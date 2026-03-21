@@ -1,6 +1,6 @@
 {
   "Lincang": {
-    "country": "China", "depositType": "Coal-hosted lignite", "reserves": "~1,000 t Ge", "operator": "Lincang Xinyuan",
+    "country": "China", "depositType": "Coal deposit", "reserves": ">1,000 t Ge", "operator": "Lincang Xinyuan",
     "type": "Deposit",
     "loc": "Yunnan Province, China",
     "stat": "1,000 t Ge reserves · 850 ppm",
@@ -32,7 +32,7 @@
     ]
   },
   "Wulantuga": {
-    "country": "China", "depositType": "Coal-hosted lignite", "reserves": "~1,600 t Ge", "operator": "Shengli Coal Group",
+    "country": "China", "depositType": "Coal deposit", "reserves": "~1,600 t Ge", "operator": "Shengli Coal Group",
     "type": "Deposit",
     "loc": "Inner Mongolia, China",
     "stat": "1,600 t Ge reserves · 137 ppm",
@@ -64,7 +64,7 @@
     ]
   },
   "Yimin": {
-    "country": "China", "depositType": "Coal-hosted lignite", "reserves": "~4,000 t Ge", "operator": "State ops",
+    "country": "China", "depositType": "Coal deposit", "reserves": "~4,000 t Ge", "operator": "State ops",
     "type": "Deposit",
     "loc": "Inner Mongolia, China",
     "stat": "4,000 t Ge reserves · 28-135 ppm",
@@ -96,7 +96,7 @@
     ]
   },
   "Huize": {
-    "country": "China", "depositType": "Zinc-lead sulfide", "reserves": "7M+ t Zn+Pb", "operator": "Yunnan Chihong",
+    "country": "China", "depositType": "Zinc ore deposit", "reserves": "443 t Ge resources (Chihong)", "operator": "Yunnan Chihong",
     "type": "Deposit",
     "loc": "NE Yunnan Province, China",
     "stat": "7M+ t Zn+Pb reserves",
@@ -128,7 +128,7 @@
     ]
   },
   "Yiliang + SYGT": {
-    "country": "China", "depositType": "Zn-Pb-Ge sulfide belt", "reserves": "32M+ t Zn", "operator": "Yunnan Chihong",
+    "country": "China", "depositType": "Zinc ore deposit", "reserves": "186 t Ge proven reserves", "operator": "Yunnan Chihong",
     "type": "Deposit belt",
     "loc": "Yunnan / Sichuan / Guizhou, China",
     "stat": "32M+ t Zn reserves in belt",
@@ -160,7 +160,7 @@
     ]
   },
   "Lincang Xinyuan": {
-    "country": "China", "outputVolume": "~40,000 t lignite/yr", "ownership": "Listed · 002428.SZ",
+    "country": "China", "outputVolume": "~40 t Ge/yr extracted", "extractionMethod": "Coal combustion + fly ash leach", "ownership": "Listed · 002428.SZ",
     "type": "Miner",
     "loc": "Yunnan Province, China",
     "stat": "~40,000 t lignite/yr · 002428.SZ",
@@ -192,7 +192,7 @@
     ]
   },
   "Shengli Coal Group": {
-    "country": "China", "outputVolume": "~1M t coal/yr", "ownership": "State-owned",
+    "country": "China", "outputVolume": "~20–35 t Ge/yr extracted", "extractionMethod": "Coal combustion + fly ash leach", "ownership": "State-owned",
     "type": "Miner",
     "loc": "Inner Mongolia, China",
     "stat": "~1,000,000 t coal/yr · State-owned",
@@ -224,7 +224,7 @@
     ]
   },
   "Various State Ops": {
-    "country": "China", "outputVolume": "Partial · low activity", "ownership": "State-owned",
+    "country": "China", "outputVolume": "~5–10 t Ge/yr est.", "extractionMethod": "Coal combustion + fly ash leach", "ownership": "State-owned",
     "type": "Miners",
     "loc": "Inner Mongolia, China",
     "stat": "Partial · low activity",
@@ -256,7 +256,7 @@
     ]
   },
   "Yunnan Chihong": {
-    "country": "China", "outputVolume": "290,000 t Zn conc/yr", "ownership": "Listed · 600497.SH",
+    "country": "China", "outputVolume": "~66 t Ge/yr refined", "extractionMethod": "Zinc smelting + leach", "ownership": "Listed · 600497.SH",
     "type": "Miner / Refiner",
     "loc": "Qujing, Yunnan, China",
     "stat": "290,000 t Zn conc/yr · 600497.SH",
@@ -288,7 +288,7 @@
     ]
   },
   "Lincang Xinyuan Refinery": {
-    "country": "China", "outputVolume": "~40 t/yr Ge", "products": "GeO₂, GeCl₄, wafers",
+    "country": "China", "outputVolume": "~40 t/yr refined Ge", "products": "GeO₂, GeCl₄, wafers",
     "type": "Refinery",
     "loc": "Kunming / Lincang, Yunnan",
     "stat": "~40 t/yr refined Ge",
@@ -320,7 +320,7 @@
     ]
   },
   "Smaller Chinese Refiners": {
-    "country": "China", "outputVolume": "~14 t/yr est.", "products": "GeO₂, Ge metal",
+    "country": "China", "outputVolume": "~14 t/yr est. combined", "products": "GeO₂, Ge metal",
     "type": "Refiners",
     "loc": "Various · Inner Mongolia / Hunan",
     "stat": "~14 t/yr est. combined",
@@ -352,7 +352,7 @@
     ]
   },
   "Yunnan Chihong Refinery": {
-    "country": "China", "outputVolume": "~66 t/yr Ge", "products": "GeO₂, Ge metal, GeCl₄",
+    "country": "China", "outputVolume": "~66 t/yr refined Ge", "products": "GeO₂, Ge metal, GeCl₄",
     "type": "Refinery",
     "loc": "Qujing, Yunnan, China",
     "stat": "~66 t/yr refined Ge",
@@ -384,7 +384,7 @@
     ]
   },
   "China Supply": {
-    "totalVolume": "~120 t/yr primary", "marketSize": "~$1.4B",
+    "totalVolume": "~120 t/yr primary refined", "globalSupply": "~230 t/yr incl. recycled", "marketSize": "~$1.4B",
     "type": "Aggregate supply node",
     "loc": "China",
     "stat": "~120 t/yr primary refined",
