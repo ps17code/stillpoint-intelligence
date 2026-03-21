@@ -1,0 +1,501 @@
+{
+  "SPINE_TREE": {
+    "Germanium": {
+      "GeO₂ / GeCl₄": {
+        "Fiber Optics": [
+          "AI Datacenter"
+        ]
+      },
+      "Ge Wafers": {
+        "Space Solar": [
+          "Satellites"
+        ]
+      }
+    },
+    "Copper": {
+      "Cu Wire": {
+        "Power Infrastructure": [
+          "Data Centers",
+          "EV Charging"
+        ]
+      }
+    },
+    "Silicon": {
+      "Si Wafers": {
+        "Semiconductors": [
+          "AI Chips",
+          "Logic ICs"
+        ]
+      }
+    }
+  },
+  "EU_DATA": {
+    "AI Datacenter": {
+      "integration": [
+        "Vertiv",
+        "Equinix",
+        "CoreWeave",
+        "Schneider Electric",
+        "CommScope",
+        "AECOM"
+      ],
+      "hyperscale": [
+        "Microsoft",
+        "Google",
+        "Amazon",
+        "Meta",
+        "xAI",
+        "Oracle"
+      ],
+      "output": "AI Datacenter",
+      "intToHyper": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          5,
+          5
+        ]
+      ]
+    }
+  },
+  "RAW_DATA": {
+    "Germanium": {
+      "deposits": [
+        "Lincang",
+        "Wulantuga",
+        "Yimin",
+        "Huize",
+        "Yiliang + SYGT"
+      ],
+      "miners": [
+        "Lincang Xinyuan",
+        "Shengli Coal Group",
+        "Various State Ops",
+        "Yunnan Chihong"
+      ],
+      "refiners": [
+        "Lincang Xinyuan Refinery",
+        "Smaller Chinese Refiners",
+        "Yunnan Chihong Refinery"
+      ],
+      "supply": "China Supply",
+      "depToMin": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "minToRef": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "minor": {
+        "deposits": [
+          2
+        ],
+        "miners": [
+          2
+        ],
+        "refiners": [
+          1
+        ]
+      }
+    },
+    "Copper": {
+      "deposits": [
+        "Escondida",
+        "Collahuasi",
+        "Antamina",
+        "Cerro Verde",
+        "El Teniente"
+      ],
+      "miners": [
+        "BHP",
+        "Glencore",
+        "Antamina JV",
+        "Freeport"
+      ],
+      "refiners": [
+        "Codelco",
+        "Atlantic Copper",
+        "Aurubis"
+      ],
+      "supply": "Global Supply",
+      "depToMin": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "minToRef": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "minor": {
+        "deposits": [],
+        "miners": [],
+        "refiners": []
+      }
+    },
+    "Silicon": {
+      "deposits": [
+        "Spruce Pine",
+        "Orissa Belt",
+        "Minas Gerais",
+        "Quartz Hill"
+      ],
+      "miners": [
+        "The Quartz Corp",
+        "CUMI",
+        "Rima Industrial"
+      ],
+      "refiners": [
+        "Wacker Chemie",
+        "Shin-Etsu",
+        "Hemlock Semi"
+      ],
+      "supply": "Global Supply",
+      "depToMin": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "minToRef": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "minor": {
+        "deposits": [],
+        "miners": [],
+        "refiners": []
+      }
+    }
+  },
+  "COMP_DATA": {
+    "GeO₂ / GeCl₄": {
+      "preform": [
+        "Corning",
+        "Prysmian",
+        "Fujikura",
+        "Sumitomo Electric",
+        "Shin-Etsu",
+        "YOFC"
+      ],
+      "drawing": [
+        "Corning",
+        "Prysmian",
+        "Fujikura",
+        "Sumitomo Electric",
+        "OFS Fitel",
+        "YOFC"
+      ],
+      "output": "Optical Fiber Strand",
+      "preToDrawing": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "minor": {
+        "preform": [
+          5
+        ],
+        "drawing": [
+          5
+        ]
+      }
+    }
+  },
+  "SUB_DATA": {
+    "Fiber Optics": {
+      "assembly": [
+        "Corning",
+        "Prysmian",
+        "Fujikura",
+        "Sumitomo Electric",
+        "CommScope",
+        "AFL",
+        "Alcatel SN",
+        "SubCom",
+        "NEC"
+      ],
+      "cableType": [
+        "Datacenter Cable",
+        "Terrestrial Long-Haul",
+        "Subsea Cable"
+      ],
+      "output": "Fiber Optic Cable",
+      "assToType": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          8,
+          2
+        ]
+      ],
+      "minor": {
+        "assembly": [],
+        "cableType": []
+      }
+    }
+  }
+}

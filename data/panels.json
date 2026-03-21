@@ -1,0 +1,548 @@
+{
+  "rawIntro": {
+    "context": "Germanium · Raw Material · Supply chain overview",
+    "title": "The invisible chokepoint",
+    "sub": "~230 t/yr global supply · $1.4B market · no substitute",
+    "sections": [
+      {
+        "label": "Key figures",
+        "type": "bigstats",
+        "stats": [
+          {
+            "val": "~230 t",
+            "key": "Global supply/yr"
+          },
+          {
+            "val": "~17%",
+            "key": "Capture rate"
+          },
+          {
+            "val": "$6k/kg",
+            "key": "Price (2024)"
+          }
+        ]
+      },
+      {
+        "label": "Germanium is never mined directly",
+        "type": "prose",
+        "content": "There is no such thing as a germanium mine. Germanium exists only as a trace impurity inside zinc sulfide ores and certain lignite coal seams. Germanium recovery is always an afterthought layered on top of a primary industrial process — zinc smelting or coal combustion."
+      },
+      {
+        "label": "The capture problem",
+        "type": "prose",
+        "content": "Of all the germanium that theoretically passes through the world's coal plants and zinc smelters each year, only approximately 17% is actually captured. At Wulantuga alone, ~137 tonnes passes through the coal burned annually — but only 20-35 tonnes is recovered. Recovery requires specialist acid-leach circuits that cost millions to install and are only economic when germanium prices are high enough."
+      },
+      {
+        "label": "Geographic concentration",
+        "type": "risks",
+        "content": [
+          "China controls ~80% of primary refined germanium globally and ~100% of all ground-source supply.",
+          "Three deposits account for essentially all current global production. There are no western deposits of consequence currently in production.",
+          "China introduced export licensing in August 2023 — exports fell ~55%. In December 2024, China banned Ge exports to the US entirely."
+        ]
+      },
+      {
+        "label": "Investment angle",
+        "type": "angle",
+        "content": "The most actionable western plays are companies with secured non-Chinese Ge supply or processing capacity: Umicore (UMI.BR) as the primary western refiner; 5N Plus (VFF.TSX) as the only vertically integrated western wafer-to-space-solar-cell producer."
+      }
+    ]
+  },
+  "compIntro": {
+    "context": "Germanium · Component · GeO₂ → Optical Fiber",
+    "title": "Where germanium becomes glass",
+    "sub": "GeO₂/GeCl₄ → preform → fiber strand · Ge locked permanently",
+    "sections": [
+      {
+        "label": "Key figures",
+        "type": "bigstats",
+        "stats": [
+          {
+            "val": "6",
+            "key": "Major preform makers"
+          },
+          {
+            "val": "3-5%",
+            "key": "Ge in fiber core"
+          },
+          {
+            "val": "~10k km",
+            "key": "Per preform rod"
+          }
+        ]
+      },
+      {
+        "label": "The transformation",
+        "type": "prose",
+        "content": "When germanium enters the component layer, it undergoes its most fundamental transformation. GeO₂ powder or GeCl₄ vapor is incorporated into a silica glass matrix during preform manufacturing. From this point forward, the germanium is no longer a commodity — it is permanently locked into the glass structure."
+      },
+      {
+        "label": "Why Ge is irreplaceable here",
+        "type": "prose",
+        "content": "The refractive index of pure silica glass is approximately 1.444. Adding germanium dioxide raises it to ~1.468 in the core. This precise gradient — higher in the center, lower at the cladding — causes total internal reflection, confining light to the fiber core. No other dopant achieves the same combination of refractive index increase, low attenuation at telecom wavelengths, and compatibility with the SiO₂ deposition process at industrial scale."
+      },
+      {
+        "label": "Market concentration",
+        "type": "risks",
+        "content": [
+          "Six companies control essentially all preform manufacturing globally: Corning, Prysmian, Fujikura, Sumitomo, Shin-Etsu, and YOFC.",
+          "YOFC (Chinese state-backed, partial Corning JV) has the largest single capacity globally.",
+          "AI datacenter buildout has created multi-year backlogs at all major western producers."
+        ]
+      },
+      {
+        "label": "Investment angle",
+        "type": "angle",
+        "content": "Corning (GLW) is the most liquid and direct western proxy for this layer. Prysmian (PRY) adds subsea cable exposure. Both benefit from a structural supply constraint upstream and a structural demand surge downstream."
+      }
+    ]
+  },
+  "subIntro": {
+    "context": "Germanium · Subsystem · Fiber Optics → Cable",
+    "title": "From strand to deployable cable",
+    "sub": "Assembly · 3 cable types · one deployable product",
+    "sections": [
+      {
+        "label": "Key figures",
+        "type": "bigstats",
+        "stats": [
+          {
+            "val": "9",
+            "key": "Major assemblers"
+          },
+          {
+            "val": "3",
+            "key": "Cable types"
+          },
+          {
+            "val": "~$15B",
+            "key": "Market 2024"
+          }
+        ]
+      },
+      {
+        "label": "The transformation",
+        "type": "prose",
+        "content": "The subsystem layer is where individual fiber strands are bundled, protected, and structured into a deployable cable product. Germanium is already permanently locked in. No new Ge is added at this layer. The transformation is mechanical — ribbonizing, buffering, jacketing, armoring, and connector termination."
+      },
+      {
+        "label": "Three cable types, one product family",
+        "type": "prose",
+        "content": "The same fundamental technology — germanium-doped glass fiber — underlies three distinct cable specifications: datacenter cable optimized for fiber density in short runs, terrestrial long-haul cable armored for outdoor deployment, and subsea cable engineered to survive ocean floor conditions for 25+ years."
+      },
+      {
+        "label": "Market dynamics",
+        "type": "risks",
+        "content": [
+          "AI hyperscalers are driving unprecedented demand for datacenter cable — Corning has guided for multi-year order visibility for the first time in company history.",
+          "The same hyperscalers (Google, Meta, Microsoft, Amazon) are funding private subsea cables directly, shifting demand from carrier-funded to tech-funded.",
+          "Cable manufacturing capacity is now the bottleneck — not fiber strand or Ge supply."
+        ]
+      },
+      {
+        "label": "Investment angle",
+        "type": "angle",
+        "content": "Corning (GLW) and Prysmian (PRY) capture the most value at this layer. Prysmian additionally captures the subsea boom via Alcatel Submarine Networks. The Ge supply constraint upstream is now a competitive advantage for companies that have secured alternative Ge supply."
+      }
+    ]
+  },
+  "euIntro": {
+    "context": "Germanium · End Use · AI Datacenter",
+    "title": "Where the chain ends",
+    "sub": "Integration · Hyperscale operators · AI Datacenter",
+    "sections": [
+      {
+        "label": "Key figures",
+        "type": "bigstats",
+        "stats": [
+          {
+            "val": "$500B+",
+            "key": "Annual DC spend"
+          },
+          {
+            "val": "100kW",
+            "key": "Per AI rack"
+          },
+          {
+            "val": "6",
+            "key": "Hyperscale operators"
+          }
+        ]
+      },
+      {
+        "label": "The terminus",
+        "type": "prose",
+        "content": "The AI datacenter is where the entire germanium supply chain terminates. Every fiber optic cable connecting GPU to GPU, switch to switch, and datacenter to datacenter began as germanium dioxide in a Chinese coal seam or zinc mine. A single hyperscale AI training cluster contains millions of kilometers of fiber — representing thousands of kilograms of germanium permanently embedded in glass."
+      },
+      {
+        "label": "The density inflection",
+        "type": "prose",
+        "content": "Traditional datacenter racks consumed 5-10 kilowatts. An AI GPU rack running H100s consumes 40-100 kilowatts — a 10-20x density increase. This creates cascading demand: more power infrastructure, more cooling, more fiber for interconnect, and more of every upstream input including germanium."
+      },
+      {
+        "label": "Infrastructure investment wave",
+        "type": "risks",
+        "content": [
+          "Microsoft, Google, Amazon, and Meta have collectively committed over $250B in datacenter capex for 2025 alone — the largest single-year infrastructure investment in history.",
+          "Power grid constraints are now the primary bottleneck for datacenter growth in key markets (Virginia, Ireland, Singapore) — not compute or fiber supply.",
+          "The US Stargate initiative ($500B over 4 years) represents a government-backed guarantee of sustained AI infrastructure demand."
+        ]
+      },
+      {
+        "label": "Investment angle",
+        "type": "angle",
+        "content": "At the end use layer, the most direct investment plays are the infrastructure enablers (Vertiv, Schneider Electric) rather than the hyperscalers themselves. Vertiv in particular has the most concentrated AI datacenter revenue exposure of any large-cap public company. Among hyperscalers, Microsoft offers the clearest AI revenue visibility through Azure OpenAI. Oracle is the most underappreciated — OCI is growing faster than any major cloud platform driven entirely by AI demand."
+      }
+    ]
+  },
+  "euLayers": {
+    "INTEGRATION": {
+      "context": "Germanium · End Use",
+      "title": "Integration layer",
+      "sub": "6 companies · power, cooling, colo, construction",
+      "sections": [
+        {
+          "label": "Overview",
+          "type": "prose",
+          "content": "The integration layer sits between the fiber optic cable and the hyperscale operators. These companies provide the power infrastructure, thermal management, colocation space, structured cabling, and physical construction that transform an empty building into a functioning AI datacenter."
+        },
+        {
+          "label": "Why this layer matters",
+          "type": "prose",
+          "content": "AI GPU clusters require 10-20x more power density than traditional compute. This has created extraordinary demand for power distribution systems, liquid cooling infrastructure, and the engineering expertise to design facilities capable of handling these loads. Vertiv and Schneider Electric are the primary beneficiaries."
+        },
+        {
+          "label": "Key risks",
+          "type": "risks",
+          "content": [
+            "Power transformer lead times have extended to 2-3 years — the integration layer is itself supply-constrained.",
+            "Labor shortages in datacenter construction are extending project timelines across the industry.",
+            "Hyperscalers are increasingly in-sourcing integration work, reducing the addressable market for third-party integrators."
+          ]
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "Vertiv (VRT) is the highest-conviction AI infrastructure play at this layer — pure-play power and cooling with >20% revenue growth. Schneider Electric (SU) offers broader industrial exposure with meaningful datacenter upside. AECOM (ACM) is the most indirect play — construction management of hyperscale campuses."
+        }
+      ]
+    },
+    "HYPERSCALE": {
+      "context": "Germanium · End Use",
+      "title": "Hyperscale operator layer",
+      "sub": "6 operators · $250B+ combined 2025 capex",
+      "sections": [
+        {
+          "label": "Overview",
+          "type": "prose",
+          "content": "Six companies control the vast majority of AI compute infrastructure globally: Microsoft, Google, Amazon, Meta, xAI, and Oracle. Together they are committing over $250B in datacenter capex in 2025 — the largest single-year infrastructure investment in history."
+        },
+        {
+          "label": "Concentration",
+          "type": "prose",
+          "content": "The hyperscale layer is extraordinarily concentrated. The top four operators (Microsoft, Google, Amazon, Meta) account for over 80% of all AI compute capacity globally. This concentration means that decisions by a handful of executives determine the demand for the entire Ge-to-fiber supply chain upstream."
+        },
+        {
+          "label": "Key risks",
+          "type": "risks",
+          "content": [
+            "AI model efficiency improvements (smaller models achieving GPT-4 capability) could reduce training compute demand.",
+            "Regulatory scrutiny of hyperscaler AI dominance is intensifying in the US, EU, and UK.",
+            "Power grid constraints in Virginia, Ireland, and Singapore are already limiting datacenter expansion in key markets."
+          ]
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "Microsoft (MSFT) offers the clearest AI revenue visibility through Azure OpenAI. Google (GOOGL) offers AI exposure at the lowest valuation multiple among hyperscalers plus TPU custom silicon upside. Oracle (ORCL) is the fastest-growing cloud platform and most underappreciated AI infrastructure play. xAI is private — monitor for IPO."
+        }
+      ]
+    },
+    "OUTPUT_EU": {
+      "context": "Germanium · End Use",
+      "title": "AI Datacenter output",
+      "sub": "The terminus of the Ge supply chain",
+      "sections": [
+        {
+          "label": "Overview",
+          "type": "prose",
+          "content": "The AI Datacenter is the final node in the germanium supply chain. Every fiber optic cable — every strand of germanium-doped glass — ultimately terminates here, connecting GPU to GPU, rack to rack, datacenter to datacenter."
+        },
+        {
+          "label": "Scale",
+          "type": "prose",
+          "content": "A single hyperscale AI training cluster may contain 50,000-100,000 GPUs connected by millions of kilometers of fiber. The global AI datacenter buildout represents the largest single deployment of optical fiber in history — and therefore the largest single drawdown on germanium supply."
+        },
+        {
+          "label": "Key risks",
+          "type": "risks",
+          "content": [
+            "Power grid constraints are the primary bottleneck — not compute, fiber, or Ge supply.",
+            "AI model efficiency could reduce training compute requirements faster than demand grows.",
+            "Geopolitical risk: Chinese Ge export controls create structural cost headwinds for all western AI infrastructure."
+          ]
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "At the output level, the value of AI compute accrues to the model operators and the applications built on top of them. The infrastructure supply chain — including the Ge-to-fiber chain mapped here — is the hidden upstream leverage on the entire AI economy."
+        }
+      ]
+    }
+  },
+  "layers": {
+    "DEPOSITS": {
+      "context": "Germanium · Raw Material",
+      "title": "Deposit layer",
+      "sub": "5 deposits · Yunnan + Inner Mongolia, China",
+      "sections": [
+        {
+          "label": "Overview",
+          "type": "prose",
+          "content": "All economically significant germanium deposits in production are in China. Three deposits — Lincang, Wulantuga, and Huize/SYGT — account for essentially all current global primary Ge production."
+        },
+        {
+          "label": "Geological risk",
+          "type": "risks",
+          "content": [
+            "Ge is never mined directly — it exists only as a trace impurity. Supply cannot be ramped independently of zinc or coal production decisions.",
+            "The highest-grade deposits are depleting assets. No comparable replacements have been identified outside China.",
+            "Theoretical reserves significantly exceed recoverable reserves."
+          ]
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "Deposit-level exposure is only accessible through Chinese listed equities. No western-listed junior miner has a credible Ge deposit in development."
+        }
+      ]
+    },
+    "MINERS": {
+      "context": "Germanium · Raw Material",
+      "title": "Miner layer",
+      "sub": "4 operators · All China-domiciled",
+      "sections": [
+        {
+          "label": "Overview",
+          "type": "prose",
+          "content": "All active germanium miners are Chinese. Two are listed domestically; two are state-owned enterprises. Mining decisions are made for zinc and coal economics, not Ge demand."
+        },
+        {
+          "label": "Key risks",
+          "type": "risks",
+          "content": [
+            "A zinc or coal downturn reduces Ge output regardless of Ge prices.",
+            "State ownership means supply can be withheld as a strategic tool.",
+            "No western capacity to replace Chinese mining — a new mine takes 7-10 years."
+          ]
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "Lincang Xinyuan (002428.SZ) is the only pure-play Ge miner. Yunnan Chihong (600497.SH) offers Ge exposure as a high-margin add-on to a zinc business."
+        }
+      ]
+    },
+    "REFINERS": {
+      "context": "Germanium · Raw Material",
+      "title": "Refiner layer",
+      "sub": "3 refiners · China dominant · Umicore western alternative",
+      "sections": [
+        {
+          "label": "Overview",
+          "type": "prose",
+          "content": "The refining layer is where Ge concentrate becomes the high-purity GeO₂, GeCl₄, and Ge wafers the fiber optic and solar industries require. China controls ~80% of primary refining capacity."
+        },
+        {
+          "label": "Key risks",
+          "type": "risks",
+          "content": [
+            "Chinese refiners produce ~80% of global primary refined Ge. Export controls throttle supply at this exact layer.",
+            "Western refining capacity is insufficient without Chinese supply — the gap is structural, not cyclical.",
+            "Recycling provides ~90 t/yr globally but cannot grow faster than cumulative historical Ge consumption."
+          ]
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "Umicore (UMI.BR) is the most accessible western refining play. 5N Plus (VFF.TSX) is vertically integrated from Ge wafer through to space solar cell."
+        }
+      ]
+    },
+    "SUPPLY": {
+      "context": "Germanium · Raw Material",
+      "title": "China Supply node",
+      "sub": "~120 t/yr primary · ~230 t/yr global total",
+      "sections": [
+        {
+          "label": "Supply picture",
+          "type": "prose",
+          "content": "Global germanium supply is approximately 230 tonnes per year: ~120 t Chinese primary, ~14 t smaller Chinese refiners, and ~90 t global recycling. The $1.4B market is tiny relative to the technology ecosystems it enables."
+        },
+        {
+          "label": "Structural constraints",
+          "type": "risks",
+          "content": [
+            "No short-term supply response possible. New western Ge recovery capacity takes 3-5 years to build.",
+            "Recycling cannot grow faster than cumulative historical Ge consumption.",
+            "The nearest western alternative adds only ~30 t/yr."
+          ]
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "The supply constraint is durable, not cyclical. Invest in western processing companies, recyclers, and non-Chinese miners with credible development-stage assets."
+        }
+      ]
+    },
+    "PREFORM": {
+      "context": "Germanium · Component · GeO₂ → fiber",
+      "title": "Preform manufacturing",
+      "sub": "6 producers · Ge baked permanently into glass core",
+      "sections": [
+        {
+          "label": "Overview",
+          "type": "prose",
+          "content": "Preform manufacturing is where germanium permanently enters the optical fiber. GeCl₄ vapor or GeO₂ powder is incorporated into a silica glass rod using chemical vapor deposition. One preform rod yields approximately 5,000-10,000 km of finished fiber."
+        },
+        {
+          "label": "Concentration risk",
+          "type": "risks",
+          "content": [
+            "Six companies control essentially all global preform capacity. Entry barriers are extremely high.",
+            "YOFC (Chinese, partial Corning JV) has the largest single capacity globally.",
+            "AI datacenter demand has created unprecedented backlogs — Corning has multi-year demand visibility for the first time."
+          ]
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "Corning (GLW) and Prysmian (PRY) are the most accessible listed equities at this layer. Both have significant AI datacenter exposure and benefit from the Ge supply squeeze."
+        }
+      ]
+    },
+    "DRAWING": {
+      "context": "Germanium · Component · GeO₂ → fiber",
+      "title": "Fiber drawing",
+      "sub": "Preform rod → thousands of km of hair-thin fiber",
+      "sections": [
+        {
+          "label": "Overview",
+          "type": "prose",
+          "content": "Fiber drawing is the process of heating one end of a preform rod to ~2,000°C and pulling it downward to create a continuous fiber ~125 microns in diameter. The Ge content is now permanently fixed — the drawing process does not alter its chemistry."
+        },
+        {
+          "label": "Vertical integration",
+          "type": "prose",
+          "content": "Drawing is almost entirely vertically integrated — the same companies that make preforms draw their own fiber. Preform manufacturing capacity is the true constraint, not drawing capacity."
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "The drawing layer does not introduce new investment theses beyond what is captured at the preform layer. Focus on preform manufacturers."
+        }
+      ]
+    },
+    "OUTPUT": {
+      "context": "Germanium · Component · GeO₂ → fiber",
+      "title": "Optical fiber strand output",
+      "sub": "Commodity product · Ge permanently locked · feeds cable assembly",
+      "sections": [
+        {
+          "label": "Overview",
+          "type": "prose",
+          "content": "The optical fiber strand is the output of the component layer. At this point germanium is no longer identifiable as a separate material — it is simply part of the glass with a specific refractive index profile. The strand is sold by the kilometer at commodity prices."
+        },
+        {
+          "label": "Market dynamics",
+          "type": "prose",
+          "content": "Fiber strand pricing has generally declined per kilometer over decades as manufacturing efficiency improved. The current AI datacenter buildout is creating a demand surge that is outpacing capacity additions for the first time in 15 years."
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "Do not invest at the strand level. Invest upstream at the preform level or downstream at the cable assembly and hyperscale operator level."
+        }
+      ]
+    },
+    "ASSEMBLY": {
+      "context": "Germanium · Subsystem",
+      "title": "Cable assembly layer",
+      "sub": "9 manufacturers · terrestrial/DC + subsea specialists",
+      "sections": [
+        {
+          "label": "Overview",
+          "type": "prose",
+          "content": "Cable assembly is where fiber strands are mechanically transformed into finished cable products. Integrated producers (Corning, Prysmian, Fujikura, Sumitomo) use their own drawn fiber. Cable-only assemblers (CommScope, AFL) buy strand on the open market. Subsea specialists (Alcatel SN, SubCom, NEC) operate an entirely different manufacturing process."
+        },
+        {
+          "label": "Key risks",
+          "type": "risks",
+          "content": [
+            "Cable manufacturing capacity is now the bottleneck — not fiber strand or Ge supply. The constraint has shifted downstream.",
+            "Subsea cable laying capacity is extremely constrained — only a handful of specialized ships exist globally.",
+            "Chinese cable producers have very large capacity and are aggressively pricing in accessible markets."
+          ]
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "Corning (GLW) and Prysmian (PRY) are the primary investment vehicles. For subsea exposure specifically, Nokia (NOKIA HE) via Alcatel SN is the only listed vehicle."
+        }
+      ]
+    },
+    "CABLE TYPE": {
+      "context": "Germanium · Subsystem",
+      "title": "Cable type layer",
+      "sub": "Datacenter · Terrestrial · Subsea · same fiber, different spec",
+      "sections": [
+        {
+          "label": "Overview",
+          "type": "prose",
+          "content": "The three cable types represent the same fundamental product — germanium-doped fiber in a protective structure — engineered for radically different deployment environments."
+        },
+        {
+          "label": "Fastest growing: datacenter",
+          "type": "prose",
+          "content": "Datacenter trunk cable is the fastest-growing segment. AI training clusters require extraordinarily high fiber density — a single hyperscale AI datacenter may contain more fiber than an entire city's telecom network."
+        },
+        {
+          "label": "Key risks",
+          "type": "risks",
+          "content": [
+            "Datacenter cable is becoming commoditized as Chinese manufacturers scale.",
+            "Subsea cable routes face increasing geopolitical risk.",
+            "Terrestrial long-haul demand is more cyclical, tied to telecom operator capital budgets."
+          ]
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "Invest in manufacturers with the highest mix of datacenter and subsea cable revenue — Corning for datacenter, Prysmian for subsea."
+        }
+      ]
+    },
+    "OUTPUT_SUB": {
+      "context": "Germanium · Subsystem",
+      "title": "Fiber Optic Cable output",
+      "sub": "Unified deployable product · feeds End Use layer",
+      "sections": [
+        {
+          "label": "Overview",
+          "type": "prose",
+          "content": "Fiber Optic Cable is the unified subsystem output — the fully manufactured, ready-to-deploy cable. This is the handoff point to the End Use layer. Germanium is irreversibly embedded. The $15B cable market is growing toward $28B by 2030."
+        },
+        {
+          "label": "Market scale",
+          "type": "prose",
+          "content": "Approximately 500 million km of optical fiber is deployed globally. AI-driven demand is adding 50-60 million km per year in new datacenter deployments alone."
+        },
+        {
+          "label": "Investment angle",
+          "type": "angle",
+          "content": "At the output level, invest in the deployers of cable — the hyperscale operators whose AI infrastructure depends on it — rather than in cable as a commodity."
+        }
+      ]
+    }
+  }
+}
