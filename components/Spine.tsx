@@ -128,6 +128,7 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
 
                 {/* Shape */}
                 <div
+                  id={key === "raw" ? "raw-anchor-shape" : undefined}
                   style={{
                     width: 28, height: 22,
                     display: "flex", alignItems: "center", justifyContent: "center",

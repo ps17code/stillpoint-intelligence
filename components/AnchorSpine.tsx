@@ -13,6 +13,7 @@ interface AnchorSpineProps {
   topPx: number;          // pixel position for top of this spine
   visible: boolean;
   nodes: AnchorNode[];    // [current, next?] — next is dormant
+  anchorId?: string;      // id applied to the first node's shape wrapper for geometry measurement
 }
 
 const SHAPE_MAP = {
@@ -21,7 +22,7 @@ const SHAPE_MAP = {
   cylinder: CylinderShape,
 };
 
-export default function AnchorSpine({ id, topPx, visible, nodes }: AnchorSpineProps) {
+export default function AnchorSpine({ id, topPx, visible, nodes, anchorId }: AnchorSpineProps) {
   return (
     <div
       id={id}
@@ -71,7 +72,13 @@ export default function AnchorSpine({ id, topPx, visible, nodes }: AnchorSpinePr
               }}>
                 {node.label}
               </div>
-              <ShapeComp />
+              {i === 0 && anchorId ? (
+                <div id={anchorId} style={{ width: 28, height: 22, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <ShapeComp />
+                </div>
+              ) : (
+                <ShapeComp />
+              )}
             </div>
           </div>
         );
