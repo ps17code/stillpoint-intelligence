@@ -27,7 +27,7 @@ import {
 import type { AppState, SpineSelection, NodeData, PanelContent } from "@/types";
 
 // Cast JSON imports
-const NODES   = nodesRaw  as Record<string, NodeData>;
+const NODES   = nodesRaw  as unknown as Record<string, NodeData>;
 const PANELS  = panelsRaw as any;
 const CHAINS  = chainsRaw as any;
 
