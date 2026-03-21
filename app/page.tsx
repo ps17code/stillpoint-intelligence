@@ -162,38 +162,50 @@ export default function Home() {
     }
   }
 
+  // ── Wait for #page-spine transform transition to finish, then run callback ──
+  function afterSpineTransition(callback: () => void) {
+    const el = document.getElementById("page-spine");
+    if (!el) { setTimeout(callback, 1000); return; }
+
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      el.removeEventListener("transitionend", onEnd);
+      requestAnimationFrame(callback);
+    };
+    const onEnd = (e: Event) => {
+      const te = e as TransitionEvent;
+      if (te.target === el && te.propertyName === "transform") finish();
+    };
+    el.addEventListener("transitionend", onEnd);
+    setTimeout(finish, 1200); // fallback in case transitionend never fires
+  }
+
   // ── State transitions ─────────────────────────────────────────────
   function goToRaw() {
     if (!sel.raw) return;
     setAppState(1);
-    setTimeout(() => {
-      buildGeometryFromAnchorEl("raw-anchor-shape", 1);
-    }, 780);
+    afterSpineTransition(() => buildGeometryFromAnchorEl("raw-anchor-shape", 1));
   }
 
   function goToComp() {
     if (!sel.comp) return;
     setGeometry(null);
     setAppState(2);
-    setTimeout(() => {
-      buildGeometryFromAnchorEl("comp-anchor-shape", 2);
-    }, 750);
+    setTimeout(() => buildGeometryFromAnchorEl("comp-anchor-shape", 2), 800);
   }
 
   function goToSub() {
     setGeometry(null);
     setAppState(3);
-    setTimeout(() => {
-      buildGeometryFromAnchorEl("sub-anchor-shape", 3);
-    }, 750);
+    setTimeout(() => buildGeometryFromAnchorEl("sub-anchor-shape", 3), 800);
   }
 
   function goToEU() {
     setGeometry(null);
     setAppState(4);
-    setTimeout(() => {
-      buildGeometryFromAnchorEl("eu-anchor-shape", 4);
-    }, 750);
+    setTimeout(() => buildGeometryFromAnchorEl("eu-anchor-shape", 4), 800);
   }
 
   function backToSpine() {
@@ -206,21 +218,21 @@ export default function Home() {
     setGeometry(null); setLayers([]);
     setAppState(1);
     setPanelOpen(false);
-    setTimeout(() => buildGeometryFromAnchorEl("raw-anchor-shape", 1), 600);
+    afterSpineTransition(() => buildGeometryFromAnchorEl("raw-anchor-shape", 1));
   }
 
   function backToComp() {
     setGeometry(null); setLayers([]);
     setAppState(2);
     setPanelOpen(false);
-    setTimeout(() => buildGeometryFromAnchorEl("comp-anchor-shape", 2), 600);
+    setTimeout(() => buildGeometryFromAnchorEl("comp-anchor-shape", 2), 800);
   }
 
   function backToSub() {
     setGeometry(null); setLayers([]);
     setAppState(3);
     setPanelOpen(false);
-    setTimeout(() => buildGeometryFromAnchorEl("sub-anchor-shape", 3), 600);
+    setTimeout(() => buildGeometryFromAnchorEl("sub-anchor-shape", 3), 800);
   }
 
   // ── Spine selection ───────────────────────────────────────────────
