@@ -196,6 +196,20 @@ export default function Home() {
     setTimeout(() => buildGeometryFromAnchorEl("comp-anchor-shape", 2), 800);
   }
 
+  function goToSubFromSpine() {
+    if (!sel.sub) return;
+    setGeometry(null);
+    setAppState(3);
+    setTimeout(() => buildGeometryFromAnchorEl("sub-anchor-shape", 3), 750);
+  }
+
+  function goToEUFromSpine() {
+    if (!sel.eu) return;
+    setGeometry(null);
+    setAppState(4);
+    setTimeout(() => buildGeometryFromAnchorEl("eu-anchor-shape", 4), 750);
+  }
+
   function goToSub() {
     setGeometry(null);
     setAppState(3);
@@ -328,6 +342,8 @@ export default function Home() {
         onSelect={handleSelect}
         onCubeClick={goToRaw}
         onSphereClick={goToComp}
+        onPyramidClick={goToSubFromSpine}
+        onCylinderClick={goToEUFromSpine}
       />
 
       {/* Comp anchor spine */}

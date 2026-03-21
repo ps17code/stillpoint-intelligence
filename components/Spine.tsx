@@ -21,11 +21,13 @@ interface SpineProps {
   onSelect: (level: "raw" | "comp" | "sub" | "eu", value: string) => void;
   onCubeClick: () => void;
   onSphereClick: () => void;
+  onPyramidClick: () => void;
+  onCylinderClick: () => void;
 }
 
 type SpineKey = "raw" | "comp" | "sub" | "eu";
 
-export default function Spine({ state, selection, options, onSelect, onCubeClick, onSphereClick }: SpineProps) {
+export default function Spine({ state, selection, options, onSelect, onCubeClick, onSphereClick, onPyramidClick, onCylinderClick }: SpineProps) {
   const [hoveredNode, setHoveredNode] = useState<SpineKey | null>(null);
 
   const transform =
@@ -139,8 +141,10 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
                   }}
                   onClick={() => {
                     if (dormant) return;
-                    if (key === "raw" && selection.raw) onCubeClick();
+                    if (key === "raw"  && selection.raw)  onCubeClick();
                     if (key === "comp" && selection.comp) onSphereClick();
+                    if (key === "sub"  && selection.sub)  onPyramidClick();
+                    if (key === "eu"   && selection.eu)   onCylinderClick();
                   }}
                 >
                   <Shape />
