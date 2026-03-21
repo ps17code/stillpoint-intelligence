@@ -61,7 +61,7 @@ export default function AnchorSpine({ id, topPx, visible, nodes, anchorId }: Anc
               cursor: node.dormant ? "default" : "pointer",
               transition: "opacity 0.3s",
             }}
-              onClick={!node.dormant ? node.onClick : undefined}
+              onClick={node.onClick}
             >
               <div style={{
                 fontSize: 14,

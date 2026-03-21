@@ -276,8 +276,8 @@ export default function Home() {
   const compSpineNodes = [
     { label: sel.comp || "GeO₂ / GeCl₄", shape: "sphere" as const,
       onClick: appState === 2 ? undefined : backToComp },
-    { label: sel.sub  || "Subsystem",     shape: "pyramid" as const, dormant: appState < 3,
-      onClick: appState === 2 ? goToSub : undefined },
+    { label: sel.sub  || "Subsystem",     shape: "pyramid" as const,
+      onClick: goToSub },
   ];
 
   // sub-spine: visible in states 3+
