@@ -36,10 +36,13 @@ const CHAINS  = chainsRaw as any;
 // when the spine is .shifted. We derive this from window.innerHeight.
 function anchorTopPx(): number {
   if (typeof window === "undefined") return 0;
-  // spine shifts by translateY(calc(50vh - 10px))
-  // cube center within shifted spine = 50vh - 10 - 51 (cube is 51px above center of shifted group)
-  // anchor top = cubeCY - 33 (label 14 + margin 8 + half shape 11)
-  return window.innerHeight * 0.5 - 10 - 51 - 33;
+  // Spine shifts by translateY(calc(50vh - 10px)).
+  // Full 4-node group height ≈ 4*(label25 + shape22) + 3*(margin14+line30+margin14) = 362px.
+  // Cube center in default layout = H/2 - (groupHeight/2 - labelH - shapeHalf)
+  //   = H/2 - (181 - 25 - 11) = H/2 - 145.
+  // After shift of (H/2 - 10): cubeCY = H/2 - 145 + H/2 - 10 = H - 155.
+  // anchorTop = cubeCY - (label14 + margin8 + halfShape11) = cubeCY - 33 = H - 188.
+  return window.innerHeight - 188;
 }
 
 export default function Home() {
@@ -333,36 +336,77 @@ export default function Home() {
 
       {/* Comp anchor spine */}
       {appState >= 2 && (
-        <div style={{ position: "fixed", top: compSpineTop, left: "50%", transform: "translateX(-50%)", zIndex: 10 }}>
-          {/* Sphere — the comp anchor shape for geometry measurement */}
-          <div id="comp-anchor-shape" data-shape="true" />
+        <>
+          <div
+            id="comp-anchor-shape"
+            data-shape="true"
+            style={{
+              position: "fixed",
+              top: anchorTop + 33 - 11,
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: 22, height: 22,
+              opacity: 0, pointerEvents: "none",
+              zIndex: -1,
+            }}
+          />
           <AnchorSpine
             id="comp-spine"
             topPx={compSpineTop}
             visible={appState === 2}
             nodes={compSpineNodes}
           />
-        </div>
+        </>
       )}
 
       {/* Sub anchor spine */}
       {appState >= 3 && (
-        <AnchorSpine
-          id="sub-spine"
-          topPx={anchorTop}
-          visible={appState === 3}
-          nodes={subSpineNodes}
-        />
+        <>
+          <div
+            id="sub-anchor-shape"
+            data-shape="true"
+            style={{
+              position: "fixed",
+              top: anchorTop + 33 - 11,
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: 22, height: 22,
+              opacity: 0, pointerEvents: "none",
+              zIndex: -1,
+            }}
+          />
+          <AnchorSpine
+            id="sub-spine"
+            topPx={anchorTop}
+            visible={appState === 3}
+            nodes={subSpineNodes}
+          />
+        </>
       )}
 
       {/* EU anchor spine */}
       {appState >= 4 && (
-        <AnchorSpine
-          id="eu-spine"
-          topPx={anchorTop}
-          visible={appState === 4}
-          nodes={euSpineNodes}
-        />
+        <>
+          <div
+            id="eu-anchor-shape"
+            data-shape="true"
+            style={{
+              position: "fixed",
+              top: anchorTop + 33 - 11,
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: 22, height: 22,
+              opacity: 0, pointerEvents: "none",
+              zIndex: -1,
+            }}
+          />
+          <AnchorSpine
+            id="eu-spine"
+            topPx={anchorTop}
+            visible={appState === 4}
+            nodes={euSpineNodes}
+          />
+        </>
       )}
 
       {/* SVG tree */}
