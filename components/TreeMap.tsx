@@ -90,7 +90,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
         const pillColors = ["#9c8c74", color.stroke, color.stroke];
 
         fields.slice(0, 3).forEach((field, idx) => {
-          const val = (nodeData as Record<string, unknown>)[field.key];
+          const val = (nodeData as unknown as Record<string, unknown>)[field.key];
           if (val == null) return;
           const pill = mkEl("text", {
             "font-family": "Geist Mono, monospace",
