@@ -1,5 +1,6 @@
 {
   "Lincang": {
+    "country": "China", "depositType": "Coal-hosted lignite", "reserves": "~1,000 t Ge", "operator": "Lincang Xinyuan",
     "type": "Deposit",
     "loc": "Yunnan Province, China",
     "stat": "1,000 t Ge reserves · 850 ppm",
@@ -31,6 +32,7 @@
     ]
   },
   "Wulantuga": {
+    "country": "China", "depositType": "Coal-hosted lignite", "reserves": "~1,600 t Ge", "operator": "Shengli Coal Group",
     "type": "Deposit",
     "loc": "Inner Mongolia, China",
     "stat": "1,600 t Ge reserves · 137 ppm",
@@ -62,6 +64,7 @@
     ]
   },
   "Yimin": {
+    "country": "China", "depositType": "Coal-hosted lignite", "reserves": "~4,000 t Ge", "operator": "State ops",
     "type": "Deposit",
     "loc": "Inner Mongolia, China",
     "stat": "4,000 t Ge reserves · 28-135 ppm",
@@ -93,6 +96,7 @@
     ]
   },
   "Huize": {
+    "country": "China", "depositType": "Zinc-lead sulfide", "reserves": "7M+ t Zn+Pb", "operator": "Yunnan Chihong",
     "type": "Deposit",
     "loc": "NE Yunnan Province, China",
     "stat": "7M+ t Zn+Pb reserves",
@@ -124,6 +128,7 @@
     ]
   },
   "Yiliang + SYGT": {
+    "country": "China", "depositType": "Zn-Pb-Ge sulfide belt", "reserves": "32M+ t Zn", "operator": "Yunnan Chihong",
     "type": "Deposit belt",
     "loc": "Yunnan / Sichuan / Guizhou, China",
     "stat": "32M+ t Zn reserves in belt",
@@ -155,6 +160,7 @@
     ]
   },
   "Lincang Xinyuan": {
+    "country": "China", "outputVolume": "~40,000 t lignite/yr", "ownership": "Listed · 002428.SZ",
     "type": "Miner",
     "loc": "Yunnan Province, China",
     "stat": "~40,000 t lignite/yr · 002428.SZ",
@@ -186,6 +192,7 @@
     ]
   },
   "Shengli Coal Group": {
+    "country": "China", "outputVolume": "~1M t coal/yr", "ownership": "State-owned",
     "type": "Miner",
     "loc": "Inner Mongolia, China",
     "stat": "~1,000,000 t coal/yr · State-owned",
@@ -217,6 +224,7 @@
     ]
   },
   "Various State Ops": {
+    "country": "China", "outputVolume": "Partial · low activity", "ownership": "State-owned",
     "type": "Miners",
     "loc": "Inner Mongolia, China",
     "stat": "Partial · low activity",
@@ -248,6 +256,7 @@
     ]
   },
   "Yunnan Chihong": {
+    "country": "China", "outputVolume": "290,000 t Zn conc/yr", "ownership": "Listed · 600497.SH",
     "type": "Miner / Refiner",
     "loc": "Qujing, Yunnan, China",
     "stat": "290,000 t Zn conc/yr · 600497.SH",
@@ -279,6 +288,7 @@
     ]
   },
   "Lincang Xinyuan Refinery": {
+    "country": "China", "outputVolume": "~40 t/yr Ge", "products": "GeO₂, GeCl₄, wafers",
     "type": "Refinery",
     "loc": "Kunming / Lincang, Yunnan",
     "stat": "~40 t/yr refined Ge",
@@ -310,6 +320,7 @@
     ]
   },
   "Smaller Chinese Refiners": {
+    "country": "China", "outputVolume": "~14 t/yr est.", "products": "GeO₂, Ge metal",
     "type": "Refiners",
     "loc": "Various · Inner Mongolia / Hunan",
     "stat": "~14 t/yr est. combined",
@@ -341,6 +352,7 @@
     ]
   },
   "Yunnan Chihong Refinery": {
+    "country": "China", "outputVolume": "~66 t/yr Ge", "products": "GeO₂, Ge metal, GeCl₄",
     "type": "Refinery",
     "loc": "Qujing, Yunnan, China",
     "stat": "~66 t/yr refined Ge",
@@ -372,6 +384,7 @@
     ]
   },
   "China Supply": {
+    "totalVolume": "~120 t/yr primary", "marketSize": "~$1.4B",
     "type": "Aggregate supply node",
     "loc": "China",
     "stat": "~120 t/yr primary refined",
@@ -403,6 +416,7 @@
     ]
   },
   "Corning": {
+    "country": "USA", "process": "OVD", "marketShare": "~25-30% global", "ownership": "Corning Inc.", "specialty": "Datacenter + long-haul cable",
     "type": "Preform & fiber manufacturer",
     "loc": "Corning, New York, USA",
     "stat": "Largest fiber producer globally · GLW NYSE",
@@ -434,6 +448,7 @@
     ]
   },
   "Prysmian": {
+    "country": "Italy", "process": "CVD + OVD", "marketShare": "~80,000 km/yr", "ownership": "Prysmian S.p.A.", "specialty": "Terrestrial + subsea cable",
     "type": "Preform & fiber manufacturer",
     "loc": "Milan, Italy",
     "stat": "Second largest fiber producer · PRY Milan",
@@ -465,6 +480,7 @@
     ]
   },
   "Fujikura": {
+    "country": "Japan", "process": "VAD", "marketShare": "Major APAC supplier", "ownership": "Fujikura Ltd.", "specialty": "Datacenter + fusion splicing",
     "type": "Preform & fiber manufacturer",
     "loc": "Tokyo, Japan",
     "stat": "Major Japanese fiber producer · 5803 TSE",
@@ -496,6 +512,7 @@
     ]
   },
   "Sumitomo Electric": {
+    "country": "Japan", "process": "VAD + OVD", "marketShare": "Top 3 global", "ownership": "Sumitomo Electric Ind.", "specialty": "Datacenter + auto wiring",
     "type": "Preform & fiber manufacturer",
     "loc": "Osaka, Japan",
     "stat": "Global fiber leader · 5802 TSE",
@@ -527,6 +544,7 @@
     ]
   },
   "Shin-Etsu": {
+    "country": "Japan", "process": "OVD", "marketShare": "Major — dual fiber+Si",
     "type": "Preform manufacturer",
     "loc": "Tokyo, Japan",
     "stat": "Largest silicon wafer maker + major fiber preform producer",
@@ -558,6 +576,7 @@
     ]
   },
   "YOFC": {
+    "country": "China", "process": "VAD + OVD", "marketShare": "Largest in China", "ownership": "State + Corning JV", "specialty": "Domestic fiber supply",
     "type": "Preform & fiber manufacturer",
     "loc": "Wuhan, China",
     "stat": "Largest fiber producer in China · 601869 SSE",
@@ -589,6 +608,7 @@
     ]
   },
   "OFS Fitel": {
+    "country": "USA", "ownership": "Furukawa subsidiary",
     "type": "Fiber drawing specialist",
     "loc": "Norcross, Georgia, USA / Denmark",
     "stat": "Furukawa subsidiary · specialist drawing",
@@ -651,6 +671,7 @@
     ]
   },
   "Vertiv": {
+    "country": "USA", "specialty": "Power + thermal management",
     "type": "Datacenter infrastructure",
     "loc": "Columbus, Ohio, USA",
     "stat": "Power + thermal systems · VRT NYSE",
@@ -682,6 +703,7 @@
     ]
   },
   "Equinix": {
+    "country": "USA", "specialty": "Colocation + interconnection",
     "type": "Colocation and interconnection",
     "loc": "Redwood City, California, USA",
     "stat": "Global colo leader · EQIX NASDAQ",
@@ -713,6 +735,7 @@
     ]
   },
   "CoreWeave": {
+    "country": "USA", "specialty": "AI GPU cloud",
     "type": "AI-native cloud provider",
     "loc": "Livingston, New Jersey, USA",
     "stat": "AI GPU cloud · CRWV NASDAQ",
@@ -744,6 +767,7 @@
     ]
   },
   "Schneider Electric": {
+    "country": "France", "specialty": "Power distribution, DCIM",
     "type": "Energy management and automation",
     "loc": "Rueil-Malmaison, France",
     "stat": "Datacenter power systems · SU Paris",
@@ -775,6 +799,7 @@
     ]
   },
   "AECOM": {
+    "country": "USA", "specialty": "Datacenter construction",
     "type": "Engineering and construction",
     "loc": "Dallas, Texas, USA",
     "stat": "Datacenter construction · ACM NYSE",
@@ -806,6 +831,7 @@
     ]
   },
   "Microsoft": {
+    "ticker": "MSFT", "capex2025": "~$80B",
     "type": "Hyperscale operator",
     "loc": "Redmond, Washington, USA",
     "stat": "Azure + OpenAI · MSFT NASDAQ",
@@ -837,6 +863,7 @@
     ]
   },
   "Google": {
+    "ticker": "GOOGL", "capex2025": "~$50B",
     "type": "Hyperscale operator",
     "loc": "Mountain View, California, USA",
     "stat": "GCP + Gemini + TPUs · GOOGL NASDAQ",
@@ -868,6 +895,7 @@
     ]
   },
   "Amazon": {
+    "ticker": "AMZN", "capex2025": "~$75B",
     "type": "Hyperscale operator",
     "loc": "Seattle, Washington, USA",
     "stat": "AWS + Trainium + Inferentia · AMZN NASDAQ",
@@ -899,6 +927,7 @@
     ]
   },
   "Meta": {
+    "ticker": "META", "capex2025": "~$60-65B",
     "type": "Hyperscale operator",
     "loc": "Menlo Park, California, USA",
     "stat": "Llama + AI infrastructure · META NASDAQ",
@@ -930,6 +959,7 @@
     ]
   },
   "xAI": {
+    "ticker": "Private", "capex2025": "~$7-12B",
     "type": "Hyperscale operator",
     "loc": "Memphis, Tennessee, USA",
     "stat": "Grok + Colossus cluster · Private",
@@ -961,6 +991,7 @@
     ]
   },
   "Oracle": {
+    "ticker": "ORCL", "capex2025": "~$16B",
     "type": "Hyperscale operator",
     "loc": "Austin, Texas, USA",
     "stat": "OCI + AI infrastructure · ORCL NYSE",
@@ -1054,6 +1085,7 @@
     ]
   },
   "Datacenter Cable": {
+    "fiberCount": "96 to 6,912", "keyBuyers": "AWS, Google, Microsoft, Meta",
     "type": "Cable specification",
     "loc": "Global",
     "stat": "High fiber count · ribbon format · no armoring",
@@ -1085,6 +1117,7 @@
     ]
   },
   "Terrestrial Long-Haul": {
+    "fiberCount": "12 to 432", "keyBuyers": "AT&T, Verizon, Deutsche Telekom",
     "type": "Cable specification",
     "loc": "Global",
     "stat": "Armored · gel-filled · km to thousands of km",
@@ -1116,6 +1149,7 @@
     ]
   },
   "Subsea Cable": {
+    "fiberCount": "8 to 24 fiber pairs", "keyBuyers": "Microsoft, Google, Meta, Amazon",
     "type": "Cable specification",
     "loc": "Ocean floors globally",
     "stat": "Low fiber count · heavily armored · copper power conductor",
@@ -1147,6 +1181,7 @@
     ]
   },
   "Alcatel SN": {
+    "country": "France", "specialty": "Subsea cable systems",
     "type": "Subsea cable manufacturer",
     "loc": "Paris, France (Nokia subsidiary)",
     "stat": "Global leader in subsea cable systems",
@@ -1178,6 +1213,7 @@
     ]
   },
   "SubCom": {
+    "country": "USA", "specialty": "Subsea cable + vessels",
     "type": "Subsea cable manufacturer",
     "loc": "Eatontown, New Jersey, USA",
     "stat": "#2 global subsea cable system provider",
@@ -1209,6 +1245,7 @@
     ]
   },
   "NEC": {
+    "country": "Japan", "specialty": "Subsea + repeater systems",
     "type": "Subsea cable manufacturer",
     "loc": "Tokyo, Japan",
     "stat": "Japanese subsea cable leader · 6701 TSE",
@@ -1240,6 +1277,7 @@
     ]
   },
   "CommScope": {
+    "country": "USA", "specialty": "Datacenter infrastructure, FTTH",
     "type": "Cable assembler",
     "loc": "Hickory, North Carolina, USA",
     "stat": "Major US datacenter cable supplier · COMM NYSE",
@@ -1271,6 +1309,7 @@
     ]
   },
   "AFL": {
+    "country": "USA", "specialty": "Datacenter + utility cable",
     "type": "Cable assembler",
     "loc": "Duncan, South Carolina, USA",
     "stat": "Fujikura subsidiary · private",

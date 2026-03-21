@@ -383,6 +383,7 @@ export default function Home() {
       <TreeMap
         geometry={geometry}
         nodes={NODES}
+        layerConfig={CHAINS.layerConfig}
         onNodeHover={handleNodeHover}
         onNodeLeave={handleNodeLeave}
         onNodeClick={handleNodeClick}
