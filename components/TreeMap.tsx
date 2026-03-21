@@ -15,6 +15,11 @@ interface TreeMapProps {
   onNodeClick: (key: string) => void;
 }
 
+const FLAGS: Record<string, string> = {
+  "China": "🇨🇳", "USA": "🇺🇸", "Japan": "🇯🇵",
+  "Italy": "🇮🇹", "France": "🇫🇷",
+};
+
 export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onNodeLeave, onNodeClick }: TreeMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -56,6 +61,43 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
       return layerKey.toLowerCase().replace(/\s+(\w)/g, (_: string, c: string) => c.toUpperCase());
     }
 
+    // Estimate SVG-unit width of a string at given font-size (monospace approximation)
+    function estimateWidth(text: string, fontSize: number): number {
+      return text.length * fontSize * 0.62 + 10;
+    }
+
+    // Build a pill badge (colored rect + text)
+    function mkPill(cx: number, y: number, text: string, strokeColor: string, opacity: number) {
+      const frag = document.createElementNS(NS, "g");
+      const w = estimateWidth(text, 8);
+      const rx = 3, h = 11;
+      const rect = mkEl("rect", {
+        x: cx - w / 2, y: y - 8.5,
+        width: w, height: h, rx,
+        fill: strokeColor, "fill-opacity": 0.1,
+        stroke: strokeColor, "stroke-opacity": 0.3, "stroke-width": 0.5,
+      });
+      const t = mkEl("text", {
+        "font-family": "'Geist Mono', monospace",
+        "font-size": 8, fill: "#6b6458", x: cx, y,
+        "text-anchor": "middle", opacity,
+        "letter-spacing": "0.04em",
+      });
+      t.textContent = text;
+      frag.appendChild(rect);
+      frag.appendChild(t);
+      return frag;
+    }
+
+    // Format location line: "🇨🇳 China · Yunnan Province"
+    function formatLocation(country: string, loc: string): string {
+      const flag = FLAGS[country] ?? "";
+      const parts = loc ? loc.split(",") : [];
+      const region = parts[0]?.trim() ?? "";
+      const showRegion = region && region.toLowerCase() !== country.toLowerCase();
+      return `${flag ? flag + " " : ""}${country}${showRegion ? " · " + region : ""}`;
+    }
+
     // Build a clickable node group with optional display field pills
     function mkNodeGroup(
       cx: number, cy: number, name: string,
@@ -67,6 +109,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
       const configKey = toConfigKey(layerKey);
       const fields = layerConfig?.[configKey]?.displayFields ?? [];
+      const raw = nodeData as unknown as Record<string, unknown>;
       const hasFields = fields.length > 0 && nodeData;
 
       // Large invisible hit area
@@ -75,45 +118,56 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
       g.appendChild(hit);
 
       if (hasFields) {
-        // Name sits higher to make room for pills below it
+        // Name — fixed dark color
         const nameEl = mkEl("text", {
-          "font-family": "EB Garamond, Georgia, serif",
-          "font-size": 12, fill: color.text, x: cx, y: cy - 52,
+          "font-family": "'EB Garamond', Georgia, serif",
+          "font-size": 13, fill: "#2a1e0c", x: cx, y: cy - 52,
           "text-anchor": "middle", opacity,
         });
         nameEl.textContent = name;
         g.appendChild(nameEl);
 
-        // Y positions for up to 3 display fields
-        const pillY = [cy - 40, cy - 29, cy - 19];
-        // First field: muted gray; rest: stroke color
-        const pillColors = ["#9c8c74", color.stroke, color.stroke];
+        // Field 0: location line or plain pill
+        const field0 = fields[0];
+        const val0 = field0 ? raw[field0.key] : undefined;
+        if (val0 != null) {
+          if (field0.key === "country") {
+            // Location line: flag + country · region
+            const locText = formatLocation(String(val0), nodeData!.loc ?? "");
+            const locEl = mkEl("text", {
+              "font-family": "'Geist Mono', monospace",
+              "font-size": 9, fill: "#9c8c74", x: cx, y: cy - 40,
+              "text-anchor": "middle", opacity,
+              "letter-spacing": "0.03em",
+            });
+            locEl.textContent = locText;
+            g.appendChild(locEl);
+          } else {
+            // Non-country first field — badge pill
+            g.appendChild(mkPill(cx, cy - 40, String(val0), color.stroke, opacity));
+          }
+        }
 
-        fields.slice(0, 3).forEach((field, idx) => {
-          const val = (nodeData as unknown as Record<string, unknown>)[field.key];
+        // Fields 1 and 2: badge pills
+        const pillY = [cy - 29, cy - 19];
+        fields.slice(1, 3).forEach((field, idx) => {
+          const val = raw[field.key];
           if (val == null) return;
-          const pill = mkEl("text", {
-            "font-family": "Geist Mono, monospace",
-            "font-size": 8, fill: pillColors[idx], x: cx, y: pillY[idx],
-            "text-anchor": "middle", opacity,
-            "letter-spacing": "0.04em",
-          });
-          pill.textContent = String(val);
-          g.appendChild(pill);
+          g.appendChild(mkPill(cx, pillY[idx], String(val), color.stroke, opacity));
         });
       } else {
-        // No display fields — original layout
+        // No display fields — original compact layout
         const label = mkEl("text", {
-          "font-family": "EB Garamond, Georgia, serif",
-          "font-size": 13, fill: color.text, x: cx, y: cy - 14,
+          "font-family": "'EB Garamond', Georgia, serif",
+          "font-size": 13, fill: "#2a1e0c", x: cx, y: cy - 14,
           "text-anchor": "middle", opacity,
         });
         label.textContent = name;
         g.appendChild(label);
       }
 
-      // Ring
-      const circle = mkEl("circle", { cx, cy, r: 5.5, fill: "none", stroke: color.text, "stroke-width": 1.3, opacity });
+      // Ring — layer stroke color
+      const circle = mkEl("circle", { cx, cy, r: 5.5, fill: "none", stroke: color.stroke, "stroke-width": 1.3, opacity });
       g.appendChild(circle);
 
       // Events
@@ -130,10 +184,10 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
     const groups: SVGGElement[] = [];
 
-    // Output → anchor line
+    // Output → anchor line: stop 70 SVG units above anchor
     const anchorG = mkGroup();
     const { outputToAnchorLine: al } = geometry;
-    anchorG.appendChild(mkLine(al.x1, al.y1, al.x2, al.y2, al.color));
+    anchorG.appendChild(mkLine(al.x1, al.y1, al.x2, al.y2 - 70, al.color));
     groups.push(anchorG);
 
     // Output node
@@ -144,20 +198,10 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
     groups.push(outG);
 
     // Layers (from top to bottom in visual tree = bottom to top in layers array)
-    // Render layers from second-to-last upward, with their edges
     for (let li = geometry.layers.length - 2; li >= 0; li--) {
       const layer = geometry.layers[li];
-      const nextLayer = geometry.layers[li + 1];
 
-      // Edges from this layer to next
-      const edgesForLayer = geometry.edges.filter(e => {
-        // Match edges whose y2 is within this layer's target
-        const targetCY = nextLayer.cy;
-        return Math.abs(e.y2 - (targetCY - 26)) < 2 &&
-               layer.nodes.some(n => Math.abs(e.x1 - n.cx) < 1);
-      });
-
-      // Also catch edges going to output
+      // Edges: offset y2 up by 39 so lines stop at targetCY - 65 (was targetCY - 26)
       const edgesToNext = geometry.edges.filter(e => {
         const layerXs = layer.nodes.map(n => n.cx);
         return layerXs.some(x => Math.abs(e.x1 - x) < 1);
@@ -165,7 +209,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
       const edgeG = mkGroup();
       edgesToNext.forEach(edge => {
-        edgeG.appendChild(mkLine(edge.x1, edge.y1, edge.x2, edge.y2, edge.color));
+        edgeG.appendChild(mkLine(edge.x1, edge.y1, edge.x2, edge.y2 - 39, edge.color));
       });
       groups.push(edgeG);
 
