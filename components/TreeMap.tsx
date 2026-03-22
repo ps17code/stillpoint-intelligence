@@ -184,10 +184,10 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
     const groups: SVGGElement[] = [];
 
-    // Output → anchor line: stop 80 SVG units above anchor
+    // Output → anchor line: geometry now encodes exact ring-edge endpoints
     const anchorG = mkGroup();
     const { outputToAnchorLine: al } = geometry;
-    anchorG.appendChild(mkLine(al.x1, al.y1, al.x2, al.y2 - 80, al.color));
+    anchorG.appendChild(mkLine(al.x1, al.y1, al.x2, al.y2, al.color));
     groups.push(anchorG);
 
     // Output node
@@ -201,7 +201,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
     for (let li = geometry.layers.length - 2; li >= 0; li--) {
       const layer = geometry.layers[li];
 
-      // Edges: current y2 ≈ targetCY - 26; want targetCY - 80; offset = -54
+      // Edges: geometry encodes ring-edge endpoints (fromCY+7.5 → toCY-7.5)
       const edgesToNext = geometry.edges.filter(e => {
         const layerXs = layer.nodes.map(n => n.cx);
         return layerXs.some(x => Math.abs(e.x1 - x) < 1);
@@ -209,7 +209,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
       const edgeG = mkGroup();
       edgesToNext.forEach(edge => {
-        edgeG.appendChild(mkLine(edge.x1, edge.y1, edge.x2, edge.y2 - 54, edge.color));
+        edgeG.appendChild(mkLine(edge.x1, edge.y1, edge.x2, edge.y2, edge.color));
       });
       groups.push(edgeG);
 
