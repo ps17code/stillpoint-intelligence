@@ -82,7 +82,7 @@ import type { RawChain } from "@/types";
 export function buildRawGeometry(
   chain: RawChain,
   ancX: number, ancY: number,
-  half = 360, gap = 200
+  half = 360, gap = 150
 ): TreeGeometry {
   const supCY = ancY - gap;
   const refCY = ancY - gap * 2;
@@ -154,7 +154,7 @@ import type { CompChain } from "@/types";
 export function buildCompGeometry(
   chain: CompChain,
   ancX: number, ancY: number,
-  half = 370, gap = 200
+  half = 370, gap = 150
 ): TreeGeometry {
   const outCY  = ancY - gap;
   const drawCY = ancY - gap * 2;
@@ -214,7 +214,7 @@ import type { SubChain } from "@/types";
 export function buildSubGeometry(
   chain: SubChain,
   ancX: number, ancY: number,
-  half = 380, gap = 200
+  half = 380, gap = 150
 ): TreeGeometry {
   const outCY  = ancY - gap;
   const typeCY = ancY - gap * 2;
@@ -272,7 +272,7 @@ import type { EUChain } from "@/types";
 export function buildEUGeometry(
   chain: EUChain,
   ancX: number, ancY: number,
-  half = 380, gap = 200
+  half = 380, gap = 150
 ): TreeGeometry {
   const outCY = ancY - gap;
   const hypCY = ancY - gap * 2;

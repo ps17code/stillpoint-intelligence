@@ -42,7 +42,7 @@ function anchorTopPx(): number {
   //   = H/2 - (181 - 25 - 11) = H/2 - 145.
   // After shift of (H/2 - 10): cubeCY = H/2 - 145 + H/2 - 10 = H - 155.
   // anchorTop = cubeCY - (label14 + margin8 + halfShape11) = cubeCY - 33 = H - 188.
-  return window.innerHeight - 188;
+  return window.innerHeight * 0.75 - 10 - 51 - 33;
 }
 
 export default function Home() {
