@@ -184,7 +184,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
     // Output → anchor line: departs from bottom of output node content, arrives above anchor ring
     const anchorG = mkGroup();
     const { outputToAnchorLine: al } = geometry;
-    anchorG.appendChild(mkLine(al.x1, geometry.outputNode.cy + 7.5, al.x2, geometry.ancY - 7.5, al.color));
+    anchorG.appendChild(mkLine(al.x1, geometry.outputNode.cy + 79, al.x2, geometry.ancY - 7, al.color));
     groups.push(anchorG);
 
     // Output node
@@ -207,7 +207,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
       const edgeG = mkGroup();
       edgesToNext.forEach(edge => {
-        edgeG.appendChild(mkLine(edge.x1, layer.cy + 67, edge.x2, nextLayer.cy - 7, edge.color));
+        edgeG.appendChild(mkLine(edge.x1, layer.cy + 79, edge.x2, nextLayer.cy - 7, edge.color));
       });
       groups.push(edgeG);
 

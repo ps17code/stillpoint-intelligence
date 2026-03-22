@@ -37,10 +37,9 @@ export function toSVG(px: number, total: number): number {
   return (px / total) * 1000;
 }
 
-// Build edges between two layers — start from ring bottom, end at ring top
-const RING_R = 5.5;
-const RING_GAP = 2;
-const RING_EDGE = RING_R + RING_GAP; // 7.5
+// Edge endpoints: depart below bottom pill (cy+79), arrive above destination ring (cy-7)
+const EDGE_Y1_OFFSET =  79; // below lowest pill
+const EDGE_Y2_OFFSET =   7; // above ring top
 
 function buildEdges(
   fromXs: number[], fromCY: number,
@@ -49,8 +48,8 @@ function buildEdges(
   mapping: [number, number][],
 ): EdgeGeometry[] {
   return mapping.map(([fi, ti]) => ({
-    x1: fromXs[fi], y1: fromCY + RING_EDGE,
-    x2: toXs[ti],   y2: toCY   - RING_EDGE,
+    x1: fromXs[fi], y1: fromCY + EDGE_Y1_OFFSET,
+    x2: toXs[ti],   y2: toCY   - EDGE_Y2_OFFSET,
     color,
   }));
 }
@@ -129,8 +128,8 @@ export function buildRawGeometry(
     ...buildEdges(depXs, depCY, minXs, minCY, PALETTES.deposits.stroke, chain.depToMin),
     ...buildEdges(minXs, minCY, refXs, refCY, PALETTES.miners.stroke, chain.minToRef),
     ...refXs.map(rx => ({
-      x1: rx,   y1: refCY + RING_EDGE,
-      x2: ancX, y2: supCY - RING_EDGE,
+      x1: rx,   y1: refCY + EDGE_Y1_OFFSET,
+      x2: ancX, y2: supCY - EDGE_Y2_OFFSET,
       color: PALETTES.refiners.stroke,
     })),
   ];
@@ -140,8 +139,8 @@ export function buildRawGeometry(
     edges,
     outputNode: { name: chain.supply, cx: ancX, cy: supCY },
     outputToAnchorLine: {
-      x1: ancX, y1: supCY + RING_EDGE,
-      x2: ancX, y2: ancY  - RING_EDGE,
+      x1: ancX, y1: supCY + EDGE_Y1_OFFSET,
+      x2: ancX, y2: ancY  - EDGE_Y2_OFFSET,
       color: PALETTES.supply.stroke,
     },
     ancY,
@@ -190,8 +189,8 @@ export function buildCompGeometry(
   const edges: EdgeGeometry[] = [
     ...buildEdges(preXs, preCY, drawXs, drawCY, PALETTES.preform.stroke, chain.preToDrawing),
     ...drawXs.map(dx => ({
-      x1: dx,   y1: drawCY + RING_EDGE,
-      x2: ancX, y2: outCY  - RING_EDGE,
+      x1: dx,   y1: drawCY + EDGE_Y1_OFFSET,
+      x2: ancX, y2: outCY  - EDGE_Y2_OFFSET,
       color: PALETTES.drawing.stroke,
     })),
   ];
@@ -200,8 +199,8 @@ export function buildCompGeometry(
     layers, edges,
     outputNode: { name: chain.output, cx: ancX, cy: outCY },
     outputToAnchorLine: {
-      x1: ancX, y1: outCY + RING_EDGE,
-      x2: ancX, y2: ancY  - RING_EDGE,
+      x1: ancX, y1: outCY + EDGE_Y1_OFFSET,
+      x2: ancX, y2: ancY  - EDGE_Y2_OFFSET,
       color: PALETTES.compOut.stroke,
     },
     ancY,
@@ -248,8 +247,8 @@ export function buildSubGeometry(
   const edges: EdgeGeometry[] = [
     ...buildEdges(assXs, assCY, typeXs, typeCY, PALETTES.assembly.stroke, chain.assToType),
     ...typeXs.map(tx => ({
-      x1: tx,   y1: typeCY + RING_EDGE,
-      x2: ancX, y2: outCY  - RING_EDGE,
+      x1: tx,   y1: typeCY + EDGE_Y1_OFFSET,
+      x2: ancX, y2: outCY  - EDGE_Y2_OFFSET,
       color: PALETTES.cableType.stroke,
     })),
   ];
@@ -258,8 +257,8 @@ export function buildSubGeometry(
     layers, edges,
     outputNode: { name: chain.output, cx: ancX, cy: outCY },
     outputToAnchorLine: {
-      x1: ancX, y1: outCY + RING_EDGE,
-      x2: ancX, y2: ancY  - RING_EDGE,
+      x1: ancX, y1: outCY + EDGE_Y1_OFFSET,
+      x2: ancX, y2: ancY  - EDGE_Y2_OFFSET,
       color: PALETTES.subOut.stroke,
     },
     ancY,
@@ -306,8 +305,8 @@ export function buildEUGeometry(
   const edges: EdgeGeometry[] = [
     ...buildEdges(intXs, intCY, hypXs, hypCY, PALETTES.integration.stroke, chain.intToHyper),
     ...hypXs.map(hx => ({
-      x1: hx,   y1: hypCY + RING_EDGE,
-      x2: ancX, y2: outCY  - RING_EDGE,
+      x1: hx,   y1: hypCY + EDGE_Y1_OFFSET,
+      x2: ancX, y2: outCY  - EDGE_Y2_OFFSET,
       color: PALETTES.hyperscale.stroke,
     })),
   ];
@@ -316,8 +315,8 @@ export function buildEUGeometry(
     layers, edges,
     outputNode: { name: chain.output, cx: ancX, cy: outCY },
     outputToAnchorLine: {
-      x1: ancX, y1: outCY + RING_EDGE,
-      x2: ancX, y2: ancY  - RING_EDGE,
+      x1: ancX, y1: outCY + EDGE_Y1_OFFSET,
+      x2: ancX, y2: ancY  - EDGE_Y2_OFFSET,
       color: PALETTES.euOut.stroke,
     },
     ancY,
