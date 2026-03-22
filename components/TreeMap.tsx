@@ -96,23 +96,26 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
           if (field0.key === "country") {
             const country = String(val0);
             const dotColor = COUNTRY_COLORS[country] ?? "#9c8c74";
+            // Center text at cx, dot flush-left of text using half-width estimate
+            const dotX = cx - (country.length * 3.2) - 8;
             g.appendChild(mkEl("circle", {
-              cx: cx - 50, cy: cy - 58,
+              cx: dotX, cy: cy - 58,
               r: 3, fill: dotColor,
             }));
             const locEl = mkEl("text", {
               "font-family": "'Geist Mono', monospace",
               "font-size": 8, fill: "#9c8c74",
-              x: cx - 42, y: cy - 55,
-              "text-anchor": "start",
+              x: cx, y: cy - 55,
+              "text-anchor": "middle",
               "letter-spacing": "0.03em",
             });
             locEl.textContent = country;
             g.appendChild(locEl);
           } else {
             // Non-country field 0 — render as pill 1
+            const pillW = Math.min(Math.max(String(val0).length * 5.8 + 16, 60), 160);
             g.appendChild(mkEl("rect", {
-              x: cx - 52, y: cy - 48, width: 104, height: 13, rx: 3,
+              x: cx - pillW / 2, y: cy - 48, width: pillW, height: 13, rx: 3,
               fill: color.stroke, "fill-opacity": 0.1,
               stroke: color.stroke, "stroke-opacity": 0.25, "stroke-width": 0.5,
             }));
@@ -126,23 +129,22 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
           }
         }
 
-        // 3 & 4. Pill fields (fields[1] and fields[2] when field0 is country; or fields[1] otherwise)
-        const pillSlice = field0?.key === "country" ? fields.slice(1, 3) : fields.slice(1, 3);
+        // 3 & 4. Pill fields
         const pillDefs = [
           { rectY: cy - 48, textY: cy - 38 },
-          { rectY: cy - 33, textY: cy - 23 },
+          { rectY: cy - 31, textY: cy - 21 },
         ];
-        // When field0 is NOT country, first pill already rendered above; shift pill slots down
         const pillOffset = field0?.key === "country" ? 0 : 1;
 
-        pillSlice.forEach((field, idx) => {
+        fields.slice(1, 3).forEach((field, idx) => {
           const val = raw[field.key];
           if (val == null || String(val) === "") return;
           const slotIdx = idx + pillOffset;
           if (slotIdx >= pillDefs.length) return;
           const { rectY, textY } = pillDefs[slotIdx];
+          const pillW = Math.min(Math.max(String(val).length * 5.8 + 16, 60), 160);
           g.appendChild(mkEl("rect", {
-            x: cx - 52, y: rectY, width: 104, height: 13, rx: 3,
+            x: cx - pillW / 2, y: rectY, width: pillW, height: 13, rx: 3,
             fill: color.stroke, "fill-opacity": 0.1,
             stroke: color.stroke, "stroke-opacity": 0.25, "stroke-width": 0.5,
           }));
