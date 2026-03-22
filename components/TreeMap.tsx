@@ -90,7 +90,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
         const nameEl = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
           "font-size": 13, "font-weight": 600, fill: "#2a1e0c",
-          x: cx, y: cy + 18, "text-anchor": "middle",
+          x: cx, y: cy + 24, "text-anchor": "middle",
         });
         nameEl.textContent = name;
         g.appendChild(nameEl);
@@ -103,11 +103,11 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
             const country = String(val0);
             const dotColor = COUNTRY_COLORS[country] ?? "#9c8c74";
             const dotX = cx - (country.length * 3.2) - 8;
-            g.appendChild(mkEl("circle", { cx: dotX, cy: cy + 31, r: 3, fill: dotColor }));
+            g.appendChild(mkEl("circle", { cx: dotX, cy: cy + 35, r: 3, fill: dotColor }));
             const locEl = mkEl("text", {
               "font-family": "'Geist Mono', monospace",
               "font-size": 8, fill: "#9c8c74",
-              x: cx, y: cy + 33, "text-anchor": "middle", "letter-spacing": "0.03em",
+              x: cx, y: cy + 39, "text-anchor": "middle", "letter-spacing": "0.03em",
             });
             locEl.textContent = country;
             g.appendChild(locEl);
@@ -115,14 +115,14 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
             // Non-country field 0 — pill 1 slot
             const pillW = Math.min(Math.max(String(val0).length * 5.8 + 16, 60), 160);
             g.appendChild(mkEl("rect", {
-              x: cx - pillW / 2, y: cy + 38, width: pillW, height: 13, rx: 3,
+              x: cx - pillW / 2, y: cy + 46, width: pillW, height: 13, rx: 3,
               fill: color.stroke, "fill-opacity": 0.1,
               stroke: color.stroke, "stroke-opacity": 0.25, "stroke-width": 0.5,
             }));
             const t = mkEl("text", {
               "font-family": "'Geist Mono', monospace",
               "font-size": 8, fill: "#6b6458",
-              x: cx, y: cy + 48, "text-anchor": "middle", "letter-spacing": "0.04em",
+              x: cx, y: cy + 56, "text-anchor": "middle", "letter-spacing": "0.04em",
             });
             t.textContent = String(val0);
             g.appendChild(t);
@@ -131,8 +131,8 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
         // Fields 1 & 2 — pill slots
         const pillDefs = [
-          { rectY: cy + 38, textY: cy + 48 },
-          { rectY: cy + 54, textY: cy + 64 },
+          { rectY: cy + 46, textY: cy + 56 },
+          { rectY: cy + 62, textY: cy + 72 },
         ];
         const pillOffset = field0?.key === "country" ? 0 : 1;
 
@@ -161,7 +161,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
         const label = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
           "font-size": 13, "font-weight": 600, fill: "#2a1e0c",
-          x: cx, y: cy + 18, "text-anchor": "middle",
+          x: cx, y: cy + 24, "text-anchor": "middle",
         });
         label.textContent = name;
         g.appendChild(label);
@@ -184,7 +184,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
     // Output → anchor line: departs from bottom of output node content, arrives above anchor ring
     const anchorG = mkGroup();
     const { outputToAnchorLine: al } = geometry;
-    anchorG.appendChild(mkLine(al.x1, geometry.outputNode.cy + 67, al.x2, geometry.ancY - 7, al.color));
+    anchorG.appendChild(mkLine(al.x1, geometry.outputNode.cy + 7.5, al.x2, geometry.ancY - 7.5, al.color));
     groups.push(anchorG);
 
     // Output node
