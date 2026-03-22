@@ -76,63 +76,63 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
       const raw = nodeData as unknown as Record<string, unknown>;
       const hasFields = fields.length > 0 && nodeData;
 
-      // Hit area
-      g.appendChild(mkEl("circle", { cx, cy, r: 40, fill: "transparent", stroke: "none" }));
+      // Hit area — rect covering ring + full content below
+      g.appendChild(mkEl("rect", {
+        x: cx - 60, y: cy - 8, width: 120, height: 80,
+        fill: "transparent", stroke: "none",
+      }));
+
+      // Ring — sits at TOP, connection point in
+      g.appendChild(mkEl("circle", { cx, cy, r: 5.5, fill: "none", stroke: color.stroke, "stroke-width": 1.3 }));
 
       if (hasFields) {
-        // 1. Name
+        // Name: below ring
         const nameEl = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
-          "font-size": 13, "font-weight": 600, fill: "#2a1e0c", x: cx, y: cy - 70,
-          "text-anchor": "middle",
+          "font-size": 13, "font-weight": 600, fill: "#2a1e0c",
+          x: cx, y: cy + 18, "text-anchor": "middle",
         });
         nameEl.textContent = name;
         g.appendChild(nameEl);
 
-        // 2. Country line (field 0 when key === "country")
+        // Field 0: country line or pill
         const field0 = fields[0];
         const val0 = field0 ? raw[field0.key] : undefined;
         if (val0 != null && String(val0) !== "") {
           if (field0.key === "country") {
             const country = String(val0);
             const dotColor = COUNTRY_COLORS[country] ?? "#9c8c74";
-            // Center text at cx, dot flush-left of text using half-width estimate
             const dotX = cx - (country.length * 3.2) - 8;
-            g.appendChild(mkEl("circle", {
-              cx: dotX, cy: cy - 58,
-              r: 3, fill: dotColor,
-            }));
+            g.appendChild(mkEl("circle", { cx: dotX, cy: cy + 31, r: 3, fill: dotColor }));
             const locEl = mkEl("text", {
               "font-family": "'Geist Mono', monospace",
               "font-size": 8, fill: "#9c8c74",
-              x: cx, y: cy - 55,
-              "text-anchor": "middle",
-              "letter-spacing": "0.03em",
+              x: cx, y: cy + 33, "text-anchor": "middle", "letter-spacing": "0.03em",
             });
             locEl.textContent = country;
             g.appendChild(locEl);
           } else {
-            // Non-country field 0 — render as pill 1
+            // Non-country field 0 — pill 1 slot
             const pillW = Math.min(Math.max(String(val0).length * 5.8 + 16, 60), 160);
             g.appendChild(mkEl("rect", {
-              x: cx - pillW / 2, y: cy - 48, width: pillW, height: 13, rx: 3,
+              x: cx - pillW / 2, y: cy + 38, width: pillW, height: 13, rx: 3,
               fill: color.stroke, "fill-opacity": 0.1,
               stroke: color.stroke, "stroke-opacity": 0.25, "stroke-width": 0.5,
             }));
             const t = mkEl("text", {
               "font-family": "'Geist Mono', monospace",
-              "font-size": 8, fill: "#6b6458", x: cx, y: cy - 38,
-              "text-anchor": "middle", "letter-spacing": "0.04em",
+              "font-size": 8, fill: "#6b6458",
+              x: cx, y: cy + 48, "text-anchor": "middle", "letter-spacing": "0.04em",
             });
             t.textContent = String(val0);
             g.appendChild(t);
           }
         }
 
-        // 3 & 4. Pill fields
+        // Fields 1 & 2 — pill slots
         const pillDefs = [
-          { rectY: cy - 48, textY: cy - 38 },
-          { rectY: cy - 31, textY: cy - 21 },
+          { rectY: cy + 38, textY: cy + 48 },
+          { rectY: cy + 54, textY: cy + 64 },
         ];
         const pillOffset = field0?.key === "country" ? 0 : 1;
 
@@ -150,25 +150,22 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
           }));
           const t = mkEl("text", {
             "font-family": "'Geist Mono', monospace",
-            "font-size": 8, fill: "#6b6458", x: cx, y: textY,
-            "text-anchor": "middle", "letter-spacing": "0.04em",
+            "font-size": 8, fill: "#6b6458",
+            x: cx, y: textY, "text-anchor": "middle", "letter-spacing": "0.04em",
           });
           t.textContent = String(val);
           g.appendChild(t);
         });
       } else {
-        // No display fields — compact layout
+        // No display fields — compact layout, name below ring
         const label = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
-          "font-size": 13, fill: "#2a1e0c", x: cx, y: cy - 14,
-          "text-anchor": "middle",
+          "font-size": 13, "font-weight": 600, fill: "#2a1e0c",
+          x: cx, y: cy + 18, "text-anchor": "middle",
         });
         label.textContent = name;
         g.appendChild(label);
       }
-
-      // 5. Ring
-      g.appendChild(mkEl("circle", { cx, cy, r: 5.5, fill: "none", stroke: color.stroke, "stroke-width": 1.3 }));
 
       // Events
       g.addEventListener("mouseenter", () => { onNodeHover(name, cx, cy); });
@@ -184,10 +181,10 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
     const groups: SVGGElement[] = [];
 
-    // Output → anchor line: start from ring bottom, stop above anchor name label
+    // Output → anchor line: departs from bottom of output node content, arrives above anchor ring
     const anchorG = mkGroup();
     const { outputToAnchorLine: al } = geometry;
-    anchorG.appendChild(mkLine(al.x1, al.y1, al.x2, geometry.ancY - 74, al.color));
+    anchorG.appendChild(mkLine(al.x1, geometry.outputNode.cy + 67, al.x2, geometry.ancY - 7, al.color));
     groups.push(anchorG);
 
     // Output node
@@ -200,9 +197,9 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
     // Layers bottom-to-top
     for (let li = geometry.layers.length - 2; li >= 0; li--) {
       const layer = geometry.layers[li];
-
-      // Edges: y1 from geometry (fromCY+7.5), y2 stops above destination name label
       const nextLayer = geometry.layers[li + 1];
+
+      // y1 = bottom of source node content (cy + 67), y2 = just above destination ring (toCY - 7)
       const edgesToNext = geometry.edges.filter(e => {
         const layerXs = layer.nodes.map(n => n.cx);
         return layerXs.some(x => Math.abs(e.x1 - x) < 1);
@@ -210,7 +207,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
       const edgeG = mkGroup();
       edgesToNext.forEach(edge => {
-        edgeG.appendChild(mkLine(edge.x1, edge.y1, edge.x2, nextLayer.cy - 74, edge.color));
+        edgeG.appendChild(mkLine(edge.x1, layer.cy + 67, edge.x2, nextLayer.cy - 7, edge.color));
       });
       groups.push(edgeG);
 
