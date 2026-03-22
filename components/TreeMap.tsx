@@ -83,7 +83,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
         // 1. Name
         const nameEl = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
-          "font-size": 13, fill: "#2a1e0c", x: cx, y: cy - 70,
+          "font-size": 13, "font-weight": 600, fill: "#2a1e0c", x: cx, y: cy - 70,
           "text-anchor": "middle",
         });
         nameEl.textContent = name;
@@ -184,10 +184,10 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
     const groups: SVGGElement[] = [];
 
-    // Output → anchor line: geometry now encodes exact ring-edge endpoints
+    // Output → anchor line: start from ring bottom, stop above anchor name label
     const anchorG = mkGroup();
     const { outputToAnchorLine: al } = geometry;
-    anchorG.appendChild(mkLine(al.x1, al.y1, al.x2, al.y2, al.color));
+    anchorG.appendChild(mkLine(al.x1, al.y1, al.x2, geometry.ancY - 72, al.color));
     groups.push(anchorG);
 
     // Output node
@@ -201,7 +201,8 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
     for (let li = geometry.layers.length - 2; li >= 0; li--) {
       const layer = geometry.layers[li];
 
-      // Edges: geometry encodes ring-edge endpoints (fromCY+7.5 → toCY-7.5)
+      // Edges: y1 from geometry (fromCY+7.5), y2 stops above destination name label
+      const nextLayer = geometry.layers[li + 1];
       const edgesToNext = geometry.edges.filter(e => {
         const layerXs = layer.nodes.map(n => n.cx);
         return layerXs.some(x => Math.abs(e.x1 - x) < 1);
@@ -209,7 +210,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
       const edgeG = mkGroup();
       edgesToNext.forEach(edge => {
-        edgeG.appendChild(mkLine(edge.x1, edge.y1, edge.x2, edge.y2, edge.color));
+        edgeG.appendChild(mkLine(edge.x1, edge.y1, edge.x2, nextLayer.cy - 72, edge.color));
       });
       groups.push(edgeG);
 
