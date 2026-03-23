@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import type { TreeGeometry, LayerGeometry } from "@/lib/treeGeometry";
-import type { NodeData } from "@/types";
+import type { NodeData, PanelContent } from "@/types";
 
 interface DisplayField { key: string; label: string; }
 interface LayerConfig { displayFields: DisplayField[]; }
@@ -13,6 +13,8 @@ interface TreeMapProps {
   onNodeHover: (key: string, svgX: number, svgY: number) => void;
   onNodeLeave: () => void;
   onNodeClick: (key: string) => void;
+  onLayerClick: (panel: PanelContent) => void;
+  layerPanels: Record<string, PanelContent>;
 }
 
 const COUNTRY_COLORS: Record<string, string> = {
@@ -24,7 +26,7 @@ const COUNTRY_COLORS: Record<string, string> = {
   "Belgium": "#7a9abc",
 };
 
-export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onNodeLeave, onNodeClick }: TreeMapProps) {
+export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onNodeLeave, onNodeClick, onLayerClick, layerPanels }: TreeMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -211,6 +213,44 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
       layer.nodes.forEach(n => {
         nodeG.appendChild(mkNodeGroup(n.cx, n.cy, n.name, layer.key, layer.color, nodes[n.name]));
       });
+
+      // Divider + label to the left of the leftmost node
+      const leftCx = layer.nodes[0].cx;
+      const cy = layer.cy;
+
+      nodeG.appendChild(mkEl("line", {
+        x1: leftCx - 40, y1: cy - 16,
+        x2: leftCx - 40, y2: cy + 16,
+        stroke: layer.color.stroke, "stroke-width": 0.5, opacity: 0.6,
+      }));
+
+      const labelG = document.createElementNS(NS, "g");
+      labelG.style.cursor = "pointer";
+
+      const labelText = mkEl("text", {
+        "font-family": "Courier New, monospace",
+        "font-size": 8, "letter-spacing": "0.14em",
+        fill: layer.color.text,
+        x: leftCx - 48, y: cy + 4,
+        "text-anchor": "end",
+      });
+      labelText.textContent = layer.label;
+      labelG.appendChild(labelText);
+
+      const underline = mkEl("line", {
+        x1: (leftCx - 48) - (layer.label.length * 5.5), y1: cy + 8,
+        x2: leftCx - 48,                                 y2: cy + 8,
+        stroke: layer.color.stroke, "stroke-width": 0.5, opacity: 0,
+      });
+      labelG.appendChild(underline);
+
+      labelG.addEventListener("mouseenter", () => underline.setAttribute("opacity", "1"));
+      labelG.addEventListener("mouseleave", () => underline.setAttribute("opacity", "0"));
+
+      const panel = layerPanels[layer.key];
+      if (panel) labelG.addEventListener("click", () => onLayerClick(panel));
+
+      nodeG.appendChild(labelG);
       groups.push(nodeG);
     }
 

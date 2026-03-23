@@ -11,7 +11,6 @@ import Spine        from "@/components/Spine";
 import TreeMap      from "@/components/TreeMap";
 import AnchorSpine  from "@/components/AnchorSpine";
 import Breadcrumb   from "@/components/Breadcrumb";
-import LayerLabels  from "@/components/LayerLabels";
 import RightPanel   from "@/components/RightPanel";
 import { buildNodePanelContent } from "@/components/RightPanel";
 import Tooltip      from "@/components/Tooltip";
@@ -391,13 +390,6 @@ export default function Home() {
         onNodeHover={handleNodeHover}
         onNodeLeave={handleNodeLeave}
         onNodeClick={handleNodeClick}
-      />
-
-      {/* Layer labels */}
-      <LayerLabels
-        layers={layers}
-        visible={appState > 0 && layers.length > 0}
-        viewportHeight={typeof window !== "undefined" ? window.innerHeight : 900}
         onLayerClick={openPanel}
         layerPanels={getLayerPanels(appState)}
       />
