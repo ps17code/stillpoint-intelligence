@@ -42,7 +42,7 @@ function anchorTopPx(): number {
   //   = H/2 - (181 - 25 - 11) = H/2 - 145.
   // After shift of (H/2 - 10): cubeCY = H/2 - 145 + H/2 - 10 = H - 155.
   // anchorTop = cubeCY - (label14 + margin8 + halfShape11) = cubeCY - 33 = H - 188.
-  return window.innerHeight * 0.75 - 10 - 51 - 33;
+  return window.innerHeight * 0.82 - 10 - 51 - 33;
 }
 
 export default function Home() {
@@ -324,7 +324,7 @@ export default function Home() {
   ];
 
   return (
-    <main style={{ width: "100%", height: "100%", background: "var(--bg)", overflow: "hidden", paddingTop: appState > 0 ? "168px" : "0" }}>
+    <main style={{ width: "100%", height: "100%", background: "var(--bg)", overflow: "hidden", paddingTop: appState > 0 ? "180px" : "0" }}>
 
       {/* Grain */}
       <div className="grain" />
@@ -370,11 +370,13 @@ export default function Home() {
           }}>
             <div style={{
               fontFamily: "'Geist Mono', monospace",
-              fontSize: "9px",
-              letterSpacing: "0.16em",
+              fontSize: "11px",
+              fontWeight: "600",
+              letterSpacing: "0.18em",
               textTransform: "uppercase",
               color: "#9c8c74",
               marginBottom: "8px",
+              textAlign: "center",
             }}>
               {currentPageTitle}
             </div>
@@ -384,6 +386,7 @@ export default function Home() {
               color: "#6b6458",
               fontStyle: "italic",
               lineHeight: 1.7,
+              textAlign: "center",
             }}>
               {currentThesis}
             </div>
