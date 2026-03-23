@@ -14,6 +14,7 @@ export interface EdgeGeometry {
   x1: number; y1: number;
   x2: number; y2: number;
   color: string;
+  fromLayer: number;  // index into layers[] — which layer this edge departs from
 }
 
 export interface TreeGeometry {
@@ -46,11 +47,13 @@ function buildEdges(
   toXs: number[], toCY: number,
   color: string,
   mapping: [number, number][],
+  fromLayerIdx: number,
 ): EdgeGeometry[] {
   return mapping.map(([fi, ti]) => ({
     x1: fromXs[fi], y1: fromCY + EDGE_Y1_OFFSET,
     x2: toXs[ti],   y2: toCY   - EDGE_Y2_OFFSET,
     color,
+    fromLayer: fromLayerIdx,
   }));
 }
 
@@ -125,12 +128,13 @@ export function buildRawGeometry(
   ];
 
   const edges: EdgeGeometry[] = [
-    ...buildEdges(depXs, depCY, minXs, minCY, PALETTES.deposits.stroke, chain.depToMin),
-    ...buildEdges(minXs, minCY, refXs, refCY, PALETTES.miners.stroke, chain.minToRef),
+    ...buildEdges(depXs, depCY, minXs, minCY, PALETTES.deposits.stroke, chain.depToMin, 0),
+    ...buildEdges(minXs, minCY, refXs, refCY, PALETTES.miners.stroke, chain.minToRef, 1),
     ...refXs.map(rx => ({
       x1: rx,   y1: refCY + EDGE_Y1_OFFSET,
       x2: ancX, y2: supCY - EDGE_Y2_OFFSET,
       color: PALETTES.refiners.stroke,
+      fromLayer: 2,
     })),
   ];
 
@@ -142,6 +146,7 @@ export function buildRawGeometry(
       x1: ancX, y1: supCY + EDGE_Y1_OFFSET,
       x2: ancX, y2: ancY  - EDGE_Y2_OFFSET,
       color: PALETTES.supply.stroke,
+      fromLayer: -1,
     },
     ancY,
   };
@@ -187,11 +192,12 @@ export function buildCompGeometry(
   ];
 
   const edges: EdgeGeometry[] = [
-    ...buildEdges(preXs, preCY, drawXs, drawCY, PALETTES.preform.stroke, chain.preToDrawing),
+    ...buildEdges(preXs, preCY, drawXs, drawCY, PALETTES.preform.stroke, chain.preToDrawing, 0),
     ...drawXs.map(dx => ({
       x1: dx,   y1: drawCY + EDGE_Y1_OFFSET,
       x2: ancX, y2: outCY  - EDGE_Y2_OFFSET,
       color: PALETTES.drawing.stroke,
+      fromLayer: 1,
     })),
   ];
 
@@ -202,6 +208,7 @@ export function buildCompGeometry(
       x1: ancX, y1: outCY + EDGE_Y1_OFFSET,
       x2: ancX, y2: ancY  - EDGE_Y2_OFFSET,
       color: PALETTES.compOut.stroke,
+      fromLayer: -1,
     },
     ancY,
   };
@@ -245,11 +252,12 @@ export function buildSubGeometry(
   ];
 
   const edges: EdgeGeometry[] = [
-    ...buildEdges(assXs, assCY, typeXs, typeCY, PALETTES.assembly.stroke, chain.assToType),
+    ...buildEdges(assXs, assCY, typeXs, typeCY, PALETTES.assembly.stroke, chain.assToType, 0),
     ...typeXs.map(tx => ({
       x1: tx,   y1: typeCY + EDGE_Y1_OFFSET,
       x2: ancX, y2: outCY  - EDGE_Y2_OFFSET,
       color: PALETTES.cableType.stroke,
+      fromLayer: 1,
     })),
   ];
 
@@ -260,6 +268,7 @@ export function buildSubGeometry(
       x1: ancX, y1: outCY + EDGE_Y1_OFFSET,
       x2: ancX, y2: ancY  - EDGE_Y2_OFFSET,
       color: PALETTES.subOut.stroke,
+      fromLayer: -1,
     },
     ancY,
   };
@@ -303,11 +312,12 @@ export function buildEUGeometry(
   ];
 
   const edges: EdgeGeometry[] = [
-    ...buildEdges(intXs, intCY, hypXs, hypCY, PALETTES.integration.stroke, chain.intToHyper),
+    ...buildEdges(intXs, intCY, hypXs, hypCY, PALETTES.integration.stroke, chain.intToHyper, 0),
     ...hypXs.map(hx => ({
       x1: hx,   y1: hypCY + EDGE_Y1_OFFSET,
       x2: ancX, y2: outCY  - EDGE_Y2_OFFSET,
       color: PALETTES.hyperscale.stroke,
+      fromLayer: 1,
     })),
   ];
 
@@ -318,6 +328,7 @@ export function buildEUGeometry(
       x1: ancX, y1: outCY + EDGE_Y1_OFFSET,
       x2: ancX, y2: ancY  - EDGE_Y2_OFFSET,
       color: PALETTES.euOut.stroke,
+      fromLayer: -1,
     },
     ancY,
   };

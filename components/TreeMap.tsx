@@ -199,11 +199,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
       const layer = geometry.layers[li];
       const nextLayer = geometry.layers[li + 1];
 
-      // y1 = bottom of source node content (cy + 67), y2 = just above destination ring (toCY - 7)
-      const edgesToNext = geometry.edges.filter(e => {
-        const layerXs = layer.nodes.map(n => n.cx);
-        return layerXs.some(x => Math.abs(e.x1 - x) < 1);
-      });
+      const edgesToNext = geometry.edges.filter(e => e.fromLayer === li);
 
       const edgeG = mkGroup();
       edgesToNext.forEach(edge => {
