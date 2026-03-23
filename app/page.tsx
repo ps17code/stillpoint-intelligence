@@ -36,13 +36,10 @@ const CHAINS  = chainsRaw as any;
 // when the spine is .shifted. We derive this from window.innerHeight.
 function anchorTopPx(): number {
   if (typeof window === "undefined") return 0;
-  // Spine shifts by translateY(calc(50vh - 10px)).
-  // Full 4-node group height ≈ 4*(label25 + shape22) + 3*(margin14+line30+margin14) = 362px.
-  // Cube center in default layout = H/2 - (groupHeight/2 - labelH - shapeHalf)
-  //   = H/2 - (181 - 25 - 11) = H/2 - 145.
-  // After shift of (H/2 - 10): cubeCY = H/2 - 145 + H/2 - 10 = H - 155.
-  // anchorTop = cubeCY - (label14 + margin8 + halfShape11) = cubeCY - 33 = H - 188.
-  return window.innerHeight * 0.82 - 10 - 51 - 33;
+  const headerHeight = 188;         // 68px spine + 120px thesis block
+  const treeHeight   = 4 * 180;    // 4 layers * 180px gap = 720px
+  const anchorPx     = headerHeight + treeHeight + 60;  // 60px bottom padding
+  return Math.min(anchorPx, window.innerHeight * 0.95);
 }
 
 export default function Home() {
@@ -73,7 +70,7 @@ export default function Home() {
     const onResize = () => setAnchorTop(anchorTopPx());
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-  }, []);
+  }, [appState]);
 
   // ── Spine dropdown options ────────────────────────────────────────
   const spineOptions = {
