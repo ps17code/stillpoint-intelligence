@@ -1,6 +1,7 @@
 {
   "rawIntro": {
     "context": "Germanium · Raw Material · Supply chain overview",
+    "thesis": "Germanium is never mined directly — it is captured as a trace byproduct of coal combustion and zinc smelting, with ~83% of global refined supply concentrated in Chinese-controlled operations.",
     "title": "The invisible chokepoint",
     "sub": "~230 t/yr global supply · $1.4B market · no substitute",
     "sections": [
@@ -50,6 +51,7 @@
   },
   "compIntro": {
     "context": "Germanium · Component · GeO₂ → Optical Fiber",
+    "thesis": "Germanium dioxide and tetrachloride are the chemical bridge between raw extraction and optical fiber — produced almost exclusively in China before flowing to Japanese and western preform manufacturers.",
     "title": "Where germanium becomes glass",
     "sub": "GeO₂/GeCl₄ → preform → fiber strand · Ge locked permanently",
     "sections": [
@@ -99,6 +101,7 @@
   },
   "subIntro": {
     "context": "Germanium · Subsystem · Fiber Optics → Cable",
+    "thesis": "Every fiber optic cable begins as germanium-doped glass. The subsystem layer maps who assembles that glass into the cables connecting the world's AI infrastructure.",
     "title": "From strand to deployable cable",
     "sub": "Assembly · 3 cable types · one deployable product",
     "sections": [
@@ -148,6 +151,7 @@
   },
   "euIntro": {
     "context": "Germanium · End Use · AI Datacenter",
+    "thesis": "AI datacenters are the terminal node of the germanium supply chain — every GPU-to-GPU fiber connection began as germanium dioxide in a Chinese coal seam or zinc mine.",
     "title": "Where the chain ends",
     "sub": "Integration · Hyperscale operators · AI Datacenter",
     "sections": [

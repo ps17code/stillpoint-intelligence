@@ -265,6 +265,12 @@ export default function Home() {
     });
   }
 
+  const currentThesis =
+    appState === 1 ? PANELS.rawIntro?.thesis :
+    appState === 2 ? PANELS.compIntro?.thesis :
+    appState === 3 ? PANELS.subIntro?.thesis :
+    appState === 4 ? PANELS.euIntro?.thesis : null;
+
   // ── Layer panel lookup ────────────────────────────────────────────
   function getLayerPanels(state: AppState): Record<string, PanelContent> {
     if (state === 1) return PANELS.layers || {};
@@ -312,7 +318,7 @@ export default function Home() {
   ];
 
   return (
-    <main style={{ width: "100%", height: "100%", background: "var(--bg)", overflow: "hidden", paddingTop: appState > 0 ? "68px" : "0" }}>
+    <main style={{ width: "100%", height: "100%", background: "var(--bg)", overflow: "hidden", paddingTop: appState > 0 ? "120px" : "0" }}>
 
       {/* Grain */}
       <div className="grain" />
@@ -332,6 +338,31 @@ export default function Home() {
           }}
           onHome={backToSpine}
         />
+      )}
+
+      {/* Thesis bar — sits just below horizontal spine */}
+      {appState > 0 && currentThesis && (
+        <div style={{
+          position: "fixed",
+          top: 68, left: 0, right: 0,
+          padding: "12px 48px",
+          borderBottom: "0.5px solid rgba(192,176,128,0.15)",
+          background: "#f2ede3",
+          zIndex: 40,
+        }}>
+          <div style={{
+            fontFamily: "'EB Garamond', Georgia, serif",
+            fontSize: "13px",
+            color: "#6b6458",
+            fontStyle: "italic",
+            lineHeight: 1.65,
+            maxWidth: 720,
+            borderLeft: "2px solid rgba(200,168,90,0.4)",
+            paddingLeft: "14px",
+          }}>
+            {currentThesis}
+          </div>
+        </div>
       )}
 
       {/* Top breadcrumb */}

@@ -27,6 +27,7 @@ export interface PanelSection {
 
 export interface PanelContent {
   context: string;
+  thesis?: string;
   title: string;
   sub: string;
   sections: PanelSection[];
