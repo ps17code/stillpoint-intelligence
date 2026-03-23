@@ -31,7 +31,7 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
   const [hoveredNode, setHoveredNode] = useState<SpineKey | null>(null);
 
   const transform =
-    state === "shifted" ? "translateY(200vh)" :
+    state === "shifted" ? "translateY(calc(50vh - 10px))" :
     state === "gone"    ? "translateY(200vh)" : "none";
 
   // Which nodes are active (have a selection upstream)
@@ -43,8 +43,8 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
     return false;
   };
 
-  // Which nodes are hidden when shifted (subsystem + end use slide off)
-  const isHiddenWhenShifted = (key: SpineKey) => key === "sub" || key === "eu";
+  // Which nodes are hidden when shifted — only cube (raw) stays visible
+  const isHiddenWhenShifted = (key: SpineKey) => key !== "raw";
 
   const getLabel = (key: SpineKey) => {
     const sel = selection[key];
