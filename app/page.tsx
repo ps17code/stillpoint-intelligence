@@ -347,7 +347,7 @@ export default function Home() {
       {appState > 0 && currentThesis && (
         <div style={{
           position: "fixed",
-          top: 68,
+          top: 76,
           left: 0,
           right: 0,
           padding: "16px 48px",
