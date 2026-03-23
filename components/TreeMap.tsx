@@ -183,17 +183,72 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
     const groups: SVGGElement[] = [];
 
+    // Shared helper: appends divider line + clickable label to any layer group
+    function addDividerAndLabel(
+      g: SVGGElement,
+      leftNodeCX: number, leftNodeName: string,
+      cy: number,
+      layerKey: string, layerLabel: string,
+      layerColor: { stroke: string; text: string },
+      panel: PanelContent | undefined,
+    ) {
+      const configKey = toConfigKey(layerKey);
+      const fields = layerConfig?.[configKey]?.displayFields ?? [];
+      const leftNodeData = nodes[leftNodeName] as unknown as Record<string, unknown>;
+      const pillTexts = fields.map(f => leftNodeData?.[f.key] ? String(leftNodeData[f.key]) : "").filter(Boolean);
+      const allTexts = [leftNodeName, ...pillTexts];
+      const maxTextWidth = Math.max(...allTexts.map(t => t.length * 5.8));
+      const nodeLeftEdge = leftNodeCX - maxTextWidth / 2 - 8;
+      const dividerX = nodeLeftEdge - 36;
+      const labelX2 = nodeLeftEdge - 54;
+
+      console.log('[TreeMap] divider layer:', layerKey, '| leftNodeCX:', leftNodeCX, '| nodeLeftEdge:', nodeLeftEdge, '| dividerX:', dividerX);
+
+      g.appendChild(mkEl("line", {
+        x1: dividerX, y1: cy - 6,
+        x2: dividerX, y2: cy + 70,
+        stroke: layerColor.stroke, "stroke-width": 0.5, opacity: 0.6,
+      }));
+
+      const labelG = document.createElementNS(NS, "g");
+      labelG.style.cursor = "pointer";
+
+      const labelText = mkEl("text", {
+        "font-family": "Courier New, monospace",
+        "font-size": 11, "font-weight": 600, "letter-spacing": "0.12em",
+        fill: "#2a1e0c",
+        x: labelX2, y: cy + 30,
+        "text-anchor": "end",
+      });
+      labelText.textContent = layerLabel;
+      labelG.appendChild(labelText);
+
+      const underline = mkEl("line", {
+        x1: labelX2 - (layerLabel.length * 7), y1: cy + 34,
+        x2: labelX2,                            y2: cy + 34,
+        stroke: layerColor.stroke, "stroke-width": 0.5, opacity: 0,
+      });
+      labelG.appendChild(underline);
+
+      labelG.addEventListener("mouseenter", () => underline.setAttribute("opacity", "1"));
+      labelG.addEventListener("mouseleave", () => underline.setAttribute("opacity", "0"));
+      if (panel) labelG.addEventListener("click", () => onLayerClick(panel));
+
+      g.appendChild(labelG);
+    }
+
     // Output → anchor line: departs from bottom of output node content, arrives above anchor ring
     const anchorG = mkGroup();
     const { outputToAnchorLine: al } = geometry;
     anchorG.appendChild(mkLine(al.x1, al.y1, al.x2, al.y2, al.color));
     groups.push(anchorG);
 
-    // Output node
+    // Output node (last layer)
     const outG = mkGroup();
     const { outputNode: out } = geometry;
     const outLayer = geometry.layers[geometry.layers.length - 1];
     outG.appendChild(mkNodeGroup(out.cx, out.cy, out.name, outLayer.key, outLayer.color, nodes[out.name]));
+    addDividerAndLabel(outG, out.cx, out.name, out.cy, outLayer.key, outLayer.label, outLayer.color, layerPanels[outLayer.key]);
     groups.push(outG);
 
     // Layers bottom-to-top
@@ -214,53 +269,10 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
         nodeG.appendChild(mkNodeGroup(n.cx, n.cy, n.name, layer.key, layer.color, nodes[n.name]));
       });
 
-      // Divider + label to the left of the leftmost node
       const leftNodeCX = Math.min(...layer.nodes.map(n => n.cx));
       const leftNodeName = layer.nodes.reduce((a, b) => a.cx < b.cx ? a : b).name;
-      const cy = layer.cy;
-      const configKey = toConfigKey(layer.key);
-      const fields = layerConfig?.[configKey]?.displayFields ?? [];
-      const leftNodeData = nodes[leftNodeName] as unknown as Record<string, unknown>;
-      const pillTexts = fields.map(f => leftNodeData?.[f.key] ? String(leftNodeData[f.key]) : "").filter(Boolean);
-      const allTexts = [leftNodeName, ...pillTexts];
-      const maxTextWidth = Math.max(...allTexts.map(t => t.length * 5.8));
-      const nodeLeftEdge = leftNodeCX - maxTextWidth / 2 - 8;
-      const dividerX = nodeLeftEdge - 36;
-      const labelX2 = nodeLeftEdge - 44;
+      addDividerAndLabel(nodeG, leftNodeCX, leftNodeName, layer.cy, layer.key, layer.label, layer.color, layerPanels[layer.key]);
 
-      nodeG.appendChild(mkEl("line", {
-        x1: dividerX, y1: cy - 6,
-        x2: dividerX, y2: cy + 70,
-        stroke: layer.color.stroke, "stroke-width": 0.5, opacity: 0.6,
-      }));
-
-      const labelG = document.createElementNS(NS, "g");
-      labelG.style.cursor = "pointer";
-
-      const labelText = mkEl("text", {
-        "font-family": "Courier New, monospace",
-        "font-size": 11, "font-weight": 600, "letter-spacing": "0.12em",
-        fill: "#2a1e0c",
-        x: labelX2, y: cy + 4,
-        "text-anchor": "end",
-      });
-      labelText.textContent = layer.label;
-      labelG.appendChild(labelText);
-
-      const underline = mkEl("line", {
-        x1: labelX2 - (layer.label.length * 7), y1: cy + 8,
-        x2: labelX2,                             y2: cy + 8,
-        stroke: layer.color.stroke, "stroke-width": 0.5, opacity: 0,
-      });
-      labelG.appendChild(underline);
-
-      labelG.addEventListener("mouseenter", () => underline.setAttribute("opacity", "1"));
-      labelG.addEventListener("mouseleave", () => underline.setAttribute("opacity", "0"));
-
-      const panel = layerPanels[layer.key];
-      if (panel) labelG.addEventListener("click", () => onLayerClick(panel));
-
-      nodeG.appendChild(labelG);
       groups.push(nodeG);
     }
 
