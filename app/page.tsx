@@ -271,6 +271,12 @@ export default function Home() {
     appState === 3 ? PANELS.subIntro?.thesis :
     appState === 4 ? PANELS.euIntro?.thesis : null;
 
+  const currentPageTitle =
+    appState === 1 ? `${sel.raw  || "Germanium"}     · Raw Material Layer` :
+    appState === 2 ? `${sel.comp || "GeO₂ / GeCl₄"} · Component Layer` :
+    appState === 3 ? `${sel.sub  || "Fiber Optics"}  · Subsystem Layer` :
+    appState === 4 ? `${sel.eu   || "AI Datacenter"} · End Use Layer` : "";
+
   // ── Layer panel lookup ────────────────────────────────────────────
   function getLayerPanels(state: AppState): Record<string, PanelContent> {
     if (state === 1) return PANELS.layers || {};
@@ -318,7 +324,7 @@ export default function Home() {
   ];
 
   return (
-    <main style={{ width: "100%", height: "100%", background: "var(--bg)", overflow: "hidden", paddingTop: appState > 0 ? "120px" : "0" }}>
+    <main style={{ width: "100%", height: "100%", background: "var(--bg)", overflow: "hidden", paddingTop: appState > 0 ? "168px" : "0" }}>
 
       {/* Grain */}
       <div className="grain" />
@@ -344,23 +350,43 @@ export default function Home() {
       {appState > 0 && currentThesis && (
         <div style={{
           position: "fixed",
-          top: 68, left: 0, right: 0,
-          padding: "12px 48px",
-          borderBottom: "0.5px solid rgba(192,176,128,0.15)",
+          top: 68,
+          left: 0,
+          right: 0,
+          padding: "16px 48px",
+          borderBottom: "0.5px solid rgba(192,176,128,0.2)",
           background: "#f2ede3",
           zIndex: 40,
+          display: "flex",
+          justifyContent: "center",
         }}>
           <div style={{
-            fontFamily: "'EB Garamond', Georgia, serif",
-            fontSize: "13px",
-            color: "#6b6458",
-            fontStyle: "italic",
-            lineHeight: 1.65,
-            maxWidth: 720,
-            borderLeft: "2px solid rgba(200,168,90,0.4)",
-            paddingLeft: "14px",
+            background: "white",
+            border: "0.5px solid rgba(192,176,128,0.3)",
+            borderRadius: "8px",
+            padding: "16px 28px",
+            maxWidth: "780px",
+            width: "100%",
           }}>
-            {currentThesis}
+            <div style={{
+              fontFamily: "'Geist Mono', monospace",
+              fontSize: "9px",
+              letterSpacing: "0.16em",
+              textTransform: "uppercase",
+              color: "#9c8c74",
+              marginBottom: "8px",
+            }}>
+              {currentPageTitle}
+            </div>
+            <div style={{
+              fontFamily: "'EB Garamond', Georgia, serif",
+              fontSize: "14px",
+              color: "#6b6458",
+              fontStyle: "italic",
+              lineHeight: 1.7,
+            }}>
+              {currentThesis}
+            </div>
           </div>
         </div>
       )}
