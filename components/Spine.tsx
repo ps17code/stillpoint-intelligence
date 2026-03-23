@@ -31,8 +31,8 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
   const [hoveredNode, setHoveredNode] = useState<SpineKey | null>(null);
 
   const transform =
-    state === "shifted" ? "translateY(calc(50vh - 10px))" :
-    state === "gone"    ? "translateY(-200vh)" : "none";
+    state === "shifted" ? "translateY(200vh)" :
+    state === "gone"    ? "translateY(200vh)" : "none";
 
   // Which nodes are active (have a selection upstream)
   const isActive = (key: SpineKey) => {

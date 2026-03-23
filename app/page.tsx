@@ -265,13 +265,6 @@ export default function Home() {
     });
   }
 
-  function handleHorizontalNodeClick(level: "raw" | "comp" | "sub" | "eu") {
-    if (level === "raw"  && appState !== 1) backToRaw();
-    if (level === "comp" && appState !== 2) goToComp();
-    if (level === "sub"  && appState !== 3) goToSub();
-    if (level === "eu"   && appState !== 4) goToEU();
-  }
-
   // ── Layer panel lookup ────────────────────────────────────────────
   function getLayerPanels(state: AppState): Record<string, PanelContent> {
     if (state === 1) return PANELS.layers || {};
@@ -319,19 +312,24 @@ export default function Home() {
   ];
 
   return (
-    <main style={{ width: "100%", height: "100%", background: "var(--bg)", overflow: "hidden" }}>
+    <main style={{ width: "100%", height: "100%", background: "var(--bg)", overflow: "hidden", paddingTop: appState > 0 ? "68px" : "0" }}>
 
       {/* Grain */}
       <div className="grain" />
 
-      {/* Horizontal spine — visible on tree pages (appState >= 1) */}
-      {appState >= 1 && (
+      {/* Horizontal spine — visible on tree pages */}
+      {appState > 0 && (
         <HorizontalSpine
           selection={sel}
           activeState={appState}
           options={spineOptions}
           onSelect={handleSelect}
-          onNodeClick={handleHorizontalNodeClick}
+          onNodeClick={(level) => {
+            if (level === "raw"  && sel.raw)  goToRaw();
+            if (level === "comp" && sel.comp) goToComp();
+            if (level === "sub"  && sel.sub)  goToSub();
+            if (level === "eu"   && sel.eu)   goToEU();
+          }}
           onHome={backToSpine}
         />
       )}
