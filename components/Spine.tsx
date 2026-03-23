@@ -31,7 +31,7 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
   const [hoveredNode, setHoveredNode] = useState<SpineKey | null>(null);
 
   const transform =
-    state === "shifted" ? "translateY(calc(10vh + 435px))" :
+    state === "shifted" ? "translateY(calc(10vh + 415px))" :
     state === "gone"    ? "translateY(200vh)" : "none";
 
   // Which nodes are active (have a selection upstream)
@@ -91,6 +91,12 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
           const opts = options[key];
           const showMenu = hoveredNode === key && active && opts.length > 0;
 
+          // In shifted state, the raw node visually shows the comp node (next level)
+          const displayShifted = state === "shifted" && key === "raw";
+          const DisplayShape = displayShifted ? SphereShape : Shape;
+          const displayLabel = displayShifted ? getLabel("comp") : getLabel(key);
+          const displayDormant = displayShifted ? !isActive("comp") : dormant;
+
           return (
             <div key={key} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               {/* Spine line above (not before first) */}
@@ -119,13 +125,13 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
                 {/* Label */}
                 <div style={{
                   fontSize: 14,
-                  color: dormant ? "var(--dormant)" : "var(--ink2)",
+                  color: displayDormant ? "var(--dormant)" : "var(--ink2)",
                   marginBottom: 8,
                   textAlign: "center",
                   whiteSpace: "nowrap",
                   transition: "color 0.3s",
                 }}>
-                  {getLabel(key)}
+                  {displayLabel}
                 </div>
 
                 {/* Shape */}
@@ -135,8 +141,8 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
                     width: 28, height: 22,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     position: "relative",
-                    cursor: dormant ? "default" : "pointer",
-                    opacity: dormant ? 0.25 : 1,
+                    cursor: displayDormant ? "default" : "pointer",
+                    opacity: displayDormant ? 0.25 : 1,
                     transition: "opacity 0.3s",
                   }}
                   onClick={() => {
@@ -147,7 +153,7 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
                     if (key === "eu"   && selection.eu)   onCylinderClick();
                   }}
                 >
-                  <Shape />
+                  <DisplayShape />
 
                   {/* Dropdown menu */}
                   {showMenu && (
