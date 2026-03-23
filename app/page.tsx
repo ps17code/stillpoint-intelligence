@@ -136,21 +136,25 @@ export default function Home() {
     const ancX = toSVG(cxPx, window.innerWidth);
     const ancY = toSVG(cyPx, window.innerHeight);
 
+    // Stop the output→anchor line just above the node label.
+    // Layout: shape half (11px) + marginBottom (8px) + label height ~17px + padding 8px = 44px above cube center.
+    const lineStopY = toSVG(cyPx - 44, window.innerHeight);
+
     let geo: TreeGeometry | null = null;
     let panelContent: PanelContent | null = null;
 
     if (level === 1 && sel.raw) {
       const chain = CHAINS.RAW_DATA[sel.raw];
-      if (chain) { geo = buildRawGeometry(chain, ancX, ancY); panelContent = PANELS.rawIntro; }
+      if (chain) { geo = buildRawGeometry(chain, ancX, ancY, 360, 150, lineStopY); panelContent = PANELS.rawIntro; }
     } else if (level === 2 && sel.comp) {
       const chain = CHAINS.COMP_DATA[sel.comp];
-      if (chain) { geo = buildCompGeometry(chain, ancX, ancY); panelContent = PANELS.compIntro; }
+      if (chain) { geo = buildCompGeometry(chain, ancX, ancY, 370, 150, lineStopY); panelContent = PANELS.compIntro; }
     } else if (level === 3 && sel.sub) {
       const chain = CHAINS.SUB_DATA[sel.sub];
-      if (chain) { geo = buildSubGeometry(chain, ancX, ancY); panelContent = PANELS.subIntro; }
+      if (chain) { geo = buildSubGeometry(chain, ancX, ancY, 380, 150, lineStopY); panelContent = PANELS.subIntro; }
     } else if (level === 4 && sel.eu) {
       const chain = CHAINS.EU_DATA[sel.eu];
-      if (chain) { geo = buildEUGeometry(chain, ancX, ancY); panelContent = PANELS.euIntro; }
+      if (chain) { geo = buildEUGeometry(chain, ancX, ancY, 380, 150, lineStopY); panelContent = PANELS.euIntro; }
     }
 
     if (geo) {
