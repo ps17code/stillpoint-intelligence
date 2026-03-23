@@ -225,12 +225,12 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
       const allTexts = [leftNodeName, ...pillTexts];
       const maxTextWidth = Math.max(...allTexts.map(t => t.length * 5.8));
       const nodeLeftEdge = leftNodeCX - maxTextWidth / 2 - 8;
-      const dividerX = nodeLeftEdge - 16;
-      const labelX2 = nodeLeftEdge - 24;
+      const dividerX = nodeLeftEdge - 36;
+      const labelX2 = nodeLeftEdge - 44;
 
       nodeG.appendChild(mkEl("line", {
-        x1: dividerX, y1: cy - 16,
-        x2: dividerX, y2: cy + 16,
+        x1: dividerX, y1: cy - 6,
+        x2: dividerX, y2: cy + 70,
         stroke: layer.color.stroke, "stroke-width": 0.5, opacity: 0.6,
       }));
 
