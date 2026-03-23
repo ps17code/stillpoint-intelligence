@@ -215,12 +215,22 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
       });
 
       // Divider + label to the left of the leftmost node
-      const leftCx = layer.nodes[0].cx;
+      const leftNodeCX = Math.min(...layer.nodes.map(n => n.cx));
+      const leftNodeName = layer.nodes.reduce((a, b) => a.cx < b.cx ? a : b).name;
       const cy = layer.cy;
+      const configKey = toConfigKey(layer.key);
+      const fields = layerConfig?.[configKey]?.displayFields ?? [];
+      const leftNodeData = nodes[leftNodeName] as unknown as Record<string, unknown>;
+      const pillTexts = fields.map(f => leftNodeData?.[f.key] ? String(leftNodeData[f.key]) : "").filter(Boolean);
+      const allTexts = [leftNodeName, ...pillTexts];
+      const maxTextWidth = Math.max(...allTexts.map(t => t.length * 5.8));
+      const nodeLeftEdge = leftNodeCX - maxTextWidth / 2 - 8;
+      const dividerX = nodeLeftEdge - 16;
+      const labelX2 = nodeLeftEdge - 24;
 
       nodeG.appendChild(mkEl("line", {
-        x1: leftCx - 40, y1: cy - 16,
-        x2: leftCx - 40, y2: cy + 16,
+        x1: dividerX, y1: cy - 16,
+        x2: dividerX, y2: cy + 16,
         stroke: layer.color.stroke, "stroke-width": 0.5, opacity: 0.6,
       }));
 
@@ -229,17 +239,17 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
       const labelText = mkEl("text", {
         "font-family": "Courier New, monospace",
-        "font-size": 8, "letter-spacing": "0.14em",
-        fill: layer.color.text,
-        x: leftCx - 48, y: cy + 4,
+        "font-size": 11, "font-weight": 600, "letter-spacing": "0.12em",
+        fill: "#2a1e0c",
+        x: labelX2, y: cy + 4,
         "text-anchor": "end",
       });
       labelText.textContent = layer.label;
       labelG.appendChild(labelText);
 
       const underline = mkEl("line", {
-        x1: (leftCx - 48) - (layer.label.length * 5.5), y1: cy + 8,
-        x2: leftCx - 48,                                 y2: cy + 8,
+        x1: labelX2 - (layer.label.length * 7), y1: cy + 8,
+        x2: labelX2,                             y2: cy + 8,
         stroke: layer.color.stroke, "stroke-width": 0.5, opacity: 0,
       });
       labelG.appendChild(underline);
