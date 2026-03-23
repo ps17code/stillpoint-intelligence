@@ -88,14 +88,16 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
           const active = isActive(key);
           const dormant = !active;
           const hidden = state === "shifted" && isHiddenWhenShifted(key);
-          const opts = options[key];
-          const showMenu = hoveredNode === key && active && opts.length > 0;
 
           // In shifted state, the raw node visually shows the comp node (next level)
           const displayShifted = state === "shifted" && key === "raw";
+          const displayKey: SpineKey = displayShifted ? "comp" : key;
           const DisplayShape = displayShifted ? SphereShape : Shape;
-          const displayLabel = displayShifted ? getLabel("comp") : getLabel(key);
-          const displayDormant = displayShifted ? !isActive("comp") : dormant;
+          const displayLabel = getLabel(displayKey);
+          const displayActive = isActive(displayKey);
+          const displayDormant = !displayActive;
+          const displayOpts = options[displayKey];
+          const showMenu = hoveredNode === key && displayActive && displayOpts.length > 0;
 
           return (
             <div key={key} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -119,7 +121,7 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
                   transition: "opacity 0.3s",
                   pointerEvents: hidden ? "none" : "all",
                 }}
-                onMouseEnter={() => { if (active) setHoveredNode(key); }}
+                onMouseEnter={() => { if (displayActive) setHoveredNode(key); }}
                 onMouseLeave={() => setHoveredNode(null)}
               >
                 {/* Label */}
@@ -146,11 +148,11 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
                     transition: "opacity 0.3s",
                   }}
                   onClick={() => {
-                    if (dormant) return;
-                    if (key === "raw"  && selection.raw)  onCubeClick();
-                    if (key === "comp" && selection.comp) onSphereClick();
-                    if (key === "sub"  && selection.sub)  onPyramidClick();
-                    if (key === "eu"   && selection.eu)   onCylinderClick();
+                    if (displayDormant) return;
+                    if (displayKey === "raw"  && selection.raw)  onCubeClick();
+                    if (displayKey === "comp" && selection.comp) onSphereClick();
+                    if (displayKey === "sub"  && selection.sub)  onPyramidClick();
+                    if (displayKey === "eu"   && selection.eu)   onCylinderClick();
                   }}
                 >
                   <DisplayShape />
@@ -164,13 +166,13 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
                     }}>
                       <div style={{ width: 28, height: 1, background: "var(--gold)", opacity: 0.7 }} />
                       <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingLeft: 14 }}>
-                        {opts.map(opt => (
+                        {displayOpts.map(opt => (
                           <div
                             key={opt}
                             style={{
                               fontFamily: "'EB Garamond', Georgia, serif",
                               fontSize: 12,
-                              color: selection[key] === opt ? "var(--ink)" : "var(--ink3)",
+                              color: selection[displayKey] === opt ? "var(--ink)" : "var(--ink3)",
                               cursor: "pointer",
                               whiteSpace: "nowrap",
                               letterSpacing: "0.04em",
@@ -179,11 +181,11 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
                             onMouseDown={e => {
                               e.preventDefault();
                               e.stopPropagation();
-                              onSelect(key, opt);
+                              onSelect(displayKey, opt);
                               setHoveredNode(null);
                             }}
                             onMouseEnter={e => (e.currentTarget.style.color = "var(--ink)")}
-                            onMouseLeave={e => (e.currentTarget.style.color = selection[key] === opt ? "var(--ink)" : "var(--ink3)")}
+                            onMouseLeave={e => (e.currentTarget.style.color = selection[displayKey] === opt ? "var(--ink)" : "var(--ink3)")}
                           >
                             {opt}
                           </div>
