@@ -10,8 +10,9 @@ import chainsRaw   from "@/data/chains.json";
 import Spine        from "@/components/Spine";
 import TreeMap      from "@/components/TreeMap";
 import AnchorSpine  from "@/components/AnchorSpine";
-import Breadcrumb   from "@/components/Breadcrumb";
-import RightPanel   from "@/components/RightPanel";
+import Breadcrumb        from "@/components/Breadcrumb";
+import HorizontalSpine   from "@/components/HorizontalSpine";
+import RightPanel        from "@/components/RightPanel";
 import { buildNodePanelContent } from "@/components/RightPanel";
 import Tooltip      from "@/components/Tooltip";
 
@@ -264,6 +265,13 @@ export default function Home() {
     });
   }
 
+  function handleHorizontalNodeClick(level: "raw" | "comp" | "sub" | "eu") {
+    if (level === "raw"  && appState !== 1) backToRaw();
+    if (level === "comp" && appState !== 2) goToComp();
+    if (level === "sub"  && appState !== 3) goToSub();
+    if (level === "eu"   && appState !== 4) goToEU();
+  }
+
   // ── Layer panel lookup ────────────────────────────────────────────
   function getLayerPanels(state: AppState): Record<string, PanelContent> {
     if (state === 1) return PANELS.layers || {};
@@ -316,22 +324,16 @@ export default function Home() {
       {/* Grain */}
       <div className="grain" />
 
-      {/* Home button */}
-      {appState > 0 && (
-        <button
-          onClick={backToSpine}
-          style={{
-            position: "fixed", top: 28, left: 28,
-            fontFamily: "'Geist Mono', monospace", fontSize: 9,
-            letterSpacing: "0.2em", color: "var(--gold2)",
-            textTransform: "uppercase", cursor: "pointer",
-            border: "none", background: "none", zIndex: 300,
-          }}
-          onMouseEnter={e => (e.currentTarget.style.color = "var(--ink)")}
-          onMouseLeave={e => (e.currentTarget.style.color = "var(--gold2)")}
-        >
-          ← home
-        </button>
+      {/* Horizontal spine — visible on tree pages (appState >= 1) */}
+      {appState >= 1 && (
+        <HorizontalSpine
+          selection={sel}
+          activeState={appState}
+          options={spineOptions}
+          onSelect={handleSelect}
+          onNodeClick={handleHorizontalNodeClick}
+          onHome={backToSpine}
+        />
       )}
 
       {/* Top breadcrumb */}
