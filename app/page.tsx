@@ -469,11 +469,12 @@ export default function Home() {
       {appState > 0 && mapTitle && (
         <div style={{
           position: "absolute",
-          top: topAnchor - 44,
+          top: topAnchor - 45,
           left: 0,
           right: 0,
           display: "flex",
           justifyContent: "center",
+          transform: "translateY(-50%)",
           pointerEvents: "none",
           zIndex: 6,
         }}>
