@@ -32,15 +32,12 @@ const NODES   = nodesRaw  as unknown as Record<string, NodeData>;
 const PANELS  = panelsRaw as any;
 const CHAINS  = chainsRaw as any;
 
-// ── ANCHOR SPINE TOP POSITION ─────────────────────────────────────
-// Uses fixed header height + thesis block height, not thesis bottom edge.
-// Works correctly even after scrolling.
-function anchorTopPx(thesisEl: HTMLElement | null): number {
-  if (typeof window === "undefined") return 600;
-  const spineHeight = 68;
-  const thesisHeight = thesisEl ? thesisEl.getBoundingClientRect().height : 110;
-  const headerTotal = spineHeight + thesisHeight + 40;
-  return headerTotal + 900;
+// ── TOP ANCHOR: document Y where tree top should appear ───────────
+// = thesis block bottom + 40px breathing room (viewport-relative at scroll=0)
+function topAnchorPx(thesisEl: HTMLElement | null): number {
+  if (typeof window === "undefined") return 220;
+  const thesisBottom = thesisEl ? thesisEl.getBoundingClientRect().bottom : 188;
+  return thesisBottom + 40;
 }
 
 export default function Home() {
@@ -76,11 +73,11 @@ export default function Home() {
   // ── Thesis ref (for anchor measurement) ──────────────────────────
   const thesisRef = useRef<HTMLDivElement>(null);
 
-  // ── Anchor spine top positions ────────────────────────────────────
-  const [anchorTop, setAnchorTop] = useState(0);
+  // ── Top anchor: viewport Y of tree top ───────────────────────────
+  const [topAnchor, setTopAnchor] = useState(220);
   useEffect(() => {
-    const timer = setTimeout(() => setAnchorTop(anchorTopPx(thesisRef.current)), 100);
-    const onResize = () => setAnchorTop(anchorTopPx(thesisRef.current));
+    const timer = setTimeout(() => setTopAnchor(topAnchorPx(thesisRef.current)), 100);
+    const onResize = () => setTopAnchor(topAnchorPx(thesisRef.current));
     window.addEventListener("resize", onResize);
     return () => { clearTimeout(timer); window.removeEventListener("resize", onResize); };
   }, [appState]);
@@ -131,45 +128,32 @@ export default function Home() {
     openPanel(buildNodePanelContent(tipKey, node));
   }
 
-  // ── Build tree geometry from anchor position ───────────────────────
-  function buildGeometryFromAnchorEl(elId: string, level: AppState) {
-    const el = document.getElementById(elId);
-    if (!el) return;
-
-    // Find the first .an-shape child to measure the shape center
-    const shape = el.querySelector("[data-shape]") as HTMLElement | null;
-    const target = shape || el;
-    const rect = target.getBoundingClientRect();
-    const cxPx = rect.left + rect.width  / 2;
-    const cyPx = rect.top  + rect.height / 2;
-
+  // ── Build tree geometry (top-down from topAnchor) ──────────────────
+  function buildGeometryFromAnchorEl(_elId: string, level: AppState) {
     // Compute SVG viewBox width for wide chains
     const rawChain = level === 1 && sel.raw ? CHAINS.RAW_DATA[sel.raw] : null;
     const newSvgWidth = rawChain ? computeRawSvgWidth(rawChain) : 1000;
     setSvgWidth(newSvgWidth);
 
-    // ancX = center of viewBox; ancY = viewport pixel → SVG coordinate
+    // ancX = center of viewBox; topY = SVG Y of tree top (just below thesis block)
     const ancX = newSvgWidth / 2;
-    const ancY = toSVG(cyPx, window.innerHeight);
-
-    // Stop the output→anchor line just above the node label.
-    const lineStopY = toSVG(cyPx - 44, window.innerHeight);
+    const topY = toSVG(topAnchor, window.innerHeight);
 
     let geo: TreeGeometry | null = null;
     let panelContent: PanelContent | null = null;
 
     if (level === 1 && sel.raw) {
       const chain = CHAINS.RAW_DATA[sel.raw];
-      if (chain) { geo = buildRawGeometry(chain, ancX, ancY, 480, 150, lineStopY); panelContent = PANELS.rawIntro; }
+      if (chain) { geo = buildRawGeometry(chain, ancX, topY); panelContent = PANELS.rawIntro; }
     } else if (level === 2 && sel.comp) {
       const chain = CHAINS.COMP_DATA[sel.comp];
-      if (chain) { geo = buildCompGeometry(chain, ancX, ancY, 370, 150, lineStopY); panelContent = PANELS.compIntro; }
+      if (chain) { geo = buildCompGeometry(chain, ancX, topY); panelContent = PANELS.compIntro; }
     } else if (level === 3 && sel.sub) {
       const chain = CHAINS.SUB_DATA[sel.sub];
-      if (chain) { geo = buildSubGeometry(chain, ancX, ancY, 380, 150, lineStopY); panelContent = PANELS.subIntro; }
+      if (chain) { geo = buildSubGeometry(chain, ancX, topY); panelContent = PANELS.subIntro; }
     } else if (level === 4 && sel.eu) {
       const chain = CHAINS.EU_DATA[sel.eu];
-      if (chain) { geo = buildEUGeometry(chain, ancX, ancY, 380, 150, lineStopY); panelContent = PANELS.euIntro; }
+      if (chain) { geo = buildEUGeometry(chain, ancX, topY); panelContent = PANELS.euIntro; }
     }
 
     if (geo) {
@@ -317,7 +301,7 @@ export default function Home() {
 
   // ── Anchor spine configs ──────────────────────────────────────────
   // comp-spine: visible in states 2+
-  const compSpineTop = anchorTop;
+  const compSpineTop = topAnchor;
   const compSpineNodes = [
     { label: sel.comp || "GeO₂ / GeCl₄", shape: "sphere" as const,
       onClick: appState === 2 ? undefined : backToComp },
@@ -338,8 +322,8 @@ export default function Home() {
     { label: sel.eu || "AI Datacenter", shape: "cylinder" as const },
   ];
 
-  // Total page height = anchor position + padding below anchor + insights section
-  const treeDocBottom = anchorTop + 200;
+  // Total page height: tree top + 5-layer tree height (900px) + insights + padding
+  const treeDocBottom = topAnchor + 900 + 80;
   const totalPageHeight = appState > 0 ? treeDocBottom + 800 : 0;
 
   return (
@@ -448,7 +432,7 @@ export default function Home() {
       {appState >= 3 && (
         <AnchorSpine
           id="sub-spine"
-          topPx={anchorTop}
+          topPx={topAnchor}
           visible={appState === 3}
           nodes={subSpineNodes}
           anchorId="sub-anchor-shape"
@@ -459,7 +443,7 @@ export default function Home() {
       {appState >= 4 && (
         <AnchorSpine
           id="eu-spine"
-          topPx={anchorTop}
+          topPx={topAnchor}
           visible={appState === 4}
           nodes={euSpineNodes}
           anchorId="eu-anchor-shape"
@@ -485,7 +469,7 @@ export default function Home() {
           {/* Insights section — absolutely positioned below tree, solid bg covers fixed SVG */}
           <div style={{
             position: "absolute",
-            top: anchorTop + 200,
+            top: topAnchor + 200,
             left: 0,
             right: 0,
             zIndex: 10,

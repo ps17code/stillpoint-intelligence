@@ -1,6 +1,6 @@
 // Generic tree geometry engine.
-// Takes any chain definition + anchor position → returns node/edge positions.
-// This replaces the four hardcoded buildRawTree / buildCompTree / etc. functions.
+// Takes any chain definition + topY anchor → returns node/edge positions.
+// Tree grows DOWNWARD from topY: first layer at topY, last layer at topY + gap*(n-1).
 
 export interface LayerGeometry {
   key: string;
@@ -21,8 +21,6 @@ export interface TreeGeometry {
   layers: LayerGeometry[];
   edges: EdgeGeometry[];
   outputNode: { name: string; cx: number; cy: number };
-  outputToAnchorLine: EdgeGeometry;
-  ancY: number;
 }
 
 // Spread n nodes evenly across [center-half+pad, center+half-pad]
@@ -77,7 +75,7 @@ export function toSVG(px: number, total: number): number {
   return (px / total) * 1000;
 }
 
-// Edge endpoints: depart below bottom pill (cy+79), arrive above destination ring (cy-7)
+// Edge endpoints: depart below bottom pill of source node, arrive just above ring of destination
 const EDGE_Y1_OFFSET =  79; // below lowest pill
 const EDGE_Y2_OFFSET =   7; // above ring top
 
@@ -124,18 +122,18 @@ import type { RawChain } from "@/types";
 
 export function buildRawGeometry(
   chain: RawChain,
-  ancX: number, ancY: number,
-  half = 480, gap = 150, lineY2?: number
+  ancX: number, topY: number,
+  half = 480, gap = 180,
 ): TreeGeometry {
   // 5-layer layout when supplyNodes are present, else legacy 4-layer
   const hasSupplyNodes = chain.supplyNodes && chain.supplyNodes.length > 0;
 
   if (hasSupplyNodes) {
-    const supCY     = ancY - gap;
-    const supNodeCY = ancY - gap * 2;
-    const refCY     = ancY - gap * 3;
-    const minCY     = ancY - gap * 4;
-    const depCY     = ancY - gap * 5;
+    const depCY     = topY;
+    const minCY     = topY + gap;
+    const refCY     = topY + gap * 2;
+    const supNodeCY = topY + gap * 3;
+    const supCY     = topY + gap * 4;
 
     // deposits: split China vs non-China, or centered spread if no split defined
     const depSplit = chain.groupSplit?.deposits;
@@ -211,21 +209,14 @@ export function buildRawGeometry(
       layers,
       edges,
       outputNode: { name: chain.supply, cx: ancX, cy: supCY },
-      outputToAnchorLine: {
-        x1: ancX, y1: supCY + EDGE_Y1_OFFSET,
-        x2: ancX, y2: lineY2 ?? (ancY - EDGE_Y2_OFFSET),
-        color: PALETTES.supply.stroke,
-        fromLayer: -1,
-      },
-      ancY,
     };
   }
 
   // ── Legacy 4-layer path (no supplyNodes) ──────────────────────────
-  const supCY = ancY - gap;
-  const refCY = ancY - gap * 2;
-  const minCY = ancY - gap * 3;
-  const depCY = ancY - gap * 4;
+  const depCY = topY;
+  const minCY = topY + gap;
+  const refCY = topY + gap * 2;
+  const supCY = topY + gap * 3;
 
   const depXs = contentAwareSpread(chain.deposits.length, ancX);
   const minXs = contentAwareSpread(chain.miners.length,   ancX);
@@ -278,13 +269,6 @@ export function buildRawGeometry(
     layers,
     edges,
     outputNode: { name: chain.supply, cx: ancX, cy: supCY },
-    outputToAnchorLine: {
-      x1: ancX, y1: supCY + EDGE_Y1_OFFSET,
-      x2: ancX, y2: lineY2 ?? (ancY - EDGE_Y2_OFFSET),
-      color: PALETTES.supply.stroke,
-      fromLayer: -1,
-    },
-    ancY,
   };
 }
 
@@ -293,12 +277,12 @@ import type { CompChain } from "@/types";
 
 export function buildCompGeometry(
   chain: CompChain,
-  ancX: number, ancY: number,
-  half = 370, gap = 150, lineY2?: number
+  ancX: number, topY: number,
+  half = 370, gap = 170,
 ): TreeGeometry {
-  const outCY  = ancY - gap;
-  const drawCY = ancY - gap * 2;
-  const preCY  = ancY - gap * 3;
+  const preCY  = topY;
+  const drawCY = topY + gap;
+  const outCY  = topY + gap * 2;
 
   const preXs  = contentAwareSpread(chain.preform.length,  ancX);
   const drawXs = contentAwareSpread(chain.drawing.length,  ancX);
@@ -340,13 +324,6 @@ export function buildCompGeometry(
   return {
     layers, edges,
     outputNode: { name: chain.output, cx: ancX, cy: outCY },
-    outputToAnchorLine: {
-      x1: ancX, y1: outCY + EDGE_Y1_OFFSET,
-      x2: ancX, y2: lineY2 ?? (ancY - EDGE_Y2_OFFSET),
-      color: PALETTES.compOut.stroke,
-      fromLayer: -1,
-    },
-    ancY,
   };
 }
 
@@ -355,12 +332,12 @@ import type { SubChain } from "@/types";
 
 export function buildSubGeometry(
   chain: SubChain,
-  ancX: number, ancY: number,
-  half = 380, gap = 150, lineY2?: number
+  ancX: number, topY: number,
+  half = 380, gap = 170,
 ): TreeGeometry {
-  const outCY  = ancY - gap;
-  const typeCY = ancY - gap * 2;
-  const assCY  = ancY - gap * 3;
+  const assCY  = topY;
+  const typeCY = topY + gap;
+  const outCY  = topY + gap * 2;
 
   const assXs  = contentAwareSpread(chain.assembly.length, ancX);
   const typeXs = contentAwareSpread(chain.cableType.length, ancX);
@@ -400,13 +377,6 @@ export function buildSubGeometry(
   return {
     layers, edges,
     outputNode: { name: chain.output, cx: ancX, cy: outCY },
-    outputToAnchorLine: {
-      x1: ancX, y1: outCY + EDGE_Y1_OFFSET,
-      x2: ancX, y2: lineY2 ?? (ancY - EDGE_Y2_OFFSET),
-      color: PALETTES.subOut.stroke,
-      fromLayer: -1,
-    },
-    ancY,
   };
 }
 
@@ -415,12 +385,12 @@ import type { EUChain } from "@/types";
 
 export function buildEUGeometry(
   chain: EUChain,
-  ancX: number, ancY: number,
-  half = 380, gap = 150, lineY2?: number
+  ancX: number, topY: number,
+  half = 380, gap = 170,
 ): TreeGeometry {
-  const outCY = ancY - gap;
-  const hypCY = ancY - gap * 2;
-  const intCY = ancY - gap * 3;
+  const intCY = topY;
+  const hypCY = topY + gap;
+  const outCY = topY + gap * 2;
 
   const intXs = contentAwareSpread(chain.integration.length, ancX);
   const hypXs = contentAwareSpread(chain.hyperscale.length,  ancX);
@@ -460,12 +430,5 @@ export function buildEUGeometry(
   return {
     layers, edges,
     outputNode: { name: chain.output, cx: ancX, cy: outCY },
-    outputToAnchorLine: {
-      x1: ancX, y1: outCY + EDGE_Y1_OFFSET,
-      x2: ancX, y2: lineY2 ?? (ancY - EDGE_Y2_OFFSET),
-      color: PALETTES.euOut.stroke,
-      fromLayer: -1,
-    },
-    ancY,
   };
 }

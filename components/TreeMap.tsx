@@ -293,13 +293,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       g.appendChild(labelG);
     }
 
-    // Output → anchor line: departs from bottom of output node content, arrives above anchor ring
-    const anchorG = mkGroup();
-    const { outputToAnchorLine: al } = geometry;
-    anchorG.appendChild(mkLine(al.x1, al.y1, al.x2, al.y2, al.color));
-    groups.push(anchorG);
-
-    // Output node (last layer)
+    // Output node (last layer — bottom of tree)
     const outG = mkGroup();
     const { outputNode: out } = geometry;
     const outLayer = geometry.layers[geometry.layers.length - 1];
@@ -307,7 +301,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
     addDividerAndLabel(outG, out.cx, out.name, out.cy, outLayer.key, outLayer.label, outLayer.color, layerPanels[outLayer.key]);
     groups.push(outG);
 
-    // Layers bottom-to-top
+    // Layers: render from bottom up so upper layers paint on top
     for (let li = geometry.layers.length - 2; li >= 0; li--) {
       const layer = geometry.layers[li];
       const nextLayer = geometry.layers[li + 1];
