@@ -105,59 +105,94 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
         fill: "transparent", stroke: "none",
       }));
 
-      // Ring — sits at TOP, connection point in
-      g.appendChild(mkEl("circle", { cx, cy, r: 5.5, fill: "none", stroke: color.stroke, "stroke-width": 1.3 }));
+      // Ring — larger for Global Supply output node
+      if (name === "Global Supply") {
+        g.appendChild(mkEl("circle", { cx, cy, r: 7, fill: "none", stroke: color.stroke, "stroke-width": 1.8 }));
+      } else {
+        g.appendChild(mkEl("circle", { cx, cy, r: 5.5, fill: "none", stroke: color.stroke, "stroke-width": 1.3 }));
+      }
 
-      if (hasFields) {
-        // Name: below ring
+      if (name === "Global Supply") {
+        // Special typographic output format — no pills, plain stat text
         const nameEl = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
-          "font-size": 13, "font-weight": 600, fill: "#2a1e0c",
-          x: cx, y: cy + 24, "text-anchor": "middle",
+          "font-size": 15, "font-weight": 600, fill: "#2a1e0c",
+          x: cx, y: cy + 22, "text-anchor": "middle",
         });
         nameEl.textContent = name;
         g.appendChild(nameEl);
 
-        // Field 0: country line or pill
+        const rawStats = (nodeData as unknown as { stats?: [string, string][] })?.stats ?? [];
+        const stat1 = rawStats[0]?.[1];
+        const stat2 = rawStats[1]?.[1];
+        if (stat1) {
+          const t1 = mkEl("text", {
+            "font-family": "'EB Garamond', Georgia, serif",
+            "font-size": 13, fill: "#2a1e0c",
+            x: cx, y: cy + 40, "text-anchor": "middle",
+          });
+          t1.textContent = stat1;
+          g.appendChild(t1);
+        }
+        if (stat2) {
+          const t2 = mkEl("text", {
+            "font-family": "'Geist Mono', monospace",
+            "font-size": 11, fill: "#9c8c74",
+            x: cx, y: cy + 56, "text-anchor": "middle",
+          });
+          t2.textContent = stat2;
+          g.appendChild(t2);
+        }
+      } else if (hasFields) {
         const field0 = fields[0];
         const val0 = field0 ? raw[field0.key] : undefined;
-        if (val0 != null && String(val0) !== "") {
-          if (field0.key === "country") {
-            const country = String(val0);
-            const dotColor = COUNTRY_COLORS[country] ?? "#9c8c74";
-            const dotX = cx - (country.length * 3.2) - 8;
-            g.appendChild(mkEl("circle", { cx: dotX, cy: cy + 35, r: 3, fill: dotColor }));
-            const locEl = mkEl("text", {
-              "font-family": "'Geist Mono', monospace",
-              "font-size": 8, fill: "#9c8c74",
-              x: cx, y: cy + 39, "text-anchor": "middle", "letter-spacing": "0.03em",
-            });
-            locEl.textContent = country;
-            g.appendChild(locEl);
-          } else {
-            // Non-country field 0 — pill 1 slot
-            const pillW = Math.min(Math.max(String(val0).length * 5.8 + 16, 60), 160);
-            g.appendChild(mkEl("rect", {
-              x: cx - pillW / 2, y: cy + 46, width: pillW, height: 13, rx: 3,
-              fill: color.stroke, "fill-opacity": 0.1,
-              stroke: color.stroke, "stroke-opacity": 0.25, "stroke-width": 0.5,
-            }));
-            const t = mkEl("text", {
-              "font-family": "'Geist Mono', monospace",
-              "font-size": 8, fill: "#6b6458",
-              x: cx, y: cy + 56, "text-anchor": "middle", "letter-spacing": "0.04em",
-            });
-            t.textContent = String(val0);
-            g.appendChild(t);
-          }
+        const hasCountry = field0?.key === "country" && val0 != null && String(val0) !== "";
+        const noCountry  = field0?.key === "country" && (val0 == null || String(val0) === "");
+
+        // Name: shift up slightly when no country line is shown
+        const nameEl = mkEl("text", {
+          "font-family": "'EB Garamond', Georgia, serif",
+          "font-size": 13, "font-weight": 600, fill: "#2a1e0c",
+          x: cx, y: noCountry ? cy + 20 : cy + 24, "text-anchor": "middle",
+        });
+        nameEl.textContent = name;
+        g.appendChild(nameEl);
+
+        // Field 0: country dot+text, or non-country pill
+        if (hasCountry) {
+          const country = String(val0);
+          const dotColor = COUNTRY_COLORS[country] ?? "#9c8c74";
+          const dotX = cx - (country.length * 3.2) - 8;
+          g.appendChild(mkEl("circle", { cx: dotX, cy: cy + 35, r: 3, fill: dotColor }));
+          const locEl = mkEl("text", {
+            "font-family": "'Geist Mono', monospace",
+            "font-size": 8, fill: "#9c8c74",
+            x: cx, y: cy + 39, "text-anchor": "middle", "letter-spacing": "0.03em",
+          });
+          locEl.textContent = country;
+          g.appendChild(locEl);
+        } else if (!noCountry && val0 != null && String(val0) !== "") {
+          // Non-country field 0 — pill at slot 0
+          const pillW = Math.min(Math.max(String(val0).length * 5.8 + 16, 60), 160);
+          g.appendChild(mkEl("rect", {
+            x: cx - pillW / 2, y: cy + 46, width: pillW, height: 13, rx: 3,
+            fill: color.stroke, "fill-opacity": 0.1,
+            stroke: color.stroke, "stroke-opacity": 0.25, "stroke-width": 0.5,
+          }));
+          const t = mkEl("text", {
+            "font-family": "'Geist Mono', monospace",
+            "font-size": 8, fill: "#6b6458",
+            x: cx, y: cy + 56, "text-anchor": "middle", "letter-spacing": "0.04em",
+          });
+          t.textContent = String(val0);
+          g.appendChild(t);
         }
 
-        // Fields 1 & 2 — pill slots
-        const pillDefs = [
-          { rectY: cy + 46, textY: cy + 56 },
-          { rectY: cy + 62, textY: cy + 72 },
-        ];
-        const pillOffset = field0?.key === "country" ? 0 : 1;
+        // Pills shifted up when no country line is present
+        const pillDefs = noCountry
+          ? [{ rectY: cy + 30, textY: cy + 40 }, { rectY: cy + 46, textY: cy + 56 }]
+          : [{ rectY: cy + 46, textY: cy + 56 }, { rectY: cy + 62, textY: cy + 72 }];
+        const pillOffset = (hasCountry || noCountry) ? 0 : 1;
 
         fields.slice(1, 3).forEach((field, idx) => {
           const val = raw[field.key];
