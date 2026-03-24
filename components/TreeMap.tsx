@@ -284,7 +284,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       const layerFields = layerConfig?.[layerConfigKey]?.displayFields ?? [];
       // First field is country (shown as dot+text, not a pill), rest are pills
       const numPills = Math.max(0, layerFields.length - 1);
-      const departY = layer.cy + (numPills >= 2 ? 79 : numPills === 1 ? 51 : 38);
+      const departY = layer.cy + (numPills >= 2 ? 83 : numPills === 1 ? 55 : 42);
 
       const edgeG = mkGroup();
       edgesToNext.forEach(edge => {
