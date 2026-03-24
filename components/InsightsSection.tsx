@@ -160,10 +160,13 @@ export default function InsightsSection({ top }: InsightsSectionProps) {
       top,
       left: 0,
       right: 0,
-      padding: "48px 64px",
+      padding: "48px 48px",
       background: "#f2ede3",
       zIndex: 10,
+      display: "flex",
+      justifyContent: "center",
     }}>
+    <div style={{ maxWidth: 780, width: "100%" }}>
 
       {/* SECTION 1 — KEY INSIGHTS */}
       <SectionDivider label="Key Insights" first />
@@ -327,6 +330,7 @@ export default function InsightsSection({ top }: InsightsSectionProps) {
         ))}
       </div>
 
+    </div>
     </div>
   );
 }
