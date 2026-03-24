@@ -35,7 +35,7 @@ export function evenSpread(n: number, center: number, half: number, pad = 0): nu
 // At typical viewport (1440×900), 1 SVG unit ≈ 0.86–0.9px, so 175 ≈ 150–157px per slot.
 // Pills are capped at 160 SVG units wide — 175-unit slots give ~15 units breathing room.
 const SLOT = 175;
-const GROUP_GAP = 100; // SVG units gap between China and non-China groups
+const GROUP_GAP = 60; // SVG units gap between China and non-China groups
 
 // Simple fixed-slot spread centered at centerX
 export function contentAwareSpread(count: number, centerX: number): number[] {
