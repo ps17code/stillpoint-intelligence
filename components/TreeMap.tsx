@@ -311,8 +311,11 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       // Edge departure Y depends on how many pills the layer's nodes show
       const layerConfigKey = toConfigKey(layer.key);
       const layerFields = layerConfig?.[layerConfigKey]?.displayFields ?? [];
-      // First field is country (shown as dot+text, not a pill), rest are pills
-      const numPills = Math.max(0, layerFields.length - 1);
+      // Only subtract 1 when field0 is "country" (shown as dot+text, not a pill)
+      const hasCountryField = layerFields[0]?.key === "country";
+      const numPills = hasCountryField
+        ? Math.max(0, layerFields.length - 1)
+        : layerFields.length;
       const departY = layer.cy + (numPills >= 2 ? 83 : numPills === 1 ? 55 : 42);
 
       const edgeG = mkGroup();
