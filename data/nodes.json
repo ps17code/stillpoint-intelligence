@@ -513,11 +513,13 @@
     "stat": "~25-30% global fiber · largest western Ge consumer",
     "fiberOutput": "~300-400M km/yr capacity",
     "geConsumption": "~25-30 t Ge/yr est.",
+    "annualRevenue": "$1.65B optical Q3 2025",
+    "primaryMarket": "AI datacenters · hyperscale",
     "ownership": "Listed · GLW · NYSE",
     "risk": "AI demand backlog — multi-year order book.",
-    "role": "Corning is the world's largest western fiber optic manufacturer and the single largest western consumer of GeCl₄. Receives ultrapure GeCl₄ from Umicore, deposits it into silica preforms via OVD process, and draws into single-mode fiber. In August 2024 Corning signed a multi-year agreement reserving 10% of its global fiber output for a single AI datacenter operator. Q1 2025 optical-communications revenue rose 46% YoY to $1.36B. Manufacturing scrap from Corning's fiber production is Umicore's primary recycled germanium feed — creating a closed-loop tolling relationship.",
+    "role": "Corning's cable division assembles the world's highest-density fiber optic cables for AI datacenters. Enterprise (datacenter) sales grew 58% YoY in Q3 2025. Meta's $6B agreement reserves a significant portion of Corning's global output. Corning's Springboard plan targets 30% CAGR for its enterprise division through AI network growth. Designs include 1,728+ fiber count cables for GPU cluster interconnect.",
     "inv": "GLW is the most liquid western proxy for AI infrastructure fiber demand. Multi-year datacenter backlogs give rare earnings visibility.",
-    "stats": [["Ticker","GLW · NYSE"],["Fiber share","~25-30% global"],["Q1 2025","$1.36B optical (+46% YoY)"],["Ge role","Largest western GeCl₄ consumer"]],
+    "stats": [["Ticker","GLW · NYSE"],["Q3 2025 optical","$1.65B (+33% YoY)"],["Enterprise growth","58% YoY Q3 2025"],["Key deal","Meta $6B AI datacenter"]],
     "risks": ["GeO₂/GeCl₄ supply constraint limits capacity","Significant China revenue exposure (~$1B+ annually)","Overcapacity risk if datacenter buildout slows"]
   },
   "Prysmian": {
@@ -527,11 +529,13 @@
     "stat": ">18% global fiber · 30M+ km/yr · 27 plants",
     "fiberOutput": ">30M km/yr cable output",
     "geConsumption": "~15-20 t Ge/yr est.",
+    "annualRevenue": ">$5B cable revenue",
+    "primaryMarket": "Telecom · submarine · FTTH",
     "ownership": "Listed · PRY · Borsa Italiana",
     "risk": "European supply chain exposure. High datacenter exposure.",
-    "role": "Prysmian is the world's largest fiber optic cable company by volume, producing over 30 million kilometers of optical cable annually across 27 production plants worldwide. Major GeCl₄ consumer for single-mode fiber core doping. Expanding capacity but constrained by the 18-24 month preform expansion lead time.",
+    "role": "Prysmian is the world's largest cable manufacturer, producing over 30M km/yr across 27 plants in telecom, datacenter, and submarine segments. Largest global market share in fiber cable at >18%. Expanding capacity to meet AI datacenter demand but constrained by 18-24 month preform lead time.",
     "inv": "PRY offers terrestrial and subsea exposure. Subsea demand is driven by AI hyperscalers building private subsea networks.",
-    "stats": [["Ticker","PRY · Borsa Italiana"],["Cable output",">30M km/yr"],["Plants","27 globally"],["Ge role","Major GeCl₄ consumer"]],
+    "stats": [["Ticker","PRY · Borsa Italiana"],["Cable output",">30M km/yr"],["Market share",">18% global fiber cable"],["Focus","AI datacenters + submarine"]],
     "risks": ["More exposed to European telecom capex cycles","Italian listing reduces liquidity for US investors","Currency risk (EUR-denominated)"]
   },
   "Fujikura": {
@@ -541,11 +545,13 @@
     "stat": "~8-10% global share · major APAC supplier",
     "fiberOutput": "~10-15M km/yr est.",
     "geConsumption": "~7-10 t Ge/yr est.",
+    "annualRevenue": "~$600M cable est.",
+    "primaryMarket": "APAC telecom · enterprise",
     "ownership": "Listed · 5803 · TSE",
     "risk": "Japanese supply chain — limited western direct investment.",
-    "role": "Fujikura is one of Japan's largest fiber optic manufacturers supplying primarily the Asia-Pacific market. Parent company of OFS Fitel (US operations). Uses VAD process for preform manufacturing — one of the most germanium-efficient deposition methods.",
+    "role": "Fujikura assembles fiber optic cables primarily for the Asia-Pacific market through its direct operations and via OFS Fitel in the US. Produces specialty cables for datacenter, telecom, and utility applications. Key supplier to Japanese and Southeast Asian telecom operators.",
     "inv": "TSE-listed with limited western investor access. Asian AI datacenter buildout is a regional demand driver.",
-    "stats": [["Ticker","5803 · TSE"],["Fiber output","~10-15M km/yr est."],["Region","APAC primary"],["US ops","OFS Fitel subsidiary"]],
+    "stats": [["Ticker","5803 · TSE"],["Region","APAC primary"],["US ops","OFS Fitel"],["Specialty","Datacenter + telecom cable"]],
     "risks": ["TSE listing limits western access","Yen depreciation impacts USD returns","More telecom-weighted than datacenter-weighted"]
   },
   "Sumitomo Electric": {
@@ -555,11 +561,13 @@
     "stat": "Top 3 global · next-gen fiber leader",
     "fiberOutput": "~10-15M km/yr est.",
     "geConsumption": "~7-10 t Ge/yr est.",
+    "annualRevenue": "~$800M cable est.",
+    "primaryMarket": "Next-gen fiber · global",
     "ownership": "Listed · 5802 · TSE",
     "risk": "Diversified across wiring harnesses — fiber is one segment.",
-    "role": "Sumitomo Electric is one of the world's top three fiber manufacturers and the leading developer of next-generation multi-core and ultra-low-loss fiber. In January 2025 achieved a world-record 1.02 Pbit/s transmission over 1,808km using 19-core fiber. Next-gen fiber types require more precise germanium concentration control, potentially increasing per-km germanium consumption.",
+    "role": "Sumitomo Electric produces fiber optic cables for telecom, datacenter, and specialty applications globally. Pioneer in next-generation multi-core and ultra-low-loss fiber cable designs. Set world record 1.02 Pbit/s transmission Jan 2025 using 19-core fiber — next-gen cable types requiring higher germanium precision.",
     "inv": "Unique dual exposure: AI fiber demand and EV wiring demand.",
-    "stats": [["Ticker","5802 · TSE"],["Rank","Top 3 global"],["Record","1.02 Pbit/s · Jan 2025"],["Ge note","Higher Ge precision for next-gen fiber"]],
+    "stats": [["Ticker","5802 · TSE"],["Specialty","Multi-core + ULL cable"],["Record","1.02 Pbit/s Jan 2025"],["Market","Global top 3"]],
     "risks": ["Fiber is a minority of revenue","Auto wiring harness slowdown could weigh on valuation","TSE listing limits western access"]
   },
   "Shin-Etsu": {
@@ -999,298 +1007,120 @@
   },
   "Fiber Optic Cable": {
     "type": "Subsystem output",
+    "country": "",
     "loc": "Global",
-    "stat": "All types unified · feeds AI Datacenter + subsea networks",
-    "risk": "Commodity convergence — value captured upstream.",
-    "stats": [
-      [
-        "Total installed",
-        "~1.3M km subsea + terrestrial"
-      ],
-      [
-        "Datacenter",
-        "Billions of km short-reach"
-      ],
-      [
-        "Growth rate",
-        "AI driving unprecedented surge"
-      ],
-      [
-        "Ge locked in",
-        "Permanently"
-      ]
-    ],
-    "role": "Fiber Optic Cable is the unified output of the subsystem layer. At this point germanium is irreversibly embedded in the glass core. The cable is the physical medium through which AI infrastructure is connected.",
-    "inv": "The cable itself is a commodity. Invest in manufacturers with highest datacenter/subsea mix (Corning, Prysmian) or at the hyperscale operator level (Microsoft, Google, Amazon, Meta).",
-    "risks": [
-      "Commodity pricing at cable level",
-      "Hyperscaler in-sourcing risk",
-      "Overcapacity risk if manufacturing scales faster than deployment"
-    ]
+    "stat": "~500M cable-km/yr · AI gap 2.6× by 2026",
+    "totalDeployed": "~500M cable-km/yr current",
+    "aiGap": "~1.3B km needed by 2026",
+    "risk": "Supply cannot 2.6× before 2027. Ge dependency in every meter.",
+    "role": "Global fiber optic cable output is currently ~500 million cable-km per year across all types — datacenter, terrestrial, and submarine. AI datacenter demand alone is projected to require ~1.3 billion fiber-km by 2026, representing a 2.6x increase over current total capacity. The gap cannot be closed before late 2027 due to the 18-24 month preform expansion lag. Fiber prices have surged 500%+ since January 2025 as the market reprices the structural shortage. The germanium dependency runs through every meter of this cable — each km of single-mode fiber contains trace germanium in its core, and the entire global supply chain depends on ~220 tonnes of refined germanium per year.",
+    "inv": "The cable itself is a commodity. Invest in manufacturers with highest datacenter/subsea mix (Corning, Prysmian) or at the hyperscale operator level.",
+    "stats": [["Current output","~500M cable-km/yr"],["AI demand 2026","~1.3B cable-km needed"],["Supply gap","Cannot close before 2027"],["Ge dependency","Every km contains Ge-doped core"]],
+    "risks": ["Supply cannot triple without proportional GeCl₄ increase","Chinese export controls directly constrain capacity expansion","Demand pull-forward could exhaust western GeCl₄ stocks"]
   },
   "Datacenter Cable": {
-    "fiberCount": "96 to 6,912",
-    "keyBuyers": "AWS, Google, Microsoft, Meta",
     "type": "Cable specification",
+    "country": "",
     "loc": "Global",
-    "stat": "High fiber count · ribbon format · no armoring",
-    "risk": "Commoditization risk as manufacturing scales.",
-    "stats": [
-      [
-        "Fiber count",
-        "96 to 6,912 fibers"
-      ],
-      [
-        "Format",
-        "Ribbon or loose-tube"
-      ],
-      [
-        "Length",
-        "Meters to a few km"
-      ],
-      [
-        "Key buyers",
-        "AWS, Google, Microsoft, Meta"
-      ]
-    ],
-    "role": "Datacenter trunk cable is optimized for extremely high fiber density in short distances. Ribbon format cables allow 6,912 fibers in a cable the diameter of a garden hose. The fastest-growing cable segment driven by AI datacenter buildout.",
+    "stat": "96 to 6,912 fibers/cable · AI demand +500% 2025–2026",
+    "fiberCount": "96 to 6,912 fibers/cable",
+    "keyOperators": "AWS · Google · Microsoft · Meta",
+    "risk": "Prices surged 500%+ in 2025–2026 on AI demand.",
+    "role": "Datacenter fiber optic cable connects GPU clusters, spine-leaf switching networks, and datacenter interconnects. AI datacenters require 36x more fiber than traditional CPU racks — a single million-GPU cluster can consume tens of thousands of fiber-km. High fiber count cables (1,728+ strands) are now standard for hyperscale AI builds. Prices surged 500%+ in 2025-2026 driven by AI demand. Meta's $6B Corning deal and Lumen's Corning agreement represent the new norm of multi-year locked supply.",
     "inv": "Invest in manufacturers with the highest datacenter revenue mix: Corning, CommScope.",
-    "risks": [
-      "Commoditization risk as manufacturing scales",
-      "Hyperscaler in-sourcing risk",
-      "Demand tied entirely to datacenter capex cycles"
-    ]
+    "stats": [["Fiber count","96 to 6,912 per cable"],["AI multiplier","36x more vs CPU rack"],["Price surge","+500% since Jan 2025"],["Key buyers","AWS · Google · Microsoft · Meta"]],
+    "risks": ["Commoditization risk as manufacturing scales","Hyperscaler in-sourcing risk","Demand tied entirely to datacenter capex cycles"]
   },
   "Terrestrial Long-Haul": {
-    "fiberCount": "12 to 432",
-    "keyBuyers": "AT&T, Verizon, Deutsche Telekom",
     "type": "Cable specification",
+    "country": "",
     "loc": "Global",
-    "stat": "Armored · gel-filled · km to thousands of km",
+    "stat": "12 to 432 fibers/cable · 213M fiber-miles needed US by 2029",
+    "fiberCount": "12 to 432 fibers/cable",
+    "keyOperators": "AT&T · Verizon · Deutsche Telekom",
     "risk": "Telecom operator capex sensitivity.",
-    "stats": [
-      [
-        "Fiber count",
-        "12 to 432 fibers typical"
-      ],
-      [
-        "Format",
-        "Loose-tube, armored"
-      ],
-      [
-        "Length",
-        "km to thousands of km"
-      ],
-      [
-        "Key buyers",
-        "AT&T, Verizon, Deutsche Telekom, NTT"
-      ]
-    ],
-    "role": "Terrestrial long-haul cable connects cities, countries, and continents overland. Armored against physical damage, gel-filled against moisture, designed for 25+ year field life. Demand driven by 5G backhaul buildout and intercity capacity expansion.",
+    "role": "Long-haul terrestrial fiber cables carry internet backbone traffic between cities and datacenters. Standard single-mode fiber (G.652D) is the dominant cable type. US needs to add 213.3 million fiber miles by 2029 to support AI datacenter interconnect demands — more than doubling current installed base. 5G transport backhaul adds additional demand on top of existing FTTH and backbone replacement cycles.",
     "inv": "More telecom-dependent than datacenter cable — slower growth but more stable recurring demand.",
-    "risks": [
-      "Telecom operator capex cycles create demand volatility",
-      "5G backhaul buildout varies by country",
-      "Competition from wireless backhaul alternatives"
-    ]
+    "stats": [["Fiber count","12 to 432 per cable"],["US demand","213M fiber-miles needed by 2029"],["Price","G.652D +150% since Jan 2025"],["Key operators","AT&T · Verizon · Deutsche Telekom"]],
+    "risks": ["Telecom operator capex cycles create demand volatility","5G backhaul buildout varies by country","Competition from wireless backhaul alternatives"]
   },
   "Subsea Cable": {
-    "fiberCount": "8 to 24 fiber pairs",
-    "keyBuyers": "Microsoft, Google, Meta, Amazon",
     "type": "Cable specification",
+    "country": "",
     "loc": "Ocean floors globally",
-    "stat": "Low fiber count · heavily armored · copper power conductor",
+    "stat": "8 to 24 fiber pairs · ~40 new systems entering service 2026",
+    "fiberCount": "8 to 24 fiber pairs",
+    "keyOperators": "Microsoft · Google · Meta · Amazon",
     "risk": "Geopolitical risk around cable routes and landing rights.",
-    "stats": [
-      [
-        "Fiber count",
-        "8 to 24 fiber pairs typical"
-      ],
-      [
-        "Armoring",
-        "Steel wire + polyethylene"
-      ],
-      [
-        "Depth rating",
-        "Up to 8,000m ocean depth"
-      ],
-      [
-        "Power",
-        "Copper conductor for repeater power"
-      ]
-    ],
-    "role": "Subsea fiber optic cable is one of the most complex engineered products in the world. Despite carrying ~95% of all international internet traffic, the total installed length is only ~1.3 million km globally — because modern coherent optical systems push terabits per second through each fiber pair.",
-    "inv": "AI hyperscalers are funding private subsea cable projects — Google, Meta, Amazon, and Microsoft have all announced privately-funded cables. This structural demand shift benefits Alcatel SN and SubCom most directly.",
-    "risks": [
-      "Geopolitical tension around cable landing rights",
-      "Repair costs and lead times are extremely high",
-      "Route concentration through a handful of landing stations"
-    ]
+    "role": "Submarine fiber optic cables carry ~99% of international internet traffic across ocean floors. Nearly 40 new submarine cable systems enter service in 2026 alone — the most active year in history, worth ~$6B in construction. Hyperscalers (Google, Meta, Microsoft, Amazon) now fund private submarine cables directly, bypassing traditional telecom carriers. SubCom, Alcatel Submarine Networks, and NEC collectively control >60% of wet-plant revenue. Each system uses Ge-doped single-mode fiber for the entire cable length.",
+    "inv": "AI hyperscalers are funding private subsea cable projects. This structural demand shift benefits Alcatel SN and SubCom most directly.",
+    "stats": [["Fiber pairs","8 to 24 per cable"],["2026 pipeline","~40 new systems · ~$6B"],["Market control","SubCom + ASN + NEC >60%"],["Hyperscaler shift","Private ownership growing fast"]],
+    "risks": ["Geopolitical tension around cable landing rights","Repair costs and lead times are extremely high","Route concentration through a handful of landing stations"]
   },
   "Alcatel SN": {
-    "country": "France",
-    "specialty": "Subsea cable systems",
     "type": "Subsea cable manufacturer",
-    "loc": "Paris, France (Nokia subsidiary)",
-    "stat": "Global leader in subsea cable systems",
-    "risk": "Part of Nokia — performance buried in segment reporting.",
-    "stats": [
-      [
-        "Parent",
-        "Nokia (NOKIA HE)"
-      ],
-      [
-        "Specialty",
-        "Subsea fiber optic systems"
-      ],
-      [
-        "Market share",
-        "~35% of global subsea market"
-      ],
-      [
-        "Scale",
-        "Largest subsea cable layer globally"
-      ]
-    ],
-    "role": "Alcatel Submarine Networks is the world's largest subsea fiber optic cable company. Designs, manufactures, and installs subsea cable systems. Has deployed more subsea cable than any other company.",
-    "inv": "Exposure via Nokia (NOKIA HE). AI hyperscalers are funding private subsea cables directly, driving unprecedented demand. ASN is a crown jewel asset within Nokia.",
-    "risks": [
-      "Buried inside Nokia — hard to isolate subsea exposure",
-      "Subsea projects have 3-5 year lead times — revenue is lumpy",
-      "Geopolitical risk around cable routes and landing stations"
-    ]
+    "country": "France",
+    "loc": "Paris, France",
+    "stat": "~20%+ submarine wet-plant · French state-owned",
+    "annualRevenue": "~$1.5B est. · French state owned",
+    "primaryMarket": "Submarine cable systems",
+    "risk": "Recently transferred to French state ownership — geopolitical asset.",
+    "role": "Alcatel Submarine Networks is one of three companies controlling over 60% of global submarine cable wet-plant revenue. Recently transferred to French state ownership — underscoring governments' heightened interest in controlling critical subsea infrastructure. Partners with hyperscalers (Google, Meta, Microsoft, Amazon) building private submarine cable systems. Signed partnership with leading cloud provider for next-generation submarine cable system in July 2025.",
+    "inv": "Exposure via Nokia (NOKIA HE) prior to divestiture. Now French state asset. AI hyperscalers are funding private subsea cables directly, driving unprecedented demand.",
+    "stats": [["Ownership","French state (post Nokia divestiture)"],["Market share","~20%+ submarine wet-plant"],["Customers","Hyperscalers + telecoms"],["Strategic","French critical infrastructure asset"]],
+    "risks": ["Geopolitical risk around cable routes and landing rights","Subsea projects have 3-5 year lead times — lumpy revenue","State ownership may affect commercial flexibility"]
   },
   "SubCom": {
-    "country": "USA",
-    "specialty": "Subsea cable + vessels",
     "type": "Subsea cable manufacturer",
+    "country": "USA",
     "loc": "Eatontown, New Jersey, USA",
-    "stat": "#2 global subsea cable system provider",
-    "risk": "Private — owned by Cerberus Capital Management.",
-    "stats": [
-      [
-        "Ownership",
-        "Cerberus Capital Management (private)"
-      ],
-      [
-        "Specialty",
-        "Subsea cable design + installation"
-      ],
-      [
-        "Market position",
-        "#2 globally behind Alcatel SN"
-      ],
-      [
-        "Vessels",
-        "Proprietary cable-laying ships"
-      ]
-    ],
-    "role": "The primary US-based subsea cable manufacturer and the second largest globally. Owns and operates its own cable-laying vessels. A critical national security asset — the US government has actively supported SubCom as an alternative to Chinese subsea cable companies.",
+    "stat": "#2 global · cable + installation vessels · US-preferred",
+    "annualRevenue": "~$1B+ est.",
+    "primaryMarket": "Submarine cable + vessels",
+    "risk": "Private — no direct investment vehicle.",
+    "role": "SubCom is the leading US submarine cable system supplier, combining cable manufacturing with marine installation vessels — a critical vertical integration that limits competition. SubCom controls a major share of US government-approved submarine cable projects given national security scrutiny of Chinese competitors. Expanding marine fulfillment capabilities to meet surging demand from 40 new submarine cable systems entering service in 2026.",
     "inv": "No direct investment — private Cerberus portfolio company. An IPO or strategic sale would be significant given AI-driven subsea demand.",
-    "risks": [
-      "Private — no investment access",
-      "Revenue concentration in a small number of large contracts",
-      "US government scrutiny of subsea cable routes"
-    ]
+    "stats": [["Ownership","Private · Cerberus Capital"],["Vertically integrated","Cable + installation vessels"],["2026 pipeline","40 new systems entering service"],["US advantage","National security preferred vendor"]],
+    "risks": ["Private — no investment access","Revenue concentration in large contracts","US government scrutiny of subsea cable routes"]
   },
   "NEC": {
-    "country": "Japan",
-    "specialty": "Subsea + repeater systems",
     "type": "Subsea cable manufacturer",
+    "country": "Japan",
     "loc": "Tokyo, Japan",
-    "stat": "Japanese subsea cable leader · 6701 TSE",
-    "risk": "Subsea is a minority of NEC's revenue.",
-    "stats": [
-      [
-        "Ticker",
-        "6701 (TSE)"
-      ],
-      [
-        "Specialty",
-        "Subsea cable + repeater systems"
-      ],
-      [
-        "Market position",
-        "#3 globally"
-      ],
-      [
-        "Diversification",
-        "IT services, government systems"
-      ]
-    ],
-    "role": "Japan's primary subsea cable manufacturer and the third largest globally. Also manufactures the submarine repeaters — the signal amplification units embedded in the cable every 50-80km — which are a higher-margin product than the cable itself.",
+    "stat": "400,000+ km deployed · Asia-Pacific dominant",
+    "annualRevenue": "~$800M submarine est.",
+    "primaryMarket": "Submarine cable · Asia-Pacific",
+    "risk": "Subsea is a minority of NEC's total revenue.",
+    "role": "NEC Corporation has deployed over 400,000 km of undersea cables worldwide, making it one of the most experienced submarine cable installers globally. Dominant in the Asia-Pacific submarine cable market. Unveiled new submarine cable system for Asia in September 2025 to meet growing data traffic. Competes with SubCom and Alcatel Submarine Networks for hyperscaler private cable projects.",
     "inv": "NEC is a diversified Japanese IT company — subsea cable is important but not dominant. Indirect play via TSE listing.",
-    "risks": [
-      "Subsea is minority of revenue",
-      "TSE listing limits western access",
-      "Japanese government IT services is the primary business"
-    ]
+    "stats": [["Ticker","6701 · TSE"],["Deployed","400,000+ km subsea"],["Region","Asia-Pacific dominant"],["2025","New system for Asian AI traffic"]],
+    "risks": ["Subsea is minority of revenue","TSE listing limits western access","Japanese government IT services is the primary business"]
   },
   "CommScope": {
-    "country": "USA",
-    "specialty": "Datacenter infrastructure, FTTH",
     "type": "Cable assembler",
+    "country": "USA",
     "loc": "Hickory, North Carolina, USA",
-    "stat": "Major US datacenter cable supplier · COMM NYSE",
-    "risk": "High debt load from ARRIS acquisition.",
-    "stats": [
-      [
-        "Ticker",
-        "COMM (NYSE)"
-      ],
-      [
-        "Specialty",
-        "Datacenter infrastructure, FTTH"
-      ],
-      [
-        "Geography",
-        "US-focused, global sales"
-      ],
-      [
-        "Business",
-        "Buys strand, assembles cable"
-      ]
-    ],
-    "role": "One of the largest US-focused cable infrastructure companies. Buys fiber strand from others and assembles into datacenter-optimized cable systems. Also sells racks, connectors, and network infrastructure.",
+    "stat": "CCS segment +27% YoY Q4 2024 · Propel 800G platform",
+    "annualRevenue": "$4.2B total · CCS segment leading",
+    "primaryMarket": "Datacenter · enterprise · broadband",
+    "risk": "$9B+ debt load from 2019 ARRIS acquisition.",
+    "role": "CommScope's Connectivity & Cable Solutions segment is the fastest-growing division, driven by hyperscale and cloud datacenter GenAI buildout. Q4 2024 net sales +27% YoY with CCS leading all segments. Launched Propel modular fiber platform in 2024 enabling 400G and 800G datacenter applications, reducing installation time by 30%. Strong US manufacturing presence for BABA-compliant broadband infrastructure.",
     "inv": "COMM is a more leveraged play on US datacenter infrastructure buildout. Higher risk than Corning but also higher upside if datacenter spending continues.",
-    "risks": [
-      "$9B+ debt from 2019 ARRIS acquisition",
-      "Not vertically integrated — exposed to strand price fluctuations",
-      "Slower to benefit from Ge supply constraint than upstream players"
-    ]
+    "stats": [["Ticker","COMM · NASDAQ"],["2024 revenue","$4.2B total"],["Q4 2024","CCS +27% YoY"],["Innovation","Propel 800G platform 2024"]],
+    "risks": ["$9B+ debt from 2019 ARRIS acquisition","Not vertically integrated — exposed to strand price fluctuations","Slower to benefit from Ge supply constraint than upstream players"]
   },
   "AFL": {
-    "country": "USA",
-    "specialty": "Datacenter + utility cable",
     "type": "Cable assembler",
+    "country": "USA",
     "loc": "Duncan, South Carolina, USA",
-    "stat": "Fujikura subsidiary · private",
+    "stat": "US domestic · utility + datacenter · BABA-compliant",
+    "annualRevenue": "~$1B+ est. · private",
+    "primaryMarket": "Utility · datacenter · enterprise",
     "risk": "Private company — no direct investment vehicle.",
-    "stats": [
-      [
-        "Ownership",
-        "Fujikura subsidiary"
-      ],
-      [
-        "Specialty",
-        "Datacenter + utility cable"
-      ],
-      [
-        "Geography",
-        "North America focused"
-      ],
-      [
-        "Products",
-        "Ribbon cable, loose-tube, ADSS"
-      ]
-    ],
-    "role": "AFL is Fujikura's North American cable assembly operation. Manufactures datacenter trunk cables, distribution cables, and aerial cables for US utility networks.",
+    "role": "AFL (Fujikura subsidiary) is a major US cable assembler focused on utility, datacenter, and enterprise fiber optic infrastructure. Produces specialty cables for power utilities, military, and hyperscale datacenter applications. Fully US-based manufacturing makes AFL a BABA-compliant domestic supplier for government-funded broadband and defense programs.",
     "inv": "No direct investment — privately held Fujikura subsidiary. Indirect exposure via Fujikura (5803 TSE).",
-    "risks": [
-      "No listed equity vehicle",
-      "Dependent on Fujikura parent strategy",
-      "US utility cable market has different demand cycle than datacenter"
-    ]
+    "stats": [["Ownership","Fujikura subsidiary"],["Headquarters","Duncan, SC, USA"],["Focus","Utility + DC + defense"],["Advantage","US domestic manufacturing"]],
+    "risks": ["No listed equity vehicle","Dependent on Fujikura parent strategy","US utility cable market has different demand cycle than datacenter"]
   },
   "Umicore": {
     "type": "Germanium recycler",

@@ -101,7 +101,7 @@
   },
   "subIntro": {
     "context": "Germanium · Subsystem · Fiber Optics → Cable",
-    "thesis": "Every fiber optic cable begins as germanium-doped glass. The subsystem layer maps who assembles that glass into the cables connecting the world's AI infrastructure.",
+    "thesis": "Six cable assemblers and three submarine specialists take germanium-doped fiber and deploy it as the physical infrastructure of the internet — at a moment when AI datacenter demand is requiring 36× more fiber per rack than anything built before, against a supply chain running at 100% capacity.",
     "title": "From strand to deployable cable",
     "sub": "Assembly · 3 cable types · one deployable product",
     "sections": [

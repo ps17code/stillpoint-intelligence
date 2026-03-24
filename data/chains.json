@@ -101,41 +101,25 @@
     "output": {
       "label": "OUTPUT",
       "displayFields": [
-        {
-          "key": "totalOutput",
-          "label": "Global capacity"
-        },
-        {
-          "key": "aiDemand",
-          "label": "AI demand 2026"
-        }
+        {"key": "totalDeployed", "label": "Deployed/yr"},
+        {"key": "aiGap", "label": "AI demand gap"}
       ]
     },
     "assembly": {
+      "label": "ASSEMBLY",
       "displayFields": [
-        {
-          "key": "country",
-          "label": "Country"
-        },
-        {
-          "key": "specialty",
-          "label": "Specialty"
-        }
-      ],
-      "label": "ASSEMBLY"
+        {"key": "country", "label": "Country"},
+        {"key": "annualRevenue", "label": "Revenue"},
+        {"key": "primaryMarket", "label": "Primary market"}
+      ]
     },
     "cableType": {
+      "label": "CABLE TYPE",
       "displayFields": [
-        {
-          "key": "fiberCount",
-          "label": "Fiber count"
-        },
-        {
-          "key": "keyBuyers",
-          "label": "Key buyers"
-        }
-      ],
-      "label": "CABLE TYPE"
+        {"key": "country", "label": ""},
+        {"key": "fiberCount", "label": "Fiber count"},
+        {"key": "keyOperators", "label": "Key operators"}
+      ]
     },
     "integration": {
       "displayFields": [
