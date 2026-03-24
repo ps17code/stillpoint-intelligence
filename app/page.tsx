@@ -39,8 +39,8 @@ function anchorTopPx(thesisEl: HTMLElement | null): number {
   const thesisBottom = thesisEl
     ? thesisEl.getBoundingClientRect().bottom
     : 188;
-  // 40px breathing room below thesis, then 5 layers × 150px = 750px tree height
-  return thesisBottom + 40 + 750;
+  // 40px breathing room + 750px tree (5×150px) + 80px for top-layer node content
+  return thesisBottom + 40 + 750 + 80;
 }
 
 export default function Home() {
