@@ -38,7 +38,7 @@ const CHAINS  = chainsRaw as any;
 function topAnchorPx(thesisEl: HTMLElement | null): number {
   if (typeof window === "undefined") return 220;
   const thesisBottom = thesisEl ? thesisEl.getBoundingClientRect().bottom : 188;
-  return thesisBottom + 40;
+  return thesisBottom + 90;
 }
 
 export default function Home() {
@@ -478,11 +478,12 @@ export default function Home() {
           zIndex: 6,
         }}>
           <span style={{
-            fontFamily: "'EB Garamond', Georgia, serif",
-            fontSize: 22,
-            fontWeight: 600,
-            color: "#2a1e0c",
-            letterSpacing: "0.01em",
+            fontFamily: "Courier New, monospace",
+            fontSize: 11,
+            fontWeight: 400,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: "#9c8c74",
           }}>{mapTitle}</span>
         </div>
       )}
