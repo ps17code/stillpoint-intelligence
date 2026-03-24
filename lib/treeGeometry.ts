@@ -33,6 +33,32 @@ export function evenSpread(n: number, center: number, half: number, pad = 0): nu
   return Array.from({ length: n }, (_, i) => l + (i * (r - l)) / (n - 1));
 }
 
+// Content-aware spread: minimum 110 SVG units per node slot, scales up for fewer nodes.
+// 110 SVG units ≈ 150px at typical viewport — enough for name + pills without overlap.
+export function contentAwareSpread(count: number, centerX: number): number[] {
+  if (count === 1) return [centerX];
+  const slot = Math.max(110, Math.floor(900 / count));
+  const totalWidth = count * slot;
+  const startX = centerX - totalWidth / 2 + slot / 2;
+  return Array.from({ length: count }, (_, i) => startX + i * slot);
+}
+
+// Split spread: two groups (left = China, right = non-China) with a visible gap between them.
+// Uses a shared slot size based on total node count so edges connect consistently.
+export function splitSpread(
+  chinaCount: number, foreignCount: number, centerX: number
+): number[] {
+  const totalCount = chinaCount + foreignCount;
+  const slot = Math.max(110, Math.floor(860 / totalCount));
+  const gapSvg = 80;
+  const chinaTotal = chinaCount * slot;
+  const totalWithGap = chinaTotal + gapSvg + foreignCount * slot;
+  const startX = centerX - totalWithGap / 2 + slot / 2;
+  const leftXs  = Array.from({ length: chinaCount },   (_, i) => startX + i * slot);
+  const rightXs = Array.from({ length: foreignCount }, (_, i) => startX + chinaTotal + gapSvg + i * slot);
+  return [...leftXs, ...rightXs];
+}
+
 // Convert pixel position to SVG 0-1000 coordinate space
 export function toSVG(px: number, total: number): number {
   return (px / total) * 1000;
@@ -98,26 +124,21 @@ export function buildRawGeometry(
     const minCY     = ancY - gap * 4;
     const depCY     = ancY - gap * 5;
 
-    // Helper: split a node list at groupIdx into left (China) and right (non-China) groups
-    const splitGroup = (names: string[], groupIdx: number | undefined): number[] => {
-      if (!groupIdx || groupIdx <= 0 || groupIdx >= names.length) {
-        return evenSpread(names.length, ancX, half);
-      }
-      const leftXs  = evenSpread(groupIdx,                ancX - half / 2, half / 2, 20);
-      const rightXs = evenSpread(names.length - groupIdx, ancX + half / 2, half / 2, 20);
-      return [...leftXs, ...rightXs];
-    };
+    // deposits: split China vs non-China, or centered spread if no split defined
+    const depSplit = chain.groupSplit?.deposits;
+    const depXs = (depSplit && depSplit > 0 && depSplit < chain.deposits.length)
+      ? splitSpread(depSplit, chain.deposits.length - depSplit, ancX)
+      : contentAwareSpread(chain.deposits.length, ancX);
 
-    const depXs = splitGroup(chain.deposits, chain.groupSplit?.deposits);
-    const minXs = splitGroup(chain.miners,   chain.groupSplit?.miners);
+    // miners: same split logic
+    const minSplit = chain.groupSplit?.miners;
+    const minXs = (minSplit && minSplit > 0 && minSplit < chain.miners.length)
+      ? splitSpread(minSplit, chain.miners.length - minSplit, ancX)
+      : contentAwareSpread(chain.miners.length, ancX);
 
-    // Split refiners: primaries (0-2) left, recyclers/western (3+) right
-    const primaryCount     = 3;
-    const primaryRefiners  = chain.refiners.slice(0, primaryCount);
-    const recyclerRefiners = chain.refiners.slice(primaryCount);
-    const primaryXs  = evenSpread(primaryRefiners.length,  ancX - half / 2, half / 2, 20);
-    const recyclerXs = evenSpread(recyclerRefiners.length, ancX + half / 2, half / 2, 20);
-    const refXs = [...primaryXs, ...recyclerXs];
+    // refiners: primaries (0-2) left, western+other (3+) right — always split
+    const primaryCount = 3;
+    const refXs = splitSpread(primaryCount, chain.refiners.length - primaryCount, ancX);
 
     const supNodeCount = chain.supplyNodes!.length;
     const supNodeXs = supNodeCount === 2
@@ -193,9 +214,9 @@ export function buildRawGeometry(
   const minCY = ancY - gap * 3;
   const depCY = ancY - gap * 4;
 
-  const depXs = evenSpread(chain.deposits.length, ancX, half);
-  const minXs = evenSpread(chain.miners.length, ancX, half, 20);
-  const refXs = evenSpread(chain.refiners.length, ancX, half, 60);
+  const depXs = contentAwareSpread(chain.deposits.length, ancX);
+  const minXs = contentAwareSpread(chain.miners.length,   ancX);
+  const refXs = contentAwareSpread(chain.refiners.length, ancX);
 
   const layers: LayerGeometry[] = [
     {
@@ -266,8 +287,8 @@ export function buildCompGeometry(
   const drawCY = ancY - gap * 2;
   const preCY  = ancY - gap * 3;
 
-  const preXs  = evenSpread(chain.preform.length,  ancX, half);
-  const drawXs = evenSpread(chain.drawing.length,  ancX, half, 10);
+  const preXs  = contentAwareSpread(chain.preform.length,  ancX);
+  const drawXs = contentAwareSpread(chain.drawing.length,  ancX);
 
   const layers: LayerGeometry[] = [
     {
@@ -328,8 +349,8 @@ export function buildSubGeometry(
   const typeCY = ancY - gap * 2;
   const assCY  = ancY - gap * 3;
 
-  const assXs  = evenSpread(chain.assembly.length,  ancX, half);
-  const typeXs = evenSpread(3, ancX, half, 80);
+  const assXs  = contentAwareSpread(chain.assembly.length, ancX);
+  const typeXs = contentAwareSpread(chain.cableType.length, ancX);
 
   const layers: LayerGeometry[] = [
     {
@@ -388,8 +409,8 @@ export function buildEUGeometry(
   const hypCY = ancY - gap * 2;
   const intCY = ancY - gap * 3;
 
-  const intXs = evenSpread(chain.integration.length, ancX, half);
-  const hypXs = evenSpread(chain.hyperscale.length,  ancX, half, 20);
+  const intXs = contentAwareSpread(chain.integration.length, ancX);
+  const hypXs = contentAwareSpread(chain.hyperscale.length,  ancX);
 
   const layers: LayerGeometry[] = [
     {
