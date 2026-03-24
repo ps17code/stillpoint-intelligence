@@ -99,14 +99,14 @@ export function buildRawGeometry(
     const depCY     = ancY - gap * 5;
 
     // Helper: split a node list at groupIdx into left (China) and right (non-China) groups
-    function splitGroup(names: string[], groupIdx: number | undefined): number[] {
+    const splitGroup = (names: string[], groupIdx: number | undefined): number[] => {
       if (!groupIdx || groupIdx <= 0 || groupIdx >= names.length) {
         return evenSpread(names.length, ancX, half);
       }
       const leftXs  = evenSpread(groupIdx,                ancX - half / 2, half / 2, 20);
       const rightXs = evenSpread(names.length - groupIdx, ancX + half / 2, half / 2, 20);
       return [...leftXs, ...rightXs];
-    }
+    };
 
     const depXs = splitGroup(chain.deposits, chain.groupSplit?.deposits);
     const minXs = splitGroup(chain.miners,   chain.groupSplit?.miners);
