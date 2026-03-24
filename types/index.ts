@@ -62,11 +62,12 @@ export interface RawChain {
 }
 
 export interface CompChain {
-  preform: string[];
-  drawing: string[];
+  geCl4: string[];
+  fiberMfg: string[];
   output: string;
-  preToDrawing: [number, number][];
-  minor: { preform: number[]; drawing: number[] };
+  geCl4ToFiber: [number, number][];
+  fiberToOutput: [number, number][];
+  minor: { geCl4: number[]; fiberMfg: number[] };
 }
 
 export interface SubChain {

@@ -64,35 +64,39 @@
       ],
       "label": "GLOBAL SUPPLY"
     },
-    "preform": {
+    "geCl4": {
+      "label": "GeCl₄ SUPPLIERS",
       "displayFields": [
         {
           "key": "country",
           "label": "Country"
         },
         {
-          "key": "process",
-          "label": "Process"
+          "key": "gecl4Output",
+          "label": "GeCl₄ output"
         },
         {
-          "key": "marketShare",
-          "label": "Share"
+          "key": "purity",
+          "label": "Purity grade"
         }
-      ],
-      "label": "PREFORM"
+      ]
     },
-    "drawing": {
+    "fiberMfg": {
+      "label": "FIBER MANUFACTURERS",
       "displayFields": [
         {
           "key": "country",
           "label": "Country"
         },
         {
-          "key": "ownership",
-          "label": "Ownership"
+          "key": "fiberOutput",
+          "label": "Fiber capacity"
+        },
+        {
+          "key": "geConsumption",
+          "label": "Ge consumed/yr"
         }
-      ],
-      "label": "DRAWING"
+      ]
     },
     "assembly": {
       "displayFields": [
@@ -616,7 +620,13 @@
   },
   "COMP_DATA": {
     "GeO₂ / GeCl₄": {
-      "preform": [
+      "geCl4": [
+        "Umicore GeCl4",
+        "Yunnan Chihong GeCl4",
+        "Chinese State GeCl4 Plants",
+        "JSC Germanium GeCl4"
+      ],
+      "fiberMfg": [
         "Corning",
         "Prysmian",
         "Fujikura",
@@ -624,48 +634,16 @@
         "Shin-Etsu",
         "YOFC"
       ],
-      "drawing": [
-        "Corning",
-        "Prysmian",
-        "Fujikura",
-        "Sumitomo Electric",
-        "OFS Fitel",
-        "YOFC"
-      ],
       "output": "Optical Fiber Strand",
-      "preToDrawing": [
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          2,
-          2
-        ],
-        [
-          3,
-          3
-        ],
-        [
-          4,
-          4
-        ],
-        [
-          5,
-          5
-        ]
+      "geCl4ToFiber": [
+        [0,0],[0,1],[0,2],[1,3],[1,4],[1,5],[2,3],[2,4],[2,5],[3,3]
+      ],
+      "fiberToOutput": [
+        [0,0],[1,0],[2,0],[3,0],[4,0],[5,0]
       ],
       "minor": {
-        "preform": [
-          5
-        ],
-        "drawing": [
-          5
-        ]
+        "geCl4": [3],
+        "fiberMfg": []
       }
     }
   },

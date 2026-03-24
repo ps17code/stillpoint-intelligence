@@ -51,7 +51,7 @@
   },
   "compIntro": {
     "context": "Germanium · Component · GeO₂ → Optical Fiber",
-    "thesis": "Germanium dioxide and tetrachloride are the chemical bridge between raw extraction and optical fiber — produced almost exclusively in China before flowing to Japanese and western preform manufacturers.",
+    "thesis": "~90 tonnes of germanium — 40% of global supply — is converted to ultrapure GeCl₄ and deposited into silica glass by six fiber manufacturers. Their combined output of ~500M fiber-km/yr must nearly triple to meet AI datacenter demand by 2026.",
     "title": "Where germanium becomes glass",
     "sub": "GeO₂/GeCl₄ → preform → fiber strand · Ge locked permanently",
     "sections": [

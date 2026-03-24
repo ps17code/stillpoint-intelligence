@@ -104,8 +104,8 @@ export const PALETTES = {
   supplyNodes:{ stroke: "#6a7a5a", text: "#3a4a2a", pip: "#6a7a5a" },
   supply:     { stroke: "#3e2c0e", text: "#3e2c0e", pip: "#3e2c0e" },
   // Component layer (teal/slate)
-  preform:  { stroke: "#3a6b6b", text: "#1e4040", pip: "#3a6b6b" },
-  drawing:  { stroke: "#3a5070", text: "#1e2e48", pip: "#3a5070" },
+  geCl4:    { stroke: "#3a6b6b", text: "#1e4040", pip: "#3a6b6b" },
+  fiberMfg: { stroke: "#3a5070", text: "#1e2e48", pip: "#3a5070" },
   compOut:  { stroke: "#1a2e4a", text: "#1a2e4a", pip: "#1a2e4a" },
   // Subsystem layer (purple-slate)
   assembly: { stroke: "#5a4a6a", text: "#2e1e40", pip: "#5a4a6a" },
@@ -286,28 +286,28 @@ export function buildCompGeometry(
   ancX: number, topY: number,
   half = 370, gap = 170,
 ): TreeGeometry {
-  const preCY  = topY;
-  const drawCY = topY + gap;
-  const outCY  = topY + gap * 2;
+  const geCl4CY   = topY;
+  const fiberCY   = topY + gap;
+  const outCY     = topY + gap * 2;
 
-  const preXs  = contentAwareSpread(chain.preform.length,  ancX);
-  const drawXs = contentAwareSpread(chain.drawing.length,  ancX);
+  const geCl4Xs  = contentAwareSpread(chain.geCl4.length,   ancX);
+  const fiberXs  = contentAwareSpread(chain.fiberMfg.length, ancX);
 
   const layers: LayerGeometry[] = [
     {
-      key: "PREFORM", label: "PREFORM", cy: preCY,
-      color: PALETTES.preform,
-      nodes: chain.preform.map((name, i) => ({
-        name, cx: preXs[i], cy: preCY,
-        opacity: chain.minor.preform.includes(i) ? 0.5 : 1,
+      key: "geCl4", label: "GeCl₄ SUPPLIERS", cy: geCl4CY,
+      color: PALETTES.geCl4,
+      nodes: chain.geCl4.map((name, i) => ({
+        name, cx: geCl4Xs[i], cy: geCl4CY,
+        opacity: chain.minor.geCl4.includes(i) ? 0.5 : 1,
       })),
     },
     {
-      key: "DRAWING", label: "DRAWING", cy: drawCY,
-      color: PALETTES.drawing,
-      nodes: chain.drawing.map((name, i) => ({
-        name, cx: drawXs[i], cy: drawCY,
-        opacity: chain.minor.drawing.includes(i) ? 0.5 : 1,
+      key: "fiberMfg", label: "FIBER MANUFACTURERS", cy: fiberCY,
+      color: PALETTES.fiberMfg,
+      nodes: chain.fiberMfg.map((name, i) => ({
+        name, cx: fiberXs[i], cy: fiberCY,
+        opacity: chain.minor.fiberMfg.includes(i) ? 0.5 : 1,
       })),
     },
     {
@@ -318,13 +318,8 @@ export function buildCompGeometry(
   ];
 
   const edges: EdgeGeometry[] = [
-    ...buildEdges(preXs, preCY, drawXs, drawCY, PALETTES.preform.stroke, chain.preToDrawing, 0),
-    ...drawXs.map(dx => ({
-      x1: dx,   y1: drawCY + EDGE_Y1_OFFSET,
-      x2: ancX, y2: outCY  - EDGE_Y2_OFFSET,
-      color: PALETTES.drawing.stroke,
-      fromLayer: 1,
-    })),
+    ...buildEdges(geCl4Xs, geCl4CY, fiberXs, fiberCY, PALETTES.geCl4.stroke, chain.geCl4ToFiber, 0),
+    ...buildEdges(fiberXs, fiberCY, [ancX], outCY, PALETTES.fiberMfg.stroke, chain.fiberToOutput, 1),
   ];
 
   return {
