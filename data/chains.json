@@ -64,7 +64,7 @@
       ],
       "label": "GLOBAL SUPPLY"
     },
-    "geCl4": {
+    "gecl4": {
       "label": "GeCl₄ SUPPLIERS",
       "displayFields": [
         {
@@ -81,7 +81,7 @@
         }
       ]
     },
-    "fiberMfg": {
+    "fibermfg": {
       "label": "FIBER MANUFACTURERS",
       "displayFields": [
         {
@@ -95,6 +95,19 @@
         {
           "key": "geConsumption",
           "label": "Ge consumed/yr"
+        }
+      ]
+    },
+    "output": {
+      "label": "OUTPUT",
+      "displayFields": [
+        {
+          "key": "totalOutput",
+          "label": "Global capacity"
+        },
+        {
+          "key": "aiDemand",
+          "label": "AI demand 2026"
         }
       ]
     },
