@@ -15,12 +15,18 @@
   --panel-w: 340px;
 }
 
-html, body {
+html {
   width: 100%;
   height: 100%;
   background: var(--bg);
   font-family: "EB Garamond", Georgia, serif;
-  overflow: hidden;
+}
+body {
+  width: 100%;
+  min-height: 100%;
+  background: var(--bg);
+  font-family: "EB Garamond", Georgia, serif;
+  overflow-y: auto;
 }
 
 /* ── Transitions ───────────────────────────────────────────────── */

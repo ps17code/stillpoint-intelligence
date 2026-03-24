@@ -331,7 +331,7 @@ export default function Home() {
   ];
 
   return (
-    <main style={{ width: "100%", height: "100%", background: "var(--bg)", overflow: "hidden", paddingTop: appState > 0 ? "180px" : "0" }}>
+    <main style={{ width: "100%", minHeight: "100%", background: "var(--bg)", paddingTop: appState > 0 ? "180px" : "0" }}>
 
       {/* Grain */}
       <div className="grain" />
@@ -461,6 +461,45 @@ export default function Home() {
         onLayerClick={openPanel}
         layerPanels={getLayerPanels(appState)}
       />
+
+      {appState > 0 && (
+        <>
+          {/* Spacer — pushes document below the fixed tree */}
+          <div style={{ height: anchorTop + 200 }} />
+
+          {/* Insight section — sits below tree in normal document flow */}
+          <div style={{
+            position: "relative",
+            zIndex: 10,
+            background: "#f2ede3",
+            borderTop: "0.5px solid rgba(192,176,128,0.2)",
+            padding: "48px 48px 80px",
+            marginTop: 0,
+          }}>
+            <div style={{
+              display: "flex", alignItems: "center", gap: 20,
+              marginBottom: 32,
+            }}>
+              <div style={{ flex: 1, height: "0.5px", background: "rgba(192,176,128,0.3)" }} />
+              <div style={{
+                fontFamily: "'Geist Mono', monospace",
+                fontSize: 9, letterSpacing: "0.18em",
+                textTransform: "uppercase", color: "#9c8c74",
+                whiteSpace: "nowrap",
+              }}>Key insights</div>
+              <div style={{ flex: 1, height: "0.5px", background: "rgba(192,176,128,0.3)" }} />
+            </div>
+
+            <div style={{
+              fontFamily: "'EB Garamond', Georgia, serif",
+              fontSize: 14, color: "#9c8c74",
+              fontStyle: "italic", textAlign: "center",
+            }}>
+              Insight section — coming soon
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Tooltip */}
       <Tooltip
