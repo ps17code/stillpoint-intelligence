@@ -106,8 +106,9 @@ export function buildRawGeometry(
     const primaryRefiners  = chain.refiners.slice(0, primaryCount);
     const recyclerRefiners = chain.refiners.slice(recyclerStart);
     // Place primaries left of center, recyclers right of center
-    const primaryXs  = evenSpread(primaryRefiners.length,  ancX - half / 4, half / 2, 30);
-    const recyclerXs = evenSpread(recyclerRefiners.length, ancX + half / 4, half / 2, 30);
+    // Each group centered at ancX±half/2 with half/2 radius → no overlap
+    const primaryXs  = evenSpread(primaryRefiners.length,  ancX - half / 2, half / 2, 20);
+    const recyclerXs = evenSpread(recyclerRefiners.length, ancX + half / 2, half / 2, 20);
     const refXs = [...primaryXs, ...recyclerXs];
 
     const supNodeCount = chain.supplyNodes!.length;
