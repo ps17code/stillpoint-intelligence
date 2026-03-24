@@ -269,6 +269,12 @@ export default function Home() {
     });
   }
 
+  const mapTitle =
+    appState === 1 ? `${sel.raw  || "Germanium"} Supply Map` :
+    appState === 2 ? `${sel.comp || "GeO₂ / GeCl₄"} Supply Map` :
+    appState === 3 ? `${sel.sub  || "Fiber Optics"} Supply Map` :
+    appState === 4 ? `${sel.eu   || "AI Datacenter"} Supply Map` : null;
+
   const currentThesis =
     appState === 1 ? PANELS.rawIntro?.thesis :
     appState === 2 ? PANELS.compIntro?.thesis :
@@ -457,6 +463,28 @@ export default function Home() {
           nodes={euSpineNodes}
           anchorId="eu-anchor-shape"
         />
+      )}
+
+      {/* Map title — sits just above tree nodes */}
+      {appState > 0 && mapTitle && (
+        <div style={{
+          position: "absolute",
+          top: topAnchor - 44,
+          left: 0,
+          right: 0,
+          display: "flex",
+          justifyContent: "center",
+          pointerEvents: "none",
+          zIndex: 6,
+        }}>
+          <span style={{
+            fontFamily: "'EB Garamond', Georgia, serif",
+            fontSize: 22,
+            fontWeight: 600,
+            color: "#2a1e0c",
+            letterSpacing: "0.01em",
+          }}>{mapTitle}</span>
+        </div>
       )}
 
       {/* SVG tree */}
