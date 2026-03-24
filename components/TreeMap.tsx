@@ -4,7 +4,7 @@ import type { TreeGeometry, LayerGeometry } from "@/lib/treeGeometry";
 import type { NodeData, PanelContent } from "@/types";
 
 interface DisplayField { key: string; label: string; }
-interface LayerConfig { displayFields: DisplayField[]; }
+interface LayerConfig { label?: string; displayFields: DisplayField[]; }
 
 interface TreeMapProps {
   geometry: TreeGeometry | null;
@@ -24,6 +24,9 @@ const COUNTRY_COLORS: Record<string, string> = {
   "France":  "#7a9abc",
   "Italy":   "#7a9abc",
   "Belgium": "#7a9abc",
+  "Canada":  "#5a7a9c",
+  "Russia":  "#8c5a5a",
+  "DRC":     "#5a8c6a",
 };
 
 export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onNodeLeave, onNodeClick, onLayerClick, layerPanels }: TreeMapProps) {
@@ -69,11 +72,12 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
       cx: number, cy: number, name: string,
       layerKey: string, color: { text: string; stroke: string },
       nodeData?: NodeData,
+      configKeyOverride?: string,
     ) {
       const g = document.createElementNS(NS, "g");
       g.style.cursor = "pointer";
 
-      const configKey = toConfigKey(layerKey);
+      const configKey = configKeyOverride ?? toConfigKey(layerKey);
       const fields = layerConfig?.[configKey]?.displayFields ?? [];
       const raw = nodeData as unknown as Record<string, unknown>;
       const hasFields = fields.length > 0 && nodeData;
@@ -247,7 +251,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
     const outG = mkGroup();
     const { outputNode: out } = geometry;
     const outLayer = geometry.layers[geometry.layers.length - 1];
-    outG.appendChild(mkNodeGroup(out.cx, out.cy, out.name, outLayer.key, outLayer.color, nodes[out.name]));
+    outG.appendChild(mkNodeGroup(out.cx, out.cy, out.name, outLayer.key, outLayer.color, nodes[out.name], toConfigKey(outLayer.key)));
     addDividerAndLabel(outG, out.cx, out.name, out.cy, outLayer.key, outLayer.label, outLayer.color, layerPanels[outLayer.key]);
     groups.push(outG);
 
@@ -266,7 +270,10 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
 
       const nodeG = mkGroup();
       layer.nodes.forEach(n => {
-        nodeG.appendChild(mkNodeGroup(n.cx, n.cy, n.name, layer.key, layer.color, nodes[n.name]));
+        const nd = nodes[n.name];
+        const cfgOverride = nd?.type === "Germanium recycler" ? "recyclers"
+          : (layer.key === "supplyNodes" ? "supplyNodes" : undefined);
+        nodeG.appendChild(mkNodeGroup(n.cx, n.cy, n.name, layer.key, layer.color, nd, cfgOverride));
       });
 
       const leftNodeCX = Math.min(...layer.nodes.map(n => n.cx));

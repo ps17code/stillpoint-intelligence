@@ -60,10 +60,12 @@ function buildEdges(
 // ── LAYER COLOR PALETTES ──────────────────────────────────────────
 export const PALETTES = {
   // Raw material layer (warm gold family)
-  deposits: { stroke: "#c8a85a", text: "#8a6820", pip: "#c8a85a" },
-  miners:   { stroke: "#a87e3a", text: "#6a4e18", pip: "#a87e3a" },
-  refiners: { stroke: "#7a5a28", text: "#4a3610", pip: "#7a5a28" },
-  supply:   { stroke: "#3e2c0e", text: "#3e2c0e", pip: "#3e2c0e" },
+  deposits:   { stroke: "#c8a85a", text: "#8a6820", pip: "#c8a85a" },
+  miners:     { stroke: "#a87e3a", text: "#6a4e18", pip: "#a87e3a" },
+  refiners:   { stroke: "#7a5a28", text: "#4a3610", pip: "#7a5a28" },
+  recyclers:  { stroke: "#5a7a9c", text: "#2a3e54", pip: "#5a7a9c" },
+  supplyNodes:{ stroke: "#6a7a5a", text: "#3a4a2a", pip: "#6a7a5a" },
+  supply:     { stroke: "#3e2c0e", text: "#3e2c0e", pip: "#3e2c0e" },
   // Component layer (teal/slate)
   preform:  { stroke: "#3a6b6b", text: "#1e4040", pip: "#3a6b6b" },
   drawing:  { stroke: "#3a5070", text: "#1e2e48", pip: "#3a5070" },
@@ -86,6 +88,97 @@ export function buildRawGeometry(
   ancX: number, ancY: number,
   half = 360, gap = 150, lineY2?: number
 ): TreeGeometry {
+  // 5-layer layout when supplyNodes are present, else legacy 4-layer
+  const hasSupplyNodes = chain.supplyNodes && chain.supplyNodes.length > 0;
+
+  if (hasSupplyNodes) {
+    const supCY     = ancY - gap;
+    const supNodeCY = ancY - gap * 2;
+    const refCY     = ancY - gap * 3;
+    const minCY     = ancY - gap * 4;
+    const depCY     = ancY - gap * 5;
+
+    const depXs = evenSpread(chain.deposits.length, ancX, half);
+    const minXs = evenSpread(chain.miners.length,   ancX, half, 20);
+    // Split refiners into primaries (0-2) and recyclers (3+)
+    const primaryCount  = 3;
+    const recyclerStart = primaryCount;
+    const primaryRefiners  = chain.refiners.slice(0, primaryCount);
+    const recyclerRefiners = chain.refiners.slice(recyclerStart);
+    // Place primaries left of center, recyclers right of center
+    const primaryXs  = evenSpread(primaryRefiners.length,  ancX - half / 4, half / 2, 20);
+    const recyclerXs = evenSpread(recyclerRefiners.length, ancX + half / 4, half / 2, 20);
+    const refXs = [...primaryXs, ...recyclerXs];
+
+    const supNodeCount = chain.supplyNodes!.length;
+    const supNodeXs = supNodeCount === 2
+      ? [ancX - 120, ancX + 120]
+      : evenSpread(supNodeCount, ancX, half, 60);
+
+    const layers: LayerGeometry[] = [
+      {
+        key: "deposits", label: "DEPOSITS", cy: depCY,
+        color: PALETTES.deposits,
+        nodes: chain.deposits.map((name, i) => ({
+          name, cx: depXs[i], cy: depCY,
+          opacity: chain.minor.deposits.includes(i) ? 0.4 : 1,
+        })),
+      },
+      {
+        key: "miners", label: "MINERS", cy: minCY,
+        color: PALETTES.miners,
+        nodes: chain.miners.map((name, i) => ({
+          name, cx: minXs[i], cy: minCY,
+          opacity: chain.minor.miners.includes(i) ? 0.4 : 1,
+        })),
+      },
+      {
+        key: "refiners", label: "REFINERS & RECYCLERS", cy: refCY,
+        color: PALETTES.refiners,
+        nodes: chain.refiners.map((name, i) => ({
+          name, cx: refXs[i], cy: refCY,
+          opacity: chain.minor.refiners.includes(i) ? 0.5 : 1,
+        })),
+      },
+      {
+        key: "supplyNodes", label: "SUPPLY", cy: supNodeCY,
+        color: PALETTES.supplyNodes,
+        nodes: chain.supplyNodes!.map((name, i) => ({
+          name, cx: supNodeXs[i], cy: supNodeCY, opacity: 1,
+        })),
+      },
+      {
+        key: "supply", label: "GLOBAL SUPPLY", cy: supCY,
+        color: PALETTES.supply,
+        nodes: [{ name: chain.supply, cx: ancX, cy: supCY, opacity: 1 }],
+      },
+    ];
+
+    const refToSupplyMapping = chain.refToSupply ?? refXs.map((_, i) => [i, 0] as [number, number]);
+    const supplyToGlobalMapping = chain.supplyToGlobal ?? supNodeXs.map((_, i) => [i, 0] as [number, number]);
+
+    const edges: EdgeGeometry[] = [
+      ...buildEdges(depXs,     depCY,     minXs,     minCY,     PALETTES.deposits.stroke,    chain.depToMin,          0),
+      ...buildEdges(minXs,     minCY,     refXs,     refCY,     PALETTES.miners.stroke,      chain.minToRef,          1),
+      ...buildEdges(refXs,     refCY,     supNodeXs, supNodeCY, PALETTES.refiners.stroke,    refToSupplyMapping,      2),
+      ...buildEdges(supNodeXs, supNodeCY, [ancX],    [supCY],   PALETTES.supplyNodes.stroke, supplyToGlobalMapping,   3),
+    ];
+
+    return {
+      layers,
+      edges,
+      outputNode: { name: chain.supply, cx: ancX, cy: supCY },
+      outputToAnchorLine: {
+        x1: ancX, y1: supCY + EDGE_Y1_OFFSET,
+        x2: ancX, y2: lineY2 ?? (ancY - EDGE_Y2_OFFSET),
+        color: PALETTES.supply.stroke,
+        fromLayer: -1,
+      },
+      ancY,
+    };
+  }
+
+  // ── Legacy 4-layer path (no supplyNodes) ──────────────────────────
   const supCY = ancY - gap;
   const refCY = ancY - gap * 2;
   const minCY = ancY - gap * 3;
@@ -97,7 +190,7 @@ export function buildRawGeometry(
 
   const layers: LayerGeometry[] = [
     {
-      key: "DEPOSITS", label: "DEPOSITS", cy: depCY,
+      key: "deposits", label: "DEPOSITS", cy: depCY,
       color: PALETTES.deposits,
       nodes: chain.deposits.map((name, i) => ({
         name, cx: depXs[i], cy: depCY,
@@ -105,7 +198,7 @@ export function buildRawGeometry(
       })),
     },
     {
-      key: "MINERS", label: "MINERS", cy: minCY,
+      key: "miners", label: "MINERS", cy: minCY,
       color: PALETTES.miners,
       nodes: chain.miners.map((name, i) => ({
         name, cx: minXs[i], cy: minCY,
@@ -113,7 +206,7 @@ export function buildRawGeometry(
       })),
     },
     {
-      key: "REFINERS", label: "REFINERS", cy: refCY,
+      key: "refiners", label: "REFINERS", cy: refCY,
       color: PALETTES.refiners,
       nodes: chain.refiners.map((name, i) => ({
         name, cx: refXs[i], cy: refCY,
@@ -121,7 +214,7 @@ export function buildRawGeometry(
       })),
     },
     {
-      key: "SUPPLY", label: "SUPPLY", cy: supCY,
+      key: "supply", label: "SUPPLY", cy: supCY,
       color: PALETTES.supply,
       nodes: [{ name: chain.supply, cx: ancX, cy: supCY, opacity: 1 }],
     },

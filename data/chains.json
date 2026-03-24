@@ -1,15 +1,185 @@
 {
   "layerConfig": {
-    "deposits":    { "displayFields": [{"key":"country","label":"Country"},{"key":"depositType","label":"Type"},{"key":"reserves","label":"Reserves"},{"key":"operator","label":"Operator"}] },
-    "miners":      { "displayFields": [{"key":"country","label":"Country"},{"key":"outputVolume","label":"Extracted/yr"},{"key":"extractionMethod","label":"Method"}] },
-    "refiners":    { "displayFields": [{"key":"country","label":"Country"},{"key":"outputVolume","label":"Output"},{"key":"products","label":"Products"}] },
-    "supply":      { "displayFields": [{"key":"totalVolume","label":"Volume"},{"key":"marketSize","label":"Market"}] },
-    "preform":     { "displayFields": [{"key":"country","label":"Country"},{"key":"process","label":"Process"},{"key":"marketShare","label":"Share"}] },
-    "drawing":     { "displayFields": [{"key":"country","label":"Country"},{"key":"ownership","label":"Ownership"}] },
-    "assembly":    { "displayFields": [{"key":"country","label":"Country"},{"key":"specialty","label":"Specialty"}] },
-    "cableType":   { "displayFields": [{"key":"fiberCount","label":"Fiber count"},{"key":"keyBuyers","label":"Key buyers"}] },
-    "integration": { "displayFields": [{"key":"country","label":"Country"},{"key":"specialty","label":"Specialty"}] },
-    "hyperscale":  { "displayFields": [{"key":"ticker","label":"Ticker"},{"key":"capex2025","label":"2025 capex"}] }
+    "deposits": {
+      "label": "DEPOSITS",
+      "displayFields": [
+        {
+          "key": "country",
+          "label": "Country"
+        },
+        {
+          "key": "depositType",
+          "label": "Type"
+        },
+        {
+          "key": "reserves",
+          "label": "Reserves"
+        },
+        {
+          "key": "status",
+          "label": "Status"
+        }
+      ]
+    },
+    "miners": {
+      "displayFields": [
+        {
+          "key": "country",
+          "label": "Country"
+        },
+        {
+          "key": "outputVolume",
+          "label": "Extracted/yr"
+        },
+        {
+          "key": "extractionMethod",
+          "label": "Method"
+        }
+      ],
+      "label": "MINERS"
+    },
+    "refiners": {
+      "displayFields": [
+        {
+          "key": "country",
+          "label": "Country"
+        },
+        {
+          "key": "outputVolume",
+          "label": "Output"
+        },
+        {
+          "key": "products",
+          "label": "Products"
+        }
+      ],
+      "label": "REFINERS & RECYCLERS"
+    },
+    "supply": {
+      "displayFields": [
+        {
+          "key": "totalVolume",
+          "label": "Volume"
+        },
+        {
+          "key": "marketSize",
+          "label": "Market"
+        }
+      ],
+      "label": "GLOBAL SUPPLY"
+    },
+    "preform": {
+      "displayFields": [
+        {
+          "key": "country",
+          "label": "Country"
+        },
+        {
+          "key": "process",
+          "label": "Process"
+        },
+        {
+          "key": "marketShare",
+          "label": "Share"
+        }
+      ],
+      "label": "PREFORM"
+    },
+    "drawing": {
+      "displayFields": [
+        {
+          "key": "country",
+          "label": "Country"
+        },
+        {
+          "key": "ownership",
+          "label": "Ownership"
+        }
+      ],
+      "label": "DRAWING"
+    },
+    "assembly": {
+      "displayFields": [
+        {
+          "key": "country",
+          "label": "Country"
+        },
+        {
+          "key": "specialty",
+          "label": "Specialty"
+        }
+      ],
+      "label": "ASSEMBLY"
+    },
+    "cableType": {
+      "displayFields": [
+        {
+          "key": "fiberCount",
+          "label": "Fiber count"
+        },
+        {
+          "key": "keyBuyers",
+          "label": "Key buyers"
+        }
+      ],
+      "label": "CABLE TYPE"
+    },
+    "integration": {
+      "displayFields": [
+        {
+          "key": "country",
+          "label": "Country"
+        },
+        {
+          "key": "specialty",
+          "label": "Specialty"
+        }
+      ],
+      "label": "INTEGRATION"
+    },
+    "hyperscale": {
+      "displayFields": [
+        {
+          "key": "ticker",
+          "label": "Ticker"
+        },
+        {
+          "key": "capex2025",
+          "label": "2025 capex"
+        }
+      ],
+      "label": "HYPERSCALE"
+    },
+    "recyclers": {
+      "label": "RECYCLERS",
+      "displayFields": [
+        {
+          "key": "country",
+          "label": "Country"
+        },
+        {
+          "key": "outputVolume",
+          "label": "Output"
+        },
+        {
+          "key": "specialty",
+          "label": "Specialty"
+        }
+      ]
+    },
+    "supplyNodes": {
+      "label": "SUPPLY",
+      "displayFields": [
+        {
+          "key": "totalVolume",
+          "label": "Volume"
+        },
+        {
+          "key": "marketSize",
+          "label": "Market"
+        }
+      ]
+    }
   },
   "SPINE_TREE": {
     "Germanium": {
@@ -179,20 +349,34 @@
         "Wulantuga",
         "Yimin",
         "Huize",
-        "Yiliang + SYGT"
+        "Yiliang + SYGT",
+        "Spetsugli",
+        "Big Hill",
+        "Red Dog"
       ],
       "miners": [
         "Lincang Xinyuan",
         "Shengli Coal Group",
         "Various State Ops",
-        "Yunnan Chihong"
+        "Yunnan Chihong",
+        "JSC Germanium",
+        "STL / Gécamines",
+        "Teck Resources"
       ],
       "refiners": [
         "Lincang Xinyuan Refinery",
         "Smaller Chinese Refiners",
-        "Yunnan Chihong Refinery"
+        "Yunnan Chihong Refinery",
+        "JSC Germanium Refinery",
+        "Umicore",
+        "5N Plus",
+        "PPM Pure Metals"
       ],
-      "supply": "China Supply",
+      "supplyNodes": [
+        "China Primary Supply",
+        "Western Recycled Supply"
+      ],
+      "supply": "Global Supply",
       "depToMin": [
         [
           0,
@@ -213,6 +397,18 @@
         [
           4,
           3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          6
         ]
       ],
       "minToRef": [
@@ -231,6 +427,58 @@
         [
           3,
           2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          6,
+          5
+        ]
+      ],
+      "refToSupply": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      "supplyToGlobal": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
         ]
       ],
       "minor": {
@@ -240,9 +488,7 @@
         "miners": [
           2
         ],
-        "refiners": [
-          1
-        ]
+        "refiners": []
       }
     },
     "Copper": {

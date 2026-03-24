@@ -51,9 +51,12 @@ export interface RawChain {
   deposits: string[];
   miners: string[];
   refiners: string[];
+  supplyNodes?: string[];
   supply: string;
   depToMin: [number, number][];
   minToRef: [number, number][];
+  refToSupply?: [number, number][];
+  supplyToGlobal?: [number, number][];
   minor: { deposits: number[]; miners: number[]; refiners: number[] };
 }
 

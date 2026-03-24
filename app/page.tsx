@@ -34,11 +34,12 @@ const CHAINS  = chainsRaw as any;
 // ── ANCHOR SPINE TOP POSITION ─────────────────────────────────────
 // Each anchor spine's pyramid/sphere sits at the same y as the raw cube
 // when the spine is .shifted. We derive this from window.innerHeight.
-function anchorTopPx(): number {
+function anchorTopPx(state: AppState = 1): number {
   if (typeof window === "undefined") return 0;
-  const headerHeight = 188;         // 68px spine + 120px thesis block
-  const treeHeight   = 4 * 180;    // 4 layers * 180px gap = 720px
-  const anchorPx     = headerHeight + treeHeight + 60;  // 60px bottom padding
+  const headerHeight = 188;                           // 68px spine + 120px thesis block
+  const layers       = state === 1 ? 5 : 4;          // raw chain has 5 layers
+  const treeHeight   = layers * 150;
+  const anchorPx     = headerHeight + treeHeight + 60;
   return Math.min(anchorPx, window.innerHeight * 0.95);
 }
 
@@ -66,8 +67,8 @@ export default function Home() {
   // ── Anchor spine top positions ────────────────────────────────────
   const [anchorTop, setAnchorTop] = useState(0);
   useEffect(() => {
-    setAnchorTop(anchorTopPx());
-    const onResize = () => setAnchorTop(anchorTopPx());
+    setAnchorTop(anchorTopPx(appState));
+    const onResize = () => setAnchorTop(anchorTopPx(appState));
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, [appState]);

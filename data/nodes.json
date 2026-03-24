@@ -1,6 +1,9 @@
 {
   "Lincang": {
-    "country": "China", "depositType": "Coal deposit", "reserves": ">1,000 t Ge", "operator": "Lincang Xinyuan",
+    "country": "China",
+    "depositType": "Coal deposit",
+    "reserves": ">1,000 t Ge",
+    "operator": "Lincang Xinyuan",
     "type": "Deposit",
     "loc": "Yunnan Province, China",
     "stat": "1,000 t Ge reserves · 850 ppm",
@@ -32,7 +35,10 @@
     ]
   },
   "Wulantuga": {
-    "country": "China", "depositType": "Coal deposit", "reserves": "~1,600 t Ge", "operator": "Shengli Coal Group",
+    "country": "China",
+    "depositType": "Coal deposit",
+    "reserves": "~1,600 t Ge",
+    "operator": "Shengli Coal Group",
     "type": "Deposit",
     "loc": "Inner Mongolia, China",
     "stat": "1,600 t Ge reserves · 137 ppm",
@@ -64,7 +70,10 @@
     ]
   },
   "Yimin": {
-    "country": "China", "depositType": "Coal deposit", "reserves": "~4,000 t Ge", "operator": "State ops",
+    "country": "China",
+    "depositType": "Coal deposit",
+    "reserves": "~4,000 t Ge",
+    "operator": "State ops",
     "type": "Deposit",
     "loc": "Inner Mongolia, China",
     "stat": "4,000 t Ge reserves · 28-135 ppm",
@@ -96,7 +105,10 @@
     ]
   },
   "Huize": {
-    "country": "China", "depositType": "Zinc ore deposit", "reserves": "443 t Ge resources (Chihong)", "operator": "Yunnan Chihong",
+    "country": "China",
+    "depositType": "Zinc ore deposit",
+    "reserves": "443 t Ge resources (Chihong)",
+    "operator": "Yunnan Chihong",
     "type": "Deposit",
     "loc": "NE Yunnan Province, China",
     "stat": "7M+ t Zn+Pb reserves",
@@ -128,7 +140,10 @@
     ]
   },
   "Yiliang + SYGT": {
-    "country": "China", "depositType": "Zinc ore deposit", "reserves": "186 t Ge proven reserves", "operator": "Yunnan Chihong",
+    "country": "China",
+    "depositType": "Zinc ore deposit",
+    "reserves": "186 t Ge proven reserves",
+    "operator": "Yunnan Chihong",
     "type": "Deposit belt",
     "loc": "Yunnan / Sichuan / Guizhou, China",
     "stat": "32M+ t Zn reserves in belt",
@@ -160,7 +175,10 @@
     ]
   },
   "Lincang Xinyuan": {
-    "country": "China", "outputVolume": "~40 t Ge/yr extracted", "extractionMethod": "Coal combustion + fly ash leach", "ownership": "Listed · 002428.SZ",
+    "country": "China",
+    "outputVolume": "~40 t Ge/yr extracted",
+    "extractionMethod": "Coal combustion + fly ash leach",
+    "ownership": "Listed · 002428.SZ",
     "type": "Miner",
     "loc": "Yunnan Province, China",
     "stat": "~40,000 t lignite/yr · 002428.SZ",
@@ -192,7 +210,10 @@
     ]
   },
   "Shengli Coal Group": {
-    "country": "China", "outputVolume": "~20–35 t Ge/yr extracted", "extractionMethod": "Coal combustion + fly ash leach", "ownership": "State-owned",
+    "country": "China",
+    "outputVolume": "~20–35 t Ge/yr extracted",
+    "extractionMethod": "Coal combustion + fly ash leach",
+    "ownership": "State-owned",
     "type": "Miner",
     "loc": "Inner Mongolia, China",
     "stat": "~1,000,000 t coal/yr · State-owned",
@@ -224,7 +245,10 @@
     ]
   },
   "Various State Ops": {
-    "country": "China", "outputVolume": "~5–10 t Ge/yr est.", "extractionMethod": "Coal combustion + fly ash leach", "ownership": "State-owned",
+    "country": "China",
+    "outputVolume": "~5–10 t Ge/yr est.",
+    "extractionMethod": "Coal combustion + fly ash leach",
+    "ownership": "State-owned",
     "type": "Miners",
     "loc": "Inner Mongolia, China",
     "stat": "Partial · low activity",
@@ -256,7 +280,10 @@
     ]
   },
   "Yunnan Chihong": {
-    "country": "China", "outputVolume": "~66 t Ge/yr refined", "extractionMethod": "Zinc smelting + leach", "ownership": "Listed · 600497.SH",
+    "country": "China",
+    "outputVolume": "~66 t Ge/yr refined",
+    "extractionMethod": "Zinc smelting + leach",
+    "ownership": "Listed · 600497.SH",
     "type": "Miner / Refiner",
     "loc": "Qujing, Yunnan, China",
     "stat": "290,000 t Zn conc/yr · 600497.SH",
@@ -288,7 +315,9 @@
     ]
   },
   "Lincang Xinyuan Refinery": {
-    "country": "China", "outputVolume": "~40 t/yr refined Ge", "products": "GeO₂, GeCl₄, wafers",
+    "country": "China",
+    "outputVolume": "~40 t/yr refined Ge",
+    "products": "GeO₂, GeCl₄, wafers",
     "type": "Refinery",
     "loc": "Kunming / Lincang, Yunnan",
     "stat": "~40 t/yr refined Ge",
@@ -320,7 +349,9 @@
     ]
   },
   "Smaller Chinese Refiners": {
-    "country": "China", "outputVolume": "~14 t/yr est. combined", "products": "GeO₂, Ge metal",
+    "country": "China",
+    "outputVolume": "~14 t/yr est. combined",
+    "products": "GeO₂, Ge metal",
     "type": "Refiners",
     "loc": "Various · Inner Mongolia / Hunan",
     "stat": "~14 t/yr est. combined",
@@ -352,7 +383,9 @@
     ]
   },
   "Yunnan Chihong Refinery": {
-    "country": "China", "outputVolume": "~66 t/yr refined Ge", "products": "GeO₂, Ge metal, GeCl₄",
+    "country": "China",
+    "outputVolume": "~66 t/yr refined Ge",
+    "products": "GeO₂, Ge metal, GeCl₄",
     "type": "Refinery",
     "loc": "Qujing, Yunnan, China",
     "stat": "~66 t/yr refined Ge",
@@ -384,7 +417,9 @@
     ]
   },
   "China Supply": {
-    "totalVolume": "~120 t/yr primary refined", "globalSupply": "~230 t/yr incl. recycled", "marketSize": "~$1.4B",
+    "totalVolume": "~120 t/yr primary refined",
+    "globalSupply": "~230 t/yr incl. recycled",
+    "marketSize": "~$1.4B",
     "type": "Aggregate supply node",
     "loc": "China",
     "stat": "~120 t/yr primary refined",
@@ -416,7 +451,11 @@
     ]
   },
   "Corning": {
-    "country": "USA", "process": "OVD", "marketShare": "~25-30% global", "ownership": "Corning Inc.", "specialty": "Datacenter + long-haul cable",
+    "country": "USA",
+    "process": "OVD",
+    "marketShare": "~25-30% global",
+    "ownership": "Corning Inc.",
+    "specialty": "Datacenter + long-haul cable",
     "type": "Preform & fiber manufacturer",
     "loc": "Corning, New York, USA",
     "stat": "Largest fiber producer globally · GLW NYSE",
@@ -448,7 +487,11 @@
     ]
   },
   "Prysmian": {
-    "country": "Italy", "process": "CVD + OVD", "marketShare": "~80,000 km/yr", "ownership": "Prysmian S.p.A.", "specialty": "Terrestrial + subsea cable",
+    "country": "Italy",
+    "process": "CVD + OVD",
+    "marketShare": "~80,000 km/yr",
+    "ownership": "Prysmian S.p.A.",
+    "specialty": "Terrestrial + subsea cable",
     "type": "Preform & fiber manufacturer",
     "loc": "Milan, Italy",
     "stat": "Second largest fiber producer · PRY Milan",
@@ -480,7 +523,11 @@
     ]
   },
   "Fujikura": {
-    "country": "Japan", "process": "VAD", "marketShare": "Major APAC supplier", "ownership": "Fujikura Ltd.", "specialty": "Datacenter + fusion splicing",
+    "country": "Japan",
+    "process": "VAD",
+    "marketShare": "Major APAC supplier",
+    "ownership": "Fujikura Ltd.",
+    "specialty": "Datacenter + fusion splicing",
     "type": "Preform & fiber manufacturer",
     "loc": "Tokyo, Japan",
     "stat": "Major Japanese fiber producer · 5803 TSE",
@@ -512,7 +559,11 @@
     ]
   },
   "Sumitomo Electric": {
-    "country": "Japan", "process": "VAD + OVD", "marketShare": "Top 3 global", "ownership": "Sumitomo Electric Ind.", "specialty": "Datacenter + auto wiring",
+    "country": "Japan",
+    "process": "VAD + OVD",
+    "marketShare": "Top 3 global",
+    "ownership": "Sumitomo Electric Ind.",
+    "specialty": "Datacenter + auto wiring",
     "type": "Preform & fiber manufacturer",
     "loc": "Osaka, Japan",
     "stat": "Global fiber leader · 5802 TSE",
@@ -544,7 +595,9 @@
     ]
   },
   "Shin-Etsu": {
-    "country": "Japan", "process": "OVD", "marketShare": "Major — dual fiber+Si",
+    "country": "Japan",
+    "process": "OVD",
+    "marketShare": "Major — dual fiber+Si",
     "type": "Preform manufacturer",
     "loc": "Tokyo, Japan",
     "stat": "Largest silicon wafer maker + major fiber preform producer",
@@ -576,7 +629,11 @@
     ]
   },
   "YOFC": {
-    "country": "China", "process": "VAD + OVD", "marketShare": "Largest in China", "ownership": "State + Corning JV", "specialty": "Domestic fiber supply",
+    "country": "China",
+    "process": "VAD + OVD",
+    "marketShare": "Largest in China",
+    "ownership": "State + Corning JV",
+    "specialty": "Domestic fiber supply",
     "type": "Preform & fiber manufacturer",
     "loc": "Wuhan, China",
     "stat": "Largest fiber producer in China · 601869 SSE",
@@ -608,7 +665,8 @@
     ]
   },
   "OFS Fitel": {
-    "country": "USA", "ownership": "Furukawa subsidiary",
+    "country": "USA",
+    "ownership": "Furukawa subsidiary",
     "type": "Fiber drawing specialist",
     "loc": "Norcross, Georgia, USA / Denmark",
     "stat": "Furukawa subsidiary · specialist drawing",
@@ -671,7 +729,8 @@
     ]
   },
   "Vertiv": {
-    "country": "USA", "specialty": "Power + thermal management",
+    "country": "USA",
+    "specialty": "Power + thermal management",
     "type": "Datacenter infrastructure",
     "loc": "Columbus, Ohio, USA",
     "stat": "Power + thermal systems · VRT NYSE",
@@ -703,7 +762,8 @@
     ]
   },
   "Equinix": {
-    "country": "USA", "specialty": "Colocation + interconnection",
+    "country": "USA",
+    "specialty": "Colocation + interconnection",
     "type": "Colocation and interconnection",
     "loc": "Redwood City, California, USA",
     "stat": "Global colo leader · EQIX NASDAQ",
@@ -735,7 +795,8 @@
     ]
   },
   "CoreWeave": {
-    "country": "USA", "specialty": "AI GPU cloud",
+    "country": "USA",
+    "specialty": "AI GPU cloud",
     "type": "AI-native cloud provider",
     "loc": "Livingston, New Jersey, USA",
     "stat": "AI GPU cloud · CRWV NASDAQ",
@@ -767,7 +828,8 @@
     ]
   },
   "Schneider Electric": {
-    "country": "France", "specialty": "Power distribution, DCIM",
+    "country": "France",
+    "specialty": "Power distribution, DCIM",
     "type": "Energy management and automation",
     "loc": "Rueil-Malmaison, France",
     "stat": "Datacenter power systems · SU Paris",
@@ -799,7 +861,8 @@
     ]
   },
   "AECOM": {
-    "country": "USA", "specialty": "Datacenter construction",
+    "country": "USA",
+    "specialty": "Datacenter construction",
     "type": "Engineering and construction",
     "loc": "Dallas, Texas, USA",
     "stat": "Datacenter construction · ACM NYSE",
@@ -831,7 +894,8 @@
     ]
   },
   "Microsoft": {
-    "ticker": "MSFT", "capex2025": "~$80B",
+    "ticker": "MSFT",
+    "capex2025": "~$80B",
     "type": "Hyperscale operator",
     "loc": "Redmond, Washington, USA",
     "stat": "Azure + OpenAI · MSFT NASDAQ",
@@ -863,7 +927,8 @@
     ]
   },
   "Google": {
-    "ticker": "GOOGL", "capex2025": "~$50B",
+    "ticker": "GOOGL",
+    "capex2025": "~$50B",
     "type": "Hyperscale operator",
     "loc": "Mountain View, California, USA",
     "stat": "GCP + Gemini + TPUs · GOOGL NASDAQ",
@@ -895,7 +960,8 @@
     ]
   },
   "Amazon": {
-    "ticker": "AMZN", "capex2025": "~$75B",
+    "ticker": "AMZN",
+    "capex2025": "~$75B",
     "type": "Hyperscale operator",
     "loc": "Seattle, Washington, USA",
     "stat": "AWS + Trainium + Inferentia · AMZN NASDAQ",
@@ -927,7 +993,8 @@
     ]
   },
   "Meta": {
-    "ticker": "META", "capex2025": "~$60-65B",
+    "ticker": "META",
+    "capex2025": "~$60-65B",
     "type": "Hyperscale operator",
     "loc": "Menlo Park, California, USA",
     "stat": "Llama + AI infrastructure · META NASDAQ",
@@ -959,7 +1026,8 @@
     ]
   },
   "xAI": {
-    "ticker": "Private", "capex2025": "~$7-12B",
+    "ticker": "Private",
+    "capex2025": "~$7-12B",
     "type": "Hyperscale operator",
     "loc": "Memphis, Tennessee, USA",
     "stat": "Grok + Colossus cluster · Private",
@@ -991,7 +1059,8 @@
     ]
   },
   "Oracle": {
-    "ticker": "ORCL", "capex2025": "~$16B",
+    "ticker": "ORCL",
+    "capex2025": "~$16B",
     "type": "Hyperscale operator",
     "loc": "Austin, Texas, USA",
     "stat": "OCI + AI infrastructure · ORCL NYSE",
@@ -1085,7 +1154,8 @@
     ]
   },
   "Datacenter Cable": {
-    "fiberCount": "96 to 6,912", "keyBuyers": "AWS, Google, Microsoft, Meta",
+    "fiberCount": "96 to 6,912",
+    "keyBuyers": "AWS, Google, Microsoft, Meta",
     "type": "Cable specification",
     "loc": "Global",
     "stat": "High fiber count · ribbon format · no armoring",
@@ -1117,7 +1187,8 @@
     ]
   },
   "Terrestrial Long-Haul": {
-    "fiberCount": "12 to 432", "keyBuyers": "AT&T, Verizon, Deutsche Telekom",
+    "fiberCount": "12 to 432",
+    "keyBuyers": "AT&T, Verizon, Deutsche Telekom",
     "type": "Cable specification",
     "loc": "Global",
     "stat": "Armored · gel-filled · km to thousands of km",
@@ -1149,7 +1220,8 @@
     ]
   },
   "Subsea Cable": {
-    "fiberCount": "8 to 24 fiber pairs", "keyBuyers": "Microsoft, Google, Meta, Amazon",
+    "fiberCount": "8 to 24 fiber pairs",
+    "keyBuyers": "Microsoft, Google, Meta, Amazon",
     "type": "Cable specification",
     "loc": "Ocean floors globally",
     "stat": "Low fiber count · heavily armored · copper power conductor",
@@ -1181,7 +1253,8 @@
     ]
   },
   "Alcatel SN": {
-    "country": "France", "specialty": "Subsea cable systems",
+    "country": "France",
+    "specialty": "Subsea cable systems",
     "type": "Subsea cable manufacturer",
     "loc": "Paris, France (Nokia subsidiary)",
     "stat": "Global leader in subsea cable systems",
@@ -1213,7 +1286,8 @@
     ]
   },
   "SubCom": {
-    "country": "USA", "specialty": "Subsea cable + vessels",
+    "country": "USA",
+    "specialty": "Subsea cable + vessels",
     "type": "Subsea cable manufacturer",
     "loc": "Eatontown, New Jersey, USA",
     "stat": "#2 global subsea cable system provider",
@@ -1245,7 +1319,8 @@
     ]
   },
   "NEC": {
-    "country": "Japan", "specialty": "Subsea + repeater systems",
+    "country": "Japan",
+    "specialty": "Subsea + repeater systems",
     "type": "Subsea cable manufacturer",
     "loc": "Tokyo, Japan",
     "stat": "Japanese subsea cable leader · 6701 TSE",
@@ -1277,7 +1352,8 @@
     ]
   },
   "CommScope": {
-    "country": "USA", "specialty": "Datacenter infrastructure, FTTH",
+    "country": "USA",
+    "specialty": "Datacenter infrastructure, FTTH",
     "type": "Cable assembler",
     "loc": "Hickory, North Carolina, USA",
     "stat": "Major US datacenter cable supplier · COMM NYSE",
@@ -1309,7 +1385,8 @@
     ]
   },
   "AFL": {
-    "country": "USA", "specialty": "Datacenter + utility cable",
+    "country": "USA",
+    "specialty": "Datacenter + utility cable",
     "type": "Cable assembler",
     "loc": "Duncan, South Carolina, USA",
     "stat": "Fujikura subsidiary · private",
@@ -1338,6 +1415,467 @@
       "No listed equity vehicle",
       "Dependent on Fujikura parent strategy",
       "US utility cable market has different demand cycle than datacenter"
+    ]
+  },
+  "Umicore": {
+    "type": "Germanium recycler",
+    "loc": "Hoboken, Belgium",
+    "stat": "World's largest Ge recycler · UMI Brussels",
+    "risk": "Feed dependent on western manufacturing scrap — constrained by fiber optic production volumes.",
+    "country": "Belgium",
+    "outputVolume": "~40-50 t/yr recycled",
+    "products": "GeO₂, GeCl₄, Ge wafers",
+    "ownership": "Listed · Euronext Brussels",
+    "specialty": "Fiber optic + IR optics scrap",
+    "stats": [
+      [
+        "Ticker",
+        "UMI (Euronext)"
+      ],
+      [
+        "Ge output",
+        "~40-50 t/yr est."
+      ],
+      [
+        "Feed source",
+        ">50% recycled scrap"
+      ],
+      [
+        "Founded",
+        "1989 (Belgium)"
+      ]
+    ],
+    "role": "Umicore is the western world's primary germanium recycler and refiner, operating out of Hoboken near Antwerp. More than 50% of their germanium feed comes from recycling customer scrap — fiber optic manufacturing waste from Corning and Prysmian, spent infrared optics, and decommissioned military equipment. Umicore is the strategic western buffer against Chinese export controls.",
+    "inv": "UMI offers the most direct western exposure to germanium supply security. As China's export restrictions tighten, Umicore's recycling model becomes structurally more valuable — it sources scrap domestically from western fiber manufacturers, entirely bypassing Chinese primary supply. The 2024 DRC partnership adds primary concentrate feed for the first time.",
+    "risks": [
+      "Germanium output volumes not publicly disclosed — estimates only",
+      "Feed volume constrained by western fiber optic manufacturing scrap availability",
+      "DRC partnership (Chemaf/STL) adds geopolitical risk from a different direction"
+    ]
+  },
+  "5N Plus": {
+    "type": "Germanium refiner",
+    "loc": "Montreal, Quebec, Canada",
+    "stat": "US DoD strategic partner · VNP TSX",
+    "risk": "Small scale relative to Umicore and Chinese producers.",
+    "country": "Canada",
+    "outputVolume": "~15-20 t/yr est.",
+    "products": "Ge wafers, GeO₂, high-purity Ge",
+    "ownership": "Listed · TSX: VNP",
+    "specialty": "Semiconductor + solar wafers",
+    "stats": [
+      [
+        "Ticker",
+        "VNP (TSX)"
+      ],
+      [
+        "Ge output",
+        "~15-20 t/yr est."
+      ],
+      [
+        "Key customer",
+        "US Department of Defense"
+      ],
+      [
+        "Facility",
+        "Utah, USA (DoD-backed)"
+      ]
+    ],
+    "role": "5N Plus produces high-purity germanium products including wafers for satellite solar cells and semiconductor applications. The US Department of Defense partnered with 5N Plus to establish a germanium wafer production facility in Utah — a direct strategic response to Chinese export controls on germanium announced in 2023.",
+    "inv": "VNP is the most direct investment play on US germanium supply independence. The DoD partnership provides contracted revenue and de-risks the business model. As US defense and space programs require domestically sourced germanium wafers, 5N Plus is structurally positioned as the primary American supplier.",
+    "risks": [
+      "Small scale — cannot meaningfully replace Chinese primary supply",
+      "DoD revenue concentration creates customer dependency",
+      "Dependent on imported germanium feed — not fully vertically integrated"
+    ]
+  },
+  "PPM Pure Metals": {
+    "type": "Germanium refiner",
+    "loc": "Langelsheim, Germany",
+    "stat": "European specialist refiner · Private",
+    "risk": "Private company — limited transparency on volumes and financials.",
+    "country": "Germany",
+    "outputVolume": "~10-15 t/yr est.",
+    "products": "Zone-refined Ge, GeO₂, GeCl₄",
+    "ownership": "Private",
+    "specialty": "Zone refining · semiconductor grade",
+    "stats": [
+      [
+        "Status",
+        "Private company"
+      ],
+      [
+        "Ge output",
+        "~10-15 t/yr est."
+      ],
+      [
+        "Process",
+        "Zone refining to 7N+ purity"
+      ],
+      [
+        "Location",
+        "Langelsheim, Germany"
+      ]
+    ],
+    "role": "PPM Pure Metals is a German specialty refiner focused on ultra-high purity germanium for semiconductor and detector applications. Their zone refining process achieves 7N+ purity (99.99999%+) — the highest grade required for radiation detection and advanced semiconductor applications. Supplies European defense and research institutions.",
+    "inv": "No direct investment vehicle — private company. Indirect exposure via European critical minerals supply chain security initiatives. PPM represents the European strategic refining capability for defense-grade germanium.",
+    "risks": [
+      "Private — no investment access",
+      "Small scale, niche market focus",
+      "Dependent on scrap feed from European fiber and IR optics manufacturers"
+    ]
+  },
+  "China Primary Supply": {
+    "type": "Primary supply node",
+    "loc": "China",
+    "stat": "~120 t/yr · ~57% of global supply",
+    "risk": "Export controls implemented August 2023 — ongoing supply risk for western buyers.",
+    "country": "China",
+    "totalVolume": "~120 t/yr primary refined",
+    "marketSize": "~$350M est.",
+    "stats": [
+      [
+        "Volume",
+        "~120 t/yr primary"
+      ],
+      [
+        "Global share",
+        "~57%"
+      ],
+      [
+        "Export control",
+        "Active since Aug 2023"
+      ],
+      [
+        "Price impact",
+        "+88% in 2024"
+      ]
+    ],
+    "role": "China Primary Supply represents the aggregated output of Chinese germanium refiners — Lincang Xinyuan Refinery, Yunnan Chihong Refinery, and smaller operators. This is primary germanium refined from coal fly ash and zinc smelting byproducts. China implemented export licensing requirements for germanium in August 2023, creating structural uncertainty for all western buyers.",
+    "inv": "China's dominance of primary germanium supply is the central investment thesis of this supply chain. The export control regime has bifurcated the market — Chinese buyers get unrestricted access while western buyers face licensing delays and price premiums. This creates durable demand for western recycling alternatives.",
+    "risks": [
+      "Export licensing can be tightened or revoked at any time",
+      "Chinese domestic demand consuming growing share of output",
+      "No western alternative at equivalent scale"
+    ]
+  },
+  "Western Recycled Supply": {
+    "type": "Secondary supply node",
+    "loc": "Belgium, Canada, Germany, USA",
+    "stat": "~90-110 t/yr · ~43% of global supply",
+    "risk": "Volume constrained by western manufacturing scrap — cannot scale independently.",
+    "country": "Belgium",
+    "totalVolume": "~90-110 t/yr recycled",
+    "marketSize": "~$270M est.",
+    "stats": [
+      [
+        "Volume",
+        "~90-110 t/yr recycled"
+      ],
+      [
+        "Global share",
+        "~43%"
+      ],
+      [
+        "Primary recycler",
+        "Umicore (Belgium)"
+      ],
+      [
+        "Growth driver",
+        "China export control response"
+      ]
+    ],
+    "role": "Western Recycled Supply aggregates germanium recovered by Umicore, 5N Plus, PPM Pure Metals, and smaller recyclers from manufacturing scrap — primarily fiber optic production waste from Corning, Prysmian, and Fujikura. This stream is the western world's strategic buffer against Chinese primary supply disruption.",
+    "inv": "The growth of western recycled supply is structurally driven by China's export controls. Every tonne recycled by Umicore or 5N Plus is a tonne that doesn't need to be sourced from China. As AI datacenter buildout drives fiber optic manufacturing volumes, the scrap stream feeding western recyclers also grows — a natural tailwind.",
+    "risks": [
+      "Cannot scale beyond available manufacturing scrap volumes",
+      "Still partially dependent on Chinese primary Ge for high-purity applications",
+      "Western recycling capacity remains well below Chinese primary output"
+    ]
+  },
+  "Global Supply": {
+    "type": "Global market output",
+    "loc": "Global",
+    "stat": "~220 t/yr total · $320M market (2024)",
+    "risk": "China controls ~57% of primary supply with active export restrictions.",
+    "totalVolume": "~220 t/yr total",
+    "globalSupply": "~220 t/yr combined",
+    "marketSize": "~$320M (2024)",
+    "stats": [
+      [
+        "Total supply",
+        "~220 t/yr"
+      ],
+      [
+        "Market value",
+        "~$320M (2024)"
+      ],
+      [
+        "China share",
+        "~57% primary"
+      ],
+      [
+        "Price 2024 peak",
+        "~$2,900/kg"
+      ]
+    ],
+    "role": "Global germanium supply combines Chinese primary refining (~120t/yr) and western recycling (~90-110t/yr). Total supply is structurally constrained — germanium cannot be mined directly and supply growth requires either increased coal/zinc processing in China or expanded western recycling capacity. The 2023 Chinese export controls have permanently bifurcated the market.",
+    "inv": "The global supply constraint is the investment thesis. ~220t/yr of supply serving rapidly growing AI infrastructure, defense, and solar demand. Supply cannot respond quickly to demand increases — it is locked to coal combustion and zinc smelting rates in China, and to western fiber manufacturing scrap volumes. Price is the release valve.",
+    "risks": [
+      "Supply permanently capped by byproduct dependency",
+      "Chinese export controls create ongoing western supply risk",
+      "Recycled supply cannot scale fast enough to close the gap if China tightens controls further"
+    ]
+  },
+  "Spetsugli": {
+    "type": "Coal-hosted germanium deposit",
+    "loc": "Primorski Krai, Russia",
+    "stat": "~1,015 t Ge · 450–514 ppm · Pavlovsk Coalfield",
+    "risk": "Output blocked from western markets post-2022 Russia sanctions.",
+    "country": "Russia",
+    "depositType": "Coal deposit",
+    "reserves": "~1,015 t Ge",
+    "grade": "450–514 ppm avg",
+    "operator": "JSC Germanium / Rostec",
+    "status": "Active · western-blocked",
+    "stats": [
+      [
+        "Reserves",
+        "~1,015 t Ge"
+      ],
+      [
+        "Grade",
+        "450–514 ppm avg"
+      ],
+      [
+        "Operator",
+        "JSC Germanium (Rostec)"
+      ],
+      [
+        "Status",
+        "Active but sanctioned"
+      ]
+    ],
+    "role": "Spetsugli is the third of the world's three active coal-hosted germanium deposits, alongside Lincang and Wulantuga. Located in the Pavlovsk Coalfield in Russia's Far East, it has been mined since the 1960s. JSC Germanium extracts germanium from coal fly ash at the site and refines it at a facility in Krasnoyarsk. Historically exported 80%+ of output to western markets — that flow has been effectively cut off since 2022.",
+    "inv": "No direct investment vehicle. Spetsugli represents ~10% of theoretical global germanium supply that is structurally unavailable to western buyers due to sanctions. Its exclusion from western supply chains permanently tightens the accessible supply picture and strengthens the investment case for Umicore and 5N Plus as the primary western alternatives.",
+    "risks": [
+      "Post-2022 sanctions effectively block all western access to Russian germanium",
+      "JSC Germanium is part of Rostec, a sanctioned state defense conglomerate",
+      "Sanctions could be reversed but political timeline is entirely unpredictable"
+    ]
+  },
+  "Big Hill": {
+    "type": "Industrial tailings deposit",
+    "loc": "Lubumbashi, DRC",
+    "stat": "14M t slag · 700+ t Ge potential · ramping up",
+    "risk": "DRC political and operational risk. Volume unproven at scale.",
+    "country": "DRC",
+    "depositType": "Tailings deposit",
+    "reserves": "700+ t Ge potential",
+    "grade": "Ge in copper-zinc slag",
+    "operator": "STL / Gécamines (DRC state)",
+    "status": "Ramping up · first export Oct 2024",
+    "stats": [
+      [
+        "Slag volume",
+        "14 million tonnes"
+      ],
+      [
+        "Ge potential",
+        "700+ t est."
+      ],
+      [
+        "Operator",
+        "STL / Gécamines"
+      ],
+      [
+        "First export",
+        "October 2024"
+      ]
+    ],
+    "role": "Big Hill is not a geological deposit — it is a century of accumulated mining slag from Lubumbashi's copper and cobalt industry. STL, a subsidiary of DRC state miner Gécamines, processes the slag through a new hydrometallurgical plant to extract germanium concentrate, which is then shipped exclusively to Umicore in Belgium for final refining. First shipment occurred October 2024. If fully ramped, could supply up to 30% of global germanium demand.",
+    "inv": "Big Hill is the most significant emerging non-Chinese germanium source in the world. The exclusive offtake agreement with Umicore makes UMI the primary beneficiary of any ramp-up. No direct investment in STL or Gécamines is possible for most western investors — exposure is via Umicore (UMI). The DRC has 700+ tonnes of estimated germanium in the slag heap — at current prices that represents $2B+ of embedded value.",
+    "risks": [
+      "DRC political risk — Gécamines is a state-owned entity subject to government policy changes",
+      "Hydrometallurgical plant is new and unproven at scale — ramp-up timeline uncertain",
+      "Exclusive Umicore offtake means no price competition — Umicore controls the western refining bottleneck"
+    ]
+  },
+  "Red Dog": {
+    "type": "Zinc-germanium ore deposit",
+    "loc": "NW Alaska, USA",
+    "stat": "World's largest zinc mine · Ge byproduct · mine life to 2031",
+    "risk": "Declining grades — production falling each year. Mine life ends 2031.",
+    "country": "USA",
+    "depositType": "Zinc ore deposit",
+    "reserves": "Declining — to 2031",
+    "grade": "Ge trace in Zn-Pb ore",
+    "operator": "Teck Resources (TSX: TECK)",
+    "status": "Active · declining",
+    "stats": [
+      [
+        "Operator",
+        "Teck Resources (TECK)"
+      ],
+      [
+        "Zinc output",
+        "~555,600 t Zn (2024)"
+      ],
+      [
+        "Mine life",
+        "To 2031 (current pits)"
+      ],
+      [
+        "Ge processing",
+        "Trail smelter, BC"
+      ]
+    ],
+    "role": "Red Dog is the world's largest zinc mine, located 170km north of the Arctic Circle in northwest Alaska on land owned by the NANA Regional Corporation. Germanium is recovered as a byproduct of zinc concentrate processing at Teck's Trail metallurgical facility in British Columbia. Germanium output volumes are not publicly disclosed. The mine has entered its decline phase — zinc grades are falling and production is expected to decrease each year through to 2031.",
+    "inv": "Teck (TECK.B TSX / TECK NYSE) offers indirect germanium exposure but the primary investment thesis is copper — Teck sold its coal business in 2023 and is repositioning as a copper-focused miner. Red Dog's germanium is a byproduct of a declining zinc operation. The more relevant angle is that Red Dog's decline removes one of the few non-Chinese zinc-germanium sources from the global supply picture — a structural tightening of western supply.",
+    "risks": [
+      "Mine life ends 2031 based on current developed deposits",
+      "Germanium output volumes not publicly disclosed — no direct tracking",
+      "Teck is merging with Anglo American — Red Dog's future ownership and operation post-merger unclear"
+    ]
+  },
+  "JSC Germanium": {
+    "type": "Germanium miner and refiner",
+    "loc": "Krasnoyarsk, Russia",
+    "stat": "~20 t/yr capacity · Rostec subsidiary · 80%+ historically exported",
+    "risk": "Sanctioned entity — output inaccessible to western buyers since 2022.",
+    "country": "Russia",
+    "outputVolume": "~20 t/yr capacity",
+    "extractionMethod": "Coal combustion + fly ash leach",
+    "ownership": "State-owned · Rostec / Shvabe",
+    "stats": [
+      [
+        "Capacity",
+        "~20 t/yr"
+      ],
+      [
+        "Refinery",
+        "Krasnoyarsk, Siberia"
+      ],
+      [
+        "Ownership",
+        "Rostec (state defense)"
+      ],
+      [
+        "Export",
+        "Blocked post-2022"
+      ]
+    ],
+    "role": "JSC Germanium operates an integrated germanium refinery in Krasnoyarsk processing coal fly ash from the Spetsugli deposit plus recycled waste streams. Part of the Rostec state defense conglomerate via the Shvabe holding company. Historically exported more than 80% of production to western markets including Europe and Japan. That export flow has been cut off since Russia's 2022 invasion of Ukraine triggered western sanctions.",
+    "inv": "No investment access — state-owned sanctioned entity. JSC Germanium's exclusion from western supply represents a permanent structural tightening of accessible germanium supply, strengthening the investment case for Umicore and 5N Plus.",
+    "risks": [
+      "Sanctioned entity — no western investment or trade possible",
+      "Part of Rostec defense conglomerate — geopolitical risk is structural not cyclical",
+      "Production continues but serves only Russia and potentially China"
+    ]
+  },
+  "STL / Gécamines": {
+    "type": "Tailings processor",
+    "loc": "Lubumbashi, DRC",
+    "stat": "First Ge export Oct 2024 · exclusive Umicore offtake · ramping",
+    "risk": "DRC political risk. New facility unproven at scale.",
+    "country": "DRC",
+    "outputVolume": "Ramping up · target 30% global supply",
+    "extractionMethod": "Hydrometallurgical leach of slag",
+    "ownership": "100% Gécamines (DRC state)",
+    "stats": [
+      [
+        "Operator",
+        "STL / Gécamines"
+      ],
+      [
+        "Offtake",
+        "100% to Umicore"
+      ],
+      [
+        "Plant",
+        "Commissioned Oct 2023"
+      ],
+      [
+        "Target",
+        "Up to 30% world demand"
+      ]
+    ],
+    "role": "STL processes the Big Hill slag heap through a new hydrometallurgical plant commissioned in October 2023, extracting germanium concentrate from a century of accumulated copper mining waste. All output ships exclusively to Umicore in Belgium under a long-term exclusive partnership signed May 2024. First export batch shipped October 2024. If fully ramped, could represent the largest new non-Chinese germanium source in the world.",
+    "inv": "No direct investment vehicle — Gécamines is DRC state-owned. The investment play is Umicore (UMI), which holds the exclusive offtake and benefits directly from every tonne STL produces. This partnership is one of the key reasons UMI is strategically positioned as the western germanium supply hub.",
+    "risks": [
+      "DRC state ownership creates policy and nationalization risk",
+      "Hydrometallurgical plant is new — ramp-up timeline and volumes unproven",
+      "Exclusive Umicore offtake means no market price competition for this source"
+    ]
+  },
+  "Teck Resources": {
+    "type": "Zinc miner — germanium byproduct",
+    "loc": "Trail, British Columbia, Canada",
+    "stat": "World's largest zinc mine · Ge byproduct · TECK NYSE/TSX",
+    "risk": "Red Dog mine life ends 2031. Germanium volumes not disclosed.",
+    "country": "Canada",
+    "outputVolume": "Undisclosed — Ge byproduct",
+    "extractionMethod": "Zinc concentrate → Trail smelter",
+    "ownership": "Listed · TECK.B TSX / TECK NYSE",
+    "stats": [
+      [
+        "Ticker",
+        "TECK (NYSE/TSX)"
+      ],
+      [
+        "Zinc output",
+        "~555,600 t/yr (2024)"
+      ],
+      [
+        "Ge output",
+        "Not disclosed"
+      ],
+      [
+        "Mine life",
+        "Red Dog to 2031"
+      ]
+    ],
+    "role": "Teck operates Red Dog in Alaska, the world's largest zinc mine, producing germanium as an undisclosed byproduct. Zinc concentrates are shipped to Teck's Trail metallurgical complex in British Columbia where germanium is recovered. Teck does not publicly disclose germanium production volumes. The company is in the process of merging with Anglo American and is repositioning as a copper-focused miner.",
+    "inv": "TECK offers indirect germanium exposure but copper is the primary thesis. The more relevant germanium angle is that Red Dog's decline removes one of the few non-Chinese zinc-germanium sources — a structural tightening of western supply that benefits Umicore and 5N Plus more than Teck itself.",
+    "risks": [
+      "Red Dog mine life ends 2031 — germanium source is finite and declining",
+      "Teck-Anglo American merger may change operational priorities at Red Dog",
+      "Germanium revenue is unquantified — no way to track or invest on that basis"
+    ]
+  },
+  "JSC Germanium Refinery": {
+    "type": "Germanium refinery",
+    "loc": "Krasnoyarsk, Russia",
+    "stat": "~20 t/yr capacity · Rostec · western-blocked",
+    "risk": "Sanctioned — inaccessible to western buyers and investors.",
+    "country": "Russia",
+    "outputVolume": "~20 t/yr refined",
+    "products": "Ge metal, GeO₂, GeCl₄, IR optics, wafers",
+    "ownership": "State-owned · Rostec",
+    "stats": [
+      [
+        "Capacity",
+        "~20 t/yr"
+      ],
+      [
+        "Products",
+        "Ge metal, GeO₂, GeCl₄"
+      ],
+      [
+        "Status",
+        "Active · export-blocked"
+      ],
+      [
+        "Parent",
+        "Rostec / Shvabe"
+      ]
+    ],
+    "role": "JSC Germanium operates a fully integrated refinery in Krasnoyarsk processing Spetsugli fly ash and recycled germanium waste into finished products including germanium metal, dioxide, tetrachloride, IR optical blanks, and wafers. Has launched germanium wafer production for the Russian space industry. Historically the world's second largest germanium exporter after China — now effectively removed from the global market.",
+    "inv": "No investment access. Sanctioned entity.",
+    "risks": [
+      "Sanctioned — no western trade or investment",
+      "Serves Russian domestic and potentially Chinese markets only",
+      "Represents structural supply removal from western accessible market"
     ]
   }
 }
