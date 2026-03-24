@@ -20,6 +20,7 @@ import Tooltip      from "@/components/Tooltip";
 import {
   buildRawGeometry, buildCompGeometry,
   buildSubGeometry, buildEUGeometry,
+  computeRawSvgWidth,
   toSVG, type TreeGeometry, type LayerGeometry,
 } from "@/lib/treeGeometry";
 
@@ -50,6 +51,7 @@ export default function Home() {
   // ── Geometry ─────────────────────────────────────────────────────
   const [geometry,  setGeometry]  = useState<TreeGeometry | null>(null);
   const [layers,    setLayers]    = useState<LayerGeometry[]>([]);
+  const [svgWidth,  setSvgWidth]  = useState(1000);
 
   // ── Panel ─────────────────────────────────────────────────────────
   const [panelOpen,    setPanelOpen]    = useState(false);
@@ -133,8 +135,13 @@ export default function Home() {
     const cxPx = rect.left + rect.width  / 2;
     const cyPx = rect.top  + rect.height / 2;
 
-    // ancX = SVG X coordinate (viewBox 0–1000); ancY = pixel-to-SVG Y
-    const ancX = toSVG(cxPx, window.innerWidth);
+    // Compute SVG viewBox width for wide chains
+    const rawChain = level === 1 && sel.raw ? CHAINS.RAW_DATA[sel.raw] : null;
+    const newSvgWidth = rawChain ? computeRawSvgWidth(rawChain) : 1000;
+    setSvgWidth(newSvgWidth);
+
+    // ancX = center of viewBox; ancY = viewport pixel → SVG coordinate
+    const ancX = newSvgWidth / 2;
     const ancY = toSVG(cyPx, window.innerHeight);
 
     // Stop the output→anchor line just above the node label.
@@ -447,6 +454,7 @@ export default function Home() {
         geometry={geometry}
         nodes={NODES}
         layerConfig={CHAINS.layerConfig}
+        svgWidth={svgWidth}
         onNodeHover={handleNodeHover}
         onNodeLeave={handleNodeLeave}
         onNodeClick={handleNodeClick}
