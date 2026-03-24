@@ -20,7 +20,6 @@ import Tooltip      from "@/components/Tooltip";
 import {
   buildRawGeometry, buildCompGeometry,
   buildSubGeometry, buildEUGeometry,
-  computeRawSvgWidth,
   toSVG, type TreeGeometry, type LayerGeometry,
 } from "@/lib/treeGeometry";
 
@@ -33,14 +32,14 @@ const PANELS  = panelsRaw as any;
 const CHAINS  = chainsRaw as any;
 
 // ── ANCHOR SPINE TOP POSITION ─────────────────────────────────────
-// Measured dynamically from the thesis block's bottom edge.
+// Uses fixed header height + thesis block height, not thesis bottom edge.
+// Works correctly even after scrolling.
 function anchorTopPx(thesisEl: HTMLElement | null): number {
   if (typeof window === "undefined") return 600;
-  const thesisBottom = thesisEl
-    ? thesisEl.getBoundingClientRect().bottom
-    : 188;
-  // 40px breathing room + 750px tree (5×150px) + 80px for top-layer node content
-  return thesisBottom + 40 + 750 + 80;
+  const spineHeight = 68;
+  const thesisHeight = thesisEl ? thesisEl.getBoundingClientRect().height : 110;
+  const headerTotal = spineHeight + thesisHeight + 40;
+  return headerTotal + 900;
 }
 
 export default function Home() {
@@ -51,7 +50,6 @@ export default function Home() {
   // ── Geometry ─────────────────────────────────────────────────────
   const [geometry,  setGeometry]  = useState<TreeGeometry | null>(null);
   const [layers,    setLayers]    = useState<LayerGeometry[]>([]);
-  const [svgWidth,  setSvgWidth]  = useState(1000);
 
   // ── Panel ─────────────────────────────────────────────────────────
   const [panelOpen,    setPanelOpen]    = useState(false);
@@ -135,13 +133,8 @@ export default function Home() {
     const cxPx = rect.left + rect.width  / 2;
     const cyPx = rect.top  + rect.height / 2;
 
-    // Compute SVG viewBox width: raw chain needs extra width for content-aware slots
-    const rawChain = level === 1 && sel.raw ? CHAINS.RAW_DATA[sel.raw] : null;
-    const newSvgWidth = rawChain ? computeRawSvgWidth(rawChain) : 1000;
-    setSvgWidth(newSvgWidth);
-
-    // ancX = center of SVG viewBox; ancY = pixel-to-SVG Y (viewBox height always 1000)
-    const ancX = newSvgWidth / 2;
+    // ancX = SVG X coordinate (viewBox 0–1000); ancY = pixel-to-SVG Y
+    const ancX = toSVG(cxPx, window.innerWidth);
     const ancY = toSVG(cyPx, window.innerHeight);
 
     // Stop the output→anchor line just above the node label.
@@ -454,7 +447,6 @@ export default function Home() {
         geometry={geometry}
         nodes={NODES}
         layerConfig={CHAINS.layerConfig}
-        svgWidth={svgWidth}
         onNodeHover={handleNodeHover}
         onNodeLeave={handleNodeLeave}
         onNodeClick={handleNodeClick}
@@ -463,7 +455,7 @@ export default function Home() {
       />
 
       {appState > 0 && (
-        <div style={{ height: anchorTop + 400, width: "100%", position: "relative" }} />
+        <div style={{ height: anchorTop + 200, width: "100%", position: "relative" }} />
       )}
 
       {appState > 0 && (
