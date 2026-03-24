@@ -16,10 +16,12 @@ function SectionDivider({ label, first = false }: { label: string; first?: boole
       <div style={{ flex: 1, height: "0.5px", background: "rgba(192,176,128,0.3)" }} />
       <span style={{
         fontFamily: "Courier New, monospace",
-        fontSize: 8,
-        letterSpacing: "0.2em",
+        fontSize: 11,
+        fontWeight: 700,
+        letterSpacing: "0.18em",
         textTransform: "uppercase" as const,
-        color: "#9c8c74",
+        color: "#6b5c3e",
+        whiteSpace: "nowrap" as const,
       }}>{label}</span>
       <div style={{ flex: 1, height: "0.5px", background: "rgba(192,176,128,0.3)" }} />
     </div>
