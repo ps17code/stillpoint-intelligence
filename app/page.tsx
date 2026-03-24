@@ -15,6 +15,7 @@ import HorizontalSpine   from "@/components/HorizontalSpine";
 import RightPanel        from "@/components/RightPanel";
 import { buildNodePanelContent } from "@/components/RightPanel";
 import Tooltip      from "@/components/Tooltip";
+import InsightsSection from "@/components/InsightsSection";
 
 // Geometry
 import {
@@ -322,14 +323,16 @@ export default function Home() {
     { label: sel.eu || "AI Datacenter", shape: "cylinder" as const },
   ];
 
-  // Total page height: tree top + 5-layer tree height (900px) + insights + padding
-  const treeDocBottom = topAnchor + 900 + 80;
-  const totalPageHeight = appState > 0 ? treeDocBottom + 800 : 0;
+  // Insights section starts below tree (5 layers × 180px gap + 60px breathing room)
+  const insightsTop = topAnchor + 5 * 180 + 60;
+
+  // Total page height: insights top + approximate insights content height
+  const totalPageHeight = appState > 0 ? insightsTop + 1400 : 0;
 
   return (
     <main style={{
       width: "100%",
-      minHeight: appState > 0 ? totalPageHeight : "100vh",
+      minHeight: appState > 0 ? totalPageHeight + "px" : "100vh",
       background: "var(--bg)",
       position: "relative",
     }}>
@@ -482,6 +485,9 @@ export default function Home() {
         content={panelContent}
         onClose={() => setPanelOpen(o => !o)}
       />
+
+      {/* Insights section — below tree, raw material layer only */}
+      {appState === 1 && <InsightsSection top={insightsTop} />}
 
     </main>
   );
