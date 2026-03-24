@@ -331,7 +331,7 @@ export default function Home() {
   ];
 
   return (
-    <main style={{ width: "100%", minHeight: "100%", background: "var(--bg)", paddingTop: appState > 0 ? "180px" : "0" }}>
+    <main style={{ width: "100%", minHeight: "100vh", background: "var(--bg)", position: "relative" }}>
 
       {/* Grain */}
       <div className="grain" />
@@ -463,11 +463,13 @@ export default function Home() {
       />
 
       {appState > 0 && (
-        <>
-          {/* Spacer — pushes document below the fixed tree */}
-          <div style={{ height: anchorTop + 200 }} />
+        <div style={{ height: anchorTop + 400, width: "100%", position: "relative" }} />
+      )}
 
+      {appState > 0 && (
+        <>
           {/* Insight section — sits below tree in normal document flow */}
+
           <div style={{
             position: "relative",
             zIndex: 10,
