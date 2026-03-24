@@ -417,8 +417,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* Top breadcrumb */}
-      <Breadcrumb nodes={breadcrumbNodes} visible={appState >= 2} />
+      {/* Top breadcrumb — hidden */}
 
       {/* Main spine (states 0 + 1) */}
       <Spine
