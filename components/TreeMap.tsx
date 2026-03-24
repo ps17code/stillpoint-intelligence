@@ -175,23 +175,23 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
           // Non-country field 0 — pill at slot 0
           const pillW = Math.min(Math.max(String(val0).length * 5.8 + 16, 60), 160);
           g.appendChild(mkEl("rect", {
-            x: cx - pillW / 2, y: cy + 46, width: pillW, height: 13, rx: 3,
+            x: cx - pillW / 2, y: cy + 30, width: pillW, height: 13, rx: 3,
             fill: color.stroke, "fill-opacity": 0.1,
             stroke: color.stroke, "stroke-opacity": 0.25, "stroke-width": 0.5,
           }));
           const t = mkEl("text", {
             "font-family": "'Geist Mono', monospace",
             "font-size": 8, fill: "#6b6458",
-            x: cx, y: cy + 56, "text-anchor": "middle", "letter-spacing": "0.04em",
+            x: cx, y: cy + 40, "text-anchor": "middle", "letter-spacing": "0.04em",
           });
           t.textContent = String(val0);
           g.appendChild(t);
         }
 
-        // Pills shifted up when no country line is present
-        const pillDefs = noCountry
-          ? [{ rectY: cy + 30, textY: cy + 40 }, { rectY: cy + 46, textY: cy + 56 }]
-          : [{ rectY: cy + 46, textY: cy + 56 }, { rectY: cy + 62, textY: cy + 72 }];
+        // Pills shifted up when no country line is present (noCountry or non-country field0)
+        const pillDefs = hasCountry
+          ? [{ rectY: cy + 46, textY: cy + 56 }, { rectY: cy + 62, textY: cy + 72 }]
+          : [{ rectY: cy + 30, textY: cy + 40 }, { rectY: cy + 46, textY: cy + 56 }];
         const pillOffset = (hasCountry || noCountry) ? 0 : 1;
 
         fields.slice(1, 3).forEach((field, idx) => {
