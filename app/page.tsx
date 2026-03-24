@@ -32,15 +32,14 @@ const PANELS  = panelsRaw as any;
 const CHAINS  = chainsRaw as any;
 
 // ── ANCHOR SPINE TOP POSITION ─────────────────────────────────────
-// Each anchor spine's pyramid/sphere sits at the same y as the raw cube
-// when the spine is .shifted. We derive this from window.innerHeight.
-function anchorTopPx(state: AppState = 1): number {
-  if (typeof window === "undefined") return 0;
-  const headerHeight = 188;                           // 68px spine + 120px thesis block
-  const layers       = state === 1 ? 5 : 4;          // raw chain has 5 layers
-  const treeHeight   = layers * 150;
-  const anchorPx     = headerHeight + treeHeight + 60;
-  return Math.min(anchorPx, window.innerHeight * 0.95);
+// Measured dynamically from the thesis block's bottom edge.
+function anchorTopPx(thesisEl: HTMLElement | null): number {
+  if (typeof window === "undefined") return 600;
+  const thesisBottom = thesisEl
+    ? thesisEl.getBoundingClientRect().bottom
+    : 188;
+  // 40px breathing room below thesis, then 900px for the full 5-layer tree
+  return thesisBottom + 40 + 900;
 }
 
 export default function Home() {
@@ -64,13 +63,16 @@ export default function Home() {
   const overTip  = useRef(false);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // ── Thesis ref (for anchor measurement) ──────────────────────────
+  const thesisRef = useRef<HTMLDivElement>(null);
+
   // ── Anchor spine top positions ────────────────────────────────────
   const [anchorTop, setAnchorTop] = useState(0);
   useEffect(() => {
-    setAnchorTop(anchorTopPx(appState));
-    const onResize = () => setAnchorTop(anchorTopPx(appState));
+    const timer = setTimeout(() => setAnchorTop(anchorTopPx(thesisRef.current)), 100);
+    const onResize = () => setAnchorTop(anchorTopPx(thesisRef.current));
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    return () => { clearTimeout(timer); window.removeEventListener("resize", onResize); };
   }, [appState]);
 
   // ── Spine dropdown options ────────────────────────────────────────
@@ -346,7 +348,7 @@ export default function Home() {
 
       {/* Thesis bar — sits just below horizontal spine */}
       {appState > 0 && currentThesis && (
-        <div style={{
+        <div ref={thesisRef} style={{
           position: "fixed",
           top: 76,
           left: 0,

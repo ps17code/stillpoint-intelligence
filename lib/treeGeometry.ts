@@ -86,7 +86,7 @@ import type { RawChain } from "@/types";
 export function buildRawGeometry(
   chain: RawChain,
   ancX: number, ancY: number,
-  half = 360, gap = 150, lineY2?: number
+  half = 480, gap = 150, lineY2?: number
 ): TreeGeometry {
   // 5-layer layout when supplyNodes are present, else legacy 4-layer
   const hasSupplyNodes = chain.supplyNodes && chain.supplyNodes.length > 0;
@@ -99,15 +99,15 @@ export function buildRawGeometry(
     const depCY     = ancY - gap * 5;
 
     const depXs = evenSpread(chain.deposits.length, ancX, half);
-    const minXs = evenSpread(chain.miners.length,   ancX, half, 20);
+    const minXs = evenSpread(chain.miners.length,   ancX, half, 10);
     // Split refiners into primaries (0-2) and recyclers (3+)
     const primaryCount  = 3;
     const recyclerStart = primaryCount;
     const primaryRefiners  = chain.refiners.slice(0, primaryCount);
     const recyclerRefiners = chain.refiners.slice(recyclerStart);
     // Place primaries left of center, recyclers right of center
-    const primaryXs  = evenSpread(primaryRefiners.length,  ancX - half / 4, half / 2, 20);
-    const recyclerXs = evenSpread(recyclerRefiners.length, ancX + half / 4, half / 2, 20);
+    const primaryXs  = evenSpread(primaryRefiners.length,  ancX - half / 4, half / 2, 30);
+    const recyclerXs = evenSpread(recyclerRefiners.length, ancX + half / 4, half / 2, 30);
     const refXs = [...primaryXs, ...recyclerXs];
 
     const supNodeCount = chain.supplyNodes!.length;
