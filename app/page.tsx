@@ -464,43 +464,6 @@ export default function Home() {
         layerPanels={getLayerPanels(appState)}
       />
 
-      {appState > 0 && (
-        <>
-          {/* Insights section — absolutely positioned below tree, solid bg covers fixed SVG */}
-          <div style={{
-            position: "absolute",
-            top: topAnchor + 200,
-            left: 0,
-            right: 0,
-            zIndex: 10,
-            background: "#f2ede3",
-            borderTop: "0.5px solid rgba(192,176,128,0.2)",
-            padding: "48px 48px 80px",
-          }}>
-            <div style={{
-              display: "flex", alignItems: "center", gap: 20,
-              marginBottom: 32,
-            }}>
-              <div style={{ flex: 1, height: "0.5px", background: "rgba(192,176,128,0.3)" }} />
-              <div style={{
-                fontFamily: "'Geist Mono', monospace",
-                fontSize: 9, letterSpacing: "0.18em",
-                textTransform: "uppercase", color: "#9c8c74",
-                whiteSpace: "nowrap",
-              }}>Key insights</div>
-              <div style={{ flex: 1, height: "0.5px", background: "rgba(192,176,128,0.3)" }} />
-            </div>
-
-            <div style={{
-              fontFamily: "'EB Garamond', Georgia, serif",
-              fontSize: 14, color: "#9c8c74",
-              fontStyle: "italic", textAlign: "center",
-            }}>
-              Insight section — coming soon
-            </div>
-          </div>
-        </>
-      )}
 
       {/* Tooltip */}
       <Tooltip
