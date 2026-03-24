@@ -105,14 +105,15 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
         fill: "transparent", stroke: "none",
       }));
 
-      // Ring — larger for Global Supply output node
-      if (name === "Global Supply") {
+      // Ring — larger for output nodes
+      const isOutputNode = name === "Global Supply" || name === "Optical Fiber Strand";
+      if (isOutputNode) {
         g.appendChild(mkEl("circle", { cx, cy, r: 7, fill: "none", stroke: color.stroke, "stroke-width": 1.8 }));
       } else {
         g.appendChild(mkEl("circle", { cx, cy, r: 5.5, fill: "none", stroke: color.stroke, "stroke-width": 1.3 }));
       }
 
-      if (name === "Global Supply") {
+      if (isOutputNode) {
         // Special typographic output format — no pills, plain stat text
         const nameEl = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
