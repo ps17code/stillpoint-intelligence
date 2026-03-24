@@ -53,6 +53,14 @@ export default function Home() {
   const [layers,    setLayers]    = useState<LayerGeometry[]>([]);
   const [svgWidth,  setSvgWidth]  = useState(1000);
 
+  // ── Scroll tracking ───────────────────────────────────────────────
+  const [scrollY, setScrollY] = useState(0);
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   // ── Panel ─────────────────────────────────────────────────────────
   const [panelOpen,    setPanelOpen]    = useState(false);
   const [panelContent, setPanelContent] = useState<PanelContent | null>(null);
@@ -330,8 +338,17 @@ export default function Home() {
     { label: sel.eu || "AI Datacenter", shape: "cylinder" as const },
   ];
 
+  // Total page height = anchor position + padding below anchor + insights section
+  const treeDocBottom = anchorTop + 200;
+  const totalPageHeight = appState > 0 ? treeDocBottom + 800 : 0;
+
   return (
-    <main style={{ width: "100%", minHeight: "100vh", background: "var(--bg)", position: "relative" }}>
+    <main style={{
+      width: "100%",
+      minHeight: appState > 0 ? totalPageHeight : "100vh",
+      background: "var(--bg)",
+      position: "relative",
+    }}>
 
       {/* Grain */}
       <div className="grain" />
@@ -455,6 +472,7 @@ export default function Home() {
         nodes={NODES}
         layerConfig={CHAINS.layerConfig}
         svgWidth={svgWidth}
+        scrollY={scrollY}
         onNodeHover={handleNodeHover}
         onNodeLeave={handleNodeLeave}
         onNodeClick={handleNodeClick}
@@ -463,20 +481,17 @@ export default function Home() {
       />
 
       {appState > 0 && (
-        <div style={{ height: anchorTop + 200, width: "100%", position: "relative" }} />
-      )}
-
-      {appState > 0 && (
         <>
-          {/* Insight section — sits below tree in normal document flow */}
-
+          {/* Insights section — absolutely positioned below tree, solid bg covers fixed SVG */}
           <div style={{
-            position: "relative",
+            position: "absolute",
+            top: anchorTop + 200,
+            left: 0,
+            right: 0,
             zIndex: 10,
             background: "#f2ede3",
             borderTop: "0.5px solid rgba(192,176,128,0.2)",
             padding: "48px 48px 80px",
-            marginTop: 0,
           }}>
             <div style={{
               display: "flex", alignItems: "center", gap: 20,

@@ -11,6 +11,7 @@ interface TreeMapProps {
   nodes: Record<string, NodeData>;
   layerConfig?: Record<string, LayerConfig>;
   svgWidth?: number;
+  scrollY?: number;
   onNodeHover: (key: string, svgX: number, svgY: number) => void;
   onNodeLeave: () => void;
   onNodeClick: (key: string) => void;
@@ -30,21 +31,36 @@ const COUNTRY_COLORS: Record<string, string> = {
   "DRC":     "#5a8c6a",
 };
 
-export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000, onNodeHover, onNodeLeave, onNodeClick, onLayerClick, layerPanels }: TreeMapProps) {
+export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000, scrollY = 0, onNodeHover, onNodeLeave, onNodeClick, onLayerClick, layerPanels }: TreeMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const contentGroupRef = useRef<SVGGElement | null>(null);
+
+  // Scroll effect: just update the transform on the content group — no DOM rebuild
+  useEffect(() => {
+    const g = contentGroupRef.current;
+    if (!g || typeof window === "undefined") return;
+    const off = (scrollY / window.innerHeight) * 1000;
+    g.setAttribute("transform", `translate(0, ${-off})`);
+  }, [scrollY]);
 
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
 
-    Array.from(svg.children).forEach(c => {
-      if (c.tagName !== "defs") svg.removeChild(c);
-    });
+    // Remove previous content group
+    if (contentGroupRef.current) {
+      try { svg.removeChild(contentGroupRef.current); } catch {}
+      contentGroupRef.current = null;
+    }
 
     if (!geometry) {
       svg.style.pointerEvents = "none";
       return;
     }
+
+    // All tree content goes into this group so scroll transform is applied cheaply
+    const contentG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    contentGroupRef.current = contentG;
 
     const NS = "http://www.w3.org/2000/svg";
 
@@ -286,9 +302,10 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
 
     svg.style.pointerEvents = "all";
     groups.forEach((g, i) => {
-      svg.appendChild(g);
+      contentG.appendChild(g);
       setTimeout(() => g.classList.add("show"), i * 110);
     });
+    svg.appendChild(contentG);
   }, [geometry]);
 
   return (
