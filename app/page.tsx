@@ -76,11 +76,15 @@ export default function Home() {
 
   // ── Top anchor: viewport Y of tree top ───────────────────────────
   const [topAnchor, setTopAnchor] = useState(220);
+  const [windowHeight, setWindowHeight] = useState(900);
   useEffect(() => {
-    const timer = setTimeout(() => setTopAnchor(topAnchorPx(thesisRef.current)), 100);
-    const onResize = () => setTopAnchor(topAnchorPx(thesisRef.current));
-    window.addEventListener("resize", onResize);
-    return () => { clearTimeout(timer); window.removeEventListener("resize", onResize); };
+    const update = () => {
+      setTopAnchor(topAnchorPx(thesisRef.current));
+      setWindowHeight(window.innerHeight);
+    };
+    const timer = setTimeout(update, 100);
+    window.addEventListener("resize", update);
+    return () => { clearTimeout(timer); window.removeEventListener("resize", update); };
   }, [appState]);
 
   // ── Spine dropdown options ────────────────────────────────────────
@@ -323,8 +327,10 @@ export default function Home() {
     { label: sel.eu || "AI Datacenter", shape: "cylinder" as const },
   ];
 
-  // Insights section starts below tree (5 layers × 180px gap + 60px breathing room)
-  const insightsTop = topAnchor + 5 * 180 + 60;
+  // Global Supply node (layer 4) sits at SVG Y = topY + 4*180.
+  // Convert back to viewport pixels: topAnchor + (4*180/1000) * windowHeight.
+  // Add ~80px breathing room below the node content.
+  const insightsTop = topAnchor + (4 * 180 / 1000) * windowHeight + 80;
 
   // Total page height: insights top + approximate insights content height
   const totalPageHeight = appState > 0 ? insightsTop + 1400 : 0;
