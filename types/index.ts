@@ -53,6 +53,7 @@ export interface RawChain {
   refiners: string[];
   supplyNodes?: string[];
   supply: string;
+  groupSplit?: { deposits?: number; miners?: number };
   depToMin: [number, number][];
   minToRef: [number, number][];
   refToSupply?: [number, number][];

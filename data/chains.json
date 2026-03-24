@@ -489,6 +489,10 @@
           2
         ],
         "refiners": []
+      },
+      "groupSplit": {
+        "deposits": 5,
+        "miners": 4
       }
     },
     "Copper": {

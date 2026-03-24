@@ -98,15 +98,23 @@ export function buildRawGeometry(
     const minCY     = ancY - gap * 4;
     const depCY     = ancY - gap * 5;
 
-    const depXs = evenSpread(chain.deposits.length, ancX, half);
-    const minXs = evenSpread(chain.miners.length,   ancX, half, 10);
-    // Split refiners into primaries (0-2) and recyclers (3+)
-    const primaryCount  = 3;
-    const recyclerStart = primaryCount;
+    // Helper: split a node list at groupIdx into left (China) and right (non-China) groups
+    function splitGroup(names: string[], groupIdx: number | undefined): number[] {
+      if (!groupIdx || groupIdx <= 0 || groupIdx >= names.length) {
+        return evenSpread(names.length, ancX, half);
+      }
+      const leftXs  = evenSpread(groupIdx,                ancX - half / 2, half / 2, 20);
+      const rightXs = evenSpread(names.length - groupIdx, ancX + half / 2, half / 2, 20);
+      return [...leftXs, ...rightXs];
+    }
+
+    const depXs = splitGroup(chain.deposits, chain.groupSplit?.deposits);
+    const minXs = splitGroup(chain.miners,   chain.groupSplit?.miners);
+
+    // Split refiners: primaries (0-2) left, recyclers/western (3+) right
+    const primaryCount     = 3;
     const primaryRefiners  = chain.refiners.slice(0, primaryCount);
-    const recyclerRefiners = chain.refiners.slice(recyclerStart);
-    // Place primaries left of center, recyclers right of center
-    // Each group centered at ancX±half/2 with half/2 radius → no overlap
+    const recyclerRefiners = chain.refiners.slice(primaryCount);
     const primaryXs  = evenSpread(primaryRefiners.length,  ancX - half / 2, half / 2, 20);
     const recyclerXs = evenSpread(recyclerRefiners.length, ancX + half / 2, half / 2, 20);
     const refXs = [...primaryXs, ...recyclerXs];
