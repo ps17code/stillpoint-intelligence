@@ -33,30 +33,43 @@ export function evenSpread(n: number, center: number, half: number, pad = 0): nu
   return Array.from({ length: n }, (_, i) => l + (i * (r - l)) / (n - 1));
 }
 
-// Content-aware spread: minimum 110 SVG units per node slot, scales up for fewer nodes.
-// 110 SVG units ≈ 150px at typical viewport — enough for name + pills without overlap.
+// Fixed slot width: 175 SVG units per node.
+// At typical viewport (1440×900), 1 SVG unit ≈ 0.86–0.9px, so 175 ≈ 150–157px per slot.
+// Pills are capped at 160 SVG units wide — 175-unit slots give ~15 units breathing room.
+const SLOT = 175;
+const GROUP_GAP = 100; // SVG units gap between China and non-China groups
+
+// Simple fixed-slot spread centered at centerX
 export function contentAwareSpread(count: number, centerX: number): number[] {
   if (count === 1) return [centerX];
-  const slot = Math.max(110, Math.floor(900 / count));
-  const totalWidth = count * slot;
-  const startX = centerX - totalWidth / 2 + slot / 2;
-  return Array.from({ length: count }, (_, i) => startX + i * slot);
+  const totalWidth = count * SLOT;
+  const startX = centerX - totalWidth / 2 + SLOT / 2;
+  return Array.from({ length: count }, (_, i) => startX + i * SLOT);
 }
 
-// Split spread: two groups (left = China, right = non-China) with a visible gap between them.
-// Uses a shared slot size based on total node count so edges connect consistently.
-export function splitSpread(
-  chinaCount: number, foreignCount: number, centerX: number
-): number[] {
-  const totalCount = chinaCount + foreignCount;
-  const slot = Math.max(110, Math.floor(860 / totalCount));
-  const gapSvg = 80;
-  const chinaTotal = chinaCount * slot;
-  const totalWithGap = chinaTotal + gapSvg + foreignCount * slot;
-  const startX = centerX - totalWithGap / 2 + slot / 2;
-  const leftXs  = Array.from({ length: chinaCount },   (_, i) => startX + i * slot);
-  const rightXs = Array.from({ length: foreignCount }, (_, i) => startX + chinaTotal + gapSvg + i * slot);
+// Two-group spread with a clear gap between left (China) and right (non-China) groups
+export function splitSpread(chinaCount: number, foreignCount: number, centerX: number): number[] {
+  const chinaTotal    = chinaCount * SLOT;
+  const totalWithGap  = chinaTotal + GROUP_GAP + foreignCount * SLOT;
+  const startX        = centerX - totalWithGap / 2 + SLOT / 2;
+  const leftXs  = Array.from({ length: chinaCount },   (_, i) => startX + i * SLOT);
+  const rightXs = Array.from({ length: foreignCount }, (_, i) => startX + chinaTotal + GROUP_GAP + i * SLOT);
   return [...leftXs, ...rightXs];
+}
+
+// Compute the SVG viewBox width required for a raw chain so all node content fits without overlap
+export function computeRawSvgWidth(chain: RawChain): number {
+  const layerWidth = (total: number, split?: number): number =>
+    split && split > 0 && split < total
+      ? split * SLOT + GROUP_GAP + (total - split) * SLOT
+      : total * SLOT;
+
+  const widths = [
+    layerWidth(chain.deposits.length, chain.groupSplit?.deposits),
+    layerWidth(chain.miners.length,   chain.groupSplit?.miners),
+    layerWidth(chain.refiners.length, 3), // refiners always split at primaryCount=3
+  ];
+  return Math.max(1000, Math.max(...widths) + 200); // 100px padding each side
 }
 
 // Convert pixel position to SVG 0-1000 coordinate space

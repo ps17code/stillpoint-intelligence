@@ -20,6 +20,7 @@ import Tooltip      from "@/components/Tooltip";
 import {
   buildRawGeometry, buildCompGeometry,
   buildSubGeometry, buildEUGeometry,
+  computeRawSvgWidth,
   toSVG, type TreeGeometry, type LayerGeometry,
 } from "@/lib/treeGeometry";
 
@@ -48,8 +49,9 @@ export default function Home() {
   const [sel, setSel] = useState<SpineSelection>({ raw: null, comp: null, sub: null, eu: null });
 
   // ── Geometry ─────────────────────────────────────────────────────
-  const [geometry, setGeometry] = useState<TreeGeometry | null>(null);
-  const [layers,   setLayers]   = useState<LayerGeometry[]>([]);
+  const [geometry,  setGeometry]  = useState<TreeGeometry | null>(null);
+  const [layers,    setLayers]    = useState<LayerGeometry[]>([]);
+  const [svgWidth,  setSvgWidth]  = useState(1000);
 
   // ── Panel ─────────────────────────────────────────────────────────
   const [panelOpen,    setPanelOpen]    = useState(false);
@@ -133,11 +135,16 @@ export default function Home() {
     const cxPx = rect.left + rect.width  / 2;
     const cyPx = rect.top  + rect.height / 2;
 
-    const ancX = toSVG(cxPx, window.innerWidth);
+    // Compute SVG viewBox width: raw chain needs extra width for content-aware slots
+    const rawChain = level === 1 && sel.raw ? CHAINS.RAW_DATA[sel.raw] : null;
+    const newSvgWidth = rawChain ? computeRawSvgWidth(rawChain) : 1000;
+    setSvgWidth(newSvgWidth);
+
+    // ancX = center of SVG viewBox; ancY = pixel-to-SVG Y (viewBox height always 1000)
+    const ancX = newSvgWidth / 2;
     const ancY = toSVG(cyPx, window.innerHeight);
 
     // Stop the output→anchor line just above the node label.
-    // Layout: shape half (11px) + marginBottom (8px) + label height ~17px + padding 8px = 44px above cube center.
     const lineStopY = toSVG(cyPx - 44, window.innerHeight);
 
     let geo: TreeGeometry | null = null;
@@ -145,7 +152,7 @@ export default function Home() {
 
     if (level === 1 && sel.raw) {
       const chain = CHAINS.RAW_DATA[sel.raw];
-      if (chain) { geo = buildRawGeometry(chain, ancX, ancY, 360, 150, lineStopY); panelContent = PANELS.rawIntro; }
+      if (chain) { geo = buildRawGeometry(chain, ancX, ancY, 480, 150, lineStopY); panelContent = PANELS.rawIntro; }
     } else if (level === 2 && sel.comp) {
       const chain = CHAINS.COMP_DATA[sel.comp];
       if (chain) { geo = buildCompGeometry(chain, ancX, ancY, 370, 150, lineStopY); panelContent = PANELS.compIntro; }
@@ -447,6 +454,7 @@ export default function Home() {
         geometry={geometry}
         nodes={NODES}
         layerConfig={CHAINS.layerConfig}
+        svgWidth={svgWidth}
         onNodeHover={handleNodeHover}
         onNodeLeave={handleNodeLeave}
         onNodeClick={handleNodeClick}

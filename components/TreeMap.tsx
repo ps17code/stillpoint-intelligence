@@ -10,6 +10,7 @@ interface TreeMapProps {
   geometry: TreeGeometry | null;
   nodes: Record<string, NodeData>;
   layerConfig?: Record<string, LayerConfig>;
+  svgWidth?: number;
   onNodeHover: (key: string, svgX: number, svgY: number) => void;
   onNodeLeave: () => void;
   onNodeClick: (key: string) => void;
@@ -29,7 +30,7 @@ const COUNTRY_COLORS: Record<string, string> = {
   "DRC":     "#5a8c6a",
 };
 
-export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onNodeLeave, onNodeClick, onLayerClick, layerPanels }: TreeMapProps) {
+export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000, onNodeHover, onNodeLeave, onNodeClick, onLayerClick, layerPanels }: TreeMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -294,7 +295,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, onNodeHover, onN
     <svg
       ref={svgRef}
       id="tree-svg"
-      viewBox="0 0 1000 1000"
+      viewBox={`0 0 ${svgWidth} 1000`}
       preserveAspectRatio="xMidYMid meet"
       style={{
         position: "fixed", inset: 0,
