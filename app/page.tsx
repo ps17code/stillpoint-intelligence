@@ -432,8 +432,8 @@ export default function Home() {
         onCylinderClick={goToEUFromSpine}
       />
 
-      {/* Comp anchor spine */}
-      {appState >= 2 && (
+      {/* Comp anchor spine — hidden (tree is top-down, no anchor needed) */}
+      {false && appState >= 2 && (
         <AnchorSpine
           id="comp-spine"
           topPx={compSpineTop}
@@ -443,8 +443,8 @@ export default function Home() {
         />
       )}
 
-      {/* Sub anchor spine */}
-      {appState >= 3 && (
+      {/* Sub anchor spine — hidden */}
+      {false && appState >= 3 && (
         <AnchorSpine
           id="sub-spine"
           topPx={topAnchor}
@@ -454,8 +454,8 @@ export default function Home() {
         />
       )}
 
-      {/* EU anchor spine */}
-      {appState >= 4 && (
+      {/* EU anchor spine — hidden */}
+      {false && appState >= 4 && (
         <AnchorSpine
           id="eu-spine"
           topPx={topAnchor}
