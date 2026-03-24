@@ -407,7 +407,7 @@ export default function Home() {
 
       {/* Main spine (states 0 + 1) */}
       <Spine
-        state={appState === 0 ? "default" : appState === 1 ? "shifted" : "gone"}
+        state={appState === 0 ? "default" : "gone"}
         selection={sel}
         options={spineOptions}
         onSelect={handleSelect}

@@ -202,7 +202,13 @@ export function buildRawGeometry(
       ...buildEdges(depXs,     depCY,     minXs,     minCY,     PALETTES.deposits.stroke,    chain.depToMin,          0),
       ...buildEdges(minXs,     minCY,     refXs,     refCY,     PALETTES.miners.stroke,      chain.minToRef,          1),
       ...buildEdges(refXs,     refCY,     supNodeXs, supNodeCY, PALETTES.refiners.stroke,    refToSupplyMapping,      2),
-      ...buildEdges(supNodeXs, supNodeCY, [ancX],    supCY,     PALETTES.supplyNodes.stroke, supplyToGlobalMapping,   3),
+      // supplyNodes → Global Supply: custom offsets (no-country nodes are shorter)
+      ...supplyToGlobalMapping.map(([fi, _ti]) => ({
+        x1: supNodeXs[fi], y1: supNodeCY + 74,
+        x2: ancX,          y2: supCY      - 8,
+        color: PALETTES.supplyNodes.stroke,
+        fromLayer: 3,
+      })),
     ];
 
     return {
