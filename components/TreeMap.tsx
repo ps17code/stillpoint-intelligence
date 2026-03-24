@@ -279,9 +279,16 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
 
       const edgesToNext = geometry.edges.filter(e => e.fromLayer === li);
 
+      // Edge departure Y depends on how many pills the layer's nodes show
+      const layerConfigKey = toConfigKey(layer.key);
+      const layerFields = layerConfig?.[layerConfigKey]?.displayFields ?? [];
+      // First field is country (shown as dot+text, not a pill), rest are pills
+      const numPills = Math.max(0, layerFields.length - 1);
+      const departY = layer.cy + (numPills >= 2 ? 79 : numPills === 1 ? 51 : 38);
+
       const edgeG = mkGroup();
       edgesToNext.forEach(edge => {
-        edgeG.appendChild(mkLine(edge.x1, layer.cy + 79, edge.x2, nextLayer.cy - 7, edge.color));
+        edgeG.appendChild(mkLine(edge.x1, departY, edge.x2, nextLayer.cy - 7, edge.color));
       });
       groups.push(edgeG);
 

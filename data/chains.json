@@ -30,10 +30,6 @@
         {
           "key": "outputVolume",
           "label": "Extracted/yr"
-        },
-        {
-          "key": "extractionMethod",
-          "label": "Method"
         }
       ],
       "label": "MINERS"
