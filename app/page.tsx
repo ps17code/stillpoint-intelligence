@@ -334,9 +334,9 @@ export default function Home() {
   ];
 
   // Global Supply node (layer 4) sits at SVG Y = topY + 4*180.
-  // Convert back to viewport pixels: topAnchor + (4*180/1000) * windowHeight.
-  // Add ~80px breathing room below the node content.
-  const insightsTop = topAnchor + (4 * 180 / 1000) * windowHeight + 80;
+  // Layer counts: raw=5 layers (4 gaps), comp=3 layers (2 gaps)
+  const treeLayerCount = appState === 1 ? 5 : 3;
+  const insightsTop = topAnchor + ((treeLayerCount - 1) * 180 / 1000) * windowHeight + 80;
 
   // Total page height: insights top + approximate insights content height
   const totalPageHeight = appState > 0 ? insightsTop + 1400 : 0;
@@ -521,7 +521,7 @@ export default function Home() {
       />
 
       {/* Insights section — below tree, raw material layer only */}
-      {appState === 1 && <InsightsSection top={insightsTop} />}
+      {(appState === 1 || appState === 2) && <InsightsSection top={insightsTop} chainState={appState} />}
 
     </main>
   );
