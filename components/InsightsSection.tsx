@@ -178,7 +178,7 @@ function WatchConnectionBox({ title, text, watch }: { title: string; text: strin
 const HEADER_STYLE = {
   display: "flex" as const,
   alignItems: "center" as const,
-  gap: 16,
+  justifyContent: "space-between" as const,
   cursor: "pointer" as const,
   padding: "20px 0",
   borderTop: "0.5px solid rgba(192,176,128,0.3)",
@@ -192,13 +192,41 @@ const HEADER_LABEL_STYLE = {
   letterSpacing: "0.22em",
   textTransform: "uppercase" as const,
   color: "#9c8c74",
+  textAlign: "center" as const,
 };
 
 const HEADER_TOGGLE_STYLE = {
+  width: 20,
   fontFamily: "Courier New, monospace",
   fontSize: 10,
   color: "#c8bc9a",
+  textAlign: "right" as const,
 };
+
+function SectionHeader({ label, isOpen, onToggle }: { label: string; isOpen: boolean; onToggle: () => void }) {
+  return (
+    <div style={HEADER_STYLE} onClick={onToggle}>
+      <div style={{ width: 20 }} />
+      <div style={HEADER_LABEL_STYLE}>{label}</div>
+      <div style={HEADER_TOGGLE_STYLE}>{isOpen ? "−" : "+"}</div>
+    </div>
+  );
+}
+
+const HERO_STYLE = {
+  textAlign: "center" as const,
+  padding: "32px 0 28px",
+  borderBottom: "0.5px solid rgba(192,176,128,0.3)",
+  marginBottom: 20,
+};
+function Hero({ num, label }: { num: string; label: string }) {
+  return (
+    <div style={HERO_STYLE}>
+      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 64, fontWeight: 500, color: "#2a1e0c", lineHeight: 1 }}>{num}</div>
+      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, color: "#6b6458", lineHeight: 1.65, maxWidth: 560, margin: "12px auto 0" }}>{label}</div>
+    </div>
+  );
+}
 
 export default function InsightsSection({ top, chainState }: InsightsSectionProps) {
   const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({
@@ -229,35 +257,24 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
       {/* ── RAW MATERIAL INSIGHTS ─────────────────────────────────────────── */}
       {chainState === 1 && (
         <>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 72, fontWeight: 600, color: "#2a1e0c", lineHeight: 1 }}>−270t</div>
-            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, color: "#6b6458", lineHeight: 1.65, maxWidth: 560, margin: "12px auto 0" }}>estimated annual germanium shortfall by 2030 — projected demand ~490t against supply capped at ~220t, with no new primary sources coming online at scale</div>
-          </div>
-
-          <div style={HEADER_STYLE} onClick={() => toggle("insights")}>
-            <div style={HEADER_LABEL_STYLE}>Key Insights</div>
-            <div style={HEADER_TOGGLE_STYLE}>{openSections.insights ? "−" : "+"}</div>
-          </div>
+          <SectionHeader label="Key Insights" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
           {openSections.insights && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
-              {RAW_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
-            </div>
+            <>
+              <Hero num="−270t" label="estimated annual germanium shortfall by 2030 — projected demand ~490t against supply capped at ~220t, with no new primary sources coming online at scale" />
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
+                {RAW_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
+              </div>
+            </>
           )}
 
-          <div style={HEADER_STYLE} onClick={() => toggle("connections")}>
-            <div style={HEADER_LABEL_STYLE}>Chain Connections</div>
-            <div style={HEADER_TOGGLE_STYLE}>{openSections.connections ? "−" : "+"}</div>
-          </div>
+          <SectionHeader label="Chain Connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
           {openSections.connections && (
             <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
               {RAW_CONNECTIONS.map(item => <ConnectionBox key={item.title} {...item} />)}
             </div>
           )}
 
-          <div style={HEADER_STYLE} onClick={() => toggle("emerging")}>
-            <div style={HEADER_LABEL_STYLE}>Emerging Supply Technologies</div>
-            <div style={HEADER_TOGGLE_STYLE}>{openSections.emerging ? "−" : "+"}</div>
-          </div>
+          <SectionHeader label="Emerging Supply Technologies" isOpen={openSections.emerging} onToggle={() => toggle("emerging")} />
           {openSections.emerging && (
             <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
               {RAW_TECHNOLOGIES.map(({ title, meta, text }) => (
@@ -282,10 +299,7 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
             </div>
           )}
 
-          <div style={HEADER_STYLE} onClick={() => toggle("investment")}>
-            <div style={HEADER_LABEL_STYLE}>Investment Angles</div>
-            <div style={HEADER_TOGGLE_STYLE}>{openSections.investment ? "−" : "+"}</div>
-          </div>
+          <SectionHeader label="Investment Angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
           {openSections.investment && (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, paddingBottom: 20 }}>
               {RAW_CARDS.map(({ variant, ticker, name, desc }) => (
@@ -311,35 +325,24 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
       {/* ── COMPONENT LAYER INSIGHTS ──────────────────────────────────────── */}
       {chainState === 2 && (
         <>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 72, fontWeight: 600, color: "#2a1e0c", lineHeight: 1 }}>36×</div>
-            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, color: "#6b6458", lineHeight: 1.65, maxWidth: 560, margin: "12px auto 0" }}>more fiber required in an AI GPU rack than a traditional CPU rack — against a supply chain running at 100% capacity with an 18–24 month expansion lag</div>
-          </div>
-
-          <div style={HEADER_STYLE} onClick={() => toggle("insights")}>
-            <div style={HEADER_LABEL_STYLE}>Key Insights</div>
-            <div style={HEADER_TOGGLE_STYLE}>{openSections.insights ? "−" : "+"}</div>
-          </div>
+          <SectionHeader label="Key Insights" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
           {openSections.insights && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
-              {COMP_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
-            </div>
+            <>
+              <Hero num="36×" label="more fiber required in an AI GPU rack than a traditional CPU rack — against a supply chain running at 100% capacity with an 18–24 month expansion lag" />
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
+                {COMP_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
+              </div>
+            </>
           )}
 
-          <div style={HEADER_STYLE} onClick={() => toggle("connections")}>
-            <div style={HEADER_LABEL_STYLE}>Chain Connections</div>
-            <div style={HEADER_TOGGLE_STYLE}>{openSections.connections ? "−" : "+"}</div>
-          </div>
+          <SectionHeader label="Chain Connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
           {openSections.connections && (
             <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
               {COMP_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
             </div>
           )}
 
-          <div style={HEADER_STYLE} onClick={() => toggle("investment")}>
-            <div style={HEADER_LABEL_STYLE}>Investment Angles</div>
-            <div style={HEADER_TOGGLE_STYLE}>{openSections.investment ? "−" : "+"}</div>
-          </div>
+          <SectionHeader label="Investment Angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
           {openSections.investment && (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, paddingBottom: 20 }}>
               {COMP_CARDS.map(({ ticker, name, desc }) => (
@@ -365,35 +368,24 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
       {/* ── SUBSYSTEM LAYER INSIGHTS ──────────────────────────────────────── */}
       {chainState === 3 && (
         <>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 72, fontWeight: 600, color: "#2a1e0c", lineHeight: 1 }}>100%</div>
-            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, color: "#6b6458", lineHeight: 1.65, maxWidth: 560, margin: "12px auto 0" }}>global fiber optic preform lines are running at full capacity — at least one major US manufacturer has sold all inventory through 2026, with no new capacity possible before late 2027</div>
-          </div>
-
-          <div style={HEADER_STYLE} onClick={() => toggle("insights")}>
-            <div style={HEADER_LABEL_STYLE}>Key Insights</div>
-            <div style={HEADER_TOGGLE_STYLE}>{openSections.insights ? "−" : "+"}</div>
-          </div>
+          <SectionHeader label="Key Insights" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
           {openSections.insights && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
-              {SUB_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
-            </div>
+            <>
+              <Hero num="100%" label="global fiber optic preform lines are running at full capacity — at least one major US manufacturer has sold all inventory through 2026, with no new capacity possible before late 2027" />
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
+                {SUB_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
+              </div>
+            </>
           )}
 
-          <div style={HEADER_STYLE} onClick={() => toggle("connections")}>
-            <div style={HEADER_LABEL_STYLE}>Chain Connections</div>
-            <div style={HEADER_TOGGLE_STYLE}>{openSections.connections ? "−" : "+"}</div>
-          </div>
+          <SectionHeader label="Chain Connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
           {openSections.connections && (
             <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
               {SUB_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
             </div>
           )}
 
-          <div style={HEADER_STYLE} onClick={() => toggle("investment")}>
-            <div style={HEADER_LABEL_STYLE}>Investment Angles</div>
-            <div style={HEADER_TOGGLE_STYLE}>{openSections.investment ? "−" : "+"}</div>
-          </div>
+          <SectionHeader label="Investment Angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
           {openSections.investment && (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, paddingBottom: 20 }}>
               {SUB_CARDS.map(({ ticker, name, desc }) => (

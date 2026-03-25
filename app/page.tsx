@@ -340,7 +340,7 @@ export default function Home() {
   // Layer counts: raw=5 layers (4 gaps), comp=3 layers (2 gaps)
   const treeLayerCount = appState === 1 ? 5 : 3;
   const treePixelHeight = ((treeLayerCount - 1) * 180 / 1000) * windowHeight;
-  const bandPadTop = 40;
+  const bandPadTop = 52;
   const bandPadBottom = 40;
   const labelHeight = 40;
   const bandTop = topAnchor - bandPadTop - labelHeight;
@@ -495,16 +495,15 @@ export default function Home() {
             style={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
-              gap: 16,
-              padding: "0 60px",
-              paddingTop: bandPadTop,
+              justifyContent: "space-between",
+              padding: `${bandPadTop}px 60px 0`,
               cursor: "pointer",
               userSelect: "none" as const,
-              position: "relative" as const,
             }}
           >
+            <div style={{ width: 20 }} />
             <div style={{
+              flex: 1,
               fontFamily: "Courier New, monospace",
               fontSize: 9,
               letterSpacing: "0.2em",
@@ -515,11 +514,11 @@ export default function Home() {
               {supplyMapLabel}
             </div>
             <div style={{
+              width: 20,
               fontFamily: "Courier New, monospace",
               fontSize: 10,
               color: "rgba(107, 100, 88, 0.4)",
-              position: "absolute" as const,
-              right: 60,
+              textAlign: "right",
             }}>
               {treeCollapsed ? "+" : "−"}
             </div>
