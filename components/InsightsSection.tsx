@@ -1,33 +1,11 @@
 "use client";
+import React from "react";
 
 interface InsightsSectionProps {
   top: number;
   chainState: number;
 }
 
-function SectionDivider({ label, first = false }: { label: string; first?: boolean }) {
-  return (
-    <div style={{
-      display: "flex",
-      alignItems: "center",
-      gap: 20,
-      marginTop: first ? 0 : 44,
-      marginBottom: 28,
-    }}>
-      <div style={{ flex: 1, height: "0.5px", background: "rgba(192,176,128,0.3)" }} />
-      <span style={{
-        fontFamily: "Courier New, monospace",
-        fontSize: 11,
-        fontWeight: 700,
-        letterSpacing: "0.18em",
-        textTransform: "uppercase" as const,
-        color: "#6b5c3e",
-        whiteSpace: "nowrap" as const,
-      }}>{label}</span>
-      <div style={{ flex: 1, height: "0.5px", background: "rgba(192,176,128,0.3)" }} />
-    </div>
-  );
-}
 
 // ─── RAW MATERIAL DATA ────────────────────────────────────────────────────────
 
@@ -197,7 +175,43 @@ function WatchConnectionBox({ title, text, watch }: { title: string; text: strin
 
 // ─── COMPONENT ────────────────────────────────────────────────────────────────
 
+const HEADER_STYLE = {
+  display: "flex" as const,
+  alignItems: "center" as const,
+  gap: 16,
+  cursor: "pointer" as const,
+  padding: "20px 0",
+  borderTop: "0.5px solid rgba(192,176,128,0.3)",
+  userSelect: "none" as const,
+};
+
+const HEADER_LABEL_STYLE = {
+  flex: 1,
+  fontFamily: "Courier New, monospace",
+  fontSize: 9,
+  letterSpacing: "0.22em",
+  textTransform: "uppercase" as const,
+  color: "#9c8c74",
+};
+
+const HEADER_TOGGLE_STYLE = {
+  fontFamily: "Courier New, monospace",
+  fontSize: 10,
+  color: "#c8bc9a",
+};
+
 export default function InsightsSection({ top, chainState }: InsightsSectionProps) {
+  const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({
+    insights: false, connections: false, emerging: false, investment: false,
+  });
+
+  React.useEffect(() => {
+    setOpenSections({ insights: false, connections: false, emerging: false, investment: false });
+  }, [chainState]);
+
+  const toggle = (key: string) =>
+    setOpenSections(prev => ({ ...prev, [key]: !prev[key] }));
+
   return (
     <div style={{
       position: "absolute",
@@ -215,140 +229,190 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
       {/* ── RAW MATERIAL INSIGHTS ─────────────────────────────────────────── */}
       {chainState === 1 && (
         <>
-          {/* Hero stat */}
           <div style={{ textAlign: "center", marginBottom: 48 }}>
             <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 72, fontWeight: 600, color: "#2a1e0c", lineHeight: 1 }}>−270t</div>
             <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, color: "#6b6458", lineHeight: 1.65, maxWidth: 560, margin: "12px auto 0" }}>estimated annual germanium shortfall by 2030 — projected demand ~490t against supply capped at ~220t, with no new primary sources coming online at scale</div>
           </div>
 
-          <SectionDivider label="Key Insights" first />
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {RAW_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
+          <div style={HEADER_STYLE} onClick={() => toggle("insights")}>
+            <div style={HEADER_LABEL_STYLE}>Key Insights</div>
+            <div style={HEADER_TOGGLE_STYLE}>{openSections.insights ? "−" : "+"}</div>
           </div>
+          {openSections.insights && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
+              {RAW_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
+            </div>
+          )}
 
-          <SectionDivider label="Chain Connections" />
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {RAW_CONNECTIONS.map(item => <ConnectionBox key={item.title} {...item} />)}
+          <div style={HEADER_STYLE} onClick={() => toggle("connections")}>
+            <div style={HEADER_LABEL_STYLE}>Chain Connections</div>
+            <div style={HEADER_TOGGLE_STYLE}>{openSections.connections ? "−" : "+"}</div>
           </div>
+          {openSections.connections && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
+              {RAW_CONNECTIONS.map(item => <ConnectionBox key={item.title} {...item} />)}
+            </div>
+          )}
 
-          <SectionDivider label="Emerging Supply Technologies" />
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {RAW_TECHNOLOGIES.map(({ title, meta, text }) => (
-              <div key={title} style={{
-                background: "white",
-                border: "0.5px solid rgba(192,176,128,0.3)",
-                borderLeft: "2px solid #5a8c6a",
-                borderRadius: 6,
-                padding: "14px 20px",
-                display: "flex",
-                gap: 16,
-                alignItems: "baseline",
-              }}>
-                <span style={{ fontSize: 11, color: "#5a8c6a", flexShrink: 0 }}>◈</span>
-                <div>
-                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, fontWeight: 600, color: "#2a1e0c", marginBottom: 3 }}>{title}</div>
-                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, color: "#9c8c74", letterSpacing: "0.06em", textTransform: "uppercase" as const, marginBottom: 6 }}>{meta}</div>
-                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#4a3e2e", lineHeight: 1.65 }}>{text}</div>
+          <div style={HEADER_STYLE} onClick={() => toggle("emerging")}>
+            <div style={HEADER_LABEL_STYLE}>Emerging Supply Technologies</div>
+            <div style={HEADER_TOGGLE_STYLE}>{openSections.emerging ? "−" : "+"}</div>
+          </div>
+          {openSections.emerging && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
+              {RAW_TECHNOLOGIES.map(({ title, meta, text }) => (
+                <div key={title} style={{
+                  background: "white",
+                  border: "0.5px solid rgba(192,176,128,0.3)",
+                  borderLeft: "2px solid #5a8c6a",
+                  borderRadius: 6,
+                  padding: "14px 20px",
+                  display: "flex",
+                  gap: 16,
+                  alignItems: "baseline",
+                }}>
+                  <span style={{ fontSize: 11, color: "#5a8c6a", flexShrink: 0 }}>◈</span>
+                  <div>
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, fontWeight: 600, color: "#2a1e0c", marginBottom: 3 }}>{title}</div>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, color: "#9c8c74", letterSpacing: "0.06em", textTransform: "uppercase" as const, marginBottom: 6 }}>{meta}</div>
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#4a3e2e", lineHeight: 1.65 }}>{text}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
-          <SectionDivider label="Investment Angles" />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
-            {RAW_CARDS.map(({ variant, ticker, name, desc }) => (
-              <div key={name} style={{
-                background: "white",
-                border: "0.5px solid rgba(192,176,128,0.3)",
-                borderLeft: `2px solid ${CARD_BORDER[variant]}`,
-                borderRadius: 6,
-                padding: "16px 18px",
-              }}>
-                <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "#9c8c74", marginBottom: 4 }}>{CARD_TYPE_LABEL[variant]}</div>
-                <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
-                <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 6 }}>{name}</div>
-                <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
-              </div>
-            ))}
+          <div style={HEADER_STYLE} onClick={() => toggle("investment")}>
+            <div style={HEADER_LABEL_STYLE}>Investment Angles</div>
+            <div style={HEADER_TOGGLE_STYLE}>{openSections.investment ? "−" : "+"}</div>
           </div>
+          {openSections.investment && (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, paddingBottom: 20 }}>
+              {RAW_CARDS.map(({ variant, ticker, name, desc }) => (
+                <div key={name} style={{
+                  background: "white",
+                  border: "0.5px solid rgba(192,176,128,0.3)",
+                  borderLeft: `2px solid ${CARD_BORDER[variant]}`,
+                  borderRadius: 6,
+                  padding: "16px 18px",
+                }}>
+                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "#9c8c74", marginBottom: 4 }}>{CARD_TYPE_LABEL[variant]}</div>
+                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
+                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 6 }}>{name}</div>
+                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          <div style={{ borderBottom: "0.5px solid rgba(192,176,128,0.3)" }} />
         </>
       )}
 
       {/* ── COMPONENT LAYER INSIGHTS ──────────────────────────────────────── */}
       {chainState === 2 && (
         <>
-          {/* Hero stat */}
           <div style={{ textAlign: "center", marginBottom: 48 }}>
             <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 72, fontWeight: 600, color: "#2a1e0c", lineHeight: 1 }}>36×</div>
             <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, color: "#6b6458", lineHeight: 1.65, maxWidth: 560, margin: "12px auto 0" }}>more fiber required in an AI GPU rack than a traditional CPU rack — against a supply chain running at 100% capacity with an 18–24 month expansion lag</div>
           </div>
 
-          <SectionDivider label="Key Insights" first />
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {COMP_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
+          <div style={HEADER_STYLE} onClick={() => toggle("insights")}>
+            <div style={HEADER_LABEL_STYLE}>Key Insights</div>
+            <div style={HEADER_TOGGLE_STYLE}>{openSections.insights ? "−" : "+"}</div>
           </div>
+          {openSections.insights && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
+              {COMP_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
+            </div>
+          )}
 
-          <SectionDivider label="Chain Connections" />
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {COMP_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
+          <div style={HEADER_STYLE} onClick={() => toggle("connections")}>
+            <div style={HEADER_LABEL_STYLE}>Chain Connections</div>
+            <div style={HEADER_TOGGLE_STYLE}>{openSections.connections ? "−" : "+"}</div>
           </div>
+          {openSections.connections && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
+              {COMP_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
+            </div>
+          )}
 
-          <SectionDivider label="Investment Angles" />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
-            {COMP_CARDS.map(({ ticker, name, desc }) => (
-              <div key={name} style={{
-                background: "white",
-                border: "0.5px solid rgba(192,176,128,0.3)",
-                borderLeft: "2px solid #5a7a9c",
-                borderRadius: 6,
-                padding: "16px 18px",
-              }}>
-                <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
-                <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 8 }}>{name}</div>
-                <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(192,176,128,0.3)", marginBottom: 8 }} />
-                <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
-              </div>
-            ))}
+          <div style={HEADER_STYLE} onClick={() => toggle("investment")}>
+            <div style={HEADER_LABEL_STYLE}>Investment Angles</div>
+            <div style={HEADER_TOGGLE_STYLE}>{openSections.investment ? "−" : "+"}</div>
           </div>
+          {openSections.investment && (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, paddingBottom: 20 }}>
+              {COMP_CARDS.map(({ ticker, name, desc }) => (
+                <div key={name} style={{
+                  background: "white",
+                  border: "0.5px solid rgba(192,176,128,0.3)",
+                  borderLeft: "2px solid #5a7a9c",
+                  borderRadius: 6,
+                  padding: "16px 18px",
+                }}>
+                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
+                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 8 }}>{name}</div>
+                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(192,176,128,0.3)", marginBottom: 8 }} />
+                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          <div style={{ borderBottom: "0.5px solid rgba(192,176,128,0.3)" }} />
         </>
       )}
 
       {/* ── SUBSYSTEM LAYER INSIGHTS ──────────────────────────────────────── */}
       {chainState === 3 && (
         <>
-          {/* Hero stat */}
           <div style={{ textAlign: "center", marginBottom: 48 }}>
             <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 72, fontWeight: 600, color: "#2a1e0c", lineHeight: 1 }}>100%</div>
             <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, color: "#6b6458", lineHeight: 1.65, maxWidth: 560, margin: "12px auto 0" }}>global fiber optic preform lines are running at full capacity — at least one major US manufacturer has sold all inventory through 2026, with no new capacity possible before late 2027</div>
           </div>
 
-          <SectionDivider label="Key Insights" first />
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {SUB_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
+          <div style={HEADER_STYLE} onClick={() => toggle("insights")}>
+            <div style={HEADER_LABEL_STYLE}>Key Insights</div>
+            <div style={HEADER_TOGGLE_STYLE}>{openSections.insights ? "−" : "+"}</div>
           </div>
+          {openSections.insights && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
+              {SUB_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
+            </div>
+          )}
 
-          <SectionDivider label="Chain Connections" />
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {SUB_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
+          <div style={HEADER_STYLE} onClick={() => toggle("connections")}>
+            <div style={HEADER_LABEL_STYLE}>Chain Connections</div>
+            <div style={HEADER_TOGGLE_STYLE}>{openSections.connections ? "−" : "+"}</div>
           </div>
+          {openSections.connections && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
+              {SUB_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
+            </div>
+          )}
 
-          <SectionDivider label="Investment Angles" />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
-            {SUB_CARDS.map(({ ticker, name, desc }) => (
-              <div key={name} style={{
-                background: "white",
-                border: "0.5px solid rgba(192,176,128,0.3)",
-                borderLeft: "2px solid #5a7a9c",
-                borderRadius: 6,
-                padding: "16px 18px",
-              }}>
-                <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
-                <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 8 }}>{name}</div>
-                <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(192,176,128,0.3)", marginBottom: 8 }} />
-                <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
-              </div>
-            ))}
+          <div style={HEADER_STYLE} onClick={() => toggle("investment")}>
+            <div style={HEADER_LABEL_STYLE}>Investment Angles</div>
+            <div style={HEADER_TOGGLE_STYLE}>{openSections.investment ? "−" : "+"}</div>
           </div>
+          {openSections.investment && (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, paddingBottom: 20 }}>
+              {SUB_CARDS.map(({ ticker, name, desc }) => (
+                <div key={name} style={{
+                  background: "white",
+                  border: "0.5px solid rgba(192,176,128,0.3)",
+                  borderLeft: "2px solid #5a7a9c",
+                  borderRadius: 6,
+                  padding: "16px 18px",
+                }}>
+                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
+                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 8 }}>{name}</div>
+                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(192,176,128,0.3)", marginBottom: 8 }} />
+                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          <div style={{ borderBottom: "0.5px solid rgba(192,176,128,0.3)" }} />
         </>
       )}
 
