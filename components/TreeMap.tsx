@@ -33,9 +33,9 @@ const COUNTRY_COLORS: Record<string, string> = {
 };
 
 // Edge style constants
-const E_STROKE_DEFAULT   = "rgba(192,176,128,0.45)";
-const E_STROKE_HIGHLIGHT = "rgba(192,176,128,0.9)";
-const E_STROKE_FADE      = "rgba(192,176,128,0.12)";
+const E_STROKE_DEFAULT   = "rgba(80,80,70,0.4)";
+const E_STROKE_HIGHLIGHT = "rgba(80,80,70,0.85)";
+const E_STROKE_FADE      = "rgba(80,80,70,0.1)";
 const E_WIDTH_DEFAULT    = "0.8";
 const E_WIDTH_HIGHLIGHT  = "1.8";
 const E_DASH_DEFAULT     = "4,3";
@@ -177,7 +177,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       if (isOutputNode) {
         const nameEl = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
-          "font-size": 15, "font-weight": 600, fill: "#2a1e0c",
+          "font-size": 15, "font-weight": 600, fill: "#1a1a14",
           x: cx, y: cy + 27, "text-anchor": "middle",
         });
         nameEl.textContent = name;
@@ -189,7 +189,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
         if (stat1) {
           const t1 = mkEl("text", {
             "font-family": "'EB Garamond', Georgia, serif",
-            "font-size": 13, fill: "#2a1e0c",
+            "font-size": 13, fill: "#1a1a14",
             x: cx, y: cy + 45, "text-anchor": "middle",
           });
           t1.textContent = stat1;
@@ -198,7 +198,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
         if (stat2) {
           const t2 = mkEl("text", {
             "font-family": "'Geist Mono', monospace",
-            "font-size": 11, fill: "#9c8c74",
+            "font-size": 11, fill: "#888880",
             x: cx, y: cy + 61, "text-anchor": "middle",
           });
           t2.textContent = stat2;
@@ -212,7 +212,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
 
         const nameEl = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
-          "font-size": 13, "font-weight": 600, fill: "#2a1e0c",
+          "font-size": 13, "font-weight": 600, fill: "#1a1a14",
           x: cx, y: noCountry ? cy + 20 : cy + 24, "text-anchor": "middle",
         });
         nameEl.textContent = name;
@@ -220,12 +220,12 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
 
         if (hasCountry) {
           const country = String(val0);
-          const dotColor = COUNTRY_COLORS[country] ?? "#9c8c74";
+          const dotColor = COUNTRY_COLORS[country] ?? "#888880";
           const dotX = cx - (country.length * 3.2) - 8;
           g.appendChild(mkEl("circle", { cx: dotX, cy: cy + 35, r: 3, fill: dotColor }));
           const locEl = mkEl("text", {
             "font-family": "'Geist Mono', monospace",
-            "font-size": 8, fill: "#9c8c74",
+            "font-size": 8, fill: "#888880",
             x: cx, y: cy + 39, "text-anchor": "middle", "letter-spacing": "0.03em",
           });
           locEl.textContent = country;
@@ -234,12 +234,12 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
           const pillW = Math.min(Math.max(String(val0).length * 5.8 + 16, 60), 160);
           g.appendChild(mkEl("rect", {
             x: cx - pillW / 2, y: cy + 30, width: pillW, height: 13, rx: 3,
-            fill: color.stroke, "fill-opacity": 0.1,
-            stroke: color.stroke, "stroke-opacity": 0.25, "stroke-width": 0.5,
+            fill: "rgba(80,80,70,0.06)",
+            stroke: "rgba(80,80,70,0.15)", "stroke-width": 0.5,
           }));
           const t = mkEl("text", {
             "font-family": "'Geist Mono', monospace",
-            "font-size": 8, fill: "#6b6458",
+            "font-size": 8, fill: "#3a3a32",
             x: cx, y: cy + 40, "text-anchor": "middle", "letter-spacing": "0.04em",
           });
           t.textContent = String(val0);
@@ -260,12 +260,12 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
           const pillW = Math.min(Math.max(String(val).length * 5.8 + 16, 60), 160);
           g.appendChild(mkEl("rect", {
             x: cx - pillW / 2, y: rectY, width: pillW, height: 13, rx: 3,
-            fill: color.stroke, "fill-opacity": 0.1,
-            stroke: color.stroke, "stroke-opacity": 0.25, "stroke-width": 0.5,
+            fill: "rgba(80,80,70,0.06)",
+            stroke: "rgba(80,80,70,0.15)", "stroke-width": 0.5,
           }));
           const t = mkEl("text", {
             "font-family": "'Geist Mono', monospace",
-            "font-size": 8, fill: "#6b6458",
+            "font-size": 8, fill: "#3a3a32",
             x: cx, y: textY, "text-anchor": "middle", "letter-spacing": "0.04em",
           });
           t.textContent = String(val);
@@ -274,7 +274,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       } else {
         const label = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
-          "font-size": 13, "font-weight": 600, fill: "#2a1e0c",
+          "font-size": 13, "font-weight": 600, fill: "#1a1a14",
           x: cx, y: cy + 24, "text-anchor": "middle",
         });
         label.textContent = name;
@@ -325,7 +325,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       const labelText = mkEl("text", {
         "font-family": "Courier New, monospace",
         "font-size": 11, "font-weight": 600, "letter-spacing": "0.12em",
-        fill: "#2a1e0c",
+        fill: "#1a1a14",
         x: labelX2, y: cy + 30,
         "text-anchor": "end",
       });

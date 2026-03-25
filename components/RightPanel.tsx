@@ -60,7 +60,7 @@ export default function RightPanel({ isOpen, content, onClose }: RightPanelProps
           style={{
             position: "fixed", right: 0, top: "50%", transform: "translateY(-50%)",
             width: 28, height: 56,
-            background: "white", border: "1px solid rgba(192,176,128,0.25)", borderRight: "none",
+            background: "white", border: "1px solid rgba(80,80,70,0.25)", borderRight: "none",
             borderRadius: "6px 0 0 6px",
             display: "flex", alignItems: "center", justifyContent: "center",
             cursor: "pointer", zIndex: 490,
@@ -78,7 +78,7 @@ export default function RightPanel({ isOpen, content, onClose }: RightPanelProps
           position: "fixed", top: 0, right: 0, bottom: 0,
           width: "var(--panel-w)",
           background: "white",
-          borderLeft: "1px solid rgba(192,176,128,0.25)",
+          borderLeft: "1px solid rgba(80,80,70,0.25)",
           zIndex: 500,
           display: "flex", flexDirection: "column",
           transform: isOpen ? "translateX(0)" : "translateX(100%)",
@@ -92,7 +92,7 @@ export default function RightPanel({ isOpen, content, onClose }: RightPanelProps
           style={{
             position: "absolute", left: -32, top: "50%", transform: "translateY(-50%)",
             width: 32, height: 64,
-            background: "white", border: "1px solid rgba(192,176,128,0.25)", borderRight: "none",
+            background: "white", border: "1px solid rgba(80,80,70,0.25)", borderRight: "none",
             borderRadius: "6px 0 0 6px",
             display: "flex", alignItems: "center", justifyContent: "center",
             cursor: "pointer",
@@ -104,7 +104,7 @@ export default function RightPanel({ isOpen, content, onClose }: RightPanelProps
 
         {/* Header */}
         {content && (
-          <div style={{ padding: "24px 24px 16px", borderBottom: "1px solid rgba(192,176,128,0.2)", flexShrink: 0 }}>
+          <div style={{ padding: "24px 24px 16px", borderBottom: "1px solid rgba(80,80,70,0.2)", flexShrink: 0 }}>
             <div style={{ fontFamily: "'Geist Mono',monospace", fontSize: 8, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink4)", marginBottom: 8 }}>
               {content.context}
             </div>
@@ -121,7 +121,7 @@ export default function RightPanel({ isOpen, content, onClose }: RightPanelProps
         <div className="thin-scroll" style={{ flex: 1, overflowY: "auto", padding: "20px 24px" }}>
           {content?.sections.map((sec, si) => (
             <div key={si} style={{ marginBottom: 22 }}>
-              <div style={{ fontFamily: "'Geist Mono',monospace", fontSize: 8, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink4)", marginBottom: 10, paddingBottom: 6, borderBottom: "1px solid rgba(192,176,128,0.2)" }}>
+              <div style={{ fontFamily: "'Geist Mono',monospace", fontSize: 8, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink4)", marginBottom: 10, paddingBottom: 6, borderBottom: "1px solid rgba(80,80,70,0.2)" }}>
                 {sec.label}
               </div>
 

@@ -389,7 +389,7 @@ export default function Home() {
           left: 0,
           right: 0,
           padding: "16px 48px",
-          borderBottom: "0.5px solid rgba(192,176,128,0.2)",
+          borderBottom: "0.5px solid rgba(80,80,70,0.2)",
           background: "#F2F2F0",
           zIndex: 40,
           display: "flex",
@@ -397,7 +397,7 @@ export default function Home() {
         }}>
           <div style={{
             background: "white",
-            border: "0.5px solid rgba(192,176,128,0.3)",
+            border: "0.5px solid rgba(80,80,70,0.3)",
             borderRadius: "8px",
             padding: "16px 28px",
             maxWidth: "780px",
@@ -409,7 +409,7 @@ export default function Home() {
               fontWeight: "600",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "#9c8c74",
+              color: "#888880",
               marginBottom: "8px",
               textAlign: "center",
             }}>
@@ -418,7 +418,7 @@ export default function Home() {
             <div style={{
               fontFamily: "'EB Garamond', Georgia, serif",
               fontSize: "14px",
-              color: "#6b6458",
+              color: "#3a3a32",
               fontStyle: "italic",
               lineHeight: 1.7,
               textAlign: "center",
@@ -485,20 +485,20 @@ export default function Home() {
           left: 0,
           right: 0,
           zIndex: 6,
-          background: "#f0ece2",
-          borderTop: "0.5px solid rgba(160,140,100,0.2)",
+          background: "#EDEDEA",
+          borderTop: "0.5px solid rgba(80,80,70,0.2)",
         }}>
           <div
             onClick={() => setTreeCollapsed(prev => !prev)}
-            onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#e9e4da"}
-            onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "#f0ece2"}
+            onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#E0E0DC"}
+            onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "#EDEDEA"}
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               padding: "26px 48px",
               cursor: "pointer",
-              background: "#f0ece2",
+              background: "#EDEDEA",
               position: "relative",
               gap: "8px",
               transition: "background 0.15s ease",
@@ -512,7 +512,7 @@ export default function Home() {
               transform: "translateY(-50%)",
               fontFamily: "var(--font-mono, 'Courier New', monospace)",
               fontSize: "13px",
-              color: "rgba(160,140,100,0.6)",
+              color: "rgba(80,80,70,0.6)",
             }}>
               {treeCollapsed ? "+" : "×"}
             </div>
@@ -522,7 +522,7 @@ export default function Home() {
               fontWeight: "600",
               letterSpacing: "0.18em",
               textTransform: "uppercase" as const,
-              color: "#2a1e0c",
+              color: "#1a1a14",
               textAlign: "center",
             }}>
               {supplyMapLabel}
@@ -538,12 +538,12 @@ export default function Home() {
                   <span style={{
                     fontFamily: "var(--font-mono, 'Courier New', monospace)",
                     fontSize: "8.5px",
-                    color: "#8a7a62",
+                    color: "#888880",
                     letterSpacing: "0.05em",
                     whiteSpace: "nowrap" as const,
                   }}>{stat}</span>
                   {i < arr.length - 1 && (
-                    <div style={{ width: "1px", height: "9px", background: "rgba(160,140,100,0.3)", flexShrink: 0 }} />
+                    <div style={{ width: "1px", height: "9px", background: "rgba(80,80,70,0.3)", flexShrink: 0 }} />
                   )}
                 </React.Fragment>
               ))}

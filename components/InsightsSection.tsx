@@ -116,16 +116,16 @@ function InsightBox({ num, label, text }: { num: string; label: string; text: st
   return (
     <div style={{
       background: "white",
-      border: "0.5px solid rgba(192,176,128,0.3)",
+      border: "0.5px solid rgba(80,80,70,0.3)",
       borderRadius: 6,
       padding: "14px 20px",
       display: "flex",
       alignItems: "baseline",
       gap: 20,
     }}>
-      <span style={{ fontFamily: "Courier New, monospace", fontSize: 9, color: "#c8bc9a", width: 18, flexShrink: 0 }}>{num}</span>
+      <span style={{ fontFamily: "Courier New, monospace", fontSize: 9, color: "#aaaaa0", width: 18, flexShrink: 0 }}>{num}</span>
       <span style={{ fontFamily: "Courier New, monospace", fontSize: 8.5, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#a89060", width: 180, flexShrink: 0 }}>{label}</span>
-      <span style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#4a3e2e", lineHeight: 1.65 }}>{text}</span>
+      <span style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#3a3a32", lineHeight: 1.65 }}>{text}</span>
     </div>
   );
 }
@@ -134,8 +134,8 @@ function ConnectionBox({ title, text }: { title: string; text: string }) {
   return (
     <div style={{
       background: "white",
-      border: "0.5px solid rgba(192,176,128,0.3)",
-      borderLeft: "2px solid rgba(192,176,128,0.45)",
+      border: "0.5px solid rgba(80,80,70,0.3)",
+      borderLeft: "2px solid rgba(80,80,70,0.45)",
       borderRadius: 6,
       padding: "14px 20px",
       display: "flex",
@@ -144,8 +144,8 @@ function ConnectionBox({ title, text }: { title: string; text: string }) {
     }}>
       <span style={{ fontSize: 11, color: "#c8a85a", flexShrink: 0 }}>→</span>
       <div>
-        <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, fontWeight: 600, color: "#2a1e0c", marginBottom: 5 }}>{title}</div>
-        <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#4a3e2e", lineHeight: 1.65, fontStyle: "italic" }}>{text}</div>
+        <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, fontWeight: 600, color: "#1a1a14", marginBottom: 5 }}>{title}</div>
+        <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#3a3a32", lineHeight: 1.65, fontStyle: "italic" }}>{text}</div>
       </div>
     </div>
   );
@@ -155,8 +155,8 @@ function WatchConnectionBox({ title, text, watch }: { title: string; text: strin
   return (
     <div style={{
       background: "white",
-      border: "0.5px solid rgba(192,176,128,0.3)",
-      borderLeft: "2px solid rgba(192,176,128,0.45)",
+      border: "0.5px solid rgba(80,80,70,0.3)",
+      borderLeft: "2px solid rgba(80,80,70,0.45)",
       borderRadius: 6,
       padding: "14px 20px",
       display: "flex",
@@ -165,9 +165,9 @@ function WatchConnectionBox({ title, text, watch }: { title: string; text: strin
     }}>
       <span style={{ fontSize: 11, color: "#c8a85a", flexShrink: 0 }}>→</span>
       <div>
-        <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, fontWeight: 600, color: "#2a1e0c", marginBottom: 5 }}>{title}</div>
-        <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#4a3e2e", lineHeight: 1.65, fontStyle: "italic", marginBottom: 8 }}>{text}</div>
-        <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, color: "#9c8c74", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Watch → {watch}</div>
+        <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, fontWeight: 600, color: "#1a1a14", marginBottom: 5 }}>{title}</div>
+        <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#3a3a32", lineHeight: 1.65, fontStyle: "italic", marginBottom: 8 }}>{text}</div>
+        <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, color: "#888880", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Watch → {watch}</div>
       </div>
     </div>
   );
@@ -181,18 +181,18 @@ function SectionHeader({ label, subtitle, isOpen, onToggle }: {
   return (
     <div
       onClick={onToggle}
-      onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#e9e4da"}
-      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "#f0ece2"}
+      onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#E0E0DC"}
+      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "#EDEDEA"}
       style={{
         display: "flex",
         flexDirection: "column" as const,
         alignItems: "center",
         padding: "22px 48px",
         cursor: "pointer",
-        background: "#f0ece2",
+        background: "#EDEDEA",
         position: "relative" as const,
         gap: "6px",
-        borderBottom: "0.5px solid rgba(160,140,100,0.15)",
+        borderBottom: "0.5px solid rgba(80,80,70,0.15)",
         transition: "background 0.15s ease",
         userSelect: "none" as const,
       }}
@@ -204,7 +204,7 @@ function SectionHeader({ label, subtitle, isOpen, onToggle }: {
         transform: "translateY(-50%)",
         fontFamily: "var(--font-mono, 'Courier New', monospace)",
         fontSize: "13px",
-        color: "rgba(160,140,100,0.6)",
+        color: "rgba(80,80,70,0.6)",
       }}>
         {isOpen ? "×" : "+"}
       </div>
@@ -214,7 +214,7 @@ function SectionHeader({ label, subtitle, isOpen, onToggle }: {
         fontWeight: "600",
         letterSpacing: "0.18em",
         textTransform: "uppercase" as const,
-        color: "#2a1e0c",
+        color: "#1a1a14",
         textAlign: "center",
       }}>
         {label}
@@ -222,7 +222,7 @@ function SectionHeader({ label, subtitle, isOpen, onToggle }: {
       <div style={{
         fontFamily: "var(--font-mono, 'Courier New', monospace)",
         fontSize: "8.5px",
-        color: "#8a7a62",
+        color: "#888880",
         letterSpacing: "0.05em",
         textAlign: "center",
       }}>
@@ -234,9 +234,9 @@ function SectionHeader({ label, subtitle, isOpen, onToggle }: {
 
 function Hero({ num, label }: { num: string; label: string }) {
   return (
-    <div style={{ textAlign: "center", paddingBottom: "28px", borderBottom: "0.5px solid rgba(160,140,100,0.15)", marginBottom: "24px" }}>
-      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 56, fontWeight: 500, color: "#2a1e0c", lineHeight: 1, letterSpacing: "-1px" }}>{num}</div>
-      <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", letterSpacing: "0.12em", color: "#8a7a62", maxWidth: 420, margin: "12px auto 0", lineHeight: 1.6 }}>{label}</div>
+    <div style={{ textAlign: "center", paddingBottom: "28px", borderBottom: "0.5px solid rgba(80,80,70,0.15)", marginBottom: "24px" }}>
+      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 56, fontWeight: 500, color: "#1a1a14", lineHeight: 1, letterSpacing: "-1px" }}>{num}</div>
+      <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", letterSpacing: "0.12em", color: "#888880", maxWidth: 420, margin: "12px auto 0", lineHeight: 1.6 }}>{label}</div>
     </div>
   );
 }
@@ -259,9 +259,9 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
       top,
       left: 0,
       right: 0,
-      background: "#f0ece2",
-      borderTop: "0.5px solid rgba(160,140,100,0.15)",
-      borderBottom: "0.5px solid rgba(160,140,100,0.2)",
+      background: "#EDEDEA",
+      borderTop: "0.5px solid rgba(80,80,70,0.15)",
+      borderBottom: "0.5px solid rgba(80,80,70,0.2)",
       zIndex: 10,
     }}>
 
@@ -270,7 +270,7 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
         <>
           <SectionHeader label="Key insights" subtitle="7 findings" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
           {openSections.insights && (
-            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
               <div style={{ maxWidth: 780, margin: "0 auto" }}>
                 <Hero num="−270t" label="estimated annual germanium shortfall by 2030 — projected demand ~490t against supply capped at ~220t, with no new primary sources coming online at scale" />
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -282,7 +282,7 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
 
           <SectionHeader label="Chain connections" subtitle="4 connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
           {openSections.connections && (
-            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
               <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 8 }}>
                 {RAW_CONNECTIONS.map(item => <ConnectionBox key={item.title} {...item} />)}
               </div>
@@ -291,12 +291,12 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
 
           <SectionHeader label="Emerging supply technologies" subtitle="3 technologies" isOpen={openSections.emerging} onToggle={() => toggle("emerging")} />
           {openSections.emerging && (
-            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
               <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 8 }}>
                 {RAW_TECHNOLOGIES.map(({ title, meta, text }) => (
                   <div key={title} style={{
                     background: "white",
-                    border: "0.5px solid rgba(192,176,128,0.3)",
+                    border: "0.5px solid rgba(80,80,70,0.3)",
                     borderLeft: "2px solid #5a8c6a",
                     borderRadius: 6,
                     padding: "14px 20px",
@@ -306,9 +306,9 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
                   }}>
                     <span style={{ fontSize: 11, color: "#5a8c6a", flexShrink: 0 }}>◈</span>
                     <div>
-                      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, fontWeight: 600, color: "#2a1e0c", marginBottom: 3 }}>{title}</div>
-                      <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, color: "#9c8c74", letterSpacing: "0.06em", textTransform: "uppercase" as const, marginBottom: 6 }}>{meta}</div>
-                      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#4a3e2e", lineHeight: 1.65 }}>{text}</div>
+                      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, fontWeight: 600, color: "#1a1a14", marginBottom: 3 }}>{title}</div>
+                      <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, color: "#888880", letterSpacing: "0.06em", textTransform: "uppercase" as const, marginBottom: 6 }}>{meta}</div>
+                      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#3a3a32", lineHeight: 1.65 }}>{text}</div>
                     </div>
                   </div>
                 ))}
@@ -318,20 +318,20 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
 
           <SectionHeader label="Investment angles" subtitle="6 angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
           {openSections.investment && (
-            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
               <div style={{ maxWidth: 780, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
                 {RAW_CARDS.map(({ variant, ticker, name, desc }) => (
                   <div key={name} style={{
                     background: "white",
-                    border: "0.5px solid rgba(192,176,128,0.3)",
+                    border: "0.5px solid rgba(80,80,70,0.3)",
                     borderLeft: `2px solid ${CARD_BORDER[variant]}`,
                     borderRadius: 6,
                     padding: "16px 18px",
                   }}>
-                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "#9c8c74", marginBottom: 4 }}>{CARD_TYPE_LABEL[variant]}</div>
-                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
-                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 6 }}>{name}</div>
-                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "#888880", marginBottom: 4 }}>{CARD_TYPE_LABEL[variant]}</div>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#888880", marginBottom: 4 }}>{ticker}</div>
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#1a1a14", marginBottom: 6 }}>{name}</div>
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#3a3a32", lineHeight: 1.6 }}>{desc}</div>
                   </div>
                 ))}
               </div>
@@ -345,7 +345,7 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
         <>
           <SectionHeader label="Key insights" subtitle="7 findings" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
           {openSections.insights && (
-            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
               <div style={{ maxWidth: 780, margin: "0 auto" }}>
                 <Hero num="36×" label="more fiber required in an AI GPU rack than a traditional CPU rack — against a supply chain running at 100% capacity with an 18–24 month expansion lag" />
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -357,7 +357,7 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
 
           <SectionHeader label="Chain connections" subtitle="4 connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
           {openSections.connections && (
-            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
               <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 8 }}>
                 {COMP_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
               </div>
@@ -366,20 +366,20 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
 
           <SectionHeader label="Investment angles" subtitle="6 angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
           {openSections.investment && (
-            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
               <div style={{ maxWidth: 780, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
                 {COMP_CARDS.map(({ ticker, name, desc }) => (
                   <div key={name} style={{
                     background: "white",
-                    border: "0.5px solid rgba(192,176,128,0.3)",
+                    border: "0.5px solid rgba(80,80,70,0.3)",
                     borderLeft: "2px solid #5a7a9c",
                     borderRadius: 6,
                     padding: "16px 18px",
                   }}>
-                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
-                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 8 }}>{name}</div>
-                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(192,176,128,0.3)", marginBottom: 8 }} />
-                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#888880", marginBottom: 4 }}>{ticker}</div>
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#1a1a14", marginBottom: 8 }}>{name}</div>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(80,80,70,0.3)", marginBottom: 8 }} />
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#3a3a32", lineHeight: 1.6 }}>{desc}</div>
                   </div>
                 ))}
               </div>
@@ -393,7 +393,7 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
         <>
           <SectionHeader label="Key insights" subtitle="7 findings" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
           {openSections.insights && (
-            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
               <div style={{ maxWidth: 780, margin: "0 auto" }}>
                 <Hero num="100%" label="global fiber optic preform lines are running at full capacity — at least one major US manufacturer has sold all inventory through 2026, with no new capacity possible before late 2027" />
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -405,7 +405,7 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
 
           <SectionHeader label="Chain connections" subtitle="4 connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
           {openSections.connections && (
-            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
               <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 8 }}>
                 {SUB_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
               </div>
@@ -414,20 +414,20 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
 
           <SectionHeader label="Investment angles" subtitle="6 angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
           {openSections.investment && (
-            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
               <div style={{ maxWidth: 780, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
                 {SUB_CARDS.map(({ ticker, name, desc }) => (
                   <div key={name} style={{
                     background: "white",
-                    border: "0.5px solid rgba(192,176,128,0.3)",
+                    border: "0.5px solid rgba(80,80,70,0.3)",
                     borderLeft: "2px solid #5a7a9c",
                     borderRadius: 6,
                     padding: "16px 18px",
                   }}>
-                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
-                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 8 }}>{name}</div>
-                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(192,176,128,0.3)", marginBottom: 8 }} />
-                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#888880", marginBottom: 4 }}>{ticker}</div>
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#1a1a14", marginBottom: 8 }}>{name}</div>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(80,80,70,0.3)", marginBottom: 8 }} />
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#3a3a32", lineHeight: 1.6 }}>{desc}</div>
                   </div>
                 ))}
               </div>

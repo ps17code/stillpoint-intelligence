@@ -5,13 +5,13 @@
 /* ── Design tokens ─────────────────────────────────────────────── */
 :root {
   --bg: #F2F2F0;
-  --ink: #2a1e0c;
-  --ink2: #6b6458;
-  --ink3: #9c8c74;
-  --ink4: #c8bc9a;
+  --ink: #1a1a14;
+  --ink2: #3a3a32;
+  --ink3: #888880;
+  --ink4: #aaaaa0;
   --gold: #c0b080;
   --gold2: #a89060;
-  --dormant: #c8bc9a;
+  --dormant: #aaaaa0;
   --panel-w: 340px;
 }
 
@@ -46,7 +46,7 @@ body {
 
 /* ── Scrollbar ─────────────────────────────────────────────────── */
 .thin-scroll::-webkit-scrollbar { width: 3px; }
-.thin-scroll::-webkit-scrollbar-thumb { background: rgba(192,176,128,0.3); }
+.thin-scroll::-webkit-scrollbar-thumb { background: rgba(80,80,70,0.3); }
 
 /* ── Grain overlay ─────────────────────────────────────────────── */
 .grain {

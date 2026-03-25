@@ -42,7 +42,7 @@ export default function Tooltip({ nodeKey, nodeData, svgX, svgY, onDeepDive, onM
         left, top,
         width: 224,
         background: "white",
-        border: "1px solid rgba(192,176,128,0.3)",
+        border: "1px solid rgba(80,80,70,0.3)",
         borderRadius: 6,
         padding: "14px 16px",
         boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
@@ -63,15 +63,15 @@ export default function Tooltip({ nodeKey, nodeData, svgX, svgY, onDeepDive, onM
           <div style={{ fontFamily: "'Geist Mono',monospace", fontSize: 9, color: "var(--ink3)", marginBottom: 10, letterSpacing: "0.04em" }}>
             {nodeData.loc}
           </div>
-          <div style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10, color: "var(--ink2)", background: "rgba(192,176,128,0.1)", borderRadius: 3, padding: "4px 8px", marginBottom: 8, display: "inline-block" }}>
+          <div style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10, color: "var(--ink2)", background: "rgba(80,80,70,0.1)", borderRadius: 3, padding: "4px 8px", marginBottom: 8, display: "inline-block" }}>
             {nodeData.stat}
           </div>
-          <div style={{ fontSize: 11, color: "#8c5a2a", lineHeight: 1.5, paddingTop: 8, borderTop: "1px solid rgba(192,176,128,0.2)", marginTop: 4 }}>
+          <div style={{ fontSize: 11, color: "#8c5a2a", lineHeight: 1.5, paddingTop: 8, borderTop: "1px solid rgba(80,80,70,0.2)", marginTop: 4 }}>
             {nodeData.risk}
           </div>
           <button
             onClick={onDeepDive}
-            style={{ display: "block", width: "100%", marginTop: 12, padding: "7px 0", textAlign: "center", fontFamily: "'Geist Mono',monospace", fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--gold2)", background: "none", border: "1px solid rgba(192,176,128,0.4)", borderRadius: 3, cursor: "pointer" }}
+            style={{ display: "block", width: "100%", marginTop: 12, padding: "7px 0", textAlign: "center", fontFamily: "'Geist Mono',monospace", fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--gold2)", background: "none", border: "1px solid rgba(80,80,70,0.4)", borderRadius: 3, cursor: "pointer" }}
           >
             Deep dive →
           </button>

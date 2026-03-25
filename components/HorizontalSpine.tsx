@@ -68,7 +68,7 @@ export default function HorizontalSpine({
       style={{
         position: "fixed", top: 0, left: 0, right: 0, height: 68,
         background: "#F2F2F0",
-        borderBottom: "0.5px solid rgba(192,176,128,0.2)",
+        borderBottom: "0.5px solid rgba(80,80,70,0.2)",
         display: "flex", alignItems: "center", justifyContent: "center",
         zIndex: 50,
         padding: "0 48px",
@@ -90,7 +90,7 @@ export default function HorizontalSpine({
           transition: "color 0.3s",
           flexShrink: 0,
         }}
-        onMouseEnter={e => (e.currentTarget.style.color = "#2a1e0c")}
+        onMouseEnter={e => (e.currentTarget.style.color = "#1a1a14")}
         onMouseLeave={e => (e.currentTarget.style.color = "var(--gold2)")}
       >
         ← home
@@ -111,7 +111,7 @@ export default function HorizontalSpine({
               {idx > 0 && (
                 <div style={{
                   width: 60, height: 1,
-                  background: "rgba(192,176,128,0.4)",
+                  background: "rgba(80,80,70,0.4)",
                   flexShrink: 0,
                 }} />
               )}
@@ -137,7 +137,7 @@ export default function HorizontalSpine({
                 <div style={{
                   fontFamily: "'EB Garamond', Georgia, serif",
                   fontSize: 12,
-                  color: (active || !dormant) ? "#2a1e0c" : "#c8bc9a",
+                  color: (active || !dormant) ? "#1a1a14" : "#aaaaa0",
                   whiteSpace: "nowrap",
                   transition: "color 0.3s",
                 }}>
@@ -166,7 +166,7 @@ export default function HorizontalSpine({
                       left: "50%",
                       transform: "translateX(-50%)",
                       background: "white",
-                      border: "0.5px solid rgba(192,176,128,0.3)",
+                      border: "0.5px solid rgba(80,80,70,0.3)",
                       borderRadius: 6,
                       padding: "6px 0",
                       minWidth: 160,
@@ -183,18 +183,18 @@ export default function HorizontalSpine({
                           padding: "7px 16px",
                           fontFamily: "'EB Garamond', Georgia, serif",
                           fontSize: 13,
-                          color: selection[lvl.key] === opt ? "#2a1e0c" : "#6b6458",
+                          color: selection[lvl.key] === opt ? "#1a1a14" : "#3a3a32",
                           fontWeight: selection[lvl.key] === opt ? 500 : 400,
                           cursor: "pointer",
                           transition: "background 0.15s, color 0.15s",
                         }}
                         onMouseEnter={e => {
-                          e.currentTarget.style.background = "rgba(192,176,128,0.08)";
-                          e.currentTarget.style.color = "#2a1e0c";
+                          e.currentTarget.style.background = "rgba(80,80,70,0.08)";
+                          e.currentTarget.style.color = "#1a1a14";
                         }}
                         onMouseLeave={e => {
                           e.currentTarget.style.background = "transparent";
-                          e.currentTarget.style.color = selection[lvl.key] === opt ? "#2a1e0c" : "#6b6458";
+                          e.currentTarget.style.color = selection[lvl.key] === opt ? "#1a1a14" : "#3a3a32";
                         }}
                         onMouseDown={e => {
                           e.preventDefault();
