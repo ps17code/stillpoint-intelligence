@@ -436,6 +436,43 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
         </>
       )}
 
+      {/* ── END USE LAYER INSIGHTS ────────────────────────────────────────── */}
+      {chainState === 4 && (
+        <>
+          <SectionHeader label="Key insights" subtitle="7 findings" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
+          {openSections.insights && (
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto" }}>
+                <Hero num="~115t" label="germanium required annually by AI datacenters alone by 2026 — against total global supply of ~220t, before accounting for IR optics, defense, semiconductors, or solar" />
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <InsightBox num="01" label="Content coming next session" text="Detailed key insights for the End Use layer will be added in the next session." />
+                </div>
+              </div>
+            </div>
+          )}
+
+          <SectionHeader label="Chain connections" subtitle="4 connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
+          {openSections.connections && (
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 8 }}>
+                <ConnectionBox title="Content coming next session" text="Chain connection analysis for the End Use layer will be added in the next session." />
+              </div>
+            </div>
+          )}
+
+          <SectionHeader label="Investment angles" subtitle="6 angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
+          {openSections.investment && (
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto" }}>
+                <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#3a3a32", padding: "12px 0" }}>
+                  Investment angle content for the End Use layer will be added in the next session.
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
     </div>
   );
 }

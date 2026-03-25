@@ -79,10 +79,13 @@ export interface SubChain {
 }
 
 export interface EUChain {
-  integration: string[];
-  hyperscale: string[];
+  installers: string[];
+  developers: string[];
+  owners: string[];
   output: string;
-  intToHyper: [number, number][];
+  installersToDevelopers: [number, number][];
+  developersToOwners: [number, number][];
+  ownerCountries?: string[];
 }
 
 export interface ChainsData {

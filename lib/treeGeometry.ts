@@ -6,7 +6,7 @@ export interface LayerGeometry {
   key: string;
   label: string;
   cy: number;       // SVG y coordinate (0-1000 scale)
-  nodes: { name: string; cx: number; cy: number; opacity: number }[];
+  nodes: { name: string; cx: number; cy: number; opacity: number; color?: string }[];
   color: { stroke: string; text: string; pip: string };
 }
 
@@ -111,10 +111,11 @@ export const PALETTES = {
   assembly: { stroke: "#5a4a6a", text: "#2e1e40", pip: "#5a4a6a" },
   cableType:{ stroke: "#2e4a5a", text: "#0e1e2e", pip: "#2e4a5a" },
   subOut:   { stroke: "#1a1e2e", text: "#1a1e2e", pip: "#1a1e2e" },
-  // End use layer (forest green → navy)
-  integration:{ stroke: "#4a3070", text: "#2c1a4a", pip: "#4a3070" },
-  hyperscale: { stroke: "#2a4a2a", text: "#1a2e1a", pip: "#2a4a2a" },
-  euOut:      { stroke: "#1a1a3a", text: "#1a1a3a", pip: "#1a1a3a" },
+  // End use layer (amber / US-dominant)
+  installers: { stroke: "#c8a85a", text: "#7a6020", pip: "#c8a85a" },
+  developers: { stroke: "#b09040", text: "#6a5010", pip: "#b09040" },
+  owners:     { stroke: "#c8a85a", text: "#7a6020", pip: "#c8a85a" },
+  euOut:      { stroke: "#1a1a2e", text: "#1a1a2e", pip: "#1a1a2e" },
 } as const;
 
 // ── RAW TREE GEOMETRY ─────────────────────────────────────────────
@@ -384,32 +385,45 @@ export function buildSubGeometry(
 // ── EU TREE GEOMETRY ──────────────────────────────────────────────
 import type { EUChain } from "@/types";
 
+const TEAL_NODE = "#5a8c6a";
+
 export function buildEUGeometry(
   chain: EUChain,
   ancX: number, topY: number,
-  half = 380, gap = 170,
+  _half = 380, gap = 170,
 ): TreeGeometry {
-  const intCY = topY;
-  const hypCY = topY + gap;
-  const outCY = topY + gap * 2;
+  const instCY = topY;
+  const devCY  = topY + gap;
+  const ownCY  = topY + gap * 2;
+  const outCY  = topY + gap * 3;
 
-  const intXs = contentAwareSpread(chain.integration.length, ancX);
-  const hypXs = contentAwareSpread(chain.hyperscale.length,  ancX);
+  const instXs = contentAwareSpread(chain.installers.length, ancX);
+  const devXs  = contentAwareSpread(chain.developers.length, ancX);
+  const ownXs  = contentAwareSpread(chain.owners.length,     ancX);
 
   const layers: LayerGeometry[] = [
     {
-      key: "INTEGRATION", label: "INTEGRATION", cy: intCY,
-      color: PALETTES.integration,
-      nodes: chain.integration.map((name, i) => ({
-        name, cx: intXs[i], cy: intCY, opacity: 1,
+      key: "installers", label: "INSTALLERS", cy: instCY,
+      color: PALETTES.installers,
+      nodes: chain.installers.map((name, i) => ({
+        name, cx: instXs[i], cy: instCY, opacity: 1,
       })),
     },
     {
-      key: "HYPERSCALE", label: "HYPERSCALE", cy: hypCY,
-      color: PALETTES.hyperscale,
-      nodes: chain.hyperscale.map((name, i) => ({
-        name, cx: hypXs[i], cy: hypCY, opacity: 1,
+      key: "developers", label: "DEVELOPERS", cy: devCY,
+      color: PALETTES.developers,
+      nodes: chain.developers.map((name, i) => ({
+        name, cx: devXs[i], cy: devCY, opacity: 1,
       })),
+    },
+    {
+      key: "owners", label: "OWNERS", cy: ownCY,
+      color: PALETTES.owners,
+      nodes: chain.owners.map((name, i) => {
+        const country = chain.ownerCountries?.[i];
+        const nodeColor = (country === "UAE" || country === "Saudi Arabia") ? TEAL_NODE : undefined;
+        return { name, cx: ownXs[i], cy: ownCY, opacity: 1, color: nodeColor };
+      }),
     },
     {
       key: "OUTPUT", label: "OUTPUT", cy: outCY,
@@ -419,12 +433,13 @@ export function buildEUGeometry(
   ];
 
   const edges: EdgeGeometry[] = [
-    ...buildEdges(intXs, intCY, hypXs, hypCY, PALETTES.integration.stroke, chain.intToHyper, 0),
-    ...hypXs.map(hx => ({
-      x1: hx,   y1: hypCY + EDGE_Y1_OFFSET,
+    ...buildEdges(instXs, instCY, devXs, devCY, PALETTES.installers.stroke, chain.installersToDevelopers, 0),
+    ...buildEdges(devXs,  devCY,  ownXs, ownCY, PALETTES.developers.stroke,  chain.developersToOwners,     1),
+    ...ownXs.map(ox => ({
+      x1: ox,   y1: ownCY + EDGE_Y1_OFFSET,
       x2: ancX, y2: outCY  - EDGE_Y2_OFFSET,
-      color: PALETTES.hyperscale.stroke,
-      fromLayer: 1,
+      color: PALETTES.owners.stroke,
+      fromLayer: 2,
     })),
   ];
 

@@ -65,7 +65,7 @@
       "label": "GLOBAL SUPPLY"
     },
     "gecl4": {
-      "label": "GeCl₄ SUPPLIERS",
+      "label": "GeCl\u2084 SUPPLIERS",
       "displayFields": [
         {
           "key": "country",
@@ -73,7 +73,7 @@
         },
         {
           "key": "gecl4Output",
-          "label": "GeCl₄ output"
+          "label": "GeCl\u2084 output"
         },
         {
           "key": "purity",
@@ -101,24 +101,48 @@
     "output": {
       "label": "OUTPUT",
       "displayFields": [
-        {"key": "country", "label": ""},
-        {"key": "annualNew", "label": "New route-km/yr"},
-        {"key": "aiDemand", "label": "AI demand 2026"}
+        {
+          "key": "newDCsPerYear",
+          "label": "New DCs/yr"
+        },
+        {
+          "key": "fiberNeeded",
+          "label": "Fiber needed"
+        },
+        {
+          "key": "germaniumNeeded",
+          "label": "Ge demand"
+        }
       ]
     },
     "assembly": {
       "label": "ASSEMBLY",
       "displayFields": [
-        {"key": "country", "label": "Country"},
-        {"key": "cableOutput", "label": "Cable output/yr"}
+        {
+          "key": "country",
+          "label": "Country"
+        },
+        {
+          "key": "cableOutput",
+          "label": "Cable output/yr"
+        }
       ]
     },
     "cableType": {
       "label": "CABLE TYPE",
       "displayFields": [
-        {"key": "country", "label": ""},
-        {"key": "fiberCount", "label": "Fiber count"},
-        {"key": "avgDeployment", "label": "Avg deployment"}
+        {
+          "key": "country",
+          "label": ""
+        },
+        {
+          "key": "fiberCount",
+          "label": "Fiber count"
+        },
+        {
+          "key": "avgDeployment",
+          "label": "Avg deployment"
+        }
       ]
     },
     "integration": {
@@ -146,6 +170,57 @@
         }
       ],
       "label": "HYPERSCALE"
+    },
+    "installers": {
+      "label": "INSTALLERS",
+      "displayFields": [
+        {
+          "key": "country",
+          "label": "Country"
+        },
+        {
+          "key": "segment",
+          "label": "Segment"
+        },
+        {
+          "key": "fiberRevenue",
+          "label": "Fiber revenue"
+        }
+      ]
+    },
+    "developers": {
+      "label": "DEVELOPERS",
+      "displayFields": [
+        {
+          "key": "country",
+          "label": "Country"
+        },
+        {
+          "key": "dcProjects",
+          "label": "DC projects"
+        },
+        {
+          "key": "dcRevenue",
+          "label": "DC revenue"
+        }
+      ]
+    },
+    "owners": {
+      "label": "OWNERS",
+      "displayFields": [
+        {
+          "key": "country",
+          "label": "Country"
+        },
+        {
+          "key": "ownerType",
+          "label": "Type"
+        },
+        {
+          "key": "currentDCs",
+          "label": "Current DCs"
+        }
+      ]
     },
     "recyclers": {
       "label": "RECYCLERS",
@@ -180,7 +255,7 @@
   },
   "SPINE_TREE": {
     "Germanium": {
-      "GeO₂ / GeCl₄": {
+      "GeO\u2082 / GeCl\u2084": {
         "Fiber Optics": [
           "AI Datacenter"
         ]
@@ -210,24 +285,42 @@
   },
   "EU_DATA": {
     "AI Datacenter": {
-      "integration": [
-        "Vertiv",
-        "Equinix",
-        "CoreWeave",
-        "Schneider Electric",
-        "CommScope",
-        "AECOM"
+      "installers": [
+        "Dycom Industries",
+        "MasTec",
+        "MYR Group",
+        "Wesco International",
+        "Hyperscaler In-House"
       ],
-      "hyperscale": [
-        "Microsoft",
-        "Google",
-        "Amazon",
+      "developers": [
+        "Turner Construction",
+        "Mortenson",
+        "DPR Construction",
+        "Holder Construction",
+        "Hyperscaler Self-Build"
+      ],
+      "owners": [
+        "Amazon / AWS",
+        "Microsoft / Azure",
+        "Google / Alphabet",
         "Meta",
-        "xAI",
-        "Oracle"
+        "Equinix",
+        "Digital Realty",
+        "G42",
+        "NEOM / PIF"
       ],
-      "output": "AI Datacenter",
-      "intToHyper": [
+      "ownerCountries": [
+        "USA",
+        "USA",
+        "USA",
+        "USA",
+        "USA",
+        "USA",
+        "UAE",
+        "Saudi Arabia"
+      ],
+      "output": "Global AI Datacenter Capacity",
+      "installersToDevelopers": [
         [
           0,
           0
@@ -249,10 +342,6 @@
           4
         ],
         [
-          0,
-          5
-        ],
-        [
           1,
           0
         ],
@@ -269,6 +358,10 @@
           3
         ],
         [
+          1,
+          4
+        ],
+        [
           2,
           0
         ],
@@ -278,11 +371,15 @@
         ],
         [
           2,
-          4
+          2
         ],
         [
           2,
-          5
+          3
+        ],
+        [
+          2,
+          4
         ],
         [
           3,
@@ -305,8 +402,12 @@
           4
         ],
         [
-          3,
-          5
+          4,
+          0
+        ],
+        [
+          4,
+          1
         ],
         [
           4,
@@ -318,23 +419,169 @@
         ],
         [
           4,
-          5
+          4
+        ]
+      ],
+      "developersToOwners": [
+        [
+          0,
+          0
         ],
         [
-          5,
+          0,
+          1
+        ],
+        [
+          0,
           2
         ],
         [
-          5,
+          0,
           3
         ],
         [
-          5,
+          0,
           4
         ],
         [
-          5,
+          0,
           5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          4,
+          7
         ]
       ]
     }
@@ -357,7 +604,7 @@
         "Various State Ops",
         "Yunnan Chihong",
         "JSC Germanium",
-        "STL / Gécamines",
+        "STL / G\u00e9camines",
         "Teck Resources"
       ],
       "refiners": [
@@ -616,7 +863,7 @@
     }
   },
   "COMP_DATA": {
-    "GeO₂ / GeCl₄": {
+    "GeO\u2082 / GeCl\u2084": {
       "geCl4": [
         "Umicore GeCl4",
         "Yunnan Chihong GeCl4",
@@ -633,13 +880,77 @@
       ],
       "output": "Optical Fiber Strand",
       "geCl4ToFiber": [
-        [0,0],[0,1],[0,2],[1,3],[1,4],[1,5],[2,3],[2,4],[2,5],[3,3]
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          3
+        ]
       ],
       "fiberToOutput": [
-        [0,0],[1,0],[2,0],[3,0],[4,0],[5,0]
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          5,
+          0
+        ]
       ],
       "minor": {
-        "geCl4": [3],
+        "geCl4": [
+          3
+        ],
         "fiberMfg": []
       }
     }

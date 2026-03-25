@@ -336,9 +336,8 @@ export default function Home() {
     { label: sel.eu || "AI Datacenter", shape: "cylinder" as const },
   ];
 
-  // Global Supply node (layer 4) sits at SVG Y = topY + 4*180.
-  // Layer counts: raw=5 layers (4 gaps), comp=3 layers (2 gaps)
-  const treeLayerCount = appState === 1 ? 5 : 3;
+  // Layer counts: raw=5 layers (4 gaps), eu=4 layers (3 gaps), comp/sub=3 layers (2 gaps)
+  const treeLayerCount = appState === 1 ? 5 : appState === 4 ? 4 : 3;
   const treePixelHeight = ((treeLayerCount - 1) * 180 / 1000) * windowHeight;
   const bandPadTop = 20;
   const bandPadBottom = 60;
@@ -529,10 +528,10 @@ export default function Home() {
             </div>
             <div style={{ display: "flex", gap: "14px", alignItems: "center", justifyContent: "center" }}>
               {([
-                appState === 1 ? "~220 t/yr" : appState === 2 ? "~88 t Ge to fiber" : "~3–4M route-km/yr",
-                appState === 1 ? "$320M market" : appState === 2 ? "~500M fiber-km/yr" : ">30M cable-km/yr",
-                appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : "71% hyperscaler owned",
-                appState === 1 ? "8 deposits · 7 miners · 7 refiners" : appState === 2 ? "6 fiber manufacturers" : "9 cable assemblers",
+                appState === 1 ? "~220 t/yr" : appState === 2 ? "~88 t Ge to fiber" : appState === 3 ? "~3–4M route-km/yr" : "~130-140 new hyperscale DCs/yr",
+                appState === 1 ? "$320M market" : appState === 2 ? "~500M fiber-km/yr" : appState === 3 ? ">30M cable-km/yr" : "~230M fiber-km/yr",
+                appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : appState === 3 ? "71% hyperscaler owned" : "~115t Ge/yr",
+                appState === 1 ? "8 deposits · 7 miners · 7 refiners" : appState === 2 ? "6 fiber manufacturers" : appState === 3 ? "9 cable assemblers" : "$600B+ capex 2026",
               ] as string[]).map((stat, i, arr) => (
                 <React.Fragment key={i}>
                   <span style={{
@@ -586,8 +585,8 @@ export default function Home() {
         onClose={() => setPanelOpen(o => !o)}
       />
 
-      {/* Insights section — raw, component, and subsystem layers */}
-      {(appState === 1 || appState === 2 || appState === 3) && <InsightsSection top={insightsTop} chainState={appState} />}
+      {/* Insights section — all tree layers */}
+      {appState > 0 && <InsightsSection top={insightsTop} chainState={appState} />}
 
     </main>
   );

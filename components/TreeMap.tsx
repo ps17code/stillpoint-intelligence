@@ -21,15 +21,17 @@ interface TreeMapProps {
 }
 
 const COUNTRY_COLORS: Record<string, string> = {
-  "China":   "#c8a85a",
-  "USA":     "#5a7a9c",
-  "Japan":   "#c8855a",
-  "France":  "#7a9abc",
-  "Italy":   "#7a9abc",
-  "Belgium": "#7a9abc",
-  "Canada":  "#5a7a9c",
-  "Russia":  "#8c5a5a",
-  "DRC":     "#5a8c6a",
+  "China":        "#c8a85a",
+  "USA":          "#5a7a9c",
+  "Japan":        "#c8855a",
+  "France":       "#7a9abc",
+  "Italy":        "#7a9abc",
+  "Belgium":      "#7a9abc",
+  "Canada":       "#5a7a9c",
+  "Russia":       "#8c5a5a",
+  "DRC":          "#5a8c6a",
+  "UAE":          "#5a8c6a",
+  "Saudi Arabia": "#5a8c6a",
 };
 
 // Edge style constants
@@ -147,6 +149,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       layerKey: string, color: { text: string; stroke: string },
       nodeData?: NodeData,
       configKeyOverride?: string,
+      nodeColorOverride?: string,
     ) {
       const g = document.createElementNS(NS, "g");
       g.style.cursor = "pointer";
@@ -164,12 +167,13 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       }));
 
       // Ring
-      const isOutputNode = name === "Global Supply" || name === "Optical Fiber Strand" || name === "Deployed Fiber Network";
+      const isOutputNode = name === "Global Supply" || name === "Optical Fiber Strand" || name === "Deployed Fiber Network" || name === "Global AI Datacenter Capacity";
+      const ringStroke = nodeColorOverride ?? color.stroke;
       let ringEl: SVGCircleElement;
       if (isOutputNode) {
-        ringEl = mkEl("circle", { cx, cy, r: 7, fill: "none", stroke: color.stroke, "stroke-width": 1.8 }) as SVGCircleElement;
+        ringEl = mkEl("circle", { cx, cy, r: 7, fill: "none", stroke: ringStroke, "stroke-width": 1.8 }) as SVGCircleElement;
       } else {
-        ringEl = mkEl("circle", { cx, cy, r: 5.5, fill: "none", stroke: color.stroke, "stroke-width": 1.3 }) as SVGCircleElement;
+        ringEl = mkEl("circle", { cx, cy, r: 5.5, fill: "none", stroke: ringStroke, "stroke-width": 1.3 }) as SVGCircleElement;
       }
       ringEl.style.transition = "fill 0.15s ease";
       g.appendChild(ringEl);
@@ -282,7 +286,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       }
 
       // Events — hover fills ring and highlights edges; no tooltip
-      g.addEventListener("mouseenter", () => handleNodeEnter(name, color.stroke, ringEl));
+      g.addEventListener("mouseenter", () => handleNodeEnter(name, ringStroke, ringEl));
       g.addEventListener("mouseleave", () => handleNodeLeave(ringEl));
       g.addEventListener("click", (e) => { e.stopPropagation(); onNodeClick(name); });
 
@@ -385,7 +389,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
         const nd = nodes[n.name];
         const cfgOverride = nd?.type === "Germanium recycler" ? "recyclers"
           : (layer.key === "supplyNodes" ? "supplyNodes" : undefined);
-        nodeG.appendChild(mkNodeGroup(n.cx, n.cy, n.name, layer.key, layer.color, nd, cfgOverride));
+        nodeG.appendChild(mkNodeGroup(n.cx, n.cy, n.name, layer.key, layer.color, nd, cfgOverride, n.color));
       });
 
       const leftNodeCX = Math.min(...layer.nodes.map(n => n.cx));
