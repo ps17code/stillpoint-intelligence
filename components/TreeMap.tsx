@@ -71,7 +71,9 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
     }
 
     function mkLine(x1: number, y1: number, x2: number, y2: number, stroke: string, dashed = true) {
-      return mkEl("line", { x1, y1, x2, y2, stroke, "stroke-width": 0.9,
+      const midY = (y1 + y2) / 2;
+      const d = `M ${x1},${y1} C ${x1},${midY} ${x2},${midY} ${x2},${y2}`;
+      return mkEl("path", { d, stroke, fill: "none", "stroke-width": 0.9,
         ...(dashed ? { "stroke-dasharray": "3 4" } : {}) });
     }
 
