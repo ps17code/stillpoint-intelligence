@@ -312,8 +312,8 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
         <>
           {/* Hero stat */}
           <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 72, fontWeight: 600, color: "#2a1e0c", lineHeight: 1 }}>71%</div>
-            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, color: "#6b6458", lineHeight: 1.65, maxWidth: 560, margin: "12px auto 0" }}>of international submarine cable capacity is now controlled by four hyperscalers — up from 10% a decade ago</div>
+            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 72, fontWeight: 600, color: "#2a1e0c", lineHeight: 1 }}>100%</div>
+            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, color: "#6b6458", lineHeight: 1.65, maxWidth: 560, margin: "12px auto 0" }}>global fiber optic preform lines are running at full capacity — at least one major US manufacturer has sold all inventory through 2026, with no new capacity possible before late 2027</div>
           </div>
 
           <SectionDivider label="Key Insights" first />
