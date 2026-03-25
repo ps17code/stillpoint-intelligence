@@ -109,7 +109,7 @@
       "label": "ASSEMBLY",
       "displayFields": [
         {"key": "country", "label": "Country"},
-        {"key": "annualRevenue", "label": "Revenue"},
+        {"key": "cableOutput", "label": "Cable output/yr"},
         {"key": "primaryMarket", "label": "Primary market"}
       ]
     },
