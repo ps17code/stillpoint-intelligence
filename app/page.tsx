@@ -38,7 +38,7 @@ const CHAINS  = chainsRaw as any;
 function topAnchorPx(thesisEl: HTMLElement | null): number {
   if (typeof window === "undefined") return 220;
   const thesisBottom = thesisEl ? thesisEl.getBoundingClientRect().bottom : 188;
-  return thesisBottom + 136;
+  return thesisBottom + 168;
 }
 
 export default function Home() {
@@ -341,8 +341,8 @@ export default function Home() {
   const treeLayerCount = appState === 1 ? 5 : 3;
   const treePixelHeight = ((treeLayerCount - 1) * 180 / 1000) * windowHeight;
   const bandPadTop = 20;
-  const bandPadBottom = 40;
-  const labelHeight = 66;
+  const bandPadBottom = 100;
+  const labelHeight = 104;
   const bandTop = topAnchor - bandPadTop - labelHeight;
   const bandHeight = bandPadTop + labelHeight + treePixelHeight + bandPadBottom;
   const collapsedBandHeight = 84;
