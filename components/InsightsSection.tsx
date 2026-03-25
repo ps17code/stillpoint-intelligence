@@ -260,6 +260,7 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
       left: 0,
       right: 0,
       background: "#ede8de",
+      borderTop: "0.5px solid rgba(160,140,100,0.15)",
       borderBottom: "0.5px solid rgba(160,140,100,0.2)",
       zIndex: 10,
     }}>

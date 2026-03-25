@@ -501,7 +501,6 @@ export default function Home() {
               background: "#ede8de",
               position: "relative",
               gap: "8px",
-              borderBottom: "0.5px solid rgba(160,140,100,0.15)",
               transition: "background 0.15s ease",
               userSelect: "none" as const,
             }}
