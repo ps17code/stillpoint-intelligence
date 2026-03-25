@@ -246,7 +246,7 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
       top,
       left: 0,
       right: 0,
-      padding: "48px 48px",
+      padding: "0 48px",
       background: "#f2ede3",
       zIndex: 10,
       display: "flex",

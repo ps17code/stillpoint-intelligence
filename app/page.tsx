@@ -345,7 +345,7 @@ export default function Home() {
   const labelHeight = 110;
   const bandTop = topAnchor - bandPadTop - labelHeight;
   const bandHeight = bandPadTop + labelHeight + treePixelHeight + bandPadBottom;
-  const collapsedBandHeight = 80;
+  const collapsedBandHeight = 56;
   const insightsTop = treeCollapsed
     ? bandTop + collapsedBandHeight
     : bandTop + bandHeight;
