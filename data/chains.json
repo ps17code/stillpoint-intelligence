@@ -649,7 +649,6 @@
       "assembly": [
         "Corning",
         "Prysmian",
-        "Fujikura",
         "Sumitomo Electric",
         "CommScope",
         "AFL",
@@ -706,11 +705,7 @@
         ],
         [
           5,
-          0
-        ],
-        [
-          5,
-          1
+          2
         ],
         [
           6,
@@ -718,10 +713,6 @@
         ],
         [
           7,
-          2
-        ],
-        [
-          8,
           2
         ]
       ],
