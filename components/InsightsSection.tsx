@@ -175,55 +175,68 @@ function WatchConnectionBox({ title, text, watch }: { title: string; text: strin
 
 // ─── COMPONENT ────────────────────────────────────────────────────────────────
 
-const HEADER_STYLE = {
-  display: "flex" as const,
-  alignItems: "center" as const,
-  justifyContent: "space-between" as const,
-  cursor: "pointer" as const,
-  padding: "20px 0",
-  borderTop: "0.5px solid rgba(192,176,128,0.3)",
-  userSelect: "none" as const,
-};
-
-const HEADER_LABEL_STYLE = {
-  flex: 1,
-  fontFamily: "Courier New, monospace",
-  fontSize: 9,
-  letterSpacing: "0.22em",
-  textTransform: "uppercase" as const,
-  color: "#9c8c74",
-  textAlign: "center" as const,
-};
-
-const HEADER_TOGGLE_STYLE = {
-  width: 20,
-  fontFamily: "Courier New, monospace",
-  fontSize: 10,
-  color: "#c8bc9a",
-  textAlign: "right" as const,
-};
-
-function SectionHeader({ label, isOpen, onToggle }: { label: string; isOpen: boolean; onToggle: () => void }) {
+function SectionHeader({ label, subtitle, isOpen, onToggle }: {
+  label: string; subtitle: string; isOpen: boolean; onToggle: () => void;
+}) {
   return (
-    <div style={HEADER_STYLE} onClick={onToggle}>
-      <div style={{ width: 20 }} />
-      <div style={HEADER_LABEL_STYLE}>{label}</div>
-      <div style={HEADER_TOGGLE_STYLE}>{isOpen ? "−" : "+"}</div>
+    <div
+      onClick={onToggle}
+      onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#e5dfd4"}
+      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "#ede8de"}
+      style={{
+        display: "flex",
+        flexDirection: "column" as const,
+        alignItems: "center",
+        padding: "22px 48px",
+        cursor: "pointer",
+        background: "#ede8de",
+        position: "relative" as const,
+        gap: "6px",
+        borderBottom: "0.5px solid rgba(160,140,100,0.15)",
+        transition: "background 0.15s ease",
+        userSelect: "none" as const,
+      }}
+    >
+      <div style={{
+        position: "absolute" as const,
+        right: "48px",
+        top: "50%",
+        transform: "translateY(-50%)",
+        fontFamily: "var(--font-mono, 'Courier New', monospace)",
+        fontSize: "13px",
+        color: "rgba(160,140,100,0.6)",
+      }}>
+        {isOpen ? "×" : "+"}
+      </div>
+      <div style={{
+        fontFamily: "var(--font-mono, 'Courier New', monospace)",
+        fontSize: "11px",
+        fontWeight: "600",
+        letterSpacing: "0.18em",
+        textTransform: "uppercase" as const,
+        color: "#2a1e0c",
+        textAlign: "center",
+      }}>
+        {label}
+      </div>
+      <div style={{
+        fontFamily: "var(--font-mono, 'Courier New', monospace)",
+        fontSize: "8.5px",
+        color: "#8a7a62",
+        letterSpacing: "0.05em",
+        textAlign: "center",
+      }}>
+        {subtitle}
+      </div>
     </div>
   );
 }
 
-const HERO_STYLE = {
-  textAlign: "center" as const,
-  padding: "32px 0 28px",
-  borderBottom: "0.5px solid rgba(192,176,128,0.3)",
-  marginBottom: 20,
-};
 function Hero({ num, label }: { num: string; label: string }) {
   return (
-    <div style={HERO_STYLE}>
-      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 64, fontWeight: 500, color: "#2a1e0c", lineHeight: 1 }}>{num}</div>
-      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, color: "#6b6458", lineHeight: 1.65, maxWidth: 560, margin: "12px auto 0" }}>{label}</div>
+    <div style={{ textAlign: "center", paddingBottom: "28px", borderBottom: "0.5px solid rgba(160,140,100,0.15)", marginBottom: "24px" }}>
+      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 56, fontWeight: 500, color: "#2a1e0c", lineHeight: 1, letterSpacing: "-1px" }}>{num}</div>
+      <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", letterSpacing: "0.12em", color: "#8a7a62", maxWidth: 420, margin: "12px auto 0", lineHeight: 1.6 }}>{label}</div>
     </div>
   );
 }
@@ -246,169 +259,182 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
       top,
       left: 0,
       right: 0,
-      padding: "0 48px",
-      background: "#f2ede3",
+      background: "#ede8de",
+      borderBottom: "0.5px solid rgba(160,140,100,0.2)",
       zIndex: 10,
-      display: "flex",
-      justifyContent: "center",
     }}>
-    <div style={{ maxWidth: 780, width: "100%" }}>
 
       {/* ── RAW MATERIAL INSIGHTS ─────────────────────────────────────────── */}
       {chainState === 1 && (
         <>
-          <SectionHeader label="Key Insights" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
+          <SectionHeader label="Key insights" subtitle="7 findings" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
           {openSections.insights && (
-            <>
-              <Hero num="−270t" label="estimated annual germanium shortfall by 2030 — projected demand ~490t against supply capped at ~220t, with no new primary sources coming online at scale" />
-              <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
-                {RAW_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto" }}>
+                <Hero num="−270t" label="estimated annual germanium shortfall by 2030 — projected demand ~490t against supply capped at ~220t, with no new primary sources coming online at scale" />
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {RAW_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
+                </div>
               </div>
-            </>
+            </div>
           )}
 
-          <SectionHeader label="Chain Connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
+          <SectionHeader label="Chain connections" subtitle="4 connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
           {openSections.connections && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
-              {RAW_CONNECTIONS.map(item => <ConnectionBox key={item.title} {...item} />)}
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 8 }}>
+                {RAW_CONNECTIONS.map(item => <ConnectionBox key={item.title} {...item} />)}
+              </div>
             </div>
           )}
 
-          <SectionHeader label="Emerging Supply Technologies" isOpen={openSections.emerging} onToggle={() => toggle("emerging")} />
+          <SectionHeader label="Emerging supply technologies" subtitle="3 technologies" isOpen={openSections.emerging} onToggle={() => toggle("emerging")} />
           {openSections.emerging && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
-              {RAW_TECHNOLOGIES.map(({ title, meta, text }) => (
-                <div key={title} style={{
-                  background: "white",
-                  border: "0.5px solid rgba(192,176,128,0.3)",
-                  borderLeft: "2px solid #5a8c6a",
-                  borderRadius: 6,
-                  padding: "14px 20px",
-                  display: "flex",
-                  gap: 16,
-                  alignItems: "baseline",
-                }}>
-                  <span style={{ fontSize: 11, color: "#5a8c6a", flexShrink: 0 }}>◈</span>
-                  <div>
-                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, fontWeight: 600, color: "#2a1e0c", marginBottom: 3 }}>{title}</div>
-                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, color: "#9c8c74", letterSpacing: "0.06em", textTransform: "uppercase" as const, marginBottom: 6 }}>{meta}</div>
-                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#4a3e2e", lineHeight: 1.65 }}>{text}</div>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 8 }}>
+                {RAW_TECHNOLOGIES.map(({ title, meta, text }) => (
+                  <div key={title} style={{
+                    background: "white",
+                    border: "0.5px solid rgba(192,176,128,0.3)",
+                    borderLeft: "2px solid #5a8c6a",
+                    borderRadius: 6,
+                    padding: "14px 20px",
+                    display: "flex",
+                    gap: 16,
+                    alignItems: "baseline",
+                  }}>
+                    <span style={{ fontSize: 11, color: "#5a8c6a", flexShrink: 0 }}>◈</span>
+                    <div>
+                      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, fontWeight: 600, color: "#2a1e0c", marginBottom: 3 }}>{title}</div>
+                      <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, color: "#9c8c74", letterSpacing: "0.06em", textTransform: "uppercase" as const, marginBottom: 6 }}>{meta}</div>
+                      <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#4a3e2e", lineHeight: 1.65 }}>{text}</div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           )}
 
-          <SectionHeader label="Investment Angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
+          <SectionHeader label="Investment angles" subtitle="6 angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
           {openSections.investment && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, paddingBottom: 20 }}>
-              {RAW_CARDS.map(({ variant, ticker, name, desc }) => (
-                <div key={name} style={{
-                  background: "white",
-                  border: "0.5px solid rgba(192,176,128,0.3)",
-                  borderLeft: `2px solid ${CARD_BORDER[variant]}`,
-                  borderRadius: 6,
-                  padding: "16px 18px",
-                }}>
-                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "#9c8c74", marginBottom: 4 }}>{CARD_TYPE_LABEL[variant]}</div>
-                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
-                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 6 }}>{name}</div>
-                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
-                </div>
-              ))}
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
+                {RAW_CARDS.map(({ variant, ticker, name, desc }) => (
+                  <div key={name} style={{
+                    background: "white",
+                    border: "0.5px solid rgba(192,176,128,0.3)",
+                    borderLeft: `2px solid ${CARD_BORDER[variant]}`,
+                    borderRadius: 6,
+                    padding: "16px 18px",
+                  }}>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "#9c8c74", marginBottom: 4 }}>{CARD_TYPE_LABEL[variant]}</div>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 6 }}>{name}</div>
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
-          <div style={{ borderBottom: "0.5px solid rgba(192,176,128,0.3)" }} />
         </>
       )}
 
       {/* ── COMPONENT LAYER INSIGHTS ──────────────────────────────────────── */}
       {chainState === 2 && (
         <>
-          <SectionHeader label="Key Insights" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
+          <SectionHeader label="Key insights" subtitle="7 findings" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
           {openSections.insights && (
-            <>
-              <Hero num="36×" label="more fiber required in an AI GPU rack than a traditional CPU rack — against a supply chain running at 100% capacity with an 18–24 month expansion lag" />
-              <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
-                {COMP_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
-              </div>
-            </>
-          )}
-
-          <SectionHeader label="Chain Connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
-          {openSections.connections && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
-              {COMP_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
-            </div>
-          )}
-
-          <SectionHeader label="Investment Angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
-          {openSections.investment && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, paddingBottom: 20 }}>
-              {COMP_CARDS.map(({ ticker, name, desc }) => (
-                <div key={name} style={{
-                  background: "white",
-                  border: "0.5px solid rgba(192,176,128,0.3)",
-                  borderLeft: "2px solid #5a7a9c",
-                  borderRadius: 6,
-                  padding: "16px 18px",
-                }}>
-                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
-                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 8 }}>{name}</div>
-                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(192,176,128,0.3)", marginBottom: 8 }} />
-                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto" }}>
+                <Hero num="36×" label="more fiber required in an AI GPU rack than a traditional CPU rack — against a supply chain running at 100% capacity with an 18–24 month expansion lag" />
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {COMP_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
                 </div>
-              ))}
+              </div>
             </div>
           )}
-          <div style={{ borderBottom: "0.5px solid rgba(192,176,128,0.3)" }} />
+
+          <SectionHeader label="Chain connections" subtitle="4 connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
+          {openSections.connections && (
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 8 }}>
+                {COMP_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
+              </div>
+            </div>
+          )}
+
+          <SectionHeader label="Investment angles" subtitle="6 angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
+          {openSections.investment && (
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
+                {COMP_CARDS.map(({ ticker, name, desc }) => (
+                  <div key={name} style={{
+                    background: "white",
+                    border: "0.5px solid rgba(192,176,128,0.3)",
+                    borderLeft: "2px solid #5a7a9c",
+                    borderRadius: 6,
+                    padding: "16px 18px",
+                  }}>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 8 }}>{name}</div>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(192,176,128,0.3)", marginBottom: 8 }} />
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </>
       )}
 
       {/* ── SUBSYSTEM LAYER INSIGHTS ──────────────────────────────────────── */}
       {chainState === 3 && (
         <>
-          <SectionHeader label="Key Insights" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
+          <SectionHeader label="Key insights" subtitle="7 findings" isOpen={openSections.insights} onToggle={() => toggle("insights")} />
           {openSections.insights && (
-            <>
-              <Hero num="100%" label="global fiber optic preform lines are running at full capacity — at least one major US manufacturer has sold all inventory through 2026, with no new capacity possible before late 2027" />
-              <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
-                {SUB_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
-              </div>
-            </>
-          )}
-
-          <SectionHeader label="Chain Connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
-          {openSections.connections && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
-              {SUB_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
-            </div>
-          )}
-
-          <SectionHeader label="Investment Angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
-          {openSections.investment && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, paddingBottom: 20 }}>
-              {SUB_CARDS.map(({ ticker, name, desc }) => (
-                <div key={name} style={{
-                  background: "white",
-                  border: "0.5px solid rgba(192,176,128,0.3)",
-                  borderLeft: "2px solid #5a7a9c",
-                  borderRadius: 6,
-                  padding: "16px 18px",
-                }}>
-                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
-                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 8 }}>{name}</div>
-                  <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(192,176,128,0.3)", marginBottom: 8 }} />
-                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto" }}>
+                <Hero num="100%" label="global fiber optic preform lines are running at full capacity — at least one major US manufacturer has sold all inventory through 2026, with no new capacity possible before late 2027" />
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {SUB_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
                 </div>
-              ))}
+              </div>
             </div>
           )}
-          <div style={{ borderBottom: "0.5px solid rgba(192,176,128,0.3)" }} />
+
+          <SectionHeader label="Chain connections" subtitle="4 connections" isOpen={openSections.connections} onToggle={() => toggle("connections")} />
+          {openSections.connections && (
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 8 }}>
+                {SUB_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
+              </div>
+            </div>
+          )}
+
+          <SectionHeader label="Investment angles" subtitle="6 angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
+          {openSections.investment && (
+            <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(160,140,100,0.15)" }}>
+              <div style={{ maxWidth: 780, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
+                {SUB_CARDS.map(({ ticker, name, desc }) => (
+                  <div key={name} style={{
+                    background: "white",
+                    border: "0.5px solid rgba(192,176,128,0.3)",
+                    borderLeft: "2px solid #5a7a9c",
+                    borderRadius: 6,
+                    padding: "16px 18px",
+                  }}>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 8 }}>{name}</div>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(192,176,128,0.3)", marginBottom: 8 }} />
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </>
       )}
 
-    </div>
     </div>
   );
 }

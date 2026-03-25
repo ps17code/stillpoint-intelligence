@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 // Data
 import nodesRaw    from "@/data/nodes.json";
@@ -345,7 +345,7 @@ export default function Home() {
   const labelHeight = 66;
   const bandTop = topAnchor - bandPadTop - labelHeight;
   const bandHeight = bandPadTop + labelHeight + treePixelHeight + bandPadBottom;
-  const collapsedBandHeight = 56;
+  const collapsedBandHeight = 84;
   const insightsTop = treeCollapsed
     ? bandTop + collapsedBandHeight
     : bandTop + bandHeight;
@@ -477,20 +477,7 @@ export default function Home() {
       )}
 
 
-      {/* Tree band background — scrolls with page */}
-      {appState > 0 && (
-        <div style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: bandTop,
-          height: treeCollapsed ? collapsedBandHeight : bandHeight,
-          background: "rgba(0, 0, 0, 0.018)",
-          width: "100%",
-        }} />
-      )}
-
-      {/* Supply map header — scrolls with page */}
+      {/* Supply map band — scrolls with page */}
       {appState > 0 && (
         <div style={{
           position: "absolute",
@@ -498,42 +485,69 @@ export default function Home() {
           left: 0,
           right: 0,
           zIndex: 6,
-          background: "transparent",
+          background: "#ede8de",
+          borderTop: "0.5px solid rgba(160,140,100,0.2)",
         }}>
-          <div style={{ maxWidth: 780, margin: "0 auto", padding: "0 48px" }}>
-            <div
-              onClick={() => setTreeCollapsed(prev => !prev)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                cursor: "pointer",
-                padding: "20px 0",
-                borderTop: "0.5px solid rgba(192,176,128,0.3)",
-                userSelect: "none" as const,
-              }}
-            >
-              <div style={{ width: 20 }} />
-              <div style={{
-                flex: 1,
-                fontFamily: "Courier New, monospace",
-                fontSize: 9,
-                letterSpacing: "0.22em",
-                textTransform: "uppercase" as const,
-                color: "#9c8c74",
-                textAlign: "center",
-              }}>
-                {supplyMapLabel}
-              </div>
-              <div style={{
-                width: 20,
-                fontFamily: "Courier New, monospace",
-                fontSize: 10,
-                color: "#c8bc9a",
-                textAlign: "right",
-              }}>
-                {treeCollapsed ? "+" : "−"}
-              </div>
+          <div
+            onClick={() => setTreeCollapsed(prev => !prev)}
+            onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#e5dfd4"}
+            onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "#ede8de"}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: "26px 48px",
+              cursor: "pointer",
+              background: "#ede8de",
+              position: "relative",
+              gap: "8px",
+              borderBottom: "0.5px solid rgba(160,140,100,0.15)",
+              transition: "background 0.15s ease",
+              userSelect: "none" as const,
+            }}
+          >
+            <div style={{
+              position: "absolute",
+              right: "48px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              fontFamily: "var(--font-mono, 'Courier New', monospace)",
+              fontSize: "13px",
+              color: "rgba(160,140,100,0.6)",
+            }}>
+              {treeCollapsed ? "+" : "×"}
+            </div>
+            <div style={{
+              fontFamily: "var(--font-mono, 'Courier New', monospace)",
+              fontSize: "11px",
+              fontWeight: "600",
+              letterSpacing: "0.18em",
+              textTransform: "uppercase" as const,
+              color: "#2a1e0c",
+              textAlign: "center",
+            }}>
+              {supplyMapLabel}
+            </div>
+            <div style={{ display: "flex", gap: "14px", alignItems: "center", justifyContent: "center" }}>
+              {([
+                appState === 1 ? "~220 t/yr" : appState === 2 ? "~88 t Ge to fiber" : "~3–4M route-km/yr",
+                appState === 1 ? "$320M market" : appState === 2 ? "~500M fiber-km/yr" : ">30M cable-km/yr",
+                appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : "71% hyperscaler owned",
+                appState === 1 ? "8 deposits · 7 miners · 7 refiners" : appState === 2 ? "6 fiber manufacturers" : "9 cable assemblers",
+              ] as string[]).map((stat, i, arr) => (
+                <React.Fragment key={i}>
+                  <span style={{
+                    fontFamily: "var(--font-mono, 'Courier New', monospace)",
+                    fontSize: "8.5px",
+                    color: "#8a7a62",
+                    letterSpacing: "0.05em",
+                    whiteSpace: "nowrap" as const,
+                  }}>{stat}</span>
+                  {i < arr.length - 1 && (
+                    <div style={{ width: "1px", height: "9px", background: "rgba(160,140,100,0.3)", flexShrink: 0 }} />
+                  )}
+                </React.Fragment>
+              ))}
             </div>
           </div>
         </div>
