@@ -118,7 +118,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
         const nameEl = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
           "font-size": 15, "font-weight": 600, fill: "#2a1e0c",
-          x: cx, y: cy + 22, "text-anchor": "middle",
+          x: cx, y: cy + 27, "text-anchor": "middle",
         });
         nameEl.textContent = name;
         g.appendChild(nameEl);
@@ -130,7 +130,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
           const t1 = mkEl("text", {
             "font-family": "'EB Garamond', Georgia, serif",
             "font-size": 13, fill: "#2a1e0c",
-            x: cx, y: cy + 40, "text-anchor": "middle",
+            x: cx, y: cy + 45, "text-anchor": "middle",
           });
           t1.textContent = stat1;
           g.appendChild(t1);
@@ -139,7 +139,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
           const t2 = mkEl("text", {
             "font-family": "'Geist Mono', monospace",
             "font-size": 11, fill: "#9c8c74",
-            x: cx, y: cy + 56, "text-anchor": "middle",
+            x: cx, y: cy + 61, "text-anchor": "middle",
           });
           t2.textContent = stat2;
           g.appendChild(t2);
