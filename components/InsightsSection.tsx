@@ -181,15 +181,15 @@ function SectionHeader({ label, subtitle, isOpen, onToggle }: {
   return (
     <div
       onClick={onToggle}
-      onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#e5dfd4"}
-      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "#ede8de"}
+      onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#e9e4da"}
+      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "#f0ece2"}
       style={{
         display: "flex",
         flexDirection: "column" as const,
         alignItems: "center",
         padding: "22px 48px",
         cursor: "pointer",
-        background: "#ede8de",
+        background: "#f0ece2",
         position: "relative" as const,
         gap: "6px",
         borderBottom: "0.5px solid rgba(160,140,100,0.15)",
@@ -259,7 +259,7 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
       top,
       left: 0,
       right: 0,
-      background: "#ede8de",
+      background: "#f0ece2",
       borderTop: "0.5px solid rgba(160,140,100,0.15)",
       borderBottom: "0.5px solid rgba(160,140,100,0.2)",
       zIndex: 10,

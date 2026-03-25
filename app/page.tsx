@@ -485,20 +485,20 @@ export default function Home() {
           left: 0,
           right: 0,
           zIndex: 6,
-          background: "#ede8de",
+          background: "#f0ece2",
           borderTop: "0.5px solid rgba(160,140,100,0.2)",
         }}>
           <div
             onClick={() => setTreeCollapsed(prev => !prev)}
-            onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#e5dfd4"}
-            onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "#ede8de"}
+            onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#e9e4da"}
+            onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "#f0ece2"}
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               padding: "26px 48px",
               cursor: "pointer",
-              background: "#ede8de",
+              background: "#f0ece2",
               position: "relative",
               gap: "8px",
               transition: "background 0.15s ease",
