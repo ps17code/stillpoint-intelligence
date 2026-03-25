@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import type { TreeGeometry, LayerGeometry } from "@/lib/treeGeometry";
+import type { TreeGeometry } from "@/lib/treeGeometry";
 import type { NodeData, PanelContent } from "@/types";
 
 interface DisplayField { key: string; label: string; }
@@ -12,8 +12,9 @@ interface TreeMapProps {
   layerConfig?: Record<string, LayerConfig>;
   svgWidth?: number;
   scrollY?: number;
-  onNodeHover: (key: string, svgX: number, svgY: number) => void;
-  onNodeLeave: () => void;
+  // tooltip props kept optional for backwards compat but no longer used
+  onNodeHover?: (key: string, svgX: number, svgY: number) => void;
+  onNodeLeave?: () => void;
   onNodeClick: (key: string) => void;
   onLayerClick: (panel: PanelContent) => void;
   layerPanels: Record<string, PanelContent>;
@@ -31,11 +32,19 @@ const COUNTRY_COLORS: Record<string, string> = {
   "DRC":     "#5a8c6a",
 };
 
-export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000, scrollY = 0, onNodeHover, onNodeLeave, onNodeClick, onLayerClick, layerPanels }: TreeMapProps) {
+// Edge style constants
+const E_STROKE_DEFAULT   = "rgba(192,176,128,0.45)";
+const E_STROKE_HIGHLIGHT = "rgba(192,176,128,0.9)";
+const E_STROKE_FADE      = "rgba(192,176,128,0.12)";
+const E_WIDTH_DEFAULT    = "0.8";
+const E_WIDTH_HIGHLIGHT  = "1.8";
+const E_DASH_DEFAULT     = "4,3";
+
+export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000, scrollY = 0, onNodeClick, onLayerClick, layerPanels }: TreeMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const contentGroupRef = useRef<SVGGElement | null>(null);
 
-  // Scroll effect: just update the transform on the content group — no DOM rebuild
+  // Scroll effect: just update transform — no DOM rebuild
   useEffect(() => {
     const g = contentGroupRef.current;
     if (!g || typeof window === "undefined") return;
@@ -47,7 +56,6 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
     const svg = svgRef.current;
     if (!svg) return;
 
-    // Remove previous content group
     if (contentGroupRef.current) {
       try { svg.removeChild(contentGroupRef.current); } catch {}
       contentGroupRef.current = null;
@@ -58,23 +66,70 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       return;
     }
 
-    // All tree content goes into this group so scroll transform is applied cheaply
     const contentG = document.createElementNS("http://www.w3.org/2000/svg", "g");
     contentGroupRef.current = contentG;
-
     const NS = "http://www.w3.org/2000/svg";
 
+    // ── Hover tracking ──────────────────────────────────────────────────────
+    type EdgeEntry = { el: SVGElement; fromName: string; toName: string };
+    type NodeEntry = { groupEl: SVGGElement; ringEl: SVGCircleElement; name: string };
+    const edgeEntries: EdgeEntry[] = [];
+    const nodeEntries: NodeEntry[] = [];
+
+    function applyEdge(el: SVGElement, stroke: string, width: string, dash?: string) {
+      el.setAttribute("stroke", stroke);
+      el.setAttribute("stroke-width", width);
+      if (dash) el.setAttribute("stroke-dasharray", dash);
+      else      el.removeAttribute("stroke-dasharray");
+    }
+
+    function handleNodeEnter(name: string, strokeColor: string, ringEl: SVGCircleElement) {
+      ringEl.setAttribute("fill", strokeColor);
+
+      const connectedEls = new Set<SVGElement>();
+      const connectedNames = new Set<string>([name]);
+      edgeEntries.forEach(e => {
+        if (e.fromName === name || e.toName === name) {
+          connectedEls.add(e.el);
+          connectedNames.add(e.fromName);
+          connectedNames.add(e.toName);
+        }
+      });
+
+      edgeEntries.forEach(({ el }) =>
+        connectedEls.has(el)
+          ? applyEdge(el, E_STROKE_HIGHLIGHT, E_WIDTH_HIGHLIGHT)
+          : applyEdge(el, E_STROKE_FADE, E_WIDTH_DEFAULT, E_DASH_DEFAULT)
+      );
+      nodeEntries.forEach(({ groupEl, name: n }) => {
+        groupEl.style.opacity = connectedNames.has(n) ? "1" : "0.35";
+      });
+    }
+
+    function handleNodeLeave(ringEl: SVGCircleElement) {
+      ringEl.setAttribute("fill", "none");
+      edgeEntries.forEach(({ el }) => applyEdge(el, E_STROKE_DEFAULT, E_WIDTH_DEFAULT, E_DASH_DEFAULT));
+      nodeEntries.forEach(({ groupEl }) => { groupEl.style.opacity = "1"; });
+    }
+
+    // ── SVG helpers ─────────────────────────────────────────────────────────
     function mkEl(tag: string, attrs: Record<string, string | number>) {
       const e = document.createElementNS(NS, tag);
       Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, String(v)));
       return e;
     }
 
-    function mkLine(x1: number, y1: number, x2: number, y2: number, stroke: string, dashed = true) {
+    function mkLine(x1: number, y1: number, x2: number, y2: number) {
       const midY = (y1 + y2) / 2;
       const d = `M ${x1},${y1} C ${x1},${midY} ${x2},${midY} ${x2},${y2}`;
-      return mkEl("path", { d, stroke, fill: "none", "stroke-width": 0.9,
-        ...(dashed ? { "stroke-dasharray": "3 4" } : {}) });
+      const el = mkEl("path", {
+        d, fill: "none",
+        stroke: E_STROKE_DEFAULT,
+        "stroke-width": E_WIDTH_DEFAULT,
+        "stroke-dasharray": E_DASH_DEFAULT,
+      });
+      (el as SVGElement).style.transition = "stroke 0.15s ease, stroke-width 0.15s ease, opacity 0.15s ease";
+      return el;
     }
 
     function mkGroup() {
@@ -95,28 +150,31 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
     ) {
       const g = document.createElementNS(NS, "g");
       g.style.cursor = "pointer";
+      g.style.transition = "opacity 0.15s ease";
 
       const configKey = configKeyOverride ?? toConfigKey(layerKey);
       const fields = layerConfig?.[configKey]?.displayFields ?? [];
       const raw = nodeData as unknown as Record<string, unknown>;
       const hasFields = fields.length > 0 && nodeData;
 
-      // Hit area — rect covering ring + full content below
+      // Hit area
       g.appendChild(mkEl("rect", {
         x: cx - 60, y: cy - 8, width: 120, height: 80,
         fill: "transparent", stroke: "none",
       }));
 
-      // Ring — larger for output nodes
+      // Ring
       const isOutputNode = name === "Global Supply" || name === "Optical Fiber Strand" || name === "Deployed Fiber Network";
+      let ringEl: SVGCircleElement;
       if (isOutputNode) {
-        g.appendChild(mkEl("circle", { cx, cy, r: 7, fill: "none", stroke: color.stroke, "stroke-width": 1.8 }));
+        ringEl = mkEl("circle", { cx, cy, r: 7, fill: "none", stroke: color.stroke, "stroke-width": 1.8 }) as SVGCircleElement;
       } else {
-        g.appendChild(mkEl("circle", { cx, cy, r: 5.5, fill: "none", stroke: color.stroke, "stroke-width": 1.3 }));
+        ringEl = mkEl("circle", { cx, cy, r: 5.5, fill: "none", stroke: color.stroke, "stroke-width": 1.3 }) as SVGCircleElement;
       }
+      ringEl.style.transition = "fill 0.15s ease";
+      g.appendChild(ringEl);
 
       if (isOutputNode) {
-        // Special typographic output format — no pills, plain stat text
         const nameEl = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
           "font-size": 15, "font-weight": 600, fill: "#2a1e0c",
@@ -152,7 +210,6 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
         const hasCountry = field0?.key === "country" && val0 != null && String(val0) !== "";
         const noCountry  = field0?.key === "country" && (val0 == null || String(val0) === "");
 
-        // Name: shift up slightly when no country line is shown
         const nameEl = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
           "font-size": 13, "font-weight": 600, fill: "#2a1e0c",
@@ -161,7 +218,6 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
         nameEl.textContent = name;
         g.appendChild(nameEl);
 
-        // Field 0: country dot+text, or non-country pill
         if (hasCountry) {
           const country = String(val0);
           const dotColor = COUNTRY_COLORS[country] ?? "#9c8c74";
@@ -175,7 +231,6 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
           locEl.textContent = country;
           g.appendChild(locEl);
         } else if (!noCountry && val0 != null && String(val0) !== "") {
-          // Non-country field 0 — pill at slot 0
           const pillW = Math.min(Math.max(String(val0).length * 5.8 + 16, 60), 160);
           g.appendChild(mkEl("rect", {
             x: cx - pillW / 2, y: cy + 30, width: pillW, height: 13, rx: 3,
@@ -191,7 +246,6 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
           g.appendChild(t);
         }
 
-        // Pills shifted up when no country line is present (noCountry or non-country field0)
         const pillDefs = hasCountry
           ? [{ rectY: cy + 46, textY: cy + 56 }, { rectY: cy + 62, textY: cy + 72 }]
           : [{ rectY: cy + 30, textY: cy + 40 }, { rectY: cy + 46, textY: cy + 56 }];
@@ -218,7 +272,6 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
           g.appendChild(t);
         });
       } else {
-        // No display fields — compact layout, name below ring
         const label = mkEl("text", {
           "font-family": "'EB Garamond', Georgia, serif",
           "font-size": 13, "font-weight": 600, fill: "#2a1e0c",
@@ -228,21 +281,20 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
         g.appendChild(label);
       }
 
-      // Events
-      g.addEventListener("mouseenter", () => { onNodeHover(name, cx, cy); });
-      g.addEventListener("mouseleave", () => { onNodeLeave(); });
-      g.addEventListener("click", (e) => {
-        e.stopPropagation();
-        onNodeLeave();
-        onNodeClick(name);
-      });
+      // Events — hover fills ring and highlights edges; no tooltip
+      g.addEventListener("mouseenter", () => handleNodeEnter(name, color.stroke, ringEl));
+      g.addEventListener("mouseleave", () => handleNodeLeave(ringEl));
+      g.addEventListener("click", (e) => { e.stopPropagation(); onNodeClick(name); });
+
+      // Register for hover system
+      nodeEntries.push({ groupEl: g, ringEl, name });
 
       return g;
     }
 
     const groups: SVGGElement[] = [];
 
-    // Shared helper: appends divider line + clickable label to any layer group
+    // Shared helper: divider line + clickable layer label
     function addDividerAndLabel(
       g: SVGGElement,
       leftNodeCX: number, leftNodeName: string,
@@ -260,8 +312,6 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       const nodeLeftEdge = leftNodeCX - maxTextWidth / 2 - 8;
       const dividerX = nodeLeftEdge - 36;
       const labelX2 = nodeLeftEdge - 54;
-
-      console.log('[TreeMap] divider layer:', layerKey, '| leftNodeCX:', leftNodeCX, '| nodeLeftEdge:', nodeLeftEdge, '| dividerX:', dividerX);
 
       g.appendChild(mkEl("line", {
         x1: dividerX, y1: cy - 6,
@@ -296,7 +346,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       g.appendChild(labelG);
     }
 
-    // Output node (last layer — bottom of tree)
+    // Output node (last layer)
     const outG = mkGroup();
     const { outputNode: out } = geometry;
     const outLayer = geometry.layers[geometry.layers.length - 1];
@@ -304,17 +354,15 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
     addDividerAndLabel(outG, out.cx, out.name, out.cy, outLayer.key, outLayer.label, outLayer.color, layerPanels[outLayer.key]);
     groups.push(outG);
 
-    // Layers: render from bottom up so upper layers paint on top
+    // Layers: bottom-up so upper layers paint on top
     for (let li = geometry.layers.length - 2; li >= 0; li--) {
       const layer = geometry.layers[li];
       const nextLayer = geometry.layers[li + 1];
 
       const edgesToNext = geometry.edges.filter(e => e.fromLayer === li);
 
-      // Edge departure Y depends on how many pills the layer's nodes show
       const layerConfigKey = toConfigKey(layer.key);
       const layerFields = layerConfig?.[layerConfigKey]?.displayFields ?? [];
-      // Only subtract 1 when field0 is "country" (shown as dot+text, not a pill)
       const hasCountryField = layerFields[0]?.key === "country";
       const numPills = hasCountryField
         ? Math.max(0, layerFields.length - 1)
@@ -323,7 +371,12 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
 
       const edgeG = mkGroup();
       edgesToNext.forEach(edge => {
-        edgeG.appendChild(mkLine(edge.x1, departY, edge.x2, nextLayer.cy - 7, edge.color));
+        const fromNode = layer.nodes.find(n => Math.abs(n.cx - edge.x1) < 1);
+        const toNode   = nextLayer.nodes.find(n => Math.abs(n.cx - edge.x2) < 1)
+                      ?? { name: out.name }; // fallback to output node
+        const pathEl = mkLine(edge.x1, departY, edge.x2, nextLayer.cy - 7);
+        edgeEntries.push({ el: pathEl, fromName: fromNode?.name ?? "", toName: toNode.name });
+        edgeG.appendChild(pathEl);
       });
       groups.push(edgeG);
 
