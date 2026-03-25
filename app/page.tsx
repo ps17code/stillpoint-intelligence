@@ -477,19 +477,29 @@ export default function Home() {
       )}
 
 
-      {/* Tree band + SVG tree */}
+      {/* Tree band background — scrolls with page */}
       {appState > 0 && (
         <div style={{
           position: "absolute",
           left: 0,
           right: 0,
           top: bandTop,
-          minHeight: treeCollapsed ? collapsedBandHeight : bandHeight,
+          height: treeCollapsed ? collapsedBandHeight : bandHeight,
           background: "rgba(0, 0, 0, 0.018)",
           width: "100%",
-          overflow: "hidden",
+        }} />
+      )}
+
+      {/* Supply map header — fixed so the toggle is always accessible */}
+      {appState > 0 && (
+        <div style={{
+          position: "fixed",
+          top: bandTop,
+          left: 0,
+          right: 0,
+          zIndex: 6,
+          background: "transparent",
         }}>
-          {/* Supply map label — clickable collapse toggle */}
           <div style={{ maxWidth: 780, margin: "0 auto", padding: "0 48px" }}>
             <div
               onClick={() => setTreeCollapsed(prev => !prev)}
@@ -526,16 +536,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          {/* Bottom border */}
-          <div style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: "0.5px",
-            background: "rgba(192, 176, 128, 0.2)",
-          }} />
         </div>
       )}
 
