@@ -98,6 +98,34 @@ const SUB_CARDS: { ticker: string; name: string; desc: string }[] = [
   { ticker: "Chinese state-linked · formerly Huawei Marine", name: "HMN Technologies risk", desc: "HMN Technologies is expanding submarine cable presence across Africa, Southeast Asia, and the Middle East at prices western suppliers cannot match. Nations choosing HMN embed Chinese access to communications infrastructure for 25-year cable lifespans. US and allied governments increasingly block HMN from strategically sensitive projects — but its Belt and Road pipeline continues growing in markets outside western influence." },
 ];
 
+// ─── END USE LAYER DATA ───────────────────────────────────────────────────────
+
+const EU_INSIGHTS: { num: string; label: string; text: string }[] = [
+  { num: "01", label: "The interconnect has become as strategic as the compute", text: "As generative AI models scale to hundreds of thousands of GPUs, optical interconnects are now the primary bottleneck — not chips. Jensen Huang's 'I/O wall' framing captures it precisely: compute compounds through process scaling, but chip-to-chip bandwidth does not scale at the same rate. Every GPU rack added to a cluster immediately demands more fiber. The network constraint is now driving datacenter architecture decisions, not the other way around." },
+  { num: "02", label: "$600B in capex is a germanium demand signal", text: "Five hyperscalers will spend $660-690 billion on infrastructure in 2026 — Amazon at $200B, Google at $175-185B, Microsoft at ~$120B, Meta at $115-135B, Oracle at $50B. Roughly 75% targets AI infrastructure specifically. Every dollar of AI infrastructure spend generates downstream fiber demand. Every fiber-km of demand requires germanium. The capex number is not just a market signal — it is a supply chain loading calculation." },
+  { num: "03", label: "One Meta campus consumes 8 million miles of optical fiber", text: "Corning confirmed that a single Meta datacenter campus will consume 8 million miles — approximately 12.9 million km — of optical fiber. At 0.5g of germanium consumed per fiber-km manufactured, that single campus implies ~6,450 kg of germanium — nearly 3% of total global annual supply — for one facility. Meta has 30 datacenters globally with 10 GW of capacity planned by end 2026." },
+  { num: "04", label: "Power is the gating constraint — but fiber follows power", text: "Power availability has replaced GPU scarcity as the primary bottleneck for datacenter construction. Over 36 projects representing $162B in investment were blocked or significantly delayed as of June 2025. But every megawatt of power capacity that does come online immediately triggers fiber installation. Power and fiber are co-constraints — you cannot commission a GPU rack without both. Dycom's hyperscaler revenue is a leading indicator of which power constraints are being resolved." },
+  { num: "05", label: "Turner Construction's backlog is the most precise public signal of AI buildout pace", text: "Turner reported $9B in datacenter revenue in 2025 — up from $3.6B in 2024 — with datacenters representing 37% of its $44.3B backlog, the highest in its history. Clients have already placed orders for major mechanical and electrical systems scheduled for delivery in 2027. Turner's quarterly datacenter backlog figure is one of the most granular public data points on the actual pace of AI infrastructure construction — more precise than hyperscaler capex guidance because it reflects committed work, not plans." },
+  { num: "06", label: "Sovereign wealth is replicating the hyperscaler model", text: "G42 (UAE) and NEOM/PIF (Saudi Arabia) are building AI datacenter infrastructure at sovereign scale — backed by state capital with no requirement for near-term returns. G42's Microsoft partnership ($1.5B) and NEOM's $500B smart city program represent a new class of datacenter owner: sovereign AI infrastructure, built for strategic autonomy rather than commercial return. These projects create fiber and germanium demand that is entirely decoupled from commercial ROI calculations — a demand signal that does not respond to price signals the way private capital does." },
+  { num: "07", label: "The 1.6T supercycle has begun — and it requires more fiber per link", text: "At OFC 2026, the market for 1.6T transceivers — capable of moving 1.6 trillion bits per second — was confirmed to be scaling faster than any previous generation. Shipments are expected to grow from 2.5 million units in 2025 to over 20 million by end 2026. Each generation increase in transceiver speed requires higher-quality fiber with tighter manufacturing tolerances — which means more germanium precision in the GeCl₄ deposition process, not less. Faster networks tighten, not loosen, the germanium constraint." },
+];
+
+const EU_CONNECTIONS: { title: string; text: string; watch: string }[] = [
+  { title: "Hyperscaler capex is the upstream demand signal for every layer of this chain", text: "When Amazon raises its 2026 capex guidance to $200B, that number propagates backwards through every layer of the germanium chain. More datacenters → more fiber cable → more fiber strand → more GeCl₄ → more germanium. The hyperscaler capital allocation decision is made in Seattle and Menlo Park and Mountain View. The supply constraint that determines whether it can be executed sits in Yunnan Province and Umicore's Belgian refinery. The two ends of this chain have never been in the same room.", watch: "Hyperscaler quarterly capex guidance revisions as the primary leading indicator for germanium and fiber demand acceleration." },
+  { title: "Turner's backlog and Dycom's revenue are the best real-time proxies for fiber consumption", text: "Hyperscaler capex announcements are plans. Turner's construction backlog and Dycom's quarterly revenue are execution. The gap between announced capex and actual construction progress is where supply chain constraints become visible. When Dycom grows 13.9% QoQ and Turner doubles datacenter revenue YoY, fiber is actually being pulled through conduits — which means germanium-containing cable is actually being consumed. These are the metrics that close the loop between upstream supply and downstream demand.", watch: "Turner quarterly datacenter backlog percentage and Dycom contract revenues from hyperscaler programs as real-time fiber consumption signals." },
+  { title: "BEAD and AI are competing for the same constrained fiber supply", text: "The BEAD program — $42.45B in federal broadband funding — entered its deployment phase in 2026 simultaneously with the peak AI datacenter buildout. Both programs draw from the same cable assemblers, the same preform capacity, and the same germanium-containing fiber. Light Reading described the result as a 'perfect storm.' The US government is simultaneously trying to connect rural homes and build AI infrastructure — from the same supply chain that is already sold out through 2026.", watch: "BEAD program deployment velocity as a secondary demand driver competing with hyperscaler fiber orders for the same constrained supply." },
+  { title: "The shift to near-edge inference creates distributed fiber demand", text: "AI is shifting from centralized training clusters to distributed inference at the network edge. Dell'Oro projects this shift will drive near-edge datacenter construction at scale by 2027 — smaller facilities close to population centers, with tight latency requirements. Unlike centralized hyperscale campuses, near-edge deployments are geographically dispersed across dozens of metro areas. This creates a long tail of fiber demand that is harder to fulfill with bulk supply agreements and more exposed to spot market pricing — which has already surged 500%+.", watch: "Near-edge datacenter construction announcements and inference deployment geography as indicators of distributed fiber demand acceleration." },
+];
+
+const EU_CARDS: { ticker: string; name: string; desc: string }[] = [
+  { ticker: "DY · NYSE", name: "Dycom Industries", desc: "The largest US fiber optic network construction contractor — the company that physically pulls the cable that Corning and Prysmian manufacture into the conduits that connect AI datacenters. Revenue grew 12.6% to $4.7B in FY2025 with hyperscaler private fiber programs becoming a significant and growing contributor alongside traditional FTTH. As the AI buildout accelerates and hyperscalers build private long-haul fiber networks, Dycom is positioned as the primary execution vehicle for US fiber deployment demand." },
+  { ticker: "Private · revenue indicator", name: "Turner Construction", desc: "The largest US datacenter construction contractor with $9B in datacenter revenue in 2025 — up from $3.6B in 2024. Datacenters now represent 37% of its $44.3B backlog. Not publicly investable, but Turner's quarterly backlog disclosures are the highest-quality public signal for actual AI infrastructure construction pace. Clients have already ordered major systems for delivery in 2027, indicating the buildout is structural and multi-year." },
+  { ticker: "EQIX · NASDAQ", name: "Equinix", desc: "The largest colocation REIT with 251 datacenters globally and 58 active expansion projects. Planning to double total capacity by 2029 — more expansion in 5 years than in its entire prior history. Hyperscaler tenants include AWS, Google, Microsoft, and Oracle. Every MW of new capacity Equinix commissions requires fiber optic cabling, pulling demand through the entire upstream chain. Equinix's annual capex of $4-5B through 2029 is a committed, visible, multi-year fiber demand signal." },
+  { ticker: "DLR · NYSE", name: "Digital Realty", desc: "The second-largest colocation REIT with 15% of US leased datacenter power share. Concentrated in Northern Virginia — the world's largest datacenter market at 6.3 GW under construction as of H2 2025. Tenants include AWS, IBM, Oracle, and Meta. Northern Virginia concentration is both a strength (proximity to hyperscaler demand) and a risk (grid congestion in the region is the most acute in the US). New capacity additions directly drive fiber installation demand." },
+  { ticker: "Private · Abu Dhabi · state-linked", name: "G42", desc: "The UAE's primary AI infrastructure company, backed by Abu Dhabi sovereign capital and partnered with Microsoft ($1.5B investment). G42 is building AI datacenter capacity at a scale that decouples demand from commercial ROI requirements — sovereign infrastructure investment does not need to clear the same return hurdles as private capital. G42's expansion creates fiber and germanium demand that will persist regardless of commercial AI market cycles. The GCC as a whole represents a structurally underserved AI infrastructure market with significant buildout ahead." },
+  { ticker: "ORCL · NYSE · OpenAI JV", name: "Stargate / Oracle", desc: "The US government's $500B Stargate joint venture — involving Oracle, OpenAI, SoftBank, and Microsoft — is the largest single AI infrastructure commitment in history. The Abilene, Texas campus alone will house 450,000+ NVIDIA GB200 GPUs at 1.2 GW initial capacity. Oracle operated 147 active datacenters as of December 2025 with 64 under development. Stargate's sovereign-strategic character means its fiber and germanium demand is backed by US government interest — structurally insulated from commercial market cycles." },
+];
+
 // ─── SHARED STYLES ────────────────────────────────────────────────────────────
 
 const CARD_BORDER: Record<CardVariant, string> = {
@@ -445,7 +473,7 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
               <div style={{ maxWidth: 780, margin: "0 auto" }}>
                 <Hero num="~115t" label="germanium required annually by AI datacenters alone by 2026 — against total global supply of ~220t, before accounting for IR optics, defense, semiconductors, or solar" />
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  <InsightBox num="01" label="Content coming next session" text="Detailed key insights for the End Use layer will be added in the next session." />
+                  {EU_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
                 </div>
               </div>
             </div>
@@ -455,7 +483,7 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
           {openSections.connections && (
             <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
               <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 8 }}>
-                <ConnectionBox title="Content coming next session" text="Chain connection analysis for the End Use layer will be added in the next session." />
+                {EU_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
               </div>
             </div>
           )}
@@ -463,10 +491,21 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
           <SectionHeader label="Investment angles" subtitle="6 angles" isOpen={openSections.investment} onToggle={() => toggle("investment")} />
           {openSections.investment && (
             <div style={{ background: "white", padding: "24px 48px 32px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
-              <div style={{ maxWidth: 780, margin: "0 auto" }}>
-                <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 13, color: "#3a3a32", padding: "12px 0" }}>
-                  Investment angle content for the End Use layer will be added in the next session.
-                </div>
+              <div style={{ maxWidth: 780, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
+                {EU_CARDS.map(({ ticker, name, desc }) => (
+                  <div key={name} style={{
+                    background: "white",
+                    border: "0.5px solid rgba(80,80,70,0.3)",
+                    borderLeft: "2px solid #c8a85a",
+                    borderRadius: 6,
+                    padding: "16px 18px",
+                  }}>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#888880", marginBottom: 4 }}>{ticker}</div>
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#1a1a14", marginBottom: 8 }}>{name}</div>
+                    <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(80,80,70,0.3)", marginBottom: 8 }} />
+                    <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#3a3a32", lineHeight: 1.6 }}>{desc}</div>
+                  </div>
+                ))}
               </div>
             </div>
           )}
