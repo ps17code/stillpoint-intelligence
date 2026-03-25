@@ -490,10 +490,10 @@ export default function Home() {
         }} />
       )}
 
-      {/* Supply map header — fixed so the toggle is always accessible */}
+      {/* Supply map header — scrolls with page */}
       {appState > 0 && (
         <div style={{
-          position: "fixed",
+          position: "absolute",
           top: bandTop,
           left: 0,
           right: 0,
