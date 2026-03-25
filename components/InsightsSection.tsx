@@ -215,6 +215,12 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
       {/* ── RAW MATERIAL INSIGHTS ─────────────────────────────────────────── */}
       {chainState === 1 && (
         <>
+          {/* Hero stat */}
+          <div style={{ textAlign: "center", marginBottom: 48 }}>
+            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 72, fontWeight: 600, color: "#2a1e0c", lineHeight: 1 }}>−270t</div>
+            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, color: "#6b6458", lineHeight: 1.65, maxWidth: 560, margin: "12px auto 0" }}>estimated annual germanium shortfall by 2030 — projected demand ~490t against supply capped at ~220t, with no new primary sources coming online at scale</div>
+          </div>
+
           <SectionDivider label="Key Insights" first />
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {RAW_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
