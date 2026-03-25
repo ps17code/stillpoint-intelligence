@@ -60,6 +60,7 @@ export default function Home() {
   }, []);
 
   // ── Panel ─────────────────────────────────────────────────────────
+  const [treeCollapsed, setTreeCollapsed] = useState(false);
   const [panelOpen,    setPanelOpen]    = useState(false);
   const [panelContent, setPanelContent] = useState<PanelContent | null>(null);
 
@@ -86,6 +87,8 @@ export default function Home() {
     window.addEventListener("resize", update);
     return () => { clearTimeout(timer); window.removeEventListener("resize", update); };
   }, [appState]);
+
+  useEffect(() => { setTreeCollapsed(false); }, [appState]);
 
   // ── Spine dropdown options ────────────────────────────────────────
   const spineOptions = {
@@ -269,12 +272,6 @@ export default function Home() {
     });
   }
 
-  const mapTitle =
-    appState === 1 ? `${sel.raw  || "Germanium"} Supply Map` :
-    appState === 2 ? `${sel.comp || "GeO₂ / GeCl₄"} Supply Map` :
-    appState === 3 ? `${sel.sub  || "Fiber Optics"} Supply Map` :
-    appState === 4 ? `${sel.eu   || "AI Datacenter"} Supply Map` : null;
-
   const currentThesis =
     appState === 1 ? PANELS.rawIntro?.thesis :
     appState === 2 ? PANELS.compIntro?.thesis :
@@ -343,9 +340,15 @@ export default function Home() {
   // Layer counts: raw=5 layers (4 gaps), comp=3 layers (2 gaps)
   const treeLayerCount = appState === 1 ? 5 : 3;
   const treePixelHeight = ((treeLayerCount - 1) * 180 / 1000) * windowHeight;
-  const bandTop = topAnchor - 60;
-  const bandHeight = treePixelHeight + 140;
-  const insightsTop = topAnchor + treePixelHeight + 80;
+  const bandPadTop = 40;
+  const bandPadBottom = 40;
+  const labelHeight = 40;
+  const bandTop = topAnchor - bandPadTop - labelHeight;
+  const bandHeight = bandPadTop + labelHeight + treePixelHeight + bandPadBottom;
+  const collapsedBandHeight = 80;
+  const insightsTop = treeCollapsed
+    ? bandTop + collapsedBandHeight
+    : bandTop + bandHeight;
 
   // Total page height: insights top + approximate insights content height
   const totalPageHeight = appState > 0 ? insightsTop + 1400 : 0;
@@ -473,28 +476,6 @@ export default function Home() {
         />
       )}
 
-      {/* Map title — sits just above tree nodes */}
-      {appState > 0 && mapTitle && (
-        <div style={{
-          position: "absolute",
-          top: 240,
-          left: 0,
-          right: 0,
-          display: "flex",
-          justifyContent: "center",
-          pointerEvents: "none",
-          zIndex: 6,
-        }}>
-          <span style={{
-            fontFamily: "Courier New, monospace",
-            fontSize: 11,
-            fontWeight: 400,
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            color: "#9c8c74",
-          }}>{mapTitle}</span>
-        </div>
-      )}
 
       {/* Tree band + SVG tree */}
       {appState > 0 && (
@@ -503,29 +484,58 @@ export default function Home() {
           left: 0,
           right: 0,
           top: bandTop,
-          minHeight: bandHeight,
+          minHeight: treeCollapsed ? collapsedBandHeight : bandHeight,
           background: "rgba(0, 0, 0, 0.018)",
           width: "100%",
+          overflow: "hidden",
         }}>
-          {/* Supply map label */}
-          <div style={{
-            fontFamily: "Courier New, monospace",
-            fontSize: 9,
-            letterSpacing: "0.2em",
-            textTransform: "uppercase" as const,
-            color: "rgba(107, 100, 88, 0.6)",
-            textAlign: "center",
-            paddingTop: 28,
-            marginBottom: -10,
-          }}>
-            {supplyMapLabel}
+          {/* Supply map label — clickable collapse toggle */}
+          <div
+            onClick={() => setTreeCollapsed(prev => !prev)}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 16,
+              padding: "0 60px",
+              paddingTop: bandPadTop,
+              cursor: "pointer",
+              userSelect: "none" as const,
+              position: "relative" as const,
+            }}
+          >
+            <div style={{
+              fontFamily: "Courier New, monospace",
+              fontSize: 9,
+              letterSpacing: "0.2em",
+              textTransform: "uppercase" as const,
+              color: "rgba(107, 100, 88, 0.6)",
+              textAlign: "center",
+            }}>
+              {supplyMapLabel}
+            </div>
+            <div style={{
+              fontFamily: "Courier New, monospace",
+              fontSize: 10,
+              color: "rgba(107, 100, 88, 0.4)",
+              position: "absolute" as const,
+              right: 60,
+            }}>
+              {treeCollapsed ? "+" : "−"}
+            </div>
           </div>
-          {/* Divider line below label */}
-          <div style={{
-            height: "0.5px",
-            background: "rgba(192, 176, 128, 0.2)",
-            margin: "12px 60px 0",
-          }} />
+
+          {!treeCollapsed && (
+            <>
+              {/* Divider line below label */}
+              <div style={{
+                height: "0.5px",
+                background: "rgba(192, 176, 128, 0.2)",
+                margin: "12px 60px 0",
+              }} />
+            </>
+          )}
+
           {/* Bottom border */}
           <div style={{
             position: "absolute",
@@ -538,18 +548,20 @@ export default function Home() {
         </div>
       )}
 
-      <TreeMap
-        geometry={geometry}
-        nodes={NODES}
-        layerConfig={CHAINS.layerConfig}
-        svgWidth={svgWidth}
-        scrollY={scrollY}
-        onNodeHover={handleNodeHover}
-        onNodeLeave={handleNodeLeave}
-        onNodeClick={handleNodeClick}
-        onLayerClick={openPanel}
-        layerPanels={getLayerPanels(appState)}
-      />
+      {!treeCollapsed && (
+        <TreeMap
+          geometry={geometry}
+          nodes={NODES}
+          layerConfig={CHAINS.layerConfig}
+          svgWidth={svgWidth}
+          scrollY={scrollY}
+          onNodeHover={handleNodeHover}
+          onNodeLeave={handleNodeLeave}
+          onNodeClick={handleNodeClick}
+          onLayerClick={openPanel}
+          layerPanels={getLayerPanels(appState)}
+        />
+      )}
 
 
       {/* Tooltip */}
