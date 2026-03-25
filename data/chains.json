@@ -101,16 +101,16 @@
     "output": {
       "label": "OUTPUT",
       "displayFields": [
-        {"key": "totalDeployed", "label": "Deployed/yr"},
-        {"key": "aiGap", "label": "AI demand gap"}
+        {"key": "country", "label": ""},
+        {"key": "annualNew", "label": "New route-km/yr"},
+        {"key": "aiDemand", "label": "AI demand 2026"}
       ]
     },
     "assembly": {
       "label": "ASSEMBLY",
       "displayFields": [
         {"key": "country", "label": "Country"},
-        {"key": "cableOutput", "label": "Cable output/yr"},
-        {"key": "primaryMarket", "label": "Primary market"}
+        {"key": "cableOutput", "label": "Cable output/yr"}
       ]
     },
     "cableType": {
@@ -118,7 +118,7 @@
       "displayFields": [
         {"key": "country", "label": ""},
         {"key": "fiberCount", "label": "Fiber count"},
-        {"key": "keyOperators", "label": "Key operators"}
+        {"key": "avgDeployment", "label": "Avg deployment"}
       ]
     },
     "integration": {
@@ -662,7 +662,7 @@
         "Terrestrial Long-Haul",
         "Subsea Cable"
       ],
-      "output": "Fiber Optic Cable",
+      "output": "Deployed Fiber Network",
       "assToType": [
         [
           0,

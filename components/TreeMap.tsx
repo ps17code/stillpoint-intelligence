@@ -106,7 +106,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       }));
 
       // Ring — larger for output nodes
-      const isOutputNode = name === "Global Supply" || name === "Optical Fiber Strand";
+      const isOutputNode = name === "Global Supply" || name === "Optical Fiber Strand" || name === "Deployed Fiber Network";
       if (isOutputNode) {
         g.appendChild(mkEl("circle", { cx, cy, r: 7, fill: "none", stroke: color.stroke, "stroke-width": 1.8 }));
       } else {

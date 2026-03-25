@@ -608,7 +608,7 @@
     "loc": "Global",
     "stat": "~500M fiber-km/yr current · ~1.3B km needed for AI by 2026",
     "totalOutput": "~500M fiber-km/yr",
-    "aiDemand": "~1.3B km for AI 2026",
+    "aiDemand": "~1.3B fiber-km needed 2026",
     "risk": "Supply cannot triple in time without proportional GeCl₄ increase.",
     "role": "Global optical fiber strand production is currently ~500 million fiber-km per year. AI datacenter buildout is driving demand toward ~1.3 billion fiber-km per year by 2026 — a 2.6x increase requiring a proportional increase in GeCl₄ supply. Each fiber-km contains approximately 0.02-0.05g of germanium in the core. At 1.3B km annual deployment, fiber alone would require ~180 tonnes of germanium per year — against total global supply of ~220 tonnes.",
     "inv": "Do not invest at the strand level. Invest upstream at GeCl₄ suppliers or downstream at hyperscale operators.",
@@ -1009,17 +1009,17 @@
       "Geopolitical risk to fiber supply chain (Chinese Ge export controls) creates cost headwinds for all operators"
     ]
   },
-  "Fiber Optic Cable": {
-    "type": "Subsystem output",
+  "Deployed Fiber Network": {
+    "type": "Global fiber infrastructure",
     "country": "",
     "loc": "Global",
-    "stat": "~500M cable-km/yr · AI gap 2.6× by 2026",
-    "totalDeployed": "~500M cable-km/yr current",
-    "aiGap": "~1.3B km needed by 2026",
-    "risk": "Supply cannot 2.6× before 2027. Ge dependency in every meter.",
-    "role": "Global fiber optic cable output is currently ~500 million cable-km per year across all types — datacenter, terrestrial, and submarine. AI datacenter demand alone is projected to require ~1.3 billion fiber-km by 2026, representing a 2.6x increase over current total capacity. The gap cannot be closed before late 2027 due to the 18-24 month preform expansion lag. Fiber prices have surged 500%+ since January 2025 as the market reprices the structural shortage. The germanium dependency runs through every meter of this cable — each km of single-mode fiber contains trace germanium in its core, and the entire global supply chain depends on ~220 tonnes of refined germanium per year.",
+    "stat": "~3-4M route-km deployed/yr · 2-3M additional needed for AI by 2026",
+    "annualNew": "~3-4M route-km/yr",
+    "aiDemand": "2-3M more km by 2026",
+    "risk": "Supply gap cannot close before late 2027 due to 18-24 month preform expansion lag.",
+    "role": "The deployed fiber network measures route-km of installed cable infrastructure — distinct from the fiber-km strand output of the component layer. One route-km of terrestrial cable contains ~144 fiber-km of strand; one route-km of subsea cable contains ~16-24 fiber pairs. Global new cable deployment runs ~3-4M route-km/yr. AI datacenter demand requires an additional 2-3M route-km of high-density datacenter cable by 2026 — on top of existing telecom, FTTH, and backbone deployment. The gap cannot close before late 2027 due to the 18-24 month preform expansion lag at the component layer above.",
     "inv": "The cable itself is a commodity. Invest in manufacturers with highest datacenter/subsea mix (Corning, Prysmian) or at the hyperscale operator level.",
-    "stats": [["Current output","~500M cable-km/yr"],["AI demand 2026","~1.3B cable-km needed"],["Supply gap","Cannot close before 2027"],["Ge dependency","Every km contains Ge-doped core"]],
+    "stats": [["New/yr now","~3-4M route-km/yr"],["AI demand 2026","+2-3M route-km needed"],["Conversion","1 route-km = ~144 fiber-km strand"],["Supply gap","Cannot close before late 2027"]],
     "risks": ["Supply cannot triple without proportional GeCl₄ increase","Chinese export controls directly constrain capacity expansion","Demand pull-forward could exhaust western GeCl₄ stocks"]
   },
   "Datacenter Cable": {
@@ -1028,6 +1028,7 @@
     "loc": "Global",
     "stat": "96 to 6,912 fibers/cable · AI demand +500% 2025–2026",
     "fiberCount": "96 to 6,912 fibers/cable",
+    "avgDeployment": "Meters to ~100 km per run",
     "keyOperators": "AWS · Google · Microsoft · Meta",
     "risk": "Prices surged 500%+ in 2025–2026 on AI demand.",
     "role": "Datacenter fiber optic cable connects GPU clusters, spine-leaf switching networks, and datacenter interconnects. AI datacenters require 36x more fiber than traditional CPU racks — a single million-GPU cluster can consume tens of thousands of fiber-km. High fiber count cables (1,728+ strands) are now standard for hyperscale AI builds. Prices surged 500%+ in 2025-2026 driven by AI demand. Meta's $6B Corning deal and Lumen's Corning agreement represent the new norm of multi-year locked supply.",
@@ -1041,6 +1042,7 @@
     "loc": "Global",
     "stat": "12 to 432 fibers/cable · 213M fiber-miles needed US by 2029",
     "fiberCount": "12 to 432 fibers/cable",
+    "avgDeployment": "100 to 4,000 km per route",
     "keyOperators": "AT&T · Verizon · Deutsche Telekom",
     "risk": "Telecom operator capex sensitivity.",
     "role": "Long-haul terrestrial fiber cables carry internet backbone traffic between cities and datacenters. Standard single-mode fiber (G.652D) is the dominant cable type. US needs to add 213.3 million fiber miles by 2029 to support AI datacenter interconnect demands — more than doubling current installed base. 5G transport backhaul adds additional demand on top of existing FTTH and backbone replacement cycles.",
@@ -1054,6 +1056,7 @@
     "loc": "Ocean floors globally",
     "stat": "8 to 24 fiber pairs · ~40 new systems entering service 2026",
     "fiberCount": "8 to 24 fiber pairs",
+    "avgDeployment": "2,000 to 50,000 km per system",
     "keyOperators": "Microsoft · Google · Meta · Amazon",
     "risk": "Geopolitical risk around cable routes and landing rights.",
     "role": "Submarine fiber optic cables carry ~99% of international internet traffic across ocean floors. Nearly 40 new submarine cable systems enter service in 2026 alone — the most active year in history, worth ~$6B in construction. Hyperscalers (Google, Meta, Microsoft, Amazon) now fund private submarine cables directly, bypassing traditional telecom carriers. SubCom, Alcatel Submarine Networks, and NEC collectively control >60% of wet-plant revenue. Each system uses Ge-doped single-mode fiber for the entire cable length.",
