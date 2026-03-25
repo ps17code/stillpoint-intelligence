@@ -287,6 +287,12 @@ export default function Home() {
     appState === 3 ? `${sel.sub  || "Fiber Optics"}  · Subsystem Layer` :
     appState === 4 ? `${sel.eu   || "AI Datacenter"} · End Use Layer` : "";
 
+  const supplyMapLabel =
+    appState === 1 ? `${sel.raw  || "Germanium"} supply map` :
+    appState === 2 ? `${sel.comp || "GeO₂ / GeCl₄"} supply map` :
+    appState === 3 ? "Fiber optics supply map" :
+    appState === 4 ? "End use supply map" : "";
+
   // ── Layer panel lookup ────────────────────────────────────────────
   function getLayerPanels(state: AppState): Record<string, PanelContent> {
     if (state === 1) return PANELS.layers || {};
@@ -336,7 +342,10 @@ export default function Home() {
   // Global Supply node (layer 4) sits at SVG Y = topY + 4*180.
   // Layer counts: raw=5 layers (4 gaps), comp=3 layers (2 gaps)
   const treeLayerCount = appState === 1 ? 5 : 3;
-  const insightsTop = topAnchor + ((treeLayerCount - 1) * 180 / 1000) * windowHeight + 80;
+  const treePixelHeight = ((treeLayerCount - 1) * 180 / 1000) * windowHeight;
+  const bandTop = topAnchor - 60;
+  const bandHeight = treePixelHeight + 140;
+  const insightsTop = topAnchor + treePixelHeight + 80;
 
   // Total page height: insights top + approximate insights content height
   const totalPageHeight = appState > 0 ? insightsTop + 1400 : 0;
@@ -487,7 +496,48 @@ export default function Home() {
         </div>
       )}
 
-      {/* SVG tree */}
+      {/* Tree band + SVG tree */}
+      {appState > 0 && (
+        <div style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: bandTop,
+          minHeight: bandHeight,
+          background: "rgba(0, 0, 0, 0.018)",
+          width: "100%",
+        }}>
+          {/* Supply map label */}
+          <div style={{
+            fontFamily: "Courier New, monospace",
+            fontSize: 9,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase" as const,
+            color: "rgba(107, 100, 88, 0.6)",
+            textAlign: "center",
+            paddingTop: 28,
+            marginBottom: -10,
+          }}>
+            {supplyMapLabel}
+          </div>
+          {/* Divider line below label */}
+          <div style={{
+            height: "0.5px",
+            background: "rgba(192, 176, 128, 0.2)",
+            margin: "12px 60px 0",
+          }} />
+          {/* Bottom border */}
+          <div style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "0.5px",
+            background: "rgba(192, 176, 128, 0.2)",
+          }} />
+        </div>
+      )}
+
       <TreeMap
         geometry={geometry}
         nodes={NODES}
