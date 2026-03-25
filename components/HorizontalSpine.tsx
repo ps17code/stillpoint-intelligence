@@ -67,7 +67,7 @@ export default function HorizontalSpine({
     <div
       style={{
         position: "fixed", top: 0, left: 0, right: 0, height: 68,
-        background: "#f2ede3",
+        background: "#F2F2F0",
         borderBottom: "0.5px solid rgba(192,176,128,0.2)",
         display: "flex", alignItems: "center", justifyContent: "center",
         zIndex: 50,

@@ -390,7 +390,7 @@ export default function Home() {
           right: 0,
           padding: "16px 48px",
           borderBottom: "0.5px solid rgba(192,176,128,0.2)",
-          background: "#f2ede3",
+          background: "#F2F2F0",
           zIndex: 40,
           display: "flex",
           justifyContent: "center",
