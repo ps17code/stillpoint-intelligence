@@ -520,8 +520,8 @@ export default function Home() {
         onClose={() => setPanelOpen(o => !o)}
       />
 
-      {/* Insights section — below tree, raw material layer only */}
-      {(appState === 1 || appState === 2) && <InsightsSection top={insightsTop} chainState={appState} />}
+      {/* Insights section — raw, component, and subsystem layers */}
+      {(appState === 1 || appState === 2 || appState === 3) && <InsightsSection top={insightsTop} chainState={appState} />}
 
     </main>
   );

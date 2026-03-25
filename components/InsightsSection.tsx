@@ -92,6 +92,34 @@ const COMP_CARDS: { ticker: string; name: string; desc: string }[] = [
   { ticker: "YOFC · Sumitomo · long-horizon", name: "Hollow-core fiber", desc: "Hollow-core fiber uses air — not germanium-doped glass — as the transmission medium, delivering 30% latency reduction and eliminating germanium dependency from the fiber layer entirely. YOFC reached commercial-scale production in November 2023. If hollow-core achieves cost parity with standard single-mode fiber, it is the bear case for the entire upstream germanium supply chain — structurally removing the largest single demand source over a 5–10 year horizon." },
 ];
 
+// ─── SUBSYSTEM LAYER DATA ─────────────────────────────────────────────────────
+
+const SUB_INSIGHTS: { num: string; label: string; text: string }[] = [
+  { num: "01", label: "Hyperscalers own the ocean floor", text: "Google is part or sole owner of ~33 submarine cables. Meta owns ~15. Microsoft 5. Amazon 4. A decade ago hyperscalers consumed 10% of submarine capacity — today they control 71%. The shift from renting to owning is complete. Every new major cable system is being built by, for, or funded by a hyperscaler." },
+  { num: "02", label: "Meta's Waterworth is the largest cable ever built", text: "Meta's Project Waterworth will span 50,000 km across five continents at an estimated cost of $10B+ — the longest submarine cable in history. It will be Meta's first fully privately owned cable, used exclusively for internal traffic. The longest cable on earth will be owned by a single Silicon Valley company." },
+  { num: "03", label: "60 new submarine systems planned through 2027", text: "Around 60 new submarine cable systems are planned for completion through 2027 — the most concentrated period of subsea infrastructure investment in history. 2026 alone sees ~40 new systems entering service worth ~$6B in construction. The bottleneck is no longer capital — it is cable ship availability and the germanium-containing fiber to fill the cable." },
+  { num: "04", label: "Datacenter cable is a different product from telecom cable", text: "AI datacenters require cables with 96 to 6,912 fibers — orders of magnitude denser than traditional telecom cable. GPU cluster interconnects need runs measured in meters with fiber counts in the thousands. Cable assemblers tooled for 5G and FTTH are not equipped for this density without significant retooling, adding another capacity constraint on top of the preform shortage." },
+  { num: "05", label: "SubCom and Alcatel SN are now strategic national assets", text: "France transferred Alcatel Submarine Networks to state ownership — explicitly treating submarine cable manufacturing as critical national infrastructure. The US government directs strategically sensitive projects to SubCom, the only US-owned turnkey submarine cable supplier with its own installation vessels. The privatization of the internet's physical layer is triggering a nationalization response from western governments." },
+  { num: "06", label: "The cable ship fleet is the invisible bottleneck", text: "Maintaining and expanding the submarine cable network requires specialized cable laying vessels — fewer than 60 operational globally. Replacing the aging fleet and adding capacity requires ~$3B and 20 new ships. Without additional vessels, the 60-system pipeline through 2027 cannot be physically installed on schedule regardless of how much cable is manufactured." },
+  { num: "07", label: "One route-km of cable contains 144 fiber-km of strand", text: "The conversion between component and subsystem layers is the key to understanding the supply chain math. A standard 144-fiber terrestrial cable contains 144 fiber-km of strand per route-km of cable. At ~3–4M route-km of new cable per year, that implies ~500M fiber-km of strand consumption annually — exactly matching the component layer's output capacity. There is no buffer. Every strand produced gets deployed." },
+];
+
+const SUB_CONNECTIONS: { title: string; text: string; watch: string }[] = [
+  { title: "Meta's $10B cable is Prysmian and SubCom's order book — not an abstraction", text: "When Meta announces a $10B submarine cable, that capital flows directly to Prysmian for cable manufacturing and SubCom or Alcatel for installation. A single hyperscaler project of this scale represents multiple years of a cable manufacturer's submarine capacity. The hyperscaler's infrastructure decision is the cable assembler's production plan — they are the same decision separated by 18 months.", watch: "Meta, Google, Microsoft, and Amazon infrastructure announcements as direct forward indicators for Prysmian and SubCom revenue." },
+  { title: "The datacenter cable shortage is pulling resources from telecom FTTH", text: "Cable assemblers operating at 100% capacity cannot simultaneously serve AI datacenter orders and FTTH rollout programs. As hyperscalers lock in multi-year supply agreements, telecom operators building fiber-to-the-home networks are being pushed down the queue. AI infrastructure buildout is directly competing with broadband access deployment for the same manufacturing slots.", watch: "FTTH deployment data from AT&T and Verizon as a proxy for how much capacity hyperscalers are absorbing from the common cable assembly pool." },
+  { title: "Chinese cable manufacturers are building strategic leverage through Belt and Road", text: "HMN Technologies (formerly Huawei Marine) and Hengtong are building submarine cable systems across Africa, Southeast Asia, and the Middle East at prices western suppliers cannot match. Nations choosing Chinese submarine cable infrastructure embed Chinese access to their communications backbone for the 25-year operational life of the cable. The geopolitical implications are identical to 5G tower decisions — but underwater and largely invisible.", watch: "HMN Technologies and Hengtong project announcements in strategically sensitive regions as indicators of Chinese infrastructure influence expansion." },
+  { title: "Microsoft's 120,000 miles of private fiber is the AI WAN nobody is talking about", text: "Microsoft has deployed 120,000 miles of dedicated fiber for its AI Wide Area Network — a private global network larger than most national telecom operators' entire fiber footprint. It carries traffic between Azure datacenters for AI training and inference. Microsoft is one of the largest single consumers of fiber optic cable on earth without appearing in any cable operator rankings.", watch: "Microsoft Azure datacenter expansion announcements as a leading indicator for private fiber WAN deployment demand." },
+];
+
+const SUB_CARDS: { ticker: string; name: string; desc: string }[] = [
+  { ticker: "PRY · Borsa Italiana", name: "Prysmian", desc: "The world's largest cable manufacturer sits at the intersection of every major demand driver — AI datacenter cable, submarine systems, FTTH, and 5G backhaul — all growing simultaneously against 100% capacity utilization. Prysmian's 2024 North American preform acquisition insulates it from GeCl₄ spot market volatility that smaller assemblers cannot hedge. The submarine cable pipeline through 2027 represents years of locked order backlog." },
+  { ticker: "GLW · NYSE", name: "Corning", desc: "Corning's cable assembly division benefits from the same AI demand surge as its fiber manufacturing division — vertically integrated from strand to finished cable. The Meta $6B deal covers both fiber and cable. Enterprise cable sales grew 58% YoY in Q3 2025. Quarterly optical-communications revenue remains the highest-quality public real-time signal for AI infrastructure deployment pace." },
+  { ticker: "Private · Cerberus Capital", name: "SubCom", desc: "The only US-owned submarine cable supplier with integrated installation vessels — a vertical integration that is increasingly valuable as national security scrutiny of Chinese competitors (HMN Technologies) intensifies. US government preference for SubCom on strategically sensitive projects is structural. The 40-system 2026 pipeline and Waterworth-scale projects represent a multi-year order backlog. No public investment vehicle — private equity owned." },
+  { ticker: "French state · post-Nokia", name: "Alcatel Submarine Networks", desc: "ASN's transfer to French state ownership signals Europe's recognition of submarine cable infrastructure as strategic national security — equivalent to defense assets. Benefits from government-backed financing and preferential treatment in European and allied-nation cable competitions. One of three companies controlling over 60% of global submarine wet-plant revenue. No direct public investment vehicle." },
+  { ticker: "DY · NYSE", name: "Dycom Industries", desc: "The largest US fiber optic network construction contractor — it installs the cable that Corning and Prysmian manufacture. As deployment contractor for AT&T, Verizon, and increasingly hyperscalers building private fiber networks, Dycom captures the labor-intensive installation phase. Full-year 2025 revenues grew 12.6% to $4.7B. Hyperscaler private fiber programs are a growing revenue contributor alongside traditional FTTH contracts." },
+  { ticker: "Chinese state-linked · formerly Huawei Marine", name: "HMN Technologies risk", desc: "HMN Technologies is expanding submarine cable presence across Africa, Southeast Asia, and the Middle East at prices western suppliers cannot match. Nations choosing HMN embed Chinese access to communications infrastructure for 25-year cable lifespans. US and allied governments increasingly block HMN from strategically sensitive projects — but its Belt and Road pipeline continues growing in markets outside western influence." },
+];
+
 // ─── SHARED STYLES ────────────────────────────────────────────────────────────
 
 const CARD_BORDER: Record<CardVariant, string> = {
@@ -262,6 +290,45 @@ export default function InsightsSection({ top, chainState }: InsightsSectionProp
           <SectionDivider label="Investment Angles" />
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
             {COMP_CARDS.map(({ ticker, name, desc }) => (
+              <div key={name} style={{
+                background: "white",
+                border: "0.5px solid rgba(192,176,128,0.3)",
+                borderLeft: "2px solid #5a7a9c",
+                borderRadius: 6,
+                padding: "16px 18px",
+              }}>
+                <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "#9c8c74", marginBottom: 4 }}>{ticker}</div>
+                <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, fontWeight: 600, color: "#2a1e0c", marginBottom: 8 }}>{name}</div>
+                <div style={{ fontFamily: "Courier New, monospace", fontSize: 7.5, height: "0.5px", background: "rgba(192,176,128,0.3)", marginBottom: 8 }} />
+                <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 12, color: "#6b6458", lineHeight: 1.6 }}>{desc}</div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* ── SUBSYSTEM LAYER INSIGHTS ──────────────────────────────────────── */}
+      {chainState === 3 && (
+        <>
+          {/* Hero stat */}
+          <div style={{ textAlign: "center", marginBottom: 48 }}>
+            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 72, fontWeight: 600, color: "#2a1e0c", lineHeight: 1 }}>71%</div>
+            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: 14, color: "#6b6458", lineHeight: 1.65, maxWidth: 560, margin: "12px auto 0" }}>of international submarine cable capacity is now controlled by four hyperscalers — up from 10% a decade ago</div>
+          </div>
+
+          <SectionDivider label="Key Insights" first />
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {SUB_INSIGHTS.map(item => <InsightBox key={item.num} {...item} />)}
+          </div>
+
+          <SectionDivider label="Chain Connections" />
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {SUB_CONNECTIONS.map(item => <WatchConnectionBox key={item.title} {...item} />)}
+          </div>
+
+          <SectionDivider label="Investment Angles" />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
+            {SUB_CARDS.map(({ ticker, name, desc }) => (
               <div key={name} style={{
                 background: "white",
                 border: "0.5px solid rgba(192,176,128,0.3)",
