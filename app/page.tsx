@@ -34,11 +34,11 @@ const PANELS  = panelsRaw as any;
 const CHAINS  = chainsRaw as any;
 
 // ── TOP ANCHOR: document Y where tree top should appear ───────────
-// = thesis box bottom (which now includes the brief) + breathing room
+// = thesis box bottom + 188px (supply map header + breathing room below thesis)
 function topAnchorPx(thesisEl: HTMLElement | null): number {
   if (typeof window === "undefined") return 600;
   const thesisBottom = thesisEl ? thesisEl.getBoundingClientRect().bottom : 500;
-  return thesisBottom + 40;
+  return thesisBottom + 188;
 }
 
 export default function Home() {
