@@ -367,7 +367,9 @@ export default function Home() {
   const treeLayerCount = appState === 1 ? 5 : appState === 4 ? 4 : 3;
   const treePixelHeight = ((treeLayerCount - 1) * 180 / 1000) * windowHeight;
   const bandPadTop = 20;
-  const bandPadBottom = 60;
+  // Raw tree uses gap=180 exactly (no overestimate buffer) and output node text extends ~55px
+  // below the circle — needs extra bottom padding vs other layers which use gap=170
+  const bandPadBottom = appState === 1 ? 120 : 60;
   const labelHeight = 124;
   const bandTop = topAnchor - bandPadTop - labelHeight;
   const bandHeight = bandPadTop + labelHeight + treePixelHeight + bandPadBottom;
