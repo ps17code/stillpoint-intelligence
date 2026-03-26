@@ -47,6 +47,45 @@
         "type": "angle",
         "content": "The most actionable western plays are companies with secured non-Chinese Ge supply or processing capacity: Umicore (UMI.BR) as the primary western refiner; 5N Plus (VFF.TSX) as the only vertically integrated western wafer-to-space-solar-cell producer."
       }
+    ],
+    "brief": [
+      {
+        "layer": "Deposits",
+        "text": "There are 8 deposits where germanium concentrate can be found, hosted inside coal or zinc reserves — never as a standalone mineral. Five are in China and subject to export controls. One is in Russia, blocked from western markets by sanctions since 2022. The remaining two are Big Hill in the DRC — only beginning to ship concentrate to Umicore under a multi-year exclusive agreement — and Red Dog in Alaska, whose mine life ends in 2031 with no identified replacement. When Red Dog closes, the only non-Chinese, non-Russian primary deposit with meaningful throughput disappears from the western supply picture entirely."
+      },
+      {
+        "layer": "Miners",
+        "text": "Miners capture germanium either from coal fly ash or through zinc smelting — it is always a byproduct, never the reason the mine exists. Only ~17% of the germanium passing through these industrial processes is actually captured. The rest is lost to slag and waste. Increasing recovery would require installing acid-leach circuits costing millions in capex — equipment miners will not invest in unless germanium prices stay elevated long enough to justify the spend. Even then, the build-out takes years. Primary supply is therefore fixed by industrial throughput, not by investment decisions. You cannot choose to produce more germanium the way you can choose to drill more oil wells."
+      },
+      {
+        "layer": "Refiners & recyclers",
+        "text": "Germanium is refined typically by the same operator that extracts it. The majority of refining capacity is in China. Russia's JSC Germanium — historically a meaningful western supplier — is cut off by sanctions. Umicore in Belgium is the only western refiner operating at scale, sourcing from three streams: fiber manufacturing scrap from Corning, Prysmian, and Fujikura (~50%); zinc smelting byproduct concentrate (~35%); and DRC concentrate from the Big Hill partnership, ramping since October 2024 (~15%, growing). 5N Plus in Canada operates a smaller closed-loop model with US DoD backing in Utah. Both run tolling agreements — they sell GeCl₄ to fiber manufacturers, take back production scrap, and refine it back into GeCl₄. The recycling loop is structurally self-limiting: if Chinese export controls reduce western fiber production, the scrap stream feeding western recyclers shrinks simultaneously."
+      },
+      {
+        "layer": "Global supply",
+        "text": "Refined and recycled output totals an estimated ~220 tonnes per year. But ~120t of that is Chinese primary supply — subject to export controls that have already tightened twice since 2023 and expire on a suspension basis in November 2026. Another ~20t is Russian, inaccessible to western buyers. That leaves roughly ~80t of genuinely western-accessible supply from Umicore, 5N Plus, and PPM Pure Metals combined — against an AI datacenter fiber buildout that will require ~325t of germanium by 2026. The gap is not a future risk. It is already open."
+      }
+    ],
+    "briefStats": [
+      {
+        "num": "220t",
+        "label": "Total supply/yr · structural ceiling"
+      },
+      {
+        "num": "~80t",
+        "label": "Western-accessible supply",
+        "color": "amber"
+      },
+      {
+        "num": "17%",
+        "label": "Capture rate · rest is wasted",
+        "color": "red"
+      },
+      {
+        "num": "2031",
+        "label": "Red Dog closes · no replacement",
+        "color": "slate"
+      }
     ]
   },
   "compIntro": {
@@ -96,6 +135,41 @@
         "label": "Investment angle",
         "type": "angle",
         "content": "Corning (GLW) is the most liquid and direct western proxy for this layer. Prysmian (PRY) adds subsea cable exposure. Both benefit from a structural supply constraint upstream and a structural demand surge downstream."
+      }
+    ],
+    "brief": [
+      {
+        "layer": "GeCl₄ suppliers",
+        "text": "Ultrapure germanium tetrachloride — GeCl₄ — is the chemical form germanium must take before it can be deposited into fiber optic preform. Umicore is the sole western supplier of GeCl₄ at semiconductor grade (8N purity). All other significant suppliers are in China or Russia. Every western fiber manufacturer — Corning, Prysmian, Fujikura, Sumitomo — depends on a single Belgian company for their germanium input. There is no western alternative. Chinese and Russian GeCl₄ suppliers serve their domestic manufacturers only, and are either export-controlled or sanctioned."
+      },
+      {
+        "layer": "Fiber manufacturers",
+        "text": "Six companies produce the overwhelming majority of the world's optical fiber preform and strand. Glass is not the constraint — silica is abundant. The constraint is the CVD deposition equipment that builds germanium-doped glass rods to parts-per-billion purity. This equipment takes 18-24 months to commission, runs at 100% global utilization, and cannot be rushed. Corning is building a $1B preform plant in Arizona. Prysmian acquired North American preform capacity in 2024. Industry expansion projects will add 55-90M km of new capacity — but earliest arrival is late 2027, and this is modest against 1.3B km/yr of AI demand."
+      },
+      {
+        "layer": "Output",
+        "text": "Current global optical fiber production is ~650M fiber-km per year. AI datacenter buildout is driving demand toward ~1.3B fiber-km per year by 2026 — a near-doubling requiring a proportional increase in GeCl₄ supply that the western supply chain cannot provide. At 100% preform utilization globally, single-mode fiber prices have risen +500% since January 2025. At least one major US manufacturer is sold out through 2026."
+      }
+    ],
+    "briefStats": [
+      {
+        "num": "1",
+        "label": "Western GeCl₄ supplier at scale",
+        "color": "red"
+      },
+      {
+        "num": "100%",
+        "label": "Preform utilization globally",
+        "color": "amber"
+      },
+      {
+        "num": "+500%",
+        "label": "Fiber price since Jan 2025",
+        "color": "red"
+      },
+      {
+        "num": "2027",
+        "label": "Earliest new capacity arrives"
       }
     ]
   },
@@ -147,6 +221,39 @@
         "type": "angle",
         "content": "Corning (GLW) and Prysmian (PRY) capture the most value at this layer. Prysmian additionally captures the subsea boom via Alcatel Submarine Networks. The Ge supply constraint upstream is now a competitive advantage for companies that have secured alternative Ge supply."
       }
+    ],
+    "brief": [
+      {
+        "layer": "Assembly",
+        "text": "Cable assembly is largely commoditized. Most preform manufacturers are vertically integrated through to cable — Corning makes preform, draws fiber, and assembles cable in the same facilities. The same companies that appear in the component layer reappear here. The subsystem layer leads the datacenter buildout cycle rather than following it — hyperscalers order cable 12-18 months before a facility opens, meaning today's order books reflect 2027 demand."
+      },
+      {
+        "layer": "Cable types",
+        "text": "Three distinct cable categories serve different parts of the AI infrastructure buildout. Datacenter cable connects GPU racks within facilities — this is where the 36× fiber multiplier per AI rack versus CPU rack shows up most acutely. Terrestrial long-haul connects facilities to the broader internet backbone. Subsea cable connects continents — a specialized market with only ~60 cable ships globally, a fleet that cannot be quickly expanded and is already booked years forward."
+      },
+      {
+        "layer": "Deployment",
+        "text": "The constraint at this layer is logistical rather than material. Specialized installation labor is scarce. Conduit permitting in dense urban areas takes years. For subsea cable, the global fleet of ~60 vessels represents a hard physical limit on how much new capacity can be laid per year — and $3B in new vessel construction would be needed to meaningfully expand it. Hyperscaler private fiber — Meta, Google, Microsoft building their own networks rather than leasing from carriers — is consuming an increasing share of both cable production and installation capacity."
+      }
+    ],
+    "briefStats": [
+      {
+        "num": "36×",
+        "label": "More fiber per AI rack vs CPU rack",
+        "color": "amber"
+      },
+      {
+        "num": "~60",
+        "label": "Cable ships globally · hard limit"
+      },
+      {
+        "num": "12–18mo",
+        "label": "Hyperscaler order lead time"
+      },
+      {
+        "num": "2027",
+        "label": "When new capacity actually arrives"
+      }
     ]
   },
   "euIntro": {
@@ -196,6 +303,41 @@
         "label": "Investment angle",
         "type": "angle",
         "content": "At the end use layer, the most direct investment plays are the infrastructure enablers (Vertiv, Schneider Electric) rather than the hyperscalers themselves. Vertiv in particular has the most concentrated AI datacenter revenue exposure of any large-cap public company. Among hyperscalers, Microsoft offers the clearest AI revenue visibility through Azure OpenAI. Oracle is the most underappreciated — OCI is growing faster than any major cloud platform driven entirely by AI demand."
+      }
+    ],
+    "brief": [
+      {
+        "layer": "Installers",
+        "text": "Fiber installation contractors are the execution layer for all AI infrastructure deployment. Every kilometer of fiber that hyperscalers order has to be physically pulled, spliced, and tested by a specialized labor force. Dycom, MasTec, and their peers are structurally under-covered as AI infrastructure beneficiaries — they are priced as construction contractors but are the indispensable bottleneck between capital commitment and deployed capacity."
+      },
+      {
+        "layer": "Developers",
+        "text": "Datacenter developers translate hyperscaler capex commitments into physical facilities. Turner Construction, Mortenson, and DPR are building the majority of US hyperscale facilities. Most major hyperscalers also have significant self-build programs — $500B+ in announced capex for 2026 — which means the developer layer is increasingly bifurcated between contracted specialists and in-house teams."
+      },
+      {
+        "layer": "Owners",
+        "text": "$600B in hyperscaler capex in 2026. 130-140 new hyperscale facilities per year. Each AI GPU rack requires 36× more fiber than a CPU rack — not an incremental increase but a structural step change in per-unit demand. Power constraints — the primary bottleneck blocking facility approvals — are being resolved through nuclear PPAs, dedicated gas generation, and large-scale solar. As blocked projects unblock, fiber demand accelerates further. Sovereign wealth funds from the GCC — G42 (UAE) and NEOM/PIF (Saudi Arabia) — are now building hyperscale capacity independently, extending demand beyond the traditional US hyperscaler base."
+      }
+    ],
+    "briefStats": [
+      {
+        "num": "$600B",
+        "label": "Hyperscaler capex 2026",
+        "color": "amber"
+      },
+      {
+        "num": "130–140",
+        "label": "New hyperscale DCs per year"
+      },
+      {
+        "num": "36×",
+        "label": "Fiber per AI rack vs CPU rack",
+        "color": "red"
+      },
+      {
+        "num": "~115t",
+        "label": "Ge needed for AI DCs alone by 2026",
+        "color": "red"
       }
     ]
   },

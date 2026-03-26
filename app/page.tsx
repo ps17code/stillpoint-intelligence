@@ -13,6 +13,7 @@ import AnchorSpine  from "@/components/AnchorSpine";
 import Breadcrumb        from "@/components/Breadcrumb";
 import HorizontalSpine   from "@/components/HorizontalSpine";
 import NodeModal         from "@/components/NodeModal";
+import LayerBrief        from "@/components/LayerBrief";
 import Tooltip      from "@/components/Tooltip";
 import InsightsSection from "@/components/InsightsSection";
 
@@ -33,11 +34,12 @@ const PANELS  = panelsRaw as any;
 const CHAINS  = chainsRaw as any;
 
 // ── TOP ANCHOR: document Y where tree top should appear ───────────
-// = thesis block bottom + 40px breathing room (viewport-relative at scroll=0)
-function topAnchorPx(thesisEl: HTMLElement | null): number {
-  if (typeof window === "undefined") return 220;
+// = thesis block bottom + brief height + breathing room
+function topAnchorPx(thesisEl: HTMLElement | null, briefEl: HTMLElement | null): number {
+  if (typeof window === "undefined") return 600;
   const thesisBottom = thesisEl ? thesisEl.getBoundingClientRect().bottom : 188;
-  return thesisBottom + 188;
+  const briefHeight  = briefEl  ? briefEl.getBoundingClientRect().height  : 500;
+  return thesisBottom + briefHeight + 40;
 }
 
 export default function Home() {
@@ -70,18 +72,19 @@ export default function Home() {
   const overTip  = useRef(false);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── Thesis ref (for anchor measurement) ──────────────────────────
+  // ── Thesis + brief refs (for anchor measurement) ─────────────────
   const thesisRef = useRef<HTMLDivElement>(null);
+  const briefRef  = useRef<HTMLDivElement>(null);
 
   // ── Top anchor: viewport Y of tree top ───────────────────────────
-  const [topAnchor, setTopAnchor] = useState(220);
+  const [topAnchor, setTopAnchor] = useState(600);
   const [windowHeight, setWindowHeight] = useState(900);
   useEffect(() => {
     const update = () => {
-      setTopAnchor(topAnchorPx(thesisRef.current));
+      setTopAnchor(topAnchorPx(thesisRef.current, briefRef.current));
       setWindowHeight(window.innerHeight);
     };
-    const timer = setTimeout(update, 100);
+    const timer = setTimeout(update, 150);
     window.addEventListener("resize", update);
     return () => { clearTimeout(timer); window.removeEventListener("resize", update); };
   }, [appState]);
@@ -281,6 +284,18 @@ export default function Home() {
     appState === 3 ? PANELS.subIntro?.thesis :
     appState === 4 ? PANELS.euIntro?.thesis : null;
 
+  const currentBrief =
+    appState === 1 ? PANELS.rawIntro?.brief :
+    appState === 2 ? PANELS.compIntro?.brief :
+    appState === 3 ? PANELS.subIntro?.brief :
+    appState === 4 ? PANELS.euIntro?.brief : null;
+
+  const currentBriefStats =
+    appState === 1 ? PANELS.rawIntro?.briefStats :
+    appState === 2 ? PANELS.compIntro?.briefStats :
+    appState === 3 ? PANELS.subIntro?.briefStats :
+    appState === 4 ? PANELS.euIntro?.briefStats : null;
+
   const currentPageTitle =
     appState === 1 ? `${sel.raw  || "Germanium"}     · Raw Material Layer` :
     appState === 2 ? `${sel.comp || "GeO₂ / GeCl₄"} · Component Layer` :
@@ -435,6 +450,27 @@ export default function Home() {
               {currentThesis}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Layer brief — scrollable, sits below fixed thesis block */}
+      {appState > 0 && currentBrief && (
+        <div
+          ref={briefRef}
+          style={{
+            position: "absolute",
+            top: 156,
+            left: 0,
+            right: 0,
+            background: "white",
+            borderBottom: "0.5px solid rgba(80,80,70,0.1)",
+            zIndex: 3,
+          }}
+        >
+          <LayerBrief
+            paragraphs={currentBrief}
+            stats={currentBriefStats ?? []}
+          />
         </div>
       )}
 
