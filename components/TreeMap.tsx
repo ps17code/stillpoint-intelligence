@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import type { TreeGeometry } from "@/lib/treeGeometry";
-import type { NodeData, PanelContent } from "@/types";
+import type { NodeData } from "@/types";
 
 interface DisplayField { key: string; label: string; }
 interface LayerConfig { label?: string; displayFields: DisplayField[]; }
@@ -16,8 +16,8 @@ interface TreeMapProps {
   onNodeHover?: (key: string, svgX: number, svgY: number) => void;
   onNodeLeave?: () => void;
   onNodeClick: (key: string) => void;
-  onLayerClick: (panel: PanelContent) => void;
-  layerPanels: Record<string, PanelContent>;
+  onLayerClick: (panel: unknown) => void;
+  layerPanels: Record<string, unknown>;
 }
 
 const COUNTRY_COLORS: Record<string, string> = {

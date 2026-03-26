@@ -1593,6 +1593,17 @@
       "Germanium output volumes not publicly disclosed \u2014 estimates only",
       "Feed volume constrained by western fiber optic manufacturing scrap availability",
       "DRC partnership (Chemaf/STL) adds geopolitical risk from a different direction"
+    ],
+    "sources": [
+      { "pct": "~55%", "name": "Fiber optic scrap", "note": "Corning, Prysmian, OFS off-cuts", "tag": "closed-loop" },
+      { "pct": "~30%", "name": "IR optics & military scrap", "note": "End-of-life thermal imaging equipment" },
+      { "pct": "~15%", "name": "DRC concentrate", "note": "Chemaf/STL partnership — primary feed since 2024", "trend": "up" }
+    ],
+    "sells": [
+      { "name": "Corning", "product": "GeO\u2082 for fiber preforms", "tag": "also-sources-from" },
+      { "name": "Prysmian", "product": "GeCl\u2084 for MCVD process", "tag": "also-sources-from" },
+      { "name": "FLIR / Elbit", "product": "High-purity Ge wafers for IR optics" },
+      { "name": "Umicore Thin Film", "product": "Internal transfer \u2014 solar & catalyst" }
     ]
   },
   "5N Plus": {

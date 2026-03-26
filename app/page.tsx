@@ -12,8 +12,7 @@ import TreeMap      from "@/components/TreeMap";
 import AnchorSpine  from "@/components/AnchorSpine";
 import Breadcrumb        from "@/components/Breadcrumb";
 import HorizontalSpine   from "@/components/HorizontalSpine";
-import RightPanel        from "@/components/RightPanel";
-import { buildNodePanelContent } from "@/components/RightPanel";
+import NodeModal         from "@/components/NodeModal";
 import Tooltip      from "@/components/Tooltip";
 import InsightsSection from "@/components/InsightsSection";
 
@@ -26,7 +25,7 @@ import {
 } from "@/lib/treeGeometry";
 
 // Types
-import type { AppState, SpineSelection, NodeData, PanelContent } from "@/types";
+import type { AppState, SpineSelection, NodeData } from "@/types";
 
 // Cast JSON imports
 const NODES   = nodesRaw  as unknown as Record<string, NodeData>;
@@ -61,8 +60,7 @@ export default function Home() {
 
   // ── Panel ─────────────────────────────────────────────────────────
   const [treeCollapsed, setTreeCollapsed] = useState(false);
-  const [panelOpen,    setPanelOpen]    = useState(false);
-  const [panelContent, setPanelContent] = useState<PanelContent | null>(null);
+  const [selectedNode, setSelectedNode] = useState<string | null>(null);
 
   // ── Tooltip ───────────────────────────────────────────────────────
   const [tipKey,  setTipKey]  = useState<string | null>(null);
@@ -99,11 +97,6 @@ export default function Home() {
   };
 
   // ── Helpers ───────────────────────────────────────────────────────
-  function openPanel(content: PanelContent) {
-    setPanelContent(content);
-    setPanelOpen(true);
-  }
-
   const schedHide = useCallback(() => {
     if (hideTimer.current) clearTimeout(hideTimer.current);
     hideTimer.current = setTimeout(() => {
@@ -123,17 +116,15 @@ export default function Home() {
   function handleTipLeave()  { overTip.current  = false; schedHide(); }
 
   function handleNodeClick(key: string) {
-    const node = NODES[key];
-    if (!node) return;
-    openPanel(buildNodePanelContent(key, node));
+    if (!NODES[key]) return;
+    setSelectedNode(key);
   }
 
   function handleDeepDive() {
     if (!tipKey) return;
-    const node = NODES[tipKey];
-    if (!node) return;
+    if (!NODES[tipKey]) return;
     setTipKey(null);
-    openPanel(buildNodePanelContent(tipKey, node));
+    setSelectedNode(tipKey);
   }
 
   // ── Build tree geometry (top-down from topAnchor) ──────────────────
@@ -148,28 +139,24 @@ export default function Home() {
     const topY = toSVG(topAnchor, window.innerHeight);
 
     let geo: TreeGeometry | null = null;
-    let panelContent: PanelContent | null = null;
 
     if (level === 1 && sel.raw) {
       const chain = CHAINS.RAW_DATA[sel.raw];
-      if (chain) { geo = buildRawGeometry(chain, ancX, topY); panelContent = PANELS.rawIntro; }
+      if (chain) { geo = buildRawGeometry(chain, ancX, topY); }
     } else if (level === 2 && sel.comp) {
       const chain = CHAINS.COMP_DATA[sel.comp];
-      if (chain) { geo = buildCompGeometry(chain, ancX, topY); panelContent = PANELS.compIntro; }
+      if (chain) { geo = buildCompGeometry(chain, ancX, topY); }
     } else if (level === 3 && sel.sub) {
       const chain = CHAINS.SUB_DATA[sel.sub];
-      if (chain) { geo = buildSubGeometry(chain, ancX, topY); panelContent = PANELS.subIntro; }
+      if (chain) { geo = buildSubGeometry(chain, ancX, topY); }
     } else if (level === 4 && sel.eu) {
       const chain = CHAINS.EU_DATA[sel.eu];
-      if (chain) { geo = buildEUGeometry(chain, ancX, topY); panelContent = PANELS.euIntro; }
+      if (chain) { geo = buildEUGeometry(chain, ancX, topY); }
     }
 
     if (geo) {
       setGeometry(geo);
       setLayers(geo.layers);
-      if (panelContent) {
-        setTimeout(() => openPanel(panelContent!), geo!.layers.length * 110 + 300);
-      }
     }
   }
 
@@ -236,27 +223,24 @@ export default function Home() {
   function backToSpine() {
     setAppState(0);
     setGeometry(null); setLayers([]);
-    setPanelOpen(false); setTipKey(null);
+    setTipKey(null);
   }
 
   function backToRaw() {
     setGeometry(null); setLayers([]);
     setAppState(1);
-    setPanelOpen(false);
     afterSpineTransition(() => buildGeometryFromAnchorEl("raw-anchor-shape", 1));
   }
 
   function backToComp() {
     setGeometry(null); setLayers([]);
     setAppState(2);
-    setPanelOpen(false);
     setTimeout(() => buildGeometryFromAnchorEl("comp-anchor-shape", 2), 800);
   }
 
   function backToSub() {
     setGeometry(null); setLayers([]);
     setAppState(3);
-    setPanelOpen(false);
     setTimeout(() => buildGeometryFromAnchorEl("sub-anchor-shape", 3), 800);
   }
 
@@ -291,13 +275,20 @@ export default function Home() {
     appState === 4 ? "End use supply map" : "";
 
   // ── Layer panel lookup ────────────────────────────────────────────
-  function getLayerPanels(state: AppState): Record<string, PanelContent> {
+  function getLayerPanels(state: AppState): Record<string, unknown> {
     if (state === 1) return PANELS.layers || {};
     if (state === 2) return PANELS.layers || {};
     if (state === 3) return PANELS.layers || {};
     if (state === 4) return PANELS.euLayers || {};
     return {};
   }
+
+  // ── Chain label for modal breadcrumb ─────────────────────────────
+  const chainLabel =
+    appState === 1 ? (sel.raw  || "Germanium") :
+    appState === 2 ? (sel.comp || "GeO₂ / GeCl₄") :
+    appState === 3 ? (sel.sub  || "Fiber Optics") :
+    appState === 4 ? (sel.eu   || "AI Datacenter") : "";
 
   // ── Breadcrumb config per state ───────────────────────────────────
   const breadcrumbNodes = (() => {
@@ -561,7 +552,7 @@ export default function Home() {
           onNodeHover={handleNodeHover}
           onNodeLeave={handleNodeLeave}
           onNodeClick={handleNodeClick}
-          onLayerClick={openPanel}
+          onLayerClick={() => {}}
           layerPanels={getLayerPanels(appState)}
         />
       )}
@@ -578,11 +569,14 @@ export default function Home() {
         onMouseLeave={handleTipLeave}
       />
 
-      {/* Right panel */}
-      <RightPanel
-        isOpen={panelOpen}
-        content={panelContent}
-        onClose={() => setPanelOpen(o => !o)}
+      {/* Node modal */}
+      <NodeModal
+        nodeKey={selectedNode}
+        allNodes={NODES}
+        layers={layers}
+        chainLabel={chainLabel}
+        onClose={() => setSelectedNode(null)}
+        onNavigate={(key) => setSelectedNode(key)}
       />
 
       {/* Insights section — all tree layers */}
