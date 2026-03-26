@@ -124,7 +124,7 @@ export default function NodeModal({
 
           {/* Pills */}
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
-            {raw.country && String(raw.country) !== "" && (
+            {!!raw.country && String(raw.country) !== "" && (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 5, ...MONO, fontSize: 7.5, color: "#888880" }}>
                 <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c8a85a", display: "inline-block" }} />
                 {String(raw.country)}
@@ -133,10 +133,10 @@ export default function NodeModal({
                 )}
               </span>
             )}
-            {raw.outputVolume && (
+            {!!raw.outputVolume && (
               <Pill>{String(raw.outputVolume)}</Pill>
             )}
-            {(raw.ticker || raw.ownership) && !raw.outputVolume && (
+            {!!(raw.ticker || raw.ownership) && !raw.outputVolume && (
               <Pill>{String(raw.ticker || raw.ownership)}</Pill>
             )}
           </div>
