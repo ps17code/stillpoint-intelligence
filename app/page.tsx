@@ -34,12 +34,11 @@ const PANELS  = panelsRaw as any;
 const CHAINS  = chainsRaw as any;
 
 // ── TOP ANCHOR: document Y where tree top should appear ───────────
-// = thesis block bottom + brief height + breathing room
-function topAnchorPx(thesisEl: HTMLElement | null, briefEl: HTMLElement | null): number {
+// = thesis box bottom (which now includes the brief) + breathing room
+function topAnchorPx(thesisEl: HTMLElement | null): number {
   if (typeof window === "undefined") return 600;
-  const thesisBottom = thesisEl ? thesisEl.getBoundingClientRect().bottom : 188;
-  const briefHeight  = briefEl  ? briefEl.getBoundingClientRect().height  : 500;
-  return thesisBottom + briefHeight + 40;
+  const thesisBottom = thesisEl ? thesisEl.getBoundingClientRect().bottom : 500;
+  return thesisBottom + 40;
 }
 
 export default function Home() {
@@ -72,16 +71,15 @@ export default function Home() {
   const overTip  = useRef(false);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── Thesis + brief refs (for anchor measurement) ─────────────────
+  // ── Thesis ref (for anchor measurement) ──────────────────────────
   const thesisRef = useRef<HTMLDivElement>(null);
-  const briefRef  = useRef<HTMLDivElement>(null);
 
   // ── Top anchor: viewport Y of tree top ───────────────────────────
   const [topAnchor, setTopAnchor] = useState(600);
   const [windowHeight, setWindowHeight] = useState(900);
   useEffect(() => {
     const update = () => {
-      setTopAnchor(topAnchorPx(thesisRef.current, briefRef.current));
+      setTopAnchor(topAnchorPx(thesisRef.current));
       setWindowHeight(window.innerHeight);
     };
     const timer = setTimeout(update, 150);
@@ -405,7 +403,7 @@ export default function Home() {
         />
       )}
 
-      {/* Thesis bar — sits just below horizontal spine */}
+      {/* Thesis bar + Layer brief — fixed, sits just below horizontal spine */}
       {appState > 0 && currentThesis && (
         <div ref={thesisRef} style={{
           position: "fixed",
@@ -449,28 +447,15 @@ export default function Home() {
             }}>
               {currentThesis}
             </div>
-          </div>
-        </div>
-      )}
 
-      {/* Layer brief — scrollable, sits below fixed thesis block */}
-      {appState > 0 && currentBrief && (
-        <div
-          ref={briefRef}
-          style={{
-            position: "absolute",
-            top: 156,
-            left: 0,
-            right: 0,
-            background: "white",
-            borderBottom: "0.5px solid rgba(80,80,70,0.1)",
-            zIndex: 3,
-          }}
-        >
-          <LayerBrief
-            paragraphs={currentBrief}
-            stats={currentBriefStats ?? []}
-          />
+            {/* Brief — extends the thesis card downward */}
+            {currentBrief && (
+              <LayerBrief
+                paragraphs={currentBrief}
+                stats={currentBriefStats ?? []}
+              />
+            )}
+          </div>
         </div>
       )}
 

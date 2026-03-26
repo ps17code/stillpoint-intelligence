@@ -17,8 +17,8 @@ const STAT_COLORS: Record<string, string> = {
 
 export default function LayerBrief({ paragraphs, stats }: LayerBriefProps) {
   return (
-    <div style={{ padding: "32px 52px 36px", background: "white" }}>
-      <div style={{ maxWidth: 820, margin: "0 auto" }}>
+    <div style={{ marginTop: 18, paddingTop: 18, borderTop: "0.5px solid rgba(80,80,70,0.1)" }}>
+      <div>
 
         {/* Paragraphs */}
         {paragraphs.map((p, i) => (
