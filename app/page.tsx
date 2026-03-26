@@ -34,11 +34,11 @@ const PANELS  = panelsRaw as any;
 const CHAINS  = chainsRaw as any;
 
 // ── TOP ANCHOR: document Y where tree top should appear ───────────
-// = thesis box bottom + 188px (supply map header + breathing room below thesis)
+// = thesis box bottom + 144px (exact height of supply map header section above tree)
 function topAnchorPx(thesisEl: HTMLElement | null): number {
   if (typeof window === "undefined") return 600;
   const thesisBottom = thesisEl ? thesisEl.getBoundingClientRect().bottom : 500;
-  return thesisBottom + 188;
+  return thesisBottom + 144;
 }
 
 export default function Home() {
@@ -459,16 +459,16 @@ export default function Home() {
               <div style={{ marginTop: 14, paddingTop: 14, borderTop: "0.5px solid rgba(80,80,70,0.1)" }}>
                 {currentBrief.map((p: { layer: string; summary?: string }, i: number) => (
                   <div key={i} style={{
-                    display: "flex", gap: 8, alignItems: "baseline",
+                    display: "flex", gap: 8, alignItems: "baseline", justifyContent: "center",
                     marginBottom: i < currentBrief.length - 1 ? 6 : 0,
                   }}>
                     <span style={{
                       fontFamily: "Courier New, monospace",
                       fontSize: 7, letterSpacing: "0.12em",
                       textTransform: "uppercase" as const,
-                      color: "#aaaaa0", whiteSpace: "nowrap" as const, flexShrink: 0,
+                      color: "#8a6820", whiteSpace: "nowrap" as const, flexShrink: 0,
                     }}>{p.layer}</span>
-                    <span style={{ width: 1, height: 9, background: "rgba(80,80,70,0.15)", flexShrink: 0, alignSelf: "center" }} />
+                    <span style={{ width: 1, height: 9, background: "rgba(80,80,70,0.2)", flexShrink: 0, alignSelf: "center" }} />
                     <span style={{
                       fontFamily: "'EB Garamond', Georgia, serif",
                       fontSize: 13, color: "#3a3a32", lineHeight: 1.5,
