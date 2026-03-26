@@ -14,6 +14,7 @@ import Breadcrumb        from "@/components/Breadcrumb";
 import HorizontalSpine   from "@/components/HorizontalSpine";
 import NodeModal         from "@/components/NodeModal";
 import BriefModal        from "@/components/BriefModal";
+import GermaniumMap      from "@/components/GermaniumMap";
 import Tooltip      from "@/components/Tooltip";
 import InsightsSection from "@/components/InsightsSection";
 
@@ -491,6 +492,7 @@ export default function Home() {
                     read layer brief →
                   </button>
                 </div>
+                {appState === 1 && sel.raw === "Germanium" && <GermaniumMap />}
               </div>
             )}
           </div>
