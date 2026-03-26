@@ -13,7 +13,7 @@ import AnchorSpine  from "@/components/AnchorSpine";
 import Breadcrumb        from "@/components/Breadcrumb";
 import HorizontalSpine   from "@/components/HorizontalSpine";
 import NodeModal         from "@/components/NodeModal";
-import LayerBrief        from "@/components/LayerBrief";
+import BriefModal        from "@/components/BriefModal";
 import Tooltip      from "@/components/Tooltip";
 import InsightsSection from "@/components/InsightsSection";
 
@@ -62,6 +62,7 @@ export default function Home() {
   // ── Panel ─────────────────────────────────────────────────────────
   const [treeCollapsed, setTreeCollapsed] = useState(false);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
+  const [briefOpen, setBriefOpen] = useState(false);
 
   // ── Tooltip ───────────────────────────────────────────────────────
   const [tipKey,  setTipKey]  = useState<string | null>(null);
@@ -87,7 +88,7 @@ export default function Home() {
     return () => { clearTimeout(timer); window.removeEventListener("resize", update); };
   }, [appState]);
 
-  useEffect(() => { setTreeCollapsed(false); }, [appState]);
+  useEffect(() => { setTreeCollapsed(false); setBriefOpen(false); }, [appState]);
 
   // ── Spine dropdown options ────────────────────────────────────────
   // Always provide options at every level so all nodes are independently selectable.
@@ -448,12 +449,44 @@ export default function Home() {
               {currentThesis}
             </div>
 
-            {/* Brief — extends the thesis card downward */}
+            {/* Layer summaries + brief trigger */}
             {currentBrief && (
-              <LayerBrief
-                paragraphs={currentBrief}
-                stats={currentBriefStats ?? []}
-              />
+              <div style={{ marginTop: 14, paddingTop: 14, borderTop: "0.5px solid rgba(80,80,70,0.1)" }}>
+                {currentBrief.map((p: { layer: string; summary?: string }, i: number) => (
+                  <div key={i} style={{
+                    display: "flex", gap: 8, alignItems: "baseline",
+                    marginBottom: i < currentBrief.length - 1 ? 6 : 0,
+                  }}>
+                    <span style={{
+                      fontFamily: "Courier New, monospace",
+                      fontSize: 7, letterSpacing: "0.12em",
+                      textTransform: "uppercase" as const,
+                      color: "#aaaaa0", whiteSpace: "nowrap" as const, flexShrink: 0,
+                    }}>{p.layer}</span>
+                    <span style={{ width: 1, height: 9, background: "rgba(80,80,70,0.15)", flexShrink: 0, alignSelf: "center" }} />
+                    <span style={{
+                      fontFamily: "'EB Garamond', Georgia, serif",
+                      fontSize: 13, color: "#3a3a32", lineHeight: 1.5,
+                    }}>{p.summary}</span>
+                  </div>
+                ))}
+                <div style={{ marginTop: 12, textAlign: "center" as const }}>
+                  <button
+                    onClick={() => setBriefOpen(true)}
+                    style={{
+                      fontFamily: "Courier New, monospace",
+                      fontSize: 7.5, letterSpacing: "0.1em",
+                      textTransform: "uppercase" as const,
+                      color: "#888880", background: "none", border: "none",
+                      cursor: "pointer", padding: 0,
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "#1a1a14")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "#888880")}
+                  >
+                    read layer brief →
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </div>
@@ -607,6 +640,15 @@ export default function Home() {
         onDeepDive={handleDeepDive}
         onMouseEnter={handleTipEnter}
         onMouseLeave={handleTipLeave}
+      />
+
+      {/* Brief modal */}
+      <BriefModal
+        isOpen={briefOpen}
+        title={chainLabel}
+        paragraphs={currentBrief ?? []}
+        stats={currentBriefStats ?? []}
+        onClose={() => setBriefOpen(false)}
       />
 
       {/* Node modal */}
