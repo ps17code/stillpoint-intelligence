@@ -76,7 +76,7 @@ export default function Home() {
   const thesisRef = useRef<HTMLDivElement>(null);
 
   // ── Top anchor: viewport Y of tree top ───────────────────────────
-  const [topAnchor, setTopAnchor] = useState(600);
+  const [topAnchor, setTopAnchor] = useState(420);
   const [windowHeight, setWindowHeight] = useState(900);
   useEffect(() => {
     const update = () => {
@@ -155,9 +155,12 @@ export default function Home() {
     const newSvgWidth = rawChain ? computeRawSvgWidth(rawChain) : 1000;
     setSvgWidth(newSvgWidth);
 
-    // ancX = center of viewBox; topY = SVG Y of tree top (just below thesis block)
+    // Read topAnchor fresh from DOM to avoid stale closure — state may not have updated yet
+    const freshTopAnchor = topAnchorPx(thesisRef.current);
+    setTopAnchor(freshTopAnchor);
+
     const ancX = newSvgWidth / 2;
-    const topY = toSVG(topAnchor, window.innerHeight);
+    const topY = toSVG(freshTopAnchor, window.innerHeight);
 
     let geo: TreeGeometry | null = null;
 
