@@ -89,11 +89,30 @@ export default function Home() {
   useEffect(() => { setTreeCollapsed(false); }, [appState]);
 
   // ── Spine dropdown options ────────────────────────────────────────
+  // Always provide options at every level so all nodes are independently selectable.
+  // When an upstream selection exists, use its narrowed options; otherwise flatten all.
   const spineOptions = {
     raw:  Object.keys(CHAINS.SPINE_TREE),
-    comp: sel.raw  ? Object.keys(CHAINS.SPINE_TREE[sel.raw] || {}) : [],
-    sub:  sel.comp ? Object.keys((CHAINS.SPINE_TREE[sel.raw!] || {})[sel.comp] || {}) : [],
-    eu:   sel.sub  ? ((CHAINS.SPINE_TREE[sel.raw!] || {})[sel.comp!] || {})[sel.sub] || [] : [],
+    comp: sel.raw
+      ? Object.keys(CHAINS.SPINE_TREE[sel.raw] || {})
+      : Array.from(new Set(
+          Object.values(CHAINS.SPINE_TREE).flatMap((r: any) => Object.keys(r))
+        )),
+    sub:  sel.comp
+      ? Object.keys((CHAINS.SPINE_TREE[sel.raw!] || {})[sel.comp] || {})
+      : Array.from(new Set(
+          Object.values(CHAINS.SPINE_TREE)
+            .flatMap((r: any) => Object.values(r))
+            .flatMap((c: any) => Object.keys(c))
+        )),
+    eu:   sel.sub
+      ? ((CHAINS.SPINE_TREE[sel.raw!] || {})[sel.comp!] || {})[sel.sub] || []
+      : Array.from(new Set(
+          Object.values(CHAINS.SPINE_TREE)
+            .flatMap((r: any) => Object.values(r))
+            .flatMap((c: any) => Object.values(c))
+            .flat()
+        )),
   };
 
   // ── Helpers ───────────────────────────────────────────────────────

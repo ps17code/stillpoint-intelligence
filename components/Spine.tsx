@@ -34,15 +34,6 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
     state === "shifted" ? "translateY(calc(10vh + 510px))" :
     state === "gone"    ? "translateY(200vh)" : "none";
 
-  // Which nodes are active (have a selection upstream)
-  const isActive = (key: SpineKey) => {
-    if (key === "raw")  return true;
-    if (key === "comp") return !!selection.raw;
-    if (key === "sub")  return !!selection.comp;
-    if (key === "eu")   return !!selection.sub;
-    return false;
-  };
-
   // Which nodes are hidden when shifted — only cube (raw) stays visible
   const isHiddenWhenShifted = (key: SpineKey) => key !== "raw";
 
@@ -54,9 +45,8 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
     return sel || defaults[key];
   };
 
-  const hint = selection.raw
-    ? "click the cube to explore"
-    : "hover a node to explore";
+  const hasAnySelection = !!(selection.raw || selection.comp || selection.sub || selection.eu);
+  const hint = hasAnySelection ? "click a node to explore" : "hover a node to explore";
 
   return (
     <div
@@ -85,8 +75,6 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
       {/* Spine nodes */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         {SPINE_NODES.map(({ key, Shape }, idx) => {
-          const active = isActive(key);
-          const dormant = !active;
           const hidden = state === "shifted" && isHiddenWhenShifted(key);
 
           // In shifted state, the raw node visually shows the comp node (next level)
@@ -94,10 +82,10 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
           const displayKey: SpineKey = displayShifted ? "comp" : key;
           const DisplayShape = displayShifted ? SphereShape : Shape;
           const displayLabel = getLabel(displayKey);
-          const displayActive = isActive(displayKey);
-          const displayDormant = !displayActive;
+          const isSelected = !!selection[displayKey];
+          const isHovered = hoveredNode === key;
           const displayOpts = options[displayKey];
-          const showMenu = hoveredNode === key && displayActive && displayOpts.length > 0;
+          const showMenu = isHovered && displayOpts.length > 0;
 
           return (
             <div key={key} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -121,13 +109,13 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
                   transition: "opacity 0.3s",
                   pointerEvents: hidden ? "none" : "all",
                 }}
-                onMouseEnter={() => { if (displayActive) setHoveredNode(key); }}
+                onMouseEnter={() => setHoveredNode(key)}
                 onMouseLeave={() => setHoveredNode(null)}
               >
                 {/* Label */}
                 <div style={{
                   fontSize: 14,
-                  color: displayDormant ? "var(--dormant)" : "var(--ink2)",
+                  color: (isSelected || isHovered) ? "var(--ink2)" : "var(--dormant)",
                   marginBottom: 8,
                   textAlign: "center",
                   whiteSpace: "nowrap",
@@ -143,12 +131,11 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
                     width: 28, height: 22,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     position: "relative",
-                    cursor: displayDormant ? "default" : "pointer",
-                    opacity: displayDormant ? 0.25 : 1,
+                    cursor: "pointer",
+                    opacity: isHovered ? 1 : isSelected ? 0.9 : 0.55,
                     transition: "opacity 0.3s",
                   }}
                   onClick={() => {
-                    if (displayDormant) return;
                     if (displayKey === "raw"  && selection.raw)  onCubeClick();
                     if (displayKey === "comp" && selection.comp) onSphereClick();
                     if (displayKey === "sub"  && selection.sub)  onPyramidClick();
@@ -194,6 +181,15 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
                     </div>
                   )}
                 </div>
+
+                {/* Selection dot */}
+                <div style={{
+                  width: 4, height: 4, borderRadius: "50%",
+                  background: "var(--gold2)",
+                  marginTop: 6,
+                  opacity: isSelected ? 1 : 0,
+                  transition: "opacity 0.3s",
+                }} />
               </div>
             </div>
           );
@@ -205,7 +201,7 @@ export default function Spine({ state, selection, options, onSelect, onCubeClick
         position: "absolute", bottom: 36, left: "50%", transform: "translateX(-50%)",
         fontFamily: "'Geist Mono', monospace", fontSize: 9, fontWeight: 300,
         letterSpacing: "0.18em",
-        color: selection.raw ? "var(--gold2)" : "var(--ink4)",
+        color: hasAnySelection ? "var(--gold2)" : "var(--ink4)",
         whiteSpace: "nowrap", textTransform: "uppercase",
         opacity: state === "shifted" ? 0 : 1,
         transition: "color 0.3s, opacity 0.3s",
