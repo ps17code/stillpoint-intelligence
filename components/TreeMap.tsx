@@ -305,7 +305,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       cy: number,
       layerKey: string, layerLabel: string,
       layerColor: { stroke: string; text: string },
-      panel: PanelContent | undefined,
+      panel: unknown,
     ) {
       const configKey = toConfigKey(layerKey);
       const fields = layerConfig?.[configKey]?.displayFields ?? [];
