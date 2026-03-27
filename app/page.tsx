@@ -437,16 +437,16 @@ export default function Home() {
         />
       )}
 
-      {/* Thesis section — scrolls with page, sits just below fixed horizontal spine */}
+      {/* Thesis section — sticky below fixed horizontal spine */}
       {appState > 0 && currentThesis && (
         <div ref={thesisRef} style={{
-          position: "absolute",
+          position: "sticky",
           top: 76,
           left: 0,
           right: 0,
           padding: "16px 48px",
           borderBottom: "0.5px solid rgba(80,80,70,0.2)",
-          background: "#F2F2F0",
+          background: "white",
           zIndex: 40,
         }}>
           {/* Two-column grid: left = thesis + map, right = stat cards placeholder */}
@@ -587,10 +587,10 @@ export default function Home() {
       )}
 
 
-      {/* Supply map band — scrolls with page */}
+      {/* Supply map band — fixed below sticky thesis */}
       {appState > 0 && (
         <div style={{
-          position: "absolute",
+          position: "fixed",
           top: bandTop,
           left: 0,
           right: 0,
