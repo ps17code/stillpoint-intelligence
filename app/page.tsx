@@ -467,16 +467,16 @@ export default function Home() {
             }}>
               <div style={{
                 fontFamily: "'Geist Mono', monospace",
-                fontSize: 11, fontWeight: 600,
+                fontSize: 15, fontWeight: 600,
                 letterSpacing: "0.18em", textTransform: "uppercase" as const,
-                color: "#888880", marginBottom: 8, textAlign: "center" as const,
+                color: "#888880", marginBottom: 8,
               }}>
                 {currentPageTitle}
               </div>
               <div style={{
                 fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-                fontSize: 14, color: "#374151",
-                fontWeight: 400, lineHeight: 1.65, textAlign: "center" as const,
+                fontSize: 13, color: "#374151",
+                fontWeight: 400, lineHeight: 1.65,
               }}>
                 {currentThesis}
               </div>
@@ -484,9 +484,18 @@ export default function Home() {
               {/* Layer summaries + brief trigger */}
               {currentBrief && (
                 <div style={{ marginTop: 14, paddingTop: 14, borderTop: "0.5px solid rgba(80,80,70,0.1)" }}>
+                  {/* Sub-layers header */}
+                  <div style={{
+                    fontFamily: "Courier New, monospace",
+                    fontSize: 11, fontWeight: 700, letterSpacing: "0.12em",
+                    textTransform: "uppercase" as const,
+                    color: "#1a1a14", marginBottom: 8,
+                  }}>
+                    Sub-layers
+                  </div>
                   {currentBrief.map((p: { layer: string; summary?: string }, i: number) => (
                     <div key={i} style={{
-                      display: "flex", gap: 8, alignItems: "baseline", justifyContent: "center",
+                      display: "flex", gap: 8, alignItems: "baseline",
                       marginBottom: i < currentBrief.length - 1 ? 6 : 0,
                     }}>
                       <span style={{
@@ -502,7 +511,7 @@ export default function Home() {
                       }}>{p.summary}</span>
                     </div>
                   ))}
-                  <div style={{ marginTop: 12, textAlign: "center" as const }}>
+                  <div style={{ marginTop: 12 }}>
                     <button
                       onClick={() => setBriefOpen(true)}
                       style={{
