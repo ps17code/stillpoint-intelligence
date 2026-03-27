@@ -47,7 +47,7 @@ export default function InsightsColumn() {
 
         {/* Insight bars */}
         <div style={{ background: "white", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "4px", overflow: "hidden" }}>
-          <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#1a1a14", textAlign: "center" as const, padding: "14px 16px 10px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
+          <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#1a1a14", textAlign: "center" as const, padding: "14px 16px 10px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
             Key insights
           </div>
           {INSIGHT_BARS.map((bar, i) => (
@@ -56,12 +56,12 @@ export default function InsightsColumn() {
               onClick={() => setActivePopup(bar.key)}
               onMouseEnter={e => (e.currentTarget.style.background = "rgba(154,123,60,0.03)")}
               onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-              style={{ padding: "11px 16px", cursor: "pointer", borderBottom: i < INSIGHT_BARS.length - 1 ? "0.5px solid rgba(80,80,70,0.1)" : "none", transition: "background 0.15s" }}
+              style={{ padding: "13px 16px", cursor: "pointer", borderBottom: i < INSIGHT_BARS.length - 1 ? "0.5px solid rgba(80,80,70,0.1)" : "none", transition: "background 0.15s" }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "8px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#5a5647" }}>{bar.label}</div>
-                  <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "8px", color: "#a8a49a", marginTop: "2px", letterSpacing: "0.02em", lineHeight: 1.4 }}>{bar.teaser}</div>
+                  <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#5a5647" }}>{bar.label}</div>
+                  <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "8.5px", color: "#a8a49a", marginTop: "2px", letterSpacing: "0.02em", lineHeight: 1.4 }}>{bar.teaser}</div>
                 </div>
                 <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", color: "#c8c4b8", marginLeft: "8px", marginTop: "1px" }}>→</span>
               </div>
