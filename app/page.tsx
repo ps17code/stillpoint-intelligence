@@ -437,10 +437,10 @@ export default function Home() {
         />
       )}
 
-      {/* Thesis section — sticky below fixed horizontal spine */}
+      {/* Thesis section — scrolls with page, sits just below fixed horizontal spine */}
       {appState > 0 && currentThesis && (
         <div ref={thesisRef} style={{
-          position: "sticky",
+          position: "absolute",
           top: 76,
           left: 0,
           right: 0,
@@ -587,10 +587,10 @@ export default function Home() {
       )}
 
 
-      {/* Supply map band — fixed below sticky thesis */}
+      {/* Supply map band — scrolls with page */}
       {appState > 0 && (
         <div style={{
-          position: "fixed",
+          position: "absolute",
           top: bandTop,
           left: 0,
           right: 0,
