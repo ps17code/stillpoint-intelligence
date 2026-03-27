@@ -6,7 +6,7 @@ const INSIGHT_BARS = [
   {
     key: "supply-demand",
     label: "SUPPLY / DEMAND GAP",
-    teaser: "~80t western-accessible vs ~325t projected demand by 2026",
+    teaser: "210 ton supply gap by 2030",
     pillBg: "#EFF6FF", pillText: "#1E40AF",
   },
   {
@@ -100,7 +100,17 @@ export default function InsightsColumn() {
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{ marginBottom: "5px" }}>
+                  <div style={{
+                    fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "#1C1E21",
+                    lineHeight: 1.4,
+                    marginBottom: "6px",
+                  }}>
+                    {bar.teaser}
+                  </div>
+                  <div>
                     <span style={{
                       display: "inline-block",
                       background: bar.pillBg,
@@ -116,18 +126,8 @@ export default function InsightsColumn() {
                       {bar.label}
                     </span>
                   </div>
-                  <div style={{
-                    fontFamily: "var(--font-mono, 'Courier New', monospace)",
-                    fontSize: "10px",
-                    color: "#1C1E21",
-                    fontWeight: 500,
-                    lineHeight: 1.45,
-                    letterSpacing: "0.01em",
-                  }}>
-                    {bar.teaser}
-                  </div>
                 </div>
-                <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", color: "#c8c4b8", marginLeft: "8px", marginTop: "1px", flexShrink: 0 }}>→</span>
+                <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", color: "#c8c4b8", marginLeft: "8px", marginTop: "2px", flexShrink: 0 }}>→</span>
               </div>
             </div>
           ))}
