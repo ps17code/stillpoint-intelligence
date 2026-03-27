@@ -19,7 +19,7 @@ type Flow = { from: number; to: number; connections: Conn[] };
 
 // ── State 1: Germanium Raw Material ─────────────────────────────────────────
 const S1_LAYERS: Layer[] = [
-  { label: "Deposits", color: "#C9A84C", radius: 3, nodes: [
+  { label: "Deposits", color: "#9a7b3c", radius: 3, nodes: [
     { lon:100.08, lat:23.88, name: "Yunnan Deposit",       loc: "Yunnan, China" },
     { lon:116.8,  lat:44.5,  name: "Inner Mongolia Deposit", loc: "Inner Mongolia, China" },
     { lon:119.8,  lat:48.5,  name: "Heilongjiang Deposit", loc: "Heilongjiang, China" },
@@ -29,7 +29,7 @@ const S1_LAYERS: Layer[] = [
     { lon:27.5,   lat:-3.5,  name: "Kipushi Deposit",      loc: "DRC" },
     { lon:-162.9, lat:68.1,  name: "Red Dog Deposit",      loc: "Alaska, USA" },
   ]},
-  { label: "Miners", color: "#6ECF7A", radius: 2.5, nodes: [
+  { label: "Miners", color: "#6b8f5e", radius: 2.5, nodes: [
     { lon:100.2,  lat:23.5,  name: "Yunnan Chihong",       loc: "Yunnan, China" },
     { lon:117.0,  lat:44.8,  name: "Inner Mongolia Miner", loc: "Inner Mongolia, China" },
     { lon:115.5,  lat:40.0,  name: "Hebei Miner",          loc: "Hebei, China" },
@@ -38,7 +38,7 @@ const S1_LAYERS: Layer[] = [
     { lon:27.8,   lat:-3.8,  name: "Glencore Kipushi",     loc: "DRC" },
     { lon:-120.5, lat:49.3,  name: "Teck Resources",       loc: "British Columbia, Canada" },
   ]},
-  { label: "Refiners", color: "#A78BDB", radius: 2.5, nodes: [
+  { label: "Refiners", color: "#8a6b9a", radius: 2.5, nodes: [
     { lon:99.8,   lat:24.2,  name: "Yunnan Refinery",      loc: "Yunnan, China" },
     { lon:113.5,  lat:38.0,  name: "Hebei Refinery",       loc: "Hebei, China" },
     { lon:103.0,  lat:25.8,  name: "Chihong Refinery",     loc: "Yunnan, China" },
@@ -55,7 +55,7 @@ const S1_FLOWS: Flow[] = [
 
 // ── State 2: Component ───────────────────────────────────────────────────────
 const S2_LAYERS: Layer[] = [
-  { label: "GeCl₄ Suppliers",    color: "#C9A84C", radius: 3, nodes: [
+  { label: "GeCl₄ Suppliers",    color: "#9a7b3c", radius: 3, nodes: [
     { lon:5.5,   lat:51.2, name: "Umicore",          loc: "Olen, Belgium" },
     { lon:103.0, lat:25.8, name: "Chihong Supplier", loc: "Yunnan, China" },
     { lon:113.5, lat:38.0, name: "Hebei Supplier",   loc: "Hebei, China" },
@@ -86,7 +86,7 @@ const S3_LAYERS: Layer[] = [
     { lon:-73.0,  lat:41.0, name: "AFL Telecom",      loc: "Connecticut, USA" },
     { lon:139.7,  lat:35.7, name: "Fujikura",         loc: "Tokyo, Japan" },
   ]},
-  { label: "Cable Types", color: "#C9A84C", radius: 2.5, nodes: [
+  { label: "Cable Types", color: "#9a7b3c", radius: 2.5, nodes: [
     { lon:-95.0, lat:38.0, name: "Terrestrial Routes", loc: "North America" },
     { lon:10.0,  lat:50.0, name: "Terrestrial Routes", loc: "Europe" },
     { lon:-30.0, lat:30.0, name: "Subsea Routes",      loc: "Atlantic" },
@@ -112,7 +112,7 @@ const S4_LAYERS: Layer[] = [
     { lon:-84.5,  lat:34.0, name: "QTS",        loc: "Georgia, USA" },
     { lon:-95.0,  lat:38.0, name: "Iron Mountain", loc: "Kansas, USA" },
   ]},
-  { label: "Owners", color: "#C9A84C", radius: 3, nodes: [
+  { label: "Owners", color: "#9a7b3c", radius: 3, nodes: [
     { lon:-122.3, lat:47.6, name: "Microsoft",  loc: "Seattle, USA" },
     { lon:-122.1, lat:47.7, name: "Amazon",     loc: "Seattle, USA" },
     { lon:-122.0, lat:37.4, name: "Google",     loc: "Mountain View, USA" },
@@ -172,7 +172,7 @@ export default function SupplyChainMap({ chainState, rawSelection }: SupplyChain
       .datum(d3.geoGraticule()())
       .attr("d", path)
       .attr("fill", "none")
-      .attr("stroke", "rgba(255,255,255,0.06)")
+      .attr("stroke", "#d8d4c8")
       .attr("stroke-width", 0.3);
 
     fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
@@ -184,13 +184,13 @@ export default function SupplyChainMap({ chainState, rawSelection }: SupplyChain
         svg.append("path")
           .datum(topojson.feature(world, (world.objects as Record<string, GeometryCollection>).land))
           .attr("d", path)
-          .attr("fill", "#7A7A75");
+          .attr("fill", "#ddd9cf");
 
         svg.append("path")
           .datum(topojson.mesh(world, (world.objects as Record<string, GeometryCollection>).countries, (a, b) => a !== b))
           .attr("d", path)
           .attr("fill", "none")
-          .attr("stroke", "rgba(255,255,255,0.08)")
+          .attr("stroke", "#d0ccc2")
           .attr("stroke-width", 0.4);
 
         // China concentration ellipse (state 1 only)
@@ -199,15 +199,15 @@ export default function SupplyChainMap({ chainState, rawSelection }: SupplyChain
           svg.append("ellipse")
             .attr("cx", ecx).attr("cy", ecy)
             .attr("rx", 72).attr("ry", 45)
-            .attr("fill", "rgba(255,255,255,0.03)")
-            .attr("stroke", "rgba(255,255,255,0.12)")
+            .attr("fill", "rgba(180,140,60,0.04)")
+            .attr("stroke", "rgba(180,140,60,0.18)")
             .attr("stroke-width", 0.7)
             .attr("stroke-dasharray", "3,3");
           svg.append("text")
             .attr("x", ecx + 74).attr("y", ecy - 46)
             .attr("font-family", "Courier New, monospace")
             .attr("font-size", 6).attr("letter-spacing", "0.1em")
-            .attr("fill", "rgba(255,255,255,0.3)").attr("text-anchor", "start")
+            .attr("fill", "rgba(154,123,60,0.6)").attr("text-anchor", "start")
             .text("CHINA CONCENTRATION");
         }
 
@@ -316,18 +316,20 @@ export default function SupplyChainMap({ chainState, rawSelection }: SupplyChain
           }
         }
 
-        // Legend (bottom-left)
+        // Legend (vertically centered, left side)
         const legendX = 14;
-        const legendY = 280;
+        const totalLegendH = (layers.length - 1) * 16;
+        const legendStartY = MAP_H / 2 - totalLegendH / 2;
         for (let i = 0; i < layers.length; i++) {
+          const ly = legendStartY + i * 16;
           svg.append("circle")
-            .attr("cx", legendX + 4).attr("cy", legendY + i * 16)
+            .attr("cx", legendX + 4).attr("cy", ly)
             .attr("r", 3).attr("fill", layers[i].color).attr("fill-opacity", 0.85);
           svg.append("text")
-            .attr("x", legendX + 12).attr("y", legendY + i * 16 + 4)
+            .attr("x", legendX + 12).attr("y", ly + 4)
             .attr("font-family", "Courier New, monospace")
             .attr("font-size", 7).attr("letter-spacing", "0.08em")
-            .attr("fill", "rgba(255,255,255,0.5)")
+            .attr("fill", "rgba(255,255,255,0.7)")
             .text(layers[i].label.toUpperCase());
         }
       })

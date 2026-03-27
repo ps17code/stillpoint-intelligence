@@ -82,8 +82,8 @@ export default function HorizontalSpine({
         ← home
       </button>
 
-      {/* Nodes with separators */}
-      <div style={{ display: "flex", alignItems: "center" }}>
+      {/* Nodes with separators — centered */}
+      <div style={{ display: "flex", alignItems: "center", flex: 1, justifyContent: "center" }}>
         {LEVELS.map((lvl, idx) => {
           const active = isActive(lvl.key);
           const dormant = isDormant(lvl.key);
@@ -91,10 +91,8 @@ export default function HorizontalSpine({
           const hasOptions = options[lvl.key].length > 0 && !dormant;
           const showDropdown = hoveredNode === lvl.key && hasOptions;
 
-          let labelColor: string;
-          if (active) labelColor = "#C9A84C";
-          else if (!dormant) labelColor = "#9CA3AF";
-          else labelColor = "#4B5563";
+          const itemOpacity = dormant && !active ? 0.5 : 1;
+          const itemWeight = active ? 700 : 400;
 
           return (
             <div key={lvl.key} style={{ display: "flex", alignItems: "center" }}>
@@ -103,7 +101,7 @@ export default function HorizontalSpine({
                 <span style={{
                   fontFamily: "'Geist Mono', 'Courier New', monospace",
                   fontSize: 11,
-                  color: "#4B5563",
+                  color: "rgba(255,255,255,0.3)",
                   margin: "0 10px",
                   userSelect: "none",
                 }}>
@@ -117,10 +115,8 @@ export default function HorizontalSpine({
                   display: "flex", alignItems: "center", gap: 5,
                   position: "relative",
                   cursor: dormant ? "default" : "pointer",
-                  padding: active ? "4px 8px" : "4px 0",
-                  background: active ? "rgba(201,168,76,0.1)" : "transparent",
-                  borderRadius: active ? 3 : 0,
-                  transition: "background 0.2s",
+                  padding: "4px 0",
+                  opacity: itemOpacity,
                 }}
                 onMouseEnter={() => {
                   cancelHide(lvl.key);
@@ -135,8 +131,8 @@ export default function HorizontalSpine({
                 <span style={{
                   fontFamily: "'Geist Mono', 'Courier New', monospace",
                   fontSize: 8,
-                  color: active ? "#C9A84C" : "#6B7280",
-                  fontWeight: active ? 600 : 400,
+                  color: "#FFFFFF",
+                  fontWeight: itemWeight,
                   letterSpacing: "0.05em",
                   lineHeight: 1,
                 }}>
@@ -149,10 +145,9 @@ export default function HorizontalSpine({
                   fontSize: 10,
                   letterSpacing: "1.5px",
                   textTransform: "uppercase",
-                  color: labelColor,
-                  fontWeight: active ? 600 : 400,
+                  color: "#FFFFFF",
+                  fontWeight: itemWeight,
                   whiteSpace: "nowrap",
-                  transition: "color 0.2s",
                   lineHeight: 1,
                 }}>
                   {label}
@@ -185,18 +180,18 @@ export default function HorizontalSpine({
                           fontSize: 10,
                           letterSpacing: "0.08em",
                           textTransform: "uppercase",
-                          color: selection[lvl.key] === opt ? "#C9A84C" : "#9CA3AF",
-                          fontWeight: selection[lvl.key] === opt ? 600 : 400,
+                          color: selection[lvl.key] === opt ? "#FFFFFF" : "rgba(255,255,255,0.6)",
+                          fontWeight: selection[lvl.key] === opt ? 700 : 400,
                           cursor: "pointer",
                           transition: "background 0.12s, color 0.12s",
                         }}
                         onMouseEnter={e => {
                           e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-                          e.currentTarget.style.color = "#E5E7EB";
+                          e.currentTarget.style.color = "#FFFFFF";
                         }}
                         onMouseLeave={e => {
                           e.currentTarget.style.background = "transparent";
-                          e.currentTarget.style.color = selection[lvl.key] === opt ? "#C9A84C" : "#9CA3AF";
+                          e.currentTarget.style.color = selection[lvl.key] === opt ? "#FFFFFF" : "rgba(255,255,255,0.6)";
                         }}
                         onMouseDown={e => {
                           e.preventDefault();
