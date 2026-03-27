@@ -14,7 +14,7 @@ import Breadcrumb        from "@/components/Breadcrumb";
 import HorizontalSpine   from "@/components/HorizontalSpine";
 import NodeModal         from "@/components/NodeModal";
 import BriefModal        from "@/components/BriefModal";
-import GermaniumMap      from "@/components/GermaniumMap";
+import SupplyChainMap    from "@/components/SupplyChainMap";
 import Tooltip      from "@/components/Tooltip";
 import InsightsSection from "@/components/InsightsSection";
 
@@ -410,10 +410,10 @@ export default function Home() {
         />
       )}
 
-      {/* Thesis bar + Layer brief — fixed, sits just below horizontal spine */}
+      {/* Thesis section — scrolls with page, sits just below fixed horizontal spine */}
       {appState > 0 && currentThesis && (
         <div ref={thesisRef} style={{
-          position: "fixed",
+          position: "absolute",
           top: 76,
           left: 0,
           right: 0,
@@ -421,80 +421,93 @@ export default function Home() {
           borderBottom: "0.5px solid rgba(80,80,70,0.2)",
           background: "#F2F2F0",
           zIndex: 40,
-          display: "flex",
-          justifyContent: "center",
         }}>
+          {/* Two-column grid: left = thesis + map, right = stat cards placeholder */}
           <div style={{
-            background: "white",
-            border: "0.5px solid rgba(80,80,70,0.3)",
-            borderRadius: "8px",
-            padding: "16px 28px",
-            maxWidth: "780px",
-            width: "100%",
+            maxWidth: 1140,
+            margin: "0 auto",
+            display: "grid",
+            gridTemplateColumns: "1fr minmax(0, 340px)",
+            gap: 20,
+            alignItems: "start",
           }}>
+            {/* Left column — thesis content + supply chain map */}
             <div style={{
-              fontFamily: "'Geist Mono', monospace",
-              fontSize: "11px",
-              fontWeight: "600",
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "#888880",
-              marginBottom: "8px",
-              textAlign: "center",
+              background: "white",
+              border: "0.5px solid rgba(80,80,70,0.3)",
+              borderRadius: 8,
+              padding: "16px 28px",
             }}>
-              {currentPageTitle}
-            </div>
-            <div style={{
-              fontFamily: "'EB Garamond', Georgia, serif",
-              fontSize: "14px",
-              color: "#3a3a32",
-              fontStyle: "italic",
-              lineHeight: 1.7,
-              textAlign: "center",
-            }}>
-              {currentThesis}
+              <div style={{
+                fontFamily: "'Geist Mono', monospace",
+                fontSize: 11, fontWeight: 600,
+                letterSpacing: "0.18em", textTransform: "uppercase" as const,
+                color: "#888880", marginBottom: 8, textAlign: "center" as const,
+              }}>
+                {currentPageTitle}
+              </div>
+              <div style={{
+                fontFamily: "'EB Garamond', Georgia, serif",
+                fontSize: 14, color: "#3a3a32",
+                fontStyle: "italic", lineHeight: 1.7, textAlign: "center" as const,
+              }}>
+                {currentThesis}
+              </div>
+
+              {/* Layer summaries + brief trigger */}
+              {currentBrief && (
+                <div style={{ marginTop: 14, paddingTop: 14, borderTop: "0.5px solid rgba(80,80,70,0.1)" }}>
+                  {currentBrief.map((p: { layer: string; summary?: string }, i: number) => (
+                    <div key={i} style={{
+                      display: "flex", gap: 8, alignItems: "baseline", justifyContent: "center",
+                      marginBottom: i < currentBrief.length - 1 ? 6 : 0,
+                    }}>
+                      <span style={{
+                        fontFamily: "Courier New, monospace",
+                        fontSize: 7, letterSpacing: "0.12em",
+                        textTransform: "uppercase" as const,
+                        color: "#8a6820", whiteSpace: "nowrap" as const, flexShrink: 0,
+                      }}>{p.layer}</span>
+                      <span style={{ width: 1, height: 9, background: "rgba(80,80,70,0.2)", flexShrink: 0, alignSelf: "center" }} />
+                      <span style={{
+                        fontFamily: "'EB Garamond', Georgia, serif",
+                        fontSize: 13, color: "#3a3a32", lineHeight: 1.5,
+                      }}>{p.summary}</span>
+                    </div>
+                  ))}
+                  <div style={{ marginTop: 12, textAlign: "center" as const }}>
+                    <button
+                      onClick={() => setBriefOpen(true)}
+                      style={{
+                        fontFamily: "Courier New, monospace",
+                        fontSize: 7.5, letterSpacing: "0.1em",
+                        textTransform: "uppercase" as const,
+                        color: "#888880", background: "none", border: "none",
+                        cursor: "pointer", padding: 0,
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.color = "#1a1a14")}
+                      onMouseLeave={e => (e.currentTarget.style.color = "#888880")}
+                    >
+                      read layer brief →
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Supply chain map — shown for all active states */}
+              <SupplyChainMap
+                chainState={appState as 1|2|3|4}
+                rawSelection={sel.raw || undefined}
+                compSelection={sel.comp || undefined}
+                subSelection={sel.sub || undefined}
+                euSelection={sel.eu || undefined}
+              />
             </div>
 
-            {/* Layer summaries + brief trigger */}
-            {currentBrief && (
-              <div style={{ marginTop: 14, paddingTop: 14, borderTop: "0.5px solid rgba(80,80,70,0.1)" }}>
-                {currentBrief.map((p: { layer: string; summary?: string }, i: number) => (
-                  <div key={i} style={{
-                    display: "flex", gap: 8, alignItems: "baseline", justifyContent: "center",
-                    marginBottom: i < currentBrief.length - 1 ? 6 : 0,
-                  }}>
-                    <span style={{
-                      fontFamily: "Courier New, monospace",
-                      fontSize: 7, letterSpacing: "0.12em",
-                      textTransform: "uppercase" as const,
-                      color: "#8a6820", whiteSpace: "nowrap" as const, flexShrink: 0,
-                    }}>{p.layer}</span>
-                    <span style={{ width: 1, height: 9, background: "rgba(80,80,70,0.2)", flexShrink: 0, alignSelf: "center" }} />
-                    <span style={{
-                      fontFamily: "'EB Garamond', Georgia, serif",
-                      fontSize: 13, color: "#3a3a32", lineHeight: 1.5,
-                    }}>{p.summary}</span>
-                  </div>
-                ))}
-                <div style={{ marginTop: 12, textAlign: "center" as const }}>
-                  <button
-                    onClick={() => setBriefOpen(true)}
-                    style={{
-                      fontFamily: "Courier New, monospace",
-                      fontSize: 7.5, letterSpacing: "0.1em",
-                      textTransform: "uppercase" as const,
-                      color: "#888880", background: "none", border: "none",
-                      cursor: "pointer", padding: 0,
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "#1a1a14")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "#888880")}
-                  >
-                    read layer brief →
-                  </button>
-                </div>
-                {appState === 1 && sel.raw === "Germanium" && <GermaniumMap />}
-              </div>
-            )}
+            {/* Right column — stat cards + insights (placeholder) */}
+            <div style={{ maxWidth: 340 }}>
+              {/* Stat cards + insights column */}
+            </div>
           </div>
         </div>
       )}
