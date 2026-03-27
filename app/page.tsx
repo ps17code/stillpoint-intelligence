@@ -604,68 +604,70 @@ export default function Home() {
           left: 0,
           right: 0,
           zIndex: 6,
-          background: "#EDEDEA",
-          borderTop: "0.5px solid rgba(80,80,70,0.2)",
+          padding: "0 48px",
         }}>
-          <div
-            onClick={() => setTreeCollapsed(prev => !prev)}
-            onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#E0E0DC"}
-            onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "#EDEDEA"}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              padding: "26px 48px",
-              cursor: "pointer",
-              background: "#EDEDEA",
-              position: "relative",
-              gap: "8px",
-              transition: "background 0.15s ease",
-              userSelect: "none" as const,
-            }}
-          >
-            <div style={{
-              position: "absolute",
-              right: "48px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              fontFamily: "var(--font-mono, 'Courier New', monospace)",
-              fontSize: "13px",
-              color: "rgba(80,80,70,0.6)",
-            }}>
-              {treeCollapsed ? "+" : "×"}
-            </div>
-            <div style={{
-              fontFamily: "var(--font-mono, 'Courier New', monospace)",
-              fontSize: "11px",
-              fontWeight: "600",
-              letterSpacing: "0.18em",
-              textTransform: "uppercase" as const,
-              color: "#1a1a14",
-              textAlign: "center",
-            }}>
-              {supplyMapLabel}
-            </div>
-            <div style={{ display: "flex", gap: "14px", alignItems: "center", justifyContent: "center" }}>
-              {([
-                appState === 1 ? "~220 t/yr" : appState === 2 ? "~88 t Ge to fiber" : appState === 3 ? "~3–4M route-km/yr" : "~130-140 new hyperscale DCs/yr",
-                appState === 1 ? "$320M market" : appState === 2 ? "~500M fiber-km/yr" : appState === 3 ? ">30M cable-km/yr" : "~230M fiber-km/yr",
-                appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : appState === 3 ? "71% hyperscaler owned" : "~115t Ge/yr",
-                appState === 1 ? "8 deposits · 7 miners · 7 refiners" : appState === 2 ? "6 fiber manufacturers" : appState === 3 ? "9 cable assemblers" : "$600B+ capex 2026",
-              ] as string[]).map((stat, i, arr) => (
-                <React.Fragment key={i}>
-                  <span style={{
-                    fontFamily: "var(--font-mono, 'Courier New', monospace)",
-                    fontSize: "8.5px",
-                    color: "#888880",
-                    letterSpacing: "0.05em",
-                    whiteSpace: "nowrap" as const,
-                  }}>{stat}</span>
-                  {i < arr.length - 1 && (
-                    <div style={{ width: "1px", height: "9px", background: "rgba(80,80,70,0.3)", flexShrink: 0 }} />
-                  )}
-                </React.Fragment>
-              ))}
+          <div style={{ maxWidth: 1140, margin: "0 auto" }}>
+            <div
+              onClick={() => setTreeCollapsed(prev => !prev)}
+              onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#F8F8F6"}
+              onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "white"}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                padding: "20px 28px",
+                cursor: "pointer",
+                background: "white",
+                border: "0.2px solid rgba(80,80,70,0.2)",
+                borderRadius: 8,
+                position: "relative",
+                gap: "8px",
+                transition: "background 0.15s ease",
+                userSelect: "none" as const,
+              }}
+            >
+              <div style={{
+                position: "absolute",
+                right: "28px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                fontFamily: "var(--font-mono, 'Courier New', monospace)",
+                fontSize: "13px",
+                color: "rgba(80,80,70,0.6)",
+              }}>
+                {treeCollapsed ? "+" : "×"}
+              </div>
+              <div style={{
+                fontFamily: "'Geist Mono', monospace",
+                fontSize: 15,
+                fontWeight: 600,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase" as const,
+                color: "#888880",
+              }}>
+                {supplyMapLabel}
+              </div>
+              <div style={{ display: "flex", gap: "14px", alignItems: "center", justifyContent: "center" }}>
+                {([
+                  appState === 1 ? "~220 t/yr" : appState === 2 ? "~88 t Ge to fiber" : appState === 3 ? "~3–4M route-km/yr" : "~130-140 new hyperscale DCs/yr",
+                  appState === 1 ? "$320M market" : appState === 2 ? "~500M fiber-km/yr" : appState === 3 ? ">30M cable-km/yr" : "~230M fiber-km/yr",
+                  appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : appState === 3 ? "71% hyperscaler owned" : "~115t Ge/yr",
+                  appState === 1 ? "8 deposits · 7 miners · 7 refiners" : appState === 2 ? "6 fiber manufacturers" : appState === 3 ? "9 cable assemblers" : "$600B+ capex 2026",
+                ] as string[]).map((stat, i, arr) => (
+                  <React.Fragment key={i}>
+                    <span style={{
+                      fontFamily: "var(--font-mono, 'Courier New', monospace)",
+                      fontSize: "8.5px",
+                      color: "#888880",
+                      letterSpacing: "0.05em",
+                      whiteSpace: "nowrap" as const,
+                    }}>{stat}</span>
+                    {i < arr.length - 1 && (
+                      <div style={{ width: "1px", height: "9px", background: "rgba(80,80,70,0.3)", flexShrink: 0 }} />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
             </div>
           </div>
         </div>
