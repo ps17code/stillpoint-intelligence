@@ -100,7 +100,7 @@ function getConfig(chainState: 1|2|3|4, rawSelection?: string) {
 }
 
 const MAP_W = 700;
-const MAP_H = 420;
+const MAP_H = 380;
 
 export default function SupplyChainMap({ chainState, rawSelection }: SupplyChainMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -115,7 +115,7 @@ export default function SupplyChainMap({ chainState, rawSelection }: SupplyChain
     const { layers, flows, showEllipse } = config;
     const el = svgRef.current;
 
-    const proj = d3.geoNaturalEarth1().scale(140).translate([MAP_W / 2, MAP_H / 2 + 15]);
+    const proj = d3.geoNaturalEarth1().scale(132).translate([MAP_W / 2, MAP_H / 2 + 15]);
     const path = d3.geoPath().projection(proj);
     const pt = (lon: number, lat: number): [number, number] => proj([lon, lat]) ?? [0, 0];
 
