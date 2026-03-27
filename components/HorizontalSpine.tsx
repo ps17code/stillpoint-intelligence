@@ -91,7 +91,7 @@ export default function HorizontalSpine({
           const hasOptions = options[lvl.key].length > 0 && !dormant;
           const showDropdown = hoveredNode === lvl.key && hasOptions;
 
-          const itemOpacity = dormant && !active ? 0.5 : 1;
+          const itemColor = active ? "#FFFFFF" : "rgba(255,255,255,0.35)";
           const itemWeight = active ? 700 : 400;
 
           return (
@@ -116,7 +116,6 @@ export default function HorizontalSpine({
                   position: "relative",
                   cursor: dormant ? "default" : "pointer",
                   padding: "4px 0",
-                  opacity: itemOpacity,
                 }}
                 onMouseEnter={() => {
                   cancelHide(lvl.key);
@@ -131,7 +130,7 @@ export default function HorizontalSpine({
                 <span style={{
                   fontFamily: "'Geist Mono', 'Courier New', monospace",
                   fontSize: 8,
-                  color: "#FFFFFF",
+                  color: itemColor,
                   fontWeight: itemWeight,
                   letterSpacing: "0.05em",
                   lineHeight: 1,
@@ -145,7 +144,7 @@ export default function HorizontalSpine({
                   fontSize: 10,
                   letterSpacing: "1.5px",
                   textTransform: "uppercase",
-                  color: "#FFFFFF",
+                  color: itemColor,
                   fontWeight: itemWeight,
                   whiteSpace: "nowrap",
                   lineHeight: 1,

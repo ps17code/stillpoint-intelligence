@@ -87,7 +87,7 @@ export default function InsightsColumn() {
 
         {/* Insight bars */}
         <div data-insights-container style={{ background: "white", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "4px", overflow: "hidden" }}>
-          <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#1a1a14", textAlign: "center" as const, padding: "14px 16px 10px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
+          <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: "10px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "rgb(136,136,128)", textAlign: "center" as const, padding: "14px 16px 10px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
             Key insights
           </div>
           {INSIGHT_BARS.map((bar, i) => (
@@ -102,7 +102,7 @@ export default function InsightsColumn() {
                 <div style={{ flex: 1 }}>
                   <div style={{
                     fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-                    fontSize: "13px",
+                    fontSize: "11px",
                     fontWeight: 600,
                     color: "#1C1E21",
                     lineHeight: 1.4,
