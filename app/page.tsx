@@ -469,7 +469,7 @@ export default function Home() {
                 fontFamily: "'Geist Mono', monospace",
                 fontSize: 15, fontWeight: 600,
                 letterSpacing: "0.18em", textTransform: "uppercase" as const,
-                color: "#888880", marginBottom: 8,
+                color: "#888880", marginBottom: 15,
               }}>
                 {currentPageTitle}
               </div>
