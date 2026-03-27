@@ -445,7 +445,6 @@ export default function Home() {
           left: 0,
           right: 0,
           padding: "16px 48px",
-          borderBottom: "0.5px solid rgba(80,80,70,0.2)",
           background: "white",
           zIndex: 40,
         }}>
