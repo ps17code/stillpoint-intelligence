@@ -116,6 +116,22 @@ export default function Home() {
     return () => { clearTimeout(timer); window.removeEventListener("resize", update); };
   }, [appState]);
 
+  // Re-build tree geometry on window resize so SVG coordinates stay in sync
+  useEffect(() => {
+    if (appState === 0) return;
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const rebuild = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => buildGeometryFromAnchorEl("", appState), 120);
+    };
+    window.addEventListener("resize", rebuild);
+    return () => {
+      clearTimeout(resizeTimer);
+      window.removeEventListener("resize", rebuild);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appState, sel.raw, sel.comp, sel.sub, sel.eu]);
+
   useEffect(() => { setTreeCollapsed(false); setBriefOpen(false); }, [appState]);
 
   // ── Spine dropdown options ────────────────────────────────────────
