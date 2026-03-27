@@ -3,14 +3,54 @@
 import { useState } from "react";
 
 const INSIGHT_BARS = [
-  { key: "supply-demand", label: "SUPPLY / DEMAND GAP", teaser: "~80t western-accessible vs ~325t projected demand by 2026" },
-  { key: "bottlenecks", label: "BOTTLENECKS", teaser: "Single-source refining, 17% recycling ceiling, Red Dog closure" },
-  { key: "geopolitical", label: "GEOPOLITICAL RISK", teaser: "China export controls, US ban, sanctions on Russian supply" },
-  { key: "catalysts", label: "CATALYSTS", teaser: "BEAD fiber buildout, defense stockpiling, DRC ramp-up" },
-  { key: "emerging-tech", label: "EMERGING TECH", teaser: "Fly ash recovery, silicon photonics, hollow-core fiber" },
-  { key: "deals-capital", label: "DEALS & CAPITAL", teaser: "Umicore-STL offtake, DoD $14.4M grant, Teck govt talks" },
-  { key: "major-companies", label: "MAJOR COMPANIES", teaser: "Corning, Umicore, Teck, Yunnan Chihong, 5N Plus" },
-  { key: "investment-ideas", label: "INVESTMENT IDEAS", teaser: "6 positions across the chain from mining to end-use" },
+  {
+    key: "supply-demand",
+    label: "SUPPLY / DEMAND GAP",
+    teaser: "~80t western-accessible vs ~325t projected demand by 2026",
+    pillBg: "#EFF6FF", pillText: "#1E40AF",
+  },
+  {
+    key: "bottlenecks",
+    label: "BOTTLENECKS",
+    teaser: "Single-source refining, 17% recycling ceiling, Red Dog closure",
+    pillBg: "#FEF2F2", pillText: "#991B1B",
+  },
+  {
+    key: "geopolitical",
+    label: "GEOPOLITICAL RISK",
+    teaser: "China export controls, US ban, sanctions on Russian supply",
+    pillBg: "#FEF3C7", pillText: "#92400E",
+  },
+  {
+    key: "catalysts",
+    label: "CATALYSTS",
+    teaser: "BEAD fiber buildout, defense stockpiling, DRC ramp-up",
+    pillBg: "#ECFDF5", pillText: "#065F46",
+  },
+  {
+    key: "emerging-tech",
+    label: "EMERGING TECH",
+    teaser: "Fly ash recovery, silicon photonics, hollow-core fiber",
+    pillBg: "#F5F3FF", pillText: "#5B21B6",
+  },
+  {
+    key: "deals-capital",
+    label: "DEALS & CAPITAL",
+    teaser: "Umicore-STL offtake, DoD $14.4M grant, Teck govt talks",
+    pillBg: "#FFF7ED", pillText: "#9A3412",
+  },
+  {
+    key: "major-companies",
+    label: "MAJOR COMPANIES",
+    teaser: "Corning, Umicore, Teck, Yunnan Chihong, 5N Plus",
+    pillBg: "#F0F9FF", pillText: "#155E75",
+  },
+  {
+    key: "investment-ideas",
+    label: "INVESTMENT IDEAS",
+    teaser: "6 positions across the chain from mining to end-use",
+    pillBg: "#FDF2F8", pillText: "#9D174D",
+  },
 ];
 
 export default function InsightsColumn() {
@@ -56,14 +96,38 @@ export default function InsightsColumn() {
               onClick={() => setActivePopup(bar.key)}
               onMouseEnter={e => (e.currentTarget.style.background = "rgba(154,123,60,0.03)")}
               onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-              style={{ padding: "13px 16px", cursor: "pointer", borderBottom: i < INSIGHT_BARS.length - 1 ? "0.5px solid rgba(80,80,70,0.1)" : "none", transition: "background 0.15s" }}
+              style={{ padding: "11px 16px", cursor: "pointer", borderBottom: i < INSIGHT_BARS.length - 1 ? "0.5px solid rgba(80,80,70,0.1)" : "none", transition: "background 0.15s" }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#5a5647" }}>{bar.label}</div>
-                  <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "8.5px", color: "#a8a49a", marginTop: "2px", letterSpacing: "0.02em", lineHeight: 1.4 }}>{bar.teaser}</div>
+                  <div style={{ marginBottom: "5px" }}>
+                    <span style={{
+                      display: "inline-block",
+                      background: bar.pillBg,
+                      color: bar.pillText,
+                      fontFamily: "var(--font-mono, 'Courier New', monospace)",
+                      fontSize: "7.5px",
+                      fontWeight: 600,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase" as const,
+                      padding: "3px 8px",
+                      borderRadius: "3px",
+                    }}>
+                      {bar.label}
+                    </span>
+                  </div>
+                  <div style={{
+                    fontFamily: "var(--font-mono, 'Courier New', monospace)",
+                    fontSize: "10px",
+                    color: "#1C1E21",
+                    fontWeight: 500,
+                    lineHeight: 1.45,
+                    letterSpacing: "0.01em",
+                  }}>
+                    {bar.teaser}
+                  </div>
                 </div>
-                <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", color: "#c8c4b8", marginLeft: "8px", marginTop: "1px" }}>→</span>
+                <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", color: "#c8c4b8", marginLeft: "8px", marginTop: "1px", flexShrink: 0 }}>→</span>
               </div>
             </div>
           ))}
@@ -76,12 +140,32 @@ export default function InsightsColumn() {
           <div style={{ position: "absolute", inset: 0, background: "rgba(90,86,71,0.3)", backdropFilter: "blur(2px)" }} />
           <div onClick={e => e.stopPropagation()} style={{ position: "relative", background: "#FAF8F4", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "6px", width: "90%", maxWidth: "520px", maxHeight: "80vh", overflowY: "auto" as const, padding: "28px 28px 24px" }}>
             <button onClick={() => setActivePopup(null)} style={{ position: "absolute", top: "12px", right: "14px", background: "none", border: "none", fontSize: "14px", color: "#a8a49a", cursor: "pointer", fontFamily: "var(--font-mono, 'Courier New', monospace)", width: "28px", height: "28px", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "3px" }}>✕</button>
-            <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "9px", letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#9a7b3c", fontWeight: 600, marginBottom: "16px" }}>
-              {INSIGHT_BARS.find(b => b.key === activePopup)?.label}
-            </div>
-            <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "14px", color: "#888880", fontStyle: "italic", lineHeight: 1.6 }}>
-              Analysis content for this insight will be populated here.
-            </div>
+            {(() => {
+              const bar = INSIGHT_BARS.find(b => b.key === activePopup);
+              return bar ? (
+                <>
+                  <div style={{ marginBottom: "16px" }}>
+                    <span style={{
+                      display: "inline-block",
+                      background: bar.pillBg,
+                      color: bar.pillText,
+                      fontFamily: "var(--font-mono, 'Courier New', monospace)",
+                      fontSize: "8px",
+                      fontWeight: 600,
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase" as const,
+                      padding: "4px 10px",
+                      borderRadius: "3px",
+                    }}>
+                      {bar.label}
+                    </span>
+                  </div>
+                  <div style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "14px", color: "#888880", fontStyle: "italic", lineHeight: 1.6 }}>
+                    Analysis content for this insight will be populated here.
+                  </div>
+                </>
+              ) : null;
+            })()}
           </div>
         </div>
       )}

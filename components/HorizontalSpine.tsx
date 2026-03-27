@@ -1,6 +1,5 @@
 "use client";
 import { useState, useRef } from "react";
-import { CubeShape, SphereShape, PyramidShape, CylinderShape } from "./Shapes";
 import type { AppState } from "@/types";
 
 interface HorizontalSpineProps {
@@ -14,26 +13,12 @@ interface HorizontalSpineProps {
 
 type Level = "raw" | "comp" | "sub" | "eu";
 
-const LEVELS: { key: Level; defaultLabel: string; activeStateIdx: number }[] = [
-  { key: "raw",  defaultLabel: "Raw Material", activeStateIdx: 1 },
-  { key: "comp", defaultLabel: "Component",    activeStateIdx: 2 },
-  { key: "sub",  defaultLabel: "Subsystem",    activeStateIdx: 3 },
-  { key: "eu",   defaultLabel: "End Use",      activeStateIdx: 4 },
+const LEVELS: { key: Level; defaultLabel: string; activeStateIdx: number; num: string }[] = [
+  { key: "raw",  defaultLabel: "Raw Material", activeStateIdx: 1, num: "01" },
+  { key: "comp", defaultLabel: "Component",    activeStateIdx: 2, num: "02" },
+  { key: "sub",  defaultLabel: "Subsystem",    activeStateIdx: 3, num: "03" },
+  { key: "eu",   defaultLabel: "End Use",      activeStateIdx: 4, num: "04" },
 ];
-
-function ShapeForLevel({ level, size }: { level: Level; size: number }) {
-  if (level === "raw")  return <CubeShape     size={size} />;
-  if (level === "comp") return <SphereShape   size={size} />;
-  if (level === "sub")  return <PyramidShape  size={size} />;
-  return                       <CylinderShape size={size} />;
-}
-
-const SHAPE_SIZES: Record<Level, number> = {
-  raw:  22,
-  comp: 20,
-  sub:  22,
-  eu:   22,
-};
 
 export default function HorizontalSpine({
   selection, activeState, options, onSelect, onNodeClick, onHome,
@@ -56,7 +41,7 @@ export default function HorizontalSpine({
   }
 
   function isDormant(level: Level): boolean {
-    if (level === "raw")  return false; // always navigable
+    if (level === "raw")  return false;
     if (level === "comp") return !selection.raw;
     if (level === "sub")  return !selection.comp;
     if (level === "eu")   return !selection.sub;
@@ -66,37 +51,38 @@ export default function HorizontalSpine({
   return (
     <div
       style={{
-        position: "fixed", top: 0, left: 0, right: 0, height: 68,
-        background: "#F2F2F0",
-        borderBottom: "0.5px solid rgba(80,80,70,0.2)",
-        display: "flex", alignItems: "center", justifyContent: "center",
+        position: "fixed", top: 0, left: 0, right: 0, height: 52,
+        background: "#000000",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
+        display: "flex", alignItems: "center",
         zIndex: 50,
-        padding: "0 48px",
+        padding: "0 24px",
       }}
     >
       {/* Home button */}
       <button
         onClick={onHome}
         style={{
-          fontFamily: "'Geist Mono', monospace",
+          fontFamily: "'Geist Mono', 'Courier New', monospace",
           fontSize: 9,
-          letterSpacing: "0.2em",
-          color: "var(--gold2)",
+          letterSpacing: "0.15em",
+          color: "#6B7280",
           textTransform: "uppercase",
           cursor: "pointer",
           border: "none",
           background: "none",
-          marginRight: 32,
-          transition: "color 0.3s",
+          marginRight: 28,
+          transition: "color 0.2s",
           flexShrink: 0,
+          padding: 0,
         }}
-        onMouseEnter={e => (e.currentTarget.style.color = "#1a1a14")}
-        onMouseLeave={e => (e.currentTarget.style.color = "var(--gold2)")}
+        onMouseEnter={e => (e.currentTarget.style.color = "#9CA3AF")}
+        onMouseLeave={e => (e.currentTarget.style.color = "#6B7280")}
       >
         ← home
       </button>
 
-      {/* Nodes with connectors */}
+      {/* Nodes with separators */}
       <div style={{ display: "flex", alignItems: "center" }}>
         {LEVELS.map((lvl, idx) => {
           const active = isActive(lvl.key);
@@ -105,24 +91,36 @@ export default function HorizontalSpine({
           const hasOptions = options[lvl.key].length > 0 && !dormant;
           const showDropdown = hoveredNode === lvl.key && hasOptions;
 
+          let labelColor: string;
+          if (active) labelColor = "#C9A84C";
+          else if (!dormant) labelColor = "#9CA3AF";
+          else labelColor = "#4B5563";
+
           return (
             <div key={lvl.key} style={{ display: "flex", alignItems: "center" }}>
-              {/* Connector line before (skip first) */}
+              {/* Separator */}
               {idx > 0 && (
-                <div style={{
-                  width: 60, height: 1,
-                  background: "rgba(80,80,70,0.4)",
-                  flexShrink: 0,
-                }} />
+                <span style={{
+                  fontFamily: "'Geist Mono', 'Courier New', monospace",
+                  fontSize: 11,
+                  color: "#4B5563",
+                  margin: "0 10px",
+                  userSelect: "none",
+                }}>
+                  →
+                </span>
               )}
 
               {/* Node */}
               <div
                 style={{
-                  display: "flex", flexDirection: "column",
-                  alignItems: "center", gap: 5,
+                  display: "flex", alignItems: "center", gap: 5,
                   position: "relative",
                   cursor: dormant ? "default" : "pointer",
+                  padding: active ? "4px 8px" : "4px 0",
+                  background: active ? "rgba(201,168,76,0.1)" : "transparent",
+                  borderRadius: active ? 3 : 0,
+                  transition: "background 0.2s",
                 }}
                 onMouseEnter={() => {
                   cancelHide(lvl.key);
@@ -133,45 +131,47 @@ export default function HorizontalSpine({
                   if (!dormant && selection[lvl.key]) onNodeClick(lvl.key);
                 }}
               >
+                {/* Step number */}
+                <span style={{
+                  fontFamily: "'Geist Mono', 'Courier New', monospace",
+                  fontSize: 8,
+                  color: active ? "#C9A84C" : "#6B7280",
+                  fontWeight: active ? 600 : 400,
+                  letterSpacing: "0.05em",
+                  lineHeight: 1,
+                }}>
+                  {lvl.num}
+                </span>
+
                 {/* Label */}
-                <div style={{
-                  fontFamily: "'EB Garamond', Georgia, serif",
-                  fontSize: 12,
-                  color: (active || !dormant) ? "#1a1a14" : "#aaaaa0",
+                <span style={{
+                  fontFamily: "'Geist Mono', 'Courier New', monospace",
+                  fontSize: 10,
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                  color: labelColor,
+                  fontWeight: active ? 600 : 400,
                   whiteSpace: "nowrap",
-                  transition: "color 0.3s",
+                  transition: "color 0.2s",
+                  lineHeight: 1,
                 }}>
                   {label}
-                </div>
-
-                {/* Shape */}
-                <div style={{ opacity: dormant ? 0.25 : 1, transition: "opacity 0.3s" }}>
-                  <ShapeForLevel level={lvl.key} size={SHAPE_SIZES[lvl.key]} />
-                </div>
-
-                {/* Active indicator dot */}
-                {active && (
-                  <div style={{
-                    width: 4, height: 4, borderRadius: "50%",
-                    background: "#c8a85a", marginTop: 3,
-                  }} />
-                )}
+                </span>
 
                 {/* Dropdown */}
                 {showDropdown && (
                   <div
                     style={{
                       position: "absolute",
-                      top: "calc(100% + 8px)",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      background: "white",
-                      border: "0.5px solid rgba(80,80,70,0.3)",
-                      borderRadius: 6,
-                      padding: "6px 0",
+                      top: "calc(100% + 10px)",
+                      left: 0,
+                      background: "#111111",
+                      border: "0.5px solid rgba(255,255,255,0.12)",
+                      borderRadius: 4,
+                      padding: "4px 0",
                       minWidth: 160,
                       zIndex: 100,
-                      boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
                     }}
                     onMouseEnter={() => cancelHide(lvl.key)}
                     onMouseLeave={() => scheduleHide(lvl.key)}
@@ -180,21 +180,23 @@ export default function HorizontalSpine({
                       <div
                         key={opt}
                         style={{
-                          padding: "7px 16px",
-                          fontFamily: "'EB Garamond', Georgia, serif",
-                          fontSize: 13,
-                          color: selection[lvl.key] === opt ? "#1a1a14" : "#3a3a32",
-                          fontWeight: selection[lvl.key] === opt ? 500 : 400,
+                          padding: "7px 14px",
+                          fontFamily: "'Geist Mono', 'Courier New', monospace",
+                          fontSize: 10,
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          color: selection[lvl.key] === opt ? "#C9A84C" : "#9CA3AF",
+                          fontWeight: selection[lvl.key] === opt ? 600 : 400,
                           cursor: "pointer",
-                          transition: "background 0.15s, color 0.15s",
+                          transition: "background 0.12s, color 0.12s",
                         }}
                         onMouseEnter={e => {
-                          e.currentTarget.style.background = "rgba(80,80,70,0.08)";
-                          e.currentTarget.style.color = "#1a1a14";
+                          e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                          e.currentTarget.style.color = "#E5E7EB";
                         }}
                         onMouseLeave={e => {
                           e.currentTarget.style.background = "transparent";
-                          e.currentTarget.style.color = selection[lvl.key] === opt ? "#1a1a14" : "#3a3a32";
+                          e.currentTarget.style.color = selection[lvl.key] === opt ? "#C9A84C" : "#9CA3AF";
                         }}
                         onMouseDown={e => {
                           e.preventDefault();

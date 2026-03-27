@@ -441,7 +441,7 @@ export default function Home() {
       {appState > 0 && currentThesis && (
         <div ref={thesisRef} style={{
           position: "absolute",
-          top: 76,
+          top: 60,
           left: 0,
           right: 0,
           padding: "16px 48px",
@@ -461,7 +461,7 @@ export default function Home() {
             {/* Left column — thesis content + supply chain map */}
             <div ref={leftColRef} style={{
               background: "white",
-              border: "0.5px solid rgba(80,80,70,0.3)",
+              border: "0.2px solid rgba(80,80,70,0.2)",
               borderRadius: 8,
               padding: "16px 28px",
             }}>
@@ -474,9 +474,9 @@ export default function Home() {
                 {currentPageTitle}
               </div>
               <div style={{
-                fontFamily: "'EB Garamond', Georgia, serif",
-                fontSize: 14, color: "#3a3a32",
-                fontStyle: "italic", lineHeight: 1.7, textAlign: "center" as const,
+                fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                fontSize: 14, color: "#374151",
+                fontWeight: 400, lineHeight: 1.65, textAlign: "center" as const,
               }}>
                 {currentThesis}
               </div>
@@ -491,7 +491,7 @@ export default function Home() {
                     }}>
                       <span style={{
                         fontFamily: "Courier New, monospace",
-                        fontSize: 7, letterSpacing: "0.12em",
+                        fontSize: 10, fontWeight: 700, letterSpacing: "0.12em",
                         textTransform: "uppercase" as const,
                         color: "#8a6820", whiteSpace: "nowrap" as const, flexShrink: 0,
                       }}>{p.layer}</span>
@@ -507,13 +507,13 @@ export default function Home() {
                       onClick={() => setBriefOpen(true)}
                       style={{
                         fontFamily: "Courier New, monospace",
-                        fontSize: 7.5, letterSpacing: "0.1em",
+                        fontSize: 10, letterSpacing: "0.12em",
                         textTransform: "uppercase" as const,
-                        color: "#888880", background: "none", border: "none",
+                        color: "#6B7280", background: "none", border: "none",
                         cursor: "pointer", padding: 0,
                       }}
-                      onMouseEnter={e => (e.currentTarget.style.color = "#1a1a14")}
-                      onMouseLeave={e => (e.currentTarget.style.color = "#888880")}
+                      onMouseEnter={e => (e.currentTarget.style.color = "#1C1E21")}
+                      onMouseLeave={e => (e.currentTarget.style.color = "#6B7280")}
                     >
                       read layer brief →
                     </button>
