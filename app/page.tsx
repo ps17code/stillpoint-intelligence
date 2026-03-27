@@ -77,6 +77,44 @@ export default function Home() {
   // ── Thesis ref (for anchor measurement) ──────────────────────────
   const thesisRef = useRef<HTMLDivElement>(null);
 
+  // ── Column refs for height matching ──────────────────────────────
+  const leftColRef  = useRef<HTMLDivElement>(null);
+  const rightColRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!leftColRef.current || !rightColRef.current) return;
+    const measure = () => {
+      const rightH = rightColRef.current!.getBoundingClientRect().height;
+      const leftH  = leftColRef.current!.getBoundingClientRect().height;
+      const mapEl  = leftColRef.current!.querySelector('[data-map-container]') as HTMLElement;
+      if (!mapEl) return;
+
+      // Minimum map height — enough to show Greenland to southern Brazil
+      const mapWidth    = mapEl.getBoundingClientRect().width;
+      const minMapHeight = mapWidth * 0.55;
+
+      const diff        = rightH - leftH;
+      const currentMapH = mapEl.getBoundingClientRect().height;
+      const targetMapH  = Math.max(currentMapH + diff, minMapHeight);
+
+      mapEl.style.height   = targetMapH + "px";
+      mapEl.style.overflow = "hidden";
+
+      // If left column is now taller, grow the insights box to match
+      const newLeftH  = leftColRef.current!.getBoundingClientRect().height;
+      const newRightH = rightColRef.current!.getBoundingClientRect().height;
+      if (newLeftH > newRightH) {
+        const insightsBox = rightColRef.current!.querySelector('[data-insights-container]') as HTMLElement;
+        if (insightsBox) {
+          insightsBox.style.paddingBottom = (newLeftH - newRightH) + "px";
+        }
+      }
+    };
+    const timer = setTimeout(measure, 500);
+    window.addEventListener("resize", measure);
+    return () => { clearTimeout(timer); window.removeEventListener("resize", measure); };
+  }, [appState, sel.raw, sel.comp, sel.sub, sel.eu]);
+
   // ── Top anchor: viewport Y of tree top ───────────────────────────
   const [topAnchor, setTopAnchor] = useState(420);
   const [windowHeight, setWindowHeight] = useState(900);
@@ -433,7 +471,7 @@ export default function Home() {
             alignItems: "start",
           }}>
             {/* Left column — thesis content + supply chain map */}
-            <div style={{
+            <div ref={leftColRef} style={{
               background: "white",
               border: "0.5px solid rgba(80,80,70,0.3)",
               borderRadius: 8,
@@ -506,7 +544,7 @@ export default function Home() {
             </div>
 
             {/* Right column — stat cards + insights */}
-            <div style={{ maxWidth: 340 }}>
+            <div ref={rightColRef} style={{ maxWidth: 340 }}>
               <InsightsColumn />
             </div>
           </div>

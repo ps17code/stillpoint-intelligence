@@ -275,6 +275,7 @@ export default function SupplyChainMap({ chainState, rawSelection }: SupplyChain
     <svg
       ref={svgRef}
       viewBox={`0 0 ${MAP_W} ${MAP_H}`}
+      data-map-container
       style={{ width: "100%", height: MAP_H, background: "#EDEDEA", borderRadius: 6, display: "block", marginTop: 16 }}
     />
   );

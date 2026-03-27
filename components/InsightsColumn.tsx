@@ -46,7 +46,7 @@ export default function InsightsColumn() {
         </div>
 
         {/* Insight bars */}
-        <div style={{ background: "white", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "4px", overflow: "hidden" }}>
+        <div data-insights-container style={{ background: "white", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "4px", overflow: "hidden" }}>
           <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#1a1a14", textAlign: "center" as const, padding: "14px 16px 10px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
             Key insights
           </div>
