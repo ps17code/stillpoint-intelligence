@@ -16,7 +16,8 @@ import NodeModal         from "@/components/NodeModal";
 import BriefModal        from "@/components/BriefModal";
 import SupplyChainMap    from "@/components/SupplyChainMap";
 import Tooltip      from "@/components/Tooltip";
-import InsightsSection from "@/components/InsightsSection";
+import InsightsSection  from "@/components/InsightsSection";
+import InsightsColumn   from "@/components/InsightsColumn";
 
 // Geometry
 import {
@@ -504,9 +505,9 @@ export default function Home() {
               />
             </div>
 
-            {/* Right column — stat cards + insights (placeholder) */}
+            {/* Right column — stat cards + insights */}
             <div style={{ maxWidth: 340 }}>
-              {/* Stat cards + insights column */}
+              <InsightsColumn />
             </div>
           </div>
         </div>
