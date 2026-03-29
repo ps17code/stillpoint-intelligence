@@ -136,9 +136,9 @@ export default function InsightsColumn() {
 
       {/* Popup overlay */}
       {activePopup && (
-        <div onClick={() => setActivePopup(null)} style={{ position: "fixed", inset: 0, zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div onClick={() => setActivePopup(null)} style={{ position: "fixed", inset: 0, zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: "64px 0 32px" }}>
           <div style={{ position: "absolute", inset: 0, background: "rgba(90,86,71,0.3)", backdropFilter: "blur(2px)" }} />
-          <div onClick={e => e.stopPropagation()} style={{ position: "relative", background: "#FAF9F7", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "6px", width: "90%", maxWidth: "680px", maxHeight: "90vh", overflowY: "auto" as const, padding: 0 }}>
+          <div onClick={e => e.stopPropagation()} style={{ position: "relative", background: "#FAF9F7", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "6px", width: "90%", maxWidth: "680px", maxHeight: "80vh", overflowY: "auto" as const, padding: 0 }}>
 
             {activePopup === "supply-demand" ? (
               <div style={{ padding: 0 }}>
