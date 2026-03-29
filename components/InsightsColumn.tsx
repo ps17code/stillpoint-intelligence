@@ -304,6 +304,30 @@ export default function InsightsColumn() {
                     ))}
                   </div>
 
+                  {/* Takeaway */}
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Takeaway</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The supply of germanium as a raw material is fundamentally fixed. It cannot be mined directly, cannot be explored for, and cannot be ramped without structural changes to the zinc and coal industries that produce it as a byproduct. Of the ~220 tonnes refined annually, over 90% originates from geopolitically constrained sources. Western-accessible supply sits at roughly 65–85 tonnes — most of it recycled — against demand that is accelerating from AI infrastructure, defense, and broadband buildout.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '16px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>In the absence of a breakthrough in alternative fiber technology or a reversal of China&apos;s export restrictions, a structural shortage of germanium is not a risk scenario — it is the baseline.</strong></p>
+
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>What could change this picture</div>
+
+                    {([
+                      ['China reverses export controls', "China's export restrictions are political, not geological — they can be reversed with a policy decision. Beijing has done this before: rare earth export restrictions imposed in 2010 were partially relaxed under WTO pressure by 2015. If China-US relations thaw or Beijing uses germanium access as a diplomatic bargaining chip, supply could re-open. But the precedent also shows that even temporary restrictions cause lasting supply chain restructuring — buyers who got burned don't go back."],
+                      ['Demand destruction via lower-Ge fiber', "Fiber manufacturers are actively researching lower-germanium and germanium-free fiber core designs. These are not commercially viable at scale today, but sustained pricing above $2,000/kg accelerates that R&D timeline significantly. The question is whether alternatives can reach qualification and production scale before the supply gap becomes acute — a race measured in years, not months."],
+                      ['Hollow-core fiber eliminates Ge entirely', "Companies like Lumenisity (acquired by Microsoft in 2022) are already deploying hollow-core fiber in specific datacenter applications. It's early, expensive, and limited to short-reach interconnects today — but if it reaches cost parity for datacenter use within 5–7 years, it could meaningfully reduce germanium demand from the largest single consumption segment. This is the most credible long-term threat to the supply thesis."],
+                      ['Recycling ceiling shifts higher', "The widely cited 30% recycling share is poorly sourced and may understate what's achievable with improved recovery technology — particularly from fiber manufacturing waste streams. If the recycling share shifts from 30% to 40–50%, that adds roughly 20–40 tonnes of effective supply. It doesn't close the gap but it buys time for other solutions to mature."],
+                      ['New zinc deposits yield germanium', 'Active exploration projects near Red Dog in Alaska (Anarraaq/Aktigiruq), in Namibia, and elsewhere could yield germanium-bearing zinc ores. But these are 10+ year timelines from discovery to production, and germanium content is never the target — it\'s a fortunate byproduct if it\'s there at all. Unlikely to be material before 2030, possible by 2035.'],
+                    ] as [string, string][]).map(([title, body], i) => (
+                      <div key={i} style={{ padding: '10px 0', borderBottom: i < 4 ? '0.5px solid #F3F4F6' : 'none' }}>
+                        <div style={{ fontFamily: "Inter, sans-serif", fontSize: '12px', fontWeight: 600, color: '#1C1E21' }}>{title}</div>
+                        <div style={{ fontFamily: "Inter, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.6, marginTop: '4px' }}>{body}</div>
+                      </div>
+                    ))}
+
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginTop: '16px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>The remaining uncertainty is timing</strong> — how fast demand accelerates relative to the slow emergence of DRC primary supply, incremental recycling gains, and early-stage fiber alternatives. The structural shortage is the baseline. The variables are severity and duration.</p>
+                  </div>
+
                   {/* Sources */}
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
                     Sources: USGS Mineral Commodity Summaries 2025 (Amy C. Tolcin), USGS Minerals Yearbook 2023 — Germanium, Yunnan Chihong Zinc &amp; Germanium Co. 2023 Annual Report, RFC Ambrian Germanium Commodity Report April 2025, Umicore Integrated Annual Report 2023, Umicore EU CRM Act press release, Gécamines press release October 2024, Corning Q3 2025 earnings / John McGirr statements, STL CEO Rahul Puri statements December 2025, Argus Media Non-Ferrous Markets pricing, Light Reading January 2026, WORLD7 Integrated Assessment Model (Springer, December 2024).
