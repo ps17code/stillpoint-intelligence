@@ -48,7 +48,7 @@ const INSIGHT_BARS = [
   {
     key: "investment-ideas",
     label: "INVESTMENT IDEAS",
-    teaser: "6 positions across the chain from mining to end-use",
+    teaser: "Companies and positions to watch across the germanium supply thesis",
     pillBg: "#FDF2F8", pillText: "#9D174D",
   },
 ];
@@ -710,6 +710,119 @@ export default function InsightsColumn() {
 
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
                     Sources: Umicore FY 2025 &amp; FY 2024 results, Umicore investor relations, Umicore EU CRM Act press release, Stockopedia/TradingView/Investing.com price data. 5N Plus FY 2025 results, Investing.com/Stockopedia price data, Kalkine analysis (Mar 2026), Globe and Mail, US DoD/DPA grant announcements. Yunnan Chihong 2023 Annual Report, Asian Metal, SMM News Q1 2025. Teck Resources 2023 Annual Report, USGS MCS 2025, Fastmarkets (Blue Moon/Apex acquisition Nov 2025).
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "investment-ideas" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '8px' }}>Companies and positions to watch across the germanium supply thesis</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#FEF3C7', color: '#92400E', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Investment ideas</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '12px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Overview</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.75, marginBottom: '12px' }}>The following are companies, technologies, and positions that connect directly to the germanium supply dynamics analyzed in the preceding insights. Some are immediately accessible public equities. Others are private or pre-IPO. One is a commodity position. One is a company that should exist but doesn&apos;t yet. The point isn&apos;t to recommend any specific action — it&apos;s to map where value could accrue if the supply thesis plays out as the data suggests.</p>
+                  </div>
+
+                  {/* Public companies */}
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '12px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Public companies</div>
+
+                    {/* Umicore */}
+                    <div style={{ marginTop: '24px' }}>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>Umicore</div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '10px' }}>XBRU: UMI · €3.9B market cap · ~€16/share · 52-wk: €7–22</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Umicore is the bottleneck through which virtually all western germanium flows. But the angle that most investors miss is the arbitrage. Chinese domestic germanium trades at ~$2,000/kg. Western germanium trades at $7,000–8,000+/kg. That&apos;s a 4x spread, and it exists because China&apos;s export controls have severed the normal price convergence mechanism. Umicore sits at the endpoint of the China → Belgium routing channel identified by the Stimson Center — taking in material at prices closer to the Chinese level, processing it in Olen, and selling ultra-high-purity GeCl₄ to western fiber manufacturers at western prices.</p>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>This likely explains why the Electro-Optic Materials unit showed &ldquo;significant earnings growth&rdquo; in 2025 even as the broader Specialty Materials segment grew only 4%. The germanium margins may be 40–50%+ in the current environment, far above the segment&apos;s blended 19% EBITDA margin. We estimate germanium-related revenue at €150–350M in 2025, potentially €400–600M by 2028 if prices hold and the DRC adds 10–15 tonnes. None of this is visible in their reporting — Umicore bundles germanium with cobalt and metal deposition. The stock trades on group-level sentiment where the battery materials writedown dominates. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>The germanium upside is real but hidden inside a complex company at a depressed valuation.</strong></p>
+                    </div>
+
+                    <hr style={{ border: 'none', borderTop: '0.5px solid #F3F4F6', margin: '24px 0 0' }} />
+
+                    {/* 5N Plus */}
+                    <div style={{ marginTop: '24px' }}>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>5N Plus</div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '10px' }}>TSX: VNP · C$2.5–2.8B market cap · ~C$28/share · 52-wk: C$4.90–31.78</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The most direct publicly traded exposure to the germanium thesis. FY 2025 revenue $391M (+35%), earnings $50.6M (+245%), EPS beating estimates by 100%+ consistently. The US government has funded their germanium capacity twice: $14.4M from DoD in April 2024 and $18.1M in January 2026, both targeting the St. George, Utah facility. Added to the S&amp;P/TSX Composite in December 2025. Six analysts rate Strong Buy, average target C$31.94.</p>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The question is whether the 5x re-rating already prices in the thesis. The near-term catalysts — government funding, capacity expansion, germanium price appreciation — are now well-known. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>The next leg depends on whether 5N Plus can expand beyond space solar cell substrates into larger germanium markets</strong>: fiber optics–grade materials, broader defense applications, or toll processing for Blue Moon&apos;s Apex mine output, which is located 23 km from their St. George facility. That proximity is not accidental.</p>
+                    </div>
+
+                    <hr style={{ border: 'none', borderTop: '0.5px solid #F3F4F6', margin: '24px 0 0' }} />
+
+                    {/* Blue Moon Metals */}
+                    <div style={{ marginTop: '24px' }}>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>Blue Moon Metals</div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '10px' }}>TSXV: MOON / NASDAQ: BMM · Pre-revenue · Production target 2028</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Every other western germanium source is a zinc mine byproduct — production is tethered to zinc economics, not germanium demand. Blue Moon is building something structurally different: a mine where germanium and gallium are primary targets. They acquired the past-producing Apex mine in Utah from Teck (completed March 2026). Apex was the primary US germanium and gallium producer in the 1980s–90s, with a historical estimate of 1 million tonnes at 0.087% germanium, 0.033% gallium, 1.8% copper, and 41 g/t silver.</p>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The shareholder base signals institutional seriousness: Oaktree Capital, Hartree Partners (partner with the US government on the $12B critical metals stockpile initiative), Teck (8% stake), Wheaton Precious Metals, Altius Minerals, Baker Steel. They&apos;re building a &ldquo;hub and spoke&rdquo; platform — Apex for germanium/gallium, Blue Moon Mine in California for zinc (concentrates to Teck&apos;s Trail smelter), and the Springer complex in Nevada as the central processing hub. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>If Apex reaches production in 2028, it becomes the first dedicated germanium mine in the western hemisphere during a structural shortage.</strong> Very early stage — pure optionality with meaningful execution risk.</p>
+                    </div>
+
+                    <hr style={{ border: 'none', borderTop: '0.5px solid #F3F4F6', margin: '24px 0 0' }} />
+
+                    {/* LightPath Technologies */}
+                    <div style={{ marginTop: '24px' }}>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>LightPath Technologies</div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '10px' }}>NASDAQ: LPTH · ~$660–750M market cap · ~$11/share · 345 employees</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>LightPath&apos;s CEO has stated the strategy explicitly: &ldquo;convert the market&apos;s Germanium supply chain angst into BlackDiamond-based camera sales.&rdquo; Their proprietary BlackDiamond chalcogenide glass, developed with the US Naval Research Lab, replaces germanium in IR optics — the second-largest end use at ~30% of consumption. Revenue is scaling fast: FQ2 2026 was $16.4M (+120% YoY), gross margin 37%, backlog $97.8M. They&apos;ve landed F-35 contracts, Navy SPEIR with L3Harris, $40M+ in IR camera orders, counter-UAS programs, and are bidding on a major Army missile program with Lockheed Martin.</p>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The structural tailwind is the FY 2026 NDAA, which mandates eliminating reliance on optical glass from certain foreign nations by January 1, 2030. That&apos;s a regulatory forcing function requiring defense primes to source germanium-free optics domestically. LightPath acquired G5 Infrared (camera systems) and Amorphous Materials (large-diameter glass melting capacity), raised $60M in equity in December 2025, and received an $8M strategic investment. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>Still unprofitable on a net basis but rapidly scaling toward breakeven. The germanium shortage is literally their business model</strong> — the longer it persists, the faster defense procurement shifts permanently to their materials. CNBC headline from January 2026: &ldquo;Russia, China control a key military metal. This company is solving U.S. problems.&rdquo;</p>
+                    </div>
+                  </div>
+
+                  {/* AI-powered deposit discovery */}
+                  <div style={{ marginTop: '28px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '12px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>AI-powered deposit discovery</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.75, marginBottom: '12px' }}>You can&apos;t explore for germanium directly — it only exists as a trace element in zinc and coal deposits. But AI is compressing how fast we find those host deposits and assess their germanium potential. These companies aren&apos;t germanium-focused today, but their platforms apply directly to the problem. All are private.</p>
+
+                    {([
+                      { name: 'KoBold Metals', meta: 'Private · Berkeley, CA · $2.96B valuation · Series C ($537M, Jan 2025) · Total raised >$1B', text: 'The most well-funded AI-driven mineral exploration company in the world. Backed by Gates (Breakthrough Energy Ventures), Bezos, Andreessen Horowitz, T. Rowe Price, Mitsubishi, BHP, Rio Tinto. Uses proprietary platforms TerraShed and Machine Prospector to analyze 100+ years of geological data with ML. 60+ active projects across 4 continents. Discovered one of the highest-grade copper deposits in a century in Zambia. Plans to IPO in 3–5 years. Not targeting germanium today but their platform applies to any mineral system — including identifying zinc deposits with germanium potential. Their mandate is to "expand and diversify the global supply of critical resources" and germanium is on the USGS critical minerals list.' },
+                      { name: 'Earth AI', meta: 'Private · Sydney, Australia', text: 'Combines AI-driven predictive analytics with proprietary drilling hardware — most exploration companies identify targets, Earth AI also drills them. Achieved a 75% discovery success rate vs the traditional industry rate of less than 1%. Discovered new indium, nickel, and palladium reserves using the platform. Directly applicable to zinc/germanium exploration. The combination of AI target selection and integrated drilling compresses the discovery timeline significantly.' },
+                      { name: 'HyperSpectral', meta: 'Private · US-based · DARPA contractor', text: 'Has a DARPA research agreement specifically for germanium detection — the most directly germanium-relevant exploration technology in development. Uses satellite and drone hyperspectral data to identify mineral signatures from the air, potentially mapping germanium-bearing deposits without ground surveys. Very early stage but backed by defense interest in securing domestic critical mineral supply.' },
+                    ] as { name: string; meta: string; text: string }[]).map((item, i) => (
+                      <div key={i} style={{ marginTop: '16px', paddingLeft: '16px', borderLeft: '1.5px solid #E5E7EB' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>{item.name}</div>
+                        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8.5px', color: '#9CA3AF', marginBottom: '6px' }}>{item.meta}</div>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.65, marginBottom: '8px' }}>{item.text}</p>
+                      </div>
+                    ))}
+
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginTop: '12px' }}>The fundamental limitation across all exploration technologies: AI compresses the discovery phase from years to months, but US permitting timelines are still 10–15 years from discovery to production. These companies reshape the supply map by 2035+, not 2026. Worth tracking for long-term positioning but not a solution to the current shortage.</p>
+                  </div>
+
+                  {/* Recovery rate optimization */}
+                  <div style={{ marginTop: '28px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '12px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Recovery rate optimization</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.75, marginBottom: '12px' }}>Approximately 12,000 tonnes of germanium flows through zinc smelters and coal plants annually. Only ~220 tonnes is captured — a 2% recovery rate. Lab results have demonstrated 73.8% recovery using high-pressure acid leaching and 80%+ using bio-inspired siderophore extraction. The technology to dramatically improve yields exists. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>At $7,000+/kg, each percentage point of recovery improvement from the global smelter base represents ~120 tonnes worth ~$840M+.</strong></p>
+
+                    {([
+                      { name: 'Novotech', meta: 'Private · Chatsworth, CA', text: 'The most specialized germanium recycler in North America outside Umicore. Qualified by the US Department of the Navy and the Defense Contract Management Agency (DCMA) to reclaim germanium, including hazardous ThF4-coated military optics. Accepts germanium in virtually any form — broken optics, slurry, sputtering targets, solar panels, fiber optic waste, coating chamber residues. Converts scrap back to GeO₂, zone-refined bars, and evaporation-grade material. Small but occupies a critical niche in the domestic defense recycling chain.' },
+                      { name: 'Lattice Materials', meta: 'Private · Bozeman, Montana · DoD-funded', text: 'Received $18.5M from the US Department of Defense (announced September 2025, Defense Production Act) to expand optical-grade germanium crystal production. Produces germanium and silicon optics for defense IR systems. The third company alongside 5N Plus receiving direct DoD germanium funding — indicates the government is building a network of domestic processors.' },
+                      { name: 'The company that should exist', meta: 'Whitespace opportunity', text: 'No company today focuses on deploying germanium recovery optimization technology across zinc smelter facilities at scale. The model: offer smelters a turnkey germanium extraction upgrade — install and operate recovery equipment in exchange for a share of the recovered germanium, or a processing fee. Each zinc smelter has different residue chemistry, but the core extraction science (high-pressure acid leaching, hydrometallurgical separation) is proven at lab scale. The barrier was always economics — at $1,500/kg germanium, the payback period on facility upgrades was too long. At $7,000+/kg, the economics have fundamentally changed. A company that could increase average smelter recovery from 10% to even 20% would add ~1,200 tonnes of annual germanium supply — more than 5x current global production. This is the highest-leverage technical opportunity in the entire germanium landscape, and nobody is building it.' },
+                    ] as { name: string; meta: string; text: string }[]).map((item, i) => (
+                      <div key={i} style={{ marginTop: '16px', paddingLeft: '16px', borderLeft: '1.5px solid #E5E7EB' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>{item.name}</div>
+                        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8.5px', color: '#9CA3AF', marginBottom: '6px' }}>{item.meta}</div>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.65, marginBottom: '8px' }}>{item.text}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Physical germanium */}
+                  <div style={{ marginTop: '28px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '12px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Physical germanium</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.75, marginBottom: '12px' }}>Germanium has no futures market, no exchange-traded pricing mechanism, and no strategic government stockpile equivalent. All pricing is OTC. GeO₂ went from $940/kg in January 2024 to $7,000–8,600/kg by March 2026. A 4x spread persists between Chinese domestic (~$2,000/kg) and western pricing because export controls prevent arbitrage.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.75, marginBottom: '12px' }}>The November 27, 2026 expiration of China&apos;s ban suspension is a binary optionality event. If reimposed, western prices likely spike further. If extended, prices may moderate but won&apos;t collapse to Chinese levels because the trust deficit is permanent — the Umicore DRC deal, the Teck government talks, and the DoD grants all happened because of the controls and won&apos;t reverse. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>Physical accumulation of GeO₂ or germanium metal is the most direct commodity play but requires storage capability, sourcing relationships, and tolerance for illiquidity.</strong> This is how specialized commodity funds and trading houses position in structurally constrained minor metals markets.</p>
+                  </div>
+
+                  <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '10.5px', color: '#9CA3AF', fontStyle: 'italic', lineHeight: 1.5, marginTop: '24px', padding: '12px 14px', background: '#F9FAFB', borderRadius: '4px' }}>
+                    This analysis identifies areas of potential interest based on supply chain research. It is not a recommendation to buy, sell, or hold any security or commodity. All investments carry risk including potential loss of principal. Many companies profiled are early-stage, pre-revenue, or private and may not be accessible to all investors. Conduct independent due diligence before making any investment decisions.
+                  </div>
+
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Umicore FY 2025 results, Stimson Center (Apr 2025), 5N Plus FY 2025 results &amp; govt grants, Blue Moon Metals press releases (Feb–Mar 2026), Mining Weekly, LightPath Technologies SEC filings &amp; FQ1–FQ2 2026 results, NDAA FY2026, KoBold Metals Series C (Jan 2025), Fortune, TechCrunch, Earth AI (AZO Mining), HyperSpectral/DARPA (Undark Nov 2024), Novotech corporate, Lattice Materials DoD grant (Sep 2025), ScienceDirect recovery research (2025), Argus Media / Strategic Metals Invest pricing, WORLD7 model.
                   </div>
                 </div>
               </div>
