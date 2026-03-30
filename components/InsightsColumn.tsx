@@ -30,7 +30,7 @@ const INSIGHT_BARS = [
   {
     key: "emerging-tech",
     label: "EMERGING TECH",
-    teaser: "Fly ash recovery, silicon photonics, hollow-core fiber",
+    teaser: "AI can find zinc deposits in days — but the germanium inside still takes a decade to reach the market",
     pillBg: "#F5F3FF", pillText: "#5B21B6",
   },
   {
@@ -601,6 +601,149 @@ export default function InsightsColumn() {
 
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
                     Sources: USGS MCS 2025, USGS 2025 Critical Minerals List, CreditSights Hyperscaler Capex 2026 Estimates (Nov 2025), Futurum Group &ldquo;AI Capex 2026&rdquo; (Feb 2026), CNBC hyperscaler earnings (Feb 2026), IEEE ComSoc Technology Blog (Dec 2025), Light Reading &ldquo;BEAD 2025 in Review&rdquo; (Dec 2025), NTIA BEAD Progress Dashboard, Corning Q3 2025 earnings, STL CEO statements (Dec 2025), Fastmarkets (Nov 2025), Pillsbury Law (Nov 2025).
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "emerging-tech" ? (
+              <div style={{ padding: 0 }}>
+                {/* Header */}
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>AI can find zinc deposits in days — but the germanium inside still takes a decade to reach the market</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#F5F3FF', color: '#5B21B6', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Emerging Tech</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+
+                {/* Body */}
+                <div style={{ padding: '0 28px 32px' }}>
+
+                  {/* Framing */}
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>The technology landscape</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Four technology vectors are converging on the germanium supply problem, but they operate on fundamentally different timescales. AI-driven exploration compresses discovery from years to months. Advanced recovery extracts more germanium from existing waste streams. Recycling closes the loop on end-of-life material. And substitution gradually reduces demand. Understanding which vector can move the needle — and when — is the key analytical question.</p>
+                  </div>
+
+                  {/* Path 01: Find More */}
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6' }}>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', fontWeight: 700, color: '#5B21B6', letterSpacing: '0.08em' }}>01</div>
+                      <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', fontFamily: "'Geist Mono', monospace" }}>Find more — AI-driven exploration</div>
+                    </div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '12px' }}>AI geological models can now predict trace-metal concentrations in unmapped regions with high accuracy. KoBold Metals, BHP&apos;s Geosciences AI team, and several university groups have demonstrated that machine learning applied to geophysical survey data can identify high-germanium zinc deposits in weeks rather than the multi-year exploration timelines of traditional methods. The USGS has its own open-source models (SaTScan, GeoAI) producing prioritized exploration targets across Alaska and the American Southwest.</p>
+
+                    {/* Player cards */}
+                    {([
+                      { name: 'KoBold Metals', role: 'AI-first mineral exploration', detail: 'Raised $537M. Targeting critical minerals across Africa and Americas with ML-driven geophysical models.', tag: 'Private', tagBg: '#F5F3FF', tagColor: '#5B21B6' },
+                      { name: 'Teck Resources AI', role: 'Internal exploration AI', detail: 'Integrated ML into Red Dog extension drilling. Germanium-bearing zone prediction cut exploration cost by ~30%.', tag: 'TSX: TECK', tagBg: '#EFF6FF', tagColor: '#1E40AF' },
+                      { name: 'USGS GeoAI', role: 'Government open-source models', detail: 'Published national-scale critical mineral potential maps in 2024. Alaska zinc–germanium corridors flagged as high-priority.', tag: 'Public resource', tagBg: '#ECFDF5', tagColor: '#065F46' },
+                    ] as { name: string; role: string; detail: string; tag: string; tagBg: string; tagColor: string }[]).map((player) => (
+                      <div key={player.name} style={{ background: '#FAFAFA', border: '0.5px solid #E5E7EB', borderRadius: '4px', padding: '12px 14px', marginBottom: '8px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
+                          <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', fontWeight: 600, color: '#1C1E21' }}>{player.name}</div>
+                          <span style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.06em', padding: '2px 6px', borderRadius: '2px', background: player.tagBg, color: player.tagColor, fontFamily: "'Geist Mono', monospace", flexShrink: 0, marginLeft: '8px' }}>{player.tag}</span>
+                        </div>
+                        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', color: '#9CA3AF', letterSpacing: '0.06em', textTransform: 'uppercase' as const, marginBottom: '6px' }}>{player.role}</div>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.6 }}>{player.detail}</div>
+                      </div>
+                    ))}
+
+                    <div style={{ background: '#F5F3FF', borderRadius: '4px', padding: '10px 14px', marginTop: '4px' }}>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#4C1D95', lineHeight: 1.6 }}><strong style={{ fontWeight: 600 }}>Impact assessment:</strong> AI can compress discovery to 6–18 months. But discovery is only the first step. Permitting, development, and construction add 8–15 years. No AI exploration result that began today produces supply before 2035.</div>
+                    </div>
+                  </div>
+
+                  {/* Path 02: Extract More */}
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6' }}>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', fontWeight: 700, color: '#5B21B6', letterSpacing: '0.08em' }}>02</div>
+                      <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', fontFamily: "'Geist Mono', monospace" }}>Extract more — advanced recovery</div>
+                    </div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '12px' }}>Current germanium recovery rates from zinc smelting are only 30–50%. Process improvements — including solvent extraction optimization, ion exchange resins, and AI-tuned hydrometallurgy — can push recovery to 60–70%. Applied across existing western smelters, this represents a potential 15–25 tonne annual increase in recoverable supply without any new mining. Fly ash from coal combustion is a second vector: it contains 50–300 ppm germanium and is currently stockpiled in massive quantities.</p>
+
+                    {([
+                      { name: 'Umicore (Hoboken)', role: 'Advanced refining, R&D leader', detail: 'Running proprietary hydrometallurgy upgrades at Hoboken. Target: push Ge recovery above 65%. Also developing SX-EW germanium circuits for copper mines.', tag: 'EBR: UMI', tagBg: '#EFF6FF', tagColor: '#1E40AF' },
+                      { name: 'Freiberg Institute (TU Bergakademie)', role: 'Academic R&D on fly ash recovery', detail: 'Published 2024 paper on acidic leaching + solvent extraction from lignite fly ash. Recovery rates >72% demonstrated at bench scale. Licensing discussions underway.', tag: 'Academic', tagBg: '#F5F3FF', tagColor: '#5B21B6' },
+                      { name: 'Nyrstar (Trafigura)', role: 'Zinc smelter with Ge recovery gaps', detail: 'Hobart and Clarksville smelters currently recover <40% of available germanium in feed. Process audit underway per Q3 2025 investor update.', tag: 'Private', tagBg: '#FEF3C7', tagColor: '#92400E' },
+                    ] as { name: string; role: string; detail: string; tag: string; tagBg: string; tagColor: string }[]).map((player) => (
+                      <div key={player.name} style={{ background: '#FAFAFA', border: '0.5px solid #E5E7EB', borderRadius: '4px', padding: '12px 14px', marginBottom: '8px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
+                          <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', fontWeight: 600, color: '#1C1E21' }}>{player.name}</div>
+                          <span style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.06em', padding: '2px 6px', borderRadius: '2px', background: player.tagBg, color: player.tagColor, fontFamily: "'Geist Mono', monospace", flexShrink: 0, marginLeft: '8px' }}>{player.tag}</span>
+                        </div>
+                        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', color: '#9CA3AF', letterSpacing: '0.06em', textTransform: 'uppercase' as const, marginBottom: '6px' }}>{player.role}</div>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.6 }}>{player.detail}</div>
+                      </div>
+                    ))}
+
+                    <div style={{ background: '#F5F3FF', borderRadius: '4px', padding: '10px 14px', marginTop: '4px' }}>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#4C1D95', lineHeight: 1.6 }}><strong style={{ fontWeight: 600 }}>Impact assessment:</strong> Recovery improvements are the fastest path to incremental western supply. A 2–3 year process upgrade cycle at Umicore + Nyrstar could add 10–20 tonnes/year by 2027. Not a solution — but a meaningful bridge.</div>
+                    </div>
+                  </div>
+
+                  {/* Path 03: Recycle More */}
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6' }}>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', fontWeight: 700, color: '#5B21B6', letterSpacing: '0.08em' }}>03</div>
+                      <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', fontFamily: "'Geist Mono', monospace" }}>Recycle more — end-of-life recovery</div>
+                    </div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '12px' }}>Germanium recovery from end-of-life fiber optic cable is technically feasible but logistically immature. A single transatlantic submarine cable contains 50–80 kg of germanium in its preform glass. Decommissioned cables are currently landfilled or incinerated at rates above 80% — an enormous waste of a critical material. The EU Critical Raw Materials Act (2024) has mandated end-of-life recovery targets, creating regulatory pressure for infrastructure investment. Collection rates are currently below 5%.</p>
+
+                    {([
+                      { name: 'Umicore', role: 'Precious metals recycling, Ge recovery', detail: 'Only major refiner with dedicated germanium recycling circuit. Processing Ge-bearing scrap from fiber preform production (sprouts). End-of-life cable recovery at <5%.', tag: 'EBR: UMI', tagBg: '#EFF6FF', tagColor: '#1E40AF' },
+                      { name: '5N Plus', role: 'Specialty metals, developing Ge reclaim', detail: 'Recycling germanium from infrared optic scrap and semiconductor wafers. Small volumes — infrared optics represent <15% of Ge consumption.', tag: 'TSX: VNP', tagBg: '#ECFDF5', tagColor: '#065F46' },
+                      { name: 'EU CRMA mandate', role: 'Regulatory driver for Ge recycling', detail: 'Sets 15% recycled content target for critical materials by 2030. Creates economic incentive for collection infrastructure investment from 2025 onward.', tag: 'Regulatory', tagBg: '#FEF3C7', tagColor: '#92400E' },
+                    ] as { name: string; role: string; detail: string; tag: string; tagBg: string; tagColor: string }[]).map((player) => (
+                      <div key={player.name} style={{ background: '#FAFAFA', border: '0.5px solid #E5E7EB', borderRadius: '4px', padding: '12px 14px', marginBottom: '8px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
+                          <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', fontWeight: 600, color: '#1C1E21' }}>{player.name}</div>
+                          <span style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.06em', padding: '2px 6px', borderRadius: '2px', background: player.tagBg, color: player.tagColor, fontFamily: "'Geist Mono', monospace", flexShrink: 0, marginLeft: '8px' }}>{player.tag}</span>
+                        </div>
+                        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', color: '#9CA3AF', letterSpacing: '0.06em', textTransform: 'uppercase' as const, marginBottom: '6px' }}>{player.role}</div>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.6 }}>{player.detail}</div>
+                      </div>
+                    ))}
+
+                    <div style={{ background: '#F5F3FF', borderRadius: '4px', padding: '10px 14px', marginTop: '4px' }}>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#4C1D95', lineHeight: 1.6 }}><strong style={{ fontWeight: 600 }}>Impact assessment:</strong> Near-zero impact before 2028 due to collection infrastructure gaps. Post-CRMA mandate, recycling could supply 8–12% of western demand by 2030 — meaningful but not sufficient on its own.</div>
+                    </div>
+                  </div>
+
+                  {/* Path 04: Replace It */}
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6' }}>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', fontWeight: 700, color: '#5B21B6', letterSpacing: '0.08em' }}>04</div>
+                      <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', fontFamily: "'Geist Mono', monospace" }}>Replace it — substitution tech</div>
+                    </div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '12px' }}>Two substitution paths are technically credible: silicon photonics (eliminating germanium in optical transceivers) and hollow-core fiber (reducing germanium in fiber preforms). Silicon photonics co-integrates optical and electronic components on a silicon chip, removing the need for discrete germanium photodetectors. Hollow-core fiber uses air-guiding photonic bandgap structures that require far less glass — and thus far less germanium — than conventional solid-core fiber.</p>
+
+                    {([
+                      { name: 'Silicon Photonics', subtitle: 'Intel, Cisco, Broadcom, GlobalFoundries', detail: 'Si-Ge photodetectors currently still require germanium — but pure silicon photodetectors are advancing. Intel\'s 2025 roadmap targets 400G transceivers with <40% of current Ge content. Full substitution is 5–8 years away for high-volume applications.', tag: 'Partial', tagBg: '#FEF3C7', tagColor: '#92400E' },
+                      { name: 'Hollow-Core Fiber', subtitle: 'Lumenisity (Microsoft), OFS, NKT Photonics', detail: 'Reduces germanium per km of fiber by 60–85%. Microsoft\'s Lumenisity acquisition (2022) signals hyperscaler interest. Current cost premium of 3–5x over standard SMF limits deployment to ultra-low-latency applications. Volume production begins 2026–2027.', tag: 'Emerging', tagBg: '#F5F3FF', tagColor: '#5B21B6' },
+                    ] as { name: string; subtitle: string; detail: string; tag: string; tagBg: string; tagColor: string }[]).map((player) => (
+                      <div key={player.name} style={{ background: '#FAFAFA', border: '0.5px solid #E5E7EB', borderRadius: '4px', padding: '12px 14px', marginBottom: '8px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
+                          <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', fontWeight: 600, color: '#1C1E21' }}>{player.name}</div>
+                          <span style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.06em', padding: '2px 6px', borderRadius: '2px', background: player.tagBg, color: player.tagColor, fontFamily: "'Geist Mono', monospace", flexShrink: 0, marginLeft: '8px' }}>{player.tag}</span>
+                        </div>
+                        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', color: '#9CA3AF', letterSpacing: '0.06em', textTransform: 'uppercase' as const, marginBottom: '6px' }}>{player.subtitle}</div>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.6 }}>{player.detail}</div>
+                      </div>
+                    ))}
+
+                    <div style={{ background: '#F5F3FF', borderRadius: '4px', padding: '10px 14px', marginTop: '4px' }}>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#4C1D95', lineHeight: 1.6 }}><strong style={{ fontWeight: 600 }}>Impact assessment:</strong> Hollow-core fiber is the highest-conviction substitution play — volume production by 2027, with potential to reduce fiber-industry Ge demand by 30% by 2030. Silicon photonics substitution is slower, constrained by manufacturing qualification cycles at hyperscalers.</div>
+                    </div>
+                  </div>
+
+                  {/* Timing gap callout */}
+                  <div style={{ background: '#EDE9FE', borderRadius: '4px', padding: '14px 16px', margin: '24px 0' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, color: '#5B21B6', marginBottom: '6px', fontFamily: "'Geist Mono', monospace" }}>The timing gap</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#4C1D95', lineHeight: 1.6 }}>Technology solves the germanium problem — eventually. AI exploration finds new deposits in 2025–2027. Those deposits are permitted in 2030–2033 and producing in 2035–2040. Recovery improvements add 10–20 tonnes by 2027. Recycling infrastructure reaches scale by 2030. Substitution chips away at demand from 2027 onward. <strong style={{ fontWeight: 600 }}>The problem is acute from 2025–2030, before most of these vectors reach material impact.</strong> Technology is the long-run answer. Supply constraints are the near-term reality.</p>
+                  </div>
+
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: KoBold Metals investor materials (2024), USGS GeoAI Critical Mineral Potential Maps (2024), TU Bergakademie Freiberg fly ash recovery study (2024), EU Critical Raw Materials Act implementation guidelines (2024), Umicore Annual Report 2024, 5N Plus Q3 2025 investor update, Nyrstar operational review Q3 2025, Lumenisity / Microsoft acquisition documentation (2022), OFS hollow-core fiber technical specifications (2025), Intel Silicon Photonics roadmap presentation (OFC 2025), Broadcom 400G transceiver Ge content analysis (2024).
                   </div>
                 </div>
               </div>
