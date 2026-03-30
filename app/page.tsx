@@ -289,8 +289,6 @@ export default function Home() {
       width: "100%",
       minHeight: "100vh",
       background: appState > 0 ? "#1A1917" : "var(--bg)",
-      paddingTop: appState > 0 ? TOP_BAR_H : 0,
-      position: "relative",
     }}>
 
       {/* Grain overlay */}
@@ -313,7 +311,7 @@ export default function Home() {
       {/* ── ACTIVE STATES (1–4) ──────────────────────────────────── */}
       {appState > 0 && (
         <>
-          {/* Fixed top bar */}
+          {/* Nav bar — fixed at top */}
           <TopBarV2
             selection={sel}
             activeState={appState}
@@ -329,46 +327,47 @@ export default function Home() {
             docId={`GE-${appState === 1 ? "RAW" : appState === 2 ? "COMP" : appState === 3 ? "SUB" : "EU"}-001 · PROPRIETARY`}
           />
 
-          {/* Main content + sidebar — normal flow, no height constraint */}
-          <div style={{ display: "flex", alignItems: "flex-start" }}>
+          {/* Page grid: left content | right sidebar — both scroll together */}
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: `1fr ${SIDEBAR_W}px`,
+            minHeight: "100vh",
+            paddingTop: TOP_BAR_H,
+          }}>
 
-            {/* Left column: thesis block + map */}
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
+            {/* ── LEFT COLUMN: thesis → map → tree → status ── */}
+            <div>
 
-              {/* ── THESIS BLOCK ── */}
+              {/* THESIS BLOCK */}
               {currentThesis && (
-                <div style={{
-                  background: "#3A3835",
-                  padding: 24,
-                  flexShrink: 0,
-                }}>
+                <div style={{ background: "#3A3835", padding: "32px 36px 36px" }}>
                   <div style={{
                     fontFamily: "'Geist Mono', 'Courier New', monospace",
                     fontSize: 6,
                     letterSpacing: "0.12em",
                     textTransform: "uppercase",
                     color: "rgba(255,255,255,0.2)",
-                    marginBottom: 10,
+                    marginBottom: 12,
                   }}>
                     {currentPageTitle}
                   </div>
                   <div style={{
                     fontFamily: "Inter, -apple-system, sans-serif",
-                    fontSize: 17,
+                    fontSize: 23,
                     fontWeight: 500,
                     color: "rgba(255,255,255,0.9)",
-                    lineHeight: 1.3,
-                    marginBottom: 12,
+                    lineHeight: 1.25,
+                    marginBottom: 16,
                   }}>
                     {chainLabel}
                   </div>
                   <div style={{
                     fontFamily: "Inter, -apple-system, sans-serif",
-                    fontSize: 12,
+                    fontSize: 14,
                     color: "rgba(255,255,255,0.35)",
-                    lineHeight: 1.7,
-                    maxWidth: 580,
-                    marginBottom: 14,
+                    lineHeight: 1.75,
+                    maxWidth: 700,
+                    marginBottom: 18,
                   }}>
                     {currentThesis}
                   </div>
@@ -386,7 +385,7 @@ export default function Home() {
                       padding: 0,
                       transition: "opacity 0.15s",
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
                     onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
                   >
                     Read Full Analysis →
@@ -394,12 +393,12 @@ export default function Home() {
                 </div>
               )}
 
-              {/* ── MAP SECTION ── */}
+              {/* MAP SECTION */}
               <div style={{
-                height: "55vh",
+                height: "70vh",
+                minHeight: 500,
                 position: "relative",
                 background: "#3A3835",
-                overflow: "hidden",
               }}>
                 <SupplyChainMap
                   chainState={appState as 1|2|3|4}
@@ -435,71 +434,70 @@ export default function Home() {
                 </button>
               </div>
 
+              {/* TREE SECTION */}
+              {!treeCollapsed && (
+                <div>
+                  <div style={{
+                    padding: "16px 36px",
+                    background: "#1A1917",
+                    borderTop: "0.5px solid rgba(255,255,255,0.06)",
+                    borderBottom: "0.5px solid rgba(255,255,255,0.06)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}>
+                    <div style={{
+                      fontFamily: "'Geist Mono', monospace",
+                      fontSize: 11,
+                      fontWeight: 500,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: "rgba(255,255,255,0.35)",
+                    }}>
+                      {supplyMapLabel}
+                    </div>
+                    <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+                      {([
+                        appState === 1 ? "~220 t/yr" : appState === 2 ? "~88 t Ge to fiber" : appState === 3 ? "~3–4M route-km/yr" : "~130–140 hyperscale DCs/yr",
+                        appState === 1 ? "$320M market" : appState === 2 ? "~500M fiber-km/yr" : appState === 3 ? ">30M cable-km/yr" : "~230M fiber-km/yr",
+                        appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : appState === 3 ? "71% hyperscaler owned" : "~115t Ge/yr",
+                      ] as string[]).map((stat, i, arr) => (
+                        <React.Fragment key={i}>
+                          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{stat}</span>
+                          {i < arr.length - 1 && <div style={{ width: 1, height: 8, background: "rgba(255,255,255,0.1)" }} />}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
+                  <TreeMap
+                    geometry={geometry}
+                    nodes={NODES}
+                    layerConfig={CHAINS.layerConfig}
+                    svgWidth={svgWidth}
+                    scrollY={scrollY}
+                    onNodeHover={handleNodeHover}
+                    onNodeLeave={handleNodeLeave}
+                    onNodeClick={handleNodeClick}
+                    onLayerClick={() => {}}
+                    layerPanels={getLayerPanels(appState)}
+                  />
+                </div>
+              )}
+
+              {/* STATUS BAR */}
+              <StatusBar />
+
             </div>{/* end left column */}
 
-            {/* Sidebar — scrolls with page */}
+            {/* ── RIGHT SIDEBAR — scrolls with page ── */}
             <div style={{
-              width: SIDEBAR_W,
-              flexShrink: 0,
               background: "#F5F3EE",
               borderLeft: "0.5px solid #DDD9D2",
             }}>
               <SidebarPanel />
             </div>
 
-          </div>{/* end flex row */}
-
-          {/* ── Tree section — full width, normal flow ── */}
-          {!treeCollapsed && (
-            <div style={{ width: "100%" }}>
-              <div style={{
-                padding: "16px 48px",
-                background: "#1A1917",
-                borderTop: "0.5px solid rgba(255,255,255,0.06)",
-                borderBottom: "0.5px solid rgba(255,255,255,0.06)",
-              }}>
-                <div style={{ maxWidth: 1140, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{
-                    fontFamily: "'Geist Mono', monospace",
-                    fontSize: 11,
-                    fontWeight: 500,
-                    letterSpacing: "0.14em",
-                    textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.35)",
-                  }}>
-                    {supplyMapLabel}
-                  </div>
-                  <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-                    {([
-                      appState === 1 ? "~220 t/yr" : appState === 2 ? "~88 t Ge to fiber" : appState === 3 ? "~3–4M route-km/yr" : "~130–140 hyperscale DCs/yr",
-                      appState === 1 ? "$320M market" : appState === 2 ? "~500M fiber-km/yr" : appState === 3 ? ">30M cable-km/yr" : "~230M fiber-km/yr",
-                      appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : appState === 3 ? "71% hyperscaler owned" : "~115t Ge/yr",
-                    ] as string[]).map((stat, i, arr) => (
-                      <React.Fragment key={i}>
-                        <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{stat}</span>
-                        {i < arr.length - 1 && <div style={{ width: 1, height: 8, background: "rgba(255,255,255,0.1)" }} />}
-                      </React.Fragment>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <TreeMap
-                geometry={geometry}
-                nodes={NODES}
-                layerConfig={CHAINS.layerConfig}
-                svgWidth={svgWidth}
-                scrollY={scrollY}
-                onNodeHover={handleNodeHover}
-                onNodeLeave={handleNodeLeave}
-                onNodeClick={handleNodeClick}
-                onLayerClick={() => {}}
-                layerPanels={getLayerPanels(appState)}
-              />
-            </div>
-          )}
-
-          {/* Status bar — bottom of page */}
-          <StatusBar />
+          </div>{/* end grid */}
         </>
       )}
 
