@@ -24,7 +24,7 @@ const INSIGHT_BARS = [
   {
     key: "catalysts",
     label: "CATALYSTS",
-    teaser: "BEAD fiber buildout, defense stockpiling, DRC ramp-up",
+    teaser: "$600B in hyperscaler capex, a ticking export ban clock, and BEAD construction all converge in 2026",
     pillBg: "#ECFDF5", pillText: "#065F46",
   },
   {
@@ -520,6 +520,87 @@ export default function InsightsColumn() {
 
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
                     Sources: USGS Mineral Commodity Summaries 2025, China MOFCOM Announcements No. 23 (2023), No. 46 (2024), No. 72 (2025), Stimson Center &ldquo;China&apos;s Germanium and Gallium Export Restrictions&rdquo; April 2025, ORF America &ldquo;China&apos;s Critical Mineral Export Controls&rdquo; May 2025, CNBC November 2025, Fastmarkets November 2025, Reuters November 2025, Pillsbury Law November 2025, The Oregon Group November 2025, Global Trade Alert 2023–2025.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "catalysts" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '8px' }}>$600B in hyperscaler capex, a ticking export ban clock, and BEAD construction all converge in 2026</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '3px 8px', borderRadius: '3px', background: '#ECFDF5', color: '#065F46', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Catalysts</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Overview</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Catalysts are specific, dateable events that could materially shift germanium supply-demand dynamics. Unlike structural constraints (permanent) or geopolitical risk (policy-driven), these are watchable triggers — each with a timeline and a probability. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>2026 is the convergence year</strong> where multiple tightening catalysts hit simultaneously.</p>
+                  </div>
+
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', borderRadius: '3px', fontSize: '8px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '14px', background: '#FEF2F2', color: '#991B1B', fontFamily: "'Geist Mono', monospace" }}>Tightening — making the shortage worse</div>
+
+                    {([
+                      { num: '01', title: 'China export ban suspension expires', date: 'Nov 27, 2026', dateColor: 'red', body: 'The single most important near-term catalyst. China suspended the US export ban as part of a trade truce following the Trump-Xi meeting in Busan. After November 27, 2026, Beijing can reimpose with a single announcement. The broader MOFCOM licensing regime remains in force. The military end-use ban remains active. This is a countdown, not a resolution.', stat: null as string | null },
+                      { num: '02', title: 'Hyperscaler AI capex hits $600B+', date: '2026', dateColor: 'red', body: 'The Big Five (Amazon, Alphabet, Microsoft, Meta, Oracle) are projected to spend over $600 billion on infrastructure in 2026 — a 36% increase from 2025. ~75% ($450B) targets AI infrastructure. Amazon alone targets $200B. AI data centers require 10–36x more fiber than traditional facilities. Every dollar translates into fiber demand which translates into germanium consumption.', stat: 'Amazon $200B · Alphabet $175–185B · Meta $115–135B · Microsoft $120B+ · Oracle $50B' as string | null },
+                      { num: '03', title: 'BEAD fiber construction begins at scale', date: '2026–2030', dateColor: 'amber', body: 'The $42.5B federal broadband program is transitioning from planning to construction. 32 of 56 state plans approved as of late 2025. The Trump administration shifted from fiber-first to technology-neutral in June 2025, slowing some timelines — but fiber still dominates (Louisiana: 80% fiber, Texas: $3.3B largest allocation). When BEAD ramps, it pulls on the same germanium-dependent fiber supply chain that AI datacenters are already straining.', stat: '$42.5B total · 32/56 states approved · construction starts early 2026' as string | null },
+                      { num: '04', title: 'Defense stockpiling acceleration', date: 'Ongoing', dateColor: 'amber', body: 'DoD awarded $14.4M in April 2024 under the Defense Production Act for germanium wafer capacity in Utah. USGS classified germanium among the highest-risk critical minerals in the 2025 list. Further DPA funding allocations are likely. Each government purchase removes tonnes from the commercial market.', stat: null as string | null },
+                      { num: '05', title: 'Controls extend to EU/Japan buyers', date: 'Plausible', dateColor: 'amber', body: 'During the licensing period, Chinese exports redirected: Belgium 33%, Germany 32%, Japan 6%. These are the remaining indirect channels for western buyers. If China-US relations deteriorate and Beijing extends restrictions, the last supply channels collapse. China has already applied controls to 17 mineral commodities — the infrastructure exists.', stat: null as string | null },
+                    ]).map((cat, i) => (
+                      <div key={i} style={{ padding: '16px 18px', background: '#fff', border: '0.5px solid #E5E7EB', borderRadius: '6px', marginBottom: '12px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                          <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', flex: 1 }}>
+                            <div style={{ fontSize: '10px', fontWeight: 600, color: '#991B1B', minWidth: '18px', fontFamily: "'Geist Mono', monospace" }}>{cat.num}</div>
+                            <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35 }}>{cat.title}</div>
+                          </div>
+                          <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.05em', padding: '3px 8px', borderRadius: '3px', whiteSpace: 'nowrap' as const, marginLeft: '8px', flexShrink: 0, fontFamily: "'Geist Mono', monospace",
+                            background: cat.dateColor === 'red' ? '#FEF2F2' : '#FEF3C7',
+                            color: cat.dateColor === 'red' ? '#991B1B' : '#92400E',
+                          }}>{cat.date}</div>
+                        </div>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.6, paddingLeft: '26px' }}>{cat.body}</div>
+                        {cat.stat && <div style={{ display: 'inline-block', background: '#F3F4F6', borderRadius: '3px', padding: '2px 8px', fontSize: '9px', fontWeight: 600, color: '#1C1E21', marginTop: '6px', marginLeft: '26px', fontFamily: "'Geist Mono', monospace" }}>{cat.stat}</div>}
+                      </div>
+                    ))}
+                  </div>
+
+                  <hr style={{ border: 'none', borderTop: '0.5px solid #E5E7EB', margin: '24px 0' }} />
+
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', borderRadius: '3px', fontSize: '8px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '14px', background: '#ECFDF5', color: '#065F46', fontFamily: "'Geist Mono', monospace" }}>Easing — could relieve pressure</div>
+
+                    {([
+                      { num: '06', title: 'DRC/Umicore reaches production scale', date: '2027–2029', dateColor: 'green', body: 'The Umicore-STL partnership at Big Hill tailings holds 700+ tonnes of Ge potential. First shipment confirmed October 2024. Facilitated by the Minerals Security Partnership (14 nations + EU). Could add 10–20t/yr of new western primary supply within 3–5 years. The most important easing catalyst — but DRC operating environment adds significant execution risk.' },
+                      { num: '07', title: 'Teck Resources government-backed expansion', date: 'Timeline unclear', dateColor: 'blue', body: 'Teck in active discussions with US and Canadian governments to expand germanium recovery from zinc operations. Blue Moon Metals acquired the Apex mine in Utah from Teck — movement in western Ge production. Government backing through DPA or Canadian critical minerals programs could accelerate. Volumes and timeline undisclosed.' },
+                      { num: '08', title: 'Nyrstar Clarksville $150M Ge/Ga facility', date: 'Stalled', dateColor: 'blue', body: 'Before suspending Tennessee mining operations in late 2024, Nyrstar proposed a $150M facility at their Clarksville zinc smelter to recover germanium and gallium. Would provide a second US processing pathway. Currently stalled but not dead — likely requires government funding to restart.' },
+                      { num: '09', title: 'Hollow-core fiber commercialization', date: '2028–2030', dateColor: 'green', body: 'Eliminates germanium entirely — light travels through air, not germanium-doped glass. Microsoft acquired Lumenisity in 2022 and is deploying in specific datacenter applications. Still early, expensive, limited to short-reach. If it reaches cost parity for datacenter use within 5–7 years, it could reduce Ge demand from the largest consumption segment. Most credible long-term technology threat to the supply thesis.' },
+                      { num: '10', title: 'China-US trade normalization', date: 'Conditional', dateColor: 'blue', body: "The November 2025 suspension proves normalization is possible. If it becomes permanent or China fully lifts the licensing regime, western-accessible supply roughly doubles overnight. However, rare earth precedent (imposed 2010, relaxed 2015) shows buyers diversify permanently. The structural damage to trust is irreversible even if the policy reverses." },
+                    ]).map((cat, i) => (
+                      <div key={i} style={{ padding: '16px 18px', background: '#fff', border: '0.5px solid #E5E7EB', borderRadius: '6px', marginBottom: '12px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                          <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', flex: 1 }}>
+                            <div style={{ fontSize: '10px', fontWeight: 600, color: '#065F46', minWidth: '18px', fontFamily: "'Geist Mono', monospace" }}>{cat.num}</div>
+                            <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35 }}>{cat.title}</div>
+                          </div>
+                          <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.05em', padding: '3px 8px', borderRadius: '3px', whiteSpace: 'nowrap' as const, marginLeft: '8px', flexShrink: 0, fontFamily: "'Geist Mono', monospace",
+                            background: cat.dateColor === 'green' ? '#ECFDF5' : '#EFF6FF',
+                            color: cat.dateColor === 'green' ? '#065F46' : '#1E40AF',
+                          }}>{cat.date}</div>
+                        </div>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.6, paddingLeft: '26px' }}>{cat.body}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ background: '#FEF2F2', borderRadius: '4px', padding: '14px 16px', margin: '20px 0' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#991B1B', marginBottom: '6px', fontFamily: "'Geist Mono', monospace" }}>The convergence problem</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#7F1D1D', lineHeight: 1.6 }}>2026 is the year where multiple demand catalysts converge: $600B+ in hyperscaler AI capex, BEAD fiber construction at scale, continued defense stockpiling — all hitting a supply base fixed at 65–85 tonnes of western-accessible germanium. <strong>The easing catalysts (DRC scale-up, Teck expansion, hollow-core fiber) are all 2–5 years from material impact.</strong> The tightening happens now. The relief arrives later. The gap between them is where the shortage becomes acute.</p>
+                  </div>
+
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: USGS MCS 2025, USGS 2025 Critical Minerals List, CreditSights Hyperscaler Capex 2026 Estimates (Nov 2025), Futurum Group &ldquo;AI Capex 2026&rdquo; (Feb 2026), CNBC hyperscaler earnings (Feb 2026), IEEE ComSoc Technology Blog (Dec 2025), Light Reading &ldquo;BEAD 2025 in Review&rdquo; (Dec 2025), NTIA BEAD Progress Dashboard, Corning Q3 2025 earnings, STL CEO statements (Dec 2025), Fastmarkets (Nov 2025), Pillsbury Law (Nov 2025).
                   </div>
                 </div>
               </div>
