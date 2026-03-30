@@ -331,7 +331,6 @@ export default function Home() {
           <div style={{
             display: "grid",
             gridTemplateColumns: `1fr ${SIDEBAR_W}px`,
-            minHeight: "100vh",
             paddingTop: TOP_BAR_H,
           }}>
 
@@ -434,9 +433,9 @@ export default function Home() {
                 </button>
               </div>
 
-              {/* TREE SECTION */}
+              {/* TREE SECTION — explicit minHeight so fixed SVG overlay has scroll distance */}
               {!treeCollapsed && (
-                <div>
+                <div style={{ minHeight: bandHeight }}>
                   <div style={{
                     padding: "16px 36px",
                     background: "#1A1917",

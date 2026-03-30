@@ -69,6 +69,9 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
     }
 
     const contentG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    // Prevent child SVG elements from capturing wheel/scroll events.
+    // Individual node groups re-enable pointer-events for click/hover.
+    contentG.setAttribute("pointer-events", "none");
     contentGroupRef.current = contentG;
     const NS = "http://www.w3.org/2000/svg";
 
@@ -152,6 +155,7 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       nodeColorOverride?: string,
     ) {
       const g = document.createElementNS(NS, "g");
+      g.setAttribute("pointer-events", "all");
       g.style.cursor = "pointer";
       g.style.transition = "opacity 0.15s ease";
 
