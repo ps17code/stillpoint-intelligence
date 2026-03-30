@@ -12,7 +12,7 @@ const INSIGHT_BARS = [
   {
     key: "bottlenecks",
     label: "BOTTLENECKS",
-    teaser: "Single-source refining, 17% recycling ceiling, Red Dog closure",
+    teaser: "One facility in Belgium stands between western industry and a germanium blackout",
     pillBg: "#FEF2F2", pillText: "#991B1B",
   },
   {
@@ -333,6 +333,111 @@ export default function InsightsColumn() {
                     Sources: USGS Mineral Commodity Summaries 2025 (Amy C. Tolcin), USGS Minerals Yearbook 2023 — Germanium, Yunnan Chihong Zinc &amp; Germanium Co. 2023 Annual Report, RFC Ambrian Germanium Commodity Report April 2025, Umicore Integrated Annual Report 2023, Umicore EU CRM Act press release, Gécamines press release October 2024, Corning Q3 2025 earnings / John McGirr statements, STL CEO Rahul Puri statements December 2025, Argus Media Non-Ferrous Markets pricing, Light Reading January 2026, WORLD7 Integrated Assessment Model (Springer, December 2024).
                   </div>
 
+                </div>
+              </div>
+            ) : activePopup === "bottlenecks" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '8px' }}>One facility in Belgium stands between western industry and a germanium blackout</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '3px 8px', borderRadius: '3px', background: '#FEF2F2', color: '#991B1B', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Bottlenecks</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+
+                <div style={{ padding: '0 28px 32px' }}>
+
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Overview</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Supply constraints explain why germanium supply can&apos;t grow. Bottlenecks answer a different question: <strong style={{ fontWeight: 600, color: '#1C1E21' }}>where does the existing supply chain break if a single node fails?</strong> These are the physical chokepoints — places where the entire flow narrows to one facility, one company, one route, or one relationship. The germanium raw material layer has five.</p>
+                  </div>
+
+                  {([
+                    {
+                      num: '01',
+                      title: 'Umicore — sole western refiner at scale',
+                      subtitle: 'Olen, Belgium · ~40–50t/yr · >50% from recycling',
+                      body: "Every meaningful volume of western germanium flows through Umicore. Their Olen facility is the only non-Chinese, non-Russian operation capable of refining germanium at 40–50 tonnes per year. They supply the majority of western optical fiber manufacturers with GeCl₄. They're also the dominant western recycler, processing several thousand tonnes of germanium-containing waste streams annually.",
+                      body2: "If Olen goes offline — a regulatory issue, a fire, a feedstock disruption, a labor action — there is no alternative at comparable scale. 5N Plus and PPM Pure Metals exist but operate at roughly a third of Umicore's volume and focus on specialty products rather than bulk fiber-grade supply. Umicore is not just a major player — they are the western germanium supply chain.",
+                      stat: null as string | null,
+                      severity: 95,
+                      severityLabel: 'Critical',
+                    },
+                    {
+                      num: '02',
+                      title: 'Yunnan Chihong — 30% of global supply from one company',
+                      subtitle: 'Qujing, Yunnan Province, China · 65.9t produced in 2023 · 60t/yr capacity',
+                      body: "Even inside China's dominant position, production is concentrated in two companies. Yunnan Chihong alone produced 65.9 tonnes of germanium in products in 2023 — roughly 30% of the entire world's supply from a single entity. Their Huize zinc mine is the primary feedstock source.",
+                      body2: 'When Chihong announced a "deep safety system optimization project" at Huize in late 2024, their Q1 2025 zinc concentrate production dropped by 17,400 tonnes of metal content. Because germanium is a byproduct, germanium output drops in lockstep. A production decision at one Chinese company about one zinc mine ripples through nearly a third of global germanium supply.',
+                      stat: 'Q1 2025 impact: zinc output down 17,400t metal content YoY' as string | null,
+                      severity: 85,
+                      severityLabel: 'High',
+                    },
+                    {
+                      num: '03',
+                      title: 'Red Dog → Canada → 5N Plus — single-threaded US pipeline',
+                      subtitle: 'Red Dog (Alaska) → Canadian processor → 5N Plus (Montreal) · volumes undisclosed',
+                      body: "The sole US germanium deposit at Red Dog, Alaska ships zinc concentrates to a Canadian processor for germanium recovery in the form of dioxide and tetrachloride. The recovered germanium flows to 5N Plus for further refining. This is a single-threaded supply chain: one mine, one export route, one processor, one refiner, across two countries.",
+                      body2: "If Red Dog's output declines further (already declining, no published reserves), if the Arctic shipping route is disrupted, or if the Canadian processing arrangement changes — there is no US-origin backup. The Tennessee operation that provided a second US pathway (Nyrstar Clarksville) suspended mining operations in late 2024.",
+                      stat: 'Nyrstar Tennessee: mining operations suspended late 2024' as string | null,
+                      severity: 70,
+                      severityLabel: 'High',
+                    },
+                    {
+                      num: '04',
+                      title: 'DRC — entire new-supply strategy in one country',
+                      subtitle: 'Big Hill tailings, Lubumbashi · STL/Gécamines + Umicore · 700t+ potential',
+                      body: "The entire western strategy for adding new primary germanium runs through a single partnership (Umicore-STL), a single tailings site (Big Hill, Lubumbashi), and a single country (the Democratic Republic of Congo). The DRC has well-documented challenges: mining sector governance issues, infrastructure limitations, political instability, and logistical complexity.",
+                      body2: "The Minerals Security Partnership — a coalition of 14 nations plus the EU — facilitated this deal specifically because there was nothing else to facilitate. If this project stalls due to local governance, operational challenges, or a breakdown in the Umicore-STL relationship, there is no Plan B for new western primary germanium. The first concentrate shipment in October 2024 was a milestone — but one shipment is not a supply chain.",
+                      stat: null as string | null,
+                      severity: 65,
+                      severityLabel: 'Medium',
+                    },
+                    {
+                      num: '05',
+                      title: 'Recycling feedstock access — a relationship bottleneck',
+                      subtitle: 'Umicore tolling model · closed-loop scrap recovery · no open market for feedstock',
+                      body: "Western germanium recycling depends on access to manufacturing scrap — IR optics machining waste, fiber production waste, solar cell wafer scrap, decommissioned military equipment. Umicore secures this feedstock through long-term tolling schemes: they sell germanium products to customers, contractually take back the production scrap, then refine and recycle it.",
+                      body2: "This closed-loop model gives Umicore first access to the richest recycling feedstock in the West. A new entrant trying to compete faces a chicken-and-egg problem: you need customer relationships to access scrap, but you need recycling capacity to win customer relationships. The barrier is not technology — it's the commercial architecture that routes scrap to incumbents. There is no open spot market for germanium recycling feedstock.",
+                      stat: null as string | null,
+                      severity: 55,
+                      severityLabel: 'Medium',
+                    },
+                  ]).map((bn, i) => (
+                    <div key={i} style={{ marginTop: '20px', padding: '16px 18px', background: '#fff', border: '0.5px solid #E5E7EB', borderRadius: '6px' }}>
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '8px' }}>
+                        <div style={{ fontSize: '11px', fontWeight: 600, color: '#991B1B', minWidth: '20px', fontFamily: "'Geist Mono', monospace" }}>{bn.num}</div>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13px', fontWeight: 600, color: '#1C1E21' }}>{bn.title}</div>
+                      </div>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11px', color: '#6B7280', fontStyle: 'italic', marginBottom: '10px', paddingLeft: '30px' }}>{bn.subtitle}</div>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.65, paddingLeft: '30px' }}>
+                        {bn.body}
+                        <br /><br />
+                        <strong style={{ fontWeight: 600, color: '#1C1E21' }}>{bn.body2}</strong>
+                      </div>
+                      {bn.stat && (
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#F3F4F6', borderRadius: '3px', padding: '3px 10px', margin: '8px 0 4px 30px', fontSize: '10px', color: '#1C1E21', fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>
+                          {bn.stat}
+                        </div>
+                      )}
+                      <div style={{ display: 'flex', gap: '6px', margin: '12px 0 0 30px', alignItems: 'center' }}>
+                        <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#6B7280', minWidth: '70px', fontFamily: "'Geist Mono', monospace" }}>Severity</div>
+                        <div style={{ flex: 1, height: '4px', background: '#F3F4F6', borderRadius: '2px', overflow: 'hidden' }}>
+                          <div style={{ height: '4px', borderRadius: '2px', width: `${bn.severity}%`, background: bn.severity >= 80 ? '#DC2626' : '#F59E0B' }}></div>
+                        </div>
+                        <div style={{ fontSize: '9px', color: '#6B7280', minWidth: '30px', textAlign: 'right', fontFamily: "'Geist Mono', monospace" }}>{bn.severityLabel}</div>
+                      </div>
+                    </div>
+                  ))}
+
+                  <div style={{ background: '#FEF2F2', borderRadius: '4px', padding: '14px 16px', margin: '20px 0' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#991B1B', marginBottom: '6px', fontFamily: "'Geist Mono', monospace" }}>Compounding risk</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#7F1D1D', lineHeight: 1.6 }}>These bottlenecks are not independent — they compound. Umicore is the sole western refiner (bottleneck #1), AND they are the partner in the only new western primary supply project in the DRC (bottleneck #4), AND they control the dominant recycling feedstock network (bottleneck #5). <strong>A single company is the chokepoint across three of the five identified bottlenecks.</strong> Any disruption at Umicore cascades through the majority of non-Chinese germanium supply simultaneously.</p>
+                  </div>
+
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: USGS Mineral Commodity Summaries 2025, USGS Minerals Yearbook 2023, Yunnan Chihong Zinc &amp; Germanium Co. 2023 Annual Report &amp; Q1 2025 investor disclosures (SMM News), Umicore Integrated Annual Report 2023, Umicore EU CRM Act press release, Umicore corporate website (GeCl₄ product page, recycling services), Gécamines press release October 2024, Teck Resources 2023 Annual Report, RFC Ambrian Germanium Commodity Report April 2025.
+                  </div>
                 </div>
               </div>
             ) : (
