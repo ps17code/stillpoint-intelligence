@@ -555,7 +555,7 @@ export default function Home() {
             </div>
 
             {/* Right column — stat cards + insights */}
-            <div ref={rightColRef} style={{ maxWidth: 340 }}>
+            <div ref={rightColRef} style={{ maxWidth: 340, background: "#F7F6F3", borderLeft: "2px solid #1C1E21", padding: "16px 16px 24px" }}>
               <InsightsColumn />
             </div>
           </div>

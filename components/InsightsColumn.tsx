@@ -55,7 +55,7 @@ export default function InsightsColumn() {
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         {/* Stat cards */}
         <div style={{ display: "flex", gap: "8px" }}>
-          <div style={{ flex: 1, padding: "10px 12px 6px", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "4px", background: "white" }}>
+          <div style={{ flex: 1, padding: "10px 12px 6px", border: "0.5px solid #E5E7EB", borderRadius: "4px", background: "#fff" }}>
             <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "7px", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#a8a49a", marginBottom: "3px" }}>GeO₂ spot price</div>
             <div style={{ display: "flex", alignItems: "baseline", gap: "5px" }}>
               <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "14px", fontWeight: 600, color: "#5a5647", letterSpacing: "-0.3px" }}>$2,840/kg</span>
@@ -66,7 +66,7 @@ export default function InsightsColumn() {
               <path d="M0,28 L12,27 L24,26 L36,25 L48,27 L60,28 L72,27 L84,26 L96,25 L108,23 L120,20 L126,16 L132,12 L140,17 L150,12 L160,8 L168,4 L174,6 L180,4 L186,3 L192,2 L200,1 L200,32 L0,32 Z" fill="#9a7b3c" opacity="0.07" />
             </svg>
           </div>
-          <div style={{ flex: 1, padding: "10px 12px 6px", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "4px", background: "white" }}>
+          <div style={{ flex: 1, padding: "10px 12px 6px", border: "0.5px solid #E5E7EB", borderRadius: "4px", background: "#fff" }}>
             <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "7px", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#a8a49a", marginBottom: "3px" }}>Western supply</div>
             <div style={{ display: "flex", alignItems: "baseline", gap: "5px" }}>
               <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "14px", fontWeight: 600, color: "#5a5647", letterSpacing: "-0.3px" }}>~80t/yr</span>
@@ -80,17 +80,17 @@ export default function InsightsColumn() {
         </div>
 
         {/* Insight bars */}
-        <div data-insights-container style={{ background: "white", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "4px", overflow: "hidden" }}>
-          <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: "10px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "rgb(136,136,128)", textAlign: "center" as const, padding: "14px 16px 10px", borderBottom: "0.5px solid rgba(80,80,70,0.15)" }}>
+        <div data-insights-container style={{ background: "#F7F6F3", border: "0.5px solid #E5E7EB", borderRadius: "4px", overflow: "hidden" }}>
+          <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: "10px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "#1C1E21", textAlign: "center" as const, padding: "14px 16px 8px", borderBottom: "1px solid #1C1E21", marginBottom: "0" }}>
             Key insights
           </div>
           {INSIGHT_BARS.map((bar, i) => (
             <div
               key={bar.key}
               onClick={() => setActivePopup(bar.key)}
-              onMouseEnter={e => (e.currentTarget.style.background = "rgba(154,123,60,0.03)")}
-              onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-              style={{ padding: "11px 16px", cursor: "pointer", borderBottom: i < INSIGHT_BARS.length - 1 ? "0.5px solid rgba(80,80,70,0.1)" : "none", transition: "background 0.15s" }}
+              onMouseEnter={e => (e.currentTarget.style.background = "rgba(28,30,33,0.03)")}
+              onMouseLeave={e => (e.currentTarget.style.background = "#fff")}
+              style={{ padding: "11px 16px", cursor: "pointer", background: "#fff", border: "0.5px solid #E5E7EB", borderRadius: "3px", margin: "6px", transition: "background 0.15s" }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 <div style={{ flex: 1 }}>
@@ -121,7 +121,7 @@ export default function InsightsColumn() {
                     </span>
                   </div>
                 </div>
-                <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", color: "#c8c4b8", marginLeft: "8px", marginTop: "2px", flexShrink: 0 }}>→</span>
+                <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "10px", color: "#C4C4C4", marginLeft: "8px", marginTop: "2px", flexShrink: 0 }}>→</span>
               </div>
             </div>
           ))}
