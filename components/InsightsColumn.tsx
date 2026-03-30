@@ -18,7 +18,7 @@ const INSIGHT_BARS = [
   {
     key: "geopolitical",
     label: "GEOPOLITICAL RISK",
-    teaser: "China export controls, US ban, sanctions on Russian supply",
+    teaser: "China has proven it can turn germanium supply on and off at will",
     pillBg: "#FEF3C7", pillText: "#92400E",
   },
   {
@@ -437,6 +437,89 @@ export default function InsightsColumn() {
 
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
                     Sources: USGS Mineral Commodity Summaries 2025, USGS Minerals Yearbook 2023, Yunnan Chihong Zinc &amp; Germanium Co. 2023 Annual Report &amp; Q1 2025 investor disclosures (SMM News), Umicore Integrated Annual Report 2023, Umicore EU CRM Act press release, Umicore corporate website (GeCl₄ product page, recycling services), Gécamines press release October 2024, Teck Resources 2023 Annual Report, RFC Ambrian Germanium Commodity Report April 2025.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "geopolitical" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '8px' }}>China has proven it can turn germanium supply on and off at will</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '3px 8px', borderRadius: '3px', background: '#FEF3C7', color: '#92400E', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Geopolitical risk</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Overview</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Between July 2023 and November 2025, China imposed, escalated, and then partially suspended export controls on germanium — demonstrating that <strong style={{ fontWeight: 600, color: '#1C1E21' }}>access to 93% of the world&apos;s germanium supply is a policy variable controlled by a single government</strong>. The controls were explicitly linked to US semiconductor restrictions and used as diplomatic leverage in trade negotiations. The underlying control architecture remains in place.</p>
+                  </div>
+
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Policy timeline</div>
+                    <div style={{ position: 'relative', margin: '16px 0', paddingLeft: '20px' }}>
+                      <div style={{ position: 'absolute', left: '5px', top: '4px', bottom: '4px', width: '1px', background: '#E5E7EB' }}></div>
+                      {([
+                        { color: '#DC2626', date: 'July 3, 2023', title: 'China announces export controls on germanium and gallium', body: 'MOFCOM requires export licenses for germanium metal, zone-melted ingots, GeO₂, GeCl₄, and related compounds. Effective August 1. Framed as "safeguarding national security." Widely seen as retaliation for US, Dutch, and Japanese chip export restrictions.', stat: null as string | null },
+                        { color: '#DC2626', date: 'August – September 2023', title: 'Exports collapse to near zero', body: 'Chinese germanium exports: 0 kg in August, 1 kg in September. For comparison, China exported 7,965 kg in July alone.', stat: '7,965 kg → 0 kg in one month' as string | null },
+                        { color: '#F59E0B', date: 'September 2023 – mid 2024', title: 'Licenses granted, exports resume at reduced levels', body: 'Beijing Tongmei Xtal Technology reportedly receives first export license. Exports partially resume but Jan–Aug 2024 total is 16,700 kg — down 55% vs the same period in 2023.', stat: 'Exports down 55% in 2024 vs 2023' as string | null },
+                        { color: '#DC2626', date: 'August 15, 2024', title: 'China adds antimony to export control list', body: 'The pattern extends beyond germanium and gallium. Beijing signals willingness to expand controls to additional critical minerals.', stat: null as string | null },
+                        { color: '#DC2626', date: 'December 3, 2024', title: 'China bans germanium exports to the United States', body: 'MOFCOM Announcement No. 46: exports of gallium, germanium, antimony, and superhard materials to the US will not be permitted "in principle." Also bans dual-use items to US military users. Direct retaliation for expanded US semiconductor export controls.', stat: null as string | null },
+                        { color: '#DC2626', date: 'October 9, 2025', title: 'Controls expand to rare earths, lithium battery materials', body: 'Six additional announcements add rare earth processing technologies, medium and heavy rare earth elements, and lithium battery components to export control lists.', stat: null as string | null },
+                        { color: '#059669', date: 'November 9, 2025', title: 'China suspends the US export ban', body: 'Following a Trump-Xi meeting in Busan, MOFCOM suspends the December 2024 US ban. Suspension runs until November 27, 2026. The broader global licensing regime (August 2023) remains in force. The ban on exports to US military end-users remains active.', stat: 'Suspension expires: Nov 27, 2026' as string | null },
+                      ]).map((item, i) => (
+                        <div key={i} style={{ position: 'relative', padding: `0 0 ${i < 6 ? '16px' : '0'} 20px` }}>
+                          <div style={{ position: 'absolute', left: '-18px', top: '5px', width: '7px', height: '7px', borderRadius: '50%', background: item.color }}></div>
+                          <div style={{ fontSize: '9px', fontWeight: 600, color: '#9CA3AF', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '2px', fontFamily: "'Geist Mono', monospace" }}>{item.date}</div>
+                          <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', fontWeight: 600, color: '#1C1E21', marginBottom: '3px' }}>{item.title}</div>
+                          <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11px', color: '#6B7280', lineHeight: 1.55 }}>{item.body}</div>
+                          {item.stat && <div style={{ display: 'inline-block', background: '#F3F4F6', borderRadius: '3px', padding: '2px 8px', fontSize: '9px', fontWeight: 600, color: '#1C1E21', marginTop: '4px', fontFamily: "'Geist Mono', monospace" }}>{item.stat}</div>}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ background: '#FFFBEB', borderRadius: '4px', padding: '14px 16px', margin: '20px 0' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#92400E', marginBottom: '6px', fontFamily: "'Geist Mono', monospace" }}>Key data point</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#78350F', lineHeight: 1.6 }}>The Stimson Center found that in 2024, germanium exports to the US fell by ~5,900 kg while exports to Belgium increased by ~6,150 kg. The combined volume to both countries remained roughly constant. This suggests <strong>third-country routing</strong> — US buyers procuring Chinese germanium through Belgium to circumvent restrictions.</p>
+                  </div>
+
+                  <hr style={{ border: 'none', borderTop: '0.5px solid #E5E7EB', margin: '24px 0' }} />
+
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>What this means</div>
+                    {([
+                      { num: '01', title: 'Germanium is a diplomatic bargaining chip, not a permanent policy', body: 'The November 2025 suspension was explicitly linked to the broader US-China trade truce. Beijing imposed controls in retaliation for chip restrictions, then lifted them as a concession during negotiations. Germanium export policy is a function of geopolitical relations, not resource management. It can be toggled on and off.' },
+                      { num: '02', title: 'The control architecture remains intact', body: 'China has suspended one element — the outright US ban. The August 2023 global licensing requirement still applies. MOFCOM still approves every germanium export. The military end-use ban remains active. China has not dismantled its control apparatus. It has paused one lever while retaining all others.' },
+                      { num: '03', title: 'The suspension has an expiration date', body: 'November 27, 2026. After that, China can reimpose the full ban with a single announcement. Any company building supply chain plans around resumed Chinese exports is building on a foundation that disappears in months.' },
+                      { num: '04', title: 'The damage is already done', body: "Even during licensing periods, volumes dropped 55%. Western buyers are actively building alternatives regardless of current policy. The Umicore-DRC deal, the Teck government talks, and the DoD grants all accelerated because of the controls — and they won't reverse just because the ban is temporarily lifted." },
+                      { num: '05', title: 'Germanium is part of a systematic pattern', body: "China has applied export controls to germanium, gallium, antimony, graphite, rare earths, and lithium battery materials. MOFCOM has placed controls on 17 mineral commodities to date. Germanium is not an isolated case — it's a template being applied across the critical minerals landscape." },
+                    ]).map((item, i) => (
+                      <div key={i} style={{ padding: '14px 16px', background: '#fff', border: '0.5px solid #E5E7EB', borderRadius: '6px', marginTop: '16px' }}>
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '6px' }}>
+                          <div style={{ fontSize: '10px', fontWeight: 600, color: '#92400E', minWidth: '18px', fontFamily: "'Geist Mono', monospace" }}>{item.num}</div>
+                          <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', fontWeight: 600, color: '#1C1E21' }}>{item.title}</div>
+                        </div>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.6, paddingLeft: '26px' }}>{item.body}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <hr style={{ border: 'none', borderTop: '0.5px solid #E5E7EB', margin: '24px 0' }} />
+
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Russia — secondary geopolitical layer</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>JSC Germanium in Russia&apos;s Far East contributes ~15t/yr capacity but western sanctions make this supply inaccessible to US and EU buyers. Russia received 25% of China&apos;s germanium exports through August 2024, suggesting a <strong style={{ fontWeight: 600, color: '#1C1E21' }}>China-Russia minerals corridor</strong> that operates outside western sanctions frameworks. This supply is effectively lost to western industry regardless of Chinese export policy.</p>
+                  </div>
+
+                  <div style={{ background: '#FEF2F2', borderRadius: '4px', padding: '14px 16px', margin: '20px 0' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#991B1B', marginBottom: '6px', fontFamily: "'Geist Mono', monospace" }}>Bottom line</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#7F1D1D', lineHeight: 1.6 }}>Access to 93% of the world&apos;s germanium mining output is controlled by a government that has demonstrated willingness to restrict it as geopolitical leverage. The current suspension is temporary, conditional, and expires in November 2026. The licensing architecture is permanent. <strong>Any assessment of germanium supply reliability must treat Chinese exports as a variable that can go to zero at any time — because it already has.</strong></p>
+                  </div>
+
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: USGS Mineral Commodity Summaries 2025, China MOFCOM Announcements No. 23 (2023), No. 46 (2024), No. 72 (2025), Stimson Center &ldquo;China&apos;s Germanium and Gallium Export Restrictions&rdquo; April 2025, ORF America &ldquo;China&apos;s Critical Mineral Export Controls&rdquo; May 2025, CNBC November 2025, Fastmarkets November 2025, Reuters November 2025, Pillsbury Law November 2025, The Oregon Group November 2025, Global Trade Alert 2023–2025.
                   </div>
                 </div>
               </div>
