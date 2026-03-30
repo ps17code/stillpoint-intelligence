@@ -13,11 +13,11 @@ interface HorizontalSpineProps {
 
 type Level = "raw" | "comp" | "sub" | "eu";
 
-const LEVELS: { key: Level; defaultLabel: string; activeStateIdx: number; num: string }[] = [
-  { key: "raw",  defaultLabel: "Raw Material", activeStateIdx: 1, num: "01" },
-  { key: "comp", defaultLabel: "Component",    activeStateIdx: 2, num: "02" },
-  { key: "sub",  defaultLabel: "Subsystem",    activeStateIdx: 3, num: "03" },
-  { key: "eu",   defaultLabel: "End Use",      activeStateIdx: 4, num: "04" },
+const LEVELS: { key: Level; defaultLabel: string; activeStateIdx: number }[] = [
+  { key: "raw",  defaultLabel: "Germanium", activeStateIdx: 1 },
+  { key: "comp", defaultLabel: "Component",  activeStateIdx: 2 },
+  { key: "sub",  defaultLabel: "Subsystem",  activeStateIdx: 3 },
+  { key: "eu",   defaultLabel: "End use",    activeStateIdx: 4 },
 ];
 
 export default function HorizontalSpine({
@@ -59,30 +59,26 @@ export default function HorizontalSpine({
         padding: "0 24px",
       }}
     >
-      {/* Home button */}
+      {/* Brand name */}
       <button
         onClick={onHome}
         style={{
-          fontFamily: "'Geist Mono', 'Courier New', monospace",
-          fontSize: 9,
-          letterSpacing: "0.15em",
-          color: "#6B7280",
-          textTransform: "uppercase",
-          cursor: "pointer",
-          border: "none",
           background: "none",
-          marginRight: 28,
-          transition: "color 0.2s",
-          flexShrink: 0,
+          border: "none",
           padding: 0,
+          cursor: "pointer",
+          marginRight: 28,
+          flexShrink: 0,
+          display: "flex",
+          alignItems: "center",
         }}
-        onMouseEnter={e => (e.currentTarget.style.color = "#9CA3AF")}
-        onMouseLeave={e => (e.currentTarget.style.color = "#6B7280")}
       >
-        ← home
+        <span style={{ fontFamily: "'DM Sans', Inter, -apple-system, sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.04em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase" }}>Stillpoint</span>
+        <span style={{ display: "inline-block", width: "5px" }} />
+        <span style={{ fontFamily: "'DM Sans', Inter, -apple-system, sans-serif", fontSize: "11px", fontWeight: 200, letterSpacing: "0.04em", color: "rgba(255,255,255,0.16)", textTransform: "uppercase" }}>Intelligence</span>
       </button>
 
-      {/* Nodes with separators — centered */}
+      {/* Chain steps — centered */}
       <div style={{ display: "flex", alignItems: "center", flex: 1, justifyContent: "center" }}>
         {LEVELS.map((lvl, idx) => {
           const active = isActive(lvl.key);
@@ -91,28 +87,23 @@ export default function HorizontalSpine({
           const hasOptions = options[lvl.key].length > 0 && !dormant;
           const showDropdown = hoveredNode === lvl.key && hasOptions;
 
-          const itemColor = active ? "#FFFFFF" : "rgba(255,255,255,0.35)";
-          const itemWeight = active ? 700 : 400;
-
           return (
             <div key={lvl.key} style={{ display: "flex", alignItems: "center" }}>
-              {/* Separator */}
+              {/* Dot separator */}
               {idx > 0 && (
-                <span style={{
-                  fontFamily: "'Geist Mono', 'Courier New', monospace",
-                  fontSize: 11,
-                  color: "rgba(255,255,255,0.3)",
+                <div style={{
+                  width: 3,
+                  height: 3,
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.12)",
                   margin: "0 10px",
-                  userSelect: "none",
-                }}>
-                  →
-                </span>
+                  flexShrink: 0,
+                }} />
               )}
 
-              {/* Node */}
+              {/* Step */}
               <div
                 style={{
-                  display: "flex", alignItems: "center", gap: 5,
                   position: "relative",
                   cursor: dormant ? "default" : "pointer",
                   padding: "4px 0",
@@ -126,28 +117,14 @@ export default function HorizontalSpine({
                   if (!dormant && selection[lvl.key]) onNodeClick(lvl.key);
                 }}
               >
-                {/* Step number */}
                 <span style={{
-                  fontFamily: "'Geist Mono', 'Courier New', monospace",
-                  fontSize: 8,
-                  color: itemColor,
-                  fontWeight: itemWeight,
-                  letterSpacing: "0.05em",
+                  fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+                  fontSize: "10.5px",
+                  color: active ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.2)",
+                  whiteSpace: "nowrap" as const,
                   lineHeight: 1,
-                }}>
-                  {lvl.num}
-                </span>
-
-                {/* Label */}
-                <span style={{
-                  fontFamily: "'Geist Mono', 'Courier New', monospace",
-                  fontSize: 10,
-                  letterSpacing: "1.5px",
-                  textTransform: "uppercase",
-                  color: itemColor,
-                  fontWeight: itemWeight,
-                  whiteSpace: "nowrap",
-                  lineHeight: 1,
+                  borderBottom: active ? "1px solid rgba(255,255,255,0.3)" : "none",
+                  paddingBottom: active ? "1px" : "0",
                 }}>
                   {label}
                 </span>
@@ -175,12 +152,10 @@ export default function HorizontalSpine({
                         key={opt}
                         style={{
                           padding: "7px 14px",
-                          fontFamily: "'Geist Mono', 'Courier New', monospace",
-                          fontSize: 10,
-                          letterSpacing: "0.08em",
-                          textTransform: "uppercase",
+                          fontFamily: "Inter, -apple-system, sans-serif",
+                          fontSize: 11,
                           color: selection[lvl.key] === opt ? "#FFFFFF" : "rgba(255,255,255,0.6)",
-                          fontWeight: selection[lvl.key] === opt ? 700 : 400,
+                          fontWeight: selection[lvl.key] === opt ? 600 : 400,
                           cursor: "pointer",
                           transition: "background 0.12s, color 0.12s",
                         }}
