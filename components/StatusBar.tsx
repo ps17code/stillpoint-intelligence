@@ -15,12 +15,11 @@ export default function StatusBar() {
 
   return (
     <div style={{
-      position: "fixed", bottom: 0, left: 0, right: 0, height: 28,
+      width: "100%", height: 28,
       background: "#111110",
       borderTop: "0.5px solid rgba(255,255,255,0.05)",
       display: "flex", alignItems: "center", justifyContent: "space-between",
       padding: "0 20px",
-      zIndex: 100,
     }}>
       <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: "5.5px", color: "rgba(255,255,255,0.1)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
         Stillpoint Intelligence · Proprietary

@@ -290,7 +290,6 @@ export default function Home() {
       minHeight: "100vh",
       background: appState > 0 ? "#1A1917" : "var(--bg)",
       paddingTop: appState > 0 ? TOP_BAR_H : 0,
-      paddingBottom: appState > 0 ? STATUS_BAR_H : 0,
       position: "relative",
     }}>
 
@@ -330,139 +329,77 @@ export default function Home() {
             docId={`GE-${appState === 1 ? "RAW" : appState === 2 ? "COMP" : appState === 3 ? "SUB" : "EU"}-001 · PROPRIETARY`}
           />
 
-          {/* Fixed status bar */}
-          <StatusBar />
+          {/* Main content + sidebar — normal flow, no height constraint */}
+          <div style={{ display: "flex", alignItems: "flex-start" }}>
 
-          {/* Main content + sidebar — flex row */}
-          <div style={{ display: "flex", minHeight: mapHeroH }}>
-
-            {/* Left column: thesis section + map */}
+            {/* Left column: thesis block + map */}
             <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
 
-              {/* ── TOP SECTION: thesis + sub-layers ── */}
+              {/* ── THESIS BLOCK ── */}
               {currentThesis && (
                 <div style={{
-                  background: "#2A2825",
-                  borderBottom: "0.5px solid rgba(255,255,255,0.07)",
-                  padding: "22px 36px 20px",
-                  display: "grid",
-                  gridTemplateColumns: "60% 40%",
-                  gap: 32,
+                  background: "#3A3835",
+                  padding: 24,
                   flexShrink: 0,
                 }}>
-                  {/* Left: tag line, title, body, brief link */}
-                  <div>
-                    <div style={{
-                      fontFamily: "'Geist Mono', 'Courier New', monospace",
-                      fontSize: 6,
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                      color: "rgba(255,255,255,0.2)",
-                      marginBottom: 9,
-                    }}>
-                      {currentPageTitle}
-                    </div>
-                    <div style={{
-                      fontFamily: "Inter, -apple-system, sans-serif",
-                      fontSize: 16,
-                      fontWeight: 500,
-                      color: "rgba(255,255,255,0.88)",
-                      lineHeight: 1.35,
-                      marginBottom: 10,
-                    }}>
-                      {chainLabel}
-                    </div>
-                    <div style={{
-                      fontFamily: "Inter, -apple-system, sans-serif",
-                      fontSize: 11,
-                      color: "rgba(255,255,255,0.38)",
-                      lineHeight: 1.7,
-                      maxWidth: 400,
-                      marginBottom: 12,
-                    }}>
-                      {currentThesis}
-                    </div>
-                    <button
-                      onClick={() => setBriefOpen(true)}
-                      style={{
-                        fontFamily: "'Geist Mono', 'Courier New', monospace",
-                        fontSize: 7,
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                        color: "rgba(255,255,255,0.22)",
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        padding: 0,
-                        transition: "color 0.15s",
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
-                      onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.22)")}
-                    >
-                      read layer brief →
-                    </button>
+                  <div style={{
+                    fontFamily: "'Geist Mono', 'Courier New', monospace",
+                    fontSize: 6,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.2)",
+                    marginBottom: 10,
+                  }}>
+                    {currentPageTitle}
                   </div>
-
-                  {/* Right: sub-layers legend */}
-                  {layerLabels.length > 0 && (
-                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 10 }}>
-                      <div style={{
-                        fontFamily: "'Geist Mono', 'Courier New', monospace",
-                        fontSize: 6,
-                        letterSpacing: "0.12em",
-                        textTransform: "uppercase",
-                        color: "rgba(255,255,255,0.18)",
-                        marginBottom: 2,
-                      }}>
-                        Sub-layers
-                      </div>
-                      {currentBrief && (currentBrief as { layer: string; summary?: string }[]).map((p, i) => (
-                        <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 9 }}>
-                          <div style={{
-                            width: 2,
-                            height: 14,
-                            background: layerLabels[i]?.color || "rgba(255,255,255,0.3)",
-                            borderRadius: 1,
-                            flexShrink: 0,
-                            marginTop: 2,
-                          }} />
-                          <div>
-                            <div style={{
-                              fontFamily: "'Geist Mono', 'Courier New', monospace",
-                              fontSize: 7,
-                              fontWeight: 600,
-                              letterSpacing: "0.08em",
-                              textTransform: "uppercase",
-                              color: layerLabels[i]?.color || "rgba(255,255,255,0.4)",
-                              marginBottom: 2,
-                            }}>
-                              {p.layer}
-                            </div>
-                            {p.summary && (
-                              <div style={{
-                                fontFamily: "Inter, -apple-system, sans-serif",
-                                fontSize: 10,
-                                color: "rgba(255,255,255,0.25)",
-                                lineHeight: 1.45,
-                              }}>
-                                {p.summary}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                  <div style={{
+                    fontFamily: "Inter, -apple-system, sans-serif",
+                    fontSize: 17,
+                    fontWeight: 500,
+                    color: "rgba(255,255,255,0.9)",
+                    lineHeight: 1.3,
+                    marginBottom: 12,
+                  }}>
+                    {chainLabel}
+                  </div>
+                  <div style={{
+                    fontFamily: "Inter, -apple-system, sans-serif",
+                    fontSize: 12,
+                    color: "rgba(255,255,255,0.35)",
+                    lineHeight: 1.7,
+                    maxWidth: 580,
+                    marginBottom: 14,
+                  }}>
+                    {currentThesis}
+                  </div>
+                  <button
+                    onClick={() => setBriefOpen(true)}
+                    style={{
+                      fontFamily: "'Geist Mono', 'Courier New', monospace",
+                      fontSize: 8,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: "#C4836A",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: 0,
+                      transition: "opacity 0.15s",
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                  >
+                    Read Full Analysis →
+                  </button>
                 </div>
               )}
 
-              {/* ── MAP SECTION: ~55vh, no overlays ── */}
+              {/* ── MAP SECTION ── */}
               <div style={{
-                flex: 1,
+                height: "55vh",
                 position: "relative",
                 background: "#3A3835",
                 overflow: "hidden",
-                minHeight: "45vh",
               }}>
                 <SupplyChainMap
                   chainState={appState as 1|2|3|4}
@@ -472,7 +409,6 @@ export default function Home() {
                   euSelection={sel.eu || undefined}
                   fillContainer
                 />
-                {/* Collapse toggle */}
                 <button
                   onClick={() => setTreeCollapsed(prev => !prev)}
                   style={{
@@ -501,23 +437,21 @@ export default function Home() {
 
             </div>{/* end left column */}
 
-            {/* Sidebar — static, scrolls with page */}
+            {/* Sidebar — scrolls with page */}
             <div style={{
               width: SIDEBAR_W,
               flexShrink: 0,
               background: "#F5F3EE",
               borderLeft: "0.5px solid #DDD9D2",
-              overflowY: "auto",
             }}>
               <SidebarPanel />
             </div>
 
           </div>{/* end flex row */}
 
-          {/* ── Tree section — sits below map hero in normal page flow ── */}
+          {/* ── Tree section — full width, normal flow ── */}
           {!treeCollapsed && (
             <div style={{ width: "100%" }}>
-              {/* Supply chain tree band header */}
               <div style={{
                 padding: "16px 48px",
                 background: "#1A1917",
@@ -549,8 +483,6 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-
-              {/* Tree map SVG — fixed overlay, uses scrollY to position content */}
               <TreeMap
                 geometry={geometry}
                 nodes={NODES}
@@ -565,6 +497,9 @@ export default function Home() {
               />
             </div>
           )}
+
+          {/* Status bar — bottom of page */}
+          <StatusBar />
         </>
       )}
 
