@@ -10,6 +10,8 @@ export interface SupplyChainMapProps {
   compSelection?: string;
   subSelection?: string;
   euSelection?: string;
+  /** When true, SVG fills its container (position absolute inset 0) instead of fixed 380px height */
+  fillContainer?: boolean;
 }
 
 type Pt = { lon: number; lat: number; name: string; loc: string };
@@ -149,7 +151,7 @@ const MAP_H = 380;
 
 type TooltipInfo = { name: string; loc: string; type: string; color: string } | null;
 
-export default function SupplyChainMap({ chainState, rawSelection }: SupplyChainMapProps) {
+export default function SupplyChainMap({ chainState, rawSelection, fillContainer }: SupplyChainMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<TooltipInfo>(null);
 
@@ -337,6 +339,34 @@ export default function SupplyChainMap({ chainState, rawSelection }: SupplyChain
 
     return () => { svg.selectAll("*").remove(); };
   }, [chainState, rawSelection]);
+
+  if (fillContainer) {
+    return (
+      <div style={{ position: "absolute", inset: 0 }}>
+        <svg
+          ref={svgRef}
+          viewBox={`0 0 ${MAP_W} ${MAP_H}`}
+          preserveAspectRatio="xMidYMid slice"
+          data-map-container
+          style={{ width: "100%", height: "100%", background: "#3A3835", display: "block" }}
+        />
+        {tooltip && (
+          <div style={{
+            position: "absolute", bottom: 12, right: 12,
+            background: "rgba(0,0,0,0.82)",
+            borderRadius: 4,
+            padding: "7px 11px",
+            pointerEvents: "none",
+            zIndex: 10,
+          }}>
+            <div style={{ fontFamily: "Courier New, monospace", fontSize: 10, fontWeight: 600, color: "white", marginBottom: 2 }}>{tooltip.name}</div>
+            <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "rgba(255,255,255,0.55)", marginBottom: 2 }}>{tooltip.loc}</div>
+            <div style={{ fontFamily: "Courier New, monospace", fontSize: 7, color: tooltip.color, textTransform: "uppercase", letterSpacing: "0.05em" }}>{tooltip.type}</div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div style={{ position: "relative", marginTop: 16 }}>
