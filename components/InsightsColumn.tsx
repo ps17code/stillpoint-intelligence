@@ -42,7 +42,7 @@ const INSIGHT_BARS = [
   {
     key: "major-companies",
     label: "MAJOR COMPANIES",
-    teaser: "Corning, Umicore, Teck, Yunnan Chihong, 5N Plus",
+    teaser: "Four companies define the western germanium chain — here's how each one operates",
     pillBg: "#F0F9FF", pillText: "#155E75",
   },
   {
@@ -601,6 +601,115 @@ export default function InsightsColumn() {
 
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
                     Sources: USGS MCS 2025, USGS 2025 Critical Minerals List, CreditSights Hyperscaler Capex 2026 Estimates (Nov 2025), Futurum Group &ldquo;AI Capex 2026&rdquo; (Feb 2026), CNBC hyperscaler earnings (Feb 2026), IEEE ComSoc Technology Blog (Dec 2025), Light Reading &ldquo;BEAD 2025 in Review&rdquo; (Dec 2025), NTIA BEAD Progress Dashboard, Corning Q3 2025 earnings, STL CEO statements (Dec 2025), Fastmarkets (Nov 2025), Pillsbury Law (Nov 2025).
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "major-companies" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '8px' }}>Four companies define the western germanium chain — here&apos;s how each one operates</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#EFF6FF', color: '#1E40AF', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Major companies</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Overview</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>These are the companies that appear repeatedly across the germanium supply chain analysis — as miners, refiners, recyclers, and processors. Each profile covers what the company does, its financial scale, and specifically why it matters to the germanium picture.</p>
+                  </div>
+
+                  {([
+                    {
+                      name: 'Umicore',
+                      ticker: 'XBRU: UMI',
+                      sub: 'Brussels, Belgium · Founded 1805 · ~11,000 employees · Materials technology',
+                      stats: [['€3.9B', 'Market cap'], ['€3.6B', 'FY25 Revenue'], ['€847M', 'FY25 Adj. EBITDA'], ['€16–17', 'Share price'], ['€7–22', '52-wk range']] as [string, string][],
+                      whatTheyDo: 'Umicore operates across four business groups: Catalysis (€1.67B revenue — automotive emissions control catalysts), Recycling (€947M — precious metals recovery from e-waste and spent catalysts), Specialty Materials (€558M — germanium, cobalt, metal deposition), and Battery Materials (cathode materials for EVs, currently undergoing strategic reset after writedowns). Formerly Union Minière du Haut Katanga — the colonial-era mining company in the Congo. CEO Bart Sap (since May 2024) launched the "CORE" strategy in March 2025, refocusing on cash generation from foundation businesses.',
+                      geRelevance: [
+                        'Umicore is the sole western germanium refiner operating at scale — their Olen, Belgium facility processes an estimated 40–50 tonnes/yr. They supply the majority of western fiber manufacturers with ultra-high-purity GeCl₄, claiming to produce "the highest consistent quality" in the industry. Over 50% of their germanium comes from recycling via closed-loop tolling schemes with customers. They also recycle germanium at a US facility.',
+                        'In May 2024, they signed a long-term feedstock agreement with STL/Gécamines in the DRC to recover germanium from copper mine tailings — the most important new western primary source in decades, facilitated by the Minerals Security Partnership (14 nations + EU). First concentrate shipment confirmed October 2024. Both germanium-related projects selected under the EU Critical Raw Materials Act belong to Umicore — one improving recovery yields, the other developing new recycling technologies.',
+                        'Germanium sits within the Specialty Materials segment: FY 2025 revenue €558M (+4%), adj. EBITDA €108M (+11%), adj. EBIT €76M (+16%). The earnings release noted "significant earnings growth in Electro-Optic Materials, fueled by strong demand." The 2026 outlook anticipates "good demand for its germanium products." Umicore does not disclose germanium-specific revenue — it is bundled with cobalt and metal deposition.',
+                      ],
+                      whyMatters: 'Umicore appears across 3 of 5 identified bottlenecks in the raw material layer: sole western refiner (#1), DRC feedstock partner (#4), and dominant recycling feedstock controller (#5). Any disruption at Umicore cascades through the majority of non-Chinese germanium supply simultaneously. Understanding Umicore is non-optional for anyone analyzing the western germanium chain.',
+                    },
+                    {
+                      name: '5N Plus',
+                      ticker: 'TSX: VNP',
+                      sub: 'Montreal, Canada · Founded 2000 · 849 employees · Specialty semiconductors & performance materials',
+                      stats: [['C$2.5–2.8B', 'Market cap'], ['$391M', 'FY25 Revenue'], ['$50.6M', 'FY25 Earnings'], ['~C$28', 'Share price'], ['C$4.90–31.78', '52-wk range']] as [string, string][],
+                      whatTheyDo: '5N Plus produces ultra-high-purity specialty semiconductor materials and performance materials across two segments. Specialty Semiconductors (majority of revenue) manufactures germanium substrates for space solar cells, cadmium telluride for terrestrial solar, and semiconductor compounds for imaging and medical devices. Performance Materials produces pharmaceutical ingredients, animal feed additives, specialty chemicals, and recycled metals. The name "5N" refers to five-nines purity (99.999%) — reflecting their position as a precision materials refiner, not a bulk commodity producer.\n\nThe company had a breakout year in 2025: revenue up 35% to $391M, earnings up 245% to $50.6M, EPS beating analyst expectations by over 100% consistently. Added to the S&P/TSX Composite Index in December 2025. The stock re-rated from ~C$5 to ~C$28 — approximately 5x in one year. 6 analysts rate Strong Buy with an average target of C$31.94.',
+                      geRelevance: [
+                        '5N Plus operates a germanium wafer manufacturing facility in St. George, Utah, producing substrates primarily for multi-junction solar cells used in satellites and space applications — a market where germanium is irreplaceable. They also produce GeO₂ and recycled germanium materials. Estimated germanium throughput: ~15–20t/yr (not disclosed by the company).',
+                        'The US government has funded 5N Plus\'s germanium capacity twice: $14.4M from the DoD under the Defense Production Act in April 2024, and US$18.1M in January 2026 specifically to increase germanium production capacity at St. George. Two rounds of direct government funding signal that Washington views 5N Plus as a strategically important domestic germanium processor. The company sources germanium from imported material and recycled sources, with the Red Dog → Canada pipeline (via Teck) as a key feedstock pathway.',
+                      ],
+                      whyMatters: '5N Plus is the primary North American processor of refined germanium products and the only company receiving direct US government funding to expand germanium capacity. Their St. George facility is a critical node in the domestic germanium supply chain — if the US wants to reduce dependence on Belgian-refined germanium, 5N Plus is where that capacity gets built.',
+                    },
+                    {
+                      name: 'Yunnan Chihong Zinc & Germanium',
+                      ticker: 'SHA: 600497',
+                      sub: 'Qujing, Yunnan Province, China · State-owned · A-share listed · Zinc-germanium mining & refining',
+                      stats: [['65.9t', '2023 Ge output'], ['60t/yr', 'Ge capacity'], ['289,800t', '2024 Zn concentrate'], ['~30%', 'Share of global Ge'], ['32Mt+', 'Zn resources']] as [string, string][],
+                      whatTheyDo: 'Yunnan Chihong is a fully vertically integrated zinc-germanium company — the only major producer where germanium is in the company name. Operations span geological exploration, mining, beneficiation, smelting, chemical engineering, deep processing, and R&D. By end of 2024: 420,000t/yr zinc concentrate capacity, 630,000t/yr refined zinc, 60t/yr germanium products, 1,000t/yr+ precious and rare metals (gold, silver, cadmium, bismuth, antimony). Zinc alloy capacity surged to 220,000t/yr. The company owns two world-class high-grade lead-zinc mines and has maintained resource reserves growth exceeding consumption for several consecutive years.',
+                      geRelevance: [
+                        'In 2023, Yunnan Chihong produced 65,922 kg (65.9 tonnes) of germanium in products — an 18% increase YoY. This represents approximately 30% of the entire world\'s germanium supply from a single entity. Products include germanium metal, GeO₂, GeCl₄ for fiber optics, germanium substrates for solar cells, and germanium lenses for IR optics. Primary feedstock comes from the Huize zinc mine (443t Ge resources) and the Yiliang/SYGT mines (186t proven Ge reserves).',
+                        'In late 2024, the company began a "deep safety system optimization project" at Huize mine. Impact was immediate: 2024 zinc concentrate production fell by 50,800 tonnes metal content YoY. Q1 2025 dropped a further 17,400 tonnes. Because germanium is a zinc byproduct, every tonne of reduced zinc output directly reduces germanium supply. A production decision at one Chinese zinc mine ripples through 30% of global germanium supply. All of Chihong\'s germanium products are subject to Chinese MOFCOM export controls.',
+                      ],
+                      whyMatters: 'Yunnan Chihong is not investable for most western investors (Shanghai A-share). But it is the single most important company in the global germanium supply chain. Their operational decisions — a maintenance shutdown, a safety project, a capacity change — determine whether the world has enough germanium. Monitoring Chihong\'s quarterly zinc output is one of the most reliable leading indicators of global germanium supply.',
+                    },
+                    {
+                      name: 'Teck Resources',
+                      ticker: 'TSX: TECK.B / NYSE: TECK',
+                      sub: 'Vancouver, Canada · ~12,000 employees · Diversified mining (copper, zinc)',
+                      stats: [['C$30B+', 'Market cap'], ['Undisclosed', 'Ge volumes'], ['Red Dog, AK', 'Sole US Ge source'], ['Declining', 'Ge deposit status'], ['In talks', 'Govt Ge expansion']] as [string, string][],
+                      whatTheyDo: 'Teck is Canada\'s largest diversified mining company, operating across copper and zinc after selling its steelmaking coal business to Glencore for ~$7.3B in 2024. The company is primarily a copper story — their massive QB2 project in Chile is the growth driver. Zinc operations center on Red Dog in Alaska (one of the world\'s largest zinc mines) and the Trail smelter complex in British Columbia. Teck\'s stock is driven by copper prices and QB2 ramp-up, not germanium.',
+                      geRelevance: [
+                        'Red Dog in northwest Alaska is the sole US deposit where germanium is recovered. Zinc concentrates containing trace germanium are shipped from Red Dog to a Canadian processing facility where germanium is recovered as dioxide and tetrachloride. The recovered material flows to 5N Plus and other downstream processors. Teck does not disclose germanium volumes, does not market germanium as a product, and does not mention it in financial reporting. Germanium is financially immaterial to a C$30B+ company.',
+                        'Red Dog\'s output is declining with no published reserve life extension. Nyrstar\'s Tennessee zinc mines — which provided a second US germanium pathway — suspended operations in late 2024, leaving Red Dog alone. Teck recently sold the Apex mine in Utah to Blue Moon Metals, which plans to develop it specifically for germanium and gallium — suggesting Teck is shedding rather than investing in germanium-adjacent assets. However, the company is reported to be in active discussions with US and Canadian governments about expanding germanium recovery, likely under Defense Production Act or Canadian Critical Minerals Strategy funding.',
+                      ],
+                      whyMatters: 'Teck controls the most strategically important germanium asset in North America but has no business incentive to develop it — germanium is immaterial to their financials. The pace of any germanium expansion will be driven by government policy and funding, not Teck\'s capital allocation priorities. Understanding Teck\'s role is essential for assessing North American germanium supply reliability, even though the company itself doesn\'t treat germanium as strategic.',
+                    },
+                  ] as { name: string; ticker: string; sub: string; stats: [string, string][]; whatTheyDo: string; geRelevance: string[]; whyMatters: string }[]).map((co, idx) => (
+                    <div key={idx} style={{ marginTop: '24px', border: '0.5px solid #E5E7EB', borderRadius: '6px', overflow: 'hidden' }}>
+                      <div style={{ padding: '14px 16px', background: '#FAFAFA', borderBottom: '0.5px solid #F3F4F6' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                          <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '14px', fontWeight: 600, color: '#1C1E21' }}>{co.name}</div>
+                          <div style={{ fontSize: '9px', fontWeight: 600, color: '#2563A0', background: '#EFF6FF', padding: '2px 8px', borderRadius: '3px', fontFamily: "'Geist Mono', monospace" }}>{co.ticker}</div>
+                        </div>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '10px', color: '#9CA3AF' }}>{co.sub}</div>
+                      </div>
+
+                      <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '6px', padding: '10px 16px', borderBottom: '0.5px solid #F3F4F6', background: '#fff' }}>
+                        {co.stats.map(([val, label], si) => (
+                          <div key={si} style={{ flex: 1, minWidth: '90px' }}>
+                            <div style={{ fontSize: '12px', fontWeight: 600, color: '#1C1E21', fontFamily: "'Geist Mono', monospace" }}>{val}</div>
+                            <div style={{ fontSize: '7px', color: '#9CA3AF', letterSpacing: '0.06em', textTransform: 'uppercase' as const, marginTop: '1px', fontFamily: "'Geist Mono', monospace" }}>{label}</div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div style={{ padding: '14px 16px', background: '#fff' }}>
+                        <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '6px', fontFamily: "'Geist Mono', monospace" }}>What the company does</div>
+                        {co.whatTheyDo.split('\n\n').map((para, pi) => (
+                          <p key={pi} style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.6, marginBottom: '8px' }}>{para}</p>
+                        ))}
+
+                        <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: '#9CA3AF', margin: '14px 0 6px', fontFamily: "'Geist Mono', monospace" }}>Germanium relevance</div>
+                        {co.geRelevance.map((para, pi) => (
+                          <p key={pi} style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.6, marginBottom: '8px' }}>{para}</p>
+                        ))}
+
+                        <div style={{ margin: '12px 0 0', padding: '10px 12px', borderRadius: '4px', background: '#EFF6FF' }}>
+                          <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: '#1E40AF', marginBottom: '3px', fontFamily: "'Geist Mono', monospace" }}>Why this company matters</div>
+                          <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '10.5px', color: '#1E3A5F', lineHeight: 1.5 }}>{co.whyMatters}</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Umicore FY 2025 &amp; FY 2024 results, Umicore investor relations, Umicore EU CRM Act press release, Stockopedia/TradingView/Investing.com price data. 5N Plus FY 2025 results, Investing.com/Stockopedia price data, Kalkine analysis (Mar 2026), Globe and Mail, US DoD/DPA grant announcements. Yunnan Chihong 2023 Annual Report, Asian Metal, SMM News Q1 2025. Teck Resources 2023 Annual Report, USGS MCS 2025, Fastmarkets (Blue Moon/Apex acquisition Nov 2025).
                   </div>
                 </div>
               </div>
