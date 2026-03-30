@@ -16,7 +16,6 @@ import NodeModal         from "@/components/NodeModal";
 import BriefModal        from "@/components/BriefModal";
 import SupplyChainMap    from "@/components/SupplyChainMap";
 import Tooltip      from "@/components/Tooltip";
-import InsightsSection  from "@/components/InsightsSection";
 import InsightsColumn   from "@/components/InsightsColumn";
 
 // Geometry
@@ -734,8 +733,6 @@ export default function Home() {
         onNavigate={(key) => setSelectedNode(key)}
       />
 
-      {/* Insights section — all tree layers */}
-      {appState > 0 && <InsightsSection top={insightsTop} chainState={appState} />}
 
     </main>
   );

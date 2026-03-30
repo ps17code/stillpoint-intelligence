@@ -34,12 +34,6 @@ const INSIGHT_BARS = [
     pillBg: "#F5F3FF", pillText: "#5B21B6",
   },
   {
-    key: "deals-capital",
-    label: "DEALS & CAPITAL",
-    teaser: "Umicore-STL offtake, DoD $14.4M grant, Teck govt talks",
-    pillBg: "#FFF7ED", pillText: "#9A3412",
-  },
-  {
     key: "major-companies",
     label: "MAJOR COMPANIES",
     teaser: "Four companies define the western germanium chain — here's how each one operates",
