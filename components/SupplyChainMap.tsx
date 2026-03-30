@@ -21,7 +21,7 @@ type Flow = { from: number; to: number; connections: Conn[] };
 
 // ── State 1: Germanium Raw Material ─────────────────────────────────────────
 const S1_LAYERS: Layer[] = [
-  { label: "Deposits", color: "#9a7b3c", radius: 3, nodes: [
+  { label: "Deposits", color: "#B8975A", radius: 3, nodes: [
     { lon:100.08, lat:23.88, name: "Yunnan Deposit",       loc: "Yunnan, China" },
     { lon:116.8,  lat:44.5,  name: "Inner Mongolia Deposit", loc: "Inner Mongolia, China" },
     { lon:119.8,  lat:48.5,  name: "Heilongjiang Deposit", loc: "Heilongjiang, China" },
@@ -31,7 +31,7 @@ const S1_LAYERS: Layer[] = [
     { lon:27.5,   lat:-3.5,  name: "Kipushi Deposit",      loc: "DRC" },
     { lon:-162.9, lat:68.1,  name: "Red Dog Deposit",      loc: "Alaska, USA" },
   ]},
-  { label: "Miners", color: "#6b8f5e", radius: 2.5, nodes: [
+  { label: "Miners", color: "#7DA06A", radius: 2.5, nodes: [
     { lon:100.2,  lat:23.5,  name: "Yunnan Chihong",       loc: "Yunnan, China" },
     { lon:117.0,  lat:44.8,  name: "Inner Mongolia Miner", loc: "Inner Mongolia, China" },
     { lon:115.5,  lat:40.0,  name: "Hebei Miner",          loc: "Hebei, China" },
@@ -40,7 +40,7 @@ const S1_LAYERS: Layer[] = [
     { lon:27.8,   lat:-3.8,  name: "Glencore Kipushi",     loc: "DRC" },
     { lon:-120.5, lat:49.3,  name: "Teck Resources",       loc: "British Columbia, Canada" },
   ]},
-  { label: "Refiners", color: "#8a6b9a", radius: 2.5, nodes: [
+  { label: "Refiners", color: "#A07DAA", radius: 2.5, nodes: [
     { lon:99.8,   lat:24.2,  name: "Yunnan Refinery",      loc: "Yunnan, China" },
     { lon:113.5,  lat:38.0,  name: "Hebei Refinery",       loc: "Hebei, China" },
     { lon:103.0,  lat:25.8,  name: "Chihong Refinery",     loc: "Yunnan, China" },
@@ -168,14 +168,6 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
     const proj = d3.geoNaturalEarth1().scale(132).translate([MAP_W / 2, MAP_H / 2 + 15]);
     const path = d3.geoPath().projection(proj);
     const pt = (lon: number, lat: number): [number, number] => proj([lon, lat]) ?? [0, 0];
-
-    // Graticule
-    svg.append("path")
-      .datum(d3.geoGraticule()())
-      .attr("d", path)
-      .attr("fill", "none")
-      .attr("stroke", "#d8d4c8")
-      .attr("stroke-width", 0.3);
 
     fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
       .then(r => r.json())
@@ -318,22 +310,7 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
           }
         }
 
-        // Legend (vertically centered, left side)
-        const legendX = 14;
-        const totalLegendH = (layers.length - 1) * 16;
-        const legendStartY = MAP_H / 2 - totalLegendH / 2;
-        for (let i = 0; i < layers.length; i++) {
-          const ly = legendStartY + i * 16;
-          svg.append("circle")
-            .attr("cx", legendX + 4).attr("cy", ly)
-            .attr("r", 3).attr("fill", layers[i].color).attr("fill-opacity", 0.85);
-          svg.append("text")
-            .attr("x", legendX + 12).attr("y", ly + 4)
-            .attr("font-family", "Courier New, monospace")
-            .attr("font-size", 7).attr("letter-spacing", "0.08em")
-            .attr("fill", "rgba(255,255,255,0.7)")
-            .text(layers[i].label.toUpperCase());
-        }
+        // Legend removed — sub-layers overlay in page.tsx serves as legend
       })
       .catch(console.error);
 

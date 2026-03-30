@@ -35,7 +35,7 @@ const CHAINS  = chainsRaw as any;
 
 const TOP_BAR_H    = 36;
 const STATUS_BAR_H = 28;
-const SIDEBAR_W    = 260;
+const SIDEBAR_W    = 320;
 
 /** Viewport Y where tree graphic starts — just at the base of the map hero section */
 function topAnchorPx(): number {
@@ -287,8 +287,10 @@ export default function Home() {
   return (
     <main style={{
       width: "100%",
-      minHeight: appState > 0 ? totalPageHeight + "px" : "100vh",
+      minHeight: "100vh",
       background: appState > 0 ? "#1A1917" : "var(--bg)",
+      paddingTop: appState > 0 ? TOP_BAR_H : 0,
+      paddingBottom: appState > 0 ? STATUS_BAR_H : 0,
       position: "relative",
     }}>
 
@@ -331,30 +333,19 @@ export default function Home() {
           {/* Fixed status bar */}
           <StatusBar />
 
-          {/* Fixed right sidebar */}
+          {/* Map hero + sidebar — flex row, sits in normal page flow */}
           <div style={{
-            position: "fixed",
-            top: TOP_BAR_H,
-            right: 0,
-            bottom: STATUS_BAR_H,
-            width: SIDEBAR_W,
-            background: "#F5F3EE",
-            borderLeft: "0.5px solid #DDD9D2",
-            zIndex: 90,
-            overflowY: "auto",
-          }}>
-            <SidebarPanel />
-          </div>
-
-          {/* Map hero — fills viewport between bars, right of sidebar */}
-          <div style={{
-            position: "absolute",
-            top: TOP_BAR_H,
-            left: 0,
-            right: SIDEBAR_W,
+            display: "flex",
             height: mapHeroH,
+          }}>
+
+          {/* Map hero — fills remaining width */}
+          <div style={{
+            flex: 1,
+            position: "relative",
             background: "#3A3835",
             overflow: "hidden",
+            minWidth: 0,
           }}>
             {/* D3 map fills the entire hero area */}
             <SupplyChainMap
@@ -370,7 +361,7 @@ export default function Home() {
             {currentThesis && (
               <div style={{
                 position: "absolute",
-                top: 32,
+                top: 24,
                 left: 36,
                 maxWidth: 440,
                 zIndex: 10,
@@ -497,16 +488,24 @@ export default function Home() {
             >
               {treeCollapsed ? "show tree +" : "hide tree ×"}
             </button>
+          </div>{/* end map hero */}
+
+          {/* Sidebar — static, scrolls with page */}
+          <div style={{
+            width: SIDEBAR_W,
+            flexShrink: 0,
+            background: "#F5F3EE",
+            borderLeft: "0.5px solid #DDD9D2",
+            overflowY: "auto",
+          }}>
+            <SidebarPanel />
           </div>
+
+          </div>{/* end flex row */}
 
           {/* ── Tree section — sits below map hero in normal page flow ── */}
           {!treeCollapsed && (
-            <div style={{
-              position: "absolute",
-              top: TOP_BAR_H + mapHeroH,
-              left: 0,
-              right: SIDEBAR_W,
-            }}>
+            <div style={{ width: "100%" }}>
               {/* Supply chain tree band header */}
               <div style={{
                 padding: "16px 48px",
