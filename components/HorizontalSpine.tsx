@@ -59,7 +59,7 @@ export default function HorizontalSpine({
         padding: "0 24px",
       }}
     >
-      {/* Brand name */}
+      {/* Left: brand name */}
       <button
         onClick={onHome}
         style={{
@@ -67,19 +67,19 @@ export default function HorizontalSpine({
           border: "none",
           padding: 0,
           cursor: "pointer",
-          marginRight: 28,
-          flexShrink: 0,
+          flex: 1,
           display: "flex",
           alignItems: "center",
+          justifyContent: "flex-start",
         }}
       >
-        <span style={{ fontFamily: "'DM Sans', Inter, -apple-system, sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.04em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase" }}>Stillpoint</span>
+        <span style={{ fontFamily: "'DM Sans', Inter, -apple-system, sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.04em", color: "rgba(255,255,255,0.55)", textTransform: "uppercase" }}>Stillpoint</span>
         <span style={{ display: "inline-block", width: "5px" }} />
-        <span style={{ fontFamily: "'DM Sans', Inter, -apple-system, sans-serif", fontSize: "11px", fontWeight: 200, letterSpacing: "0.04em", color: "rgba(255,255,255,0.16)", textTransform: "uppercase" }}>Intelligence</span>
+        <span style={{ fontFamily: "'DM Sans', Inter, -apple-system, sans-serif", fontSize: "11px", fontWeight: 200, letterSpacing: "0.04em", color: "rgba(255,255,255,0.30)", textTransform: "uppercase" }}>Intelligence</span>
       </button>
 
-      {/* Chain steps — centered */}
-      <div style={{ display: "flex", alignItems: "center", flex: 1, justifyContent: "center" }}>
+      {/* Center: chain steps */}
+      <div style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
         {LEVELS.map((lvl, idx) => {
           const active = isActive(lvl.key);
           const dormant = isDormant(lvl.key);
@@ -95,7 +95,7 @@ export default function HorizontalSpine({
                   width: 3,
                   height: 3,
                   borderRadius: "50%",
-                  background: "rgba(255,255,255,0.12)",
+                  background: "rgba(255,255,255,0.25)",
                   margin: "0 10px",
                   flexShrink: 0,
                 }} />
@@ -120,10 +120,10 @@ export default function HorizontalSpine({
                 <span style={{
                   fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
                   fontSize: "10.5px",
-                  color: active ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.2)",
+                  color: active ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.4)",
                   whiteSpace: "nowrap" as const,
                   lineHeight: 1,
-                  borderBottom: active ? "1px solid rgba(255,255,255,0.3)" : "none",
+                  borderBottom: active ? "1px solid rgba(255,255,255,0.5)" : "none",
                   paddingBottom: active ? "1px" : "0",
                 }}>
                   {label}
@@ -184,6 +184,9 @@ export default function HorizontalSpine({
           );
         })}
       </div>
+
+      {/* Right: spacer to balance brand */}
+      <div style={{ flex: 1 }} />
     </div>
   );
 }
