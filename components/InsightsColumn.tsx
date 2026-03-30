@@ -5,8 +5,8 @@ import { useState } from "react";
 const INSIGHT_BARS = [
   {
     key: "supply-demand",
-    label: "SUPPLY / DEMAND GAP",
-    teaser: "210 ton supply gap by 2030",
+    label: "SUPPLY CONSTRAINTS",
+    teaser: "A structural shortage of raw germanium isn't a risk — it's the baseline",
     pillBg: "#EFF6FF", pillText: "#1E40AF",
   },
   {
