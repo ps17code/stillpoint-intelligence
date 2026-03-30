@@ -333,173 +333,184 @@ export default function Home() {
           {/* Fixed status bar */}
           <StatusBar />
 
-          {/* Map hero + sidebar — flex row, sits in normal page flow */}
-          <div style={{
-            display: "flex",
-            height: mapHeroH,
-          }}>
+          {/* Main content + sidebar — flex row */}
+          <div style={{ display: "flex", minHeight: mapHeroH }}>
 
-          {/* Map hero — fills remaining width */}
-          <div style={{
-            flex: 1,
-            position: "relative",
-            background: "#3A3835",
-            overflow: "hidden",
-            minWidth: 0,
-          }}>
-            {/* D3 map fills the entire hero area */}
-            <SupplyChainMap
-              chainState={appState as 1|2|3|4}
-              rawSelection={sel.raw || undefined}
-              compSelection={sel.comp || undefined}
-              subSelection={sel.sub || undefined}
-              euSelection={sel.eu || undefined}
-              fillContainer
-            />
+            {/* Left column: thesis section + map */}
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
 
-            {/* ── Floating: thesis block (top-left) ── */}
-            {currentThesis && (
+              {/* ── TOP SECTION: thesis + sub-layers ── */}
+              {currentThesis && (
+                <div style={{
+                  background: "#2A2825",
+                  borderBottom: "0.5px solid rgba(255,255,255,0.07)",
+                  padding: "22px 36px 20px",
+                  display: "grid",
+                  gridTemplateColumns: "60% 40%",
+                  gap: 32,
+                  flexShrink: 0,
+                }}>
+                  {/* Left: tag line, title, body, brief link */}
+                  <div>
+                    <div style={{
+                      fontFamily: "'Geist Mono', 'Courier New', monospace",
+                      fontSize: 6,
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase",
+                      color: "rgba(255,255,255,0.2)",
+                      marginBottom: 9,
+                    }}>
+                      {currentPageTitle}
+                    </div>
+                    <div style={{
+                      fontFamily: "Inter, -apple-system, sans-serif",
+                      fontSize: 16,
+                      fontWeight: 500,
+                      color: "rgba(255,255,255,0.88)",
+                      lineHeight: 1.35,
+                      marginBottom: 10,
+                    }}>
+                      {chainLabel}
+                    </div>
+                    <div style={{
+                      fontFamily: "Inter, -apple-system, sans-serif",
+                      fontSize: 11,
+                      color: "rgba(255,255,255,0.38)",
+                      lineHeight: 1.7,
+                      maxWidth: 400,
+                      marginBottom: 12,
+                    }}>
+                      {currentThesis}
+                    </div>
+                    <button
+                      onClick={() => setBriefOpen(true)}
+                      style={{
+                        fontFamily: "'Geist Mono', 'Courier New', monospace",
+                        fontSize: 7,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "rgba(255,255,255,0.22)",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: 0,
+                        transition: "color 0.15s",
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
+                      onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.22)")}
+                    >
+                      read layer brief →
+                    </button>
+                  </div>
+
+                  {/* Right: sub-layers legend */}
+                  {layerLabels.length > 0 && (
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 10 }}>
+                      <div style={{
+                        fontFamily: "'Geist Mono', 'Courier New', monospace",
+                        fontSize: 6,
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        color: "rgba(255,255,255,0.18)",
+                        marginBottom: 2,
+                      }}>
+                        Sub-layers
+                      </div>
+                      {currentBrief && (currentBrief as { layer: string; summary?: string }[]).map((p, i) => (
+                        <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 9 }}>
+                          <div style={{
+                            width: 2,
+                            height: 14,
+                            background: layerLabels[i]?.color || "rgba(255,255,255,0.3)",
+                            borderRadius: 1,
+                            flexShrink: 0,
+                            marginTop: 2,
+                          }} />
+                          <div>
+                            <div style={{
+                              fontFamily: "'Geist Mono', 'Courier New', monospace",
+                              fontSize: 7,
+                              fontWeight: 600,
+                              letterSpacing: "0.08em",
+                              textTransform: "uppercase",
+                              color: layerLabels[i]?.color || "rgba(255,255,255,0.4)",
+                              marginBottom: 2,
+                            }}>
+                              {p.layer}
+                            </div>
+                            {p.summary && (
+                              <div style={{
+                                fontFamily: "Inter, -apple-system, sans-serif",
+                                fontSize: 10,
+                                color: "rgba(255,255,255,0.25)",
+                                lineHeight: 1.45,
+                              }}>
+                                {p.summary}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* ── MAP SECTION: ~55vh, no overlays ── */}
               <div style={{
-                position: "absolute",
-                top: 24,
-                left: 36,
-                maxWidth: 440,
-                zIndex: 10,
+                flex: 1,
+                position: "relative",
+                background: "#3A3835",
+                overflow: "hidden",
+                minHeight: "45vh",
               }}>
-                {/* Tag line */}
-                <div style={{
-                  fontFamily: "'Geist Mono', 'Courier New', monospace",
-                  fontSize: 6,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.15)",
-                  marginBottom: 8,
-                }}>
-                  {currentPageTitle}
-                </div>
-                {/* Title */}
-                <div style={{
-                  fontFamily: "Inter, -apple-system, sans-serif",
-                  fontSize: 16,
-                  fontWeight: 500,
-                  color: "rgba(255,255,255,0.92)",
-                  lineHeight: 1.4,
-                  marginBottom: 10,
-                }}>
-                  {chainLabel}
-                </div>
-                {/* Body */}
-                <div style={{
-                  fontFamily: "Inter, -apple-system, sans-serif",
-                  fontSize: 11,
-                  color: "rgba(255,255,255,0.32)",
-                  lineHeight: 1.65,
-                  maxWidth: 380,
-                }}>
-                  {currentThesis}
-                </div>
-
-                {/* Brief button */}
+                <SupplyChainMap
+                  chainState={appState as 1|2|3|4}
+                  rawSelection={sel.raw || undefined}
+                  compSelection={sel.comp || undefined}
+                  subSelection={sel.sub || undefined}
+                  euSelection={sel.eu || undefined}
+                  fillContainer
+                />
+                {/* Collapse toggle */}
                 <button
-                  onClick={() => setBriefOpen(true)}
+                  onClick={() => setTreeCollapsed(prev => !prev)}
                   style={{
-                    marginTop: 12,
+                    position: "absolute",
+                    bottom: 16,
+                    right: 16,
                     fontFamily: "'Geist Mono', 'Courier New', monospace",
                     fontSize: 7,
-                    letterSpacing: "0.1em",
+                    letterSpacing: "0.08em",
                     textTransform: "uppercase",
                     color: "rgba(255,255,255,0.2)",
-                    background: "none",
-                    border: "none",
+                    background: "rgba(0,0,0,0.25)",
+                    border: "0.5px solid rgba(255,255,255,0.1)",
+                    borderRadius: 3,
+                    padding: "4px 10px",
                     cursor: "pointer",
-                    padding: 0,
+                    zIndex: 10,
                     transition: "color 0.15s",
                   }}
                   onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.55)")}
                   onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.2)")}
                 >
-                  read layer brief →
+                  {treeCollapsed ? "show tree +" : "hide tree ×"}
                 </button>
               </div>
-            )}
 
-            {/* ── Floating: layer summary rows (bottom-left) ── */}
-            {layerLabels.length > 0 && (
-              <div style={{
-                position: "absolute",
-                bottom: 28,
-                left: 36,
-                zIndex: 10,
-                display: "flex",
-                flexDirection: "column",
-                gap: 6,
-              }}>
-                <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 6, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.18)", marginBottom: 4 }}>
-                  Sub-layers
-                </div>
-                {currentBrief && (currentBrief as { layer: string; summary?: string }[]).map((p, i) => (
-                  <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 7 }}>
-                    <span style={{
-                      fontFamily: "'Geist Mono', 'Courier New', monospace",
-                      fontSize: 7,
-                      fontWeight: 600,
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                      color: layerLabels[i]?.color || "rgba(255,255,255,0.4)",
-                      flexShrink: 0,
-                    }}>
-                      {p.layer}
-                    </span>
-                    {p.summary && (
-                      <>
-                        <span style={{ width: 1, height: 8, background: "rgba(255,255,255,0.12)", flexShrink: 0, alignSelf: "center" }} />
-                        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 10, color: "rgba(255,255,255,0.2)", lineHeight: 1.4 }}>
-                          {p.summary}
-                        </span>
-                      </>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
+            </div>{/* end left column */}
 
-            {/* ── Floating: collapse toggle (bottom-right of map) ── */}
-            <button
-              onClick={() => setTreeCollapsed(prev => !prev)}
-              style={{
-                position: "absolute",
-                bottom: 20,
-                right: 20,
-                fontFamily: "'Geist Mono', 'Courier New', monospace",
-                fontSize: 7,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.2)",
-                background: "rgba(0,0,0,0.25)",
-                border: "0.5px solid rgba(255,255,255,0.1)",
-                borderRadius: 3,
-                padding: "4px 10px",
-                cursor: "pointer",
-                zIndex: 10,
-                transition: "color 0.15s",
-              }}
-              onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.55)")}
-              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.2)")}
-            >
-              {treeCollapsed ? "show tree +" : "hide tree ×"}
-            </button>
-          </div>{/* end map hero */}
-
-          {/* Sidebar — static, scrolls with page */}
-          <div style={{
-            width: SIDEBAR_W,
-            flexShrink: 0,
-            background: "#F5F3EE",
-            borderLeft: "0.5px solid #DDD9D2",
-            overflowY: "auto",
-          }}>
-            <SidebarPanel />
-          </div>
+            {/* Sidebar — static, scrolls with page */}
+            <div style={{
+              width: SIDEBAR_W,
+              flexShrink: 0,
+              background: "#F5F3EE",
+              borderLeft: "0.5px solid #DDD9D2",
+              overflowY: "auto",
+            }}>
+              <SidebarPanel />
+            </div>
 
           </div>{/* end flex row */}
 
