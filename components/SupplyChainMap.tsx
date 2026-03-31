@@ -555,7 +555,7 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
         />
 
         {/* Legend — active layer sub-layers */}
-        <div style={{ position: "absolute", bottom: 30, left: 50, display: "flex", flexDirection: "column", gap: 8, pointerEvents: "auto", zIndex: 5 }}>
+        <div style={{ position: "absolute", top: "55%", left: "8%", display: "flex", flexDirection: "column", gap: 8, pointerEvents: "auto", zIndex: 5 }}>
           <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.9)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 2 }}>Sub-layers</div>
           {legendItems.map(item => (
             <div

@@ -127,7 +127,7 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
               }}
             >
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div data-title style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 13, fontWeight: 500, color: "#2C2B28", lineHeight: 1.4, marginBottom: 3, transition: "color 0.1s" }}>
+                <div data-title style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 13, fontWeight: 500, color: "#2C2B28", lineHeight: 1.4, marginBottom: 10, transition: "color 0.1s" }}>
                   {bar.teaser}
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 5 }}>

@@ -382,9 +382,9 @@ export default function Home() {
                   <div style={{
                     fontFamily: "Inter, -apple-system, sans-serif",
                     fontSize: 14,
-                    color: "rgba(255,255,255,0.35)",
+                    color: "rgba(255,255,255,0.72)",
                     lineHeight: 1.75,
-                    maxWidth: "min(1000px, 80%)",
+                    maxWidth: "min(1000px, 95%)",
                     marginBottom: 18,
                   }}>
                     {appState === 1 ? (
