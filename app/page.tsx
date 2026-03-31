@@ -8,7 +8,6 @@ import type { FeatureCollection, Feature, MultiPolygon, Polygon, Position } from
 
 const R = 1;
 
-// Lon/lat (degrees) → point on sphere surface
 function toVec3(lon: number, lat: number, r = R): THREE.Vector3 {
   const phi   = (90 - lat) * (Math.PI / 180);
   const theta = (lon + 180) * (Math.PI / 180);
@@ -19,7 +18,7 @@ function toVec3(lon: number, lat: number, r = R): THREE.Vector3 {
   );
 }
 
-// Outline: line segments for a closed ring
+// Outline: consecutive line-segment pairs
 function addOutlineRing(ring: Position[], buf: number[], r: number) {
   for (let i = 0; i < ring.length - 1; i++) {
     const a = toVec3(ring[i][0],   ring[i][1],   r);
@@ -28,6 +27,18 @@ function addOutlineRing(ring: Position[], buf: number[], r: number) {
   }
 }
 
+// Fill: fan triangulation from sphere-surface centroid
+function addFillRing(ring: Position[], buf: number[], r: number) {
+  const pts = ring.map(([lon, lat]) => toVec3(lon, lat, r));
+  const c   = new THREE.Vector3();
+  pts.forEach(p => c.add(p));
+  c.normalize().multiplyScalar(r);
+  for (let i = 0; i < pts.length - 1; i++) {
+    buf.push(c.x,        c.y,        c.z,
+             pts[i].x,   pts[i].y,   pts[i].z,
+             pts[i+1].x, pts[i+1].y, pts[i+1].z);
+  }
+}
 
 export default function HomePage() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -45,48 +56,37 @@ export default function HomePage() {
 
     // ── Scene & Camera ────────────────────────────────────────────────────────
     const scene  = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(0, 0, 2.85);
+    // FOV 46 + z=3.2 makes the globe slightly smaller than before
+    const camera = new THREE.PerspectiveCamera(46, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0, 3.2);
 
-    // ── Lights ────────────────────────────────────────────────────────────────
-    // Ambient — pure white, enough to keep dark side readable
-    scene.add(new THREE.AmbientLight(0xfffaf0, 0.45));
-
-    // Key light — upper left, bright white
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.8);
+    // ── Lights (only affect the ocean sphere — land uses MeshBasicMaterial) ───
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
     keyLight.position.set(-3, 2.5, 2.5);
     scene.add(keyLight);
-
-    // Soft fill from lower right — smooths the terminator
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.25);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
     fillLight.position.set(3, -2, 1);
     scene.add(fillLight);
 
-    // ── Globe group — everything rotates together ─────────────────────────────
+    // ── Globe group ───────────────────────────────────────────────────────────
     const globeGroup = new THREE.Group();
     scene.add(globeGroup);
 
-    // ── Textured globe sphere ─────────────────────────────────────────────────
-    // Texture multiplies with material color — dark gray tint keeps it subtle
-    const sphereMat = new THREE.MeshPhongMaterial({
-      color:     new THREE.Color("#3A3A36"),
-      specular:  new THREE.Color("#2A2A26"),
-      shininess: 12,
-    });
-    const sphereMesh = new THREE.Mesh(new THREE.SphereGeometry(R, 72, 72), sphereMat);
-    globeGroup.add(sphereMesh);
+    // ── Ocean sphere — MeshPhongMaterial so lights give it dimensionality ─────
+    globeGroup.add(new THREE.Mesh(
+      new THREE.SphereGeometry(R, 72, 72),
+      new THREE.MeshPhongMaterial({
+        color:     new THREE.Color("#141413"),
+        specular:  new THREE.Color("#222220"),
+        shininess: 14,
+      }),
+    ));
 
-    new THREE.TextureLoader().load(
-      "/earth-dark.jpg",
-      (tex) => { sphereMat.map = tex; sphereMat.needsUpdate = true; },
-    );
-
-    // ── Outline material ──────────────────────────────────────────────────────
-    const outlineMat = new THREE.LineBasicMaterial({
-      color:       0xffffff,
-      transparent: true,
-      opacity:     0.22,
-    });
+    // Materials defined up-front; geometry added after fetch
+    // Land: MeshBasicMaterial — unlit, always #333330 regardless of light angle
+    const landMat    = new THREE.MeshBasicMaterial({ color: new THREE.Color("#333330") });
+    const outlineMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.30 });
 
     // ── Auto-rotation: 1 rev / 90 s ───────────────────────────────────────────
     const AUTO_SPEED = (2 * Math.PI) / 90;
@@ -123,13 +123,14 @@ export default function HomePage() {
     const tick = () => {
       animId = requestAnimationFrame(tick);
       if (!isDragging) globeGroup.rotation.y += AUTO_SPEED * clock.getDelta();
-      else clock.getDelta(); // consume delta so no jump on release
+      else clock.getDelta();
       renderer.render(scene, camera);
     };
     tick();
 
-    // ── Fetch & build continent outlines ─────────────────────────────────────
-    const OUTLINE_R = R * 1.001; // fractionally above sphere surface
+    // ── Fetch land polygons → fills + outlines ────────────────────────────────
+    const LAND_R    = R * 1.001;   // land sits above ocean
+    const OUTLINE_R = R * 1.0018;  // outlines sit above land
 
     fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json")
       .then(res => res.json())
@@ -138,23 +139,31 @@ export default function HomePage() {
           world,
           (world.objects as Record<string, GeometryCollection>).land,
         );
-
         const features: Feature<MultiPolygon | Polygon>[] =
           raw.type === "FeatureCollection"
             ? (raw as FeatureCollection<MultiPolygon | Polygon>).features
             : [raw as unknown as Feature<MultiPolygon | Polygon>];
 
+        const fillBuf: number[]    = [];
         const outlineBuf: number[] = [];
 
         features.forEach(({ geometry: { type, coordinates } }) => {
           if (type === "Polygon") {
-            (coordinates as Position[][]).forEach(ring => addOutlineRing(ring, outlineBuf, OUTLINE_R));
+            (coordinates as Position[][]).forEach(ring => {
+              addFillRing(ring,    fillBuf,    LAND_R);
+              addOutlineRing(ring, outlineBuf, OUTLINE_R);
+            });
           } else if (type === "MultiPolygon") {
-            (coordinates as Position[][][]).forEach(poly =>
-              poly.forEach(ring => addOutlineRing(ring, outlineBuf, OUTLINE_R))
-            );
+            (coordinates as Position[][][]).forEach(poly => poly.forEach(ring => {
+              addFillRing(ring,    fillBuf,    LAND_R);
+              addOutlineRing(ring, outlineBuf, OUTLINE_R);
+            }));
           }
         });
+
+        const fillGeo = new THREE.BufferGeometry();
+        fillGeo.setAttribute("position", new THREE.Float32BufferAttribute(fillBuf, 3));
+        globeGroup.add(new THREE.Mesh(fillGeo, landMat));
 
         const outlineGeo = new THREE.BufferGeometry();
         outlineGeo.setAttribute("position", new THREE.Float32BufferAttribute(outlineBuf, 3));
