@@ -30,7 +30,11 @@ export default function SidebarPanel() {
       <div style={{ padding: "16px 14px 24px" }}>
 
         {/* ── Market data ─────────────────────────────────────────── */}
-        <div style={{ ...SECTION_HDR, marginBottom: 20 }}>Market Data</div>
+        <style>{`@keyframes sp-blink { 0%,100%{opacity:1} 50%{opacity:0.15} }`}</style>
+        <div style={{ ...SECTION_HDR, marginBottom: 20, display: "flex", alignItems: "center", gap: 7 }}>
+          <span>Market Data</span>
+          <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#7DA06A", animation: "sp-blink 2s ease-in-out infinite", flexShrink: 0 }} />
+        </div>
 
         {/* GeO₂ price card */}
         <div style={{ marginBottom: 12 }}>
@@ -58,29 +62,6 @@ export default function SidebarPanel() {
           </div>
         </div>
 
-        {/* Western supply card */}
-        <div style={{ marginBottom: 16 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 6, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#9CA3AF", marginBottom: 3 }}>Western supply</div>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 2 }}>
-                <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 17, fontWeight: 600, color: "#1C1E21", letterSpacing: "-0.4px", lineHeight: 1 }}>~80t</span>
-                <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 8, fontWeight: 600, color: "#B85450" }}>−24%</span>
-              </div>
-              <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 5, color: "#B0ADA6", letterSpacing: "0.05em" }}>annual · USGS 2025</div>
-            </div>
-            <svg width="72" height="32" viewBox="0 0 72 32" style={{ flexShrink: 0, marginTop: 2 }}>
-              <defs>
-                <linearGradient id="spk-fill2" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#B85450" stopOpacity="0.18" />
-                  <stop offset="100%" stopColor="#B85450" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path d="M0,2 L8,2 L16,3 L24,5 L32,8 L40,13 L48,19 L56,24 L64,28 L72,30" fill="none" stroke="#B85450" strokeWidth="0.8" />
-              <path d="M0,2 L8,2 L16,3 L24,5 L32,8 L40,13 L48,19 L56,24 L64,28 L72,30 L72,32 L0,32 Z" fill="url(#spk-fill2)" />
-            </svg>
-          </div>
-        </div>
 
         {/* ── Core Analysis ───────────────────────────────────────── */}
         <div style={{ ...SECTION_HDR, marginTop: 20, marginBottom: 10 }}>Core Analysis</div>

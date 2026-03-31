@@ -345,7 +345,7 @@ export default function Home() {
           }}>
 
             {/* ── LEFT COLUMN: thesis → map → tree → status ── */}
-            <div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
 
               {/* THESIS BLOCK */}
               {currentThesis && (
@@ -402,10 +402,10 @@ export default function Home() {
                 </div>
               )}
 
-              {/* MAP SECTION */}
+              {/* MAP SECTION — flex:1 so it fills remaining left-column height */}
               <div style={{
-                height: "70vh",
-                minHeight: 500,
+                flex: 1,
+                minHeight: 400,
                 position: "relative",
                 background: "#3A3835",
               }}>
@@ -457,9 +457,9 @@ export default function Home() {
 
           {/* ── TREE SECTION — full width below grid ── */}
           {!treeCollapsed && (
-            <div style={{ marginTop: 20, paddingBottom: 40 }}>
+            <div style={{ paddingBottom: 40 }}>
               <div style={{
-                padding: "14px 36px 16px",
+                padding: "24px 36px 16px",
                 background: "#1A1917",
                 borderTop: "0.5px solid rgba(255,255,255,0.06)",
                 borderBottom: "0.5px solid rgba(255,255,255,0.06)",

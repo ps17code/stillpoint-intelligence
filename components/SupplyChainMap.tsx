@@ -187,23 +187,6 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
           .attr("stroke", "#d0ccc2")
           .attr("stroke-width", 0.4);
 
-        // China concentration ellipse (state 1 only)
-        if (showEllipse) {
-          const [ecx, ecy] = pt(107, 37);
-          svg.append("ellipse")
-            .attr("cx", ecx).attr("cy", ecy)
-            .attr("rx", 72).attr("ry", 45)
-            .attr("fill", "rgba(180,140,60,0.04)")
-            .attr("stroke", "rgba(180,140,60,0.18)")
-            .attr("stroke-width", 0.7)
-            .attr("stroke-dasharray", "3,3");
-          svg.append("text")
-            .attr("x", ecx + 74).attr("y", ecy - 46)
-            .attr("font-family", "Courier New, monospace")
-            .attr("font-size", 6).attr("letter-spacing", "0.1em")
-            .attr("fill", "rgba(154,123,60,0.6)").attr("text-anchor", "start")
-            .text("CHINA CONCENTRATION");
-        }
 
         // Flow arcs
         const arcPath = (x1: number, y1: number, x2: number, y2: number) => {
