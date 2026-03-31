@@ -76,6 +76,23 @@ export default function Home() {
 
   // ── Panel ─────────────────────────────────────────────────────────
   const [treeCollapsed, setTreeCollapsed] = useState(false);
+
+  // ── Tree section position — used to offset fixed SVG scroll ───────
+  // The TreeMap SVG is position:fixed, so its scroll translation must
+  // be relative to when the tree section is visible in the viewport,
+  // not absolute document scroll. We measure the tree section's doc-top
+  // and subtract it so nodes stay below viewport until scrolled there.
+  const treeSectionRef = useRef<HTMLDivElement>(null);
+  const [treeSectionDocTop, setTreeSectionDocTop] = useState(99999);
+  const measureTreeSection = useCallback(() => {
+    const el = treeSectionRef.current;
+    if (el) setTreeSectionDocTop(el.getBoundingClientRect().top + window.scrollY);
+  }, []);
+  useEffect(() => { measureTreeSection(); }, [appState, treeCollapsed, measureTreeSection]);
+  useEffect(() => {
+    window.addEventListener("resize", measureTreeSection);
+    return () => window.removeEventListener("resize", measureTreeSection);
+  }, [measureTreeSection]);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [briefOpen, setBriefOpen] = useState(false);
 
@@ -259,6 +276,10 @@ export default function Home() {
   // Map hero height in pixels (for page flow)
   const mapHeroH = windowHeight - TOP_BAR_H - STATUS_BAR_H;
 
+  // Effective scroll for TreeMap: offset by tree section's document position.
+  // Negative values push nodes below the viewport (tree not yet in view).
+  const effectiveTreeScrollY = scrollY - treeSectionDocTop;
+
   // Total document height: top bar area + map hero + tree section + some overflow
   const totalPageHeight = appState > 0
     ? TOP_BAR_H + mapHeroH + (bandHeight + 300)
@@ -435,7 +456,7 @@ export default function Home() {
 
               {/* TREE SECTION — explicit minHeight so fixed SVG overlay has scroll distance */}
               {!treeCollapsed && (
-                <div style={{ minHeight: bandHeight }}>
+                <div ref={treeSectionRef} style={{ minHeight: bandHeight }}>
                   <div style={{
                     padding: "16px 36px",
                     background: "#1A1917",
@@ -473,7 +494,7 @@ export default function Home() {
                     nodes={NODES}
                     layerConfig={CHAINS.layerConfig}
                     svgWidth={svgWidth}
-                    scrollY={scrollY}
+                    scrollY={effectiveTreeScrollY}
                     onNodeHover={handleNodeHover}
                     onNodeLeave={handleNodeLeave}
                     onNodeClick={handleNodeClick}
