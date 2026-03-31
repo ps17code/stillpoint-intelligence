@@ -91,7 +91,7 @@ export default function SidebarPanel() {
                   <div data-title style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 13, fontWeight: 500, color: "#2C2B28", lineHeight: 1.4, marginBottom: 3, transition: "color 0.1s" }}>
                     {bar.teaser}
                   </div>
-                  <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: "5.5px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: bar.color }}>
+                  <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: "9px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: bar.color }}>
                     {bar.label}
                   </span>
                 </div>
