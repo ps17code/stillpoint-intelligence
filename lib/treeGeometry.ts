@@ -67,7 +67,7 @@ export function computeRawSvgWidth(chain: RawChain): number {
     layerWidth(chain.miners.length,   chain.groupSplit?.miners),
     layerWidth(chain.refiners.length, 3), // refiners always split at primaryCount=3
   ];
-  return Math.max(1000, Math.max(...widths) + 200); // 100px padding each side
+  return Math.max(1000, Math.max(...widths) + 400); // 200px padding each side (labels extend ~200 units left)
 }
 
 // Convert pixel position to SVG 0-1000 coordinate space
