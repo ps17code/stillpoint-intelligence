@@ -2,31 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import * as topojson from "topojson-client";
-import type { Topology, GeometryCollection } from "topojson-specification";
-import type { FeatureCollection, Feature, MultiPolygon, Polygon, Position } from "geojson";
 
 const R = 1;
-
-function toVec3(lon: number, lat: number, r = R): THREE.Vector3 {
-  const phi   = (90 - lat) * (Math.PI / 180);
-  const theta = (lon + 180) * (Math.PI / 180);
-  return new THREE.Vector3(
-    -r * Math.sin(phi) * Math.cos(theta),
-     r * Math.cos(phi),
-     r * Math.sin(phi) * Math.sin(theta),
-  );
-}
-
-// Outline: consecutive line-segment pairs
-function addOutlineRing(ring: Position[], buf: number[], r: number) {
-  for (let i = 0; i < ring.length - 1; i++) {
-    const a = toVec3(ring[i][0],   ring[i][1],   r);
-    const b = toVec3(ring[i+1][0], ring[i+1][1], r);
-    buf.push(a.x, a.y, a.z, b.x, b.y, b.z);
-  }
-}
-
 
 export default function HomePage() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -80,8 +57,6 @@ export default function HomePage() {
       (err) => console.error("Texture load error:", err),
     );
 
-    // Outline material — sits above the texture as a data layer
-    const outlineMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.15 });
 
     // ── Auto-rotation: 1 rev / 90 s ───────────────────────────────────────────
     const AUTO_SPEED = (2 * Math.PI) / 90;
@@ -123,38 +98,6 @@ export default function HomePage() {
     };
     tick();
 
-    // ── Fetch land polygons → outline lines only (texture handles land/ocean) ──
-    const OUTLINE_R = R * 1.001;
-
-    fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json")
-      .then(res => res.json())
-      .then((world: Topology) => {
-        const raw = topojson.feature(
-          world,
-          (world.objects as Record<string, GeometryCollection>).land,
-        );
-        const features: Feature<MultiPolygon | Polygon>[] =
-          raw.type === "FeatureCollection"
-            ? (raw as FeatureCollection<MultiPolygon | Polygon>).features
-            : [raw as unknown as Feature<MultiPolygon | Polygon>];
-
-        const outlineBuf: number[] = [];
-
-        features.forEach(({ geometry: { type, coordinates } }) => {
-          if (type === "Polygon") {
-            (coordinates as Position[][]).forEach(ring => addOutlineRing(ring, outlineBuf, OUTLINE_R));
-          } else if (type === "MultiPolygon") {
-            (coordinates as Position[][][]).forEach(poly =>
-              poly.forEach(ring => addOutlineRing(ring, outlineBuf, OUTLINE_R))
-            );
-          }
-        });
-
-        const outlineGeo = new THREE.BufferGeometry();
-        outlineGeo.setAttribute("position", new THREE.Float32BufferAttribute(outlineBuf, 3));
-        globeGroup.add(new THREE.LineSegments(outlineGeo, outlineMat));
-      })
-      .catch(console.error);
 
     // ── Cleanup ───────────────────────────────────────────────────────────────
     return () => {
