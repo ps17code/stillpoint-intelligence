@@ -22,6 +22,26 @@ const COMPONENT_INSIGHT_BARS = [
   { key: "comp-investment-ideas", label: "INVESTMENT",   teaser: "The GeCl₄ bottleneck creates a 12–24 month pricing power window — and specific companies capture asymmetric value on each side", color: "#9D174D" },
 ];
 
+const SUBSYSTEM_INSIGHT_BARS = [
+  { key: "sub-supply-demand",    label: "SUPPLY / DEMAND", teaser: "The world needs 60 new submarine cable systems this decade — and only three companies can build the wet plant that makes them work", color: "#1E40AF" },
+  { key: "sub-bottlenecks",      label: "BOTTLENECKS",     teaser: "SubCom, ASN, and NEC control the wet-plant oligopoly — and their order books are full through 2027", color: "#991B1B" },
+  { key: "sub-geopolitical",     label: "GEOPOLITICAL",    teaser: "The Baltic Sea cable cuts prove that submarine infrastructure is a target — and HMN Technologies' exclusion reshapes the competitive map", color: "#92400E" },
+  { key: "sub-catalysts",        label: "CATALYSTS",       teaser: "Meta's $10B+ Waterworth, Google's 30+ cable investments, and $42.5B in BEAD funding converge on a subsystem layer already running at capacity", color: "#065F46" },
+  { key: "sub-emerging-tech",    label: "EMERGING TECH",   teaser: "Space-division multiplexing, open cable systems, and 1.6T coherent optics are rewriting submarine cable economics — but hollow-core fiber could eliminate the germanium dependency entirely", color: "#5B21B6" },
+  { key: "sub-major-companies",  label: "COMPANIES",       teaser: "Prysmian's €16–17B backlog and 8-vessel fleet make it the subsystem layer's dominant integrated player — but the real pricing power sits with SubCom's wet-plant monopoly in the US", color: "#155E75" },
+  { key: "sub-investment-ideas", label: "INVESTMENT",      teaser: "Prysmian's integrated model, Dycom's labor moat, and cable vessel scarcity offer three entry points — but the real asymmetry is SubCom's eventual IPO", color: "#9D174D" },
+];
+
+const END_USE_INSIGHT_BARS = [
+  { key: "eu-supply-demand",    label: "SUPPLY / DEMAND", teaser: "68 GW of datacenter power needed by 2027 — and 4–7 year grid interconnection queues mean most of it won't arrive in time", color: "#1E40AF" },
+  { key: "eu-bottlenecks",      label: "BOTTLENECKS",     teaser: "Northern Virginia's 1.5 GW incident exposed what happens when datacenter demand hits grid limits — and Turner Construction's 37% backlog share reveals a single-contractor dependency few investors track", color: "#991B1B" },
+  { key: "eu-geopolitical",     label: "GEOPOLITICAL",    teaser: "NVIDIA's Blackwell chips are entirely export-controlled, G42 is spending $15.2B with Microsoft, and data sovereignty laws are fragmenting the global datacenter market into regulatory islands", color: "#92400E" },
+  { key: "eu-catalysts",        label: "CATALYSTS",       teaser: "$660–690B in 2026 hyperscaler capex, the 1.6T transceiver supercycle, Stargate's $500B commitment, and political backlash against datacenter power create the end-use layer's most volatile catalyst stack in a decade", color: "#065F46" },
+  { key: "eu-emerging-tech",    label: "EMERGING TECH",   teaser: "Co-packaged optics, Microsoft's MOSAIC MicroLED interconnects, nuclear SMRs, and liquid cooling are rewriting datacenter architecture from the photon to the watt", color: "#5B21B6" },
+  { key: "eu-major-companies",  label: "COMPANIES",       teaser: "Equinix doubling capacity by 2029, Digital Realty's 11.7M sq ft Digital Dulles campus, Turner's $16B datacenter backlog, and Vertiv's $15B cooling pipeline define the end-use layer's physical reality", color: "#155E75" },
+  { key: "eu-investment-ideas", label: "INVESTMENT",      teaser: "Long Equinix/DLR for the REIT backbone, long Vertiv for the cooling supercycle, long Constellation for nuclear datacenter power — and short power-constrained operators without secured supply agreements", color: "#9D174D" },
+];
+
 const SECTION_HDR: React.CSSProperties = {
   fontFamily: "'Geist Mono', 'Courier New', monospace",
   fontSize: 15,
@@ -35,7 +55,7 @@ const SECTION_HDR: React.CSSProperties = {
 
 export default function SidebarPanel({ chainState }: { chainState?: number }) {
   const [activePopup, setActivePopup] = useState<string | null>(null);
-  const bars = chainState === 2 ? COMPONENT_INSIGHT_BARS : INSIGHT_BARS;
+  const bars = chainState === 2 ? COMPONENT_INSIGHT_BARS : chainState === 3 ? SUBSYSTEM_INSIGHT_BARS : chainState === 4 ? END_USE_INSIGHT_BARS : INSIGHT_BARS;
 
   const activeBarIdx = activePopup ? bars.findIndex(b => b.key === activePopup) : -1;
   const prevKey = activeBarIdx > 0 ? bars[activeBarIdx - 1].key : null;
@@ -927,6 +947,450 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
                   </div>
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
                     Sources: Umicore Full Year Results 2025; Corning Q3 2025 Earnings; Corning–Meta $6B Agreement; Prysmian FY2024 Results; Prysmian–Umicore Supply Agreement 2025; Data Center Dynamics — Relativity-Prysmian Partnership; Fastmarkets Germanium Pricing Data March 2026.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "sub-supply-demand" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Cable manufacturing capacity, vessel availability, and repeater production define a subsystem layer where physical constraints outweigh financial ones</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#EFF6FF', color: '#1E40AF', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Supply constraints</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Submarine cable manufacturing</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The global submarine cable market reached $32.8 billion in 2026, driven by hyperscaler demand for intercontinental bandwidth. Approximately 60 new submarine cable systems are planned or under construction globally through 2030. The three integrated manufacturers — SubCom, ASN (Alcatel Submarine Networks), and NEC — control more than 60% of wet-plant revenue and operate the only facilities capable of manufacturing repeatered submarine cable systems at scale.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Total submarine cable manufacturing capacity is approximately 100,000–120,000 km/year. Against planned deployments requiring 400,000+ km through 2030, the pipeline is saturated. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>Lead times for turnkey submarine cable systems have stretched to 3–4 years from contract to ready-for-service</strong>, compared with 18–24 months historically.</p>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Repeater and cable laying vessel constraints</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>EDFA repeaters are the highest-value components in submarine cable systems — a single transoceanic system may require 100+ repeaters at $500K–1M+ each. Repeater order books at SubCom and ASN are filled through 2027. Branching unit lead times have extended to 18–24 months.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Of approximately 60 cable laying vessels (CLVs) globally, only 15–20 are rated for deep-water transoceanic work. ~66% of the fleet will reach end-of-life by 2040 without replacement. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>Vessel day rates have increased 40–60% since 2023</strong>. Weather windows restrict laying seasons to approximately 200 operational days per year in the North Atlantic — a constraint immune to capital.</p>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Terrestrial deployment</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The US alone requires an estimated 213.3 million additional fiber miles by 2029. Single-mode fiber prices surged more than 500% between January 2025 and early 2026, with G.657A2 fiber reaching $35/km. The binding constraint has shifted from cable availability to installation capacity — trained splicing crews, conduit access, and permitting.</p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Prysmian FY2024 Results; SubCom Corporate Overview; TeleGeography Submarine Cable Map; Light Reading — Fiber Supply Threatens US Broadband Targets; NTIA BEAD Progress Dashboard.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "sub-bottlenecks" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Three chokepoints define the subsystem layer: wet-plant integration, cable laying vessel scheduling, and landing station permitting create irreducible lead times</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#FEF2F2', color: '#991B1B', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Bottlenecks</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  {([
+                    ['Wet-plant oligopoly', 'SubCom (US) · ASN (France) · NEC (Japan) · Combined >60% of wet-plant revenue', 'SubCom, ASN, and NEC are the only facilities capable of manufacturing repeatered submarine cable systems at scale. The barrier to entry is extreme — submarine repeaters must operate for 25+ years at ocean-floor pressures without maintenance access. No new entrant has broken into the repeatered cable market in over two decades. Repeater order books at all three manufacturers are committed through 2027. The practical implication: a hyperscaler placing a new transoceanic cable order today will wait 3–4 years for ready-for-service delivery.'],
+                    ['Cable laying vessel scheduling', 'Fleet booking 12–18 months advance · Only 15–20 deep-water rated vessels globally', 'Even when cable is manufactured and repeaters are ready, installation requires booking vessel time 12–18 months in advance. A single weather delay pushes vessel availability for subsequent projects. The dual-use nature of many CLVs — capable of both telecom and offshore wind installation — creates competition for vessel time between two surging sectors. Prysmian has responded by building the industry\'s largest private CLV fleet (8 vessels by 2028), removing capacity from the open market.'],
+                    ['Landing station permitting', 'US: 18–36 months · EU: 12–24 months · NEPA + CZMA sequential approval', 'Every submarine cable requires terrestrial landing stations where subsea fiber transitions to terrestrial networks. US permitting involves coastal environmental reviews (NEPA, CZMA), FCC submarine cable landing license, and local government approvals. Virginia Beach serves as the US landing point for more than a dozen transatlantic cables — a single permitting moratorium would affect multiple systems simultaneously.'],
+                    ['Terrestrial installation labor', 'Fiber splicers: 2–3 years to train · Workforce depleted in 2020–2022 downturn', 'Trained fiber splicing crews are the scarcest resource in the US deployment chain. Municipal permitting varies dramatically by jurisdiction — from weeks in rural areas to 12+ months in dense urban environments. As BEAD funding flows into construction in 2026, competition for qualified crews intensifies.'],
+                  ] as [string, string, string][]).map(([title, meta, body], i) => (
+                    <div key={i} style={{ marginTop: '24px', paddingBottom: '20px', borderBottom: i < 3 ? '0.5px solid #F3F4F6' : 'none' }}>
+                      <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '6px', fontFamily: "'Geist Mono', monospace" }}>Bottleneck {String(i + 1).padStart(2, '0')}</div>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13px', fontWeight: 600, color: '#1C1E21', marginBottom: '4px' }}>{title}</div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', color: '#9CA3AF', marginBottom: '8px' }}>{meta}</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                    </div>
+                  ))}
+                  <div style={{ marginTop: '20px', padding: '12px 14px', background: '#FEF2F2', borderRadius: '4px', border: '0.5px solid rgba(153,27,27,0.12)' }}>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#6B3A3A', lineHeight: 1.65, margin: 0 }}>The bottlenecks interact multiplicatively: a 3-month permitting delay pushes vessel scheduling, which cascades to the next project. <strong style={{ fontWeight: 600 }}>Companies that control these bottleneck assets hold structural pricing power that persists regardless of demand fluctuations.</strong></p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: TeleGeography — Submarine Cable Industry Analysis; SubCom Corporate Capabilities; ASN / French Government Nationalization 2024; Prysmian FY2024 Results; FCC Submarine Cable Landing License Process.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "sub-geopolitical" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>State ownership of submarine cable manufacturers, deliberate cable sabotage, and the bifurcation of the global cable network into western and Chinese spheres define the subsystem layer&apos;s geopolitical risk</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#FEF3C7', color: '#92400E', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Geopolitical risk</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>HMN Technologies and market bifurcation</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>HMN Technologies (formerly Huawei Marine Networks) held ~23% of the global submarine cable market by length installed. Despite the restructuring to remove the Huawei name, western governments and hyperscalers have systematically excluded HMN from new cable projects on national security grounds. The 2020 Team Telecom recommendation against the Pacific Light Cable Network set the precedent.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>This exclusion has <strong style={{ fontWeight: 600, color: '#1C1E21' }}>bifurcated the global submarine cable network into two parallel supply chains.</strong> Western-funded systems use SubCom, ASN, or NEC exclusively. Chinese and Belt and Road systems use HMN and Hengtong. The PEACE cable (25,000 km) connects Pakistan, East Africa, and Europe — HMN&apos;s largest repeatered project.</p>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Baltic Sea sabotage and France nationalizes ASN</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Since 2022, at least 10 submarine cable and pipeline incidents have occurred in the Baltic Sea. The October 2023 damage to the Balticconnector gas pipeline and Estonia-Finland telecom cable within 24 hours demonstrated the vulnerability of co-located submarine infrastructure. NATO launched a Maritime Centre for the Security of Critical Undersea Infrastructure in response.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>In March 2024, France completed the acquisition of ASN from Nokia for ~€350 million — explicitly framed as a national security decision. Under state ownership, ASN&apos;s project selection may increasingly reflect French and EU strategic priorities rather than purely commercial considerations. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>Cable repair operations require the same specialized CLVs needed for new installation, meaning every sabotage event compounds the vessel scheduling bottleneck.</strong></p>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>US government influence on SubCom</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>SubCom (acquired by Cerberus Capital in 2018 for ~$325M) is the only US-owned manufacturer of repeatered submarine cable systems. The US government uses diplomatic channels to steer cable contracts toward SubCom — particularly in the Indo-Pacific. Cable route selection has become a geopolitical exercise: cables avoid the South China Sea, Taiwan Strait, and Red Sea, and landing stations in Djibouti, Singapore, and Guam are subject to increasing government oversight.</p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: HMN Technologies Market Share Data; TeleGeography Submarine Cable Analysis; French Government — ASN Acquisition March 2024; US FCC Team Telecom — PLCN Decision; Reuters — Baltic Sea Cable Incidents; NATO Maritime Centre for Critical Undersea Infrastructure.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "sub-catalysts" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Hyperscaler submarine cable commitments, BEAD terrestrial deployment, military fiber demand, and nine new cable laying vessels create demand acceleration the subsystem layer cannot absorb before 2028</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#ECFDF5', color: '#065F46', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Catalysts</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Hyperscaler submarine cable investment</div>
+                    <div style={{ display: 'flex', gap: '8px', margin: '12px 0' }}>
+                      {([['$10B+', 'Meta Waterworth (50,000 km)', false], ['30+', 'Google cable investments', false], ['$50B+', 'Hyperscaler pipeline through 2030', true]] as [string, string, boolean][]).map(([num, label, isGreen], i) => (
+                        <div key={i} style={{ flex: 1, background: '#F3F4F6', borderRadius: '4px', padding: '10px 12px' }}>
+                          <div style={{ fontSize: '16px', fontWeight: 600, color: isGreen ? '#065F46' : '#1C1E21', letterSpacing: '-0.3px', fontFamily: "'Geist Mono', monospace" }}>{num}</div>
+                          <div style={{ fontSize: '7.5px', color: '#9CA3AF', letterSpacing: '0.05em', textTransform: 'uppercase' as const, marginTop: '2px', fontFamily: "'Geist Mono', monospace" }}>{label}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Meta&apos;s Project Waterworth (~50,000 km, $10B+) represents approximately 40–50% of one year&apos;s global submarine cable manufacturing capacity — a single project. Google has invested in 30+ cable systems including sole ownership of Curie, Dunant, Equiano, Firmina, and Umoja. The aggregate hyperscaler submarine cable pipeline exceeds $50 billion in committed and planned investment through 2030.</p>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>BEAD + military + offshore wind convergence</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The $42.5B BEAD program enters peak construction in 2026, requiring 213.3 million additional fiber miles — BABA-compliant, concentrating demand on Corning, Prysmian North American operations, and OFS. Military fiber demand (fiber-guided munitions, DAS monitoring cables, shipboard networks) accounts for an estimated 10.5% of global fiber consumption in 2025. Offshore wind (~30 GW under construction in Europe alone) competes for the same CLV time, factory capacity, and installation crews as submarine telecom cables.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>Nine CLV newbuilds are scheduled for delivery by end 2026.</strong> The net effect is to reduce (not eliminate) the vessel scheduling bottleneck — more simultaneous installation projects, but still insufficient to prevent scheduling conflicts through 2028.</p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Meta Project Waterworth Disclosures; Google Submarine Cable Investment Portfolio; Prysmian FY2024 Results; NTIA BEAD Progress Dashboard March 2026; TeleGeography Submarine Cable Database; Leonardo da Vinci CLV Technical Specifications.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "sub-emerging-tech" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Five technology shifts are reshaping the subsystem layer: SDM multi-core fiber, open cable architectures, 800G-to-1.6T coherent optics, distributed acoustic sensing, and next-generation cable laying vessel designs</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#EDE9FE', color: '#5B21B6', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Emerging tech</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  {([
+                    ['Space-division multiplexing (SDM)', 'Google Dunant: 250 Tbps / 12 fiber pairs · 4-core commercial systems expected 2028–2029', 'SDM uses multiple cores within a single fiber to multiply transmission capacity without proportional increases in cable diameter or power consumption. NEC demonstrated 20-core multi-core fiber transmission at 319 Tb/s per fiber in laboratory conditions. SDM requires new repeater designs that amplify multiple spatial modes simultaneously — creating an engineering advantage for manufacturers that have invested in SDM repeater development. Germanium implication: SDM multi-core fiber may increase germanium consumption per km, but if SDM reduces total systems deployed, the net demand effect is ambiguous.', 'neutral'],
+                    ['Open cable architectures', 'TIP OCS specification · Meta, Google, Microsoft consortium · Enables terminal upgrades without replacing submarine plant', 'Open Cable Systems decouple wet-plant (cable + repeaters) from terminal equipment, allowing owners to select best-in-class components and upgrade as coherent technology advances (400G → 800G → 1.6T) without touching subsea components. This shifts value from integrated system suppliers toward component specialists — coherent optics vendors (Ciena, Infinera/Nokia, Acacia/Cisco) gain direct access to submarine terminal equipment previously controlled by cable manufacturers.', 'neutral'],
+                    ['800G and 1.6T coherent optics', 'Doubles throughput of existing cables without subsea changes · 1.6T submarine grade: commercial by 2027–2028', 'Upgrading terminal equipment from 400G to 800G doubles the throughput of an existing cable system. 1.6T transceivers for submarine use require advances in DSP, forward error correction, and nonlinear compensation expected by 2027–2028. For terrestrial networks, 800G/1.6T drives demand for higher-quality single-mode fiber with tighter specifications — higher germanium content per km.', 'bull'],
+                    ['Distributed Acoustic Sensing (DAS)', 'NATO-promoted post-Baltic sabotage · Dedicated sensing fibers per cable system', 'DAS uses standard optical fiber as a continuous acoustic sensor, detecting anchor strikes, trawling, and sabotage attempts in real time with ~1 meter spatial resolution. Following Baltic Sea incidents, DAS monitoring has moved from experimental to mandatory for new cable systems in sensitive corridors. DAS requires dedicated fiber pairs per cable — increasing the fiber count per system and adding manufacturing complexity. Creates new revenue: monitoring data sold to governments and naval forces.', 'bull'],
+                  ] as [string, string, string, string][]).map(([title, status, body, dir], i) => (
+                    <div key={i} style={{ marginTop: '24px', paddingBottom: '20px', borderBottom: i < 3 ? '0.5px solid #F3F4F6' : 'none' }}>
+                      <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '6px', fontFamily: "'Geist Mono', monospace" }}>Vector {String(i + 1).padStart(2, '0')}</div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, marginBottom: '5px' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13px', fontWeight: 600, color: '#1C1E21' }}>{title}</div>
+                        <span style={{ fontSize: '7.5px', padding: '2px 6px', borderRadius: '3px', fontFamily: "'Geist Mono', monospace", flexShrink: 0, fontWeight: 600, background: dir === 'bull' ? '#ECFDF5' : '#F3F4F6', color: dir === 'bull' ? '#065F46' : '#6B7280' }}>{dir === 'bull' ? 'Ge+ demand' : 'ambiguous'}</span>
+                      </div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', color: '#9CA3AF', marginBottom: '8px' }}>{status}</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                    </div>
+                  ))}
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Google Dunant Cable Specs; NEC Multi-Core Fiber Demonstration; Telecom Infra Project OCS Specification; Ciena 800G Coherent Optics; NATO — DAS for Submarine Cable Protection; TeleGeography Submarine Cable Technology Trends.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "sub-major-companies" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Six companies control the subsystem layer: Prysmian (integrated cable-to-vessel), SubCom (US wet-plant), ASN (French state-owned), NEC (Trans-Pacific), Dycom (terrestrial deployment), and the excluded HMN Technologies (Belt and Road)</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#ECFEFF', color: '#155E75', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Major companies</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  {([
+                    ['Prysmian Group', 'Borsa Italiana: PRY · Market cap ~€31B · Revenue €17.1B (FY2024) · Submarine backlog €16–17B · Fleet: 8 CLVs by 2028', 'World\'s largest cable company by revenue and the only player with full vertical integration from fiber preform manufacturing through cable production to vessel-based installation. The Leonardo da Vinci (170m, 10,000-tonne cable capacity, DP3 positioning) commissioned 2024. The Arco Felice (Naples) factory is the world\'s largest submarine cable factory. The €16–17B submarine backlog provides revenue visibility through 2028+.'],
+                    ['SubCom', 'Private (Cerberus Capital) · Acquired 2018 for ~$325M · Headquarters: Newington, NH · ~1,800 employees', 'The only US-owned manufacturer of repeatered submarine cable systems. This unique position makes it the de facto supplier for US government-affiliated projects and cables landing on US territory. SubCom manufactured the MAREA cable (Microsoft-Meta), the Dunant cable (Google), and numerous high-profile systems. Its US ownership and security clearances make it irreplaceable for defense-adjacent projects. Cerberus\'s acquisition at $325M looks like one of the most successful PE deals in telecom infrastructure — replacement value today would be multiples of that price.'],
+                    ['ASN (Alcatel Submarine Networks)', 'French government owned (acquired from Nokia, March 2024, ~€350M) · Calais factory · ~2,000 employees', 'Nationalization transformed ASN from a Nokia division into a sovereign industrial asset managed for strategic capability. Under state ownership, ASN is expanding its Calais factory and investing in SDM-capable next-generation repeater technology. Historically the leading supplier for cables connecting Europe to Africa and the Middle East. State ownership provides capital access and strategic patience that commercial competitors cannot match.'],
+                    ['Dycom Industries', 'NYSE: DY · Market cap ~$17B · Revenue $5.55B (FY2026) · Backlog $9.54B · FY2027 guidance $6.85–7.15B', 'Largest specialty contractor for terrestrial fiber optic cable deployment in North America. Does not manufacture cable — installs it. Customers include AT&T, Lumen, Charter, Comcast, and hyperscalers. The $9.54B backlog (up 29% YoY) reflects convergence of BEAD, hyperscaler campus deployment, and 5G fiber backhaul. Competitive advantage is workforce scale — approximately 15,000 employees across 49 states. The largest pool of trained fiber installation labor in North America.'],
+                  ] as [string, string, string][]).map(([name, meta, body], i) => (
+                    <div key={i} style={{ marginTop: '20px', paddingBottom: i < 3 ? '20px' : 0, borderBottom: i < 3 ? '0.5px solid #F3F4F6' : 'none' }}>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>{name}</div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '10px' }}>{meta}</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                    </div>
+                  ))}
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Prysmian FY2024 Annual Report; SubCom Corporate Overview and Project History; ASN / French Government Acquisition March 2024; NEC Submarine Networks Division; Dycom Industries FY2026 10-K; TeleGeography Submarine Cable Database.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "sub-investment-ideas" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Long Prysmian for integrated capacity, long Dycom for terrestrial deployment, watch for SubCom IPO as the decade&apos;s highest-conviction submarine infrastructure event</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#FDF2F8', color: '#9D174D', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Investment ideas</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Public companies — long positions</div>
+                    {([
+                      ['Prysmian (BIT: PRY)', '~€31B market cap · 1.8x revenue · €16–17B submarine backlog through 2028+', 'The only company with integrated submarine cable manufacturing, fiber preform production, and a captive CLV fleet. The backlog provides revenue visibility through 2028+. The Leonardo da Vinci and fleet expansion to 8 vessels eliminate vessel scheduling risk that constrains competitors. Submarine cables are the highest-margin segment (~15–20% EBITDA vs. 10–12% for terrestrial cables).', 'Execution risk on simultaneous mega-projects. Offshore wind margin pressure if energy transition slows. Italian corporate governance complexity.'],
+                      ['Dycom Industries (NYSE: DY)', '~$17B market cap · 3x revenue · $9.54B backlog (29% YoY growth)', 'Pure-play beneficiary of terrestrial fiber deployment acceleration. Labor moat — the largest trained fiber installation workforce in North America — is the scarcest resource in the deployment chain. Multi-year demand visibility from BEAD supports premium multiple.', 'BEAD program delays (political or administrative). Customer concentration (AT&T historically 20%+ of revenue). Weather and seasonal construction variability.'],
+                    ] as [string, string, string, string][]).map(([name, meta, bull, risk], i) => (
+                      <div key={i} style={{ marginTop: '18px', paddingBottom: '18px', borderBottom: i < 1 ? '0.5px solid #F3F4F6' : 'none' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>{name}</div>
+                        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '8px' }}>{meta}</div>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: '8px' }}><strong style={{ fontWeight: 600, color: '#065F46' }}>Thesis:</strong> {bull}</p>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: 0 }}><strong style={{ fontWeight: 600, color: '#991B1B' }}>Risks:</strong> {risk}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>SubCom IPO watch — the decade&apos;s highest-conviction event</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Cerberus Capital acquired SubCom in 2018 for ~$325 million. SubCom is now the sole US manufacturer of repeatered submarine cable systems with order books filled through 2027 and strategic importance to the US government. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>A Cerberus exit via IPO would likely value SubCom at $5–10 billion</strong> based on comparable multiples — a 15–30x return on the 2018 acquisition.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Cerberus typically holds investments for 5–7 years — the 2018 acquisition puts an exit in the 2025–2027 window. Monitor SEC filings for S-1 registration. Risk: Cerberus may pursue strategic sale (to a defense prime like L3Harris or Leidos) rather than IPO, limiting public market access.</p>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Coherent optics — terminal upgrade cycle</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Open cable architectures enable terminal equipment upgrades independent of wet-plant changes. The transition from 400G → 800G → 1.6T wavelengths on existing cables creates recurring revenue for coherent optics vendors. Key companies: <strong style={{ fontWeight: 600, color: '#1C1E21' }}>Ciena (NYSE: CIEN)</strong> — WaveLogic transponders for multiple submarine systems. Nokia-Infinera and Cisco-Acacia for submarine-grade DSP technology.</p>
+                  </div>
+                  <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '10.5px', color: '#9CA3AF', fontStyle: 'italic', lineHeight: 1.5, marginTop: '24px', padding: '12px 14px', background: '#F9FAFB', borderRadius: '4px' }}>
+                    This analysis identifies companies positioned to benefit from structural supply chain dynamics. It does not constitute investment advice. Conduct independent due diligence before making any investment decisions.
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Prysmian FY2024 Annual Report; Dycom Industries FY2026 10-K; SubCom / Cerberus Acquisition 2018; Ciena WaveLogic Documentation; TeleGeography Submarine Cable Market Analysis; NTIA BEAD Program Tracker.
+                  </div>
+                </div>
+              </div>
+
+            ) : activePopup === "eu-supply-demand" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Power delivery, construction labor, GPU allocation, and cooling equipment define four simultaneous supply constraints throttling the $660B+ hyperscaler buildout</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#EFF6FF', color: '#1E40AF', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Supply constraints</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Power — the binding constraint</div>
+                    <div style={{ display: 'flex', gap: '8px', margin: '12px 0' }}>
+                      {([['68 GW', 'Datacenter power needed by 2027', true], ['4–7 yrs', 'Average grid interconnection queue', true], ['$64B', 'Projects blocked by power constraints', false]] as [string, string, boolean][]).map(([num, label, isRed], i) => (
+                        <div key={i} style={{ flex: 1, background: '#F3F4F6', borderRadius: '4px', padding: '10px 12px' }}>
+                          <div style={{ fontSize: '16px', fontWeight: 600, color: isRed ? '#991B1B' : '#1C1E21', letterSpacing: '-0.3px', fontFamily: "'Geist Mono', monospace" }}>{num}</div>
+                          <div style={{ fontSize: '7.5px', color: '#9CA3AF', letterSpacing: '0.05em', textTransform: 'uppercase' as const, marginTop: '2px', fontFamily: "'Geist Mono', monospace" }}>{label}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Grid interconnection queues in the US averaged 4–7 years as of early 2026 — meaning a datacenter applying for grid connection today would not receive power until 2030–2033. Hyperscaler datacenter campuses now routinely require 500 MW–2 GW of power. An estimated <strong style={{ fontWeight: 600, color: '#1C1E21' }}>$64 billion in datacenter projects are currently blocked by power availability or permitting constraints.</strong> Transformer lead times have extended to 128–210 weeks for large power transformers (345 kV+).</p>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Construction labor, GPU, and cooling</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The datacenter construction workforce faces a structural deficit of approximately <strong style={{ fontWeight: 600, color: '#1C1E21' }}>439,000 workers</strong> across the US as of 2026 — most acute in electrical workers qualified for medium- and high-voltage systems. NVIDIA holds 77–92% of the AI accelerator market with the Blackwell architecture; demand exceeds supply through at least mid-2026. TSMC&apos;s CoWoS advanced packaging capacity has been the binding production constraint for Blackwell shipments.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>AI training workloads generate heat densities of 50–100+ kW per rack (vs. 10–15 kW for traditional workloads). <strong style={{ fontWeight: 600, color: '#1C1E21' }}>83% of datacenter operators reported inability to source liquid cooling equipment locally.</strong> Lead times for enterprise-grade liquid cooling systems have extended to 6–12 months.</p>
+                  </div>
+                  <div style={{ marginTop: '24px', padding: '12px 14px', background: '#F9FAFB', borderRadius: '4px' }}>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.65, margin: 0 }}>The end-use layer&apos;s supply constraints are multiplicative. Power, construction labor, GPU allocation, and cooling must all converge simultaneously for a datacenter to generate revenue. A shortfall in any single dimension idles the investment in all others.</p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: McKinsey — Datacenter Power Demand Forecast; CBRE — US Datacenter Market Report 2026; NVIDIA FY2026 Earnings; TSMC CoWoS Capacity Analysis; Vertiv Investor Presentations; GridStrategies — US Interconnection Queue Analysis.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "eu-bottlenecks" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Grid interconnection queues, construction contractor concentration, NVIDIA GPU allocation, and cooling infrastructure gaps create four compounding bottlenecks where each delay cascades through the entire deployment timeline</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#FEF2F2', color: '#991B1B', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Bottlenecks</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  {([
+                    ['Grid interconnection and power infrastructure', 'PJM queue >5 years · 2,600 GW queued nationally · Only 15–20% will be built', 'Northern Virginia illustrates the bottleneck in extreme form. Loudoun County alone hosts 300+ datacenter facilities consuming ~4.5 GW. A 1.5 GW grid disturbance in 2024 triggered emergency load-shedding affecting multiple hyperscaler campuses. The bottleneck is now driving datacenter location decisions to Columbus (Ohio), Salt Lake City, and Nordic countries. Behind-the-meter generation has emerged as a workaround — Amazon acquired the Susquehanna nuclear-adjacent campus ($650M), Microsoft contracted TMI Unit 1 restart, Google signed the first corporate SMR PPA with Kairos Power.'],
+                    ['Construction contractor concentration', 'Turner Construction: $44.3B backlog, 37% datacenter ($16B) · $9B datacenter revenue', 'Turner Construction is the dominant datacenter construction contractor — its datacenter practice has grown from a specialty group to its largest market segment. If Turner experiences labor disputes or safety incidents, a disproportionate share of the industry pipeline is affected. The construction bottleneck is most acute for high-voltage electrical workers and precision liquid cooling installers. Modular construction (Compass Datacenters, EdgeConneX, DataBank) reduces on-site labor by 30–40%, but introduces its own supply chain constraints.'],
+                    ['NVIDIA GPU allocation and AI silicon supply', '77–92% market share · TSMC CoWoS packaging as rate limiter · AI Diffusion Rule adds geopolitical dimension', 'NVIDIA\'s allocation model for Blackwell-generation GPUs (B100, B200, GB200 NVL72) prioritizes large customers based on volume commitments. TSMC\'s CoWoS advanced packaging has been the production-rate limiter through early 2026. The GPU allocation bottleneck interacts with power and construction timelines — misalignment in either direction (GPUs before datacenter, or datacenter before GPUs) represents idle capital. Alternative AI silicon (AMD MI300X, Google TPUs) provides partial relief but does not eliminate the NVIDIA dependency.'],
+                    ['Cooling infrastructure for high-density AI workloads', 'Vertiv: $15B backlog · Liquid cooling market $6.65B → $29.46B by 2033 · 83% cannot source locally', 'AI training clusters require 50–100+ kW per rack vs. 10–15 kW for traditional workloads — a 5–10x increase that conventional air cooling cannot address. Three liquid cooling approaches compete: direct-to-chip (current standard for GB200 NVL72), rear-door heat exchangers, and immersion cooling. Total industry manufacturing capacity is insufficient for projected deployment rates. The cooling bottleneck is compounded by a skills gap — installing liquid cooling requires plumbing expertise that most datacenter operations teams lack.'],
+                  ] as [string, string, string][]).map(([title, meta, body], i) => (
+                    <div key={i} style={{ marginTop: '24px', paddingBottom: '20px', borderBottom: i < 3 ? '0.5px solid #F3F4F6' : 'none' }}>
+                      <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '6px', fontFamily: "'Geist Mono', monospace" }}>Bottleneck {String(i + 1).padStart(2, '0')}</div>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13px', fontWeight: 600, color: '#1C1E21', marginBottom: '4px' }}>{title}</div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', color: '#9CA3AF', marginBottom: '8px' }}>{meta}</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                    </div>
+                  ))}
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: PJM Interconnection Queue Statistics; CBRE — US Datacenter Market Report 2026; Turner Construction Backlog; NVIDIA Blackwell Production Updates; TSMC CoWoS Analysis; Vertiv FY2025 Presentations; McKinsey — Datacenter Labor Analysis.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "eu-geopolitical" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>GPU export controls, sovereign AI infrastructure investments, data sovereignty regulation, and the AUKUS datacenter cooperation framework are reshaping where datacenters can be built, who can operate them, and what workloads they can run</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#FEF3C7', color: '#92400E', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Geopolitical risk</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>NVIDIA export controls and the AI Diffusion Rule</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The US AI Diffusion Rule (effective May 2025) established a three-tier country classification for AI chip exports. Tier 1 (close allies) face minimal restrictions. Tier 2 (most of the world) face annual compute caps. Tier 3 (China, Russia, embargoed nations) face near-total prohibition. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>NVIDIA&apos;s Blackwell architecture — B100, B200, GB200 NVL72 — is entirely controlled for export. No Blackwell variant is authorized for Tier 3.</strong> This makes GPU allocation implicitly geopolitical: every chip shipped to Tier 1/2 is unavailable for any other destination.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>China is building a domestically sourced AI infrastructure stack (Huawei Ascend, Biren Technology, Cambricon) limited to approximately 2 generations behind NVIDIA&apos;s frontier by EUV lithography availability. China&apos;s domestic datacenter market is expected to exceed 40 GW by 2030, using domestically manufactured fiber (YOFC, Hengtong) — creating a parallel demand stream for germanium-doped fiber entirely outside western supply chain visibility.</p>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Sovereign AI and Gulf state investment</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The UAE&apos;s G42 (Mubadala-backed) committed $15.2 billion with Microsoft for datacenter infrastructure — requiring G42 to divest its Chinese technology relationships (including Huawei equipment) as a condition of US government approval. Saudi Arabia&apos;s $5 billion DataVolt project in NEOM is powered by renewables. India&apos;s DPDP Act drives datacenter investment in Mumbai, Chennai, and Hyderabad; the market is projected to grow from 1.3 GW to 3+ GW by 2028.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Data sovereignty laws are fragmenting the global datacenter market into regulatory islands where data must be stored within national borders. EU GDPR, India&apos;s DPDP Act, and emerging regulations in Indonesia, Brazil, and Nigeria mean a hyperscaler cannot serve 50 countries from 5 mega-datacenters — <strong style={{ fontWeight: 600, color: '#1C1E21' }}>it needs presence in 30+ jurisdictions, each with local power, construction, and connectivity requirements.</strong> This multiplies the end-use layer&apos;s demand for fiber connectivity across every regulated market.</p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: US Bureau of Industry and Security — AI Diffusion Rule (May 2025); NVIDIA Blackwell Export Control Classification; G42-Microsoft Partnership ($15.2B); NEOM DataVolt Documentation; EU AI Act; India DPDP Act 2023; China &quot;East Data, West Computation&quot; Initiative; CBRE Global Datacenter Market Report 2026.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "eu-catalysts" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Five catalysts are converging: hyperscaler capex acceleration, the 1.6T optical transceiver ramp, Stargate and sovereign mega-projects, political and environmental backlash, and the near-edge inference shift that may redistribute demand away from centralized hyperscale</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#ECFDF5', color: '#065F46', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Catalysts</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>2026 hyperscaler capex — $660–690B</div>
+                    <table style={{ width: '100%', borderCollapse: 'collapse' as const, margin: '8px 0 12px', fontSize: '11px' }}>
+                      <thead>
+                        <tr>{['Company', '2026 Capex', 'Key driver'].map(h => <th key={h} style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, color: '#9CA3AF', textAlign: 'left' as const, padding: '6px 8px', borderBottom: '0.5px solid #E5E7EB', fontFamily: "'Geist Mono', monospace" }}>{h}</th>)}</tr>
+                      </thead>
+                      <tbody>
+                        {([['Amazon (AWS)', '$200B+', 'New regions + AI training'], ['Google', '$175–185B', 'Cloud + submarine cables + TPU v5p'], ['Microsoft', '~$120B', 'Azure + nuclear power PPAs'], ['Meta', '$115–135B', 'Llama training + $6B Corning fiber + Waterworth'], ['Oracle', '$50B', 'Stargate partner + OCI expansion']] as [string,string,string][]).map(([name, cap, driver], i) => (
+                          <tr key={i}><td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "Inter, sans-serif", color: '#374151', fontSize: '11px', fontWeight: 500 }}>{name}</td><td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace", color: '#065F46', fontSize: '10px', fontWeight: 600 }}>{cap}</td><td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "Inter, sans-serif", color: '#6B7280', fontSize: '10.5px' }}>{driver}</td></tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Stargate + 1.6T supercycle + political backlash</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>Stargate:</strong> $500 billion commitment across 7 US sites (OpenAI, SoftBank, Oracle). The Abilene, Texas site is the initial deployment. Parallel sovereign mega-projects include Saudi Arabia&apos;s $100B AI initiative, UAE G42-Microsoft&apos;s $15.2B partnership, and India&apos;s IndiaAI program (10,000+ GPU national capacity).</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>1.6T transceiver supercycle:</strong> 1.6T transceivers began commercial sampling in late 2025 and ramp through 2026. Higher-speed transceivers require tighter fiber specifications → more precise germanium doping → demand pull on the upstream supply chain. A single 100,000-GPU training cluster may require thousands of km of intra-campus fiber at 1.6T speeds.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#92400E' }}>Political backlash (demand constraint):</strong> Datacenters are projected to consume 6–9% of US electricity by 2030. Local opposition has led to moratoriums in Dublin, Amsterdam, and Singapore. Water consumption, land use, and tax incentive backlash are creating regulatory constraints that limit where new capacity can be deployed — concentrating investment in favorable jurisdictions and pushing operators toward behind-the-meter nuclear power.</p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Amazon/Google/Meta/Microsoft FY2025–2026 Capex Guidance; Stargate Initiative Announcement; OFC 2026 — 1.6T Transceiver Demonstrations; G42-Microsoft $15.2B Partnership; IEA — Datacenter Energy Consumption Projections; CBRE — Edge Datacenter Market Report.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "eu-emerging-tech" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Co-packaged optics, 1.6T–3.2T transceivers, liquid-to-immersion cooling evolution, Microsoft MOSAIC MicroLED interconnects, and nuclear SMRs represent five technology shifts reshaping end-use layer infrastructure by 2030</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#EDE9FE', color: '#5B21B6', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Emerging tech</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  {([
+                    ['Co-packaged optics (CPO)', 'NVIDIA Spectrum-X targets 3.2T · Broadcom Tomahawk 5 · Production H2 2026', 'CPO integrates optical engines directly onto the switch ASIC package, eliminating pluggable transceivers as separate components. CPO reduces discrete transceiver modules (which use germanium photodetectors), but increases total optical interconnect bandwidth per switch — each CPO-enabled switch drives more fiber connections at higher speeds. Net effect: more fiber deployed per unit of compute. A datacenter using CPO may need only 2 switch tiers vs. 3, but at proportionally higher bandwidth and fiber count per link.', '+Ge demand'],
+                    ['1.6T and 3.2T optical transceivers', '1.6T commercial sampling late 2025 · 3.2T laboratory demos exist · Volume ramp 2026', 'Each transceiver speed generation requires fiber with tighter attenuation specifications → more precise germanium doping profiles → higher-purity GeCl₄ input. The fiber-to-germanium linkage strengthens with each speed generation. 3.2T (expected 2028–2029) will require even tighter fiber specs, potentially driving demand for specialty fiber grades with premium germanium content.', '+Ge demand'],
+                    ['Liquid cooling evolution', 'Market $6.65B → $29.46B by 2033 · Direct-to-chip → immersion · Vertiv $15B backlog', 'Three liquid cooling approaches compete: direct-to-chip (current GB200 NVL72 standard), rear-door heat exchangers, and immersion cooling (submerging entire servers in dielectric fluid for 100+ kW rack densities). Two-phase immersion offers highest efficiency but faces fluid supply issues (3M Novec discontinued). The liquid cooling transition enables higher rack densities that concentrate fiber connections — more compute per building means more fiber per unit area of campus.', 'neutral'],
+                    ['Microsoft MOSAIC MicroLED interconnects', 'Board-level optical interconnects · Production readiness target late 2027', 'MOSAIC (Micro-Optical Semiconductor Architecture for Interconnect Computing) uses MicroLED arrays to replace copper traces with light at centimeter-scale distances — extending optical interconnects from the current ~3m minimum down to board level. MOSAIC uses III-V semiconductors (not germanium) for MicroLED emitters, but receivers may use germanium photodetectors. More broadly, every level where optics replaces copper increases total datacenter fiber consumption.', 'neutral'],
+                    ['Nuclear SMRs for dedicated datacenter power', 'Microsoft/Constellation: TMI Unit 1 restart 2027 · Amazon/Talen: Susquehanna nuclear adjacent', 'Dedicated nuclear power bypasses the 4–7 year grid interconnection queue — the most binding constraint on datacenter deployment. If nuclear SMRs achieve commercial deployment at scale (2030+), they unlock datacenter capacity in locations currently constrained by grid availability, fundamentally changing hyperscale geography. Current commitments: Microsoft (TMI restart, 820 MW), Amazon (Susquehanna adjacent campus), Google (Kairos Power SMR PPA, first reactor 2030).', 'neutral'],
+                  ] as [string, string, string, string][]).map(([title, status, body, dir], i) => (
+                    <div key={i} style={{ marginTop: '24px', paddingBottom: '20px', borderBottom: i < 4 ? '0.5px solid #F3F4F6' : 'none' }}>
+                      <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '6px', fontFamily: "'Geist Mono', monospace" }}>Vector {String(i + 1).padStart(2, '0')}</div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, marginBottom: '5px' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13px', fontWeight: 600, color: '#1C1E21' }}>{title}</div>
+                        <span style={{ fontSize: '7.5px', padding: '2px 6px', borderRadius: '3px', fontFamily: "'Geist Mono', monospace", flexShrink: 0, fontWeight: 600, background: dir === '+Ge demand' ? '#ECFDF5' : '#F3F4F6', color: dir === '+Ge demand' ? '#065F46' : '#6B7280' }}>{dir}</span>
+                      </div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', color: '#9CA3AF', marginBottom: '8px' }}>{status}</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                    </div>
+                  ))}
+                  <div style={{ marginTop: '20px', padding: '12px 14px', background: '#F9FAFB', borderRadius: '4px' }}>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.65, margin: 0 }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>Every technology trend at the end-use layer increases the fiber intensity of AI infrastructure.</strong> More compute requires more bandwidth, which requires more fiber, which requires more germanium-doped preforms.</p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: NVIDIA Spectrum-X CPO Announcements; OFC 2026 Transceiver Demonstrations; Vertiv Product Portfolio; Microsoft MOSAIC Research Publications; Constellation Energy — TMI Restart Agreement; Google-Kairos Power PPA; Amazon-Talen Energy Acquisition.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "eu-major-companies" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Seven companies control the end-use layer&apos;s critical infrastructure: Equinix and Digital Realty (colocation/wholesale), Dycom (fiber deployment), Turner Construction (datacenter construction), Vertiv (cooling and power), Corning (fiber manufacturing), and Oracle (Stargate and sovereign cloud)</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#ECFEFF', color: '#155E75', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Major companies</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  {([
+                    ['Equinix', 'NASDAQ: EQIX · Market cap ~$85B · 260+ datacenters in 72 metro markets · 500,000+ cross-connects', 'World\'s largest datacenter REIT. Doubling datacenter capacity by 2029 through organic development and xScale joint ventures (partnerships with sovereign wealth funds for hyperscale builds). The interconnection network effect is its primary moat — no competitor matches its geographic breadth or customer density. The xScale program provides hyperscale exposure while preserving the core interconnection business.'],
+                    ['Digital Realty', 'NYSE: DLR · Market cap ~$55B · 300+ datacenters in 50+ metros · Digital Dulles campus: 11.7M sq ft', 'World\'s largest wholesale datacenter provider. Digital Dulles in Northern Virginia is among the largest datacenter campuses in the world. Powered shell delivery — pre-built buildings with utility power and cooling that hyperscaler tenants complete with IT equipment — reduces deployment timelines vs. build-to-suit. Wholesale lease rates have increased 15–25% YoY in constrained markets (Northern Virginia, Silicon Valley, Dublin).'],
+                    ['Vertiv Holdings', 'NYSE: VRT · Market cap ~$45B · Revenue ~$8B · Backlog ~$15B · UPS + thermal + power distribution', 'Leading provider of critical infrastructure for datacenters. The $15B backlog reflects the AI-driven surge in thermal management demand. Liquid cooling product line — direct-to-chip systems designed for NVIDIA GB200 NVL72 racks — positions Vertiv at the intersection of AI compute and datacenter infrastructure. The transition from air to liquid cooling represents a generational product cycle that increases Vertiv\'s content per rack from ~$5,000 (UPS + air) to $10,000+ (UPS + liquid + thermal management).'],
+                    ['Turner Construction', 'Private (HOCHTIEF/ACS subsidiary) · Backlog $44.3B total, 37% datacenter ($16B+) · ~$9B datacenter revenue', 'Largest commercial builder in the US and dominant datacenter construction contractor. Managing 10+ simultaneous datacenter projects across multiple states, each requiring 500+ workers, precision mechanical/electrical systems. Competitive advantage is execution at scale and union labor relationships. Single-contractor risk: DPR, Holder, and Fortis Construction compete at smaller scale.'],
+                    ['Oracle Corporation', 'NYSE: ORCL · Market cap ~$350B · OCI cloud revenue $25B+ annualized (+50% YoY) · 147+ active datacenters', 'Oracle\'s Stargate infrastructure partner role (alongside OpenAI and SoftBank) positions it at the center of the largest datacenter investment commitment in history. OCI has differentiated on price-performance for AI workloads, winning customers that find AWS/Azure/GCP pricing prohibitive. Oracle\'s datacenter expansion — from 40 regions to 147+ in 3 years — demonstrates construction velocity that exceeds larger competitors.'],
+                  ] as [string, string, string][]).map(([name, meta, body], i) => (
+                    <div key={i} style={{ marginTop: '20px', paddingBottom: i < 4 ? '20px' : 0, borderBottom: i < 4 ? '0.5px solid #F3F4F6' : 'none' }}>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>{name}</div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '10px' }}>{meta}</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                    </div>
+                  ))}
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Equinix FY2025 Earnings; Digital Realty FY2025 Earnings; Turner Construction Backlog; Vertiv FY2025 Earnings; Oracle Cloud Infrastructure Expansion and Stargate Partnership; Dycom Industries FY2026 10-K; CBRE US Datacenter Market Report 2026.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "eu-investment-ideas" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Six investment ideas spanning datacenter REITs, fiber deployment, critical infrastructure, nuclear power, optical components, and short positions in power-constrained operators</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#FDF2F8', color: '#9D174D', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Investment ideas</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Long positions</div>
+                    {([
+                      ['Equinix (EQIX) + Digital Realty (DLR)', 'EQIX ~$85B · DLR ~$55B · Network effect + land bank moats', 'Equinix and Digital Realty control the largest portfolios of datacenter-ready real estate in the world. In an environment where new capacity takes 3–5 years to develop, existing leasable capacity commands premium pricing. Equinix\'s xScale program provides hyperscale exposure while preserving the interconnection business. DLR\'s Digital Dulles land bank positions it for the largest hyperscaler deals; wholesale lease rates have increased 15–25% YoY in constrained markets.', 'Rising interest rates (REITs are rate-sensitive). Power availability constraints limiting new development starts. Political backlash (moratoriums, tax incentive clawbacks).'],
+                      ['Vertiv Holdings (VRT)', '~$45B market cap · $15B backlog · 5.5x revenue · 25–30x forward earnings', 'Best pure-play on the datacenter infrastructure supercycle. The $15B backlog provides multi-year revenue visibility. Transition from air to liquid cooling is a generational product cycle increasing Vertiv\'s content per rack from ~$5K to $10K+. Margin expansion as higher-content liquid cooling systems carry premium pricing. Global manufacturing and service operations.', 'Execution risk on the liquid cooling ramp. Competition from CoolIT, Asetek, and vertically integrated hyperscaler cooling designs. Valuation prices in significant growth acceleration.'],
+                      ['Constellation Energy (CEG)', '~$75B market cap · 21.5 GW nuclear fleet · TMI restart PPA: ~$100–110/MWh', 'Largest nuclear power operator in the US. Microsoft-Three Mile Island restart agreement established a paradigm for dedicated nuclear datacenter power — long-term PPAs at ~2x wholesale power prices. If 5–10 GW of the fleet can be contracted under datacenter PPAs, incremental revenue would justify a significantly higher valuation. Bipartisan nuclear energy legislation and hyperscaler 24/7 carbon-free energy commitments are tailwinds.', 'NRC regulatory risk (TMI restart is unprecedented). Construction cost overruns. Political risk — nuclear remains controversial in some states.'],
+                      ['Corning (GLW)', '~$40B market cap · ~$14B revenue · $6B Meta agreement', 'BABA-compliant manufacturing base positions it as primary beneficiary of converging datacenter fiber demand and BEAD deployment. Technology leadership in low-loss and bend-insensitive fiber creates premium pricing. $6B Meta agreement provides unprecedented revenue visibility for the optical segment.', 'Germanium supply constraints limiting preform production. Chinese fiber competition in non-BABA markets. HCF technology risk — if HCF reaches commercial scale it eliminates germanium from the fiber value chain.'],
+                    ] as [string, string, string, string][]).map(([name, meta, bull, risk], i) => (
+                      <div key={i} style={{ marginTop: '18px', paddingBottom: '18px', borderBottom: i < 3 ? '0.5px solid #F3F4F6' : 'none' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>{name}</div>
+                        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '8px' }}>{meta}</div>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: '8px' }}><strong style={{ fontWeight: 600, color: '#065F46' }}>Thesis:</strong> {bull}</p>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: 0 }}><strong style={{ fontWeight: 600, color: '#991B1B' }}>Risks:</strong> {risk}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Short: power-constrained operators</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Datacenter operators and developers without secured power (executed grid connection or behind-the-meter generation) or long-term fiber supply agreements face existential risk. Indicators to watch: power contract status (executed vs. applied), grid interconnection queue position, fiber supply agreements (long-term vs. spot), BABA compliance, balance sheet leverage. Small and mid-cap datacenter developers without utility relationships, international operators in constrained markets (Ireland, Singapore), and SPAC-era companies with speculative demand projections are most exposed.</p>
+                  </div>
+                  <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '10.5px', color: '#9CA3AF', fontStyle: 'italic', lineHeight: 1.5, marginTop: '24px', padding: '12px 14px', background: '#F9FAFB', borderRadius: '4px' }}>
+                    This analysis identifies companies positioned to benefit from structural supply chain dynamics. It does not constitute investment advice. The common risk across all long positions is demand cyclicality — if hyperscaler capex growth slows, the supply-demand imbalance that drives pricing power today could narrow by 2029.
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Equinix Investor Day; Digital Realty FY2025 Earnings; Vertiv FY2025 Earnings; Constellation Energy — TMI Restart Agreement; Corning FY2025 Earnings and Meta $6B Agreement; Oracle Stargate Partnership; Goldman Sachs — Datacenter Infrastructure Investment Outlook.
                   </div>
                 </div>
               </div>
