@@ -407,12 +407,11 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
     <svg
       ref={svgRef}
       id="tree-svg"
-      viewBox={`0 0 ${svgWidth} 1000`}
-      preserveAspectRatio="xMidYMid meet"
+      viewBox={`0 0 ${svgWidth} ${svgHeight ?? 1000}`}
       style={{
         display: "block",
         width: "100%",
-        height: svgHeight ?? "100vh",
+        height: svgHeight ?? 800,
       }}
     >
       <defs />

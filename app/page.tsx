@@ -153,32 +153,29 @@ export default function Home() {
   function handleDeepDive()  { if (!tipKey || !NODES[tipKey]) return; setTipKey(null); setSelectedNode(tipKey); }
 
   // ── Build tree geometry ───────────────────────────────────────────
-  // Tree renders as an in-flow SVG. We compute a local SVG height that
-  // fits the tree content, then set ancY near the SVG bottom so nodes
-  // fill the container without empty space.
+  // Tree grows DOWNWARD from topY. For in-flow rendering we set topY to
+  // a small value (top padding) so nodes start near the SVG top.
+  // viewBoxH = topY + (layers-1)*gap + bottomPad — the SVG pixel height
+  // is set equal to viewBoxH so 1 SVG unit = 1 px, no empty space.
   function buildGeometryFromAnchorEl(level: AppState) {
     const rawChain = level === 1 && sel.raw ? CHAINS.RAW_DATA[sel.raw] : null;
     const newSvgWidth = rawChain ? computeRawSvgWidth(rawChain) : 1000;
     setSvgWidth(newSvgWidth);
 
-    const H = window.innerHeight;
+    const topY      = 80;                            // SVG units of padding above first layer
+    const bottomPad = 80;                            // SVG units below last layer
+    const gap       = level === 1 ? 180 : 170;       // matches geometry defaults
     const layerCount = level === 1 ? 5 : level === 4 ? 4 : 3;
-    const padTop    = 20;
-    const padBottom = level === 1 ? 120 : 60;
-    const labelH    = 124;
-    const treePixH  = ((layerCount - 1) * 180 / 1000) * H;
-    const svgH      = Math.round(padTop + labelH + treePixH + padBottom);
-    setSvgHeight(svgH);
+    const viewBoxH  = topY + (layerCount - 1) * gap + bottomPad;
+    setSvgHeight(viewBoxH);
 
-    // ancY: output node sits padBottom pixels above SVG bottom in SVG units
-    const ancY = ((svgH - padBottom) / svgH) * 1000;
     const ancX = newSvgWidth / 2;
 
     let geo: TreeGeometry | null = null;
-    if (level === 1 && sel.raw)  { const c = CHAINS.RAW_DATA[sel.raw];  if (c) geo = buildRawGeometry(c, ancX, ancY); }
-    else if (level === 2 && sel.comp) { const c = CHAINS.COMP_DATA[sel.comp]; if (c) geo = buildCompGeometry(c, ancX, ancY); }
-    else if (level === 3 && sel.sub)  { const c = CHAINS.SUB_DATA[sel.sub];   if (c) geo = buildSubGeometry(c, ancX, ancY); }
-    else if (level === 4 && sel.eu)   { const c = CHAINS.EU_DATA[sel.eu];     if (c) geo = buildEUGeometry(c, ancX, ancY); }
+    if (level === 1 && sel.raw)  { const c = CHAINS.RAW_DATA[sel.raw];  if (c) geo = buildRawGeometry(c, ancX, topY); }
+    else if (level === 2 && sel.comp) { const c = CHAINS.COMP_DATA[sel.comp]; if (c) geo = buildCompGeometry(c, ancX, topY); }
+    else if (level === 3 && sel.sub)  { const c = CHAINS.SUB_DATA[sel.sub];   if (c) geo = buildSubGeometry(c, ancX, topY); }
+    else if (level === 4 && sel.eu)   { const c = CHAINS.EU_DATA[sel.eu];     if (c) geo = buildEUGeometry(c, ancX, topY); }
     if (geo) { setGeometry(geo); setLayers(geo.layers); }
   }
 
