@@ -165,7 +165,7 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
     const { layers, flows, showEllipse } = config;
     const el = svgRef.current;
 
-    const proj = d3.geoNaturalEarth1().scale(118).translate([MAP_W / 2, MAP_H / 2 + 20]);
+    const proj = d3.geoNaturalEarth1().scale(110).translate([MAP_W / 2 - 28, MAP_H / 2 + 20]);
     const path = d3.geoPath().projection(proj);
     const pt = (lon: number, lat: number): [number, number] => proj([lon, lat]) ?? [0, 0];
 
@@ -325,17 +325,18 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
           viewBox={`0 0 ${MAP_W} ${MAP_H}`}
           preserveAspectRatio="xMidYMid slice"
           data-map-container
-          style={{ width: "100%", height: "100%", background: "#282828", display: "block" }}
+          style={{ width: "100%", height: "100%", background: "#3A3835", display: "block" }}
         />
         {/* Sub-layers legend — raw material state only */}
         {chainState === 1 && (
           <div style={{
             position: "absolute",
-            bottom: 20,
-            left: 24,
+            top: "50%",
+            left: 36,
+            transform: "translateY(-50%)",
             display: "flex",
             flexDirection: "column",
-            gap: 7,
+            gap: 8,
             pointerEvents: "none",
             zIndex: 5,
           }}>
@@ -345,15 +346,20 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
               color: "rgba(255,255,255,0.12)",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
-              marginBottom: 1,
+              marginBottom: 2,
             }}>Sub-layers</div>
             {([
-              { label: "Deposits",            color: "#B8975A",               desc: "8 globally — 5 in China, 1 Russia-sanctioned, 1 closing 2031, 1 just beginning to ramp in DRC." },
-              { label: "Miners",              color: "#7DA06A",               desc: "Germanium is always a byproduct — only ~17% of what passes through industrial processes is captured." },
-              { label: "Refiners & Recyclers",color: "#A07DAA",               desc: "One western refiner at scale (Umicore). The recycling loop is structurally self-limiting." },
-              { label: "Global Supply",       color: "rgba(255,255,255,0.25)",desc: "~80t western-accessible supply against ~325t of AI datacenter demand by 2026 — the gap is already open." },
-            ] as { label: string; color: string; desc: string }[]).map(item => (
-              <div key={item.label} style={{ display: "flex", alignItems: "baseline", gap: 6, maxWidth: 420 }}>
+              { label: "Deposits",             color: "#B8975A" },
+              { label: "Miners",               color: "#7DA06A" },
+              { label: "Refiners & Recyclers", color: "#A07DAA" },
+              { label: "Global Supply",        color: "rgba(255,255,255,0.4)" },
+            ] as { label: string; color: string }[]).map(item => (
+              <div key={item.label} style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                <div style={{
+                  width: 5, height: 5, borderRadius: "50%",
+                  background: item.color,
+                  flexShrink: 0,
+                }} />
                 <span style={{
                   fontFamily: "'Geist Mono', 'Courier New', monospace",
                   fontSize: 7,
@@ -362,15 +368,7 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
                   letterSpacing: "0.03em",
                   color: item.color,
                   whiteSpace: "nowrap",
-                  flexShrink: 0,
                 }}>{item.label}</span>
-                <span style={{ color: "rgba(255,255,255,0.1)", fontSize: 8, flexShrink: 0 }}>|</span>
-                <span style={{
-                  fontFamily: "Inter, -apple-system, sans-serif",
-                  fontSize: 10,
-                  color: "rgba(255,255,255,0.25)",
-                  lineHeight: 1.4,
-                }}>{item.desc}</span>
               </div>
             ))}
           </div>

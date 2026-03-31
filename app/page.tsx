@@ -349,7 +349,7 @@ export default function Home() {
 
               {/* THESIS BLOCK */}
               {currentThesis && (
-                <div style={{ background: "#282828", padding: "32px 36px 36px" }}>
+                <div style={{ background: "#3A3835", padding: "32px 36px 36px" }}>
                   <div style={{
                     fontFamily: "'Geist Mono', 'Courier New', monospace",
                     fontSize: 6,
@@ -375,7 +375,7 @@ export default function Home() {
                     fontSize: 14,
                     color: "rgba(255,255,255,0.35)",
                     lineHeight: 1.75,
-                    maxWidth: "min(750px, 70%)",
+                    maxWidth: "min(1000px, 80%)",
                     marginBottom: 18,
                   }}>
                     {currentThesis}
@@ -407,7 +407,8 @@ export default function Home() {
                 height: "70vh",
                 minHeight: 500,
                 position: "relative",
-                background: "#282828",
+                background: "#3A3835",
+                marginBottom: 40,
               }}>
                 <SupplyChainMap
                   chainState={appState as 1|2|3|4}
@@ -459,13 +460,14 @@ export default function Home() {
           {!treeCollapsed && (
             <div>
               <div style={{
-                padding: "16px 36px",
+                padding: "14px 36px 16px",
                 background: "#1A1917",
                 borderTop: "0.5px solid rgba(255,255,255,0.06)",
                 borderBottom: "0.5px solid rgba(255,255,255,0.06)",
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "space-between",
+                gap: 8,
               }}>
                 <div style={{
                   fontFamily: "'Geist Mono', monospace",
@@ -473,7 +475,7 @@ export default function Home() {
                   fontWeight: 500,
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.35)",
+                  color: "rgba(255,255,255,0.9)",
                 }}>
                   {supplyMapLabel}
                 </div>
@@ -484,7 +486,7 @@ export default function Home() {
                     appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : appState === 3 ? "71% hyperscaler owned" : "~115t Ge/yr",
                   ] as string[]).map((stat, i, arr) => (
                     <React.Fragment key={i}>
-                      <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{stat}</span>
+                      <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.45)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{stat}</span>
                       {i < arr.length - 1 && <div style={{ width: 1, height: 8, background: "rgba(255,255,255,0.1)" }} />}
                     </React.Fragment>
                   ))}

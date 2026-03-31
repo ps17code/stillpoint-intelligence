@@ -108,7 +108,7 @@ export default function SidebarPanel() {
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 6 }}>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div data-title style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 10, fontWeight: 500, color: "#2C2B28", lineHeight: 1.4, marginBottom: 3, transition: "color 0.1s" }}>
+                  <div data-title style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 13, fontWeight: 500, color: "#2C2B28", lineHeight: 1.4, marginBottom: 3, transition: "color 0.1s" }}>
                     {bar.teaser}
                   </div>
                   <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: "5.5px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: bar.color }}>
