@@ -179,7 +179,7 @@ export default function HomePage() {
 
     // ── Supply chain nodes ────────────────────────────────────────────────────
     const NODE_R   = R * 1.012; // sit above surface
-    const DOT_SIZE = 0.012;
+    const DOT_SIZE = 0.008;
     const dotGeo   = new THREE.SphereGeometry(DOT_SIZE, 8, 8);
 
     type NodeObj = {
@@ -223,10 +223,21 @@ export default function HomePage() {
     // ── Connection arcs ───────────────────────────────────────────────────────
     const nodeByName = Object.fromEntries(NODES.map(n => [n.name, n]));
 
-    type ArcObj = { lineMat: THREE.LineBasicMaterial; nA: THREE.Vector3; nB: THREE.Vector3 };
+    type ArcObj = {
+      lineMat:     THREE.LineBasicMaterial;
+      nA:          THREE.Vector3;
+      nB:          THREE.Vector3;
+      curve:       THREE.QuadraticBezierCurve3;
+      traveler:    THREE.Mesh;
+      travelerMat: THREE.MeshBasicMaterial;
+      speed:       number;
+      tOffset:     number;
+    };
     const arcObjs: ArcObj[] = [];
 
-    ARCS.forEach(([fromName, toName]) => {
+    const travelerGeo = new THREE.SphereGeometry(DOT_SIZE * 0.65, 6, 6);
+
+    ARCS.forEach(([fromName, toName], idx) => {
       const a = nodeByName[fromName];
       const b = nodeByName[toName];
       if (!a || !b) return;
@@ -241,10 +252,25 @@ export default function HomePage() {
       const pts     = curve.getPoints(60);
       const geo     = new THREE.BufferGeometry().setFromPoints(pts);
       const color   = NODE_COLOR[a.type];
-      const lineMat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.05 });
+      const lineMat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.14 });
       globeGroup.add(new THREE.Line(geo, lineMat));
 
-      arcObjs.push({ lineMat, nA: pA.clone().normalize(), nB: pB.clone().normalize() });
+      // Traveling dot
+      const travelerMat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0 });
+      const traveler    = new THREE.Mesh(travelerGeo, travelerMat);
+      traveler.position.copy(curve.getPoint(0));
+      globeGroup.add(traveler);
+
+      arcObjs.push({
+        lineMat,
+        nA: pA.clone().normalize(),
+        nB: pB.clone().normalize(),
+        curve,
+        traveler,
+        travelerMat,
+        speed:   0.08 + (idx % 5) * 0.012,   // 0.08 – 0.128, varied per arc
+        tOffset: (idx * 0.37) % 1,            // staggered start positions
+      });
     });
 
     // ── Auto-rotation ─────────────────────────────────────────────────────────
@@ -305,11 +331,24 @@ export default function HomePage() {
         }
       });
 
-      // Arc: fade with back-face visibility
-      arcObjs.forEach(({ lineMat, nA, nB }) => {
+      // Arc: fade with back-face visibility + animate traveling dot
+      arcObjs.forEach(({ lineMat, nA, nB, curve, traveler, travelerMat, speed, tOffset }) => {
         const fA = worldNormal.copy(nA).applyQuaternion(globeGroup.quaternion).dot(camDir);
         const fB = worldNormal.copy(nB).applyQuaternion(globeGroup.quaternion).dot(camDir);
-        lineMat.opacity = Math.max(0, Math.min(fA, fB)) * 0.05;
+        const visibility = Math.max(0, Math.min(fA, fB));
+        lineMat.opacity = visibility * 0.14;
+
+        // Advance traveler along curve
+        const progress = ((t * speed + tOffset) % 1 + 1) % 1;
+        const pos = curve.getPoint(progress);
+        traveler.position.copy(pos);
+
+        // Back-face hide the traveler using its current surface normal
+        worldNormal.copy(pos).normalize().applyQuaternion(globeGroup.quaternion);
+        const travFacing = worldNormal.dot(camDir);
+        travelerMat.opacity = travFacing < -0.1
+          ? 0
+          : Math.min(1, (travFacing + 0.1) / 0.3) * 0.85;
       });
 
       renderer.render(scene, camera);
