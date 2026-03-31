@@ -387,7 +387,11 @@ export default function Home() {
                     maxWidth: "min(1000px, 80%)",
                     marginBottom: 18,
                   }}>
-                    {currentThesis}
+                    {appState === 1 ? (
+                      <>
+                        Germanium is a trace metal recovered as a byproduct of zinc smelting and coal processing — <strong style={{ color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>never mined on its own</strong>. It is the critical dopant in fiber optic cables, the lens material in infrared imaging systems, the substrate for satellite solar cells, and a key input in advanced semiconductors. There are 8 deposits globally with economically viable germanium concentrations, <strong style={{ color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>5 of which are in China</strong>. Roughly 130–140 tonnes per year is extracted and refined as primary supply, with another 60–70 tonnes recovered through recycling — dominated by Umicore in Belgium and 5N Plus in Canada. Of the ~220 tonnes total, <strong style={{ color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>only 65–85 tonnes is reliably accessible to western industry. Fiber optics alone requires 77–97 tonnes per year.</strong>
+                      </>
+                    ) : currentThesis}
                   </div>
                   <button
                     onClick={() => setBriefOpen(true)}
@@ -406,7 +410,7 @@ export default function Home() {
                     onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
                     onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
                   >
-                    Read Full Analysis →
+                    Read about each layer →
                   </button>
                 </div>
               )}

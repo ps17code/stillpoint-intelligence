@@ -41,7 +41,7 @@ interface LevelConfig {
   layerKey: LayerKey;
   subLayers: SubLayerDef[];
   flows: Flow[];
-  legendItems: { label: string; color: string }[];
+  legendItems: { label: string; color: string; count?: number }[];
 }
 
 // ── All layer / flow data ────────────────────────────────────────────────────
@@ -68,7 +68,7 @@ const LEVEL_CONFIGS: LevelConfig[] = [
         { lon:27.8,   lat:-3.8,  name: "Glencore Kipushi",     loc: "DRC" },
         { lon:-120.5, lat:49.3,  name: "Teck Resources",       loc: "British Columbia, Canada" },
       ]},
-      { label: "Refiners", color: "#A07DAA", radius: 2.5, nodes: [
+      { label: "Refiners & Recyclers", color: "#A07DAA", radius: 2.5, nodes: [
         { lon:99.8,  lat:24.2,  name: "Yunnan Refinery",  loc: "Yunnan, China" },
         { lon:113.5, lat:38.0,  name: "Hebei Refinery",   loc: "Hebei, China" },
         { lon:103.0, lat:25.8,  name: "Chihong Refinery", loc: "Yunnan, China" },
@@ -83,9 +83,9 @@ const LEVEL_CONFIGS: LevelConfig[] = [
       { from: 1, to: 2, connections: [[0,0],[1,1],[2,1],[3,2],[4,3],[5,4],[6,5]] },
     ],
     legendItems: [
-      { label: "Deposits",             color: "#B8975A" },
-      { label: "Miners",               color: "#7DA06A" },
-      { label: "Refiners & Recyclers", color: "#A07DAA" },
+      { label: "Deposits",             color: "#B8975A", count: 8 },
+      { label: "Miners",               color: "#7DA06A", count: 7 },
+      { label: "Refiners & Recyclers", color: "#A07DAA", count: 7 },
     ],
   },
   {
@@ -347,7 +347,8 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<TooltipInfo>(null);
   const [selectedPanel, setSelectedPanel] = useState<NodePanelData | null>(null);
-  const dotMapRef = useRef<Map<string, { dot: SVGCircleElement; r: number }>>(new Map());
+  const dotMapRef = useRef<Map<string, { dot: SVGCircleElement; r: number; type: string }>>(new Map());
+  const [hoveredLegendLabel, setHoveredLegendLabel] = useState<string | null>(null);
   const prevSelectedRef = useRef<string | null>(null);
 
   function deselectNode() {
@@ -488,7 +489,7 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
               solidDot.setAttribute("style", "cursor: pointer;");
               group.node()!.appendChild(solidDot);
 
-              dotMapRef.current.set(node.name, { dot: solidDot, r });
+              dotMapRef.current.set(node.name, { dot: solidDot, r, type: subLayer.label });
 
               // Hit area
               const hit = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -554,12 +555,37 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
         />
 
         {/* Legend — active layer sub-layers */}
-        <div style={{ position: "absolute", top: "50%", left: 60, transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: 8, pointerEvents: "none", zIndex: 5 }}>
-          <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 6.5, color: "rgba(255,255,255,0.12)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 2 }}>Sub-layers</div>
+        <div style={{ position: "absolute", bottom: 30, left: 50, display: "flex", flexDirection: "column", gap: 8, pointerEvents: "auto", zIndex: 5 }}>
+          <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.9)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 2 }}>Sub-layers</div>
           {legendItems.map(item => (
-            <div key={item.label} style={{ display: "flex", alignItems: "center", gap: 7 }}>
+            <div
+              key={item.label}
+              style={{ display: "flex", alignItems: "center", gap: 7, cursor: "pointer", opacity: hoveredLegendLabel && hoveredLegendLabel !== item.label ? 0.4 : 1, transition: "opacity 0.15s" }}
+              onMouseEnter={() => {
+                setHoveredLegendLabel(item.label);
+                dotMapRef.current.forEach(({ dot, type }) => {
+                  if (type === item.label) {
+                    dot.setAttribute("r", "8");
+                    dot.setAttribute("fill-opacity", "1");
+                    (dot as SVGElement).style.filter = `drop-shadow(0 0 4px ${item.color})`;
+                  } else {
+                    dot.setAttribute("fill-opacity", "0.15");
+                  }
+                });
+              }}
+              onMouseLeave={() => {
+                setHoveredLegendLabel(null);
+                dotMapRef.current.forEach(({ dot, r }) => {
+                  dot.setAttribute("r", String(r));
+                  dot.setAttribute("fill-opacity", "0.9");
+                  (dot as SVGElement).style.filter = "";
+                });
+              }}
+            >
               <div style={{ width: 5, height: 5, borderRadius: "50%", background: item.color, flexShrink: 0 }} />
-              <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 7, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.03em", color: item.color, whiteSpace: "nowrap" }}>{item.label}</span>
+              <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 10, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.03em", color: item.color, whiteSpace: "nowrap" }}>
+                {item.count != null ? `${item.count} ${item.label}` : item.label}
+              </span>
             </div>
           ))}
         </div>

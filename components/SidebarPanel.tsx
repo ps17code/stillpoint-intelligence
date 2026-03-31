@@ -108,30 +108,34 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
               key={bar.key}
               onClick={() => setActivePopup(bar.key)}
               style={{
-                padding: "9px 0",
+                padding: "9px 6px",
                 cursor: "pointer",
                 borderBottom: i < bars.length - 1 ? "0.5px solid #E8E5DE" : "none",
-                transition: "background 0.1s",
+                transition: "background 0.15s ease",
+                borderRadius: 3,
+                margin: "0 -6px",
               }}
               onMouseEnter={e => {
+                e.currentTarget.style.background = "rgba(0,0,0,0.03)";
                 const title = e.currentTarget.querySelector<HTMLElement>("[data-title]");
                 if (title) title.style.color = "#000";
               }}
               onMouseLeave={e => {
+                e.currentTarget.style.background = "transparent";
                 const title = e.currentTarget.querySelector<HTMLElement>("[data-title]");
                 if (title) title.style.color = "#2C2B28";
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 6 }}>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div data-title style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 13, fontWeight: 500, color: "#2C2B28", lineHeight: 1.4, marginBottom: 3, transition: "color 0.1s" }}>
-                    {bar.teaser}
-                  </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div data-title style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 13, fontWeight: 500, color: "#2C2B28", lineHeight: 1.4, marginBottom: 3, transition: "color 0.1s" }}>
+                  {bar.teaser}
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
                   <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: "9px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: bar.color }}>
                     {bar.label}
                   </span>
+                  <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: "9px", color: "#C8C4BC" }}>→</span>
                 </div>
-                <span style={{ fontSize: 9, color: "#C8C4BC", flexShrink: 0, marginTop: 1 }}>→</span>
               </div>
             </div>
           ))}
