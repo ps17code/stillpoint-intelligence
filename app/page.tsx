@@ -65,6 +65,7 @@ export default function Home() {
   const [geometry,  setGeometry]  = useState<TreeGeometry | null>(null);
   const [layers,    setLayers]    = useState<LayerGeometry[]>([]);
   const [svgWidth,  setSvgWidth]  = useState(1000);
+  const [svgHeight, setSvgHeight] = useState(900);
 
   // ── Scroll tracking ───────────────────────────────────────────────
   const [scrollY, setScrollY] = useState(0);
@@ -77,22 +78,6 @@ export default function Home() {
   // ── Panel ─────────────────────────────────────────────────────────
   const [treeCollapsed, setTreeCollapsed] = useState(false);
 
-  // ── Tree section position — used to offset fixed SVG scroll ───────
-  // The TreeMap SVG is position:fixed, so its scroll translation must
-  // be relative to when the tree section is visible in the viewport,
-  // not absolute document scroll. We measure the tree section's doc-top
-  // and subtract it so nodes stay below viewport until scrolled there.
-  const treeSectionRef = useRef<HTMLDivElement>(null);
-  const [treeSectionDocTop, setTreeSectionDocTop] = useState(99999);
-  const measureTreeSection = useCallback(() => {
-    const el = treeSectionRef.current;
-    if (el) setTreeSectionDocTop(el.getBoundingClientRect().top + window.scrollY);
-  }, []);
-  useEffect(() => { measureTreeSection(); }, [appState, treeCollapsed, measureTreeSection]);
-  useEffect(() => {
-    window.addEventListener("resize", measureTreeSection);
-    return () => window.removeEventListener("resize", measureTreeSection);
-  }, [measureTreeSection]);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [briefOpen, setBriefOpen] = useState(false);
 
@@ -168,22 +153,32 @@ export default function Home() {
   function handleDeepDive()  { if (!tipKey || !NODES[tipKey]) return; setTipKey(null); setSelectedNode(tipKey); }
 
   // ── Build tree geometry ───────────────────────────────────────────
+  // Tree renders as an in-flow SVG. We compute a local SVG height that
+  // fits the tree content, then set ancY near the SVG bottom so nodes
+  // fill the container without empty space.
   function buildGeometryFromAnchorEl(level: AppState) {
     const rawChain = level === 1 && sel.raw ? CHAINS.RAW_DATA[sel.raw] : null;
     const newSvgWidth = rawChain ? computeRawSvgWidth(rawChain) : 1000;
     setSvgWidth(newSvgWidth);
 
-    const freshTopAnchor = topAnchorPx();
-    setTopAnchor(freshTopAnchor);
+    const H = window.innerHeight;
+    const layerCount = level === 1 ? 5 : level === 4 ? 4 : 3;
+    const padTop    = 20;
+    const padBottom = level === 1 ? 120 : 60;
+    const labelH    = 124;
+    const treePixH  = ((layerCount - 1) * 180 / 1000) * H;
+    const svgH      = Math.round(padTop + labelH + treePixH + padBottom);
+    setSvgHeight(svgH);
 
+    // ancY: output node sits padBottom pixels above SVG bottom in SVG units
+    const ancY = ((svgH - padBottom) / svgH) * 1000;
     const ancX = newSvgWidth / 2;
-    const topY = toSVG(freshTopAnchor, window.innerHeight);
 
     let geo: TreeGeometry | null = null;
-    if (level === 1 && sel.raw)  { const c = CHAINS.RAW_DATA[sel.raw];  if (c) geo = buildRawGeometry(c, ancX, topY); }
-    else if (level === 2 && sel.comp) { const c = CHAINS.COMP_DATA[sel.comp]; if (c) geo = buildCompGeometry(c, ancX, topY); }
-    else if (level === 3 && sel.sub)  { const c = CHAINS.SUB_DATA[sel.sub];   if (c) geo = buildSubGeometry(c, ancX, topY); }
-    else if (level === 4 && sel.eu)   { const c = CHAINS.EU_DATA[sel.eu];     if (c) geo = buildEUGeometry(c, ancX, topY); }
+    if (level === 1 && sel.raw)  { const c = CHAINS.RAW_DATA[sel.raw];  if (c) geo = buildRawGeometry(c, ancX, ancY); }
+    else if (level === 2 && sel.comp) { const c = CHAINS.COMP_DATA[sel.comp]; if (c) geo = buildCompGeometry(c, ancX, ancY); }
+    else if (level === 3 && sel.sub)  { const c = CHAINS.SUB_DATA[sel.sub];   if (c) geo = buildSubGeometry(c, ancX, ancY); }
+    else if (level === 4 && sel.eu)   { const c = CHAINS.EU_DATA[sel.eu];     if (c) geo = buildEUGeometry(c, ancX, ancY); }
     if (geo) { setGeometry(geo); setLayers(geo.layers); }
   }
 
@@ -276,9 +271,6 @@ export default function Home() {
   // Map hero height in pixels (for page flow)
   const mapHeroH = windowHeight - TOP_BAR_H - STATUS_BAR_H;
 
-  // Effective scroll for TreeMap: offset by tree section's document position.
-  // Negative values push nodes below the viewport (tree not yet in view).
-  const effectiveTreeScrollY = scrollY - treeSectionDocTop;
 
   // Total document height: top bar area + map hero + tree section + some overflow
   const totalPageHeight = appState > 0
@@ -454,9 +446,9 @@ export default function Home() {
                 </button>
               </div>
 
-              {/* TREE SECTION — explicit minHeight so fixed SVG overlay has scroll distance */}
+              {/* TREE SECTION */}
               {!treeCollapsed && (
-                <div ref={treeSectionRef} style={{ minHeight: bandHeight }}>
+                <div>
                   <div style={{
                     padding: "16px 36px",
                     background: "#1A1917",
@@ -494,7 +486,7 @@ export default function Home() {
                     nodes={NODES}
                     layerConfig={CHAINS.layerConfig}
                     svgWidth={svgWidth}
-                    scrollY={effectiveTreeScrollY}
+                    svgHeight={svgHeight}
                     onNodeHover={handleNodeHover}
                     onNodeLeave={handleNodeLeave}
                     onNodeClick={handleNodeClick}

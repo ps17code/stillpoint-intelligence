@@ -11,8 +11,8 @@ interface TreeMapProps {
   nodes: Record<string, NodeData>;
   layerConfig?: Record<string, LayerConfig>;
   svgWidth?: number;
-  scrollY?: number;
-  // tooltip props kept optional for backwards compat but no longer used
+  svgHeight?: number;   // pixel height for in-flow rendering
+  scrollY?: number;     // unused in in-flow mode, kept for compat
   onNodeHover?: (key: string, svgX: number, svgY: number) => void;
   onNodeLeave?: () => void;
   onNodeClick: (key: string) => void;
@@ -42,17 +42,9 @@ const E_WIDTH_DEFAULT    = "0.8";
 const E_WIDTH_HIGHLIGHT  = "1.8";
 const E_DASH_DEFAULT     = "4,3";
 
-export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000, scrollY = 0, onNodeClick, onLayerClick, layerPanels }: TreeMapProps) {
+export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000, svgHeight, onNodeClick, onLayerClick, layerPanels }: TreeMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const contentGroupRef = useRef<SVGGElement | null>(null);
-
-  // Scroll effect: just update transform — no DOM rebuild
-  useEffect(() => {
-    const g = contentGroupRef.current;
-    if (!g || typeof window === "undefined") return;
-    const off = (scrollY / window.innerHeight) * 1000;
-    g.setAttribute("transform", `translate(0, ${-off})`);
-  }, [scrollY]);
 
   useEffect(() => {
     const svg = svgRef.current;
@@ -418,9 +410,9 @@ export default function TreeMap({ geometry, nodes, layerConfig, svgWidth = 1000,
       viewBox={`0 0 ${svgWidth} 1000`}
       preserveAspectRatio="xMidYMid meet"
       style={{
-        position: "fixed", inset: 0,
-        width: "100%", height: "100%",
-        pointerEvents: "none", zIndex: 5,
+        display: "block",
+        width: "100%",
+        height: svgHeight ?? "100vh",
       }}
     >
       <defs />
