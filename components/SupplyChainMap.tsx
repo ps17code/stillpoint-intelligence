@@ -149,7 +149,7 @@ function getConfig(chainState: 1|2|3|4, rawSelection?: string) {
 const MAP_W = 700;
 const MAP_H = 380;
 
-type TooltipInfo = { name: string; loc: string; type: string; color: string } | null;
+type TooltipInfo = { name: string; loc: string; type: string; color: string; x: number; y: number } | null;
 
 export default function SupplyChainMap({ chainState, rawSelection, fillContainer }: SupplyChainMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -284,7 +284,11 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
             hit.setAttribute("fill", "transparent");
             hit.setAttribute("style", "cursor: pointer;");
             hit.addEventListener("mouseenter", () => {
-              setTooltip({ name: node.name, loc: node.loc, type: layer.label, color: layer.color });
+              const hitRect = hit.getBoundingClientRect();
+              const containerRect = (el.parentElement ?? el).getBoundingClientRect();
+              const cx = hitRect.left + hitRect.width  / 2 - containerRect.left;
+              const cy = hitRect.top  + hitRect.height / 2 - containerRect.top;
+              setTooltip({ name: node.name, loc: node.loc, type: layer.label, color: layer.color, x: cx, y: cy });
             });
             hit.addEventListener("mouseleave", () => {
               setTooltip(null);
@@ -358,16 +362,20 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
 
         {tooltip && (
           <div style={{
-            position: "absolute", bottom: 12, right: 12,
-            background: "rgba(0,0,0,0.82)",
+            position: "absolute",
+            left: tooltip.x,
+            top: tooltip.y - 10,
+            transform: "translate(-50%, -100%)",
+            background: "rgba(15,14,12,0.88)",
             borderRadius: 4,
-            padding: "7px 11px",
+            padding: "6px 10px",
             pointerEvents: "none",
             zIndex: 10,
+            whiteSpace: "nowrap",
           }}>
-            <div style={{ fontFamily: "Courier New, monospace", fontSize: 10, fontWeight: 600, color: "white", marginBottom: 2 }}>{tooltip.name}</div>
-            <div style={{ fontFamily: "Courier New, monospace", fontSize: 8, color: "rgba(255,255,255,0.55)", marginBottom: 2 }}>{tooltip.loc}</div>
-            <div style={{ fontFamily: "Courier New, monospace", fontSize: 7, color: tooltip.color, textTransform: "uppercase", letterSpacing: "0.05em" }}>{tooltip.type}</div>
+            <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 9, fontWeight: 600, color: "rgba(255,255,255,0.92)", marginBottom: 2 }}>{tooltip.name}</div>
+            <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7.5, color: "rgba(255,255,255,0.45)", marginBottom: 2 }}>{tooltip.loc}</div>
+            <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 6.5, color: tooltip.color, textTransform: "uppercase", letterSpacing: "0.06em" }}>{tooltip.type}</div>
           </div>
         )}
       </div>
