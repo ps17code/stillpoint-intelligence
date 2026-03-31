@@ -475,7 +475,7 @@ export default function Home() {
               background: "#F5F3EE",
               borderLeft: "0.5px solid #DDD9D2",
             }}>
-              <SidebarPanel />
+              <SidebarPanel chainState={appState} />
             </div>
 
           </div>{/* end grid */}

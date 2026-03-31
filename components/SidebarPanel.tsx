@@ -2,6 +2,7 @@
 import { useState } from "react";
 
 const INSIGHT_BARS = [
+  // raw material layer (chainState === 1)
   { key: "supply-demand", label: "SUPPLY / DEMAND", teaser: "A structural shortage of raw germanium isn't a risk — it's the baseline", color: "#1E40AF" },
   { key: "bottlenecks",   label: "BOTTLENECKS",     teaser: "One facility in Belgium stands between western industry and a germanium blackout", color: "#991B1B" },
   { key: "geopolitical",  label: "GEOPOLITICAL",    teaser: "China has proven it can turn germanium supply on and off at will", color: "#92400E" },
@@ -9,6 +10,16 @@ const INSIGHT_BARS = [
   { key: "emerging-tech", label: "EMERGING TECH",   teaser: "AI can find zinc deposits in days — but germanium inside takes a decade to reach market", color: "#5B21B6" },
   { key: "major-companies", label: "COMPANIES",     teaser: "Four companies define the western germanium chain", color: "#155E75" },
   { key: "investment-ideas", label: "INVESTMENT",   teaser: "Companies and positions across the germanium supply thesis", color: "#9D174D" },
+];
+
+const COMPONENT_INSIGHT_BARS = [
+  { key: "comp-supply-demand", label: "SUPPLY / DEMAND", teaser: "Every kilometer of optical fiber begins as a few grams of ultrapure GeCl₄ — and fewer than six facilities on earth can produce it", color: "#1E40AF" },
+  { key: "comp-bottlenecks",   label: "BOTTLENECKS",     teaser: "Six facilities, one equipment supplier, and a 40–60% deposition yield stand between raw germanium and every fiber-km the world produces", color: "#991B1B" },
+  { key: "comp-geopolitical",  label: "GEOPOLITICAL",    teaser: "China didn't just control germanium metal — it explicitly listed GeO₂ and GeCl₄ as separate controlled items from day one", color: "#92400E" },
+  { key: "comp-catalysts",     label: "CATALYSTS",       teaser: "The China ban expiry, $600B in hyperscaler capex, and BEAD construction all hit the GeCl₄ supply chain simultaneously in 2026–2027", color: "#065F46" },
+  { key: "comp-emerging-tech", label: "EMERGING TECH",   teaser: "Hollow-core fiber eliminates germanium entirely — but it won't carry more than 10% of datacenter traffic before 2028", color: "#5B21B6" },
+  { key: "comp-major-companies", label: "COMPANIES",     teaser: "Six companies convert raw germanium into the fiber that carries the world's data — and the supply chain's fate depends on their capacity decisions", color: "#155E75" },
+  { key: "comp-investment-ideas", label: "INVESTMENT",   teaser: "The GeCl₄ bottleneck creates a 12–24 month pricing power window — and specific companies capture asymmetric value on each side", color: "#9D174D" },
 ];
 
 const SECTION_HDR: React.CSSProperties = {
@@ -22,8 +33,9 @@ const SECTION_HDR: React.CSSProperties = {
   paddingBottom: 6,
 };
 
-export default function SidebarPanel() {
+export default function SidebarPanel({ chainState }: { chainState?: number }) {
   const [activePopup, setActivePopup] = useState<string | null>(null);
+  const bars = chainState === 2 ? COMPONENT_INSIGHT_BARS : INSIGHT_BARS;
 
   return (
     <>
@@ -67,14 +79,14 @@ export default function SidebarPanel() {
         <div style={{ ...SECTION_HDR, marginTop: 20, marginBottom: 10 }}>Core Analysis</div>
 
         <div>
-          {INSIGHT_BARS.map((bar, i) => (
+          {bars.map((bar, i) => (
             <div
               key={bar.key}
               onClick={() => setActivePopup(bar.key)}
               style={{
                 padding: "9px 0",
                 cursor: "pointer",
-                borderBottom: i < INSIGHT_BARS.length - 1 ? "0.5px solid #E8E5DE" : "none",
+                borderBottom: i < bars.length - 1 ? "0.5px solid #E8E5DE" : "none",
                 transition: "background 0.1s",
               }}
               onMouseEnter={e => {
@@ -608,6 +620,302 @@ export default function SidebarPanel() {
                   </div>
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
                     Sources: Umicore FY 2025 results, Stimson Center (Apr 2025), 5N Plus FY 2025 results & govt grants, Blue Moon Metals press releases (Feb–Mar 2026), LightPath Technologies SEC filings & FQ1–FQ2 2026 results, NDAA FY2026, KoBold Metals Series C (Jan 2025), Argus Media / Strategic Metals Invest pricing.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "comp-supply-demand" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>The western fiber optic supply chain runs through a single chemical compound that most investors have never heard of</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#EFF6FF', color: '#1E40AF', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Supply constraints</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>The compound</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Germanium tetrachloride (GeCl₄) is the critical precursor chemical used to dope silica glass with germanium dioxide (GeO₂) during fiber preform manufacturing. When GeCl₄ vapor is oxidized at 2,000–2,100°C inside a rotating silica tube, it converts to GeO₂ nanoparticles that are deposited layer by layer into the preform core, raising the refractive index by ~0.35% to create the waveguide effect that allows light to propagate through the fiber.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>There is no alternative dopant for standard single-mode telecommunications fiber.</strong> Fluorine doping lowers refractive index (useful only for cladding), phosphorus serves niche Raman applications, and hollow-core fiber eliminates the need for doping entirely — but none can substitute for germanium in the G.652.D fiber that carries 99%+ of the world&apos;s data today.</p>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Global producers</div>
+                    <table style={{ width: '100%', borderCollapse: 'collapse' as const, margin: '12px 0', fontSize: '11px' }}>
+                      <thead>
+                        <tr>
+                          {['Producer', 'Country', 'Capacity', 'Role'].map(h => (
+                            <th key={h} style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, color: '#9CA3AF', textAlign: 'left' as const, padding: '6px 8px', borderBottom: '0.5px solid #E5E7EB', fontFamily: "'Geist Mono', monospace" }}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {([
+                          ['Umicore', 'Belgium', '~40–50t Ge/yr', 'Sole western supplier at scale', 'green'],
+                          ['Yunnan Chihong', 'China', '60t Ge + 30t GeCl₄', 'Largest Chinese producer', 'red'],
+                          ['Nanjing Germanium', 'China', '~15t GeO₂/yr', 'Domestic fiber market', 'red'],
+                          ['JSC Germanium', 'Russia', '~15–20t/yr', 'Sanctioned; full-cycle', 'amber'],
+                          ['5N Plus', 'Canada', 'Expanding to 20t/yr', 'DoD funded, ramp 2027–29', 'amber'],
+                        ] as [string, string, string, string, string][]).map(([name, country, cap, role, tag], i) => (
+                          <tr key={i}>
+                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "Inter, sans-serif", color: '#374151', fontSize: '11px' }}>{name}</td>
+                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "Inter, sans-serif", color: '#374151', fontSize: '11px' }}>{country}</td>
+                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace", color: '#374151', fontSize: '10px' }}>{cap}</td>
+                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6' }}>
+                              <span style={{ fontSize: '8px', padding: '2px 6px', borderRadius: '2px', fontWeight: 600, letterSpacing: '0.03em', display: 'inline-block', fontFamily: "'Geist Mono', monospace", background: tag === 'red' ? '#FEF2F2' : tag === 'amber' ? '#FEF3C7' : '#ECFDF5', color: tag === 'red' ? '#991B1B' : tag === 'amber' ? '#92400E' : '#065F46' }}>{role}</span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Purity and conversion yields</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Fiber optics requires 6N+ purity (99.9999%) GeCl₄ — fewer than 1 part per million of metallic impurities. Arsenic contamination is the hardest to eliminate, as AsCl₃ co-distills with GeCl₄ and must be removed through multi-stage fractional distillation in quartz towers. A single part-per-billion of arsenic can degrade fiber attenuation to commercially unacceptable levels.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The conversion path from raw germanium to deployed fiber involves cascading yield losses: ~10% recovery from ore → ≤70% chlorination yield → 40–60% MCVD deposition efficiency. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>Cumulative yield from ore to deployed fiber is estimated at 2–5%.</strong> This extraordinary inefficiency means expanding fiber output requires vastly more raw germanium than deployed fiber-kilometers would suggest.</p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: USGS Mineral Commodity Summaries 2025, Grand View Research Germanium Market Report 2025, Global Growth Insights GeCl₄ Market Report 2025, Umicore Germanium Solutions Documentation, Fastmarkets Germanium Pricing March 2026.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "comp-bottlenecks" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>The component layer has five chokepoints — and three of them run through the same company</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#FEF2F2', color: '#991B1B', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Bottlenecks</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  {([
+                    ['Umicore — sole western GeCl₄ producer', '95% — Critical', 'Olen, Belgium · ~35% global GeCl₄ share · >50% from recycled feed', 'Every western fiber preform manufacturer — Corning, Prysmian, Sumitomo, Fujikura — sources ultrapure GeCl₄ from Umicore. Their Olen facility is the only non-Chinese, non-Russian operation producing 6N+ purity GeCl₄ at volumes sufficient to supply the western fiber industry. If Olen experiences any disruption, there is no western alternative at comparable scale or purity. The next-largest non-Chinese producer (5N Plus in Canada) has meaningful output not expected before 2027–2028.'],
+                    ['Rosendahl Nextrom — preform equipment near-monopoly', '80% — High', 'Austria (KNILL Gruppe) · Hundreds of MCVD units since 1990 · Projects in 73+ countries', 'The OFC 12 MCVD system is described as "the most widely used MCVD system in the industry." A surge in simultaneous expansion orders (which the current demand environment is producing) creates equipment delivery backlogs that extend capacity ramps beyond the inherent process timeline. Privately held — the bottleneck is invisible until it manifests as delayed expansions at Corning or Prysmian.'],
+                    ['6N+ purification — arsenic removal as binding constraint', '75% — High', '~5–6 facilities globally · Multi-stage quartz distillation · Arsenic co-distillation problem', 'AsCl₃ boils at 130°C vs. GeCl₄ at 83.1°C — close enough to require specialized extraction with quartz stills and repeated fractional distillation. Only ~5–6 facilities globally can produce 6N+ GeCl₄. Of these, only Umicore is accessible to western fiber manufacturers. Even if more raw germanium became available tomorrow, converting it to fiber-grade GeCl₄ would take years of facility construction.'],
+                    ['Preform manufacturing concentration — top 3 control >40%', '70% — High', 'YOFC (3,500 t/a) · Corning · Prysmian · 18–24 month expansion cycle', 'All preform lines globally are running at 95–100% utilization. The 18–24 month expansion timeline is irreducible — it reflects the physics of commissioning MCVD/OVD/VAD systems. Every new preform line commissioned increases GeCl₄ demand: the preform bottleneck and GeCl₄ bottleneck are coupled, creating a feedback loop where capacity relief at one layer immediately becomes demand pressure at the other.'],
+                    ['Military demand priority — high-purity preforms redirected', '60% — Medium', 'G.657A1 at $22/km · G.657A2 at $35/km · Military orders given priority allocation', 'Fiber-guided munitions (FPV drones consuming 10–40 km of single-mode fiber per flight) have created a new demand category pulling from the same preform pool as commercial fiber. Russia\'s fiber procurement alone jumped from <1% to 10.5% of global fiber demand in 2025. Defense procurement operates outside commercial supply-demand equilibrium — it is not price-sensitive.'],
+                  ] as [string, string, string, string][]).map(([title, severity, meta, body], i) => (
+                    <div key={i} style={{ marginTop: '24px' }}>
+                      <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '6px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Bottleneck {String(i + 1).padStart(2, '0')}</div>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13px', fontWeight: 600, color: '#1C1E21', marginBottom: '3px' }}>{title}</div>
+                      <div style={{ display: 'flex', gap: 6, marginBottom: '8px', flexWrap: 'wrap' as const }}>
+                        <span style={{ fontSize: '7.5px', padding: '2px 7px', borderRadius: '3px', fontWeight: 600, fontFamily: "'Geist Mono', monospace", background: i === 0 ? '#FEF2F2' : i < 3 ? '#FEF3C7' : '#F3F4F6', color: i === 0 ? '#991B1B' : i < 3 ? '#92400E' : '#6B7280' }}>{severity}</span>
+                        <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: '7.5px', color: '#9CA3AF' }}>{meta}</span>
+                      </div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: 0 }}>{body}</p>
+                    </div>
+                  ))}
+                  <div style={{ marginTop: '24px', padding: '12px 14px', background: '#FEF2F2', borderRadius: '4px', border: '0.5px solid rgba(153,27,27,0.12)' }}>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#6B3A3A', lineHeight: 1.65, margin: 0 }}>Umicore is the sole western GeCl₄ producer (Bottleneck #1), AND depends on preform manufacturers&apos; scrap for recycled feed (coupled to #4), AND supplies GeCl₄ to the same manufacturers whose military-priority production reduces Umicore&apos;s recycling feedstock (#5). <strong style={{ fontWeight: 600 }}>A single company sits at the intersection of three of the five identified bottlenecks.</strong></p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Umicore Germanium Solutions, Rosendahl Nextrom Product Documentation, Credence Research Optical Fiber Preform Equipment Market, Grand View Research Fiber Optic Preform Market Share, Commmesh 2026 Fiber Price Analysis.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "comp-geopolitical" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>The export controls were designed for the component layer — GeO₂ and GeCl₄ were named specifically, not caught incidentally</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#FEF3C7', color: '#92400E', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Geopolitical risk</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>The six controlled items</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>When MOFCOM announced export controls in July 2023, <strong style={{ fontWeight: 600, color: '#1C1E21' }}>six specific germanium products were individually enumerated</strong> — and GeO₂ and GeCl₄ were both explicitly named. This was not an oversight. China designed the controls to target the component layer directly, recognizing that controlling chemical intermediates is more strategically effective than controlling the metal alone.</p>
+                    <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 4, margin: '12px 0' }}>
+                      {['Metal germanium', 'Zone-melted germanium ingots', 'Phosphorus germanium zinc (GeZnP)', 'Germanium epitaxial growth substrates', 'Germanium dioxide (GeO₂) — HS 2825.60', 'Germanium tetrachloride (GeCl₄) — dual-use export control'].map((item, i) => (
+                        <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, padding: '5px 8px', background: i >= 4 ? 'rgba(146,64,14,0.05)' : '#F9FAFB', borderRadius: 3, border: i >= 4 ? '0.5px solid rgba(146,64,14,0.15)' : '0.5px solid #F3F4F6' }}>
+                          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', color: i >= 4 ? '#92400E' : '#9CA3AF', minWidth: 12, fontWeight: 600 }}>{String(i + 1).padStart(2, '0')}</span>
+                          <span style={{ fontFamily: "Inter, sans-serif", fontSize: '11.5px', color: i >= 4 ? '#92400E' : '#374151', fontWeight: i >= 4 ? 600 : 400 }}>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Impact on western fiber manufacturers</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>GeCl₄ falls under dual-use chemical licensing, requiring end-user documentation and intended-use verification from MOFCOM. Each application is reviewed independently. The licensing process introduces unpredictable delays that prevent reliable supply planning — even when licenses are eventually granted.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>YOFC and Chinese peers source GeCl₄ from Yunnan Chihong and state chemical plants — <strong style={{ fontWeight: 600, color: '#1C1E21' }}>completely insulated from export controls that constrain Corning and Prysmian.</strong> This is not a temporary trade disruption — it is a permanent structural cost and availability advantage for Chinese fiber manufacturers.</p>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>The November 2025 suspension</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Following a Trump-Xi meeting, MOFCOM suspended the outright US export ban effective November 9, 2025. The suspension runs until <strong style={{ fontWeight: 600, color: '#1C1E21' }}>November 27, 2026</strong>. The global dual-use export licensing requirement (August 2023) remains in full force. MOFCOM retains discretion to grant or deny individual licenses. Every GeCl₄ shipment still requires approval with end-use documentation.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Any western company building its GeCl₄ supply strategy around resumed Chinese access is building on a foundation that disappears on November 27, 2026 — with a single announcement, no legislative process, no warning period.</p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: MOFCOM Regular Press Conference July 6, 2023; Stimson Center — China&apos;s Germanium and Gallium Export Restrictions (2025); CNBC — China Suspends Ban November 2025; Fastmarkets Germanium Pricing Data; Winston &amp; Strawn Global Trade Analysis.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "comp-catalysts" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Five tightening forces converge on GeCl₄ supply before any easing catalyst can reach market scale</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#ECFDF5', color: '#065F46', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Catalysts</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Tightening catalysts</div>
+                    {([
+                      ['China export ban suspension expires: Nov 27, 2026', 'Binary event for GeCl₄ supply', 'MOFCOM can reimpose the full ban with a single announcement — no legislative process, no warning period. The broader global licensing requirement (August 2023) remains in force regardless. Markets will begin pricing this risk 3–6 months in advance. The May–August 2026 window is when germanium and fiber pricing will reflect probability-weighted ban reimposition.'],
+                      ['Hyperscaler AI capex drives GeCl₄ to structural limits', '36x fiber multiplier per AI datacenter rack', 'AI-focused datacenters require approximately 36 times more fiber than traditional CPU-based racks. Five hyperscalers will spend $660–690B on infrastructure in 2026: Amazon ($200B), Google ($175–185B), Microsoft (~$120B), Meta ($115–135B), Oracle ($50B). Every dollar of AI infrastructure spend generates downstream fiber demand → more cable → more preforms → more GeCl₄ → more germanium.'],
+                      ['BEAD program fiber deployment begins', '$42.45B federal broadband pulling from same GeCl₄ pool', '53 states and territories have received NTIA approval; peak construction runs 2026–2030. BEAD deployments drive sustained demand for standard G.652.D fiber, competing directly with AI infrastructure for limited preform capacity. The US government is simultaneously connecting rural homes and building AI infrastructure — from a supply chain already sold out through 2026.'],
+                      ['New preform capacity commitments increase GeCl₄ demand', 'Every new preform line is a new GeCl₄ consumer', 'Corning\'s Hickory, NC expansion ($170–268M, announced October 2025) creates the world\'s largest fiber-optic cable plant. Shin-Etsu announced ¥18B capital investment for preform expansion. Each new preform line commissioned increases demand for GeCl₄. Capacity expansion at the preform layer is demand expansion at the GeCl₄ layer.'],
+                    ] as [string, string, string][]).map(([title, impact, body], i) => (
+                      <div key={i} style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: i < 3 ? '0.5px solid #F3F4F6' : 'none' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '3px' }}>{title}</div>
+                        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', color: '#065F46', marginBottom: '8px' }}>{impact}</div>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Key dates</div>
+                    <table style={{ width: '100%', borderCollapse: 'collapse' as const, margin: '8px 0', fontSize: '11px' }}>
+                      <thead>
+                        <tr>
+                          {['Date', 'Event', 'GeCl₄ impact'].map(h => (
+                            <th key={h} style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, color: '#9CA3AF', textAlign: 'left' as const, padding: '6px 8px', borderBottom: '0.5px solid #E5E7EB', fontFamily: "'Geist Mono', monospace" }}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {([
+                          ['H1 2026', 'BEAD groundbreakings; Corning Hickory expansion', 'Fiber demand spike; GeCl₄ demand increases'],
+                          ['Nov 27, 2026', 'China ban suspension expires', 'Binary risk event for GeCl₄ availability'],
+                          ['2027', 'Stade restart (40t/yr); 5N Plus ramping', 'Incremental non-Chinese supply (~55t combined)'],
+                          ['2028–2029', '5N Plus at scale; DRC contributing to Umicore', 'More meaningful supply relief'],
+                        ] as [string, string, string][]).map(([date, event, impact], i) => (
+                          <tr key={i}>
+                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace", color: date === 'Nov 27, 2026' ? '#991B1B' : '#374151', fontSize: '10px', whiteSpace: 'nowrap' as const, fontWeight: date === 'Nov 27, 2026' ? 600 : 400 }}>{date}</td>
+                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "Inter, sans-serif", color: '#374151', fontSize: '11px' }}>{event}</td>
+                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "Inter, sans-serif", color: '#6B7280', fontSize: '10.5px' }}>{impact}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: MOFCOM Export Ban Suspension November 2025; IEEE ComSoc Technology Blog — Fiber Demand 2026; NTIA BEAD Progress Dashboard; Corning News Release — Hickory Expansion; Umicore Newsroom — EU Project Selection February 2026; 5N Plus Q4 Earnings Call 2025.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "comp-emerging-tech" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Four technology vectors could reshape the component layer, but none reaches meaningful scale before the supply crisis peaks</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#EDE9FE', color: '#5B21B6', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Emerging tech</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  {([
+                    ['Replace it: hollow-core fiber', 'Commercial deployments begun · Meaningful market share 2028–2030', 'Hollow-core fiber (HCF) is the only technology that eliminates germanium from the supply chain entirely — light travels through air rather than germanium-doped glass. Microsoft deployed 1,280 km across Azure with zero field failures (0.091 dB/km loss), targeting 15,000 km by late 2026. YOFC achieved a world-record 0.040 dB/km in lab conditions and 91.2 km single preform drawing. But total HCF deployment by end 2026 will be approximately 20,000 km against billions km of global installed base. HCF is the structural bear case for germanium demand — but it arrives after the supply crisis peaks.', 'bear'],
+                    ['Use less: advanced deposition efficiency', 'PCVD technology available · Incremental adoption underway', 'MCVD (most widely deployed) achieves 40–60% GeCl₄-to-GeO₂ conversion efficiency. PCVD approaches 100% deposition efficiency through plasma-assisted heterogeneous deposition. Switching from MCVD to PCVD approximately doubles germanium utilization efficiency — but MCVD remains the dominant installed base globally, and equipment replacement cycles are measured in decades. Efficiency improvements slow the rate of demand growth; they do not reverse it.', 'neutral'],
+                    ['Substitute the dopant: fluorine and phosphorus', 'Niche applications only · Not viable for standard telecom fiber', 'Fluorine doping creates depressed refractive index (suitable for cladding only, not core). Phosphorus serves Raman applications but is unsuitable for standard telecom core doping. The fundamental refractive index requirement for conventional fiber makes germanium extremely difficult to displace broadly. Total alternative dopant displacement: <10% of germanium consumption in telecoms by 2030.', 'neutral'],
+                    ['Co-packaged optics: does NOT reduce fiber demand', 'CPO market $470M → $603M (2025→2026, CAGR 29.7%) · Net effect: increases germanium demand', 'CPO enables higher bandwidth density within datacenters but does not reduce total fiber consumption. AI datacenter buildout demands vastly exceed fiber supply regardless of transceiver technology. CPO actually accelerates fiber deployment by improving datacenter economics. Expected net germanium demand growth from CPO deployment: +8–12% through 2030. The technology that appears to reduce fiber-per-link increases total fiber deployed by making more datacenters economically viable.', 'bull'],
+                  ] as [string, string, string, string][]).map(([title, status, body, dir], i) => (
+                    <div key={i} style={{ marginTop: '24px', paddingBottom: '20px', borderBottom: i < 3 ? '0.5px solid #F3F4F6' : 'none' }}>
+                      <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '6px', fontFamily: "'Geist Mono', monospace" }}>Vector {String(i + 1).padStart(2, '0')}</div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, marginBottom: '6px' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13px', fontWeight: 600, color: '#1C1E21' }}>{title}</div>
+                        <span style={{ fontSize: '7.5px', padding: '2px 6px', borderRadius: '3px', fontFamily: "'Geist Mono', monospace", flexShrink: 0, fontWeight: 600, background: dir === 'bear' ? '#EDE9FE' : dir === 'bull' ? '#FEF2F2' : '#F3F4F6', color: dir === 'bear' ? '#5B21B6' : dir === 'bull' ? '#991B1B' : '#6B7280' }}>{dir === 'bear' ? 'Ge- bear' : dir === 'bull' ? 'Ge+ bull' : 'neutral'}</span>
+                      </div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', color: '#9CA3AF', marginBottom: '8px' }}>{status}</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                    </div>
+                  ))}
+                  <div style={{ marginTop: '20px', padding: '12px 14px', background: '#F9FAFB', borderRadius: '4px' }}>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.65, margin: 0 }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>The technologies that could save the supply chain don&apos;t arrive in time to prevent the shortage. The technologies that arrive in time don&apos;t save enough supply to matter.</strong></p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: YOFC Hollow-Core Fiber Press Releases; Microsoft Blog — Lumenisity Acquisition; Data Center Dynamics — Microsoft HCF Deployment; IEEE Xplore — Germanium Recovery from Optical Fiber Manufacturing; Grand View Research — Silicon Photonics Market.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "comp-major-companies" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>The component layer is defined by one supplier, one dominant consumer, and four manufacturers racing to expand capacity they cannot build fast enough</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#ECFEFF', color: '#155E75', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Major companies</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  {([
+                    ['Umicore', 'Euronext Brussels: UMI · €3.6B revenue (2025) · €847M adjusted EBITDA · ~€16/share', 'Sole western producer of ultrapure GeCl₄ at meaningful scale. Refines raw germanium concentrates, purifies through multi-stage fractional distillation, and produces 6N+ purity GeCl₄ at their integrated Olen facility near Antwerp. ~35% of world GeCl₄ market. >50% of germanium feed from recycled manufacturing scrap via long-term tolling agreements. EU Commission selected two Umicore germanium projects in February 2026. Every western fiber preform manufacturer — Corning, Prysmian, Sumitomo, Fujikura — depends on Umicore for GeCl₄.'],
+                    ['Corning', 'NYSE: GLW · $16.4B core revenue (2025) · Market cap ~$110B · All-time high $160 (Feb 2026)', 'World\'s largest consumer of GeCl₄ and largest fiber preform manufacturer. Converts ultrapure GeCl₄ into GeO₂-doped silica preforms using proprietary OVD process, then draws into optical fiber. Q3 2025 optical communications revenue of $1.65B (+33% YoY). Meta\'s $6B multi-year agreement (January 2026) equals Corning\'s entire 2025 optical-communications revenue from a single customer. Springboard plan upgraded to $11B through 2028.'],
+                    ['Prysmian', 'Borsa Italiana: PRY · €17.0B revenue (2024) · Market cap ~€31B · 30M+ km/yr', 'World\'s largest fiber cable manufacturer. Recently expanded upstream into preform manufacturing through 2024 North American capacity acquisition — all glass sourced from US origin (BABA compliant). Renewed long-term germanium supply agreement with Umicore in 2025, locking in sustainable sourcing but codifying single-supplier dependency. Invested in Relativity Networks for HCF production at Eindhoven — a strategic hedge against germanium dependency.'],
+                    ['YOFC', 'HKEX: 6869 · China\'s #1 fiber producer · 3,500 t/a preform capacity', 'China\'s largest and world\'s largest fiber preform manufacturer. Produces preforms using all three major methods (PCVD, VAD, OVD) — the only company to independently develop and mass-produce via all three. Sources GeCl₄ from domestic Chinese suppliers (Yunnan Chihong, Nanjing Germanium) — completely insulated from MOFCOM export controls. Achieved world-record HCF attenuation of 0.040 dB/km. YOFC is simultaneously the largest beneficiary of the current germanium-doped fiber chain and the company most aggressively developing technology that could replace it.'],
+                    ['Shin-Etsu Chemical', 'TYO: 4063 · ¥2.56T revenue (FY2025) · Market cap ~$73B', 'Manufactures optical fiber preforms across three facilities: Kashima Plant (Japan), Shin-Etsu Jiangsu (China), and Shin-Etsu YOFC Hubei (China JV). Announced ¥18B capital investment for global preform expansion. The China JV structure provides optionality that pure western manufacturers lack — Shin-Etsu can shift production between Japanese (Umicore-sourced) and Chinese (domestically-sourced) facilities depending on export control conditions.'],
+                  ] as [string, string, string][]).map(([name, meta, body], i) => (
+                    <div key={i} style={{ marginTop: '20px', paddingBottom: i < 4 ? '20px' : 0, borderBottom: i < 4 ? '0.5px solid #F3F4F6' : 'none' }}>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>{name}</div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '10px' }}>{meta}</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                    </div>
+                  ))}
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Umicore Full Year Results 2024 and 2025; Corning Q3 2025 Earnings Release; Corning–Meta $6B Agreement January 2026; Prysmian FY2024 Results; YOFC 2024 ESG Report; Shin-Etsu Annual Report 2024; Shin-Etsu Preform Capacity Expansion Announcement.
+                  </div>
+                </div>
+              </div>
+            ) : activePopup === "comp-investment-ideas" ? (
+              <div style={{ padding: 0 }}>
+                <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
+                  <div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Three public companies capture the component-layer bottleneck, one private bet hedges it, and one binary date reprices the entire chain</div>
+                    <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#FDF2F8', color: '#9D174D', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Investment ideas</div>
+                  </div>
+                  <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
+                </div>
+                <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Public companies — long positions</div>
+                    {([
+                      ['Umicore (Euronext Brussels: UMI)', '~€4.6B market cap · ~€16/share · Up 62% YTD', 'Umicore\'s recycled germanium cost structure provides a widening margin advantage as virgin germanium prices remain elevated. >50% of germanium feed comes from recycling — secured at costs well below spot. As germanium metal climbed from €1,550/kg to €2,950/kg (Jan–Sep 2024) and onward to $8,597/kg (February 2026), Umicore\'s input costs rose modestly while output pricing followed market upward. Chinese export controls are, counterintuitively, the best thing that could happen to Umicore\'s margins — they force western buyers to Umicore at any price while Umicore\'s recycled cost base remains largely fixed.', 'Umicore is a conglomerate — germanium is embedded in Specialty Materials alongside battery materials (which has underperformed). Germanium-specific segment revenue is not separately disclosed.'],
+                      ['Corning (NYSE: GLW)', '~$110B market cap · ~$129/share · All-time high: $160 (Feb 2026)', 'Corning\'s position as world\'s largest fiber preform manufacturer, running at 100% capacity with multi-year backlogs, gives it extraordinary pricing power. Meta\'s $6B agreement — equal to Corning\'s entire 2025 optical-communications revenue — demonstrates hyperscalers will pay premium prices to lock in supply years ahead. Fiber prices have risen 500%+ vs. germanium costs up 200%; vertically integrated producers with scale absorb input cost shocks better than competitors.', 'Valuation has nearly tripled in 12 months — the supply shortage thesis is increasingly priced in. GeCl₄ cost pressures could compress margins if fiber pricing plateaus.'],
+                      ['Prysmian (Borsa Italiana: PRY)', '~€31B market cap · ~€98/share · P/E: 21.85', 'Prysmian offers a differentiated component-layer investment: locked-in GeCl₄ supply through Umicore 2025 agreement, newly acquired North American preform capacity (BABA compliant), and strategic investment in Relativity Networks for hollow-core fiber production. Dual positioning — germanium-supplied present, HCF-enabled future — provides optionality that pure-play germanium chain companies lack.', 'Prysmian\'s dependency on Umicore is contractually locked — if Umicore faces disruption, Prysmian\'s preform operations halt. HCF investment is a hedge, not yet a revenue contributor.'],
+                    ] as [string, string, string, string][]).map(([name, meta, bull, risk], i) => (
+                      <div key={i} style={{ marginTop: '18px', paddingBottom: '18px', borderBottom: i < 2 ? '0.5px solid #F3F4F6' : 'none' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>{name}</div>
+                        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '8px' }}>{meta}</div>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: '8px' }}><strong style={{ fontWeight: 600, color: '#065F46' }}>Thesis:</strong> {bull}</p>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: 0 }}><strong style={{ fontWeight: 600, color: '#991B1B' }}>Risks:</strong> {risk}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>The binary event: November 27, 2026</div>
+                    <div style={{ display: 'flex', gap: '8px', margin: '12px 0' }}>
+                      {([['Nov 27, 2026', 'China ban suspension expires', '#991B1B', '#FEF2F2']] as [string, string, string, string][]).map(([date, label, color, bg], i) => (
+                        <div key={i} style={{ flex: 1, background: bg, borderRadius: '4px', padding: '10px 12px', border: `0.5px solid ${color}22` }}>
+                          <div style={{ fontSize: '13px', fontWeight: 600, color, letterSpacing: '-0.3px', fontFamily: "'Geist Mono', monospace" }}>{date}</div>
+                          <div style={{ fontSize: '7.5px', color, letterSpacing: '0.05em', textTransform: 'uppercase' as const, marginTop: '2px', fontFamily: "'Geist Mono', monospace" }}>{label}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>Reimposition (bull for Umicore/Corning/Prysmian):</strong> GeCl₄ supply to western manufacturers immediately constrained. Germanium prices spike. Companies with locked-in supply capture pricing power. Companies without supply agreements face production curtailment.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>Extension or permanent lift (bear):</strong> Pricing spread between recycled and virgin germanium compresses. Umicore&apos;s margin advantage narrows. The urgency driving hyperscaler multi-year supply agreements diminishes.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: 0 }}>Long Umicore/Corning/Prysmian is a bet that the 12–24 month supply gap persists regardless of what China does. Even if the suspension extends, the structural shortage of preform capacity and the acceleration of AI/BEAD fiber demand sustain pricing power through 2027–2028.</p>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Private market</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>Relativity Networks (Series A · $10.7M raised):</strong> Prysmian-backed HCF startup targeting mass production at Eindhoven. If HCF achieves 10% market share by 2030, addressable market grows from ~$1.5B to $5B+. Entry via secondary market or Series B financing (2026–2027).</p>
+                  </div>
+                  <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '10.5px', color: '#9CA3AF', fontStyle: 'italic', lineHeight: 1.5, marginTop: '24px', padding: '12px 14px', background: '#F9FAFB', borderRadius: '4px' }}>
+                    This analysis identifies companies positioned to benefit from structural supply chain dynamics. It does not constitute investment advice. All positions should be evaluated against individual risk tolerance and investment horizons.
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: Umicore Full Year Results 2025; Corning Q3 2025 Earnings; Corning–Meta $6B Agreement; Prysmian FY2024 Results; Prysmian–Umicore Supply Agreement 2025; Data Center Dynamics — Relativity-Prysmian Partnership; Fastmarkets Germanium Pricing Data March 2026.
                   </div>
                 </div>
               </div>
