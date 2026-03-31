@@ -2,8 +2,20 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import * as topojson from "topojson-client";
+import type { Topology, GeometryCollection } from "topojson-specification";
 
 const R = 1;
+
+function toVec3(lon: number, lat: number, r = R): THREE.Vector3 {
+  const phi   = (90 - lat) * (Math.PI / 180);
+  const theta = (lon + 180) * (Math.PI / 180);
+  return new THREE.Vector3(
+    -r * Math.sin(phi) * Math.cos(theta),
+     r * Math.cos(phi),
+     r * Math.sin(phi) * Math.sin(theta),
+  );
+}
 
 export default function HomePage() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -40,7 +52,7 @@ export default function HomePage() {
 
     // ── Textured globe sphere ─────────────────────────────────────────────────
     const sphereMat = new THREE.MeshPhongMaterial({
-      color:     new THREE.Color("#8A7D6A"), // warm gray-gold — grayscale topology × this = black ocean, gold-gray land
+      color:     new THREE.Color("#B0A490"), // brighter warm gold — lifts land clearly above ocean
       specular:  new THREE.Color("#111111"),
       shininess: 5,
     });
@@ -57,6 +69,32 @@ export default function HomePage() {
       (err) => console.error("Texture load error:", err),
     );
 
+
+    // ── Country outlines — sharp edges on top of the texture ─────────────────
+    const outlineMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.18 });
+    const OUTLINE_R  = R * 1.001;
+
+    fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
+      .then(res => res.json())
+      .then((world: Topology) => {
+        // mesh() gives every border segment as a MultiLineString
+        const borders = topojson.mesh(
+          world,
+          (world.objects as Record<string, GeometryCollection>).countries,
+        );
+        const buf: number[] = [];
+        borders.coordinates.forEach(line => {
+          for (let i = 0; i < line.length - 1; i++) {
+            const a = toVec3(line[i][0],   line[i][1],   OUTLINE_R);
+            const b = toVec3(line[i+1][0], line[i+1][1], OUTLINE_R);
+            buf.push(a.x, a.y, a.z, b.x, b.y, b.z);
+          }
+        });
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute("position", new THREE.Float32BufferAttribute(buf, 3));
+        globeGroup.add(new THREE.LineSegments(geo, outlineMat));
+      })
+      .catch(console.error);
 
     // ── Auto-rotation: 1 rev / 90 s ───────────────────────────────────────────
     const AUTO_SPEED = (2 * Math.PI) / 90;
