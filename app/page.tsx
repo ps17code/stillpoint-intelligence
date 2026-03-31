@@ -349,7 +349,7 @@ export default function Home() {
 
               {/* THESIS BLOCK */}
               {currentThesis && (
-                <div style={{ background: "#3A3835", padding: "32px 36px 36px" }}>
+                <div style={{ background: "#282828", padding: "32px 36px 36px" }}>
                   <div style={{
                     fontFamily: "'Geist Mono', 'Courier New', monospace",
                     fontSize: 6,
