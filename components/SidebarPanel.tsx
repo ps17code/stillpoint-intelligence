@@ -13,14 +13,13 @@ const INSIGHT_BARS = [
 
 const SECTION_HDR: React.CSSProperties = {
   fontFamily: "'Geist Mono', 'Courier New', monospace",
-  fontSize: 7,
+  fontSize: 15,
   fontWeight: 500,
   letterSpacing: "0.08em",
   textTransform: "uppercase",
   color: "#8A8880",
-  borderBottom: "0.5px solid #DDD9D2",
+  borderBottom: "0.5px solid #B8B4AC",
   paddingBottom: 6,
-  marginBottom: 10,
 };
 
 export default function SidebarPanel() {
@@ -31,7 +30,7 @@ export default function SidebarPanel() {
       <div style={{ padding: "16px 14px 24px" }}>
 
         {/* ── Market data ─────────────────────────────────────────── */}
-        <div style={SECTION_HDR}>Market data</div>
+        <div style={{ ...SECTION_HDR, marginBottom: 20 }}>Market Data</div>
 
         {/* GeO₂ price card */}
         <div style={{ marginBottom: 12 }}>
@@ -83,8 +82,8 @@ export default function SidebarPanel() {
           </div>
         </div>
 
-        {/* ── Key insights ────────────────────────────────────────── */}
-        <div style={SECTION_HDR}>Key insights</div>
+        {/* ── Core Analysis ───────────────────────────────────────── */}
+        <div style={{ ...SECTION_HDR, marginTop: 20, marginBottom: 10 }}>Core Analysis</div>
 
         <div>
           {INSIGHT_BARS.map((bar, i) => (

@@ -408,7 +408,6 @@ export default function Home() {
                 minHeight: 500,
                 position: "relative",
                 background: "#3A3835",
-                marginBottom: 40,
               }}>
                 <SupplyChainMap
                   chainState={appState as 1|2|3|4}
@@ -458,7 +457,7 @@ export default function Home() {
 
           {/* ── TREE SECTION — full width below grid ── */}
           {!treeCollapsed && (
-            <div>
+            <div style={{ marginTop: 20, paddingBottom: 40 }}>
               <div style={{
                 padding: "14px 36px 16px",
                 background: "#1A1917",
