@@ -446,59 +446,6 @@ export default function Home() {
                 </button>
               </div>
 
-              {/* TREE SECTION */}
-              {!treeCollapsed && (
-                <div>
-                  <div style={{
-                    padding: "16px 36px",
-                    background: "#1A1917",
-                    borderTop: "0.5px solid rgba(255,255,255,0.06)",
-                    borderBottom: "0.5px solid rgba(255,255,255,0.06)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}>
-                    <div style={{
-                      fontFamily: "'Geist Mono', monospace",
-                      fontSize: 11,
-                      fontWeight: 500,
-                      letterSpacing: "0.14em",
-                      textTransform: "uppercase",
-                      color: "rgba(255,255,255,0.35)",
-                    }}>
-                      {supplyMapLabel}
-                    </div>
-                    <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-                      {([
-                        appState === 1 ? "~220 t/yr" : appState === 2 ? "~88 t Ge to fiber" : appState === 3 ? "~3–4M route-km/yr" : "~130–140 hyperscale DCs/yr",
-                        appState === 1 ? "$320M market" : appState === 2 ? "~500M fiber-km/yr" : appState === 3 ? ">30M cable-km/yr" : "~230M fiber-km/yr",
-                        appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : appState === 3 ? "71% hyperscaler owned" : "~115t Ge/yr",
-                      ] as string[]).map((stat, i, arr) => (
-                        <React.Fragment key={i}>
-                          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{stat}</span>
-                          {i < arr.length - 1 && <div style={{ width: 1, height: 8, background: "rgba(255,255,255,0.1)" }} />}
-                        </React.Fragment>
-                      ))}
-                    </div>
-                  </div>
-                  <TreeMap
-                    geometry={geometry}
-                    nodes={NODES}
-                    layerConfig={CHAINS.layerConfig}
-                    svgWidth={svgWidth}
-                    svgHeight={svgHeight}
-                    onNodeHover={handleNodeHover}
-                    onNodeLeave={handleNodeLeave}
-                    onNodeClick={handleNodeClick}
-                    onLayerClick={() => {}}
-                    layerPanels={getLayerPanels(appState)}
-                  />
-                </div>
-              )}
-
-              {/* STATUS BAR */}
-              <StatusBar />
-
             </div>{/* end left column */}
 
             {/* ── RIGHT SIDEBAR — scrolls with page ── */}
@@ -510,6 +457,59 @@ export default function Home() {
             </div>
 
           </div>{/* end grid */}
+
+          {/* ── TREE SECTION — full width below grid ── */}
+          {!treeCollapsed && (
+            <div>
+              <div style={{
+                padding: "16px 36px",
+                background: "#1A1917",
+                borderTop: "0.5px solid rgba(255,255,255,0.06)",
+                borderBottom: "0.5px solid rgba(255,255,255,0.06)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}>
+                <div style={{
+                  fontFamily: "'Geist Mono', monospace",
+                  fontSize: 11,
+                  fontWeight: 500,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.35)",
+                }}>
+                  {supplyMapLabel}
+                </div>
+                <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+                  {([
+                    appState === 1 ? "~220 t/yr" : appState === 2 ? "~88 t Ge to fiber" : appState === 3 ? "~3–4M route-km/yr" : "~130–140 hyperscale DCs/yr",
+                    appState === 1 ? "$320M market" : appState === 2 ? "~500M fiber-km/yr" : appState === 3 ? ">30M cable-km/yr" : "~230M fiber-km/yr",
+                    appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : appState === 3 ? "71% hyperscaler owned" : "~115t Ge/yr",
+                  ] as string[]).map((stat, i, arr) => (
+                    <React.Fragment key={i}>
+                      <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{stat}</span>
+                      {i < arr.length - 1 && <div style={{ width: 1, height: 8, background: "rgba(255,255,255,0.1)" }} />}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+              <TreeMap
+                geometry={geometry}
+                nodes={NODES}
+                layerConfig={CHAINS.layerConfig}
+                svgWidth={svgWidth}
+                svgHeight={svgHeight}
+                onNodeHover={handleNodeHover}
+                onNodeLeave={handleNodeLeave}
+                onNodeClick={handleNodeClick}
+                onLayerClick={() => {}}
+                layerPanels={getLayerPanels(appState)}
+              />
+            </div>
+          )}
+
+          {/* STATUS BAR */}
+          <StatusBar />
         </>
       )}
 
