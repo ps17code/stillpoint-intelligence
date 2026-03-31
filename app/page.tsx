@@ -61,22 +61,16 @@ export default function HomePage() {
     camera.position.set(0, 0, 2.85);
 
     // ── Lights ────────────────────────────────────────────────────────────────
-    // Blue-tinted ambient — gives the dark side a subtle deep-navy cast
-    scene.add(new THREE.AmbientLight(0x111133, 0.55));
+    // Ambient — pure white, enough to keep dark side readable
+    scene.add(new THREE.AmbientLight(0xfffaf0, 0.45));
 
-    // Key light — upper left, creates visible continent shading
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.05);
+    // Key light — upper left, bright white
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.8);
     keyLight.position.set(-3, 2.5, 2.5);
     scene.add(keyLight);
 
-    // Rim / atmosphere light — behind & below, blue-ish, makes sphere edge
-    // glow against the dark background
-    const rimLight = new THREE.DirectionalLight(0x4466AA, 0.4);
-    rimLight.position.set(2, -1, -3);
-    scene.add(rimLight);
-
-    // Subtle warm fill from lower right to break up the dark side
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.08);
+    // Soft fill from lower right — smooths the terminator
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.25);
     fillLight.position.set(3, -2, 1);
     scene.add(fillLight);
 
@@ -88,34 +82,22 @@ export default function HomePage() {
     globeGroup.add(new THREE.Mesh(
       new THREE.SphereGeometry(R, 72, 72),
       new THREE.MeshPhongMaterial({
-        color:     new THREE.Color("#080E1A"),
-        specular:  new THREE.Color("#1A2A4A"),
-        shininess: 30,
-      }),
-    ));
-
-    // ── Atmosphere halo — BackSide sphere slightly larger than globe ───────────
-    // Creates the blue edge glow visible against the dark background
-    globeGroup.add(new THREE.Mesh(
-      new THREE.SphereGeometry(R * 1.025, 64, 64),
-      new THREE.MeshBasicMaterial({
-        color:       0x2255CC,
-        transparent: true,
-        opacity:     0.045,
-        side:        THREE.BackSide,
+        color:     new THREE.Color("#1A1A18"),
+        specular:  new THREE.Color("#2E2E2A"),
+        shininess: 18,
       }),
     ));
 
     // ── Land materials ────────────────────────────────────────────────────────
     const landMat = new THREE.MeshPhongMaterial({
-      color:     new THREE.Color("#181F2E"),
-      specular:  new THREE.Color("#1E2B40"),
+      color:     new THREE.Color("#333330"),
+      specular:  new THREE.Color("#3A3A36"),
       shininess: 8,
     });
     const outlineMat = new THREE.LineBasicMaterial({
       color:       0xffffff,
       transparent: true,
-      opacity:     0.13,
+      opacity:     0.40,
     });
 
     // ── Auto-rotation: 1 rev / 90 s ───────────────────────────────────────────
