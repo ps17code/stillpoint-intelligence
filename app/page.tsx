@@ -238,10 +238,16 @@ export default function Home() {
     appState === 4 ? `${sel.eu   || "AI Datacenter"} · End Use Layer` : "";
 
   const supplyMapLabel =
-    appState === 1 ? `${sel.raw  || "Germanium"} supply map` :
-    appState === 2 ? `${sel.comp || "GeO₂ / GeCl₄"} supply map` :
-    appState === 3 ? "Fiber optics supply map" :
-    appState === 4 ? "End use supply map" : "";
+    appState === 1 ? "Germanium Tree" :
+    appState === 2 ? `${sel.comp || "GeO₂ / GeCl₄"} Tree` :
+    appState === 3 ? "Fiber Optics Tree" :
+    appState === 4 ? "End Use Tree" : "";
+
+  const worldMapTitle =
+    appState === 1 ? "Germanium Supply Map" :
+    appState === 2 ? `${sel.comp || "GeO₂ / GeCl₄"} Supply Map` :
+    appState === 3 ? "Fiber Optics Supply Map" :
+    appState === 4 ? "End Use Supply Map" : "";
 
   const chainLabel =
     appState === 1 ? (sel.raw  || "Germanium") :
@@ -417,6 +423,22 @@ export default function Home() {
                   euSelection={sel.eu || undefined}
                   fillContainer
                 />
+                {/* World map title */}
+                <div style={{
+                  position: "absolute",
+                  top: 18,
+                  left: 36,
+                  fontFamily: "'Geist Mono', 'Courier New', monospace",
+                  fontSize: 10,
+                  fontWeight: 500,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.45)",
+                  pointerEvents: "none",
+                  zIndex: 5,
+                }}>
+                  {worldMapTitle}
+                </div>
                 <button
                   onClick={() => setTreeCollapsed(prev => !prev)}
                   style={{

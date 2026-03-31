@@ -315,7 +315,7 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
           <div style={{
             position: "absolute",
             top: "50%",
-            left: 36,
+            left: 60,
             transform: "translateY(-50%)",
             display: "flex",
             flexDirection: "column",
@@ -335,7 +335,6 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
               { label: "Deposits",             color: "#B8975A" },
               { label: "Miners",               color: "#7DA06A" },
               { label: "Refiners & Recyclers", color: "#A07DAA" },
-              { label: "Global Supply",        color: "rgba(255,255,255,0.4)" },
             ] as { label: string; color: string }[]).map(item => (
               <div key={item.label} style={{ display: "flex", alignItems: "center", gap: 7 }}>
                 <div style={{
