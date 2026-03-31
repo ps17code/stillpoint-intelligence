@@ -40,14 +40,14 @@ export default function HomePage() {
 
     // ── Textured globe sphere ─────────────────────────────────────────────────
     const sphereMat = new THREE.MeshPhongMaterial({
-      color:     new THREE.Color("#554433"), // dark warm brown — dims texture and pulls blue out of oceans
+      color:     new THREE.Color("#8A7D6A"), // warm gray-gold — grayscale topology × this = black ocean, gold-gray land
       specular:  new THREE.Color("#111111"),
       shininess: 5,
     });
     globeGroup.add(new THREE.Mesh(new THREE.SphereGeometry(R, 72, 72), sphereMat));
 
     new THREE.TextureLoader().load(
-      "/earth-texture.jpg",
+      "/earth-topology.png",
       (tex) => {
         console.log("Earth texture loaded:", tex.image.width, "×", tex.image.height);
         sphereMat.map = tex;
