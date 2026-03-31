@@ -37,6 +37,10 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
   const [activePopup, setActivePopup] = useState<string | null>(null);
   const bars = chainState === 2 ? COMPONENT_INSIGHT_BARS : INSIGHT_BARS;
 
+  const activeBarIdx = activePopup ? bars.findIndex(b => b.key === activePopup) : -1;
+  const prevKey = activeBarIdx > 0 ? bars[activeBarIdx - 1].key : null;
+  const nextKey = activeBarIdx < bars.length - 1 ? bars[activeBarIdx + 1].key : null;
+
   return (
     <>
       <div style={{ padding: "16px 14px 24px" }}>
@@ -123,8 +127,15 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
           <div style={{ position: "absolute", inset: 0, background: "rgba(20,18,15,0.55)", backdropFilter: "blur(3px)" }} />
           <div
             onClick={e => e.stopPropagation()}
-            style={{ position: "relative", background: "#FAF9F7", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: 6, width: "100%", maxWidth: 680, maxHeight: "80vh", overflowY: "auto" as const }}
+            style={{ position: "relative", display: "flex", alignItems: "center", gap: 14, width: "100%", maxWidth: 760 }}
           >
+            {/* Prev button */}
+            <button
+              onClick={() => prevKey && setActivePopup(prevKey)}
+              disabled={!prevKey}
+              style={{ flexShrink: 0, width: 38, height: 38, borderRadius: "50%", border: "0.5px solid rgba(255,255,255,0.18)", background: prevKey ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.03)", cursor: prevKey ? "pointer" : "default", color: prevKey ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.18)", fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Geist Mono', monospace", transition: "background 0.15s" }}
+            >←</button>
+            <div style={{ flex: 1, minWidth: 0, background: "#FAF9F7", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: 6, maxHeight: "80vh", overflowY: "auto" as const }}>
             {activePopup === "supply-demand" ? (
               <div style={{ padding: 0 }}>
                 <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
@@ -920,6 +931,13 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
                 </div>
               </div>
             ) : null}
+            </div>{/* end modal card */}
+            {/* Next button */}
+            <button
+              onClick={() => nextKey && setActivePopup(nextKey)}
+              disabled={!nextKey}
+              style={{ flexShrink: 0, width: 38, height: 38, borderRadius: "50%", border: "0.5px solid rgba(255,255,255,0.18)", background: nextKey ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.03)", cursor: nextKey ? "pointer" : "default", color: nextKey ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.18)", fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Geist Mono', monospace", transition: "background 0.15s" }}
+            >→</button>
           </div>
         </div>
       )}
