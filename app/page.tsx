@@ -19,39 +19,100 @@ function toVec3(lon: number, lat: number, r = R): THREE.Vector3 {
 
 // ── Node data ────────────────────────────────────────────────────────────────
 const NODE_COLOR: Record<string, number> = {
-  deposit: 0xB8975A,
-  miner:   0x7DA06A,
-  refiner: 0xA07DAA,
+  // Raw material
+  deposit:     0xB8975A,
+  miner:       0x7DA06A,
+  refiner:     0xA07DAA,
+  // Component
+  converter:   0x6A8BBF,
+  manufacturer:0x6A8BBF,
+  // Subsystem
+  assembler:   0x5A9E8F,
+  recycler:    0x5A9E8F,
+  // End use
+  datacenter:  0xC8B88A,
+  telecom:     0xC8B88A,
 };
 
 const NODES = [
-  { name: "Red Dog",         lat:  68.0, lng: -163.0, type: "deposit", key: true  },
-  { name: "Lincang",         lat:  23.9, lng:  100.1, type: "deposit", key: false },
-  { name: "Wulantuga",       lat:  44.5, lng:  116.8, type: "deposit", key: false },
-  { name: "Yimin",           lat:  48.5, lng:  119.8, type: "deposit", key: false },
-  { name: "Huize",           lat:  26.4, lng:  103.3, type: "deposit", key: true  },
-  { name: "Yiliang",         lat:  24.9, lng:  104.1, type: "deposit", key: false },
-  { name: "Spetsugli",       lat:  47.3, lng:  134.2, type: "deposit", key: false },
-  { name: "Big Hill",        lat: -11.7, lng:   27.5, type: "deposit", key: false },
-  { name: "Lincang Xinyuan", lat:  24.0, lng:  100.2, type: "miner",   key: false },
-  { name: "Shengli Coal",    lat:  44.0, lng:  116.5, type: "miner",   key: false },
-  { name: "Yunnan Chihong",  lat:  25.5, lng:  103.8, type: "miner",   key: false },
-  { name: "STL DRC",         lat: -11.7, lng:   27.6, type: "miner",   key: true  },
-  { name: "Teck Resources",  lat:  49.1, lng: -117.7, type: "miner",   key: false },
-  { name: "5N Plus",         lat:  37.1, lng: -113.6, type: "refiner", key: false },
-  { name: "Trail",           lat:  49.1, lng: -117.8, type: "refiner", key: false },
-  { name: "Umicore",         lat:  51.2, lng:    4.9, type: "refiner", key: true  },
-  { name: "PPM",             lat:  50.9, lng:    6.9, type: "refiner", key: false },
-  { name: "JSC Germanium",   lat:  56.0, lng:   93.0, type: "refiner", key: false },
+  // ── Raw material: Deposits ─────────────────────────────────────────────────
+  { name: "Red Dog",                   lat:  68.0, lng: -163.0, type: "deposit",      key: true  },
+  { name: "Lincang",                   lat:  23.9, lng:  100.1, type: "deposit",      key: false },
+  { name: "Wulantuga",                 lat:  44.5, lng:  116.8, type: "deposit",      key: false },
+  { name: "Yimin",                     lat:  48.5, lng:  119.8, type: "deposit",      key: false },
+  { name: "Huize",                     lat:  26.4, lng:  103.3, type: "deposit",      key: true  },
+  { name: "Yiliang",                   lat:  24.9, lng:  104.1, type: "deposit",      key: false },
+  { name: "Spetsugli",                 lat:  47.3, lng:  134.2, type: "deposit",      key: false },
+  { name: "Big Hill DRC",              lat: -11.7, lng:   27.5, type: "deposit",      key: false },
+  // ── Raw material: Miners ───────────────────────────────────────────────────
+  { name: "Lincang Xinyuan",           lat:  24.0, lng:  100.2, type: "miner",        key: false },
+  { name: "Shengli Coal",              lat:  44.0, lng:  116.5, type: "miner",        key: false },
+  { name: "Yunnan Chihong",            lat:  25.5, lng:  103.8, type: "miner",        key: false },
+  { name: "STL DRC",                   lat: -11.7, lng:   27.6, type: "miner",        key: true  },
+  { name: "Teck Resources",            lat:  49.1, lng: -117.7, type: "miner",        key: false },
+  { name: "Various State Ops",         lat:  39.9, lng:  116.4, type: "miner",        key: false },
+  // ── Raw material: Refiners & Recyclers ─────────────────────────────────────
+  { name: "Umicore",                   lat:  51.2, lng:    4.9, type: "refiner",      key: true  },
+  { name: "5N Plus",                   lat:  37.1, lng: -113.6, type: "refiner",      key: false },
+  { name: "Trail Smelter",             lat:  49.1, lng: -117.8, type: "refiner",      key: false },
+  { name: "PPM Pure Metals",           lat:  50.9, lng:    6.9, type: "refiner",      key: false },
+  { name: "JSC Germanium",             lat:  56.0, lng:   93.0, type: "refiner",      key: false },
+  { name: "Lincang Xinyuan Refinery",  lat:  23.8, lng:  100.0, type: "refiner",      key: false },
+  { name: "Yunnan Chihong Refinery",   lat:  25.6, lng:  103.9, type: "refiner",      key: false },
+  { name: "Smaller Chinese Refiners",  lat:  30.6, lng:  114.3, type: "refiner",      key: false },
+  // ── Component: GeCl4 / GeO2 producers & preform manufacturers ──────────────
+  { name: "Umicore GeCl4",             lat:  51.2, lng:    5.0, type: "converter",    key: true  },
+  { name: "Yunnan Chihong GeCl4",      lat:  25.5, lng:  104.0, type: "converter",    key: false },
+  { name: "Nanjing Germanium",         lat:  31.8, lng:  118.8, type: "converter",    key: false },
+  { name: "Corning Preform",           lat:  35.8, lng:  -81.3, type: "manufacturer", key: true  },
+  { name: "YOFC",                      lat:  30.6, lng:  114.3, type: "manufacturer", key: false },
+  { name: "Shin-Etsu Kashima",         lat:  35.9, lng:  140.7, type: "manufacturer", key: false },
+  { name: "Shin-Etsu YOFC Hubei",      lat:  30.3, lng:  112.2, type: "manufacturer", key: false },
+  { name: "Prysmian Preform NA",       lat:  35.2, lng:  -80.8, type: "manufacturer", key: false },
+  { name: "Sumitomo Electric",         lat:  34.7, lng:  135.5, type: "manufacturer", key: false },
+  // ── Subsystem: Fiber cable manufacturers & IR optics ───────────────────────
+  { name: "Corning Fiber Concord",     lat:  35.4, lng:  -80.6, type: "assembler",    key: true  },
+  { name: "Corning Hickory",           lat:  35.7, lng:  -81.3, type: "assembler",    key: false },
+  { name: "Prysmian Milan",            lat:  45.5, lng:    9.2, type: "assembler",    key: false },
+  { name: "Prysmian Eindhoven",        lat:  51.4, lng:    5.5, type: "assembler",    key: false },
+  { name: "YOFC Wuhan Cable",          lat:  30.6, lng:  114.4, type: "assembler",    key: false },
+  { name: "Sumitomo Cable",            lat:  34.7, lng:  135.5, type: "assembler",    key: false },
+  { name: "LightPath Orlando",         lat:  28.5, lng:  -81.4, type: "assembler",    key: false },
+  { name: "Novotech Chatsworth",       lat:  34.3, lng: -118.6, type: "recycler",     key: false },
+  // ── End use: AI datacenters, telecom, defense ──────────────────────────────
+  { name: "AWS us-east-1",             lat:  39.0, lng:  -77.5, type: "datacenter",   key: true  },
+  { name: "Azure West Europe",         lat:  52.4, lng:    4.9, type: "datacenter",   key: false },
+  { name: "Google us-central",         lat:  41.3, lng:  -95.9, type: "datacenter",   key: false },
+  { name: "Meta Prineville",           lat:  44.3, lng: -120.8, type: "datacenter",   key: false },
+  { name: "Microsoft Quincy",          lat:  47.2, lng: -119.9, type: "datacenter",   key: false },
+  { name: "Oracle Austin",             lat:  30.3, lng:  -97.7, type: "datacenter",   key: false },
+  { name: "Equinix Tokyo",             lat:  35.7, lng:  139.8, type: "datacenter",   key: false },
+  { name: "BEAD Rural Deploy",         lat:  38.0, lng:  -97.0, type: "telecom",      key: false },
 ];
 
 // Arcs: [from-name, to-name]
 const ARCS: [string, string][] = [
-  ["Red Dog",       "Trail"],
-  ["Trail",         "5N Plus"],
-  ["STL DRC",       "Umicore"],
-  ["Huize",         "Yunnan Chihong"],
-  ["Spetsugli",     "JSC Germanium"],
+  // Raw material flows
+  ["Red Dog",               "Trail Smelter"],
+  ["Trail Smelter",         "5N Plus"],
+  ["STL DRC",               "Umicore"],
+  ["Huize",                 "Yunnan Chihong"],
+  ["Spetsugli",             "JSC Germanium"],
+  ["Yunnan Chihong",        "Yunnan Chihong Refinery"],
+  // Raw → Component flows
+  ["Umicore GeCl4",         "Corning Preform"],
+  ["Umicore GeCl4",         "Prysmian Preform NA"],
+  ["Yunnan Chihong GeCl4",  "YOFC"],
+  // Component → Subsystem flows
+  ["Corning Preform",       "Corning Fiber Concord"],
+  ["Corning Preform",       "Corning Hickory"],
+  ["YOFC",                  "YOFC Wuhan Cable"],
+  ["Prysmian Preform NA",   "Prysmian Milan"],
+  // Subsystem → End use flows
+  ["Corning Fiber Concord", "AWS us-east-1"],
+  ["Corning Hickory",       "Meta Prineville"],
+  ["Prysmian Milan",        "Azure West Europe"],
+  ["YOFC Wuhan Cable",      "Equinix Tokyo"],
 ];
 
 export default function HomePage() {
@@ -117,16 +178,16 @@ export default function HomePage() {
       }).catch(console.error);
 
     // ── Supply chain nodes ────────────────────────────────────────────────────
-    const NODE_R    = R * 1.012; // sit above surface
-    const DOT_SIZE  = 0.012;
-    const dotGeo    = new THREE.SphereGeometry(DOT_SIZE, 8, 8);
+    const NODE_R   = R * 1.012; // sit above surface
+    const DOT_SIZE = 0.012;
+    const dotGeo   = new THREE.SphereGeometry(DOT_SIZE, 8, 8);
 
     type NodeObj = {
-      dot:      THREE.Mesh;
-      ring:     THREE.Mesh | null;
-      ringMat:  THREE.MeshBasicMaterial | null;
-      normal:   THREE.Vector3; // unit outward direction in local space
-      offset:   number;        // pulse animation offset (seconds)
+      dot:     THREE.Mesh;
+      ring:    THREE.Mesh | null;
+      ringMat: THREE.MeshBasicMaterial | null;
+      normal:  THREE.Vector3;
+      offset:  number;
     };
 
     const nodeObjs: NodeObj[] = [];
@@ -151,7 +212,6 @@ export default function HomePage() {
         ringMat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0, side: THREE.DoubleSide });
         ring    = new THREE.Mesh(new THREE.RingGeometry(RING_INNER, RING_OUTER, 32), ringMat);
         ring.position.copy(pos);
-        // Orient ring to face outward from globe center
         ring.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
         globeGroup.add(ring);
         pulseOffset += 0.8;
@@ -163,8 +223,7 @@ export default function HomePage() {
     // ── Connection arcs ───────────────────────────────────────────────────────
     const nodeByName = Object.fromEntries(NODES.map(n => [n.name, n]));
 
-    // Arc lines stored for back-face visibility updates
-    type ArcObj = { line: THREE.Line; lineMat: THREE.LineBasicMaterial; nA: THREE.Vector3; nB: THREE.Vector3 };
+    type ArcObj = { lineMat: THREE.LineBasicMaterial; nA: THREE.Vector3; nB: THREE.Vector3 };
     const arcObjs: ArcObj[] = [];
 
     ARCS.forEach(([fromName, toName]) => {
@@ -176,17 +235,16 @@ export default function HomePage() {
       const pB     = toVec3(b.lng, b.lat, NODE_R);
       const mid    = pA.clone().add(pB).multiplyScalar(0.5);
       const lift   = mid.length();
-      const midOut = mid.normalize().multiplyScalar(lift + 0.55); // arc peak height
+      const midOut = mid.normalize().multiplyScalar(lift + 0.55);
 
-      const curve  = new THREE.QuadraticBezierCurve3(pA, midOut, pB);
-      const pts    = curve.getPoints(60);
-      const geo    = new THREE.BufferGeometry().setFromPoints(pts);
-      const color  = NODE_COLOR[a.type];
-      const lineMat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.22 });
-      const line   = new THREE.Line(geo, lineMat);
-      globeGroup.add(line);
+      const curve   = new THREE.QuadraticBezierCurve3(pA, midOut, pB);
+      const pts     = curve.getPoints(60);
+      const geo     = new THREE.BufferGeometry().setFromPoints(pts);
+      const color   = NODE_COLOR[a.type];
+      const lineMat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.05 });
+      globeGroup.add(new THREE.Line(geo, lineMat));
 
-      arcObjs.push({ line, lineMat, nA: pA.clone().normalize(), nB: pB.clone().normalize() });
+      arcObjs.push({ lineMat, nA: pA.clone().normalize(), nB: pB.clone().normalize() });
     });
 
     // ── Auto-rotation ─────────────────────────────────────────────────────────
@@ -217,10 +275,8 @@ export default function HomePage() {
 
     // ── Render loop ───────────────────────────────────────────────────────────
     let animId: number;
-    const clock  = new THREE.Clock();
-    // World-space direction from globe toward camera (camera is always at +Z)
-    const camDir = new THREE.Vector3(0, 0, 1);
-    // Temp vector for transforming local normals to world space
+    const clock       = new THREE.Clock();
+    const camDir      = new THREE.Vector3(0, 0, 1);
     const worldNormal = new THREE.Vector3();
 
     const tick = () => {
@@ -231,40 +287,29 @@ export default function HomePage() {
       const t = clock.elapsedTime;
 
       // Per-node: back-face hiding + pulse rings
-      nodeObjs.forEach(({ dot, ring, ringMat, normal, offset }, i) => {
-        // Transform local normal to world space
+      nodeObjs.forEach(({ dot, ring, ringMat, normal, offset }) => {
         worldNormal.copy(normal).applyQuaternion(globeGroup.quaternion);
-        const facing = worldNormal.dot(camDir); // +1 = fully facing, -1 = fully back
+        const facing = worldNormal.dot(camDir);
 
-        // Dot: fade near limb, hide on back
         const dotMat = dot.material as THREE.MeshBasicMaterial;
-        if (facing < -0.1) {
-          dotMat.opacity = 0;
-        } else {
-          dotMat.opacity = Math.min(1, (facing + 0.1) / 0.3);
-        }
+        dotMat.opacity = facing < -0.1 ? 0 : Math.min(1, (facing + 0.1) / 0.3);
 
-        // Ring pulse
         if (ring && ringMat) {
           if (facing < -0.1) {
             ringMat.opacity = 0;
           } else {
-            const wave  = (Math.sin((t * 0.9 + offset * 0.8) * Math.PI * 2 * 0.28) + 1) / 2;
-            const scale = 1.0 + wave * 1.6;
-            ring.scale.setScalar(scale);
+            const wave = (Math.sin((t * 0.9 + offset * 0.8) * Math.PI * 2 * 0.28) + 1) / 2;
+            ring.scale.setScalar(1.0 + wave * 1.6);
             ringMat.opacity = (1 - wave) * 0.35 * Math.min(1, (facing + 0.1) / 0.3);
           }
         }
-
-        void i;
       });
 
-      // Arc: fade when both endpoints face away
+      // Arc: fade with back-face visibility
       arcObjs.forEach(({ lineMat, nA, nB }) => {
         const fA = worldNormal.copy(nA).applyQuaternion(globeGroup.quaternion).dot(camDir);
         const fB = worldNormal.copy(nB).applyQuaternion(globeGroup.quaternion).dot(camDir);
-        const visibility = Math.max(0, Math.min(fA, fB));
-        lineMat.opacity = visibility * 0.22;
+        lineMat.opacity = Math.max(0, Math.min(fA, fB)) * 0.05;
       });
 
       renderer.render(scene, camera);
