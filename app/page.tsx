@@ -4,11 +4,11 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import * as topojson from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
-import type { FeatureCollection, MultiPolygon, Polygon, Position } from "geojson";
+import type { FeatureCollection, Feature, MultiPolygon, Polygon, Position } from "geojson";
 
-const R = 1; // globe radius
+const R = 1;
 
-// Convert geographic coordinates (degrees) → 3D point on sphere surface
+// Lon/lat (degrees) → point on sphere surface
 function toVec3(lon: number, lat: number, r = R): THREE.Vector3 {
   const phi   = (90 - lat) * (Math.PI / 180);
   const theta = (lon + 180) * (Math.PI / 180);
@@ -19,12 +19,25 @@ function toVec3(lon: number, lat: number, r = R): THREE.Vector3 {
   );
 }
 
-// Build a flat Float32Array of line-segment pairs from a GeoJSON ring
-function addRing(ring: Position[], positions: number[], r: number) {
+// Outline: line segments for a closed ring
+function addOutlineRing(ring: Position[], buf: number[], r: number) {
   for (let i = 0; i < ring.length - 1; i++) {
     const a = toVec3(ring[i][0],   ring[i][1],   r);
     const b = toVec3(ring[i+1][0], ring[i+1][1], r);
-    positions.push(a.x, a.y, a.z, b.x, b.y, b.z);
+    buf.push(a.x, a.y, a.z, b.x, b.y, b.z);
+  }
+}
+
+// Fill: fan triangulation from centroid — no 2-D projection issues
+function addFillRing(ring: Position[], buf: number[], r: number) {
+  const pts = ring.map(([lon, lat]) => toVec3(lon, lat, r));
+  const c   = new THREE.Vector3();
+  pts.forEach(p => c.add(p));
+  c.normalize().multiplyScalar(r);
+  for (let i = 0; i < pts.length - 1; i++) {
+    buf.push(c.x,        c.y,        c.z,
+             pts[i].x,   pts[i].y,   pts[i].z,
+             pts[i+1].x, pts[i+1].y, pts[i+1].z);
   }
 }
 
@@ -35,7 +48,7 @@ export default function HomePage() {
     const mount = mountRef.current;
     if (!mount) return;
 
-    // ── Renderer ─────────────────────────────────────────────────────────────
+    // ── Renderer ──────────────────────────────────────────────────────────────
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -43,66 +56,88 @@ export default function HomePage() {
     mount.appendChild(renderer.domElement);
 
     // ── Scene & Camera ────────────────────────────────────────────────────────
-    const scene = new THREE.Scene();
+    const scene  = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(0, 0, 2.85);
 
     // ── Lights ────────────────────────────────────────────────────────────────
-    // Soft ambient
-    scene.add(new THREE.AmbientLight(0xffffff, 0.22));
+    // Blue-tinted ambient — gives the dark side a subtle deep-navy cast
+    scene.add(new THREE.AmbientLight(0x111133, 0.55));
 
-    // Main key light — upper left, front
-    const keyLight = new THREE.DirectionalLight(0xffffff, 0.72);
-    keyLight.position.set(-3, 2.5, 2);
+    // Key light — upper left, creates visible continent shading
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.05);
+    keyLight.position.set(-3, 2.5, 2.5);
     scene.add(keyLight);
 
-    // Rim light — behind the globe, creates edge glow against the dark bg
-    const rimLight = new THREE.DirectionalLight(0x8899cc, 0.32);
-    rimLight.position.set(1.5, -0.5, -4);
+    // Rim / atmosphere light — behind & below, blue-ish, makes sphere edge
+    // glow against the dark background
+    const rimLight = new THREE.DirectionalLight(0x4466AA, 0.4);
+    rimLight.position.set(2, -1, -3);
     scene.add(rimLight);
 
-    // Secondary fill — very dim, bottom right
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.12);
+    // Subtle warm fill from lower right to break up the dark side
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.08);
     fillLight.position.set(3, -2, 1);
     scene.add(fillLight);
 
-    // ── Globe group — all rotating parts go here ──────────────────────────────
+    // ── Globe group — everything rotates together ─────────────────────────────
     const globeGroup = new THREE.Group();
     scene.add(globeGroup);
 
-    // ── Solid sphere ──────────────────────────────────────────────────────────
-    const sphereMat = new THREE.MeshPhongMaterial({
-      color:    new THREE.Color("#1E1E1C"),
-      specular: new THREE.Color("#303030"),
-      shininess: 22,
-    });
-    globeGroup.add(new THREE.Mesh(new THREE.SphereGeometry(R, 72, 72), sphereMat));
+    // ── Ocean sphere ──────────────────────────────────────────────────────────
+    globeGroup.add(new THREE.Mesh(
+      new THREE.SphereGeometry(R, 72, 72),
+      new THREE.MeshPhongMaterial({
+        color:     new THREE.Color("#080E1A"),
+        specular:  new THREE.Color("#1A2A4A"),
+        shininess: 30,
+      }),
+    ));
 
-    // ── Auto-rotation ─────────────────────────────────────────────────────────
-    const AUTO_SPEED = (2 * Math.PI) / 90; // 1 rev / 90 s
+    // ── Atmosphere halo — BackSide sphere slightly larger than globe ───────────
+    // Creates the blue edge glow visible against the dark background
+    globeGroup.add(new THREE.Mesh(
+      new THREE.SphereGeometry(R * 1.025, 64, 64),
+      new THREE.MeshBasicMaterial({
+        color:       0x2255CC,
+        transparent: true,
+        opacity:     0.045,
+        side:        THREE.BackSide,
+      }),
+    ));
+
+    // ── Land materials ────────────────────────────────────────────────────────
+    const landMat = new THREE.MeshPhongMaterial({
+      color:     new THREE.Color("#181F2E"),
+      specular:  new THREE.Color("#1E2B40"),
+      shininess: 8,
+    });
+    const outlineMat = new THREE.LineBasicMaterial({
+      color:       0xffffff,
+      transparent: true,
+      opacity:     0.13,
+    });
+
+    // ── Auto-rotation: 1 rev / 90 s ───────────────────────────────────────────
+    const AUTO_SPEED = (2 * Math.PI) / 90;
 
     // ── Drag-to-rotate ────────────────────────────────────────────────────────
     let isDragging = false;
     let prevX = 0, prevY = 0;
-
-    const onPointerDown = (e: PointerEvent) => {
-      isDragging = true;
-      prevX = e.clientX;
-      prevY = e.clientY;
+    const onDown = (e: PointerEvent) => {
+      isDragging = true; prevX = e.clientX; prevY = e.clientY;
       mount.setPointerCapture(e.pointerId);
     };
-    const onPointerMove = (e: PointerEvent) => {
+    const onMove = (e: PointerEvent) => {
       if (!isDragging) return;
       globeGroup.rotation.y += (e.clientX - prevX) * 0.005;
       globeGroup.rotation.x += (e.clientY - prevY) * 0.005;
-      prevX = e.clientX;
-      prevY = e.clientY;
+      prevX = e.clientX; prevY = e.clientY;
     };
-    const onPointerUp = () => { isDragging = false; };
-
-    mount.addEventListener("pointerdown", onPointerDown);
-    mount.addEventListener("pointermove", onPointerMove);
-    mount.addEventListener("pointerup",   onPointerUp);
+    const onUp = () => { isDragging = false; };
+    mount.addEventListener("pointerdown", onDown);
+    mount.addEventListener("pointermove", onMove);
+    mount.addEventListener("pointerup",   onUp);
 
     // ── Resize ────────────────────────────────────────────────────────────────
     const onResize = () => {
@@ -115,48 +150,57 @@ export default function HomePage() {
     // ── Render loop ───────────────────────────────────────────────────────────
     let animId: number;
     const clock = new THREE.Clock();
-    const animate = () => {
-      animId = requestAnimationFrame(animate);
+    const tick = () => {
+      animId = requestAnimationFrame(tick);
       if (!isDragging) globeGroup.rotation.y += AUTO_SPEED * clock.getDelta();
-      else clock.getDelta(); // consume delta to avoid jump on release
+      else clock.getDelta(); // consume delta so no jump on release
       renderer.render(scene, camera);
     };
-    animate();
+    tick();
 
-    // ── Load continent outlines from TopoJSON ─────────────────────────────────
-    const OUTLINE_R = R * 1.0015; // fractionally above sphere surface
+    // ── Fetch & build land geometry ───────────────────────────────────────────
+    const LAND_R    = R * 1.001;   // slightly above ocean sphere
+    const OUTLINE_R = R * 1.0018;  // slightly above land fill
 
     fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json")
-      .then(r => r.json())
+      .then(res => res.json())
       .then((world: Topology) => {
-        const land = topojson.feature(
+        const raw = topojson.feature(
           world,
           (world.objects as Record<string, GeometryCollection>).land,
-        ) as unknown as FeatureCollection<MultiPolygon | Polygon>;
+        );
 
-        const positions: number[] = [];
+        // topojson may return a Feature (single) or FeatureCollection
+        const features: Feature<MultiPolygon | Polygon>[] =
+          raw.type === "FeatureCollection"
+            ? (raw as FeatureCollection<MultiPolygon | Polygon>).features
+            : [raw as unknown as Feature<MultiPolygon | Polygon>];
 
-        land.features.forEach(feat => {
-          const { type, coordinates } = feat.geometry;
-          if (type === "Polygon") {
-            coordinates.forEach(ring => addRing(ring, positions, OUTLINE_R));
-          } else if (type === "MultiPolygon") {
-            coordinates.forEach(poly =>
-              poly.forEach(ring => addRing(ring, positions, OUTLINE_R))
-            );
-          }
+        const fillBuf: number[]    = [];
+        const outlineBuf: number[] = [];
+
+        const processRings = (rings: Position[][]) => {
+          rings.forEach(ring => {
+            addFillRing(ring,    fillBuf,    LAND_R);
+            addOutlineRing(ring, outlineBuf, OUTLINE_R);
+          });
+        };
+
+        features.forEach(({ geometry: { type, coordinates } }) => {
+          if      (type === "Polygon")      processRings(coordinates as Position[][]);
+          else if (type === "MultiPolygon") (coordinates as Position[][][]).forEach(processRings);
         });
 
-        const geo = new THREE.BufferGeometry();
-        geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+        // Land fill mesh
+        const fillGeo = new THREE.BufferGeometry();
+        fillGeo.setAttribute("position", new THREE.Float32BufferAttribute(fillBuf, 3));
+        fillGeo.computeVertexNormals();
+        globeGroup.add(new THREE.Mesh(fillGeo, landMat));
 
-        const mat = new THREE.LineBasicMaterial({
-          color: 0xffffff,
-          transparent: true,
-          opacity: 0.10,
-        });
-
-        globeGroup.add(new THREE.LineSegments(geo, mat));
+        // Continent outlines
+        const outlineGeo = new THREE.BufferGeometry();
+        outlineGeo.setAttribute("position", new THREE.Float32BufferAttribute(outlineBuf, 3));
+        globeGroup.add(new THREE.LineSegments(outlineGeo, outlineMat));
       })
       .catch(console.error);
 
@@ -164,9 +208,9 @@ export default function HomePage() {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", onResize);
-      mount.removeEventListener("pointerdown", onPointerDown);
-      mount.removeEventListener("pointermove", onPointerMove);
-      mount.removeEventListener("pointerup",   onPointerUp);
+      mount.removeEventListener("pointerdown", onDown);
+      mount.removeEventListener("pointermove", onMove);
+      mount.removeEventListener("pointerup",   onUp);
       renderer.dispose();
       if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
     };
