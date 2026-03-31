@@ -349,7 +349,7 @@ export default function Home() {
 
               {/* THESIS BLOCK */}
               {currentThesis && (
-                <div style={{ background: "#3A3835", padding: "32px 36px 36px" }}>
+                <div style={{ background: "#282828", padding: "32px 36px 36px" }}>
                   <div style={{
                     fontFamily: "'Geist Mono', 'Courier New', monospace",
                     fontSize: 6,
@@ -375,7 +375,7 @@ export default function Home() {
                     fontSize: 14,
                     color: "rgba(255,255,255,0.35)",
                     lineHeight: 1.75,
-                    maxWidth: 700,
+                    maxWidth: "min(750px, 70%)",
                     marginBottom: 18,
                   }}>
                     {currentThesis}
@@ -407,7 +407,7 @@ export default function Home() {
                 height: "70vh",
                 minHeight: 500,
                 position: "relative",
-                background: "#3A3835",
+                background: "#282828",
               }}>
                 <SupplyChainMap
                   chainState={appState as 1|2|3|4}
