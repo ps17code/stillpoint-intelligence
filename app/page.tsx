@@ -40,7 +40,7 @@ export default function HomePage() {
 
     // ── Textured globe sphere ─────────────────────────────────────────────────
     const sphereMat = new THREE.MeshPhongMaterial({
-      color:     new THREE.Color("#888885"), // multiplies with texture — ~half brightness
+      color:     new THREE.Color("#998877"), // warm amber tint neutralizes blue oceans
       specular:  new THREE.Color("#111111"),
       shininess: 5,
     });
