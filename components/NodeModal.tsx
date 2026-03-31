@@ -78,8 +78,8 @@ export default function NodeModal({
       <div
         onClick={e => e.stopPropagation()}
         style={{
-          background: "white",
-          border: "0.5px solid rgba(80,80,70,0.16)",
+          background: "#F5F3EE",
+          border: "0.5px solid #DDD9D2",
           borderRadius: 7,
           width: 560,
           maxHeight: "80vh",
@@ -91,7 +91,7 @@ export default function NodeModal({
         {/* ── A) HEADER ───────────────────────────────────────────────── */}
         <div style={{
           padding: "16px 18px 14px",
-          borderBottom: "0.5px solid rgba(80,80,70,0.09)",
+          borderBottom: "0.5px solid #DDD9D2",
         }}>
           {/* Close */}
           <button
@@ -99,7 +99,7 @@ export default function NodeModal({
             style={{
               position: "absolute", top: 12, right: 12,
               width: 22, height: 22,
-              border: "0.5px solid rgba(80,80,70,0.14)",
+              border: "0.5px solid #DDD9D2",
               borderRadius: 4, background: "none", cursor: "pointer",
               display: "flex", alignItems: "center", justifyContent: "center",
               ...MONO, fontSize: 12, color: "#888880",
@@ -145,8 +145,8 @@ export default function NodeModal({
         {/* ── B) FLOW SECTION ─────────────────────────────────────────── */}
         {hasFlow && (
           <div style={{
-            borderBottom: "0.5px solid rgba(80,80,70,0.09)",
-            background: "#fafaf8",
+            borderBottom: "0.5px solid #DDD9D2",
+            background: "#EDE9E1",
             display: "grid",
             gridTemplateColumns: "1fr auto 1fr",
           }}>
@@ -174,8 +174,8 @@ export default function NodeModal({
             {/* Center node */}
             <div style={{
               padding: "12px 10px", minWidth: 110,
-              borderLeft: "0.5px solid rgba(80,80,70,0.09)",
-              borderRight: "0.5px solid rgba(80,80,70,0.09)",
+              borderLeft: "0.5px solid #DDD9D2",
+              borderRight: "0.5px solid #DDD9D2",
               display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
             }}>
               <div style={{ ...SERIF, fontSize: 12, color: "#1a1a14", textAlign: "center", marginBottom: 3 }}>{nodeKey}</div>
@@ -207,7 +207,7 @@ export default function NodeModal({
           <div style={{
             display: "grid",
             gridTemplateColumns: `repeat(${Math.min(stats.length, 4)}, 1fr)`,
-            borderBottom: "0.5px solid rgba(80,80,70,0.09)",
+            borderBottom: "0.5px solid #DDD9D2",
           }}>
             {stats.slice(0, 4).map(([key, value], i) => {
               const isPositive = value.includes("+") || /\bup\b/i.test(value);
@@ -215,7 +215,7 @@ export default function NodeModal({
                 <div key={i} style={{
                   padding: "10px 14px",
                   borderRight: i < Math.min(stats.length, 4) - 1
-                    ? "0.5px solid rgba(80,80,70,0.07)" : "none",
+                    ? "0.5px solid #DDD9D2" : "none",
                 }}>
                   <div style={{ ...MONO, fontSize: 7, textTransform: "uppercase", letterSpacing: "0.1em", color: "#aaaaa0", marginBottom: 3 }}>{key}</div>
                   <div style={{ ...SERIF, fontSize: 13, color: isPositive ? "#5a8c6a" : "#1a1a14" }}>{value}</div>
@@ -255,9 +255,9 @@ export default function NodeModal({
 
         {/* ── E) FOOTER ───────────────────────────────────────────────── */}
         <div style={{
-          borderTop: "0.5px solid rgba(80,80,70,0.09)",
+          borderTop: "0.5px solid #DDD9D2",
           padding: "9px 18px",
-          background: "#fafaf8",
+          background: "#EDE9E1",
           display: "flex", alignItems: "center", justifyContent: "space-between",
         }}>
           <div style={{ ...MONO, fontSize: 7.5, color: "#aaaaa0" }}>
@@ -282,8 +282,8 @@ function Pill({ children }: { children: React.ReactNode }) {
     <span style={{
       fontFamily: "Courier New, monospace",
       fontSize: 7.5, color: "#888880",
-      background: "rgba(80,80,70,0.06)",
-      border: "0.5px solid rgba(80,80,70,0.15)",
+      background: "rgba(80,80,70,0.05)",
+      border: "0.5px solid #DDD9D2",
       borderRadius: 3, padding: "2px 6px",
     }}>{children}</span>
   );
@@ -329,7 +329,7 @@ function NavBtn({ children, disabled, onClick }: { children: React.ReactNode; di
       style={{
         fontFamily: "Courier New, monospace",
         fontSize: 7.5,
-        border: "0.5px solid rgba(80,80,70,0.2)",
+        border: "0.5px solid #DDD9D2",
         borderRadius: 3, padding: "3px 9px",
         background: "none",
         cursor: disabled ? "default" : "pointer",

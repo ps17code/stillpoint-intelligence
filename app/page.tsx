@@ -10,38 +10,51 @@ import chainsRaw   from "@/data/chains.json";
 import Spine        from "@/components/Spine";
 import TreeMap      from "@/components/TreeMap";
 import AnchorSpine  from "@/components/AnchorSpine";
-import Breadcrumb        from "@/components/Breadcrumb";
-import HorizontalSpine   from "@/components/HorizontalSpine";
-import NodeModal         from "@/components/NodeModal";
-import BriefModal        from "@/components/BriefModal";
-import SupplyChainMap    from "@/components/SupplyChainMap";
+import TopBarV2     from "@/components/TopBarV2";
+import StatusBar    from "@/components/StatusBar";
+import NodeModal    from "@/components/NodeModal";
+import BriefModal   from "@/components/BriefModal";
+import SupplyChainMap from "@/components/SupplyChainMap";
 import Tooltip      from "@/components/Tooltip";
-import InsightsSection  from "@/components/InsightsSection";
-import InsightsColumn   from "@/components/InsightsColumn";
+import SidebarPanel from "@/components/SidebarPanel";
 
 // Geometry
 import {
   buildRawGeometry, buildCompGeometry,
   buildSubGeometry, buildEUGeometry,
-  computeRawSvgWidth,
+  computeRawSvgWidth, computeCompSvgWidth, computeSubSvgWidth, computeEUSvgWidth,
   toSVG, type TreeGeometry, type LayerGeometry,
 } from "@/lib/treeGeometry";
 
 // Types
 import type { AppState, SpineSelection, NodeData } from "@/types";
 
-// Cast JSON imports
 const NODES   = nodesRaw  as unknown as Record<string, NodeData>;
 const PANELS  = panelsRaw as any;
 const CHAINS  = chainsRaw as any;
 
-// ── TOP ANCHOR: document Y where tree top should appear ───────────
-// = thesis box bottom + 144px (exact height of supply map header section above tree)
-function topAnchorPx(thesisEl: HTMLElement | null): number {
+const TOP_BAR_H    = 36;
+const STATUS_BAR_H = 28;
+const SIDEBAR_W    = 320;
+
+/** Viewport Y where tree graphic starts — just at the base of the map hero section */
+function topAnchorPx(): number {
   if (typeof window === "undefined") return 600;
-  const thesisBottom = thesisEl ? thesisEl.getBoundingClientRect().bottom : 500;
-  return thesisBottom + 144;
+  return window.innerHeight - STATUS_BAR_H;
 }
+
+// Layer node-type colors for the floating overlay
+const LAYER_COLORS: Record<string, string> = {
+  "Deposits":            "#B8975A",
+  "Miners":              "#7DA06A",
+  "Refiners":            "#A07DAA",
+  "GeCl₄ Suppliers":    "#B8975A",
+  "Fiber Manufacturers": "#7DA06A",
+  "Cable Assemblers":    "#7DA06A",
+  "Cable Types":         "#A07DAA",
+  "Integration":         "#B8975A",
+  "Hyperscale":          "#7DA06A",
+};
 
 export default function Home() {
   // ── App state ────────────────────────────────────────────────────
@@ -52,6 +65,7 @@ export default function Home() {
   const [geometry,  setGeometry]  = useState<TreeGeometry | null>(null);
   const [layers,    setLayers]    = useState<LayerGeometry[]>([]);
   const [svgWidth,  setSvgWidth]  = useState(1000);
+  const [svgHeight, setSvgHeight] = useState(900);
 
   // ── Scroll tracking ───────────────────────────────────────────────
   const [scrollY, setScrollY] = useState(0);
@@ -63,6 +77,7 @@ export default function Home() {
 
   // ── Panel ─────────────────────────────────────────────────────────
   const [treeCollapsed, setTreeCollapsed] = useState(false);
+
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [briefOpen, setBriefOpen] = useState(false);
 
@@ -74,91 +89,48 @@ export default function Home() {
   const overTip  = useRef(false);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── Thesis ref (for anchor measurement) ──────────────────────────
-  const thesisRef = useRef<HTMLDivElement>(null);
-
-  // ── Column refs for height matching ──────────────────────────────
-  const leftColRef  = useRef<HTMLDivElement>(null);
-  const rightColRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!leftColRef.current || !rightColRef.current) return;
-    const measure = () => {
-      const mapEl = leftColRef.current!.querySelector('[data-map-container]') as HTMLElement;
-      if (!mapEl) return;
-
-      // Reset map height so we measure thesis content alone
-      mapEl.style.height = "0px";
-
-      const rightH      = rightColRef.current!.getBoundingClientRect().height;
-      const leftContentH = leftColRef.current!.getBoundingClientRect().height;
-
-      // Map absorbs remaining space to match right column height
-      const mapHeight = Math.max(rightH - leftContentH, 200);
-      mapEl.style.height   = mapHeight + "px";
-      mapEl.style.overflow = "hidden";
-    };
-    const timer = setTimeout(measure, 500);
-    window.addEventListener("resize", measure);
-    return () => { clearTimeout(timer); window.removeEventListener("resize", measure); };
-  }, [appState, sel.raw, sel.comp, sel.sub, sel.eu]);
-
-  // ── Top anchor: viewport Y of tree top ───────────────────────────
-  const [topAnchor, setTopAnchor] = useState(420);
+  // ── Window height ─────────────────────────────────────────────────
   const [windowHeight, setWindowHeight] = useState(900);
   useEffect(() => {
-    const update = () => {
-      setTopAnchor(topAnchorPx(thesisRef.current));
-      setWindowHeight(window.innerHeight);
-    };
-    const timer = setTimeout(update, 150);
+    const update = () => setWindowHeight(window.innerHeight);
+    update();
     window.addEventListener("resize", update);
-    return () => { clearTimeout(timer); window.removeEventListener("resize", update); };
-  }, [appState]);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
-  // Re-build tree geometry on window resize so SVG coordinates stay in sync
+  // ── Top anchor (where tree graphic starts in viewport) ────────────
+  const [topAnchor, setTopAnchor] = useState(600);
+  useEffect(() => {
+    const update = () => setTopAnchor(topAnchorPx());
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  // Re-build tree geometry on resize
   useEffect(() => {
     if (appState === 0) return;
-    let resizeTimer: ReturnType<typeof setTimeout>;
-    const rebuild = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => buildGeometryFromAnchorEl("", appState), 120);
-    };
+    let t: ReturnType<typeof setTimeout>;
+    const rebuild = () => { clearTimeout(t); t = setTimeout(() => buildGeometryFromAnchorEl(appState), 120); };
     window.addEventListener("resize", rebuild);
-    return () => {
-      clearTimeout(resizeTimer);
-      window.removeEventListener("resize", rebuild);
-    };
+    return () => { clearTimeout(t); window.removeEventListener("resize", rebuild); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState, sel.raw, sel.comp, sel.sub, sel.eu]);
 
   useEffect(() => { setTreeCollapsed(false); setBriefOpen(false); }, [appState]);
 
   // ── Spine dropdown options ────────────────────────────────────────
-  // Always provide options at every level so all nodes are independently selectable.
-  // When an upstream selection exists, use its narrowed options; otherwise flatten all.
   const spineOptions = {
     raw:  Object.keys(CHAINS.SPINE_TREE),
     comp: sel.raw
       ? Object.keys(CHAINS.SPINE_TREE[sel.raw] || {})
-      : Array.from(new Set(
-          Object.values(CHAINS.SPINE_TREE).flatMap((r: any) => Object.keys(r))
-        )),
+      : Array.from(new Set(Object.values(CHAINS.SPINE_TREE).flatMap((r: any) => Object.keys(r)))),
     sub:  sel.comp
       ? Object.keys((CHAINS.SPINE_TREE[sel.raw!] || {})[sel.comp] || {})
-      : Array.from(new Set(
-          Object.values(CHAINS.SPINE_TREE)
-            .flatMap((r: any) => Object.values(r))
-            .flatMap((c: any) => Object.keys(c))
-        )),
+      : Array.from(new Set(Object.values(CHAINS.SPINE_TREE).flatMap((r: any) => Object.values(r)).flatMap((c: any) => Object.keys(c)))),
     eu:   sel.sub
       ? ((CHAINS.SPINE_TREE[sel.raw!] || {})[sel.comp!] || {})[sel.sub] || []
-      : Array.from(new Set(
-          Object.values(CHAINS.SPINE_TREE)
-            .flatMap((r: any) => Object.values(r))
-            .flatMap((c: any) => Object.values(c))
-            .flat()
-        )),
+      : Array.from(new Set(Object.values(CHAINS.SPINE_TREE).flatMap((r: any) => Object.values(r)).flatMap((c: any) => Object.values(c)).flat())),
   };
 
   // ── Helpers ───────────────────────────────────────────────────────
@@ -172,151 +144,70 @@ export default function Home() {
   function handleNodeHover(key: string, svgX: number, svgY: number) {
     if (hideTimer.current) clearTimeout(hideTimer.current);
     overNode.current = true;
-    setTipKey(key);
-    setTipSvgX(svgX);
-    setTipSvgY(svgY);
+    setTipKey(key); setTipSvgX(svgX); setTipSvgY(svgY);
   }
   function handleNodeLeave() { overNode.current = false; schedHide(); }
   function handleTipEnter()  { overTip.current  = true;  if (hideTimer.current) clearTimeout(hideTimer.current); }
   function handleTipLeave()  { overTip.current  = false; schedHide(); }
+  function handleNodeClick(key: string) { if (NODES[key]) setSelectedNode(key); }
+  function handleDeepDive()  { if (!tipKey || !NODES[tipKey]) return; setTipKey(null); setSelectedNode(tipKey); }
 
-  function handleNodeClick(key: string) {
-    if (!NODES[key]) return;
-    setSelectedNode(key);
-  }
-
-  function handleDeepDive() {
-    if (!tipKey) return;
-    if (!NODES[tipKey]) return;
-    setTipKey(null);
-    setSelectedNode(tipKey);
-  }
-
-  // ── Build tree geometry (top-down from topAnchor) ──────────────────
-  function buildGeometryFromAnchorEl(_elId: string, level: AppState) {
-    // Compute SVG viewBox width for wide chains
-    const rawChain = level === 1 && sel.raw ? CHAINS.RAW_DATA[sel.raw] : null;
-    const newSvgWidth = rawChain ? computeRawSvgWidth(rawChain) : 1000;
+  // ── Build tree geometry ───────────────────────────────────────────
+  // Tree grows DOWNWARD from topY. For in-flow rendering we set topY to
+  // a small value (top padding) so nodes start near the SVG top.
+  // viewBoxH = topY + (layers-1)*gap + bottomPad — the SVG pixel height
+  // is set equal to viewBoxH so 1 SVG unit = 1 px, no empty space.
+  function buildGeometryFromAnchorEl(level: AppState) {
+    let newSvgWidth = 1000;
+    if      (level === 1 && sel.raw)  { const c = CHAINS.RAW_DATA[sel.raw];  if (c) newSvgWidth = computeRawSvgWidth(c); }
+    else if (level === 2 && sel.comp) { const c = CHAINS.COMP_DATA[sel.comp]; if (c) newSvgWidth = computeCompSvgWidth(c); }
+    else if (level === 3 && sel.sub)  { const c = CHAINS.SUB_DATA[sel.sub];   if (c) newSvgWidth = computeSubSvgWidth(c); }
+    else if (level === 4 && sel.eu)   { const c = CHAINS.EU_DATA[sel.eu];     if (c) newSvgWidth = computeEUSvgWidth(c); }
     setSvgWidth(newSvgWidth);
 
-    // Read topAnchor fresh from DOM to avoid stale closure — state may not have updated yet
-    const freshTopAnchor = topAnchorPx(thesisRef.current);
-    setTopAnchor(freshTopAnchor);
+    const topY      = 80;                            // SVG units of padding above first layer
+    const bottomPad = 80;                            // SVG units below last layer
+    const gap       = level === 1 ? 180 : 170;       // matches geometry defaults
+    const layerCount = level === 1 ? 5 : level === 4 ? 4 : 3;
+    const viewBoxH  = topY + (layerCount - 1) * gap + bottomPad;
+    setSvgHeight(viewBoxH);
 
     const ancX = newSvgWidth / 2;
-    const topY = toSVG(freshTopAnchor, window.innerHeight);
 
     let geo: TreeGeometry | null = null;
-
-    if (level === 1 && sel.raw) {
-      const chain = CHAINS.RAW_DATA[sel.raw];
-      if (chain) { geo = buildRawGeometry(chain, ancX, topY); }
-    } else if (level === 2 && sel.comp) {
-      const chain = CHAINS.COMP_DATA[sel.comp];
-      if (chain) { geo = buildCompGeometry(chain, ancX, topY); }
-    } else if (level === 3 && sel.sub) {
-      const chain = CHAINS.SUB_DATA[sel.sub];
-      if (chain) { geo = buildSubGeometry(chain, ancX, topY); }
-    } else if (level === 4 && sel.eu) {
-      const chain = CHAINS.EU_DATA[sel.eu];
-      if (chain) { geo = buildEUGeometry(chain, ancX, topY); }
-    }
-
-    if (geo) {
-      setGeometry(geo);
-      setLayers(geo.layers);
-    }
+    if (level === 1 && sel.raw)  { const c = CHAINS.RAW_DATA[sel.raw];  if (c) geo = buildRawGeometry(c, ancX, topY); }
+    else if (level === 2 && sel.comp) { const c = CHAINS.COMP_DATA[sel.comp]; if (c) geo = buildCompGeometry(c, ancX, topY); }
+    else if (level === 3 && sel.sub)  { const c = CHAINS.SUB_DATA[sel.sub];   if (c) geo = buildSubGeometry(c, ancX, topY); }
+    else if (level === 4 && sel.eu)   { const c = CHAINS.EU_DATA[sel.eu];     if (c) geo = buildEUGeometry(c, ancX, topY); }
+    if (geo) { setGeometry(geo); setLayers(geo.layers); }
   }
 
-  // ── Wait for #page-spine transform transition to finish, then run callback ──
   function afterSpineTransition(callback: () => void) {
     const el = document.getElementById("page-spine");
     if (!el) { setTimeout(callback, 1000); return; }
-
     let done = false;
-    const finish = () => {
-      if (done) return;
-      done = true;
-      el.removeEventListener("transitionend", onEnd);
-      requestAnimationFrame(callback);
-    };
-    const onEnd = (e: Event) => {
-      const te = e as TransitionEvent;
-      if (te.target === el && te.propertyName === "transform") finish();
-    };
+    const finish = () => { if (done) return; done = true; el.removeEventListener("transitionend", onEnd); requestAnimationFrame(callback); };
+    const onEnd = (e: Event) => { const te = e as TransitionEvent; if (te.target === el && te.propertyName === "transform") finish(); };
     el.addEventListener("transitionend", onEnd);
-    setTimeout(finish, 1200); // fallback in case transitionend never fires
+    setTimeout(finish, 1200);
   }
 
   // ── State transitions ─────────────────────────────────────────────
-  function goToRaw() {
-    if (!sel.raw) return;
-    setAppState(1);
-    afterSpineTransition(() => buildGeometryFromAnchorEl("raw-anchor-shape", 1));
-  }
+  function goToRaw()  { if (!sel.raw)  return; setAppState(1); afterSpineTransition(() => buildGeometryFromAnchorEl(1)); }
+  function goToComp() { if (!sel.comp) return; setGeometry(null); setAppState(2); setTimeout(() => buildGeometryFromAnchorEl(2), 800); }
+  function goToSubFromSpine() { if (!sel.sub) return; setGeometry(null); setAppState(3); setTimeout(() => buildGeometryFromAnchorEl(3), 750); }
+  function goToEUFromSpine()  { if (!sel.eu)  return; setGeometry(null); setAppState(4); setTimeout(() => buildGeometryFromAnchorEl(4), 750); }
+  function goToSub() { setGeometry(null); setAppState(3); setTimeout(() => buildGeometryFromAnchorEl(3), 800); }
+  function goToEU()  { setGeometry(null); setAppState(4); setTimeout(() => buildGeometryFromAnchorEl(4), 800); }
 
-  function goToComp() {
-    if (!sel.comp) return;
-    setGeometry(null);
-    setAppState(2);
-    setTimeout(() => buildGeometryFromAnchorEl("comp-anchor-shape", 2), 800);
-  }
+  function backToSpine() { setAppState(0); setGeometry(null); setLayers([]); setTipKey(null); }
+  function backToRaw()   { setGeometry(null); setLayers([]); setAppState(1); afterSpineTransition(() => buildGeometryFromAnchorEl(1)); }
+  function backToComp()  { setGeometry(null); setLayers([]); setAppState(2); setTimeout(() => buildGeometryFromAnchorEl(2), 800); }
+  function backToSub()   { setGeometry(null); setLayers([]); setAppState(3); setTimeout(() => buildGeometryFromAnchorEl(3), 800); }
 
-  function goToSubFromSpine() {
-    if (!sel.sub) return;
-    setGeometry(null);
-    setAppState(3);
-    setTimeout(() => buildGeometryFromAnchorEl("sub-anchor-shape", 3), 750);
-  }
-
-  function goToEUFromSpine() {
-    if (!sel.eu) return;
-    setGeometry(null);
-    setAppState(4);
-    setTimeout(() => buildGeometryFromAnchorEl("eu-anchor-shape", 4), 750);
-  }
-
-  function goToSub() {
-    setGeometry(null);
-    setAppState(3);
-    setTimeout(() => buildGeometryFromAnchorEl("sub-anchor-shape", 3), 800);
-  }
-
-  function goToEU() {
-    setGeometry(null);
-    setAppState(4);
-    setTimeout(() => buildGeometryFromAnchorEl("eu-anchor-shape", 4), 800);
-  }
-
-  function backToSpine() {
-    setAppState(0);
-    setGeometry(null); setLayers([]);
-    setTipKey(null);
-  }
-
-  function backToRaw() {
-    setGeometry(null); setLayers([]);
-    setAppState(1);
-    afterSpineTransition(() => buildGeometryFromAnchorEl("raw-anchor-shape", 1));
-  }
-
-  function backToComp() {
-    setGeometry(null); setLayers([]);
-    setAppState(2);
-    setTimeout(() => buildGeometryFromAnchorEl("comp-anchor-shape", 2), 800);
-  }
-
-  function backToSub() {
-    setGeometry(null); setLayers([]);
-    setAppState(3);
-    setTimeout(() => buildGeometryFromAnchorEl("sub-anchor-shape", 3), 800);
-  }
-
-  // ── Spine selection ───────────────────────────────────────────────
   function handleSelect(level: "raw" | "comp" | "sub" | "eu", value: string) {
     setSel(prev => {
       const next = { ...prev, [level]: value };
-      // Clear downstream selections
       if (level === "raw")  { next.comp = null; next.sub = null; next.eu = null; }
       if (level === "comp") { next.sub  = null; next.eu = null; }
       if (level === "sub")  { next.eu   = null; }
@@ -324,6 +215,7 @@ export default function Home() {
     });
   }
 
+  // ── Derived data ──────────────────────────────────────────────────
   const currentThesis =
     appState === 1 ? PANELS.rawIntro?.thesis :
     appState === 2 ? PANELS.compIntro?.thesis :
@@ -343,368 +235,315 @@ export default function Home() {
     appState === 4 ? PANELS.euIntro?.briefStats : null;
 
   const currentPageTitle =
-    appState === 1 ? `${sel.raw  || "Germanium"}     · Raw Material Layer` :
+    appState === 1 ? `${sel.raw  || "Germanium"} · Raw Material Layer` :
     appState === 2 ? `${sel.comp || "GeO₂ / GeCl₄"} · Component Layer` :
-    appState === 3 ? `${sel.sub  || "Fiber Optics"}  · Subsystem Layer` :
+    appState === 3 ? `${sel.sub  || "Fiber Optics"} · Subsystem Layer` :
     appState === 4 ? `${sel.eu   || "AI Datacenter"} · End Use Layer` : "";
 
   const supplyMapLabel =
-    appState === 1 ? `${sel.raw  || "Germanium"} supply map` :
-    appState === 2 ? `${sel.comp || "GeO₂ / GeCl₄"} supply map` :
-    appState === 3 ? "Fiber optics supply map" :
-    appState === 4 ? "End use supply map" : "";
+    appState === 1 ? "Germanium Tree" :
+    appState === 2 ? `${sel.comp || "GeO₂ / GeCl₄"} Tree` :
+    appState === 3 ? "Fiber Optics Tree" :
+    appState === 4 ? "End Use Tree" : "";
 
-  // ── Layer panel lookup ────────────────────────────────────────────
-  function getLayerPanels(state: AppState): Record<string, unknown> {
-    if (state === 1) return PANELS.layers || {};
-    if (state === 2) return PANELS.layers || {};
-    if (state === 3) return PANELS.layers || {};
-    if (state === 4) return PANELS.euLayers || {};
-    return {};
-  }
+  const worldMapTitle =
+    appState === 1 ? "Germanium Supply Map" :
+    appState === 2 ? `${sel.comp || "GeO₂ / GeCl₄"} Supply Map` :
+    appState === 3 ? "Fiber Optics Supply Map" :
+    appState === 4 ? "End Use Supply Map" : "";
 
-  // ── Chain label for modal breadcrumb ─────────────────────────────
   const chainLabel =
     appState === 1 ? (sel.raw  || "Germanium") :
     appState === 2 ? (sel.comp || "GeO₂ / GeCl₄") :
     appState === 3 ? (sel.sub  || "Fiber Optics") :
     appState === 4 ? (sel.eu   || "AI Datacenter") : "";
 
-  // ── Breadcrumb config per state ───────────────────────────────────
-  const breadcrumbNodes = (() => {
-    if (appState === 2) return [{ label: sel.raw || "Germanium", shape: "cube" as const, onClick: backToRaw }];
-    if (appState === 3) return [
-      { label: sel.raw  || "Germanium", shape: "cube"   as const, onClick: backToSpine },
-      { label: sel.comp || "GeO₂/GeCl₄", shape: "sphere" as const, onClick: backToComp },
-    ];
-    if (appState === 4) return [
-      { label: sel.sub || "Fiber Optics", shape: "pyramid"  as const, onClick: backToSub },
-      { label: sel.eu  || "AI Datacenter", shape: "cylinder" as const, onClick: backToSub },
-    ];
-    return [];
-  })();
+  function getLayerPanels(state: AppState): Record<string, unknown> {
+    if (state === 4) return PANELS.euLayers || {};
+    return PANELS.layers || {};
+  }
 
-  // ── Anchor spine configs ──────────────────────────────────────────
-  // comp-spine: visible in states 2+
-  const compSpineTop = topAnchor;
-  const compSpineNodes = [
-    { label: sel.comp || "GeO₂ / GeCl₄", shape: "sphere" as const,
-      onClick: appState === 2 ? undefined : backToComp },
-    { label: sel.sub  || "Subsystem",     shape: "pyramid" as const,
-      onClick: goToSub },
-  ];
-
-  // sub-spine: visible in states 3+
-  const subSpineNodes = [
-    { label: sel.sub || "Fiber Optics", shape: "pyramid" as const,
-      onClick: appState === 3 ? undefined : backToSub },
-    { label: sel.eu  || "End Use",      shape: "cylinder" as const, dormant: appState < 4,
-      onClick: appState === 3 ? goToEU : undefined },
-  ];
-
-  // eu-spine: visible in state 4, no next node
-  const euSpineNodes = [
-    { label: sel.eu || "AI Datacenter", shape: "cylinder" as const },
-  ];
-
-  // Layer counts: raw=5 layers (4 gaps), eu=4 layers (3 gaps), comp/sub=3 layers (2 gaps)
+  // ── Tree sizing ───────────────────────────────────────────────────
   const treeLayerCount = appState === 1 ? 5 : appState === 4 ? 4 : 3;
   const treePixelHeight = ((treeLayerCount - 1) * 180 / 1000) * windowHeight;
-  const bandPadTop = 20;
-  // Raw tree uses gap=180 exactly (no overestimate buffer) and output node text extends ~55px
-  // below the circle — needs extra bottom padding vs other layers which use gap=170
+  const bandPadTop    = 20;
   const bandPadBottom = appState === 1 ? 120 : 60;
-  const labelHeight = 124;
-  const bandTop = topAnchor - bandPadTop - labelHeight;
-  const bandHeight = bandPadTop + labelHeight + treePixelHeight + bandPadBottom;
+  const labelHeight   = 124;
+  const bandTop       = topAnchor - bandPadTop - labelHeight;
+  const bandHeight    = bandPadTop + labelHeight + treePixelHeight + bandPadBottom;
   const collapsedBandHeight = 84;
-  const insightsTop = treeCollapsed
-    ? bandTop + collapsedBandHeight
-    : bandTop + bandHeight;
+  const insightsTop   = treeCollapsed ? bandTop + collapsedBandHeight : bandTop + bandHeight;
 
-  // Total page height: insights top + approximate insights content height
-  const totalPageHeight = appState > 0 ? insightsTop + 1400 : 0;
+  // Map hero height in pixels (for page flow)
+  const mapHeroH = windowHeight - TOP_BAR_H - STATUS_BAR_H;
+
+
+  // Total document height: top bar area + map hero + tree section + some overflow
+  const totalPageHeight = appState > 0
+    ? TOP_BAR_H + mapHeroH + (bandHeight + 300)
+    : 0;
+
+  // Layer label config for floating overlay
+  const layerLabels: { name: string; color: string }[] =
+    appState === 1 ? [
+      { name: "Deposits",  color: "#B8975A" },
+      { name: "Miners",    color: "#7DA06A" },
+      { name: "Refiners",  color: "#A07DAA" },
+    ] :
+    appState === 2 ? [
+      { name: "GeCl₄ Suppliers",    color: "#B8975A" },
+      { name: "Fiber Manufacturers", color: "#7DA06A" },
+    ] :
+    appState === 3 ? [
+      { name: "Cable Assemblers",  color: "#7DA06A" },
+      { name: "Cable Types",       color: "#A07DAA" },
+    ] :
+    appState === 4 ? [
+      { name: "Integration", color: "#B8975A" },
+      { name: "Hyperscale",  color: "#7DA06A" },
+    ] : [];
 
   return (
     <main style={{
       width: "100%",
-      minHeight: appState > 0 ? totalPageHeight + "px" : "100vh",
-      background: "var(--bg)",
-      position: "relative",
+      minHeight: "100vh",
+      background: appState > 0 ? "#1A1917" : "var(--bg)",
     }}>
 
-      {/* Grain */}
+      {/* Grain overlay */}
       <div className="grain" />
 
-      {/* Horizontal spine — visible on tree pages */}
-      {appState > 0 && (
-        <HorizontalSpine
+      {/* ── HOME STATE (0) ───────────────────────────────────────── */}
+      {appState === 0 && (
+        <Spine
+          state="default"
           selection={sel}
-          activeState={appState}
           options={spineOptions}
           onSelect={handleSelect}
-          onNodeClick={(level) => {
-            if (level === "raw"  && sel.raw)  goToRaw();
-            if (level === "comp" && sel.comp) goToComp();
-            if (level === "sub"  && sel.sub)  goToSub();
-            if (level === "eu"   && sel.eu)   goToEU();
-          }}
-          onHome={backToSpine}
+          onCubeClick={goToRaw}
+          onSphereClick={goToComp}
+          onPyramidClick={goToSubFromSpine}
+          onCylinderClick={goToEUFromSpine}
         />
       )}
 
-      {/* Thesis section — scrolls with page, sits just below fixed horizontal spine */}
-      {appState > 0 && currentThesis && (
-        <div ref={thesisRef} style={{
-          position: "absolute",
-          top: 60,
-          left: 0,
-          right: 0,
-          padding: "16px 48px",
-          background: "white",
-          zIndex: 40,
-        }}>
-          {/* Two-column grid: left = thesis + map, right = stat cards placeholder */}
-          <div style={{
-            maxWidth: 1140,
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "1fr minmax(0, 340px)",
-            gap: 20,
-            alignItems: "start",
-          }}>
-            {/* Left column — thesis content + supply chain map */}
-            <div ref={leftColRef} style={{
-              background: "white",
-              border: "0.2px solid rgba(80,80,70,0.2)",
-              borderRadius: 8,
-              padding: "16px 28px",
-            }}>
-              <div style={{
-                fontFamily: "'Geist Mono', monospace",
-                fontSize: 15, fontWeight: 600,
-                letterSpacing: "0.18em", textTransform: "uppercase" as const,
-                color: "#888880", marginBottom: 15,
-              }}>
-                {currentPageTitle}
-              </div>
-              <div style={{
-                fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-                fontSize: 13, color: "#374151",
-                fontWeight: 400, lineHeight: 1.65,
-              }}>
-                {currentThesis}
-              </div>
+      {/* ── ACTIVE STATES (1–4) ──────────────────────────────────── */}
+      {appState > 0 && (
+        <>
+          {/* Nav bar — fixed at top */}
+          <TopBarV2
+            selection={sel}
+            activeState={appState}
+            options={spineOptions}
+            onSelect={handleSelect}
+            onNodeClick={level => {
+              if (level === "raw"  && sel.raw)  goToRaw();
+              if (level === "comp" && sel.comp) goToComp();
+              if (level === "sub"  && sel.sub)  goToSub();
+              if (level === "eu"   && sel.eu)   goToEU();
+            }}
+            onHome={backToSpine}
+            docId={`GE-${appState === 1 ? "RAW" : appState === 2 ? "COMP" : appState === 3 ? "SUB" : "EU"}-001 · PROPRIETARY`}
+          />
 
-              {/* Layer summaries + brief trigger */}
-              {currentBrief && (
-                <div style={{ marginTop: 14, paddingTop: 14, borderTop: "0.5px solid rgba(80,80,70,0.1)" }}>
-                  {/* Sub-layers header */}
+          {/* Page grid: left content | right sidebar — both scroll together */}
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: `1fr ${SIDEBAR_W}px`,
+            paddingTop: TOP_BAR_H,
+          }}>
+
+            {/* ── LEFT COLUMN: thesis → map → tree → status ── */}
+            <div style={{ display: "flex", flexDirection: "column" }}>
+
+              {/* THESIS BLOCK */}
+              {currentThesis && (
+                <div style={{ background: "#282828", padding: "32px 36px 36px" }}>
                   <div style={{
-                    fontFamily: "Courier New, monospace",
-                    fontSize: 11, fontWeight: 700, letterSpacing: "0.12em",
-                    textTransform: "uppercase" as const,
-                    color: "#1a1a14", marginBottom: 8,
+                    fontFamily: "'Geist Mono', 'Courier New', monospace",
+                    fontSize: 6,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.2)",
+                    marginBottom: 12,
                   }}>
-                    Sub-layers
+                    {currentPageTitle}
                   </div>
-                  {currentBrief.map((p: { layer: string; summary?: string }, i: number) => (
-                    <div key={i} style={{
-                      display: "flex", gap: 8, alignItems: "baseline",
-                      marginBottom: i < currentBrief.length - 1 ? 6 : 0,
-                    }}>
-                      <span style={{
-                        fontFamily: "Courier New, monospace",
-                        fontSize: 10, fontWeight: 700, letterSpacing: "0.12em",
-                        textTransform: "uppercase" as const,
-                        color: "#8a6820", whiteSpace: "nowrap" as const, flexShrink: 0,
-                      }}>{p.layer}</span>
-                      <span style={{ width: 1, height: 9, background: "rgba(80,80,70,0.2)", flexShrink: 0, alignSelf: "center" }} />
-                      <span style={{
-                        fontFamily: "'EB Garamond', Georgia, serif",
-                        fontSize: 13, color: "#3a3a32", lineHeight: 1.5,
-                      }}>{p.summary}</span>
-                    </div>
-                  ))}
-                  <div style={{ marginTop: 12 }}>
-                    <button
-                      onClick={() => setBriefOpen(true)}
-                      style={{
-                        fontFamily: "Courier New, monospace",
-                        fontSize: 10, letterSpacing: "0.12em",
-                        textTransform: "uppercase" as const,
-                        color: "#6B7280", background: "none", border: "none",
-                        cursor: "pointer", padding: 0,
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.color = "#1C1E21")}
-                      onMouseLeave={e => (e.currentTarget.style.color = "#6B7280")}
-                    >
-                      read layer brief →
-                    </button>
+                  <div style={{
+                    fontFamily: "Inter, -apple-system, sans-serif",
+                    fontSize: 23,
+                    fontWeight: 500,
+                    color: "rgba(255,255,255,0.9)",
+                    lineHeight: 1.25,
+                    marginBottom: 16,
+                  }}>
+                    {chainLabel}
                   </div>
+                  <div style={{
+                    fontFamily: "Inter, -apple-system, sans-serif",
+                    fontSize: 14,
+                    color: "rgba(255,255,255,0.72)",
+                    lineHeight: 1.75,
+                    maxWidth: "min(1000px, 95%)",
+                    marginBottom: 18,
+                  }}>
+                    {appState === 1 ? (
+                      <>
+                        Germanium is a trace metal recovered as a byproduct of zinc smelting and coal processing — <strong style={{ color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>never mined on its own</strong>. It is the critical dopant in fiber optic cables, the lens material in infrared imaging systems, the substrate for satellite solar cells, and a key input in advanced semiconductors. There are 8 deposits globally with economically viable germanium concentrations, <strong style={{ color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>5 of which are in China</strong>. Roughly 130–140 tonnes per year is extracted and refined as primary supply, with another 60–70 tonnes recovered through recycling — dominated by Umicore in Belgium and 5N Plus in Canada. Of the ~220 tonnes total, <strong style={{ color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>only 65–85 tonnes is reliably accessible to western industry. Fiber optics alone requires 77–97 tonnes per year.</strong>
+                      </>
+                    ) : currentThesis}
+                  </div>
+                  <button
+                    onClick={() => setBriefOpen(true)}
+                    style={{
+                      fontFamily: "'Geist Mono', 'Courier New', monospace",
+                      fontSize: 8,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: "#C4836A",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: 0,
+                      transition: "opacity 0.15s",
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                  >
+                    Read about each layer →
+                  </button>
                 </div>
               )}
 
-              {/* Supply chain map — shown for all active states */}
-              <SupplyChainMap
-                chainState={appState as 1|2|3|4}
-                rawSelection={sel.raw || undefined}
-                compSelection={sel.comp || undefined}
-                subSelection={sel.sub || undefined}
-                euSelection={sel.eu || undefined}
-              />
+              {/* MAP SECTION — flex:1 so it fills remaining left-column height */}
+              <div style={{
+                flex: 1,
+                minHeight: 400,
+                position: "relative",
+                background: "#3A3835",
+              }}>
+                <SupplyChainMap
+                  chainState={appState as 1|2|3|4}
+                  rawSelection={sel.raw || undefined}
+                  compSelection={sel.comp || undefined}
+                  subSelection={sel.sub || undefined}
+                  euSelection={sel.eu || undefined}
+                  fillContainer
+                />
+                {/* World map title */}
+                <div style={{
+                  position: "absolute",
+                  top: 18,
+                  left: 36,
+                  fontFamily: "'Geist Mono', 'Courier New', monospace",
+                  fontSize: 10,
+                  fontWeight: 500,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.45)",
+                  pointerEvents: "none",
+                  zIndex: 5,
+                }}>
+                  {worldMapTitle}
+                </div>
+                <button
+                  onClick={() => setTreeCollapsed(prev => !prev)}
+                  style={{
+                    position: "absolute",
+                    bottom: 16,
+                    right: 16,
+                    fontFamily: "'Geist Mono', 'Courier New', monospace",
+                    fontSize: 7,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.2)",
+                    background: "rgba(0,0,0,0.25)",
+                    border: "0.5px solid rgba(255,255,255,0.1)",
+                    borderRadius: 3,
+                    padding: "4px 10px",
+                    cursor: "pointer",
+                    zIndex: 10,
+                    transition: "color 0.15s",
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.55)")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.2)")}
+                >
+                  {treeCollapsed ? "show tree +" : "hide tree ×"}
+                </button>
+              </div>
+
+            </div>{/* end left column */}
+
+            {/* ── RIGHT SIDEBAR — scrolls with page ── */}
+            <div style={{
+              background: "#F5F3EE",
+              borderLeft: "0.5px solid #DDD9D2",
+            }}>
+              <SidebarPanel chainState={appState} />
             </div>
 
-            {/* Right column — stat cards + insights */}
-            <div ref={rightColRef} style={{ maxWidth: 340 }}>
-              <InsightsColumn />
-            </div>
-          </div>
-        </div>
-      )}
+          </div>{/* end grid */}
 
-      {/* Top breadcrumb — hidden */}
-
-      {/* Main spine (states 0 + 1) */}
-      <Spine
-        state={appState === 0 ? "default" : "gone"}
-        selection={sel}
-        options={spineOptions}
-        onSelect={handleSelect}
-        onCubeClick={goToRaw}
-        onSphereClick={goToComp}
-        onPyramidClick={goToSubFromSpine}
-        onCylinderClick={goToEUFromSpine}
-      />
-
-      {/* Comp anchor spine — hidden (tree is top-down, no anchor needed) */}
-      {false && appState >= 2 && (
-        <AnchorSpine
-          id="comp-spine"
-          topPx={compSpineTop}
-          visible={appState === 2}
-          nodes={compSpineNodes}
-          anchorId="comp-anchor-shape"
-        />
-      )}
-
-      {/* Sub anchor spine — hidden */}
-      {false && appState >= 3 && (
-        <AnchorSpine
-          id="sub-spine"
-          topPx={topAnchor}
-          visible={appState === 3}
-          nodes={subSpineNodes}
-          anchorId="sub-anchor-shape"
-        />
-      )}
-
-      {/* EU anchor spine — hidden */}
-      {false && appState >= 4 && (
-        <AnchorSpine
-          id="eu-spine"
-          topPx={topAnchor}
-          visible={appState === 4}
-          nodes={euSpineNodes}
-          anchorId="eu-anchor-shape"
-        />
-      )}
-
-
-      {/* Supply map band — scrolls with page */}
-      {appState > 0 && (
-        <div style={{
-          position: "absolute",
-          top: bandTop,
-          left: 0,
-          right: 0,
-          zIndex: 6,
-          padding: "0 48px",
-        }}>
-          <div style={{ maxWidth: 1140, margin: "0 auto" }}>
-            <div
-              onClick={() => setTreeCollapsed(prev => !prev)}
-              onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "#F8F8F6"}
-              onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "white"}
-              style={{
+          {/* ── TREE SECTION — full width below grid ── */}
+          {!treeCollapsed && (
+            <div style={{ paddingBottom: 40 }}>
+              <div style={{
+                padding: "24px 36px 16px",
+                background: "#1A1917",
+                borderTop: "0.5px solid rgba(255,255,255,0.06)",
+                borderBottom: "0.5px solid rgba(255,255,255,0.06)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                padding: "20px 28px",
-                cursor: "pointer",
-                background: "white",
-                border: "0.2px solid rgba(80,80,70,0.2)",
-                borderRadius: 8,
-                position: "relative",
-                gap: "8px",
-                transition: "background 0.15s ease",
-                userSelect: "none" as const,
-              }}
-            >
-              <div style={{
-                position: "absolute",
-                right: "28px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                fontFamily: "var(--font-mono, 'Courier New', monospace)",
-                fontSize: "13px",
-                color: "rgba(80,80,70,0.6)",
+                gap: 8,
               }}>
-                {treeCollapsed ? "+" : "×"}
+                <div style={{
+                  fontFamily: "'Geist Mono', monospace",
+                  fontSize: 11,
+                  fontWeight: 500,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.9)",
+                }}>
+                  {supplyMapLabel}
+                </div>
+                <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+                  {([
+                    appState === 1 ? "~220 t/yr" : appState === 2 ? "~88 t Ge to fiber" : appState === 3 ? "~3–4M route-km/yr" : "~130–140 hyperscale DCs/yr",
+                    appState === 1 ? "$320M market" : appState === 2 ? "~500M fiber-km/yr" : appState === 3 ? ">30M cable-km/yr" : "~230M fiber-km/yr",
+                    appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : appState === 3 ? "71% hyperscaler owned" : "~115t Ge/yr",
+                  ] as string[]).map((stat, i, arr) => (
+                    <React.Fragment key={i}>
+                      <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.45)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{stat}</span>
+                      {i < arr.length - 1 && <div style={{ width: 1, height: 8, background: "rgba(255,255,255,0.1)" }} />}
+                    </React.Fragment>
+                  ))}
+                </div>
               </div>
-              <div style={{
-                fontFamily: "'Geist Mono', monospace",
-                fontSize: 15,
-                fontWeight: 600,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase" as const,
-                color: "#888880",
-              }}>
-                {supplyMapLabel}
-              </div>
-              <div style={{ display: "flex", gap: "14px", alignItems: "center", justifyContent: "center" }}>
-                {([
-                  appState === 1 ? "~220 t/yr" : appState === 2 ? "~88 t Ge to fiber" : appState === 3 ? "~3–4M route-km/yr" : "~130-140 new hyperscale DCs/yr",
-                  appState === 1 ? "$320M market" : appState === 2 ? "~500M fiber-km/yr" : appState === 3 ? ">30M cable-km/yr" : "~230M fiber-km/yr",
-                  appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : appState === 3 ? "71% hyperscaler owned" : "~115t Ge/yr",
-                  appState === 1 ? "8 deposits · 7 miners · 7 refiners" : appState === 2 ? "6 fiber manufacturers" : appState === 3 ? "9 cable assemblers" : "$600B+ capex 2026",
-                ] as string[]).map((stat, i, arr) => (
-                  <React.Fragment key={i}>
-                    <span style={{
-                      fontFamily: "var(--font-mono, 'Courier New', monospace)",
-                      fontSize: "8.5px",
-                      color: "#888880",
-                      letterSpacing: "0.05em",
-                      whiteSpace: "nowrap" as const,
-                    }}>{stat}</span>
-                    {i < arr.length - 1 && (
-                      <div style={{ width: "1px", height: "9px", background: "rgba(80,80,70,0.3)", flexShrink: 0 }} />
-                    )}
-                  </React.Fragment>
-                ))}
-              </div>
+              <TreeMap
+                geometry={geometry}
+                nodes={NODES}
+                layerConfig={CHAINS.layerConfig}
+                svgWidth={svgWidth}
+                svgHeight={svgHeight}
+                onNodeHover={handleNodeHover}
+                onNodeLeave={handleNodeLeave}
+                onNodeClick={handleNodeClick}
+                onLayerClick={() => {}}
+                layerPanels={getLayerPanels(appState)}
+              />
             </div>
-          </div>
-        </div>
+          )}
+
+          {/* STATUS BAR */}
+          <StatusBar />
+        </>
       )}
 
-      {!treeCollapsed && (
-        <TreeMap
-          geometry={geometry}
-          nodes={NODES}
-          layerConfig={CHAINS.layerConfig}
-          svgWidth={svgWidth}
-          scrollY={scrollY}
-          onNodeHover={handleNodeHover}
-          onNodeLeave={handleNodeLeave}
-          onNodeClick={handleNodeClick}
-          onLayerClick={() => {}}
-          layerPanels={getLayerPanels(appState)}
-        />
-      )}
+      {/* ── AnchorSpine (legacy, hidden) ────────────────────────── */}
+      {false && appState >= 2 && <AnchorSpine id="comp-spine" topPx={topAnchor} visible={appState === 2} nodes={[{ label: sel.comp || "GeO₂ / GeCl₄", shape: "sphere" as const }]} anchorId="comp-anchor-shape" />}
 
-
-      {/* Tooltip */}
+      {/* ── Tooltip ─────────────────────────────────────────────── */}
       <Tooltip
         nodeKey={tipKey}
         nodeData={tipKey ? NODES[tipKey] : null}
@@ -715,7 +554,7 @@ export default function Home() {
         onMouseLeave={handleTipLeave}
       />
 
-      {/* Brief modal */}
+      {/* ── Brief modal ─────────────────────────────────────────── */}
       <BriefModal
         isOpen={briefOpen}
         title={chainLabel}
@@ -724,18 +563,15 @@ export default function Home() {
         onClose={() => setBriefOpen(false)}
       />
 
-      {/* Node modal */}
+      {/* ── Node modal ──────────────────────────────────────────── */}
       <NodeModal
         nodeKey={selectedNode}
         allNodes={NODES}
         layers={layers}
         chainLabel={chainLabel}
         onClose={() => setSelectedNode(null)}
-        onNavigate={(key) => setSelectedNode(key)}
+        onNavigate={key => setSelectedNode(key)}
       />
-
-      {/* Insights section — all tree layers */}
-      {appState > 0 && <InsightsSection top={insightsTop} chainState={appState} />}
 
     </main>
   );
