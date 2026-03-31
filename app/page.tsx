@@ -49,14 +49,11 @@ export default function HomePage() {
     camera.position.set(0, 0, 3.2);
 
     // ── Lights ────────────────────────────────────────────────────────────────
-    // Ambient keeps dark side visible without washing out the lit side
-    scene.add(new THREE.AmbientLight(0xffffff, 0.35));
-    // Key — upper left, creates the main directional shading on the ocean sphere
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.6);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    const keyLight = new THREE.DirectionalLight(0xffffff, 0.9);
     keyLight.position.set(-3, 2.5, 2.5);
     scene.add(keyLight);
-    // Fill — softens the terminator from the opposite side
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.35);
     fillLight.position.set(3, -2, 1);
     scene.add(fillLight);
 
@@ -68,15 +65,15 @@ export default function HomePage() {
     globeGroup.add(new THREE.Mesh(
       new THREE.SphereGeometry(R, 72, 72),
       new THREE.MeshPhongMaterial({
-        color:     new THREE.Color("#141413"),
-        specular:  new THREE.Color("#2A2A28"),
-        shininess: 18,
+        color:     new THREE.Color("#1C1C1A"),
+        specular:  new THREE.Color("#111110"),
+        shininess: 4,
       }),
     ));
 
     // ── Land fills — MeshBasicMaterial: unlit, always bright regardless of
     //    light angle, giving hard contrast against the shaded ocean sphere ──────
-    const landMat = new THREE.MeshBasicMaterial({ color: new THREE.Color("#4A4438") });
+    const landMat = new THREE.MeshBasicMaterial({ color: new THREE.Color("#9A8E7A") });
 
     // ── Auto-rotation ─────────────────────────────────────────────────────────
     const AUTO_SPEED = (2 * Math.PI) / 90;
