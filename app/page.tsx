@@ -22,7 +22,7 @@ import SidebarPanel from "@/components/SidebarPanel";
 import {
   buildRawGeometry, buildCompGeometry,
   buildSubGeometry, buildEUGeometry,
-  computeRawSvgWidth,
+  computeRawSvgWidth, computeCompSvgWidth, computeSubSvgWidth, computeEUSvgWidth,
   toSVG, type TreeGeometry, type LayerGeometry,
 } from "@/lib/treeGeometry";
 
@@ -158,8 +158,11 @@ export default function Home() {
   // viewBoxH = topY + (layers-1)*gap + bottomPad — the SVG pixel height
   // is set equal to viewBoxH so 1 SVG unit = 1 px, no empty space.
   function buildGeometryFromAnchorEl(level: AppState) {
-    const rawChain = level === 1 && sel.raw ? CHAINS.RAW_DATA[sel.raw] : null;
-    const newSvgWidth = rawChain ? computeRawSvgWidth(rawChain) : 1000;
+    let newSvgWidth = 1000;
+    if      (level === 1 && sel.raw)  { const c = CHAINS.RAW_DATA[sel.raw];  if (c) newSvgWidth = computeRawSvgWidth(c); }
+    else if (level === 2 && sel.comp) { const c = CHAINS.COMP_DATA[sel.comp]; if (c) newSvgWidth = computeCompSvgWidth(c); }
+    else if (level === 3 && sel.sub)  { const c = CHAINS.SUB_DATA[sel.sub];   if (c) newSvgWidth = computeSubSvgWidth(c); }
+    else if (level === 4 && sel.eu)   { const c = CHAINS.EU_DATA[sel.eu];     if (c) newSvgWidth = computeEUSvgWidth(c); }
     setSvgWidth(newSvgWidth);
 
     const topY      = 80;                            // SVG units of padding above first layer

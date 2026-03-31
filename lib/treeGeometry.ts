@@ -70,6 +70,21 @@ export function computeRawSvgWidth(chain: RawChain): number {
   return Math.max(1000, Math.max(...widths) + 400); // 200px padding each side (labels extend ~200 units left)
 }
 
+export function computeCompSvgWidth(chain: CompChain): number {
+  const widths = [chain.geCl4.length * SLOT, chain.fiberMfg.length * SLOT];
+  return Math.max(1000, Math.max(...widths) + 400);
+}
+
+export function computeSubSvgWidth(chain: SubChain): number {
+  const widths = [chain.assembly.length * SLOT, chain.cableType.length * SLOT];
+  return Math.max(1000, Math.max(...widths) + 400);
+}
+
+export function computeEUSvgWidth(chain: EUChain): number {
+  const widths = [chain.installers.length * SLOT, chain.developers.length * SLOT, chain.owners.length * SLOT];
+  return Math.max(1000, Math.max(...widths) + 400);
+}
+
 // Convert pixel position to SVG 0-1000 coordinate space
 export function toSVG(px: number, total: number): number {
   return (px / total) * 1000;
