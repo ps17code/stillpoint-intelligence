@@ -72,7 +72,7 @@ export function computeRawSvgWidth(chain: RawChain): number {
 
 export function computeCompSvgWidth(chain: CompChain): number {
   const widths = [chain.geCl4.length * SLOT, chain.fiberMfg.length * SLOT];
-  return Math.max(1000, Math.max(...widths) + 400);
+  return Math.max(1800, Math.max(...widths) + 400);
 }
 
 export function computeSubSvgWidth(chain: SubChain): number {
