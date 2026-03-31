@@ -2,32 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import * as topojson from "topojson-client";
-import type { Topology, GeometryCollection } from "topojson-specification";
-import type { FeatureCollection, Feature, MultiPolygon, Polygon, Position } from "geojson";
 
 const R = 1;
-
-function toVec3(lon: number, lat: number, r = R): THREE.Vector3 {
-  const phi   = (90 - lat) * (Math.PI / 180);
-  const theta = (lon + 180) * (Math.PI / 180);
-  return new THREE.Vector3(
-    -r * Math.sin(phi) * Math.cos(theta),
-     r * Math.cos(phi),
-     r * Math.sin(phi) * Math.sin(theta),
-  );
-}
-
-// Fan-triangulate a ring from its sphere-surface centroid
-function addFillRing(ring: Position[], buf: number[], r: number) {
-  const pts = ring.map(([lon, lat]) => toVec3(lon, lat, r));
-  const c   = new THREE.Vector3();
-  pts.forEach(p => c.add(p));
-  c.normalize().multiplyScalar(r);
-  for (let i = 0; i < pts.length - 1; i++) {
-    buf.push(c.x, c.y, c.z, pts[i].x, pts[i].y, pts[i].z, pts[i+1].x, pts[i+1].y, pts[i+1].z);
-  }
-}
 
 export default function HomePage() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -45,15 +21,16 @@ export default function HomePage() {
 
     // ── Scene & Camera ────────────────────────────────────────────────────────
     const scene  = new THREE.Scene();
+    // FOV 46 + z=3.2 makes the globe slightly smaller than before
     const camera = new THREE.PerspectiveCamera(46, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(0, 0, 3.2);
 
-    // ── Lights ────────────────────────────────────────────────────────────────
-    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-    const keyLight = new THREE.DirectionalLight(0xffffff, 0.9);
+    // ── Lights (only affect the ocean sphere — land uses MeshBasicMaterial) ───
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
     keyLight.position.set(-3, 2.5, 2.5);
     scene.add(keyLight);
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.35);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
     fillLight.position.set(3, -2, 1);
     scene.add(fillLight);
 
@@ -61,21 +38,27 @@ export default function HomePage() {
     const globeGroup = new THREE.Group();
     scene.add(globeGroup);
 
-    // ── Ocean sphere — MeshPhongMaterial, reacts to lights for dimensionality ─
-    globeGroup.add(new THREE.Mesh(
-      new THREE.SphereGeometry(R, 72, 72),
-      new THREE.MeshPhongMaterial({
-        color:     new THREE.Color("#1C1C1A"),
-        specular:  new THREE.Color("#111110"),
-        shininess: 4,
-      }),
-    ));
+    // ── Textured globe sphere ─────────────────────────────────────────────────
+    const sphereMat = new THREE.MeshPhongMaterial({
+      color:     new THREE.Color("#8A7D6A"), // warm gray-gold — grayscale topology × this = black ocean, gold-gray land
+      specular:  new THREE.Color("#111111"),
+      shininess: 5,
+    });
+    globeGroup.add(new THREE.Mesh(new THREE.SphereGeometry(R, 72, 72), sphereMat));
 
-    // ── Land fills — MeshBasicMaterial: unlit, always bright regardless of
-    //    light angle, giving hard contrast against the shaded ocean sphere ──────
-    const landMat = new THREE.MeshBasicMaterial({ color: new THREE.Color("#9A8E7A") });
+    new THREE.TextureLoader().load(
+      "/earth-topology.png",
+      (tex) => {
+        console.log("Earth texture loaded:", tex.image.width, "×", tex.image.height);
+        sphereMat.map = tex;
+        sphereMat.needsUpdate = true;
+      },
+      undefined,
+      (err) => console.error("Texture load error:", err),
+    );
 
-    // ── Auto-rotation ─────────────────────────────────────────────────────────
+
+    // ── Auto-rotation: 1 rev / 90 s ───────────────────────────────────────────
     const AUTO_SPEED = (2 * Math.PI) / 90;
 
     // ── Drag-to-rotate ────────────────────────────────────────────────────────
@@ -115,37 +98,6 @@ export default function HomePage() {
     };
     tick();
 
-    // ── Fetch GeoJSON → sharp-edged continent fills ───────────────────────────
-    const LAND_R = R * 1.001;
-
-    fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json")
-      .then(res => res.json())
-      .then((world: Topology) => {
-        const raw = topojson.feature(
-          world,
-          (world.objects as Record<string, GeometryCollection>).land,
-        );
-        const features: Feature<MultiPolygon | Polygon>[] =
-          raw.type === "FeatureCollection"
-            ? (raw as FeatureCollection<MultiPolygon | Polygon>).features
-            : [raw as unknown as Feature<MultiPolygon | Polygon>];
-
-        const fillBuf: number[] = [];
-        features.forEach(({ geometry: { type, coordinates } }) => {
-          if (type === "Polygon") {
-            (coordinates as Position[][]).forEach(ring => addFillRing(ring, fillBuf, LAND_R));
-          } else if (type === "MultiPolygon") {
-            (coordinates as Position[][][]).forEach(poly =>
-              poly.forEach(ring => addFillRing(ring, fillBuf, LAND_R))
-            );
-          }
-        });
-
-        const geo = new THREE.BufferGeometry();
-        geo.setAttribute("position", new THREE.Float32BufferAttribute(fillBuf, 3));
-        globeGroup.add(new THREE.Mesh(geo, landMat));
-      })
-      .catch(console.error);
 
     // ── Cleanup ───────────────────────────────────────────────────────────────
     return () => {
@@ -161,6 +113,8 @@ export default function HomePage() {
 
   return (
     <div style={{ background: "#0C0C0B", width: "100vw", height: "100vh", overflow: "hidden", position: "relative" }}>
+
+      {/* Header */}
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0,
         height: 40, display: "flex", alignItems: "center",
@@ -174,6 +128,8 @@ export default function HomePage() {
           Intelligence
         </span>
       </div>
+
+      {/* Globe canvas */}
       <div ref={mountRef} style={{ position: "absolute", inset: 0, cursor: "grab" }} />
     </div>
   );
