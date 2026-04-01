@@ -357,44 +357,28 @@ export default function HomePage() {
 
     // ── Input ─────────────────────────────────────────────────────────────────
     const AUTO_SPEED = (2 * Math.PI) / 90;
-    let didDrag = false, pointerDownX = 0, pointerDownY = 0, prevX = 0, prevY = 0;
     const mouseScreen = { x: -999, y: -999 };
     let currentHoveredIdx = -1, currentHoveredName: string | null = null;
     const tooltipPos = new THREE.Vector3(), tooltipProj = new THREE.Vector3();
 
-    const onDown = (e: PointerEvent) => {
-      didDrag = false; pointerDownX = e.clientX; pointerDownY = e.clientY;
-      prevX = e.clientX; prevY = e.clientY;
-      mount.setPointerCapture(e.pointerId);
-    };
     const onMove = (e: PointerEvent) => {
       mouseScreen.x = e.clientX; mouseScreen.y = e.clientY;
-      const dx = e.clientX - pointerDownX, dy = e.clientY - pointerDownY;
-      if (Math.sqrt(dx * dx + dy * dy) > 4) didDrag = true;
-      if (!didDrag) return;
-      globeGroup.rotation.y += (e.clientX - prevX) * 0.005;
-      globeGroup.rotation.x += (e.clientY - prevY) * 0.005;
-      prevX = e.clientX; prevY = e.clientY;
     };
-    const onUp = () => {
-      if (!didDrag) {
-        if (isPausedRef.current) {
-          resumeRotation();
-        } else {
-          isPausedRef.current = true;
-          if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
-          pauseTimerRef.current = setTimeout(resumeRotation, 15000);
-        }
+    const onClick = () => {
+      if (isPausedRef.current) {
+        resumeRotation();
+      } else {
+        isPausedRef.current = true;
+        if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+        pauseTimerRef.current = null;
       }
-      didDrag = false;
     };
     const onLeave = () => {
       mouseScreen.x = -999; mouseScreen.y = -999;
       if (currentHoveredName !== null) { currentHoveredName = null; currentHoveredIdx = -1; setHoveredNode(null); }
     };
-    mount.addEventListener("pointerdown",  onDown);
     mount.addEventListener("pointermove",  onMove);
-    mount.addEventListener("pointerup",    onUp);
+    mount.addEventListener("click",        onClick);
     mount.addEventListener("pointerleave", onLeave);
 
     const onResize = () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); };
@@ -407,7 +391,7 @@ export default function HomePage() {
     const tick = () => {
       animId = requestAnimationFrame(tick);
       const delta = clock.getDelta();
-      if (!didDrag && !isPausedRef.current) globeGroup.rotation.y += AUTO_SPEED * delta;
+      if (!isPausedRef.current) globeGroup.rotation.y += AUTO_SPEED * delta;
       const t = clock.elapsedTime;
       const { activeLayers } = filterRef.current;
       const filtering = activeLayers.size > 0;
@@ -442,9 +426,7 @@ export default function HomePage() {
       });
 
       // ── Node hover detection ──────────────────────────────────────────────
-      if (didDrag && currentHoveredName !== null) {
-        currentHoveredName = null; currentHoveredIdx = -1; setHoveredNode(null);
-      } else if (!didDrag && mouseScreen.x > -500) {
+      if (mouseScreen.x > -500) {
         let closest = -1, closestDist = 14, cSX = 0, cSY = 0;
         nodeObjs.forEach((no, idx) => {
           worldNormal.copy(no.normal).applyQuaternion(globeGroup.quaternion);
@@ -476,9 +458,8 @@ export default function HomePage() {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", onResize);
-      mount.removeEventListener("pointerdown",  onDown);
       mount.removeEventListener("pointermove",  onMove);
-      mount.removeEventListener("pointerup",    onUp);
+      mount.removeEventListener("click",        onClick);
       mount.removeEventListener("pointerleave", onLeave);
       if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
       renderer.dispose();
@@ -500,7 +481,7 @@ export default function HomePage() {
       </div>
 
       {/* Globe */}
-      <div ref={mountRef} style={{ position: "absolute", inset: 0, cursor: hoveredNode ? "crosshair" : "grab" }} />
+      <div ref={mountRef} style={{ position: "absolute", inset: 0, cursor: hoveredNode ? "crosshair" : "default" }} />
 
       {/* Hover tooltip — position updated by render loop */}
       <div ref={tooltipRef} style={{ position: "absolute", pointerEvents: "none", zIndex: 30, opacity: hoveredNode ? 1 : 0, transition: "opacity 0.1s ease", transform: "translate(-50%, -100%)", left: 0, top: 0 }}>
