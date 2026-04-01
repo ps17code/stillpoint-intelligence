@@ -36,54 +36,23 @@ const TYPE_DISPLAY: Record<string, { label: string; color: string }> = {
   telecom:      { label: "Telecom",      color: "#C8B88A" },
 };
 
-// ── Context panel content ─────────────────────────────────────────────────────
-type ContextDef = { chipLabel: string; chipColor: string; text: string };
+// ── Portal data ────────────────────────────────────────────────────────────────
+type L3Item = { id: string; label: string; dot: string; count: number; desc: string };
+type L2Item = { id: string; label: string; dot: string | null; count: number | null; status: "Live" | "Soon" | null; href?: string; sublayers?: L3Item[] };
+type L1Item = { id: string; label: string; count: number; children: L2Item[] };
 
-const CONTEXT_CONTENT: Record<string, ContextDef> = {
-  germanium: {
-    chipLabel: "Raw material",
-    chipColor: "#B8975A",
-    text: "8 deposits visible across 4 countries — but look at where they cluster. <b>Five sit in China.</b> The only western deposit, in Alaska, is declining. The nodes in Belgium and Canada aren't mines — they're recyclers, recovering scraps from the same manufacturers they supply. The single node in the DRC just started shipping its first concentrates in late 2024. Total global supply: roughly 220 tonnes. <b>Only 65–85 of those tonnes are accessible to the west.</b>",
-  },
-  gecl4: {
-    chipLabel: "Component",
-    chipColor: "#6A8BBF",
-    text: "Follow the flow from the raw material nodes into the component layer. Nearly all western germanium converges on <b>one point — Olen, Belgium</b> — where it's purified into the chemical that fiber manufacturers need. From that single node, ultra-pure GeCl₄ ships to preform plants in North Carolina, Japan, and China. <b>Fewer than six facilities on earth</b> can produce it at the purity fiber optics demands. One facility stands between the raw material and the western fiber supply chain.",
-  },
-  "fiber-optic": {
-    chipLabel: "Subsystem",
-    chipColor: "#5A9E8F",
-    text: "The manufacturing nodes stretch across the US, Europe, Japan, and China — but <b>every one of them traces back upstream through the same bottleneck.</b> The US cluster in the Carolinas is expanding — Corning's Hickory plant is becoming the world's largest. Prysmian operates across Europe. YOFC and Sumitomo serve Asia. All running at full capacity. All waiting on the same constrained input from the layer above.",
-  },
-  "ai-datacenter": {
-    chipLabel: "End use",
-    chipColor: "#C8B88A",
-    text: "The demand endpoints — Ashburn, Amsterdam, Council Bluffs, Prineville, Quincy. <b>Trace any datacenter node backwards</b> through the fiber plants, through the GeCl₄ converters, through the refiners, back to 8 deposits and one western refinery in Belgium. AI racks consume 36x more fiber than traditional servers. Hundreds of billions in hyperscaler spending flows into infrastructure that depends on this chain. <b>Every dot on this globe is connected.</b>",
-  },
-};
-
-function renderContextText(text: string) {
-  return text.split(/(<b>.*?<\/b>)/).map((part, i) => {
-    if (part.startsWith("<b>") && part.endsWith("</b>")) {
-      return (
-        <span key={i} style={{ color: "rgba(255,255,255,0.6)", fontWeight: 500 }}>
-          {part.slice(3, -4)}
-        </span>
-      );
-    }
-    return <span key={i}>{part}</span>;
-  });
-}
-
-// ── Portal & tracker data ─────────────────────────────────────────────────────
-type ChildItem = { id: string; label: string; dot: string | null; count: number | null; status: "Live" | "Soon" | null; href?: string };
-type ParentItem = { id: string; label: string; count: number; children: ChildItem[] };
-
-const PORTAL_DATA: ParentItem[] = [
+const PORTAL_DATA: L1Item[] = [
   {
     id: "raw-material", label: "Raw material", count: 22,
     children: [
-      { id: "germanium",   label: "Germanium",   dot: "#B8975A", count: 28,   status: "Live", href: "/germanium" },
+      {
+        id: "germanium", label: "Germanium", dot: "#B8975A", count: 22, status: "Live", href: "/germanium",
+        sublayers: [
+          { id: "deposit", label: "Deposits", dot: "#B8975A", count: 8, desc: "5 in China, 1 Russia (sanctioned), 1 DRC (ramping), 1 Alaska (declining). Zinc and coal ores." },
+          { id: "miner",   label: "Miners",   dot: "#7DA06A", count: 7, desc: "Germanium is never the primary target — extracted as a byproduct of zinc and coal processing." },
+          { id: "refiner", label: "Refiners", dot: "#A07DAA", count: 7, desc: "Only 2 western refiners — Umicore (Belgium) and Teck Trail (Canada). >50% from recycled scrap." },
+        ],
+      },
       { id: "gallium",     label: "Gallium",     dot: "#6A8BBF", count: null, status: "Soon" },
       { id: "lithium",     label: "Lithium",     dot: "#C4836A", count: null, status: "Soon" },
       { id: "cobalt",      label: "Cobalt",      dot: null,      count: null, status: null },
@@ -94,28 +63,45 @@ const PORTAL_DATA: ParentItem[] = [
   {
     id: "component", label: "Component", count: 9,
     children: [
-      { id: "gecl4", label: "GeO₂ / GeCl₄",  dot: "#6A8BBF", count: 9,    status: "Live", href: "/germanium" },
-      { id: "gan",   label: "GaN wafers",     dot: null,      count: null, status: null },
-      { id: "lioh",  label: "LiOH / Cathode", dot: null,      count: null, status: null },
+      {
+        id: "gecl4", label: "GeO₂ / GeCl₄", dot: "#6A8BBF", count: 9, status: "Live", href: "/germanium",
+        sublayers: [
+          { id: "converter",    label: "Converters",            dot: "#6A8BBF", count: 3, desc: "Purify germanium into ultra-pure GeCl₄. In the west, virtually all flows through Umicore in Olen." },
+          { id: "manufacturer", label: "Preform manufacturers", dot: "#6A8BBF", count: 6, desc: "Corning, Shin-Etsu, Sumitomo, YOFC, Prysmian. All at 100% capacity. Backlogs into 2027." },
+        ],
+      },
+      { id: "gan",  label: "GaN wafers",     dot: null, count: null, status: null },
+      { id: "lioh", label: "LiOH / Cathode", dot: null, count: null, status: null },
     ],
   },
   {
     id: "subsystem", label: "Subsystem", count: 8,
     children: [
-      { id: "fiber-optic", label: "Fiber optic cable",  dot: "#5A9E8F", count: 8,    status: "Live", href: "/germanium" },
-      { id: "ir-camera",   label: "IR camera modules",  dot: null,      count: null, status: null },
-      { id: "battery",     label: "Battery cells",      dot: null,      count: null, status: null },
+      {
+        id: "fiber-optic", label: "Fiber optic cable", dot: "#5A9E8F", count: 8, status: "Live", href: "/germanium",
+        sublayers: [
+          { id: "assembler", label: "Cable manufacturers", dot: "#5A9E8F", count: 8, desc: "Corning Hickory becoming world's largest. Prysmian 27 plants. Every one traces back upstream." },
+        ],
+      },
+      { id: "ir-camera", label: "IR camera modules", dot: null, count: null, status: null },
+      { id: "battery",   label: "Battery cells",     dot: null, count: null, status: null },
     ],
   },
   {
     id: "end-use", label: "End use", count: 8,
     children: [
-      { id: "ai-datacenter",  label: "AI datacenter",    dot: "#C8B88A", count: 8,    status: "Live", href: "/germanium" },
-      { id: "defense",        label: "Defense / IR",      dot: null,      count: null, status: null },
-      { id: "ev",             label: "Electric vehicles", dot: null,      count: null, status: null },
-      { id: "5g",             label: "5G infrastructure", dot: null,      count: null, status: null },
-      { id: "satellite",      label: "Satellite",         dot: null,      count: null, status: null },
-      { id: "fiber-networks", label: "Fiber networks",    dot: null,      count: null, status: null },
+      {
+        id: "ai-datacenter", label: "AI datacenter", dot: "#C8B88A", count: 8, status: "Live", href: "/germanium",
+        sublayers: [
+          { id: "datacenter", label: "Hyperscaler DCs", dot: "#C8B88A", count: 6, desc: "AWS, Azure, Google, Meta, Microsoft, Oracle. AI racks consume 36x more fiber than traditional." },
+          { id: "telecom",    label: "Telecom / BEAD", dot: "#C8B88A", count: 2, desc: "Federal broadband competing for the same fiber supply as AI infrastructure." },
+        ],
+      },
+      { id: "defense",        label: "Defense / IR",      dot: null, count: null, status: null },
+      { id: "ev",             label: "Electric vehicles", dot: null, count: null, status: null },
+      { id: "5g",             label: "5G infrastructure", dot: null, count: null, status: null },
+      { id: "satellite",      label: "Satellite",         dot: null, count: null, status: null },
+      { id: "fiber-networks", label: "Fiber networks",    dot: null, count: null, status: null },
     ],
   },
 ];
@@ -197,74 +183,64 @@ const ARCS: [string, string][] = [
 
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function HomePage() {
-  const mountRef          = useRef<HTMLDivElement>(null);
-  const tooltipRef        = useRef<HTMLDivElement>(null);
-  const filterRef         = useRef<{ activeLayers: Set<string> }>({ activeLayers: new Set() });
-  const isPausedRef       = useRef(false);
-  const pauseTimerRef     = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const transitionTimerRef= useRef<ReturnType<typeof setTimeout> | null>(null);
-  const targetChildRef    = useRef<string | null>(null);
-  const hoverTimerRef     = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mountRef    = useRef<HTMLDivElement>(null);
+  const tooltipRef  = useRef<HTMLDivElement>(null);
+  const filterRef   = useRef<{ activeLayers: Set<string>; activeL3: { parentId: string; nodeType: string } | null }>({ activeLayers: new Set(), activeL3: null });
+  const isPausedRef = useRef(false);
+  const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const [selectedChildren, setSelectedChildren] = useState<Map<string, string>>(new Map());
-  const [lastSelectedChild, setLastSelectedChild] = useState<{ parentId: string; childId: string } | null>(null);
-  const [contextChildId,   setContextChildId]   = useState<string | null>(null);
-  const [contextOpacity,   setContextOpacity]   = useState(0);
-  const [openPopover,      setOpenPopover]      = useState<string | null>(null);
-  const [hoveredChild,     setHoveredChild]     = useState<string | null>(null);
-  const [hoveredNode,      setHoveredNode]      = useState<{ name: string; type: string; location: string } | null>(null);
-  const [hoverEnter,       setHoverEnter]       = useState(false);
+  const [openL1s,    setOpenL1s]    = useState<Set<string>>(new Set());
+  const [selectedL2, setSelectedL2] = useState<Map<string, string>>(new Map());
+  const [activeL3,   setActiveL3]   = useState<{ parentId: string; nodeType: string } | null>(null);
+  const [hovered,    setHovered]    = useState<string | null>(null);
+  const [hoveredNode, setHoveredNode] = useState<{ name: string; type: string; location: string } | null>(null);
+  const [hoverEnter, setHoverEnter] = useState(false);
 
-  const openFor      = (id: string) => { if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current); setOpenPopover(id); };
-  const scheduleClose= () => { hoverTimerRef.current = setTimeout(() => setOpenPopover(null), 90); };
-
-  const handleChildClick = (parentId: string, child: ChildItem) => {
-    if (!child.status) return;
-    const next = new Map(selectedChildren);
-    let newLast: { parentId: string; childId: string } | null = null;
-    if (next.get(parentId) === child.id) {
-      next.delete(parentId);
-      const rem = Array.from(next.entries());
-      newLast = rem.length > 0 ? { parentId: rem[rem.length - 1][0], childId: rem[rem.length - 1][1] } : null;
-    } else {
-      next.set(parentId, child.id);
-      newLast = { parentId, childId: child.id };
-    }
-    setSelectedChildren(next);
-    setLastSelectedChild(newLast);
-    setOpenPopover(null);
-    const activeLayers = new Set<string>();
-    next.forEach((_, pid) => activeLayers.add(pid));
-    filterRef.current = { activeLayers };
+  const computeActiveLayers = (l1s: Set<string>, l2s: Map<string, string>): Set<string> => {
+    const s = new Set<string>();
+    l1s.forEach(id => s.add(id));
+    Array.from(l2s.keys()).forEach(id => s.add(id));
+    return s;
   };
 
-  const hasLiveSelection = Array.from(selectedChildren.entries()).some(([pid, cid]) => {
+  const updateFilter = (l1s: Set<string>, l2s: Map<string, string>, l3: { parentId: string; nodeType: string } | null) => {
+    filterRef.current = { activeLayers: computeActiveLayers(l1s, l2s), activeL3: l3 };
+  };
+
+  const toggleL1 = (parentId: string) => {
+    const next = new Set(openL1s);
+    if (next.has(parentId)) next.delete(parentId); else next.add(parentId);
+    setOpenL1s(next);
+    updateFilter(next, selectedL2, activeL3);
+  };
+
+  const handleSelectL2 = (parentId: string, childId: string, status: "Live" | "Soon" | null) => {
+    if (!status) return;
+    const next = new Map(selectedL2);
+    if (next.get(parentId) === childId) next.delete(parentId); else next.set(parentId, childId);
+    setSelectedL2(next);
+    setActiveL3(null);
+    updateFilter(openL1s, next, null);
+  };
+
+  const handleSelectL3 = (parentId: string, nodeType: string) => {
+    const next = (activeL3?.nodeType === nodeType && activeL3?.parentId === parentId) ? null : { parentId, nodeType };
+    setActiveL3(next);
+    updateFilter(openL1s, selectedL2, next);
+  };
+
+  const hasLiveSelection = Array.from(selectedL2.entries()).some(([pid, cid]) => {
     const parent = PORTAL_DATA.find(p => p.id === pid);
     return parent?.children.find(c => c.id === cid)?.status === "Live";
   });
 
   const handleEnterChain = () => {
-    Array.from(selectedChildren.entries()).forEach(([pid, cid]) => {
+    Array.from(selectedL2.entries()).forEach(([pid, cid]) => {
       const parent = PORTAL_DATA.find(p => p.id === pid);
       const child  = parent?.children.find(c => c.id === cid);
       if (child?.status === "Live" && child.href) window.location.href = child.href;
     });
   };
-
-  // ── Context fade transition ────────────────────────────────────────────────
-  useEffect(() => {
-    const newId = lastSelectedChild?.childId ?? null;
-    if (newId === targetChildRef.current) return;
-    targetChildRef.current = newId;
-    if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
-    setContextOpacity(0);
-    if (newId === null) {
-      transitionTimerRef.current = setTimeout(() => setContextChildId(null), 300);
-    } else {
-      transitionTimerRef.current = setTimeout(() => { setContextChildId(newId); setContextOpacity(1); }, 220);
-    }
-    return () => { if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current); };
-  }, [lastSelectedChild]);
 
   // ── Three.js ──────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -311,7 +287,7 @@ export default function HomePage() {
     const NODE_R = R * 1.012, DOT_SIZE = 0.008;
     const dotGeo = new THREE.SphereGeometry(DOT_SIZE, 8, 8);
 
-    type NodeObj = { dot: THREE.Mesh; ring: THREE.Mesh | null; ringMat: THREE.MeshBasicMaterial | null; normal: THREE.Vector3; offset: number; layer: string; currentMult: number };
+    type NodeObj = { dot: THREE.Mesh; ring: THREE.Mesh | null; ringMat: THREE.MeshBasicMaterial | null; normal: THREE.Vector3; offset: number; layer: string; nodeType: string; currentMult: number };
     const nodeObjs: NodeObj[] = [];
     let pulseOffset = 0;
 
@@ -327,11 +303,11 @@ export default function HomePage() {
         ring.position.copy(pos); ring.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
         globeGroup.add(ring); pulseOffset += 0.8;
       }
-      nodeObjs.push({ dot, ring, ringMat, normal, offset: n.key ? pulseOffset : 0, layer, currentMult: 1 });
+      nodeObjs.push({ dot, ring, ringMat, normal, offset: n.key ? pulseOffset : 0, layer, nodeType: n.type, currentMult: 1 });
     });
 
     const nodeByName = Object.fromEntries(NODES.map(n => [n.name, n]));
-    type ArcObj = { lineMat: THREE.LineBasicMaterial; nA: THREE.Vector3; nB: THREE.Vector3; curve: THREE.QuadraticBezierCurve3; traveler: THREE.Mesh; travelerMat: THREE.MeshBasicMaterial; speed: number; tOffset: number; layerA: string; layerB: string; currentMult: number };
+    type ArcObj = { lineMat: THREE.LineBasicMaterial; nA: THREE.Vector3; nB: THREE.Vector3; curve: THREE.QuadraticBezierCurve3; traveler: THREE.Mesh; travelerMat: THREE.MeshBasicMaterial; speed: number; tOffset: number; layerA: string; typeA: string; layerB: string; typeB: string; currentMult: number };
     const arcObjs: ArcObj[] = [];
     const travelerGeo = new THREE.SphereGeometry(DOT_SIZE * 0.65, 6, 6);
 
@@ -346,7 +322,7 @@ export default function HomePage() {
       const travelerMat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0 });
       const traveler = new THREE.Mesh(travelerGeo, travelerMat);
       traveler.position.copy(curve.getPoint(0)); globeGroup.add(traveler);
-      arcObjs.push({ lineMat, nA: pA.clone().normalize(), nB: pB.clone().normalize(), curve, traveler, travelerMat, speed: 0.08 + (idx % 5) * 0.012, tOffset: (idx * 0.37) % 1, layerA: layerFromType(a.type), layerB: layerFromType(b.type), currentMult: 1 });
+      arcObjs.push({ lineMat, nA: pA.clone().normalize(), nB: pB.clone().normalize(), curve, traveler, travelerMat, speed: 0.08 + (idx % 5) * 0.012, tOffset: (idx * 0.37) % 1, layerA: layerFromType(a.type), typeA: a.type, layerB: layerFromType(b.type), typeB: b.type, currentMult: 1 });
     });
 
     // ── Pause/resume ──────────────────────────────────────────────────────────
@@ -414,12 +390,14 @@ export default function HomePage() {
       const delta = clock.getDelta();
       if (!isPausedRef.current && !isPointerDown) globeGroup.rotation.y += AUTO_SPEED * delta;
       const t = clock.elapsedTime;
-      const { activeLayers } = filterRef.current;
+      const { activeLayers, activeL3: al3 } = filterRef.current;
       const filtering = activeLayers.size > 0;
       const lerpK = Math.min(1, delta * 5);
 
       nodeObjs.forEach((no) => {
-        const tgt = filtering ? (activeLayers.has(no.layer) ? 1 : 0.1) : 1;
+        const layerOk = !filtering || activeLayers.has(no.layer);
+        const typeOk  = !al3 || no.layer !== al3.parentId || no.nodeType === al3.nodeType;
+        const tgt = (layerOk && typeOk) ? 1 : 0.1;
         no.currentMult += (tgt - no.currentMult) * lerpK;
         const m = no.currentMult;
         worldNormal.copy(no.normal).applyQuaternion(globeGroup.quaternion);
@@ -432,9 +410,14 @@ export default function HomePage() {
       });
 
       arcObjs.forEach((ao) => {
-        const mA = filtering ? (activeLayers.has(ao.layerA) ? 1 : 0.1) : 1;
-        const mB = filtering ? (activeLayers.has(ao.layerB) ? 1 : 0.1) : 1;
-        ao.currentMult += (Math.min(mA, mB) - ao.currentMult) * lerpK;
+        const aLayerOk = !filtering || activeLayers.has(ao.layerA);
+        const aTypeOk  = !al3 || ao.layerA !== al3.parentId || ao.typeA === al3.nodeType;
+        const bLayerOk = !filtering || activeLayers.has(ao.layerB);
+        const bTypeOk  = !al3 || ao.layerB !== al3.parentId || ao.typeB === al3.nodeType;
+        const mA = (aLayerOk && aTypeOk) ? 1 : 0.1;
+        const mB = (bLayerOk && bTypeOk) ? 1 : 0.1;
+        const tgt = Math.min(mA, mB);
+        ao.currentMult += (tgt - ao.currentMult) * lerpK;
         const m = ao.currentMult;
         const fA = worldNormal.copy(ao.nA).applyQuaternion(globeGroup.quaternion).dot(camDir);
         const fB = worldNormal.copy(ao.nB).applyQuaternion(globeGroup.quaternion).dot(camDir);
@@ -489,8 +472,7 @@ export default function HomePage() {
     };
   }, []);
 
-  const trackerVisible = selectedChildren.size > 0;
-  const contextContent = contextChildId ? CONTEXT_CONTENT[contextChildId] : null;
+  const trackerVisible = selectedL2.size > 0;
 
   return (
     <div style={{ background: "#0C0C0B", width: "100vw", height: "100vh", overflow: "hidden", position: "relative" }}>
@@ -516,37 +498,107 @@ export default function HomePage() {
         )}
       </div>
 
-      {/* ── Left portal ─────────────────────────────────────────────────────── */}
+      {/* ── Left portal tree ──────────────────────────────────────────────────── */}
       <div style={{ position: "absolute", left: 36, top: "50%", transform: "translateY(-50%)", zIndex: 20 }}>
         {PORTAL_DATA.map((parent) => {
-          const selChildId = selectedChildren.get(parent.id);
-          const selChild   = selChildId ? parent.children.find(c => c.id === selChildId) : null;
-          const isOpen     = openPopover === parent.id;
+          const isOpen     = openL1s.has(parent.id);
+          const selL2Id    = selectedL2.get(parent.id) ?? null;
+          const selL2      = selL2Id ? parent.children.find(c => c.id === selL2Id) : null;
+          const hasSelection = !isOpen && !!selL2;
+          const isHovL1    = hovered === `l1:${parent.id}`;
+
+          const lineColor  = hasSelection && selL2?.dot ? selL2.dot : isOpen ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.1)";
+          const lineWidth  = isOpen ? 16 : 14;
+          const nameColor  = hasSelection && selL2?.dot ? selL2.dot
+            : isOpen     ? "rgba(255,255,255,0.7)"
+            : isHovL1    ? "rgba(255,255,255,0.6)"
+            : "rgba(255,255,255,0.4)";
+          const nameWeight = (isOpen || hasSelection) ? 500 : 400;
+          const countColor = isOpen ? "rgba(255,255,255,0.15)" : hasSelection ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.08)";
+
           return (
-            <div key={parent.id} style={{ position: "relative" }}>
-              <div onMouseEnter={() => openFor(parent.id)} onMouseLeave={scheduleClose}
-                style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 0", cursor: "pointer" }}>
-                <div style={{ width: 12, height: 0.5, background: selChild?.dot ?? "rgba(255,255,255,0.1)", flexShrink: 0, transition: "background 0.2s ease" }} />
-                <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 12, fontWeight: selChild ? 500 : 400, letterSpacing: "0.01em", color: selChild?.dot ?? "rgba(255,255,255,0.4)", transition: "color 0.2s ease", whiteSpace: "nowrap" }}>
-                  {selChild ? selChild.label : parent.label}
+            <div key={parent.id}>
+              {/* L1 row */}
+              <div
+                onClick={() => toggleL1(parent.id)}
+                onMouseEnter={() => setHovered(`l1:${parent.id}`)}
+                onMouseLeave={() => setHovered(null)}
+                style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", cursor: "pointer" }}
+              >
+                <div style={{ width: lineWidth, height: 0.5, background: lineColor, flexShrink: 0, transition: "width 0.2s ease, background 0.2s ease" }} />
+                <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 12, fontWeight: nameWeight, color: nameColor, transition: "color 0.2s ease", whiteSpace: "nowrap" }}>
+                  {parent.label}
                 </span>
+                <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7, color: countColor, transition: "color 0.2s ease" }}>{parent.count}</span>
               </div>
+
+              {/* L2 children */}
               {isOpen && (
-                <div onMouseEnter={() => openFor(parent.id)} onMouseLeave={scheduleClose}
-                  style={{ position: "absolute", left: "calc(100% + 20px)", top: "50%", transform: "translateY(-50%)", background: "rgba(20,20,18,0.92)", border: "0.5px solid rgba(255,255,255,0.06)", padding: "8px 12px", zIndex: 30, minWidth: 160 }}>
+                <div style={{ padding: "2px 0 4px 22px", borderLeft: "0.5px solid rgba(255,255,255,0.04)", marginLeft: 7, animation: "fadeInDown 0.3s ease" }}>
                   {parent.children.map((child) => {
-                    const isUnavailable = !child.status;
-                    const isSel = selChildId === child.id;
-                    const ck    = `${parent.id}/${child.id}`;
-                    const isHov = hoveredChild === ck;
+                    const isUnavail = !child.status;
+                    const isSel     = selL2Id === child.id;
+                    const hovKeyL2  = `l2:${parent.id}/${child.id}`;
+                    const isHovL2   = hovered === hovKeyL2 && !isUnavail;
+
                     return (
-                      <div key={child.id} onClick={() => handleChildClick(parent.id, child)}
-                        onMouseEnter={() => setHoveredChild(ck)} onMouseLeave={() => setHoveredChild(null)}
-                        style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 0", cursor: isUnavailable ? "default" : "pointer" }}>
-                        <div style={{ width: isSel ? 5 : 4, height: isSel ? 5 : 4, borderRadius: "50%", background: child.dot ?? "rgba(255,255,255,0.15)", opacity: isUnavailable ? 0.3 : 1, flexShrink: 0, boxShadow: isSel && child.dot ? `0 0 6px ${child.dot}` : "none", transition: "all 0.15s ease" }} />
-                        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 10.5, fontWeight: isSel ? 500 : 400, color: isSel ? "rgba(255,255,255,0.85)" : isHov && !isUnavailable ? "rgba(255,255,255,0.7)" : isUnavailable ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.35)", transition: "color 0.12s ease", whiteSpace: "nowrap" }}>{child.label}</span>
-                        {child.status && <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 5.5, textTransform: "uppercase", letterSpacing: "0.05em", padding: "1px 4px", borderRadius: 2, color: child.status === "Live" ? "#7DA06A" : "rgba(255,255,255,0.12)", background: child.status === "Live" ? "rgba(125,160,106,0.1)" : "rgba(255,255,255,0.03)" }}>{child.status}</span>}
-                        {child.count !== null && <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 6.5, color: "rgba(255,255,255,0.08)" }}>{child.count}</span>}
+                      <div key={child.id}>
+                        {/* L2 row */}
+                        <div
+                          onClick={() => handleSelectL2(parent.id, child.id, child.status)}
+                          onMouseEnter={() => !isUnavail && setHovered(hovKeyL2)}
+                          onMouseLeave={() => setHovered(null)}
+                          style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 0", cursor: isUnavail ? "default" : "pointer" }}
+                        >
+                          <div style={{ width: isSel ? 5 : 4, height: isSel ? 5 : 4, borderRadius: "50%", background: child.dot ?? "rgba(255,255,255,0.15)", opacity: isUnavail ? 0.3 : 1, flexShrink: 0, boxShadow: isSel && child.dot ? `0 0 6px ${child.dot}` : "none", transition: "all 0.15s ease" }} />
+                          <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 10.5, fontWeight: isSel ? 500 : 400, color: isSel ? "rgba(255,255,255,0.8)" : isHovL2 ? "rgba(255,255,255,0.6)" : isUnavail ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.3)", transition: "color 0.12s ease", whiteSpace: "nowrap" }}>
+                            {child.label}
+                          </span>
+                          {child.status && (
+                            <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 5.5, textTransform: "uppercase" as const, letterSpacing: "0.05em", padding: "1px 4px", color: child.status === "Live" ? "#7DA06A" : "rgba(255,255,255,0.12)", background: child.status === "Live" ? "rgba(125,160,106,0.1)" : "rgba(255,255,255,0.03)" }}>
+                              {child.status}
+                            </span>
+                          )}
+                          {child.count !== null && (
+                            <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 6.5, color: "rgba(255,255,255,0.08)" }}>{child.count}</span>
+                          )}
+                        </div>
+
+                        {/* L3 sublayers — shown when this L2 is selected */}
+                        {isSel && child.sublayers && (
+                          <div style={{ padding: "2px 0 4px 18px", borderLeft: "0.5px solid rgba(255,255,255,0.03)", marginLeft: 2, animation: "fadeInDown 0.3s ease" }}>
+                            {child.sublayers.map((sub) => {
+                              const isActive  = activeL3?.parentId === parent.id && activeL3?.nodeType === sub.id;
+                              const hovKeyL3  = `l3:${parent.id}/${sub.id}`;
+                              const isHovL3   = hovered === hovKeyL3;
+
+                              return (
+                                <div
+                                  key={sub.id}
+                                  onClick={() => handleSelectL3(parent.id, sub.id)}
+                                  onMouseEnter={() => setHovered(hovKeyL3)}
+                                  onMouseLeave={() => setHovered(null)}
+                                  style={{ padding: "4px 0", cursor: "pointer" }}
+                                >
+                                  {/* L3 row */}
+                                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                    <div style={{ width: isActive ? 4 : 3, height: isActive ? 4 : 3, borderRadius: "50%", background: sub.dot, flexShrink: 0, transition: "all 0.15s ease" }} />
+                                    <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 9, fontWeight: isActive ? 600 : 400, color: isActive ? "rgba(255,255,255,0.65)" : isHovL3 ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.22)", transition: "color 0.12s ease", whiteSpace: "nowrap" }}>
+                                      {sub.label}
+                                    </span>
+                                    <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 6, color: isActive ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.08)" }}>{sub.count}</span>
+                                  </div>
+                                  {/* Description */}
+                                  <div style={{ paddingLeft: 9, paddingTop: 2, paddingBottom: 2, maxWidth: 260 }}>
+                                    <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 8.5, color: "rgba(255,255,255,0.15)", lineHeight: 1.5, display: "block" }}>
+                                      {sub.desc}
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -557,26 +609,11 @@ export default function HomePage() {
         })}
       </div>
 
-      {/* ── Context panel (bottom-left) ──────────────────────────────────────── */}
-      {contextContent && (
-        <div style={{ position: "absolute", left: 36, bottom: 48, maxWidth: 360, zIndex: 20, opacity: contextOpacity, transition: "opacity 0.3s ease" }}>
-          {/* Layer chip */}
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 5, border: "0.5px solid rgba(255,255,255,0.08)", padding: "2px 8px", marginBottom: 10 }}>
-            <div style={{ width: 3, height: 3, borderRadius: "50%", background: contextContent.chipColor, flexShrink: 0 }} />
-            <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7, textTransform: "uppercase", letterSpacing: "0.04em", color: "rgba(255,255,255,0.3)" }}>{contextContent.chipLabel}</span>
-          </div>
-          {/* Narrative paragraph */}
-          <p style={{ margin: 0, fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11.5, color: "rgba(255,255,255,0.35)", lineHeight: 1.7 }}>
-            {renderContextText(contextContent.text)}
-          </p>
-        </div>
-      )}
-
       {/* ── Bottom-right tracker (pill) ──────────────────────────────────────── */}
       <div style={{ position: "absolute", bottom: 32, right: 36, zIndex: 20, opacity: trackerVisible ? 1 : 0, transform: trackerVisible ? "translateY(0)" : "translateY(4px)", transition: "opacity 0.3s ease, transform 0.3s ease", pointerEvents: trackerVisible ? "auto" : "none" }}>
         <div style={{ background: "rgba(20,20,18,0.88)", border: "0.5px solid rgba(255,255,255,0.08)", borderRadius: 24, padding: "6px 8px", display: "flex", alignItems: "center" }}>
           {TRACKER_LAYERS.map((layer, idx) => {
-            const cid  = selectedChildren.get(layer.id);
+            const cid  = selectedL2.get(layer.id);
             const pd   = PORTAL_DATA.find(p => p.id === layer.id)!;
             const cd   = cid ? pd.children.find(c => c.id === cid) : null;
             return (
