@@ -18,19 +18,19 @@ function toVec3(lon: number, lat: number, r = R): THREE.Vector3 {
 }
 
 function layerFromType(type: string): string {
-  if (["deposit", "miner", "refiner"].includes(type))          return "raw-material";
-  if (["converter", "manufacturer"].includes(type))             return "component";
-  if (["assembler", "recycler"].includes(type))                 return "subsystem";
+  if (["deposit", "miner", "refiner"].includes(type))   return "raw-material";
+  if (["converter", "manufacturer"].includes(type))      return "component";
+  if (["assembler", "recycler"].includes(type))          return "subsystem";
   return "end-use";
 }
 
-// ── Portal data ───────────────────────────────────────────────────────────────
+// ── Portal & tracker data ─────────────────────────────────────────────────────
 type ChildItem = {
   id:      string;
   label:   string;
-  dot:     string;
-  count?:  number;
-  status?: "Live" | "Soon";
+  dot:     string | null;
+  count:   number | null;
+  status:  "Live" | "Soon" | null;
   href?:   string;
 };
 
@@ -46,40 +46,47 @@ const PORTAL_DATA: ParentItem[] = [
     id: "raw-material", label: "Raw material", count: 22,
     children: [
       { id: "germanium",   label: "Germanium",   dot: "#B8975A", count: 28, status: "Live", href: "/germanium" },
-      { id: "gallium",     label: "Gallium",     dot: "#6A8BBF",              status: "Soon" },
-      { id: "lithium",     label: "Lithium",     dot: "#C4836A",              status: "Soon" },
-      { id: "cobalt",      label: "Cobalt",      dot: "rgba(255,255,255,0.1)" },
-      { id: "rare-earths", label: "Rare earths", dot: "rgba(255,255,255,0.1)" },
-      { id: "tungsten",    label: "Tungsten",    dot: "rgba(255,255,255,0.1)" },
+      { id: "gallium",     label: "Gallium",     dot: "#6A8BBF", count: null, status: "Soon" },
+      { id: "lithium",     label: "Lithium",     dot: "#C4836A", count: null, status: "Soon" },
+      { id: "cobalt",      label: "Cobalt",      dot: null,      count: null, status: null },
+      { id: "rare-earths", label: "Rare earths", dot: null,      count: null, status: null },
+      { id: "tungsten",    label: "Tungsten",    dot: null,      count: null, status: null },
     ],
   },
   {
     id: "component", label: "Component", count: 9,
     children: [
-      { id: "gecl4", label: "GeO₂ / GeCl₄",  dot: "#6A8BBF", count: 9, status: "Live", href: "/germanium" },
-      { id: "gan",   label: "GaN wafers",     dot: "rgba(255,255,255,0.1)" },
-      { id: "lioh",  label: "LiOH / Cathode", dot: "rgba(255,255,255,0.1)" },
+      { id: "gecl4", label: "GeO₂ / GeCl₄",  dot: "#6A8BBF", count: 9,   status: "Live", href: "/germanium" },
+      { id: "gan",   label: "GaN wafers",     dot: null,      count: null, status: null },
+      { id: "lioh",  label: "LiOH / Cathode", dot: null,      count: null, status: null },
     ],
   },
   {
     id: "subsystem", label: "Subsystem", count: 8,
     children: [
-      { id: "fiber-optic", label: "Fiber optic cable",  dot: "#5A9E8F", count: 8, status: "Live", href: "/germanium" },
-      { id: "ir-camera",   label: "IR camera modules",  dot: "rgba(255,255,255,0.1)" },
-      { id: "battery",     label: "Battery cells",      dot: "rgba(255,255,255,0.1)" },
+      { id: "fiber-optic", label: "Fiber optic cable",  dot: "#5A9E8F", count: 8,   status: "Live", href: "/germanium" },
+      { id: "ir-camera",   label: "IR camera modules",  dot: null,      count: null, status: null },
+      { id: "battery",     label: "Battery cells",      dot: null,      count: null, status: null },
     ],
   },
   {
     id: "end-use", label: "End use", count: 8,
     children: [
-      { id: "ai-datacenter",  label: "AI datacenter",    dot: "#C8B88A", count: 8, status: "Live", href: "/germanium" },
-      { id: "defense",        label: "Defense / IR",      dot: "rgba(255,255,255,0.1)" },
-      { id: "ev",             label: "Electric vehicles", dot: "rgba(255,255,255,0.1)" },
-      { id: "5g",             label: "5G infrastructure", dot: "rgba(255,255,255,0.1)" },
-      { id: "satellite",      label: "Satellite",         dot: "rgba(255,255,255,0.1)" },
-      { id: "fiber-networks", label: "Fiber networks",    dot: "rgba(255,255,255,0.1)" },
+      { id: "ai-datacenter",  label: "AI datacenter",    dot: "#C8B88A", count: 8,   status: "Live", href: "/germanium" },
+      { id: "defense",        label: "Defense / IR",      dot: null,      count: null, status: null },
+      { id: "ev",             label: "Electric vehicles", dot: null,      count: null, status: null },
+      { id: "5g",             label: "5G infrastructure", dot: null,      count: null, status: null },
+      { id: "satellite",      label: "Satellite",         dot: null,      count: null, status: null },
+      { id: "fiber-networks", label: "Fiber networks",    dot: null,      count: null, status: null },
     ],
   },
+];
+
+const TRACKER_LAYERS = [
+  { id: "raw-material", label: "Raw material" },
+  { id: "component",    label: "Component" },
+  { id: "subsystem",    label: "Subsystem" },
+  { id: "end-use",      label: "End use" },
 ];
 
 // ── Node data ─────────────────────────────────────────────────────────────────
@@ -152,23 +159,19 @@ const NODES = [
 ];
 
 const ARCS: [string, string][] = [
-  // Raw material flows
   ["Red Dog",              "Trail Smelter"],
   ["Trail Smelter",        "5N Plus"],
   ["STL DRC",              "Umicore"],
   ["Huize",                "Yunnan Chihong"],
   ["Spetsugli",            "JSC Germanium"],
   ["Yunnan Chihong",       "Yunnan Chihong Refinery"],
-  // Raw → Component
   ["Umicore GeCl4",        "Corning Preform"],
   ["Umicore GeCl4",        "Prysmian Preform NA"],
   ["Yunnan Chihong GeCl4", "YOFC"],
-  // Component → Subsystem
   ["Corning Preform",      "Corning Fiber Concord"],
   ["Corning Preform",      "Corning Hickory"],
   ["YOFC",                 "YOFC Wuhan Cable"],
   ["Prysmian Preform NA",  "Prysmian Milan"],
-  // Subsystem → End use
   ["Corning Fiber Concord","AWS us-east-1"],
   ["Corning Hickory",      "Meta Prineville"],
   ["Prysmian Milan",       "Azure West Europe"],
@@ -177,35 +180,46 @@ const ARCS: [string, string][] = [
 
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function HomePage() {
-  const mountRef = useRef<HTMLDivElement>(null);
-  const filterRef = useRef<{ parentId: string | null }>({ parentId: null });
+  const mountRef  = useRef<HTMLDivElement>(null);
+  const filterRef = useRef<{ activeLayers: Set<string> }>({ activeLayers: new Set() });
 
-  const [activeParent,  setActiveParent]  = useState<string | null>(null);
-  const [activeChild,   setActiveChild]   = useState<string | null>(null);
-  const [hoveredParent, setHoveredParent] = useState<string | null>(null);
-  const [hoveredChild,  setHoveredChild]  = useState<string | null>(null);
+  // Portal state
+  const [expandedParents,  setExpandedParents]  = useState<Set<string>>(new Set());
+  const [selectedChildren, setSelectedChildren] = useState<Map<string, string>>(new Map());
+  const [hoveredParent,    setHoveredParent]    = useState<string | null>(null);
+  const [hoveredChild,     setHoveredChild]     = useState<string | null>(null);
+  const [hoverEnter,       setHoverEnter]       = useState(false);
 
-  const handleParentClick = (id: string) => {
-    if (activeParent === id) {
-      setActiveParent(null);
-      setActiveChild(null);
-      filterRef.current = { parentId: null };
-    } else {
-      setActiveParent(id);
-      setActiveChild(null);
-      filterRef.current = { parentId: id };
-    }
+  const handleParentToggle = (id: string) => {
+    const next = new Set(expandedParents);
+    if (next.has(id)) next.delete(id); else next.add(id);
+    setExpandedParents(next);
   };
 
-  const handleChildClick = (child: ChildItem, parentId: string) => {
-    if (child.status !== "Live") return;
-    if (activeChild === child.id) {
-      setActiveChild(null);
-      filterRef.current = { parentId };
-    } else {
-      setActiveChild(child.id);
-      filterRef.current = { parentId }; // layer filter stays at parent level
-    }
+  const handleChildClick = (parentId: string, child: ChildItem) => {
+    if (!child.status) return;
+    const next = new Map(selectedChildren);
+    if (next.get(parentId) === child.id) next.delete(parentId);
+    else next.set(parentId, child.id);
+    setSelectedChildren(next);
+    const activeLayers = new Set<string>();
+    next.forEach((_, pid) => activeLayers.add(pid));
+    filterRef.current = { activeLayers };
+  };
+
+  const hasLiveSelection = Array.from(selectedChildren.entries()).some(([pid, cid]) => {
+    const parent = PORTAL_DATA.find(p => p.id === pid);
+    return parent?.children.find(c => c.id === cid)?.status === "Live";
+  });
+
+  const handleEnterChain = () => {
+    Array.from(selectedChildren.entries()).forEach(([pid, cid]) => {
+      const parent = PORTAL_DATA.find(p => p.id === pid);
+      const child  = parent?.children.find(c => c.id === cid);
+      if (child?.status === "Live" && child.href) {
+        window.location.href = child.href;
+      }
+    });
   };
 
   useEffect(() => {
@@ -251,7 +265,7 @@ export default function HomePage() {
     // ── Country outlines ──────────────────────────────────────────────────────
     const OUTLINE_R = R * 1.001;
     fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
-      .then(res => res.json())
+      .then(r => r.json())
       .then((world: Topology) => {
         const borders = topojson.mesh(world, (world.objects as Record<string, GeometryCollection>).countries);
         const buf: number[] = [];
@@ -268,9 +282,9 @@ export default function HomePage() {
       }).catch(console.error);
 
     // ── Supply chain nodes ────────────────────────────────────────────────────
-    const NODE_R      = R * 1.012;
-    const DOT_SIZE    = 0.008;
-    const dotGeo      = new THREE.SphereGeometry(DOT_SIZE, 8, 8);
+    const NODE_R   = R * 1.012;
+    const DOT_SIZE = 0.008;
+    const dotGeo   = new THREE.SphereGeometry(DOT_SIZE, 8, 8);
 
     type NodeObj = {
       dot:         THREE.Mesh;
@@ -328,7 +342,6 @@ export default function HomePage() {
       currentMult: number;
     };
     const arcObjs: ArcObj[] = [];
-
     const travelerGeo = new THREE.SphereGeometry(DOT_SIZE * 0.65, 6, 6);
 
     ARCS.forEach(([fromName, toName], idx) => {
@@ -339,8 +352,7 @@ export default function HomePage() {
       const pA     = toVec3(a.lng, a.lat, NODE_R);
       const pB     = toVec3(b.lng, b.lat, NODE_R);
       const mid    = pA.clone().add(pB).multiplyScalar(0.5);
-      const lift   = mid.length();
-      const midOut = mid.normalize().multiplyScalar(lift + 0.55);
+      const midOut = mid.clone().normalize().multiplyScalar(mid.length() + 0.55);
 
       const curve   = new THREE.QuadraticBezierCurve3(pA, midOut, pB);
       const pts     = curve.getPoints(60);
@@ -358,9 +370,7 @@ export default function HomePage() {
         lineMat,
         nA: pA.clone().normalize(),
         nB: pB.clone().normalize(),
-        curve,
-        traveler,
-        travelerMat,
+        curve, traveler, travelerMat,
         speed:   0.08 + (idx % 5) * 0.012,
         tOffset: (idx * 0.37) % 1,
         layerA:  layerFromType(a.type),
@@ -369,12 +379,9 @@ export default function HomePage() {
       });
     });
 
-    // ── Auto-rotation ─────────────────────────────────────────────────────────
+    // ── Input ─────────────────────────────────────────────────────────────────
     const AUTO_SPEED = (2 * Math.PI) / 90;
-
-    // ── Drag-to-rotate ────────────────────────────────────────────────────────
-    let isDragging = false;
-    let prevX = 0, prevY = 0;
+    let isDragging = false, prevX = 0, prevY = 0;
     const onDown = (e: PointerEvent) => { isDragging = true; prevX = e.clientX; prevY = e.clientY; mount.setPointerCapture(e.pointerId); };
     const onMove = (e: PointerEvent) => {
       if (!isDragging) return;
@@ -387,7 +394,6 @@ export default function HomePage() {
     mount.addEventListener("pointermove", onMove);
     mount.addEventListener("pointerup",   onUp);
 
-    // ── Resize ────────────────────────────────────────────────────────────────
     const onResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -407,12 +413,12 @@ export default function HomePage() {
       if (!isDragging) globeGroup.rotation.y += AUTO_SPEED * delta;
       const t = clock.elapsedTime;
 
-      const { parentId } = filterRef.current;
-      const lerpK = Math.min(1, delta * 5); // ~0.2s smooth transition
+      const { activeLayers } = filterRef.current;
+      const filtering = activeLayers.size > 0;
+      const lerpK = Math.min(1, delta * 5);
 
-      // Per-node: filter lerp + back-face hiding + pulse rings
       nodeObjs.forEach((no) => {
-        const targetMult = parentId === null ? 1 : (no.layer === parentId ? 1 : 0.1);
+        const targetMult = filtering ? (activeLayers.has(no.layer) ? 1 : 0.1) : 1;
         no.currentMult  += (targetMult - no.currentMult) * lerpK;
         const mult        = no.currentMult;
 
@@ -420,12 +426,10 @@ export default function HomePage() {
         const facing = worldNormal.dot(camDir);
 
         const dotMat = no.dot.material as THREE.MeshBasicMaterial;
-        dotMat.opacity = facing < -0.1
-          ? 0
-          : Math.min(1, (facing + 0.1) / 0.3) * mult;
+        dotMat.opacity = facing < -0.1 ? 0 : Math.min(1, (facing + 0.1) / 0.3) * mult;
 
         if (no.ring && no.ringMat) {
-          if (facing < -0.1) {
+          if (facing < -0.1 || mult < 0.5) {
             no.ringMat.opacity = 0;
           } else {
             const wave = (Math.sin((t * 0.9 + no.offset * 0.8) * Math.PI * 2 * 0.28) + 1) / 2;
@@ -435,34 +439,29 @@ export default function HomePage() {
         }
       });
 
-      // Arc: filter lerp + back-face visibility + traveling dot
       arcObjs.forEach((ao) => {
-        const multA = parentId === null ? 1 : (ao.layerA === parentId ? 1 : 0.1);
-        const multB = parentId === null ? 1 : (ao.layerB === parentId ? 1 : 0.1);
-        ao.currentMult += (Math.min(multA, multB) - ao.currentMult) * lerpK;
+        const mA = filtering ? (activeLayers.has(ao.layerA) ? 1 : 0.1) : 1;
+        const mB = filtering ? (activeLayers.has(ao.layerB) ? 1 : 0.1) : 1;
+        ao.currentMult += (Math.min(mA, mB) - ao.currentMult) * lerpK;
         const mult = ao.currentMult;
 
         const fA = worldNormal.copy(ao.nA).applyQuaternion(globeGroup.quaternion).dot(camDir);
         const fB = worldNormal.copy(ao.nB).applyQuaternion(globeGroup.quaternion).dot(camDir);
-        const visibility = Math.max(0, Math.min(fA, fB));
-        ao.lineMat.opacity = visibility * 0.14 * mult;
+        const vis = Math.max(0, Math.min(fA, fB));
+        ao.lineMat.opacity = vis * 0.14 * mult;
 
         const progress = ((t * ao.speed + ao.tOffset) % 1 + 1) % 1;
         const pos = ao.curve.getPoint(progress);
         ao.traveler.position.copy(pos);
-
         worldNormal.copy(pos).normalize().applyQuaternion(globeGroup.quaternion);
-        const travFacing = worldNormal.dot(camDir);
-        ao.travelerMat.opacity = travFacing < -0.1
-          ? 0
-          : Math.min(1, (travFacing + 0.1) / 0.3) * 0.85 * mult;
+        const tf = worldNormal.dot(camDir);
+        ao.travelerMat.opacity = tf < -0.1 ? 0 : Math.min(1, (tf + 0.1) / 0.3) * 0.85 * mult;
       });
 
       renderer.render(scene, camera);
     };
     tick();
 
-    // ── Cleanup ───────────────────────────────────────────────────────────────
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", onResize);
@@ -473,6 +472,8 @@ export default function HomePage() {
       if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
     };
   }, []);
+
+  const trackerVisible = selectedChildren.size > 0;
 
   return (
     <div style={{ background: "#0C0C0B", width: "100vw", height: "100vh", overflow: "hidden", position: "relative" }}>
@@ -491,48 +492,52 @@ export default function HomePage() {
       {/* Globe canvas */}
       <div ref={mountRef} style={{ position: "absolute", inset: 0, cursor: "grab" }} />
 
-      {/* Left portal */}
-      <div style={{
-        position:  "absolute",
-        left:      36,
-        top:       "50%",
-        transform: "translateY(-50%)",
-        zIndex:    20,
-        width:     "auto",
-      }}>
+      {/* ── Left portal ─────────────────────────────────────────────────────── */}
+      <div style={{ position: "absolute", left: 36, top: "50%", transform: "translateY(-50%)", zIndex: 20 }}>
         {PORTAL_DATA.map((parent) => {
-          const isActive  = activeParent === parent.id;
-          const isDimmed  = activeParent !== null && !isActive;
+          const isExpanded    = expandedParents.has(parent.id);
+          const hasSelection  = selectedChildren.has(parent.id);
+          const isHovP        = hoveredParent === parent.id;
+
+          // Three parent visual states
+          const lineW     = isExpanded ? 16 : hasSelection ? 14 : 12;
+          const lineColor = isExpanded
+            ? "rgba(255,255,255,0.4)"
+            : hasSelection
+              ? "rgba(255,255,255,0.25)"
+              : "rgba(255,255,255,0.1)";
+          const nameColor = isExpanded
+            ? "rgba(255,255,255,0.85)"
+            : hasSelection
+              ? "rgba(255,255,255,0.5)"
+              : isHovP
+                ? "rgba(255,255,255,0.7)"
+                : "rgba(255,255,255,0.4)";
+          const countColor = isExpanded
+            ? "rgba(255,255,255,0.2)"
+            : hasSelection
+              ? "rgba(255,255,255,0.15)"
+              : "rgba(255,255,255,0.1)";
 
           return (
-            <div
-              key={parent.id}
-              style={{ opacity: isDimmed ? 0.4 : 1, transition: "opacity 0.2s ease" }}
-            >
+            <div key={parent.id}>
               {/* Parent row */}
               <div
-                onClick={() => handleParentClick(parent.id)}
+                onClick={() => handleParentToggle(parent.id)}
                 onMouseEnter={() => setHoveredParent(parent.id)}
                 onMouseLeave={() => setHoveredParent(null)}
                 style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 0", cursor: "pointer" }}
               >
                 <div style={{
-                  width:      isActive ? 16 : 12,
-                  height:     0.5,
-                  background: isActive ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.08)",
-                  flexShrink: 0,
+                  width: lineW, height: 0.5, background: lineColor, flexShrink: 0,
                   transition: "all 0.2s ease",
                 }} />
                 <span style={{
-                  fontFamily:  "Inter, -apple-system, sans-serif",
-                  fontSize:    12,
-                  fontWeight:  isActive ? 500 : 400,
+                  fontFamily: "Inter, -apple-system, sans-serif",
+                  fontSize: 12,
+                  fontWeight: isExpanded ? 500 : 400,
                   letterSpacing: "0.01em",
-                  color: isActive
-                    ? "rgba(255,255,255,0.8)"
-                    : hoveredParent === parent.id
-                      ? "rgba(255,255,255,0.7)"
-                      : "rgba(255,255,255,0.22)",
+                  color: nameColor,
                   transition: "color 0.15s ease",
                   whiteSpace: "nowrap",
                 }}>
@@ -540,62 +545,71 @@ export default function HomePage() {
                 </span>
                 <span style={{
                   fontFamily: "'Geist Mono', monospace",
-                  fontSize:   7,
-                  color:      isActive ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.06)",
+                  fontSize: 7,
+                  color: countColor,
                   transition: "color 0.2s ease",
                 }}>
                   {parent.count}
                 </span>
               </div>
 
-              {/* Children */}
-              {isActive && (
+              {/* Children (expanded) */}
+              {isExpanded && (
                 <div style={{
-                  paddingLeft:  20,
-                  borderLeft:   "0.5px solid rgba(255,255,255,0.04)",
-                  marginLeft:   6,
-                  marginBottom: 4,
+                  padding: "4px 0 6px 20px",
+                  borderLeft: "0.5px solid rgba(255,255,255,0.06)",
+                  marginLeft: 6,
                 }}>
                   {parent.children.map((child) => {
-                    const isLive        = child.status === "Live";
+                    const isUnavailable = !child.status;
+                    const isSelected    = selectedChildren.get(parent.id) === child.id;
                     const childKey      = `${parent.id}/${child.id}`;
-                    const isHov         = hoveredChild === childKey;
-                    const isActiveChild = activeChild  === child.id;
+                    const isHovC        = hoveredChild === childKey;
+
+                    const nameCol = isSelected
+                      ? "rgba(255,255,255,0.85)"
+                      : isHovC && !isUnavailable
+                        ? "rgba(255,255,255,0.7)"
+                        : isUnavailable
+                          ? "rgba(255,255,255,0.12)"
+                          : "rgba(255,255,255,0.35)";
+
+                    const dotBg     = child.dot ?? "rgba(255,255,255,0.2)";
+                    const dotSize   = isSelected ? 5 : 4;
+                    const dotOpac   = isUnavailable ? 0.3 : 1;
+                    const dotShadow = isSelected && child.dot
+                      ? `0 0 6px ${child.dot}`
+                      : "none";
 
                     return (
                       <div
                         key={child.id}
-                        onClick={() => handleChildClick(child, parent.id)}
+                        onClick={() => handleChildClick(parent.id, child)}
                         onMouseEnter={() => setHoveredChild(childKey)}
                         onMouseLeave={() => setHoveredChild(null)}
                         style={{
-                          display:    "flex",
-                          alignItems: "center",
-                          gap:        6,
-                          padding:    "5px 0",
-                          cursor:     isLive ? "pointer" : "default",
+                          display: "flex", alignItems: "center", gap: 6,
+                          padding: "5px 0",
+                          cursor: isUnavailable ? "default" : "pointer",
                         }}
                       >
                         {/* Color dot */}
                         <div style={{
-                          width:        4,
-                          height:       4,
+                          width: dotSize, height: dotSize,
                           borderRadius: "50%",
-                          background:   child.dot,
-                          flexShrink:   0,
-                          boxShadow:    isActiveChild && isLive ? `0 0 5px ${child.dot}` : "none",
-                          transition:   "box-shadow 0.2s ease",
+                          background: dotBg,
+                          opacity: dotOpac,
+                          flexShrink: 0,
+                          boxShadow: dotShadow,
+                          transition: "all 0.2s ease",
                         }} />
 
                         {/* Name */}
                         <span style={{
                           fontFamily: "Inter, -apple-system, sans-serif",
-                          fontSize:   10.5,
-                          color:      isActiveChild
-                            ? "rgba(255,255,255,0.75)"
-                            : isHov && isLive
-                              ? "rgba(255,255,255,0.6)"
-                              : "rgba(255,255,255,0.18)",
+                          fontSize: 10.5,
+                          fontWeight: isSelected ? 500 : 400,
+                          color: nameCol,
                           transition: "color 0.15s ease",
                           whiteSpace: "nowrap",
                         }}>
@@ -605,47 +619,27 @@ export default function HomePage() {
                         {/* Status tag */}
                         {child.status && (
                           <span style={{
-                            fontFamily:    "'Geist Mono', monospace",
-                            fontSize:      5.5,
+                            fontFamily: "'Geist Mono', monospace",
+                            fontSize: 5.5,
                             textTransform: "uppercase",
                             letterSpacing: "0.05em",
-                            padding:       "1px 4px",
-                            borderRadius:  2,
-                            color:      child.status === "Live" ? "#7DA06A" : "rgba(255,255,255,0.1)",
-                            background: child.status === "Live" ? "rgba(125,160,106,0.08)" : "rgba(255,255,255,0.02)",
+                            padding: "1px 4px",
+                            borderRadius: 2,
+                            color:      child.status === "Live" ? "#7DA06A" : "rgba(255,255,255,0.12)",
+                            background: child.status === "Live" ? "rgba(125,160,106,0.1)" : "rgba(255,255,255,0.03)",
                           }}>
                             {child.status}
                           </span>
                         )}
 
                         {/* Count */}
-                        {child.count !== undefined && (
+                        {child.count !== null && (
                           <span style={{
                             fontFamily: "'Geist Mono', monospace",
-                            fontSize:   6.5,
-                            color:      "rgba(255,255,255,0.06)",
+                            fontSize: 6.5,
+                            color: "rgba(255,255,255,0.08)",
                           }}>
                             {child.count}
-                          </span>
-                        )}
-
-                        {/* Arrow — navigate to chain page */}
-                        {isLive && (
-                          <span
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (child.href) window.location.href = child.href;
-                            }}
-                            style={{
-                              fontFamily: "'Geist Mono', monospace",
-                              fontSize:   8,
-                              color:      "rgba(255,255,255,0.08)",
-                              opacity:    isHov ? 0.3 : 0,
-                              transition: "opacity 0.15s ease",
-                              cursor:     "pointer",
-                            }}
-                          >
-                            →
                           </span>
                         )}
                       </div>
@@ -656,6 +650,139 @@ export default function HomePage() {
             </div>
           );
         })}
+      </div>
+
+      {/* ── Bottom-right chain tracker ───────────────────────────────────────── */}
+      <div style={{
+        position:   "absolute",
+        bottom:     28,
+        right:      36,
+        zIndex:     20,
+        opacity:    trackerVisible ? 1 : 0,
+        transform:  trackerVisible ? "translateY(0)" : "translateY(4px)",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+        pointerEvents: trackerVisible ? "auto" : "none",
+      }}>
+        <div style={{
+          background:    "rgba(12,12,11,0.85)",
+          padding:       4,
+          display:       "flex",
+          alignItems:    "center",
+        }}>
+
+          {TRACKER_LAYERS.map((layer, idx) => {
+            const selChildId = selectedChildren.get(layer.id);
+            const parentData = PORTAL_DATA.find(p => p.id === layer.id)!;
+            const childData  = selChildId ? parentData.children.find(c => c.id === selChildId) : null;
+
+            return (
+              <div key={layer.id} style={{ display: "flex", alignItems: "center" }}>
+                {/* Arrow between slots */}
+                {idx > 0 && (
+                  <span style={{
+                    fontFamily: "'Geist Mono', monospace",
+                    fontSize: 8,
+                    color: "rgba(255,255,255,0.08)",
+                    padding: "0 2px",
+                  }}>→</span>
+                )}
+
+                {/* Slot */}
+                <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 12px" }}>
+                  {childData ? (
+                    /* Filled slot */
+                    <>
+                      <div style={{
+                        width: 6, height: 6,
+                        borderRadius: "50%",
+                        background: childData.dot ?? "rgba(255,255,255,0.2)",
+                        flexShrink: 0,
+                      }} />
+                      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                        <span style={{
+                          fontFamily: "Inter, -apple-system, sans-serif",
+                          fontSize: 9, fontWeight: 500,
+                          color: "rgba(255,255,255,0.5)",
+                          whiteSpace: "nowrap",
+                        }}>
+                          {childData.label}
+                        </span>
+                        <span style={{
+                          fontFamily: "'Geist Mono', monospace",
+                          fontSize: 6,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.05em",
+                          color: "rgba(255,255,255,0.1)",
+                          whiteSpace: "nowrap",
+                        }}>
+                          {layer.label}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    /* Empty slot */
+                    <>
+                      <div style={{
+                        width: 6, height: 6,
+                        borderRadius: "50%",
+                        border: "0.5px solid rgba(255,255,255,0.08)",
+                        flexShrink: 0,
+                      }} />
+                      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                        <span style={{
+                          fontFamily: "'Geist Mono', monospace",
+                          fontSize: 7,
+                          color: "rgba(255,255,255,0.08)",
+                          whiteSpace: "nowrap",
+                        }}>
+                          Select
+                        </span>
+                        <span style={{
+                          fontFamily: "'Geist Mono', monospace",
+                          fontSize: 6,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.05em",
+                          color: "rgba(255,255,255,0.1)",
+                          whiteSpace: "nowrap",
+                        }}>
+                          {layer.label}
+                        </span>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Enter chain button */}
+          {hasLiveSelection && (
+            <div
+              onClick={handleEnterChain}
+              onMouseEnter={() => setHoverEnter(true)}
+              onMouseLeave={() => setHoverEnter(false)}
+              style={{
+                marginLeft:  8,
+                padding:     "8px 14px",
+                border:      `0.5px solid ${hoverEnter ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.1)"}`,
+                background:  hoverEnter ? "rgba(255,255,255,0.03)" : "transparent",
+                cursor:      "pointer",
+                transition:  "all 0.15s ease",
+              }}
+            >
+              <span style={{
+                fontFamily: "Inter, -apple-system, sans-serif",
+                fontSize: 9,
+                color: hoverEnter ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.35)",
+                transition: "color 0.15s ease",
+                whiteSpace: "nowrap",
+              }}>
+                Enter chain →
+              </span>
+            </div>
+          )}
+
+        </div>
       </div>
 
     </div>
