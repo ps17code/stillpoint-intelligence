@@ -75,6 +75,38 @@ const TRACKER_LAYERS = [
   { id: "end-use",      label: "End use" },
 ];
 
+// ── Shape system ───────────────────────────────────────────────────────────────
+// Each node type gets a distinct shape; color stays per-layer (single color per layer)
+const TYPE_SHAPE: Record<string, string> = {
+  deposit:      "circle",   // filled circle = source / primary production
+  miner:        "diamond",  // diamond = extraction
+  refiner:      "ring",     // hollow circle = refining / purification
+  converter:    "circle",   // source of its layer
+  manufacturer: "square",   // square = fabrication
+  assembler:    "circle",   // circle = primary production
+  recycler:     "circle",
+  datacenter:   "triangle", // triangle = end consumption / demand
+  telecom:      "diamond",  // diamond = infrastructure processing
+};
+
+// Maps sublayer node-type IDs to CSS shapes for the nav legend
+const SUB_SHAPE: Record<string, string> = {
+  deposit: "circle", miner: "diamond", refiner: "ring",
+  converter: "circle", manufacturer: "square",
+  assembler: "circle", recycler: "circle",
+  datacenter: "triangle", telecom: "diamond",
+};
+
+// CSS shape icon component for nav legend
+function ShapeIcon({ shape, color }: { shape: string; color: string }) {
+  if (shape === "circle")   return <div style={{ width: 4, height: 4, borderRadius: "50%", background: color, flexShrink: 0 }} />;
+  if (shape === "diamond")  return <div style={{ width: 4, height: 4, background: color, transform: "rotate(45deg)", flexShrink: 0 }} />;
+  if (shape === "ring")     return <div style={{ width: 4, height: 4, borderRadius: "50%", border: `1px solid ${color}`, background: "transparent", flexShrink: 0 }} />;
+  if (shape === "square")   return <div style={{ width: 4, height: 4, background: color, flexShrink: 0 }} />;
+  if (shape === "triangle") return <div style={{ width: 0, height: 0, borderLeft: "3px solid transparent", borderRight: "3px solid transparent", borderBottom: `5px solid ${color}`, flexShrink: 0 }} />;
+  return null;
+}
+
 // ── Data ──────────────────────────────────────────────────────────────────────
 type SubItem = { id: string; label: string; count: number; desc: string };
 type L2Item  = { id: string; label: string; dot: string | null; count: number | null; status: "Live" | "Soon" | null; href?: string; sublayers?: SubItem[] };
@@ -324,9 +356,13 @@ export default function HomePage() {
     const fl = new THREE.DirectionalLight(0xffffff, 0.3); fl.position.set(3, -2, 1);     scene.add(fl);
 
     const globeGroup = new THREE.Group();
+    // Initial rotation: center on North America (~lon -95, central US)
+    // By default, lon=-90 faces the camera; shift slightly westward
+    globeGroup.rotation.y = 0.09;
     scene.add(globeGroup);
 
-    const sphereMat = new THREE.MeshPhongMaterial({ color: new THREE.Color("#B0A490"), specular: new THREE.Color("#111111"), shininess: 5 });
+    // Dark base color avoids the amber flash before topology texture loads
+    const sphereMat = new THREE.MeshPhongMaterial({ color: new THREE.Color("#0C0C0A"), specular: new THREE.Color("#111111"), shininess: 5 });
     globeGroup.add(new THREE.Mesh(new THREE.SphereGeometry(R, 72, 72), sphereMat));
     new THREE.TextureLoader().load("/earth-topology.png", (tex) => { sphereMat.map = tex; sphereMat.needsUpdate = true; });
 
@@ -346,26 +382,47 @@ export default function HomePage() {
       }).catch(console.error);
 
     const NODE_R  = R * 1.012;
-    const dotGeo  = new THREE.SphereGeometry(DOT_SIZE, 8, 8);
+    const S       = DOT_SIZE;
+    // Per-type shape geometries (shared across nodes of the same type)
+    const SHAPE_GEOS: Record<string, THREE.BufferGeometry> = {
+      circle:   new THREE.SphereGeometry(S, 8, 8),
+      diamond:  new THREE.PlaneGeometry(S * 1.4, S * 1.4),
+      ring:     new THREE.RingGeometry(S * 0.42, S * 0.72, 16),
+      square:   new THREE.PlaneGeometry(S * 1.1, S * 1.1),
+      triangle: new THREE.CircleGeometry(S * 0.78, 3),
+    };
     const ringGeo = new THREE.RingGeometry(DOT_SIZE * 1.5, DOT_SIZE * 4.5, 32);
 
-    type NodeObj = { dot: THREE.Mesh; ring: THREE.Mesh; ringMat: THREE.MeshBasicMaterial; normal: THREE.Vector3; pulseOffset: number; layer: string; nodeType: string; isKey: boolean; currentMult: number; currentScale: number; currentColor: THREE.Color };
+    type NodeObj = { dot: THREE.Mesh; ring: THREE.Mesh; ringMat: THREE.MeshBasicMaterial; normal: THREE.Vector3; pulseOffset: number; layer: string; nodeType: string; isKey: boolean; currentMult: number; currentScale: number; currentColor: THREE.Color; shape: string };
     const nodeObjs: NodeObj[] = [];
     let pOffset = 0;
 
     NODES.forEach(n => {
-      const layer = layerFromType(n.type);
-      const pos   = toVec3(n.lng, n.lat, NODE_R);
+      const layer  = layerFromType(n.type);
+      const shape  = TYPE_SHAPE[n.type] ?? "circle";
+      const pos    = toVec3(n.lng, n.lat, NODE_R);
       const normal = pos.clone().normalize();
       const currentColor = new THREE.Color(NEUTRAL_HEX);
-      const dot  = new THREE.Mesh(dotGeo, new THREE.MeshBasicMaterial({ color: currentColor.clone(), transparent: true, opacity: 1 }));
-      dot.position.copy(pos); globeGroup.add(dot);
+
+      const dot = new THREE.Mesh(
+        SHAPE_GEOS[shape],
+        new THREE.MeshBasicMaterial({ color: currentColor.clone(), transparent: true, opacity: 1, side: THREE.DoubleSide }),
+      );
+      dot.position.copy(pos);
+      // Orient flat shapes to face outward from the globe surface
+      if (shape !== "circle") {
+        dot.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+        if (shape === "diamond") dot.rotateZ(Math.PI / 4);
+      }
+      globeGroup.add(dot);
+
       const ringMat = new THREE.MeshBasicMaterial({ color: currentColor.clone(), transparent: true, opacity: 0, side: THREE.DoubleSide });
       const ring    = new THREE.Mesh(ringGeo, ringMat);
       ring.position.copy(pos); ring.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
       globeGroup.add(ring);
+
       pOffset += 0.8;
-      nodeObjs.push({ dot, ring, ringMat, normal, pulseOffset: pOffset, layer, nodeType: n.type, isKey: n.key, currentMult: 1, currentScale: 1, currentColor });
+      nodeObjs.push({ dot, ring, ringMat, normal, pulseOffset: pOffset, layer, nodeType: n.type, isKey: n.key, currentMult: 1, currentScale: 1, currentColor, shape });
     });
 
     const nodeByName = Object.fromEntries(NODES.map(n => [n.name, n]));
@@ -509,6 +566,7 @@ export default function HomePage() {
       mount.removeEventListener("pointerdown", onDown); mount.removeEventListener("pointermove", onMove);
       mount.removeEventListener("pointerup", onUp);     mount.removeEventListener("pointerleave", onLeave);
       if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+      Object.values(SHAPE_GEOS).forEach(g => g.dispose());
       renderer.dispose(); if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
     };
   }, []);
@@ -624,9 +682,13 @@ export default function HomePage() {
                         onClick={() => handleSelectL3(parent.id, sub.id)}
                         onMouseEnter={() => setHoveredSub(subKey)}
                         onMouseLeave={() => setHoveredSub(null)}
-                        style={{ padding: "5px 0 5px 8px", cursor: "pointer", borderLeft: isActive ? `2px solid ${lc}` : "2px solid transparent", transition: "border-left-color 0.2s ease" }}
+                        style={{ padding: "5px 0 5px 6px", cursor: "pointer", background: isActive ? hexToRgba(lc, 0.04) : "transparent", borderRadius: 3, transition: "background 0.15s ease" }}
                       >
                         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                          {/* Active dot indicator (replaces border-left) */}
+                          <div style={{ width: 4, height: 4, borderRadius: "50%", background: isActive ? lc : "transparent", flexShrink: 0, transition: "background 0.15s ease" }} />
+                          {/* Shape icon teaches the visual language */}
+                          <ShapeIcon shape={SUB_SHAPE[sub.id] ?? "circle"} color={isActive || isHovSub ? lc : "rgba(255,255,255,0.2)"} />
                           <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, fontWeight: 500, color: (isActive || isHovSub) ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.45)", transition: "color 0.12s ease", whiteSpace: "nowrap" }}>
                             {sub.label}
                           </span>
