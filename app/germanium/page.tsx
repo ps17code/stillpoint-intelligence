@@ -56,10 +56,21 @@ const LAYER_COLORS: Record<string, string> = {
   "Hyperscale":          "#7DA06A",
 };
 
+// Maps globe child IDs → SPINE_TREE keys
+const CHILD_TO_SPINE: Record<string, string> = {
+  "germanium":     "Germanium",
+  "gecl4":         "GeO₂ / GeCl₄",
+  "fiber-optic":   "Fiber Optics",
+  "ai-datacenter": "AI Datacenter",
+};
+
 export default function Home() {
   // ── App state ────────────────────────────────────────────────────
   const [appState, setAppState] = useState<AppState>(0);
   const [sel, setSel] = useState<SpineSelection>({ raw: null, comp: null, sub: null, eu: null });
+
+  // ── Globe selection autoload ──────────────────────────────────────
+  const pendingAutoLoad = useRef<AppState | null>(null);
 
   // ── Geometry ─────────────────────────────────────────────────────
   const [geometry,  setGeometry]  = useState<TreeGeometry | null>(null);
@@ -118,6 +129,40 @@ export default function Home() {
   }, [appState, sel.raw, sel.comp, sel.sub, sel.eu]);
 
   useEffect(() => { setTreeCollapsed(false); setBriefOpen(false); }, [appState]);
+
+  // ── Globe selection autoload (mount) ─────────────────────────────
+  useEffect(() => {
+    const stored = sessionStorage.getItem("globeSelection");
+    if (!stored) return;
+    sessionStorage.removeItem("globeSelection");
+    const gs = JSON.parse(stored) as { raw: string | null; comp: string | null; sub: string | null; eu: string | null };
+    const newSel: SpineSelection = {
+      raw:  gs.raw  ? (CHILD_TO_SPINE[gs.raw]  ?? gs.raw)  : null,
+      comp: gs.comp ? (CHILD_TO_SPINE[gs.comp] ?? gs.comp) : null,
+      sub:  gs.sub  ? (CHILD_TO_SPINE[gs.sub]  ?? gs.sub)  : null,
+      eu:   gs.eu   ? (CHILD_TO_SPINE[gs.eu]   ?? gs.eu)   : null,
+    };
+    const targetState: AppState = newSel.eu ? 4 : newSel.sub ? 3 : newSel.comp ? 2 : newSel.raw ? 1 : 0;
+    if (targetState === 0) return;
+    setSel(newSel);
+    pendingAutoLoad.current = targetState;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ── Globe autoload: trigger state transition after sel updates ────
+  useEffect(() => {
+    if (pendingAutoLoad.current === null) return;
+    const targetState = pendingAutoLoad.current;
+    pendingAutoLoad.current = null;
+    if (targetState === 1) {
+      setAppState(1);
+      afterSpineTransition(() => buildGeometryFromAnchorEl(1));
+    } else {
+      setAppState(targetState);
+      setTimeout(() => buildGeometryFromAnchorEl(targetState), 800);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sel]);
 
   // ── Spine dropdown options ────────────────────────────────────────
   const spineOptions = {
