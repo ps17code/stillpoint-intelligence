@@ -85,7 +85,7 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
               <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 5, color: "#B0ADA6", letterSpacing: "0.05em" }}>per kg · Fastmarkets Mar 2026</div>
             </div>
             {/* Right: sparkline fills remaining width */}
-            <div style={{ flex: 1, minWidth: 0, marginLeft: 8 }}>
+            <div style={{ flex: 1, minWidth: 0, marginLeft: 8, height: 44, alignSelf: "flex-end" }}>
               <svg width="100%" height="100%" viewBox="0 0 72 40" preserveAspectRatio="none">
                 <defs>
                   <linearGradient id="spk-fill" x1="0" y1="0" x2="0" y2="1">
