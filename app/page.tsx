@@ -359,10 +359,10 @@ export default function HomePage() {
     // Initial rotation: center on North America (~lon -95, central US)
     // By default, lon=-90 faces the camera; shift slightly westward
     globeGroup.rotation.y = 0.09;
+    globeGroup.rotation.x = -0.35; // tilt ~20° so North America sits higher in frame
     scene.add(globeGroup);
 
-    // Dark base color avoids the amber flash before topology texture loads
-    const sphereMat = new THREE.MeshPhongMaterial({ color: new THREE.Color("#0C0C0A"), specular: new THREE.Color("#111111"), shininess: 5 });
+    const sphereMat = new THREE.MeshPhongMaterial({ color: new THREE.Color("#B0A490"), specular: new THREE.Color("#111111"), shininess: 5 });
     globeGroup.add(new THREE.Mesh(new THREE.SphereGeometry(R, 72, 72), sphereMat));
     new THREE.TextureLoader().load("/earth-topology.png", (tex) => { sphereMat.map = tex; sphereMat.needsUpdate = true; });
 
@@ -391,7 +391,7 @@ export default function HomePage() {
       square:   new THREE.PlaneGeometry(S * 1.1, S * 1.1),
       triangle: new THREE.CircleGeometry(S * 0.78, 3),
     };
-    const ringGeo = new THREE.RingGeometry(DOT_SIZE * 1.5, DOT_SIZE * 4.5, 32);
+    const ringGeo = new THREE.RingGeometry(DOT_SIZE * 1.3, DOT_SIZE * 2.2, 32);
 
     type NodeObj = { dot: THREE.Mesh; ring: THREE.Mesh; ringMat: THREE.MeshBasicMaterial; normal: THREE.Vector3; pulseOffset: number; layer: string; nodeType: string; isKey: boolean; currentMult: number; currentScale: number; currentColor: THREE.Color; shape: string };
     const nodeObjs: NodeObj[] = [];
@@ -491,7 +491,7 @@ export default function HomePage() {
         } else if (selectedLayers.has(no.layer)) {
           const lc = LAYER_COLOR_HEX[no.layer];
           if (activeSubParent === no.layer && activeSubType) {
-            if (no.nodeType === activeSubType) { targetMult = 1; targetScale = 1.625; targetHex = lc; ringEnabled = true; }
+            if (no.nodeType === activeSubType) { targetMult = 1; targetScale = 1; targetHex = lc; ringEnabled = true; }
             else                               { targetMult = 0.3; targetScale = 1; targetHex = lc; ringEnabled = false; }
           } else { targetMult = 1; targetScale = 1; targetHex = lc; ringEnabled = no.isKey; }
         } else { targetMult = 0.08; targetScale = 1; targetHex = NEUTRAL_HEX; ringEnabled = false; }
@@ -507,8 +507,8 @@ export default function HomePage() {
         (no.dot.material as THREE.MeshBasicMaterial).opacity = base * no.currentMult;
         if (ringEnabled && f >= -0.1 && no.currentMult > 0.3) {
           const w = (Math.sin((t * 0.9 + no.pulseOffset * 0.8) * Math.PI * 2 * 0.28) + 1) / 2;
-          no.ring.scale.setScalar(1 + w * 1.6); no.ringMat.color.copy(no.currentColor);
-          no.ringMat.opacity = (1 - w) * 0.35 * base * no.currentMult;
+          no.ring.scale.setScalar(1 + w * 0.9); no.ringMat.color.copy(no.currentColor);
+          no.ringMat.opacity = (1 - w) * 0.28 * base * no.currentMult;
         } else { no.ringMat.opacity = Math.max(0, no.ringMat.opacity - delta * 3); }
       });
 
@@ -685,8 +685,6 @@ export default function HomePage() {
                         style={{ padding: "5px 0 5px 6px", cursor: "pointer", background: isActive ? hexToRgba(lc, 0.04) : "transparent", borderRadius: 3, transition: "background 0.15s ease" }}
                       >
                         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                          {/* Active dot indicator (replaces border-left) */}
-                          <div style={{ width: 4, height: 4, borderRadius: "50%", background: isActive ? lc : "transparent", flexShrink: 0, transition: "background 0.15s ease" }} />
                           {/* Shape icon teaches the visual language */}
                           <ShapeIcon shape={SUB_SHAPE[sub.id] ?? "circle"} color={isActive || isHovSub ? lc : "rgba(255,255,255,0.2)"} />
                           <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, fontWeight: 500, color: (isActive || isHovSub) ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.45)", transition: "color 0.12s ease", whiteSpace: "nowrap" }}>
