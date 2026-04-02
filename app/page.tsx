@@ -762,24 +762,24 @@ export default function HomePage() {
             );
           })}
           {hasLiveSelection && (
-            <>
-              <div style={{ width: 0.5, height: 20, background: "rgba(255,255,255,0.06)", margin: "0 2px" }} />
-              <div
-                onClick={handleEnterChain}
-                onMouseEnter={() => setHoverEnter(true)}
-                onMouseLeave={() => setHoverEnter(false)}
-                style={{
-                  padding: "5px 12px",
-                  cursor: "pointer",
-                  borderRadius: 4,
-                  background: hoverEnter ? "rgba(160,155,145,0.2)"  : "rgba(160,155,145,0.12)",
-                  border:     hoverEnter ? "0.5px solid rgba(160,155,145,0.4)" : "0.5px solid rgba(160,155,145,0.25)",
-                  transition: "background 0.15s ease, border 0.15s ease",
-                }}
-              >
-                <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 9, color: hoverEnter ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)", transition: "color 0.15s ease", whiteSpace: "nowrap" }}>Enter chain →</span>
-              </div>
-            </>
+            <div
+              onClick={handleEnterChain}
+              onMouseEnter={() => setHoverEnter(true)}
+              onMouseLeave={() => setHoverEnter(false)}
+              style={{
+                marginLeft: 6,
+                marginRight: 4,
+                padding: "7px 18px",
+                cursor: "pointer",
+                borderRadius: 20,
+                background: hoverEnter ? "rgba(255,255,255,0.1)"  : "rgba(255,255,255,0.05)",
+                border:     hoverEnter ? "0.5px solid rgba(255,255,255,0.12)" : "0.5px solid rgba(255,255,255,0.06)",
+                transition: "background 0.15s ease, border 0.15s ease",
+                flexShrink: 0,
+              }}
+            >
+              <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 9.5, color: hoverEnter ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.4)", transition: "color 0.15s ease", whiteSpace: "nowrap" }}>Enter chain →</span>
+            </div>
           )}
         </div>
       </div>
