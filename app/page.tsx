@@ -768,9 +768,16 @@ export default function HomePage() {
                 onClick={handleEnterChain}
                 onMouseEnter={() => setHoverEnter(true)}
                 onMouseLeave={() => setHoverEnter(false)}
-                style={{ padding: "6px 12px", cursor: "pointer" }}
+                style={{
+                  padding: "5px 12px",
+                  cursor: "pointer",
+                  borderRadius: 4,
+                  background: hoverEnter ? "rgba(160,155,145,0.2)"  : "rgba(160,155,145,0.12)",
+                  border:     hoverEnter ? "0.5px solid rgba(160,155,145,0.4)" : "0.5px solid rgba(160,155,145,0.25)",
+                  transition: "background 0.15s ease, border 0.15s ease",
+                }}
               >
-                <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 9, color: hoverEnter ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.4)", transition: "color 0.15s ease", whiteSpace: "nowrap" }}>Enter chain →</span>
+                <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 9, color: hoverEnter ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)", transition: "color 0.15s ease", whiteSpace: "nowrap" }}>Enter chain →</span>
               </div>
             </>
           )}
