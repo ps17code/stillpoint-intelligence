@@ -53,7 +53,7 @@ const LAYER_COLOR_HEX: Record<string, number> = {
 const NEUTRAL_HEX = 0x8A8478;
 const DOT_SIZE    = 0.008;
 
-// ── Portal data ────────────────────────────────────────────────────────────────
+// ── Data ──────────────────────────────────────────────────────────────────────
 type SubItem = { id: string; label: string; count: number; desc: string };
 type L2Item  = { id: string; label: string; dot: string | null; count: number | null; status: "Live" | "Soon" | null; href?: string; sublayers?: SubItem[] };
 type L1Item  = { id: string; label: string; count: number; children: L2Item[] };
@@ -123,14 +123,6 @@ const PORTAL_DATA: L1Item[] = [
   },
 ];
 
-const TRACKER_LAYERS = [
-  { id: "raw-material", label: "Raw material" },
-  { id: "component",    label: "Component" },
-  { id: "subsystem",    label: "Subsystem" },
-  { id: "end-use",      label: "End use" },
-];
-
-// ── Node / arc data ───────────────────────────────────────────────────────────
 const NODE_COLOR_HEX: Record<string, number> = {
   deposit: 0xB8975A, miner: 0x7DA06A, refiner: 0xA07DAA,
   converter: 0x6A8BBF, manufacturer: 0x6A8BBF,
@@ -200,38 +192,26 @@ const ARCS: [string, string][] = [
 
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function HomePage() {
-  const mountRef          = useRef<HTMLDivElement>(null);
-  const tooltipRef        = useRef<HTMLDivElement>(null);
-  const filterRef         = useRef<{
-    selectedLayers:   Set<string>;
-    activeSubType:    string | null;
-    activeSubParent:  string | null;
-  }>({ selectedLayers: new Set(), activeSubType: null, activeSubParent: null });
-  const isPausedRef       = useRef(false);
-  const pauseTimerRef     = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const transitionTimerRef= useRef<ReturnType<typeof setTimeout> | null>(null);
-  const targetLegendRef   = useRef<string | null>(null);
-  const hoverTimerRef     = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mountRef      = useRef<HTMLDivElement>(null);
+  const tooltipRef    = useRef<HTMLDivElement>(null);
+  const filterRef     = useRef<{ selectedLayers: Set<string>; activeSubType: string | null; activeSubParent: string | null }>({ selectedLayers: new Set(), activeSubType: null, activeSubParent: null });
+  const isPausedRef   = useRef(false);
+  const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const [selectedL2,   setSelectedL2]   = useState<Map<string, string>>(new Map());
-  const [activeL3,     setActiveL3]     = useState<{ parentId: string; nodeType: string } | null>(null);
-  const [lastSelected, setLastSelected] = useState<{ parentId: string; childId: string } | null>(null);
-  const [legendKey,    setLegendKey]    = useState<{ parentId: string; childId: string } | null>(null);
-  const [legendOpacity,setLegendOpacity]= useState(0);
-  const [openPopover,  setOpenPopover]  = useState<string | null>(null);
-  const [hovered,      setHovered]      = useState<string | null>(null);
-  const [hoveredNode,  setHoveredNode]  = useState<{ name: string; type: string; location: string } | null>(null);
-  const [hoverEnter,   setHoverEnter]   = useState(false);
+  const [selectedL2,  setSelectedL2]  = useState<Map<string, string>>(new Map());
+  const [activeL3,    setActiveL3]    = useState<{ parentId: string; nodeType: string } | null>(null);
+  const [hoveredSub,  setHoveredSub]  = useState<string | null>(null); // "parentId/nodeType"
+  const [openPopover, setOpenPopover] = useState<string | null>(null);
+  const [hovered,     setHovered]     = useState<string | null>(null);
+  const [hoveredNode, setHoveredNode] = useState<{ name: string; type: string; location: string } | null>(null);
+  const [hoverEnter,  setHoverEnter]  = useState(false);
 
   // ── Helpers ──────────────────────────────────────────────────────────────
   const updateFilter = (l2s: Map<string, string>, l3: typeof activeL3) => {
-    const selectedLayers = new Set<string>();
-    Array.from(l2s.keys()).forEach(id => selectedLayers.add(id));
-    filterRef.current = {
-      selectedLayers,
-      activeSubType:   l3?.nodeType  ?? null,
-      activeSubParent: l3?.parentId  ?? null,
-    };
+    const sel = new Set<string>();
+    Array.from(l2s.keys()).forEach(id => sel.add(id));
+    filterRef.current = { selectedLayers: sel, activeSubType: l3?.nodeType ?? null, activeSubParent: l3?.parentId ?? null };
   };
 
   const openFor       = (id: string) => { if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current); setOpenPopover(id); };
@@ -240,32 +220,25 @@ export default function HomePage() {
   const handleSelectL2 = (parentId: string, childId: string, status: "Live" | "Soon" | null) => {
     if (!status) return;
     const next = new Map(selectedL2);
-    let newLast = lastSelected;
-    let newL3   = activeL3;
-
+    let newL3 = activeL3;
     if (next.get(parentId) === childId) {
       next.delete(parentId);
-      if (lastSelected?.parentId === parentId && lastSelected?.childId === childId) {
-        const entries = Array.from(next.entries());
-        newLast = entries.length > 0 ? { parentId: entries[entries.length - 1][0], childId: entries[entries.length - 1][1] } : null;
-      }
       if (activeL3?.parentId === parentId) newL3 = null;
     } else {
       next.set(parentId, childId);
-      newLast = { parentId, childId };
       if (activeL3?.parentId === parentId) newL3 = null;
     }
-
     setSelectedL2(next);
-    setLastSelected(newLast);
     setActiveL3(newL3);
     updateFilter(next, newL3);
     setOpenPopover(null);
+    setHoveredSub(null);
   };
 
   const handleSelectL3 = (parentId: string, nodeType: string) => {
     const next = (activeL3?.nodeType === nodeType && activeL3?.parentId === parentId) ? null : { parentId, nodeType };
     setActiveL3(next);
+    setHoveredSub(null);
     updateFilter(selectedL2, next);
   };
 
@@ -281,21 +254,6 @@ export default function HomePage() {
       if (child?.status === "Live" && child.href) window.location.href = child.href;
     });
   };
-
-  // ── Legend fade transition ────────────────────────────────────────────────
-  useEffect(() => {
-    const key = lastSelected ? `${lastSelected.parentId}/${lastSelected.childId}` : null;
-    if (key === targetLegendRef.current) return;
-    targetLegendRef.current = key;
-    if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
-    setLegendOpacity(0);
-    if (!lastSelected) {
-      transitionTimerRef.current = setTimeout(() => setLegendKey(null), 300);
-    } else {
-      transitionTimerRef.current = setTimeout(() => { setLegendKey(lastSelected); setLegendOpacity(1); }, 220);
-    }
-    return () => { if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current); };
-  }, [lastSelected]);
 
   // ── Three.js ──────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -323,14 +281,13 @@ export default function HomePage() {
     globeGroup.add(new THREE.Mesh(new THREE.SphereGeometry(R, 72, 72), sphereMat));
     new THREE.TextureLoader().load("/earth-topology.png", (tex) => { sphereMat.map = tex; sphereMat.needsUpdate = true; });
 
-    const OUTLINE_R = R * 1.001;
     fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
       .then(r => r.json()).then((world: Topology) => {
         const borders = topojson.mesh(world, (world.objects as Record<string, GeometryCollection>).countries);
         const buf: number[] = [];
         borders.coordinates.forEach(line => {
           for (let i = 0; i < line.length - 1; i++) {
-            const a = toVec3(line[i][0], line[i][1], OUTLINE_R), b = toVec3(line[i + 1][0], line[i + 1][1], OUTLINE_R);
+            const a = toVec3(line[i][0], line[i][1], R * 1.001), b = toVec3(line[i + 1][0], line[i + 1][1], R * 1.001);
             buf.push(a.x, a.y, a.z, b.x, b.y, b.z);
           }
         });
@@ -343,12 +300,7 @@ export default function HomePage() {
     const dotGeo  = new THREE.SphereGeometry(DOT_SIZE, 8, 8);
     const ringGeo = new THREE.RingGeometry(DOT_SIZE * 1.5, DOT_SIZE * 4.5, 32);
 
-    type NodeObj = {
-      dot: THREE.Mesh; ring: THREE.Mesh; ringMat: THREE.MeshBasicMaterial;
-      normal: THREE.Vector3; pulseOffset: number;
-      layer: string; nodeType: string; isKey: boolean;
-      currentMult: number; currentScale: number; currentColor: THREE.Color;
-    };
+    type NodeObj = { dot: THREE.Mesh; ring: THREE.Mesh; ringMat: THREE.MeshBasicMaterial; normal: THREE.Vector3; pulseOffset: number; layer: string; nodeType: string; isKey: boolean; currentMult: number; currentScale: number; currentColor: THREE.Color };
     const nodeObjs: NodeObj[] = [];
     let pOffset = 0;
 
@@ -357,28 +309,18 @@ export default function HomePage() {
       const pos   = toVec3(n.lng, n.lat, NODE_R);
       const normal = pos.clone().normalize();
       const currentColor = new THREE.Color(NEUTRAL_HEX);
-
-      const dot = new THREE.Mesh(dotGeo, new THREE.MeshBasicMaterial({ color: currentColor.clone(), transparent: true, opacity: 1 }));
-      dot.position.copy(pos);
-      globeGroup.add(dot);
-
+      const dot  = new THREE.Mesh(dotGeo, new THREE.MeshBasicMaterial({ color: currentColor.clone(), transparent: true, opacity: 1 }));
+      dot.position.copy(pos); globeGroup.add(dot);
       const ringMat = new THREE.MeshBasicMaterial({ color: currentColor.clone(), transparent: true, opacity: 0, side: THREE.DoubleSide });
       const ring    = new THREE.Mesh(ringGeo, ringMat);
-      ring.position.copy(pos);
-      ring.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+      ring.position.copy(pos); ring.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
       globeGroup.add(ring);
-
       pOffset += 0.8;
       nodeObjs.push({ dot, ring, ringMat, normal, pulseOffset: pOffset, layer, nodeType: n.type, isKey: n.key, currentMult: 1, currentScale: 1, currentColor });
     });
 
     const nodeByName = Object.fromEntries(NODES.map(n => [n.name, n]));
-
-    type ArcObj = {
-      lineMat: THREE.LineBasicMaterial; nA: THREE.Vector3; nB: THREE.Vector3;
-      curve: THREE.QuadraticBezierCurve3; traveler: THREE.Mesh; travelerMat: THREE.MeshBasicMaterial;
-      speed: number; tOffset: number; layerA: string; typeA: string; layerB: string; typeB: string; currentMult: number;
-    };
+    type ArcObj = { lineMat: THREE.LineBasicMaterial; nA: THREE.Vector3; nB: THREE.Vector3; curve: THREE.QuadraticBezierCurve3; traveler: THREE.Mesh; travelerMat: THREE.MeshBasicMaterial; speed: number; tOffset: number; layerA: string; typeA: string; layerB: string; typeB: string; currentMult: number };
     const arcObjs: ArcObj[] = [];
     const travelerGeo = new THREE.SphereGeometry(DOT_SIZE * 0.65, 6, 6);
 
@@ -387,69 +329,42 @@ export default function HomePage() {
       const pA = toVec3(a.lng, a.lat, NODE_R), pB = toVec3(b.lng, b.lat, NODE_R);
       const midOut = pA.clone().add(pB).multiplyScalar(0.5).normalize().multiplyScalar(pA.clone().add(pB).multiplyScalar(0.5).length() + 0.55);
       const curve  = new THREE.QuadraticBezierCurve3(pA, midOut, pB);
-      const color  = NODE_COLOR_HEX[a.type];
-      const lineMat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.14 });
+      const lineMat    = new THREE.LineBasicMaterial({ color: NODE_COLOR_HEX[a.type], transparent: true, opacity: 0.14 });
       globeGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(60)), lineMat));
-      const travelerMat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0 });
+      const travelerMat = new THREE.MeshBasicMaterial({ color: NODE_COLOR_HEX[a.type], transparent: true, opacity: 0 });
       const traveler    = new THREE.Mesh(travelerGeo, travelerMat);
-      traveler.position.copy(curve.getPoint(0));
-      globeGroup.add(traveler);
+      traveler.position.copy(curve.getPoint(0)); globeGroup.add(traveler);
       arcObjs.push({ lineMat, nA: pA.clone().normalize(), nB: pB.clone().normalize(), curve, traveler, travelerMat, speed: 0.08 + (idx % 5) * 0.012, tOffset: (idx * 0.37) % 1, layerA: layerFromType(a.type), typeA: a.type, layerB: layerFromType(b.type), typeB: b.type, currentMult: 1 });
     });
 
-    // ── Pause/resume ────────────────────────────────────────────────────────
-    const resumeRotation = () => {
-      isPausedRef.current = false;
-      if (pauseTimerRef.current) { clearTimeout(pauseTimerRef.current); pauseTimerRef.current = null; }
-    };
+    const resumeRotation = () => { isPausedRef.current = false; if (pauseTimerRef.current) { clearTimeout(pauseTimerRef.current); pauseTimerRef.current = null; } };
 
-    // ── Input ───────────────────────────────────────────────────────────────
-    const AUTO_SPEED = (2 * Math.PI) / 90;
+    const AUTO_SPEED  = (2 * Math.PI) / 90;
     const mouseScreen = { x: -999, y: -999 };
     let currentHoveredIdx = -1, currentHoveredName: string | null = null;
     const tooltipPos = new THREE.Vector3(), tooltipProj = new THREE.Vector3();
+    let isPointerDown = false, didDrag = false, pointerDownX = 0, pointerDownY = 0, prevX = 0, prevY = 0;
 
-    let isPointerDown = false, didDrag = false;
-    let pointerDownX = 0, pointerDownY = 0, prevX = 0, prevY = 0;
-
-    const onDown = (e: PointerEvent) => {
-      isPointerDown = true; didDrag = false;
-      pointerDownX = e.clientX; pointerDownY = e.clientY;
-      prevX = e.clientX; prevY = e.clientY;
-      mount.setPointerCapture(e.pointerId);
-    };
+    const onDown = (e: PointerEvent) => { isPointerDown = true; didDrag = false; pointerDownX = e.clientX; pointerDownY = e.clientY; prevX = e.clientX; prevY = e.clientY; mount.setPointerCapture(e.pointerId); };
     const onMove = (e: PointerEvent) => {
       mouseScreen.x = e.clientX; mouseScreen.y = e.clientY;
       if (!isPointerDown) return;
       const dx = e.clientX - pointerDownX, dy = e.clientY - pointerDownY;
       if (Math.sqrt(dx * dx + dy * dy) > 4) didDrag = true;
       if (!didDrag) return;
-      globeGroup.rotation.y += (e.clientX - prevX) * 0.005;
-      globeGroup.rotation.x += (e.clientY - prevY) * 0.005;
+      globeGroup.rotation.y += (e.clientX - prevX) * 0.005; globeGroup.rotation.x += (e.clientY - prevY) * 0.005;
       prevX = e.clientX; prevY = e.clientY;
     };
-    const onUp = () => {
-      isPointerDown = false;
-      if (!didDrag) {
-        if (isPausedRef.current) resumeRotation();
-        else { isPausedRef.current = true; if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current); pauseTimerRef.current = null; }
-      }
-      didDrag = false;
-    };
-    const onLeave = () => {
-      isPointerDown = false; didDrag = false;
-      mouseScreen.x = -999; mouseScreen.y = -999;
-      if (currentHoveredName !== null) { currentHoveredName = null; currentHoveredIdx = -1; setHoveredNode(null); }
-    };
+    const onUp    = () => { isPointerDown = false; if (!didDrag) { if (isPausedRef.current) resumeRotation(); else { isPausedRef.current = true; if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current); pauseTimerRef.current = null; } } didDrag = false; };
+    const onLeave = () => { isPointerDown = false; didDrag = false; mouseScreen.x = -999; mouseScreen.y = -999; if (currentHoveredName !== null) { currentHoveredName = null; currentHoveredIdx = -1; setHoveredNode(null); } };
+
     mount.addEventListener("pointerdown",  onDown);
     mount.addEventListener("pointermove",  onMove);
     mount.addEventListener("pointerup",    onUp);
     mount.addEventListener("pointerleave", onLeave);
-
     const onResize = () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); };
     window.addEventListener("resize", onResize);
 
-    // ── Render loop ──────────────────────────────────────────────────────────
     let animId: number;
     const clock = new THREE.Clock(), camDir = new THREE.Vector3(0, 0, 1), worldNormal = new THREE.Vector3();
     const tmpColor = new THREE.Color();
@@ -463,60 +378,38 @@ export default function HomePage() {
       const { selectedLayers, activeSubType, activeSubParent } = filterRef.current;
       const hasSelection = selectedLayers.size > 0;
 
-      // ── Nodes ─────────────────────────────────────────────────────────────
       nodeObjs.forEach((no) => {
         let targetMult: number, targetScale: number, targetHex: number, ringEnabled: boolean;
-
         if (!hasSelection) {
-          // State 1 — neutral
-          targetMult  = 1; targetScale = 1; targetHex = NEUTRAL_HEX; ringEnabled = false;
+          targetMult = 1; targetScale = 1; targetHex = NEUTRAL_HEX; ringEnabled = false;
         } else if (selectedLayers.has(no.layer)) {
           const lc = LAYER_COLOR_HEX[no.layer];
           if (activeSubParent === no.layer && activeSubType) {
-            if (no.nodeType === activeSubType) {
-              // State 3 — highlighted sub-layer
-              targetMult = 1; targetScale = 1.625; targetHex = lc; ringEnabled = true;
-            } else {
-              // State 3 — same layer, other sub-layers
-              targetMult = 0.3; targetScale = 1; targetHex = lc; ringEnabled = false;
-            }
-          } else {
-            // State 2 — whole layer selected
-            targetMult = 1; targetScale = 1; targetHex = lc; ringEnabled = no.isKey;
-          }
-        } else {
-          // Not in any selected layer
-          targetMult = 0.08; targetScale = 1; targetHex = NEUTRAL_HEX; ringEnabled = false;
-        }
+            if (no.nodeType === activeSubType) { targetMult = 1; targetScale = 1.625; targetHex = lc; ringEnabled = true; }
+            else                               { targetMult = 0.3; targetScale = 1; targetHex = lc; ringEnabled = false; }
+          } else { targetMult = 1; targetScale = 1; targetHex = lc; ringEnabled = no.isKey; }
+        } else { targetMult = 0.08; targetScale = 1; targetHex = NEUTRAL_HEX; ringEnabled = false; }
 
         no.currentMult  += (targetMult  - no.currentMult)  * lerpK;
         no.currentScale += (targetScale - no.currentScale) * lerpK;
-        tmpColor.setHex(targetHex);
-        no.currentColor.lerp(tmpColor, lerpK);
-
+        tmpColor.setHex(targetHex); no.currentColor.lerp(tmpColor, lerpK);
         no.dot.scale.setScalar(no.currentScale);
         (no.dot.material as THREE.MeshBasicMaterial).color.copy(no.currentColor);
         worldNormal.copy(no.normal).applyQuaternion(globeGroup.quaternion);
-        const f = worldNormal.dot(camDir);
+        const f    = worldNormal.dot(camDir);
         const base = f < -0.1 ? 0 : Math.min(1, (f + 0.1) / 0.3);
         (no.dot.material as THREE.MeshBasicMaterial).opacity = base * no.currentMult;
-
         if (ringEnabled && f >= -0.1 && no.currentMult > 0.3) {
           const w = (Math.sin((t * 0.9 + no.pulseOffset * 0.8) * Math.PI * 2 * 0.28) + 1) / 2;
-          no.ring.scale.setScalar(1 + w * 1.6);
-          no.ringMat.color.copy(no.currentColor);
+          no.ring.scale.setScalar(1 + w * 1.6); no.ringMat.color.copy(no.currentColor);
           no.ringMat.opacity = (1 - w) * 0.35 * base * no.currentMult;
-        } else {
-          no.ringMat.opacity = Math.max(0, no.ringMat.opacity - delta * 3);
-        }
+        } else { no.ringMat.opacity = Math.max(0, no.ringMat.opacity - delta * 3); }
       });
 
-      // ── Arcs ──────────────────────────────────────────────────────────────
       arcObjs.forEach((ao) => {
         let mA: number, mB: number;
-        if (!hasSelection) {
-          mA = mB = 1;
-        } else {
+        if (!hasSelection) { mA = mB = 1; }
+        else {
           mA = selectedLayers.has(ao.layerA) ? 1 : 0.08;
           mB = selectedLayers.has(ao.layerB) ? 1 : 0.08;
           if (activeSubParent && activeSubType) {
@@ -525,7 +418,7 @@ export default function HomePage() {
           }
         }
         ao.currentMult += (Math.min(mA, mB) - ao.currentMult) * lerpK;
-        const m = ao.currentMult;
+        const m  = ao.currentMult;
         const fA = worldNormal.copy(ao.nA).applyQuaternion(globeGroup.quaternion).dot(camDir);
         const fB = worldNormal.copy(ao.nB).applyQuaternion(globeGroup.quaternion).dot(camDir);
         ao.lineMat.opacity = Math.max(0, Math.min(fA, fB)) * 0.14 * m;
@@ -536,7 +429,6 @@ export default function HomePage() {
         ao.travelerMat.opacity = tf < -0.1 ? 0 : Math.min(1, (tf + 0.1) / 0.3) * 0.85 * m;
       });
 
-      // ── Hover detection ───────────────────────────────────────────────────
       if (mouseScreen.x > -500) {
         let closest = -1, closestDist = 14, cSX = 0, cSY = 0;
         nodeObjs.forEach((no, idx) => {
@@ -555,10 +447,7 @@ export default function HomePage() {
           if (closest >= 0) { const n = NODES[closest]; setHoveredNode({ name: n.name, type: n.type, location: n.location }); }
           else setHoveredNode(null);
         }
-        if (closest >= 0 && tooltipRef.current) {
-          tooltipRef.current.style.left = cSX + "px";
-          tooltipRef.current.style.top  = (cSY - 8) + "px";
-        }
+        if (closest >= 0 && tooltipRef.current) { tooltipRef.current.style.left = cSX + "px"; tooltipRef.current.style.top = (cSY - 8) + "px"; }
         void currentHoveredIdx;
       }
 
@@ -567,23 +456,17 @@ export default function HomePage() {
     tick();
 
     return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener("resize", onResize);
-      mount.removeEventListener("pointerdown",  onDown);
-      mount.removeEventListener("pointermove",  onMove);
-      mount.removeEventListener("pointerup",    onUp);
-      mount.removeEventListener("pointerleave", onLeave);
+      cancelAnimationFrame(animId); window.removeEventListener("resize", onResize);
+      mount.removeEventListener("pointerdown", onDown); mount.removeEventListener("pointermove", onMove);
+      mount.removeEventListener("pointerup", onUp);     mount.removeEventListener("pointerleave", onLeave);
       if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
-      renderer.dispose();
-      if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
+      renderer.dispose(); if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
     };
   }, []);
 
-  // ── Derived display state ─────────────────────────────────────────────────
-  const trackerVisible = selectedL2.size > 0;
-  const legendParent   = legendKey ? PORTAL_DATA.find(p => p.id === legendKey.parentId) : null;
-  const legendL2       = legendKey && legendParent ? legendParent.children.find(c => c.id === legendKey.childId) : null;
-  const legendColor    = legendKey ? LAYER_COLORS[legendKey.parentId] : "#8A8478";
+  // Description expansion: hover overrides active; active is sticky when not hovering
+  const activeSubKey = activeL3 ? `${activeL3.parentId}/${activeL3.nodeType}` : null;
+  const expandedKey  = hoveredSub ?? activeSubKey;
 
   return (
     <div style={{ background: "#0C0C0B", width: "100vw", height: "100vh", overflow: "hidden", position: "relative" }}>
@@ -609,60 +492,98 @@ export default function HomePage() {
         )}
       </div>
 
-      {/* ── Top-left portal ─────────────────────────────────────────────────── */}
-      <div style={{ position: "absolute", left: 36, top: 64, zIndex: 20 }}>
+      {/* ── Left navigation (portal + sub-layers merged) ───────────────────────── */}
+      <div style={{ position: "absolute", left: 36, top: "50%", transform: "translateY(-50%)", zIndex: 20 }}>
         {PORTAL_DATA.map((parent) => {
-          const selL2Id   = selectedL2.get(parent.id) ?? null;
-          const selL2     = selL2Id ? parent.children.find(c => c.id === selL2Id) : null;
+          const selL2Id    = selectedL2.get(parent.id) ?? null;
+          const selL2      = selL2Id ? parent.children.find(c => c.id === selL2Id) : null;
           const isSelected = !!selL2;
-          const isOpen    = openPopover === parent.id;
-          const isHov     = hovered === `l1:${parent.id}`;
-          const lc        = LAYER_COLORS[parent.id];
+          const isOpen     = openPopover === parent.id;
+          const isHovL1    = hovered === `l1:${parent.id}`;
+          const lc         = LAYER_COLORS[parent.id];
 
           return (
-            <div key={parent.id} style={{ position: "relative" }}>
+            <div key={parent.id}>
+              {/* Parent row */}
               <div
                 onMouseEnter={() => { openFor(parent.id); setHovered(`l1:${parent.id}`); }}
                 onMouseLeave={() => { scheduleClose(); setHovered(null); }}
-                style={{ display: "flex", alignItems: "center", gap: 8, padding: "5px 0", cursor: "pointer" }}
+                style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 0", cursor: "pointer", position: "relative" }}
               >
                 <div style={{ width: 12, height: 0.5, background: isSelected ? lc : "rgba(255,255,255,0.08)", flexShrink: 0, transition: "background 0.25s ease" }} />
-                <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11.5, fontWeight: isSelected ? 500 : 400, color: isSelected ? lc : isHov ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.35)", transition: "color 0.2s ease", whiteSpace: "nowrap" }}>
+                <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 12, fontWeight: isSelected ? 500 : 400, color: isSelected ? lc : isHovL1 ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.35)", transition: "color 0.2s ease", whiteSpace: "nowrap" }}>
                   {isSelected ? selL2!.label : parent.label}
                 </span>
+
+                {/* Hover popover */}
+                {isOpen && (
+                  <div
+                    onMouseEnter={() => openFor(parent.id)}
+                    onMouseLeave={scheduleClose}
+                    style={{ position: "absolute", left: "calc(100% + 20px)", top: "50%", transform: "translateY(-50%)", background: "rgba(20,20,18,0.92)", border: "0.5px solid rgba(255,255,255,0.06)", padding: "8px 12px", zIndex: 30, minWidth: 165 }}
+                  >
+                    {parent.children.map((child) => {
+                      const isUnavail = !child.status;
+                      const isSel     = selL2Id === child.id;
+                      const ck        = `pop:${parent.id}/${child.id}`;
+                      const isHovCh   = hovered === ck && !isUnavail;
+                      return (
+                        <div key={child.id}
+                          onClick={() => handleSelectL2(parent.id, child.id, child.status)}
+                          onMouseEnter={() => !isUnavail && setHovered(ck)}
+                          onMouseLeave={() => setHovered(null)}
+                          style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 0", cursor: isUnavail ? "default" : "pointer" }}
+                        >
+                          <div style={{ width: isSel ? 5 : 4, height: isSel ? 5 : 4, borderRadius: "50%", background: child.dot ?? "rgba(255,255,255,0.15)", opacity: isUnavail ? 0.3 : 1, flexShrink: 0, boxShadow: isSel && child.dot ? `0 0 6px ${child.dot}` : "none", transition: "all 0.15s ease" }} />
+                          <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 10.5, fontWeight: isSel ? 500 : 400, color: isSel ? "rgba(255,255,255,0.85)" : isHovCh ? "rgba(255,255,255,0.6)" : isUnavail ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.35)", transition: "color 0.12s ease", whiteSpace: "nowrap" }}>
+                            {child.label}
+                          </span>
+                          {child.status && (
+                            <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 5.5, textTransform: "uppercase" as const, letterSpacing: "0.05em", padding: "1px 4px", color: child.status === "Live" ? "#7DA06A" : "rgba(255,255,255,0.12)", background: child.status === "Live" ? "rgba(125,160,106,0.1)" : "rgba(255,255,255,0.03)" }}>
+                              {child.status}
+                            </span>
+                          )}
+                          {child.count !== null && (
+                            <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 6.5, color: "rgba(255,255,255,0.08)" }}>{child.count}</span>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
-              {/* Popover */}
-              {isOpen && (
-                <div
-                  onMouseEnter={() => openFor(parent.id)}
-                  onMouseLeave={scheduleClose}
-                  style={{ position: "absolute", left: "calc(100% + 20px)", top: "50%", transform: "translateY(-50%)", background: "rgba(20,20,18,0.92)", border: "0.5px solid rgba(255,255,255,0.06)", padding: "8px 12px", zIndex: 30, minWidth: 160 }}
-                >
-                  {parent.children.map((child) => {
-                    const isUnavail = !child.status;
-                    const isSel     = selL2Id === child.id;
-                    const ck        = `pop:${parent.id}/${child.id}`;
-                    const isHovCh   = hovered === ck && !isUnavail;
+              {/* Sub-layers — appear inline when material is selected */}
+              {isSelected && selL2!.sublayers && (
+                <div style={{ padding: "4px 0 4px 22px", borderLeft: "0.5px solid rgba(255,255,255,0.04)", marginLeft: 7, animation: "fadeInDown 0.3s ease" }}>
+                  {selL2!.sublayers.map((sub) => {
+                    const subKey    = `${parent.id}/${sub.id}`;
+                    const isActive  = activeL3?.parentId === parent.id && activeL3?.nodeType === sub.id;
+                    const isHovSub  = hoveredSub === subKey;
+                    const isExpanded= expandedKey === subKey;
+
                     return (
-                      <div key={child.id}
-                        onClick={() => handleSelectL2(parent.id, child.id, child.status)}
-                        onMouseEnter={() => !isUnavail && setHovered(ck)}
-                        onMouseLeave={() => setHovered(null)}
-                        style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 0", cursor: isUnavail ? "default" : "pointer" }}
+                      <div
+                        key={sub.id}
+                        onClick={() => handleSelectL3(parent.id, sub.id)}
+                        onMouseEnter={() => setHoveredSub(subKey)}
+                        onMouseLeave={() => setHoveredSub(null)}
+                        style={{ padding: "4px 0 4px 8px", cursor: "pointer", borderLeft: isActive ? `2px solid ${lc}` : "2px solid transparent", transition: "border-left-color 0.2s ease" }}
                       >
-                        <div style={{ width: isSel ? 5 : 4, height: isSel ? 5 : 4, borderRadius: "50%", background: child.dot ?? "rgba(255,255,255,0.15)", opacity: isUnavail ? 0.3 : 1, flexShrink: 0, boxShadow: isSel && child.dot ? `0 0 6px ${child.dot}` : "none", transition: "all 0.15s ease" }} />
-                        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 10.5, fontWeight: isSel ? 500 : 400, color: isSel ? "rgba(255,255,255,0.85)" : isHovCh ? "rgba(255,255,255,0.6)" : isUnavail ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.35)", transition: "color 0.12s ease", whiteSpace: "nowrap" }}>
-                          {child.label}
-                        </span>
-                        {child.status && (
-                          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 5.5, textTransform: "uppercase" as const, letterSpacing: "0.05em", padding: "1px 4px", color: child.status === "Live" ? "#7DA06A" : "rgba(255,255,255,0.12)", background: child.status === "Live" ? "rgba(125,160,106,0.1)" : "rgba(255,255,255,0.03)" }}>
-                            {child.status}
+                        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 9, fontWeight: isActive ? 500 : 400, color: isActive ? "rgba(255,255,255,0.6)" : isHovSub ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.25)", transition: "color 0.12s ease", whiteSpace: "nowrap" }}>
+                            {sub.label}
                           </span>
-                        )}
-                        {child.count !== null && (
-                          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 6.5, color: "rgba(255,255,255,0.08)" }}>{child.count}</span>
-                        )}
+                          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7, color: "rgba(255,255,255,0.1)" }}>{sub.count}</span>
+                        </div>
+                        {/* Description — expands on hover or active */}
+                        <div style={{ display: "grid", gridTemplateRows: isExpanded ? "1fr" : "0fr", opacity: isExpanded ? 1 : 0, transition: "grid-template-rows 0.2s ease, opacity 0.2s ease", maxWidth: 280 }}>
+                          <div style={{ overflow: "hidden" }}>
+                            <p style={{ margin: "4px 0 2px 0", fontFamily: "Inter, -apple-system, sans-serif", fontSize: 9, color: "rgba(255,255,255,0.2)", lineHeight: 1.5 }}>
+                              {sub.desc}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     );
                   })}
@@ -673,76 +594,14 @@ export default function HomePage() {
         })}
       </div>
 
-      {/* ── Bottom-left context legend ───────────────────────────────────────── */}
-      {legendL2 && (
-        <div style={{ position: "absolute", left: 36, bottom: 44, zIndex: 20, maxWidth: 340, opacity: legendOpacity, transform: legendOpacity > 0 ? "translateY(0)" : "translateY(4px)", transition: "opacity 0.4s ease, transform 0.4s ease", pointerEvents: legendOpacity > 0.5 ? "auto" : "none" }}>
-          {/* Header */}
-          <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 14 }}>
-            <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 13, fontWeight: 500, color: legendColor }}>{legendL2.label}</span>
-            <div style={{ width: 5, height: 5, borderRadius: "50%", background: legendColor, flexShrink: 0 }} />
-            <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7, textTransform: "uppercase" as const, letterSpacing: "0.04em", color: "rgba(255,255,255,0.12)" }}>{legendParent?.label}</span>
-          </div>
-
-          {/* Sub-layer rows */}
-          {legendL2.sublayers?.map((sub) => {
-            const isActive = activeL3?.parentId === legendKey!.parentId && activeL3?.nodeType === sub.id;
-            const isHovSub = hovered === `sub:${legendKey!.parentId}/${sub.id}`;
-            return (
-              <div
-                key={sub.id}
-                onClick={() => handleSelectL3(legendKey!.parentId, sub.id)}
-                onMouseEnter={() => setHovered(`sub:${legendKey!.parentId}/${sub.id}`)}
-                onMouseLeave={() => setHovered(null)}
-                style={{ padding: "6px 0 6px 8px", borderBottom: "0.5px solid rgba(255,255,255,0.02)", cursor: "pointer", borderLeft: isActive ? `2px solid ${legendColor}` : "2px solid transparent", transition: "border-left-color 0.2s ease" }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
-                  <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 9.5, fontWeight: 500, color: isActive ? "rgba(255,255,255,0.7)" : isHovSub ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.35)", transition: "color 0.12s ease" }}>
-                    {sub.label}
-                  </span>
-                  <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7, color: "rgba(255,255,255,0.1)" }}>{sub.count}</span>
-                </div>
-                <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 9.5, color: "rgba(255,255,255,0.2)", lineHeight: 1.55 }}>
-                  {sub.desc}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* ── Bottom-right tracker ─────────────────────────────────────────────── */}
-      <div style={{ position: "absolute", bottom: 32, right: 36, zIndex: 20, opacity: trackerVisible ? 1 : 0, transform: trackerVisible ? "translateY(0)" : "translateY(4px)", transition: "opacity 0.3s ease, transform 0.3s ease", pointerEvents: trackerVisible ? "auto" : "none" }}>
-        <div style={{ background: "rgba(20,20,18,0.88)", border: "0.5px solid rgba(255,255,255,0.08)", borderRadius: 24, padding: "6px 8px", display: "flex", alignItems: "center" }}>
-          {TRACKER_LAYERS.map((layer, idx) => {
-            const cid = selectedL2.get(layer.id);
-            const pd  = PORTAL_DATA.find(p => p.id === layer.id)!;
-            const cd  = cid ? pd.children.find(c => c.id === cid) : null;
-            return (
-              <div key={layer.id} style={{ display: "flex", alignItems: "center" }}>
-                {idx > 0 && <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.12)", padding: "0 2px" }}>→</span>}
-                <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 10px" }}>
-                  {cd ? (
-                    <><div style={{ width: 5, height: 5, borderRadius: "50%", background: cd.dot ?? "rgba(255,255,255,0.2)", flexShrink: 0 }} />
-                    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                      <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 9, fontWeight: 500, color: "rgba(255,255,255,0.55)", whiteSpace: "nowrap" }}>{cd.label}</span>
-                      <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 6, textTransform: "uppercase" as const, letterSpacing: "0.04em", color: "rgba(255,255,255,0.2)", whiteSpace: "nowrap" }}>{layer.label}</span>
-                    </div></>
-                  ) : (
-                    <><div style={{ width: 5, height: 5, borderRadius: "50%", border: "0.5px solid rgba(255,255,255,0.12)", flexShrink: 0 }} />
-                    <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7, color: "rgba(255,255,255,0.15)", whiteSpace: "nowrap" }}>{layer.label}</span></>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-          {hasLiveSelection && (
-            <><div style={{ width: 0.5, height: 20, background: "rgba(255,255,255,0.06)", margin: "0 2px" }} />
-            <div onClick={handleEnterChain} onMouseEnter={() => setHoverEnter(true)} onMouseLeave={() => setHoverEnter(false)}
-              style={{ padding: "6px 12px", cursor: "pointer" }}>
-              <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 9, color: hoverEnter ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.4)", transition: "color 0.15s ease", whiteSpace: "nowrap" }}>Enter chain →</span>
-            </div></>
-          )}
-        </div>
+      {/* ── Enter chain — standalone bottom-right ─────────────────────────────── */}
+      <div
+        onClick={handleEnterChain}
+        onMouseEnter={() => setHoverEnter(true)}
+        onMouseLeave={() => setHoverEnter(false)}
+        style={{ position: "absolute", bottom: 32, right: 36, zIndex: 20, display: "flex", alignItems: "center", gap: 8, padding: "10px 18px", background: hoverEnter ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.06)", border: hoverEnter ? "0.5px solid rgba(255,255,255,0.25)" : "0.5px solid rgba(255,255,255,0.12)", borderRadius: 20, cursor: hasLiveSelection ? "pointer" : "default", opacity: hasLiveSelection ? 1 : 0, transform: hasLiveSelection ? "translateY(0)" : "translateY(4px)", transition: "opacity 0.3s ease, transform 0.3s ease, background 0.15s ease, border-color 0.15s ease", pointerEvents: hasLiveSelection ? "auto" : "none" }}
+      >
+        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 10, color: hoverEnter ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.45)", transition: "color 0.15s ease", whiteSpace: "nowrap" }}>Enter chain →</span>
       </div>
 
     </div>
