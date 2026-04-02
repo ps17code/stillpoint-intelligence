@@ -359,6 +359,7 @@ export default function HomePage() {
     // Initial rotation: center on North America (~lon -95, central US)
     // By default, lon=-90 faces the camera; shift slightly westward
     globeGroup.rotation.y = 0.09;
+    globeGroup.rotation.x = -0.22;
     scene.add(globeGroup);
 
     const sphereMat = new THREE.MeshPhongMaterial({ color: new THREE.Color("#B0A490"), specular: new THREE.Color("#111111"), shininess: 5 });
