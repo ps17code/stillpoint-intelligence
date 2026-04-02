@@ -438,48 +438,25 @@ export default function Home() {
                       </>
                     ) : currentThesis}
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                    <button
-                      onClick={() => setBriefOpen(true)}
-                      style={{
-                        fontFamily: "'Geist Mono', 'Courier New', monospace",
-                        fontSize: 8,
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                        color: "#C4836A",
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        padding: 0,
-                        transition: "opacity 0.15s",
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
-                      onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                    >
-                      Read about each layer →
-                    </button>
-                    {appState === 1 && (
-                      <button
-                        onClick={() => { window.location.href = "/germanium/report"; }}
-                        style={{
-                          fontFamily: "'Geist Mono', 'Courier New', monospace",
-                          fontSize: 8,
-                          letterSpacing: "0.1em",
-                          textTransform: "uppercase",
-                          color: "rgba(200,180,140,0.5)",
-                          background: "none",
-                          border: "none",
-                          cursor: "pointer",
-                          padding: 0,
-                          transition: "opacity 0.15s",
-                        }}
-                        onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
-                        onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                      >
-                        Read Full Analysis →
-                      </button>
-                    )}
-                  </div>
+                  <button
+                    onClick={() => { window.location.href = "/germanium/report"; }}
+                    style={{
+                      fontFamily: "'Geist Mono', 'Courier New', monospace",
+                      fontSize: 8,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: "#C4836A",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: 0,
+                      transition: "opacity 0.15s",
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                  >
+                    Read Full Analysis →
+                  </button>
                 </div>
               )}
 
@@ -575,18 +552,25 @@ export default function Home() {
                 }}>
                   {supplyMapLabel}
                 </div>
-                <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-                  {([
-                    appState === 1 ? "~220 t/yr" : appState === 2 ? "~88 t Ge to fiber" : appState === 3 ? "~3–4M route-km/yr" : "~130–140 hyperscale DCs/yr",
-                    appState === 1 ? "$320M market" : appState === 2 ? "~500M fiber-km/yr" : appState === 3 ? ">30M cable-km/yr" : "~230M fiber-km/yr",
-                    appState === 1 ? "83% China primary" : appState === 2 ? "36× AI fiber demand" : appState === 3 ? "71% hyperscaler owned" : "~115t Ge/yr",
-                  ] as string[]).map((stat, i, arr) => (
-                    <React.Fragment key={i}>
-                      <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.45)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{stat}</span>
-                      {i < arr.length - 1 && <div style={{ width: 1, height: 8, background: "rgba(255,255,255,0.1)" }} />}
-                    </React.Fragment>
-                  ))}
-                </div>
+                <button
+                  onClick={() => setBriefOpen(true)}
+                  style={{
+                    fontFamily: "'Geist Mono', 'Courier New', monospace",
+                    fontSize: 8,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "#C4836A",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                    transition: "opacity 0.15s",
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                >
+                  Read about each layer →
+                </button>
               </div>
               <TreeMap
                 geometry={geometry}
