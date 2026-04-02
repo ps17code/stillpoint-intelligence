@@ -438,25 +438,48 @@ export default function Home() {
                       </>
                     ) : currentThesis}
                   </div>
-                  <button
-                    onClick={() => setBriefOpen(true)}
-                    style={{
-                      fontFamily: "'Geist Mono', 'Courier New', monospace",
-                      fontSize: 8,
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase",
-                      color: "#C4836A",
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
-                      padding: 0,
-                      transition: "opacity 0.15s",
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
-                    onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                  >
-                    Read about each layer →
-                  </button>
+                  <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+                    <button
+                      onClick={() => setBriefOpen(true)}
+                      style={{
+                        fontFamily: "'Geist Mono', 'Courier New', monospace",
+                        fontSize: 8,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "#C4836A",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: 0,
+                        transition: "opacity 0.15s",
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
+                      onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                    >
+                      Read about each layer →
+                    </button>
+                    {appState === 1 && (
+                      <button
+                        onClick={() => { window.location.href = "/germanium/report"; }}
+                        style={{
+                          fontFamily: "'Geist Mono', 'Courier New', monospace",
+                          fontSize: 8,
+                          letterSpacing: "0.1em",
+                          textTransform: "uppercase",
+                          color: "rgba(200,180,140,0.5)",
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          padding: 0,
+                          transition: "opacity 0.15s",
+                        }}
+                        onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
+                        onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                      >
+                        Read Full Analysis →
+                      </button>
+                    )}
+                  </div>
                 </div>
               )}
 
