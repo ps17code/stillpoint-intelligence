@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as topojson from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
 
@@ -250,7 +251,6 @@ export default function HomePage() {
   const mountRef      = useRef<HTMLDivElement>(null);
   const tooltipRef    = useRef<HTMLDivElement>(null);
   const filterRef     = useRef<{ selectedLayers: Set<string>; activeSubType: string | null; activeSubParent: string | null }>({ selectedLayers: new Set(), activeSubType: null, activeSubParent: null });
-  const isPausedRef   = useRef(false);
   const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [selectedL2,    setSelectedL2]    = useState<Map<string, string>>(new Map());
@@ -443,42 +443,60 @@ export default function HomePage() {
       arcObjs.push({ lineMat, nA: pA.clone().normalize(), nB: pB.clone().normalize(), curve, traveler, travelerMat, speed: 0.08 + (idx % 5) * 0.012, tOffset: (idx * 0.37) % 1, layerA: layerFromType(a.type), typeA: a.type, layerB: layerFromType(b.type), typeB: b.type, currentMult: 1 });
     });
 
-    const resumeRotation = () => { isPausedRef.current = false; if (pauseTimerRef.current) { clearTimeout(pauseTimerRef.current); pauseTimerRef.current = null; } };
-
-    const AUTO_SPEED  = (2 * Math.PI) / 90;
     const mouseScreen = { x: -999, y: -999 };
     let currentHoveredIdx = -1, currentHoveredName: string | null = null;
     const tooltipPos = new THREE.Vector3(), tooltipProj = new THREE.Vector3();
-    let isPointerDown = false, didDrag = false, pointerDownX = 0, pointerDownY = 0, prevX = 0, prevY = 0;
 
-    const onDown = (e: PointerEvent) => { isPointerDown = true; didDrag = false; pointerDownX = e.clientX; pointerDownY = e.clientY; prevX = e.clientX; prevY = e.clientY; mount.setPointerCapture(e.pointerId); };
-    const onMove = (e: PointerEvent) => {
-      mouseScreen.x = e.clientX; mouseScreen.y = e.clientY;
-      if (!isPointerDown) return;
-      const dx = e.clientX - pointerDownX, dy = e.clientY - pointerDownY;
-      if (Math.sqrt(dx * dx + dy * dy) > 4) didDrag = true;
-      if (!didDrag) return;
-      globeGroup.rotation.y += (e.clientX - prevX) * 0.005; globeGroup.rotation.x += (e.clientY - prevY) * 0.005;
-      prevX = e.clientX; prevY = e.clientY;
+    // OrbitControls
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableZoom    = true;
+    controls.enableRotate  = true;
+    controls.enablePan     = false;
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.rotateSpeed   = 0.4;
+    controls.zoomSpeed     = 0.5;
+    controls.minDistance   = R * 1.3;
+    controls.maxDistance   = R * 3.0;
+    controls.autoRotate    = true;
+    controls.autoRotateSpeed = 0.4;
+
+    // Tooltip mouse tracking (separate listener, doesn't interfere with OrbitControls)
+    const onMouseMove  = (e: MouseEvent) => { mouseScreen.x = e.clientX; mouseScreen.y = e.clientY; };
+    const onMouseLeave = () => { mouseScreen.x = -999; mouseScreen.y = -999; if (currentHoveredName !== null) { currentHoveredName = null; currentHoveredIdx = -1; setHoveredNode(null); } };
+    mount.addEventListener("mousemove",  onMouseMove);
+    mount.addEventListener("mouseleave", onMouseLeave);
+
+    // Click-to-pause autoRotate
+    let clickDownPos = { x: 0, y: 0 };
+    const onPointerDown = (e: PointerEvent) => { clickDownPos = { x: e.clientX, y: e.clientY }; };
+    const onClick = (e: MouseEvent) => {
+      const dx = e.clientX - clickDownPos.x, dy = e.clientY - clickDownPos.y;
+      if (Math.sqrt(dx * dx + dy * dy) < 5) {
+        if (controls.autoRotate) {
+          controls.autoRotate = false;
+          if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+          pauseTimerRef.current = setTimeout(() => { controls.autoRotate = true; pauseTimerRef.current = null; }, 15000);
+        } else {
+          controls.autoRotate = true;
+          if (pauseTimerRef.current) { clearTimeout(pauseTimerRef.current); pauseTimerRef.current = null; }
+        }
+      }
     };
-    const onUp    = () => { isPointerDown = false; if (!didDrag) { if (isPausedRef.current) resumeRotation(); else { isPausedRef.current = true; if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current); pauseTimerRef.current = null; } } didDrag = false; };
-    const onLeave = () => { isPointerDown = false; didDrag = false; mouseScreen.x = -999; mouseScreen.y = -999; if (currentHoveredName !== null) { currentHoveredName = null; currentHoveredIdx = -1; setHoveredNode(null); } };
-
-    mount.addEventListener("pointerdown",  onDown);
-    mount.addEventListener("pointermove",  onMove);
-    mount.addEventListener("pointerup",    onUp);
-    mount.addEventListener("pointerleave", onLeave);
+    mount.addEventListener("pointerdown", onPointerDown);
+    mount.addEventListener("click",       onClick);
     const onResize = () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); };
     window.addEventListener("resize", onResize);
 
     let animId: number;
-    const clock = new THREE.Clock(), camDir = new THREE.Vector3(0, 0, 1), worldNormal = new THREE.Vector3();
+    const clock = new THREE.Clock(), camDir = new THREE.Vector3(), worldNormal = new THREE.Vector3();
     const tmpColor = new THREE.Color();
 
     const tick = () => {
       animId = requestAnimationFrame(tick);
       const delta = clock.getDelta();
-      if (!isPausedRef.current && !isPointerDown) globeGroup.rotation.y += AUTO_SPEED * delta;
+      controls.update();
+      camDir.copy(camera.position).normalize();
       const t = clock.elapsedTime;
       const lerpK = Math.min(1, delta * 4.5);
       const { selectedLayers, activeSubType, activeSubParent } = filterRef.current;
@@ -563,8 +581,11 @@ export default function HomePage() {
 
     return () => {
       cancelAnimationFrame(animId); window.removeEventListener("resize", onResize);
-      mount.removeEventListener("pointerdown", onDown); mount.removeEventListener("pointermove", onMove);
-      mount.removeEventListener("pointerup", onUp);     mount.removeEventListener("pointerleave", onLeave);
+      controls.dispose();
+      mount.removeEventListener("mousemove",   onMouseMove);
+      mount.removeEventListener("mouseleave",  onMouseLeave);
+      mount.removeEventListener("pointerdown", onPointerDown);
+      mount.removeEventListener("click",       onClick);
       if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
       Object.values(SHAPE_GEOS).forEach(g => g.dispose());
       renderer.dispose(); if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
