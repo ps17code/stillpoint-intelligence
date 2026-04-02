@@ -68,6 +68,13 @@ const NODE_COLOR_HEX: Record<string, number> = {
   datacenter: 0xD4CCBA, telecom: 0xD4CCBA,
 };
 
+const TRACKER_LAYERS = [
+  { id: "raw-material", label: "Raw material" },
+  { id: "component",    label: "Component" },
+  { id: "subsystem",    label: "Subsystem" },
+  { id: "end-use",      label: "End use" },
+];
+
 // ── Data ──────────────────────────────────────────────────────────────────────
 type SubItem = { id: string; label: string; count: number; desc: string };
 type L2Item  = { id: string; label: string; dot: string | null; count: number | null; status: "Live" | "Soon" | null; href?: string; sublayers?: SubItem[] };
@@ -643,14 +650,51 @@ export default function HomePage() {
         })}
       </div>
 
-      {/* ── Enter chain — standalone bottom-right ─────────────────────────────── */}
-      <div
-        onClick={handleEnterChain}
-        onMouseEnter={() => setHoverEnter(true)}
-        onMouseLeave={() => setHoverEnter(false)}
-        style={{ position: "absolute", bottom: 32, right: 36, zIndex: 20, display: "flex", alignItems: "center", padding: "10px 18px", background: hoverEnter ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.06)", border: hoverEnter ? "0.5px solid rgba(255,255,255,0.25)" : "0.5px solid rgba(255,255,255,0.12)", borderRadius: 20, cursor: hasLiveSelection ? "pointer" : "default", opacity: hasLiveSelection ? 1 : 0, transform: hasLiveSelection ? "translateY(0)" : "translateY(4px)", transition: "opacity 0.3s ease, transform 0.3s ease, background 0.15s ease, border-color 0.15s ease", pointerEvents: hasLiveSelection ? "auto" : "none" }}
-      >
-        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 10, color: hoverEnter ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.45)", transition: "color 0.15s ease", whiteSpace: "nowrap" }}>Enter chain →</span>
+      {/* ── Bottom-right chain tracker (pill) ────────────────────────────────── */}
+      <div style={{ position: "absolute", bottom: 32, right: 36, zIndex: 20, opacity: selectedL2.size > 0 ? 1 : 0, transform: selectedL2.size > 0 ? "translateY(0)" : "translateY(4px)", transition: "opacity 0.3s ease, transform 0.3s ease", pointerEvents: selectedL2.size > 0 ? "auto" : "none" }}>
+        <div style={{ background: "rgba(20,20,18,0.88)", border: "0.5px solid rgba(255,255,255,0.08)", borderRadius: 24, padding: "6px 8px", display: "flex", alignItems: "center" }}>
+          {TRACKER_LAYERS.map((layer, idx) => {
+            const selChildId = selectedL2.get(layer.id) ?? null;
+            const parentData = PORTAL_DATA.find(p => p.id === layer.id)!;
+            const childData  = selChildId ? parentData.children.find(c => c.id === selChildId) ?? null : null;
+            return (
+              <div key={layer.id} style={{ display: "flex", alignItems: "center" }}>
+                {idx > 0 && (
+                  <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.12)", padding: "0 2px" }}>→</span>
+                )}
+                <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 10px" }}>
+                  {childData ? (
+                    <>
+                      <div style={{ width: 5, height: 5, borderRadius: "50%", background: LAYER_COLORS[layer.id], flexShrink: 0 }} />
+                      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 9, fontWeight: 500, color: "rgba(255,255,255,0.55)", whiteSpace: "nowrap" }}>{childData.label}</span>
+                        <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 6, textTransform: "uppercase" as const, letterSpacing: "0.04em", color: "rgba(255,255,255,0.25)", whiteSpace: "nowrap" }}>{layer.label}</span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div style={{ width: 5, height: 5, borderRadius: "50%", border: "0.5px solid rgba(255,255,255,0.12)", flexShrink: 0 }} />
+                      <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7, color: "rgba(255,255,255,0.15)", whiteSpace: "nowrap" }}>{layer.label}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+          {hasLiveSelection && (
+            <>
+              <div style={{ width: 0.5, height: 20, background: "rgba(255,255,255,0.06)", margin: "0 2px" }} />
+              <div
+                onClick={handleEnterChain}
+                onMouseEnter={() => setHoverEnter(true)}
+                onMouseLeave={() => setHoverEnter(false)}
+                style={{ padding: "6px 12px", cursor: "pointer" }}
+              >
+                <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 9, color: hoverEnter ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.4)", transition: "color 0.15s ease", whiteSpace: "nowrap" }}>Enter chain →</span>
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
     </div>
