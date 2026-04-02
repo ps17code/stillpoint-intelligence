@@ -72,29 +72,31 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
           <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#7DA06A", animation: "sp-blink 2s ease-in-out infinite", flexShrink: 0 }} />
         </div>
 
-        {/* GeO₂ price card */}
+        {/* Ge metal price card */}
         <div style={{ marginBottom: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
+          <div style={{ display: "flex", alignItems: "stretch", gap: 0 }}>
             {/* Left: data */}
-            <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 6, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#9CA3AF", marginBottom: 3 }}>GeO₂ spot price</div>
+            <div style={{ flexShrink: 0 }}>
+              <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 6, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#9CA3AF", marginBottom: 3 }}>Ge Metal Spot Price</div>
               <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 2 }}>
-                <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 17, fontWeight: 600, color: "#1C1E21", letterSpacing: "-0.4px", lineHeight: 1 }}>$2,840</span>
+                <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 17, fontWeight: 600, color: "#1C1E21", letterSpacing: "-0.4px", lineHeight: 1 }}>$8,597</span>
                 <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 8, fontWeight: 600, color: "#3B6D11" }}>+202%</span>
               </div>
               <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 5, color: "#B0ADA6", letterSpacing: "0.05em" }}>per kg · Fastmarkets Mar 2026</div>
             </div>
-            {/* Right: sparkline */}
-            <svg width="72" height="32" viewBox="0 0 72 32" style={{ flexShrink: 0, marginTop: 2 }}>
-              <defs>
-                <linearGradient id="spk-fill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#3B6D11" stopOpacity="0.18" />
-                  <stop offset="100%" stopColor="#3B6D11" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path d="M0,29 L5,28 L10,27 L15,27 L20,28 L25,27 L30,26 L35,23 L40,19 L45,14 L50,10 L55,6 L60,3 L65,2 L72,1" fill="none" stroke="#3B6D11" strokeWidth="0.8" />
-              <path d="M0,29 L5,28 L10,27 L15,27 L20,28 L25,27 L30,26 L35,23 L40,19 L45,14 L50,10 L55,6 L60,3 L65,2 L72,1 L72,32 L0,32 Z" fill="url(#spk-fill)" />
-            </svg>
+            {/* Right: sparkline fills remaining width */}
+            <div style={{ flex: 1, minWidth: 0, marginLeft: 8 }}>
+              <svg width="100%" height="100%" viewBox="0 0 72 40" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="spk-fill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#3B6D11" stopOpacity="0.18" />
+                    <stop offset="100%" stopColor="#3B6D11" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <path d="M0,37 L5,36 L10,35 L15,35 L20,36 L25,35 L30,34 L35,31 L40,27 L45,22 L50,18 L55,14 L60,11 L65,10 L72,9" fill="none" stroke="#3B6D11" strokeWidth="0.8" />
+                <path d="M0,37 L5,36 L10,35 L15,35 L20,36 L25,35 L30,34 L35,31 L40,27 L45,22 L50,18 L55,14 L60,11 L65,10 L72,9 L72,40 L0,40 Z" fill="url(#spk-fill)" />
+              </svg>
+            </div>
           </div>
         </div>
 
