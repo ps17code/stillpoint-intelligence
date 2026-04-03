@@ -832,19 +832,70 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
                         </div>
                       ))}
                     </div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginTop: '10px' }}>GeO₂ and GeCl₄ are classified under separate HS codes from germanium metal. A company importing germanium metal and converting it to GeCl₄ domestically does not bypass the controls — <strong style={{ fontWeight: 600, color: '#1C1E21' }}>the finished compound is itself a controlled item requiring a separate MOFCOM license for export.</strong></p>
                   </div>
+
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Component-level impact is more severe than raw material controls</div>
+                    {([
+                      ['01 — GeCl₄ has fewer substitution pathways than germanium metal.', 'Raw germanium has multiple end uses (IR optics, solar, electronics, fiber). GeCl₄ is purpose-built for fiber preform manufacturing. Controlling GeCl₄ directly targets the fiber optic supply chain with surgical precision.'],
+                      ['02 — Licensing approval is slower for dual-use chemicals.', 'GeCl₄ is classified as a dual-use chemical compound, requiring end-user documentation and intended-use verification from MOFCOM. Each application is reviewed independently. The licensing process introduces unpredictable 4–8 week delays that prevent reliable supply planning for preform manufacturers operating on 18–24 month production horizons.'],
+                      ['03 — Third-country routing is harder for processed chemicals.', 'Chinese germanium exports to Belgium increased ~224% in 2024 relative to 2022, suggesting third-country routing of germanium metal. But GeCl₄ re-export is technically riskier: the compound carries specific chemical identification that can be traced to its origin, and the licensing system requires end-use documentation that creates paper trails.'],
+                    ] as [string, string][]).map(([title, body], i) => (
+                      <div key={i} style={{ marginBottom: '12px' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '4px' }}>{title}</div>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>China&apos;s domestic GeCl₄ producers</div>
+                    {([
+                      ['Yunnan Chihong Zinc & Germanium (600497)', 'State-owned subsidiary of Chinalco. Produced 65.9t of germanium products in 2023, operates a dedicated 30t/yr GeCl₄ production line for optical fiber applications. This single production line represents a meaningful fraction of global ultrapure GeCl₄ supply.'],
+                      ['China Germanium (Nanjing)', 'Located in Nanjing Lishui Economic Development Zone. 25t/yr germanium ingot capacity, 15t/yr GeO₂. Produces GeCl₄ for fiber optic and infrared applications. Export-dependent company now subject to mandatory MOFCOM licensing.'],
+                      ['GRINM / Vital Materials', 'State-linked germanium processor serving domestic supply chain. Capacity undisclosed.'],
+                    ] as [string, string][]).map(([name, body], i) => (
+                      <div key={i} style={{ marginBottom: '12px', padding: '8px 10px', background: '#F9FAFB', borderRadius: 3, border: '0.5px solid #F3F4F6' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', fontWeight: 600, color: '#1C1E21', marginBottom: '4px' }}>{name}</div>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#374151', lineHeight: 1.65, margin: 0 }}>{body}</p>
+                      </div>
+                    ))}
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginTop: '10px' }}>Chinese fiber manufacturers (YOFC, Hengtong, FiberHome) access GeCl₄ from these domestic producers through a parallel supply chain that is <strong style={{ fontWeight: 600, color: '#1C1E21' }}>completely insulated from export controls.</strong></p>
+                  </div>
+
                   <div style={{ marginTop: '24px' }}>
                     <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Impact on western fiber manufacturers</div>
-                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>GeCl₄ falls under dual-use chemical licensing, requiring end-user documentation and intended-use verification from MOFCOM. Each application is reviewed independently. The licensing process introduces unpredictable delays that prevent reliable supply planning — even when licenses are eventually granted.</p>
-                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>YOFC and Chinese peers source GeCl₄ from Yunnan Chihong and state chemical plants — <strong style={{ fontWeight: 600, color: '#1C1E21' }}>completely insulated from export controls that constrain Corning and Prysmian.</strong> This is not a temporary trade disruption — it is a permanent structural cost and availability advantage for Chinese fiber manufacturers.</p>
+                    {([
+                      ['Supply disruption:', 'Companies using Chinese-sourced GeCl₄ face unpredictable licensing approval timelines. MOFCOM reviews each application independently, creating planning uncertainty incompatible with the 18–24 month preform production cycles that fiber manufacturers operate on.'],
+                      ['Cost premium:', 'Secondary sourcing from Umicore (the only non-Chinese option at scale) adds 15–25% cost premiums relative to pre-control Chinese pricing. Germanium metal prices climbed 200% from January 2024 to February 2026, and GeCl₄ pricing followed.'],
+                      ['Contractual lock-in:', "Prysmian's 2025 renewal of its Umicore supply agreement signals that western manufacturers see no near-term alternative to single-source dependency. They are contractually codifying the bottleneck rather than diversifying away from it."],
+                      ["YOFC's structural advantage:", 'Chinese fiber manufacturers source GeCl₄ domestically — completely insulated from the very restrictions they impose on western competitors. This is not a temporary trade disruption — it is a permanent structural cost and availability advantage.'],
+                    ] as [string, string][]).map(([label, body], i) => (
+                      <div key={i} style={{ marginBottom: '10px' }}>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, margin: 0 }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>{label}</strong> {body}</p>
+                      </div>
+                    ))}
                   </div>
+
                   <div style={{ marginTop: '24px' }}>
                     <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>The November 2025 suspension</div>
-                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Following a Trump-Xi meeting, MOFCOM suspended the outright US export ban effective November 9, 2025. The suspension runs until <strong style={{ fontWeight: 600, color: '#1C1E21' }}>November 27, 2026</strong>. The global dual-use export licensing requirement (August 2023) remains in full force. MOFCOM retains discretion to grant or deny individual licenses. Every GeCl₄ shipment still requires approval with end-use documentation.</p>
-                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Any western company building its GeCl₄ supply strategy around resumed Chinese access is building on a foundation that disappears on November 27, 2026 — with a single announcement, no legislative process, no warning period.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Following a Trump-Xi meeting in Busan, MOFCOM suspended the full US export ban (Announcement No. 46, December 2024) effective November 9, 2025. The suspension runs until <strong style={{ fontWeight: 600, color: '#1C1E21' }}>November 27, 2026</strong>. The global dual-use export licensing requirement (August 2023) remains in full force regardless. Military end-user restrictions remain fully in effect. MOFCOM retains discretion to grant or deny individual export licenses.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The suspension provides partial relief for civilian fiber manufacturers but does not eliminate the licensing bottleneck. Every GeCl₄ shipment still requires MOFCOM approval with end-use documentation. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>The control architecture remains intact, and China retains the ability to reimpose the full ban after November 27, 2026 with a single announcement.</strong></p>
                   </div>
+
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Enforcement escalation</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>May 2025:</strong> China launched a coordinated interagency crackdown on transshipment and smuggling involving 10+ central ministries. Belgium and other conduit countries were explicitly targeted in enforcement messaging.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>Long-arm jurisdiction:</strong> The December 2024 ban invoked &quot;long-arm jurisdiction&quot; provisions — any organization globally violating the rules faces legal consequences. This is designed to prevent third-country processors from re-exporting Chinese-origin GeCl₄ to US end users.</p>
+                  </div>
+
+                  <div style={{ marginTop: '16px', padding: '12px 14px', background: 'rgba(146,64,14,0.04)', borderRadius: '4px', border: '0.5px solid rgba(146,64,14,0.15)' }}>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#92400E', lineHeight: 1.65, margin: 0 }}>China designed the controls specifically to include GeO₂ and GeCl₄ as named items, controls them under stricter dual-use chemical licensing than raw metal, and Chinese fiber manufacturers operate in a parallel supply chain immune to the restrictions they impose on western competitors. <strong style={{ fontWeight: 600 }}>The November 2025 suspension is a diplomatic gesture, not a structural resolution.</strong></p>
+                  </div>
+
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
-                    Sources: MOFCOM Regular Press Conference July 6, 2023; Stimson Center — China&apos;s Germanium and Gallium Export Restrictions (2025); CNBC — China Suspends Ban November 2025; Fastmarkets Germanium Pricing Data; Winston &amp; Strawn Global Trade Analysis.
+                    Sources: MOFCOM Regular Press Conference July 6, 2023; IEA Policy Database — China Germanium/Gallium Export Controls; USGS Mineral Commodity Summaries 2024 and 2025; Stimson Center — China&apos;s Germanium and Gallium Export Restrictions (2025); CNBC — China Suspends Ban on Exports of Gallium, Germanium, Antimony to US (November 9, 2025); Fastmarkets Germanium Pricing Data; Winston &amp; Strawn Global Trade Analysis; Light Reading — &apos;Perfect Storm&apos; in Fiber Supply (2025); Cabling Installation &amp; Maintenance — Prysmian-Umicore Partnership (2025).
                   </div>
                 </div>
               </div>
@@ -900,7 +951,28 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
                     </table>
                   </div>
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
-                    Sources: MOFCOM Export Ban Suspension November 2025; IEEE ComSoc Technology Blog — Fiber Demand 2026; NTIA BEAD Progress Dashboard; Corning News Release — Hickory Expansion; Umicore Newsroom — EU Project Selection February 2026; 5N Plus Q4 Earnings Call 2025.
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Easing catalysts</div>
+                    {([
+                      ['Umicore EU-backed capacity expansion', '2026–2028 · Incremental, not transformative', 'The European Commission selected two Umicore germanium projects in February 2026: (a) process innovation to increase germanium recovery yields, and (b) new recycling technologies for complex waste streams. EU support includes streamlined permitting and dedicated finance access. These are process improvement projects, not new greenfield capacity. Incremental yield gains of 5–15% are meaningful but do not resolve the structural supply-demand gap.'],
+                      ['5N Plus DoD-funded expansion', 'Meaningful output 2027–2029 · Up to 20t/yr at full scale', 'DoD awarded 5N Plus $18.1M in DPA Title III funds (December 2025) for St. George, Utah facility expansion. Target: up to 20 metric tonnes of high-purity germanium per year from industrial residues over 48 months. Very little revenue impact in 2026; benefits beginning in 2027 but more meaningful in 2028–2029 due to installation and ramp timelines.'],
+                      ['DRC germanium reaching conversion stage', '2025–2028 · Concentrates flowing to Umicore for refining', 'Gécamines subsidiary STL began exporting germanium concentrates from Lubumbashi in October 2024 to Umicore for processing. DRC\'s hydrometallurgical plant should enable DRC to supply up to 30% of world\'s germanium demand at full scale. But conversion to GeCl₄ happens at Umicore in Belgium — DRC adds raw feed but does not add GeCl₄ conversion capacity. The DRC story eases the germanium metal bottleneck but reinforces the Umicore component-layer bottleneck.'],
+                      ['Hollow-core fiber commercialization', 'Niche deployments 2026 · Meaningful market share 2028–2030', 'Microsoft achieved 1,280 km deployed HCF with zero field failures (0.091 dB/km loss), targeting 15,000 km by late 2026. YOFC achieved world-record 0.040 dB/km attenuation. HCF uses air rather than germanium-doped glass, eliminating germanium from the fiber layer. But near-term impact is limited — HCF deployments in 2026–2027 remain niche (~20,000 km total vs. billions km global installed base).'],
+                      ['Non-Chinese recycling and refining capacity', '2026–2027 · Combined ~55t/yr vs. 170t needed to replace China', "Germany's Stade refinery plans to restart by 2027, adding 40t/yr. Kazakhstan's Padvolar refinery targets 15t/yr from H2 2026. Combined with existing western recyclers, this adds meaningful but insufficient volume to close the supply gap."],
+                    ] as [string, string, string][]).map(([title, timeline, body], i) => (
+                      <div key={i} style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: i < 4 ? '0.5px solid #F3F4F6' : 'none' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '3px' }}>{title}</div>
+                        <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '8px', color: '#9CA3AF', marginBottom: '8px' }}>{timeline}</div>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: '16px', padding: '12px 14px', background: '#F9FAFB', borderRadius: '4px' }}>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.65, margin: 0 }}>The tightening catalysts hit in 2026. The easing catalysts arrive in 2027–2029. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>The gap between demand acceleration and supply response is 12–24 months — and it is during this window that GeCl₄ availability will determine which fiber manufacturers can produce and which cannot.</strong></p>
+                  </div>
+                  <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
+                    Sources: MOFCOM Export Ban Suspension Announcement November 2025; Fastmarkets Germanium Pricing; CNBC — China Suspends Ban (November 9, 2025); IEEE ComSoc Technology Blog — Fiber Demand 2026; MIT Technology Review — Hyperscale AI Data Centers 2026; NTIA BEAD Progress Dashboard; Corning News Release — Hickory Expansion; Umicore Newsroom — EU Project Selection February 2026; Umicore Full Year Results 2025; 5N Plus Q4 Earnings Call 2025; Semiconductor Today — 5N Plus DPA Award; Gécamines Press Release October 2024; Tom&apos;s Hardware — Microsoft HCF Deployment; Data Center Dynamics — Relativity-Prysmian Partnership.
                   </div>
                 </div>
               </div>
@@ -954,15 +1026,16 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
                     ['Prysmian', 'Borsa Italiana: PRY · €17.0B revenue (2024) · Market cap ~€31B · 30M+ km/yr', 'World\'s largest fiber cable manufacturer. Recently expanded upstream into preform manufacturing through 2024 North American capacity acquisition — all glass sourced from US origin (BABA compliant). Renewed long-term germanium supply agreement with Umicore in 2025, locking in sustainable sourcing but codifying single-supplier dependency. Invested in Relativity Networks for HCF production at Eindhoven — a strategic hedge against germanium dependency.'],
                     ['YOFC', 'HKEX: 6869 · China\'s #1 fiber producer · 3,500 t/a preform capacity', 'China\'s largest and world\'s largest fiber preform manufacturer. Produces preforms using all three major methods (PCVD, VAD, OVD) — the only company to independently develop and mass-produce via all three. Sources GeCl₄ from domestic Chinese suppliers (Yunnan Chihong, Nanjing Germanium) — completely insulated from MOFCOM export controls. Achieved world-record HCF attenuation of 0.040 dB/km. YOFC is simultaneously the largest beneficiary of the current germanium-doped fiber chain and the company most aggressively developing technology that could replace it.'],
                     ['Shin-Etsu Chemical', 'TYO: 4063 · ¥2.56T revenue (FY2025) · Market cap ~$73B', 'Manufactures optical fiber preforms across three facilities: Kashima Plant (Japan), Shin-Etsu Jiangsu (China), and Shin-Etsu YOFC Hubei (China JV). Announced ¥18B capital investment for global preform expansion. The China JV structure provides optionality that pure western manufacturers lack — Shin-Etsu can shift production between Japanese (Umicore-sourced) and Chinese (domestically-sourced) facilities depending on export control conditions.'],
+                    ['Sumitomo Electric', 'TYO: 5802 · ¥4.68T revenue (FY2024) · Record results', 'Manufactures optical fiber preforms and draws fiber across the full value chain. Particularly focused on next-generation fiber technology — developed ultra-low-loss multi-core fiber (MCF) with 0.1397 dB/km loss, the lowest attenuation ever achieved for multi-core architectures. FY2024 net sales of ¥4.68T (6% YoY, record high), with Infocommunications segment benefiting from strong datacenter demand. Innovation-focused with proprietary low-loss fiber technology commanding premium pricing — less exposed to commodity fiber capacity constraints due to specialization.'],
                   ] as [string, string, string][]).map(([name, meta, body], i) => (
-                    <div key={i} style={{ marginTop: '20px', paddingBottom: i < 4 ? '20px' : 0, borderBottom: i < 4 ? '0.5px solid #F3F4F6' : 'none' }}>
+                    <div key={i} style={{ marginTop: '20px', paddingBottom: i < 5 ? '20px' : 0, borderBottom: i < 5 ? '0.5px solid #F3F4F6' : 'none' }}>
                       <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>{name}</div>
                       <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '10px' }}>{meta}</div>
                       <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
                     </div>
                   ))}
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
-                    Sources: Umicore Full Year Results 2024 and 2025; Corning Q3 2025 Earnings Release; Corning–Meta $6B Agreement January 2026; Prysmian FY2024 Results; YOFC 2024 ESG Report; Shin-Etsu Annual Report 2024; Shin-Etsu Preform Capacity Expansion Announcement.
+                    Sources: Umicore Germanium Solutions Product Documentation; Umicore Full Year Results 2024 and 2025; Corning Q3 2025 Earnings Release; Corning–Meta $6B Agreement January 2026; Manufacturing Dive — Corning-Meta Deal; Prysmian FY2024 Results; Prysmian–Encore Wire Acquisition Press Release; YOFC 2024 ESG Report; YOFC–China Mobile 800G HCF Press Release; Shin-Etsu Annual Report 2024; Shin-Etsu Preform Capacity Expansion Announcement; Sumitomo Electric FY2024 Financial Results; Sumitomo Electric Ultra-Low-Loss MCF Press Release March 2024.
                   </div>
                 </div>
               </div>
@@ -992,6 +1065,20 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
                     ))}
                   </div>
                   <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Germanium substitution plays</div>
+                    <div style={{ marginBottom: '8px' }}>
+                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>LightPath Technologies (NASDAQ: LPTH)</div>
+                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '8px' }}>Small-cap · Germanium replacement in IR optics · DoD Phase 2 funded</div>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: '8px' }}><strong style={{ fontWeight: 600, color: '#065F46' }}>Thesis:</strong> LightPath has developed BlackDiamond glass — a proprietary alternative to germanium for military thermal imaging and IR applications, exclusively licensed by the US DoD. Every pound of germanium LightPath displaces from IR optics is a pound available for GeCl₄ conversion. Successfully transitioned key defense customers from germanium to BlackDiamond optics, with sustained delivery to European defense customers underway (2025).</p>
+                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, marginBottom: 0 }}><strong style={{ fontWeight: 600, color: '#991B1B' }}>Risks:</strong> Small-cap, early-stage commercialization. IR optics is a much smaller market than fiber optics. Revenue contribution from germanium substitution is modest relative to total germanium demand.</p>
+                    </div>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Equipment and infrastructure plays</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>Rosendahl Nextrom (Austria, private, KNILL Gruppe):</strong> The dominant supplier of MCVD, PCVD, OVD, and VAD preform equipment — &quot;the most widely used MCVD system in the industry, with hundreds of units delivered since 1990.&quot; Projects in 73+ countries. Heraeus Covantics (private) supplies fused silica substrate tubes essential for all CVD processes.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#6B7280', lineHeight: 1.7, marginBottom: 0 }}>No publicly traded pure-play fiber preform equipment manufacturers exist. The equipment bottleneck is real — expansion orders from Corning, Prysmian, and YOFC create delivery backlogs at these private companies — but there is no public market vehicle to capture it directly. Equipment procurement signals from fiber manufacturers (capex guidance, facility announcements) serve as indirect indicators.</p>
+                  </div>
+                  <div style={{ marginTop: '24px' }}>
                     <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>The binary event: November 27, 2026</div>
                     <div style={{ display: 'flex', gap: '8px', margin: '12px 0' }}>
                       {([['Nov 27, 2026', 'China ban suspension expires', '#991B1B', '#FEF2F2']] as [string, string, string, string][]).map(([date, label, color, bg], i) => (
@@ -1013,7 +1100,7 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
                     This analysis identifies companies positioned to benefit from structural supply chain dynamics. It does not constitute investment advice. All positions should be evaluated against individual risk tolerance and investment horizons.
                   </div>
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
-                    Sources: Umicore Full Year Results 2025; Corning Q3 2025 Earnings; Corning–Meta $6B Agreement; Prysmian FY2024 Results; Prysmian–Umicore Supply Agreement 2025; Data Center Dynamics — Relativity-Prysmian Partnership; Fastmarkets Germanium Pricing Data March 2026.
+                    Sources: Umicore Germanium Solutions; Umicore Full Year Results 2025; Corning Q3 2025 Earnings; Corning–Meta $6B Agreement; Prysmian FY2024 Results; Prysmian–Umicore Supply Agreement 2025; LightPath Technologies Press Releases 2025 (BlackDiamond Glass, DoD Phase 2 Funding); Rosendahl Nextrom Product Documentation; Data Center Dynamics — Relativity-Prysmian Partnership; Fastmarkets Germanium Pricing Data March 2026.
                   </div>
                 </div>
               </div>
