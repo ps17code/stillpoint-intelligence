@@ -670,48 +670,109 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
                   <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
                 </div>
                 <div style={{ padding: '0 28px 32px' }}>
+
+                  {/* What GeCl₄ is and why it matters */}
                   <div style={{ marginTop: '24px' }}>
-                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>The compound</div>
-                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Germanium tetrachloride (GeCl₄) is the critical precursor chemical used to dope silica glass with germanium dioxide (GeO₂) during fiber preform manufacturing. When GeCl₄ vapor is oxidized at 2,000–2,100°C inside a rotating silica tube, it converts to GeO₂ nanoparticles that are deposited layer by layer into the preform core, raising the refractive index by ~0.35% to create the waveguide effect that allows light to propagate through the fiber.</p>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>What GeCl₄ is and why it matters</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Germanium tetrachloride (GeCl₄) is the critical precursor chemical used to dope silica glass with germanium dioxide (GeO₂) during fiber preform manufacturing. When GeCl₄ vapor is oxidized at 2,000–2,100°C inside a rotating silica tube or on a rotating mandrel, it converts to GeO₂ nanoparticles that are deposited layer by layer into the preform core. This GeO₂ doping raises the refractive index of the fiber core by approximately 0.35%, creating the waveguide effect that allows light to propagate through the fiber.</p>
                     <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>There is no alternative dopant for standard single-mode telecommunications fiber.</strong> Fluorine doping lowers refractive index (useful only for cladding), phosphorus serves niche Raman applications, and hollow-core fiber eliminates the need for doping entirely — but none can substitute for germanium in the G.652.D fiber that carries 99%+ of the world&apos;s data today.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The GeCl₄ market for optical fiber applications was valued at approximately $92 million in 2025 and is projected to reach $104 million by 2033 (CAGR 6.3%). This modest dollar figure belies its strategic importance: $92 million of GeCl₄ enables a fiber optic market worth tens of billions. Total global germanium production is approximately 220 tonnes per year. Of this, fiber optics consumes roughly 35–44% (77–97 tonnes equivalent) — the single largest end use. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>If deployment doubles by 2030 as projected for AI infrastructure, approximately 180 tonnes per year would be needed for fiber alone — representing 74–75% of current total global production dedicated to a single application.</strong></p>
                   </div>
+
+                  {/* Layer 1 — GeCl₄ suppliers */}
                   <div style={{ marginTop: '24px' }}>
-                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Global producers</div>
-                    <table style={{ width: '100%', borderCollapse: 'collapse' as const, margin: '12px 0', fontSize: '11px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Layer 1 — GeCl₄ suppliers</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '12px' }}>Fewer than six major facilities globally produce optical-grade (6N+) GeCl₄. Of these, only Umicore serves western fiber manufacturers at meaningful volume. The rest are Chinese, Russian (sanctioned), or still ramping.</p>
+                    <table style={{ width: '100%', borderCollapse: 'collapse' as const, margin: '0 0 10px', fontSize: '11px' }}>
                       <thead>
                         <tr>
-                          {['Producer', 'Country', 'Capacity', 'Role'].map(h => (
-                            <th key={h} style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, color: '#9CA3AF', textAlign: 'left' as const, padding: '6px 8px', borderBottom: '0.5px solid #E5E7EB', fontFamily: "'Geist Mono', monospace" }}>{h}</th>
+                          {['Producer', 'Country', 'Ge / GeCl₄ capacity', 'Role'].map(h => (
+                            <th key={h} style={{ fontSize: '7.5px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase' as const, color: '#9CA3AF', textAlign: 'left' as const, padding: '6px 8px', background: '#F9FAFB', borderBottom: '0.5px solid #E5E7EB', fontFamily: "'Geist Mono', monospace" }}>{h}</th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
                         {([
-                          ['Umicore', 'Belgium', '~40–50t Ge/yr', 'Sole western supplier at scale', 'green'],
-                          ['Yunnan Chihong', 'China', '60t Ge + 30t GeCl₄', 'Largest Chinese producer', 'red'],
-                          ['Nanjing Germanium', 'China', '~15t GeO₂/yr', 'Domestic fiber market', 'red'],
-                          ['JSC Germanium', 'Russia', '~15–20t/yr', 'Sanctioned; full-cycle', 'amber'],
-                          ['5N Plus', 'Canada', 'Expanding to 20t/yr', 'DoD funded, ramp 2027–29', 'amber'],
-                        ] as [string, string, string, string, string][]).map(([name, country, cap, role, tag], i) => (
-                          <tr key={i}>
-                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "Inter, sans-serif", color: '#374151', fontSize: '11px' }}>{name}</td>
+                          ['Umicore',           'Belgium', '~40–50t Ge/yr (>50% recycled)',      'Sole western GeCl₄ supplier at scale', 'green'],
+                          ['Yunnan Chihong',    'China',   '60t Ge/yr + 30t GeCl₄ line',         'Largest single Chinese producer',       'red'],
+                          ['Nanjing Germanium', 'China',   '~15t GeO₂/yr, GeCl₄ undisclosed',    'Serves domestic fiber market',          'red'],
+                          ['GRINM / Vital Mtls','China',   'Undisclosed',                         'State-linked processor',                'red'],
+                          ['JSC Germanium',     'Russia',  '~15–20t/yr',                          'Sanctioned; full-cycle processor',      'amber'],
+                          ['5N Plus',           'Canada',  'Expanding to 20t/yr (DPA III funded)','US defense-focused, ramping 2027–2029', 'amber'],
+                        ] as [string,string,string,string,string][]).map(([name, country, cap, role, tag], i) => (
+                          <tr key={i} style={{ background: i % 2 === 1 ? '#FAFAF8' : 'white' }}>
+                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "Inter, sans-serif", color: '#1C1E21', fontSize: '11px', fontWeight: 500 }}>{name}</td>
                             <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "Inter, sans-serif", color: '#374151', fontSize: '11px' }}>{country}</td>
                             <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace", color: '#374151', fontSize: '10px' }}>{cap}</td>
                             <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6' }}>
-                              <span style={{ fontSize: '8px', padding: '2px 6px', borderRadius: '2px', fontWeight: 600, letterSpacing: '0.03em', display: 'inline-block', fontFamily: "'Geist Mono', monospace", background: tag === 'red' ? '#FEF2F2' : tag === 'amber' ? '#FEF3C7' : '#ECFDF5', color: tag === 'red' ? '#991B1B' : tag === 'amber' ? '#92400E' : '#065F46' }}>{role}</span>
+                              <span style={{ fontSize: '7.5px', padding: '2px 6px', borderRadius: '2px', fontWeight: 600, display: 'inline-block', fontFamily: "'Geist Mono', monospace", background: tag === 'red' ? '#FEF2F2' : tag === 'amber' ? '#FEF3C7' : '#ECFDF5', color: tag === 'red' ? '#991B1B' : tag === 'amber' ? '#92400E' : '#065F46' }}>{role}</span>
                             </td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                   </div>
+
+                  {/* Layer 2 — Fiber preform manufacturers */}
                   <div style={{ marginTop: '24px' }}>
-                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Purity and conversion yields</div>
-                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>Fiber optics requires 6N+ purity (99.9999%) GeCl₄ — fewer than 1 part per million of metallic impurities. Arsenic contamination is the hardest to eliminate, as AsCl₃ co-distills with GeCl₄ and must be removed through multi-stage fractional distillation in quartz towers. A single part-per-billion of arsenic can degrade fiber attenuation to commercially unacceptable levels.</p>
-                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The conversion path from raw germanium to deployed fiber involves cascading yield losses: ~10% recovery from ore → ≤70% chlorination yield → 40–60% MCVD deposition efficiency. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>Cumulative yield from ore to deployed fiber is estimated at 2–5%.</strong> This extraordinary inefficiency means expanding fiber output requires vastly more raw germanium than deployed fiber-kilometers would suggest.</p>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Layer 2 — Fiber preform manufacturers</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The purity demands for GeCl₄ vary dramatically by end use, and fiber optics requires the most extreme specification: <strong style={{ fontWeight: 600, color: '#1C1E21' }}>6N+ (99.9999%) — fewer than 1 part per million of metallic impurities.</strong> Arsenic contamination is historically the most difficult impurity to eliminate, as AsCl₃ co-distills with GeCl₄ and must be removed through multi-stage fractional distillation in quartz rectifying towers operating at 75–95°C with 4:1 to 14:1 reflux ratios. A single part-per-billion of arsenic can degrade fiber attenuation from the target of &lt;0.18 dB/km at 1550 nm to commercially unacceptable levels.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>IR optics (4N–5N) serve military thermal imaging and FLIR applications. Solar cells and catalysts operate at 3N–4N. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>The purity gradient creates a pricing pyramid</strong>: 6N+ GeCl₄ commands multiples of the price of lower-grade material, and the number of facilities capable of producing it narrows dramatically at each purity tier.</p>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>GeO₂ prices rose from €940/kg in January 2024 to €2,125/kg by September 2024. Germanium metal climbed from €1,550/kg to €2,950/kg in the same period, and continued to <strong style={{ fontWeight: 600, color: '#1C1E21' }}>$8,597/kg by February 2026.</strong> G.657A1 fiber prices spiked to $22/km and G.657A2 to $35/km in 2025–2026, reflecting preform scarcity propagating downstream.</p>
                   </div>
+
+                  {/* Germanium-to-fiber conversion model */}
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Germanium-to-fiber conversion model</div>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '12px' }}>The conversion path from raw germanium to deployed fiber involves multiple yield-loss steps. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>Cumulative yield from ore to deployed fiber is estimated at 2–5%.</strong> This extraordinary inefficiency means that expanding fiber output requires vastly more raw germanium than the fiber-kilometers deployed would suggest.</p>
+                    <table style={{ width: '100%', borderCollapse: 'collapse' as const, margin: '0 0 10px', fontSize: '11px' }}>
+                      <thead>
+                        <tr>
+                          {['Step', 'Process', 'Yield / efficiency', 'Notes'].map(h => (
+                            <th key={h} style={{ fontSize: '7.5px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase' as const, color: '#9CA3AF', textAlign: 'left' as const, padding: '6px 8px', background: '#F9FAFB', borderBottom: '0.5px solid #E5E7EB', fontFamily: "'Geist Mono', monospace" }}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {([
+                          ['1', 'Germanium extraction from zinc ore / fly ash', '~10%', 'Only ~3% of Ge in global ores is recovered; Wulantuga recovers 20–35t from ~137t passing through'],
+                          ['2', 'Chlorination (GeO₂ → GeCl₄)', '≤70%', 'GeO₂ + 4HCl → GeCl₄ + 2H₂O; losses in chloride sewage and hydrolysis stages'],
+                          ['3', 'Purification to 6N+', '~90–95%', 'Multi-stage fractional distillation; arsenic removal step alone reduces yield by 5–10%'],
+                          ['4', 'Deposition in preform (MCVD / OVD / VAD)', '40–60%', 'PCVD approaches 100%; standard MCVD deposits 40–60%; remainder captured from exhaust and recycled'],
+                          ['5', 'Scrap recovery from preform manufacturing', '>95% captured', '~20% of Ge dopant at advanced facilities sourced from reclaimed preform scrap'],
+                        ] as [string,string,string,string][]).map(([step, process, yield_, notes], i) => (
+                          <tr key={i} style={{ background: i % 2 === 1 ? '#FAFAF8' : 'white' }}>
+                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace", color: '#9CA3AF', fontSize: '10px' }}>{step}</td>
+                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "Inter, sans-serif", color: '#374151', fontSize: '11px' }}>{process}</td>
+                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace", color: '#1C1E21', fontSize: '10px', fontWeight: 600, whiteSpace: 'nowrap' as const }}>{yield_}</td>
+                            <td style={{ padding: '7px 8px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "Inter, sans-serif", color: '#6B7280', fontSize: '10.5px', lineHeight: 1.5 }}>{notes}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Core constraints */}
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Core constraints</div>
+                    {([
+                      ['01 — Byproduct dependency propagates through the component layer', 'GeCl₄ production begins with germanium metal, which begins with zinc smelting. No amount of GeCl₄ demand can increase germanium extraction if zinc production is flat or declining.'],
+                      ['02 — Purification infrastructure is scarce and capital-intensive', 'Building a new 6N+ GeCl₄ distillation facility requires specialized quartz equipment, cleanroom environments, and process know-how accumulated over decades. Lead time from investment decision to first commercial output is 3–5 years minimum.'],
+                      ['03 — The preform bottleneck amplifies the GeCl₄ constraint', 'All preform lines globally are running at 95–100% utilization with an 18–24 month expansion cycle. New preform lines require more GeCl₄, creating a demand pull that tightens the very supply they depend on.'],
+                      ['04 — Price escalation reflects structural scarcity', 'These are not cyclical price swings — they reflect a market where supply cannot respond to demand signals. GeO₂ prices more than doubled in eight months; germanium metal has risen 5× since early 2024.'],
+                      ['05 — Recycling has limits at the component layer', 'Umicore recycles fiber manufacturing scrap back into GeCl₄, but germanium doped into deployed cable is non-recoverable. The recycling loop only captures manufacturing waste, not the product itself.'],
+                      ['06 — Military demand is absorbing high-purity supply', 'Fiber-guided munitions and IR optics have been given priority access to highest-purity preforms, creating shortages for commercial cable manufacturers. Defense procurement is not price-sensitive and operates outside commercial supply-demand equilibrium.'],
+                    ] as [string, string][]).map(([title, body], i) => (
+                      <div key={i} style={{ marginBottom: '14px' }}>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '4px' }}>{title}</div>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                      </div>
+                    ))}
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginTop: '12px', marginBottom: 0 }}>Western fiber manufacturers are dependent on a single supplier (Umicore) for a single chemical compound (6N+ GeCl₄) that no other western facility produces at scale. <strong style={{ fontWeight: 600, color: '#1C1E21' }}>If germanium is the strategic material, GeCl₄ is the strategic chokepoint.</strong></p>
+                  </div>
+
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
-                    Sources: USGS Mineral Commodity Summaries 2025, Grand View Research Germanium Market Report 2025, Global Growth Insights GeCl₄ Market Report 2025, Umicore Germanium Solutions Documentation, Fastmarkets Germanium Pricing March 2026.
+                    Sources: USGS Mineral Commodity Summaries 2025, Grand View Research Germanium Market Report 2025, Global Growth Insights GeCl₄ Market Report 2025, Umicore Germanium Solutions Product Documentation, Nature Scientific Reports (Low-loss GeO₂ Fiber Studies), ResearchGate MCVD Reaction Studies, Wiseguy Reports High Purity GeCl₄ Market 2025, Fastmarkets Germanium Pricing Data March 2026, AmeriCOM Germanium Supply Chain Analysis May 2025, Light Reading Fiber Supply Analysis 2025.
                   </div>
                 </div>
               </div>
