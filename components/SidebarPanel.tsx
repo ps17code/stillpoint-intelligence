@@ -671,6 +671,11 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
                 </div>
                 <div style={{ padding: '0 28px 32px' }}>
 
+                  {/* Takeaway */}
+                  <div style={{ marginTop: '20px', padding: '14px 14px', background: 'rgba(30,64,175,0.03)', borderLeft: '2px solid #1E40AF', borderRadius: '0 3px 3px 0' }}>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#1e3a5f', lineHeight: 1.7, margin: 0 }}>87 tonnes of germanium enters this layer annually. After conversion losses, purification losses, and deposition losses, roughly 23–34 tonnes ends up embedded in fiber — the rest is captured and recycled through a single company. The entire western supply of the chemical that enables fiber optics flows through one facility in Belgium, fewer than 20 companies can turn it into preforms, and every one of them is running at full capacity. This layer doesn&apos;t just transmit the germanium shortage downstream — it amplifies it.</p>
+                  </div>
+
                   {/* What GeCl₄ is and why it matters */}
                   <div style={{ marginTop: '24px' }}>
                     <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>What GeCl₄ is and why it matters</div>
@@ -682,7 +687,50 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
 
                   {/* Layer 1 — GeCl₄ suppliers */}
                   <div style={{ marginTop: '24px' }}>
-                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Layer 1 — GeCl₄ suppliers</div>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '12px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Layer 1 — GeCl₄ suppliers</div>
+
+                    {/* SVG: Layer 1 process flow */}
+                    <svg viewBox="0 0 460 150" style={{ width: '100%', display: 'block', marginBottom: '14px' }}>
+                      <defs>
+                        <marker id="arrCSL1" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+                          <path d="M0,0 L0,5 L5,2.5 z" fill="#9CA3AF"/>
+                        </marker>
+                      </defs>
+                      {/* Box 1: GeO₂ powder */}
+                      <rect x="0" y="12" width="88" height="44" rx="3" fill="#FFFBEB" stroke="#D97706" strokeWidth="0.75"/>
+                      <text x="44" y="29" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7.5" fontWeight="600" fill="#92400E">GeO₂ powder</text>
+                      <text x="44" y="44" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7" fill="#92400E">87 tonnes/yr</text>
+                      {/* Arrow 1 + HCl */}
+                      <line x1="89" y1="34" x2="118" y2="34" stroke="#9CA3AF" strokeWidth="1" markerEnd="url(#arrCSL1)"/>
+                      <text x="103" y="30" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="6.5" fill="#9CA3AF">+ HCl</text>
+                      {/* Box 2: Chlorination */}
+                      <rect x="122" y="12" width="88" height="44" rx="3" fill="#F9FAFB" stroke="#D1D5DB" strokeWidth="0.75"/>
+                      <text x="166" y="29" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7.5" fontWeight="600" fill="#374151">Chlorination</text>
+                      <text x="166" y="44" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7" fill="#6B7280">Acid dissolution</text>
+                      {/* Arrow 2 */}
+                      <line x1="211" y1="34" x2="240" y2="34" stroke="#9CA3AF" strokeWidth="1" markerEnd="url(#arrCSL1)"/>
+                      {/* Box 3: Distillation */}
+                      <rect x="244" y="12" width="88" height="44" rx="3" fill="#F9FAFB" stroke="#D1D5DB" strokeWidth="0.75"/>
+                      <text x="288" y="29" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7.5" fontWeight="600" fill="#374151">Distillation</text>
+                      <text x="288" y="44" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7" fill="#6B7280">Quartz towers, 6N+</text>
+                      {/* Arrow 3 */}
+                      <line x1="333" y1="34" x2="362" y2="34" stroke="#9CA3AF" strokeWidth="1" markerEnd="url(#arrCSL1)"/>
+                      {/* Box 4: 6N+ GeCl₄ */}
+                      <rect x="366" y="12" width="92" height="44" rx="3" fill="#ECFDF5" stroke="#059669" strokeWidth="0.75"/>
+                      <text x="412" y="29" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7.5" fontWeight="600" fill="#065F46">6N+ GeCl₄</text>
+                      <text x="412" y="44" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7" fill="#065F46">~57t Ge equiv.</text>
+                      {/* Dashed loss lines */}
+                      <line x1="166" y1="57" x2="224" y2="76" stroke="#DC2626" strokeWidth="0.75" strokeDasharray="3,2"/>
+                      <line x1="288" y1="57" x2="234" y2="76" stroke="#DC2626" strokeWidth="0.75" strokeDasharray="3,2"/>
+                      {/* Loss box */}
+                      <rect x="162" y="76" width="136" height="22" rx="3" fill="#FEF2F2" stroke="#FCA5A5" strokeWidth="0.75"/>
+                      <text x="230" y="91" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7.5" fontWeight="600" fill="#991B1B">~35% lost in purification</text>
+                      {/* Footer note */}
+                      <rect x="0" y="108" width="458" height="36" rx="3" fill="#F9FAFB" stroke="#E5E7EB" strokeWidth="0.5"/>
+                      <text x="8" y="122" fontFamily="Inter,sans-serif" fontSize="7" fill="#6B7280">Lost in byproducts, waste fractions, arsenic removal. Much recoverable — recycled back to Umicore.</text>
+                      <text x="8" y="136" fontFamily="Inter,sans-serif" fontSize="7" fill="#6B7280">Fewer than 6 facilities globally. Only Umicore serves the west at scale. Arsenic removal is the binding technical challenge.</text>
+                    </svg>
+
                     {([
                       ['What they do:', 'These facilities take refined GeO₂ powder, dissolve it in acid to produce crude GeCl₄ liquid, then distill it repeatedly in quartz towers until it reaches 99.9999% purity (6N+). This extreme purity is non-negotiable — a single part-per-billion of the wrong impurity can ruin fiber performance.'],
                       ['Why so few can do it:', "The purification process requires specialized quartz distillation towers, proprietary temperature control techniques, and decades of accumulated process knowledge. The hardest technical challenge is removing arsenic, which behaves chemically similar to germanium and doesn't separate easily during distillation. There's no way to buy this capability off the shelf — new entrants need years of process development even after building the physical plant."],
@@ -696,7 +744,87 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
 
                   {/* Layer 2 — Fiber preform manufacturers */}
                   <div style={{ marginTop: '24px' }}>
-                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Layer 2 — Fiber preform manufacturers</div>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '12px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Layer 2 — Fiber preform manufacturers</div>
+
+                    {/* SVG: Layer 2 process flow */}
+                    <svg viewBox="0 0 460 196" style={{ width: '100%', display: 'block', marginBottom: '14px' }}>
+                      <defs>
+                        <marker id="arrCSL2" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+                          <path d="M0,0 L0,5 L5,2.5 z" fill="#9CA3AF"/>
+                        </marker>
+                      </defs>
+
+                      {/* Sub-process A label */}
+                      <text x="0" y="9" fontFamily="Geist Mono,monospace" fontSize="6.5" fontWeight="600" fill="#9CA3AF" letterSpacing="1">PREFORM DEPOSITION</text>
+
+                      {/* Box 1: GeCl₄ liq */}
+                      <rect x="0" y="14" width="76" height="40" rx="3" fill="#ECFDF5" stroke="#059669" strokeWidth="0.75"/>
+                      <text x="38" y="30" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7" fontWeight="600" fill="#065F46">GeCl₄ liq.</text>
+                      <text x="38" y="44" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="6.5" fill="#065F46">Ultra-pure 6N+</text>
+                      <line x1="77" y1="34" x2="100" y2="34" stroke="#9CA3AF" strokeWidth="1" markerEnd="url(#arrCSL2)"/>
+
+                      {/* Box 2: Vaporize */}
+                      <rect x="104" y="14" width="68" height="40" rx="3" fill="#F9FAFB" stroke="#D1D5DB" strokeWidth="0.75"/>
+                      <text x="138" y="30" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7" fontWeight="600" fill="#374151">Vaporize</text>
+                      <text x="138" y="44" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="6.5" fill="#6B7280">Liquid → gas</text>
+                      <line x1="173" y1="34" x2="196" y2="34" stroke="#9CA3AF" strokeWidth="1" markerEnd="url(#arrCSL2)"/>
+
+                      {/* Box 3: Deposit */}
+                      <rect x="200" y="14" width="76" height="40" rx="3" fill="#FFFBEB" stroke="#D97706" strokeWidth="0.75"/>
+                      <text x="238" y="30" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7" fontWeight="600" fill="#92400E">Deposit</text>
+                      <text x="238" y="44" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="6.5" fill="#92400E">~2,000°C layers</text>
+                      <line x1="277" y1="34" x2="300" y2="34" stroke="#9CA3AF" strokeWidth="1" markerEnd="url(#arrCSL2)"/>
+
+                      {/* Box 4: Collapse */}
+                      <rect x="304" y="14" width="68" height="40" rx="3" fill="#EDE9FE" stroke="#7C3AED" strokeWidth="0.75"/>
+                      <text x="338" y="30" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7" fontWeight="600" fill="#5B21B6">Collapse</text>
+                      <text x="338" y="44" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="6.5" fill="#5B21B6">Solid glass rod</text>
+                      <line x1="373" y1="34" x2="396" y2="34" stroke="#9CA3AF" strokeWidth="1" markerEnd="url(#arrCSL2)"/>
+
+                      {/* Box 5: Preform */}
+                      <rect x="400" y="14" width="58" height="40" rx="3" fill="#EDE9FE" stroke="#7C3AED" strokeWidth="0.75"/>
+                      <text x="429" y="30" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7" fontWeight="600" fill="#5B21B6">Preform</text>
+                      <text x="429" y="44" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="6.5" fill="#5B21B6">~1m glass rod</text>
+
+                      {/* Dashed loss from Deposit */}
+                      <line x1="238" y1="55" x2="238" y2="70" stroke="#DC2626" strokeWidth="0.75" strokeDasharray="3,2"/>
+                      <rect x="183" y="70" width="110" height="20" rx="3" fill="#FEF2F2" stroke="#FCA5A5" strokeWidth="0.75"/>
+                      <text x="238" y="83" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="7" fontWeight="600" fill="#991B1B">40–60% lost (MCVD)</text>
+
+                      {/* Recycle note */}
+                      <text x="0" y="103" fontFamily="Inter,sans-serif" fontSize="7" fill="#6B7280">Undeposited GeCl₄ captured from exhaust (&gt;95%) → recycled back upstream to Umicore</text>
+
+                      {/* Sub-process B container */}
+                      <rect x="0" y="112" width="458" height="78" rx="4" fill="#F9FAFB" stroke="#E5E7EB" strokeWidth="0.5"/>
+                      <text x="8" y="124" fontFamily="Geist Mono,monospace" fontSize="6.5" fontWeight="600" fill="#9CA3AF" letterSpacing="1">FIBER DRAWING</text>
+
+                      {/* Preform box */}
+                      <rect x="8" y="130" width="60" height="26" rx="2" fill="#EDE9FE" stroke="#7C3AED" strokeWidth="0.75"/>
+                      <text x="38" y="147" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="6.5" fontWeight="600" fill="#5B21B6">Preform</text>
+                      <line x1="69" y1="143" x2="93" y2="143" stroke="#9CA3AF" strokeWidth="1" markerEnd="url(#arrCSL2)"/>
+                      <text x="81" y="139" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="6" fill="#9CA3AF">~2000°C</text>
+
+                      {/* Draw tower box */}
+                      <rect x="97" y="130" width="80" height="26" rx="2" fill="#F3F4F6" stroke="#D1D5DB" strokeWidth="0.75"/>
+                      <text x="137" y="143" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="6.5" fontWeight="600" fill="#374151">Draw tower</text>
+                      <text x="137" y="152" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="5.5" fill="#6B7280">10–20 m/s</text>
+                      <line x1="178" y1="143" x2="200" y2="143" stroke="#9CA3AF" strokeWidth="1" markerEnd="url(#arrCSL2)"/>
+
+                      {/* 125μm fiber box */}
+                      <rect x="204" y="130" width="88" height="26" rx="2" fill="#ECFDF5" stroke="#059669" strokeWidth="0.75"/>
+                      <text x="248" y="143" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="6.5" fontWeight="600" fill="#065F46">125μm fiber</text>
+                      <text x="248" y="152" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="5.5" fill="#065F46">thinner than hair</text>
+                      <line x1="293" y1="143" x2="315" y2="143" stroke="#9CA3AF" strokeWidth="1" markerEnd="url(#arrCSL2)"/>
+
+                      {/* Spool box */}
+                      <rect x="319" y="130" width="72" height="26" rx="2" fill="#ECFDF5" stroke="#059669" strokeWidth="0.75"/>
+                      <text x="355" y="143" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="6.5" fontWeight="600" fill="#065F46">Spool</text>
+                      <text x="355" y="152" textAnchor="middle" fontFamily="Geist Mono,monospace" fontSize="5.5" fill="#065F46">250+ km/preform</text>
+
+                      {/* Cross-section note */}
+                      <text x="8" y="178" fontFamily="Inter,sans-serif" fontSize="6.5" fill="#9CA3AF">Cross-section shrinks ~1,000× → length extends ~1,000×. All internal structure scales down perfectly.</text>
+                    </svg>
+
                     <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>What they do:</strong> These companies turn ultra-pure GeCl₄ into the glass rods (preforms) that become fiber strands. GeCl₄ arrives as a liquid. It&apos;s vaporized and fed as a gas into a hollow glass tube spinning on a lathe. A flame moves along the outside of the tube, heating it to about 2,000°C. Where the heat hits, the gas inside reacts and deposits a thin layer of germanium-doped glass on the inner wall. The flame passes back and forth dozens or hundreds of times, building up layers. Then the heat cranks up further and the hollow tube collapses into a solid glass rod — that&apos;s the preform.</p>
                     <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}>The preform then goes into the top of a tall vertical furnace called a draw tower. The bottom tip melts and a thin strand of glass drops downward — that strand is the fiber, about 125 micrometers wide (thinner than a human hair). As the strand pulls down at 10–20 meters per second, the preform slowly feeds in from the top and gets consumed. The entire preform stretches into a continuous fiber strand because the cross-section shrinks by roughly 1,000x, extending the length proportionally. All the internal structure — the germanium-doped core, the cladding around it — scales down perfectly.</p>
                     <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12.5px', color: '#374151', lineHeight: 1.7, marginBottom: '10px' }}><strong style={{ fontWeight: 600, color: '#1C1E21' }}>Why there are more players but capacity is still tight:</strong> About 20 companies globally make preforms, compared to fewer than 6 for GeCl₄. The reason is that preform manufacturing uses established equipment platforms that can be purchased. But the equipment comes from a very concentrated supplier base — <strong style={{ fontWeight: 600, color: '#1C1E21' }}>Rosendahl Nextrom</strong> in Austria dominates with hundreds of systems in 73+ countries. When every manufacturer tries to expand at once, equipment delivery backlogs stack up. A new preform line takes 18–24 months minimum from order to first production.</p>
@@ -744,7 +872,7 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
                   <div style={{ marginTop: '24px' }}>
                     <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '10px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Core constraints</div>
                     {([
-                      ['The facility constraint.', 'Fewer than six facilities on earth can produce 6N+ GeCl₄. Only one serves the west at scale. Building new capacity takes 3–5 years and requires process knowledge that can&apos;t be purchased.'],
+                      ['The facility constraint.', "Fewer than six facilities on earth can produce 6N+ GeCl₄. Only one serves the west at scale. Building new capacity takes 3–5 years and requires process knowledge that can't be purchased."],
                       ['The recycling monopoly.', 'Over 50% of germanium flowing through this layer is waste sent to Umicore for reprocessing. They are simultaneously the primary supplier and the sole recycler at scale. If their recycling capacity is constrained, the entire loop tightens. The dependency is circular with no alternative.'],
                       ['The yield cascade.', 'From germanium entering this layer to germanium embedded in fiber: roughly 25–40% survives. The loss rate is dictated by physics unchanged since 1974.'],
                       ['The input competition.', 'Only 35–44% of global germanium goes to fiber. IR optics, solar, semiconductors, and defense compete for the same 220-tonne pool.'],
@@ -757,7 +885,7 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
                   </div>
 
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
-                    Sources: USGS Mineral Commodity Summaries 2024–2025; Umicore Germanium Solutions; IEEE Xplore — Germanium Chemistry in MCVD; ResearchGate — GeCl₄ Reaction Under MCVD Conditions; Grand View Research — Fiber Optic Preform Market; Amanda Van Dyke — The Germanium Chokepoint; Rosendahl Nextrom Product Documentation.
+                    Sources: USGS Mineral Commodity Summaries 2024–2025; Umicore Germanium Solutions; IEEE Xplore — Germanium Chemistry in MCVD; Grand View Research — Fiber Optic Preform Market; Amanda Van Dyke — The Germanium Chokepoint; Rosendahl Nextrom.
                   </div>
                 </div>
               </div>
