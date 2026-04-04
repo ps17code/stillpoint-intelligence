@@ -447,7 +447,7 @@ export default function Home() {
                         {" "}And over half of its input comes from recycling the waste of the same fiber manufacturers it supplies.
                       </p>
                       {/* Stats row */}
-                      <div style={{ display: "inline-block", borderTop: "0.5px solid rgba(255,255,255,0.06)", marginTop: 20, paddingTop: 16 }}>
+                      <div style={{ display: "inline-block", borderTop: "0.5px dashed rgba(255,255,255,0.26)", marginTop: 20, paddingTop: 16 }}>
                       <div style={{ display: "flex", alignItems: "baseline", marginBottom: 20 }}>
                         {([
                           { value: "87t",   unit: "GeO₂ / yr",    label: "GERMANIUM INPUT",    padLeft: 0,  padRight: 24 },
@@ -458,10 +458,12 @@ export default function Home() {
                             {i > 0 && (
                               <div style={{ width: "0.5px", height: 40, background: "rgba(255,255,255,0.06)", flexShrink: 0, alignSelf: "center" }} />
                             )}
-                            <div style={{ paddingLeft: padLeft, paddingRight: padRight }}>
-                              <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 16, fontWeight: 500, color: "rgba(255,255,255,0.75)", lineHeight: 1.1 }}>{value}</div>
-                              <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 8, color: "rgba(255,255,255,0.18)", marginTop: 2 }}>{unit}</div>
-                              <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 6.5, color: "rgba(255,255,255,0.1)", textTransform: "uppercase" as const, letterSpacing: "0.06em", marginTop: 3 }}>{label}</div>
+                            <div style={{ paddingLeft: padLeft, paddingRight: padRight, display: "flex", alignItems: "center", gap: 8 }}>
+                              <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 16, fontWeight: 500, color: "rgba(255,255,255,0.75)" }}>{value}</div>
+                              <div style={{ display: "flex", flexDirection: "column" }}>
+                                <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 8, color: "rgba(255,255,255,0.45)", lineHeight: 1.3 }}>{unit}</span>
+                                <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 6.5, color: "rgba(255,255,255,0.45)", textTransform: "uppercase" as const, letterSpacing: "0.04em", lineHeight: 1.3 }}>{label}</span>
+                              </div>
                             </div>
                           </React.Fragment>
                         ))}
