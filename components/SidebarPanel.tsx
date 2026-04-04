@@ -13,13 +13,13 @@ const INSIGHT_BARS = [
 ];
 
 const COMPONENT_INSIGHT_BARS = [
-  { key: "comp-supply-demand", label: "SUPPLY / DEMAND", teaser: "Every kilometer of optical fiber begins as a few grams of ultrapure GeCl₄ — and fewer than six facilities on earth can produce it", color: "#1E40AF" },
-  { key: "comp-bottlenecks",   label: "BOTTLENECKS",     teaser: "Six facilities, one equipment supplier, and a 40–60% deposition yield stand between raw germanium and every fiber-km the world produces", color: "#991B1B" },
-  { key: "comp-geopolitical",  label: "GEOPOLITICAL",    teaser: "China didn't just control germanium metal — it explicitly listed GeO₂ and GeCl₄ as separate controlled items from day one", color: "#92400E" },
-  { key: "comp-catalysts",     label: "CATALYSTS",       teaser: "The China ban expiry, $600B in hyperscaler capex, and BEAD construction all hit the GeCl₄ supply chain simultaneously in 2026–2027", color: "#065F46" },
-  { key: "comp-emerging-tech", label: "EMERGING TECH",   teaser: "Hollow-core fiber eliminates germanium entirely — but it won't carry more than 10% of datacenter traffic before 2028", color: "#5B21B6" },
-  { key: "comp-major-companies", label: "COMPANIES",     teaser: "Six companies convert raw germanium into the fiber that carries the world's data — and the supply chain's fate depends on their capacity decisions", color: "#155E75" },
-  { key: "comp-investment-ideas", label: "INVESTMENT",   teaser: "The GeCl₄ bottleneck creates a 12–24 month pricing power window — and specific companies capture asymmetric value on each side", color: "#9D174D" },
+  { key: "comp-supply-demand", label: "SUPPLY / DEMAND", teaser: "A chemical compound most investors have never heard of sits between germanium and every fiber strand on earth", color: "#1E40AF" },
+  { key: "comp-bottlenecks",   label: "BOTTLENECKS",     teaser: "The component layer has five chokepoints — and three of them run through the same company", color: "#991B1B" },
+  { key: "comp-geopolitical",  label: "GEOPOLITICAL",    teaser: "The export controls were designed for the component layer — GeO₂ and GeCl₄ were named specifically, not caught incidentally", color: "#92400E" },
+  { key: "comp-catalysts",     label: "CATALYSTS",       teaser: "Five tightening forces converge on GeCl₄ supply before any easing catalyst can reach market scale", color: "#065F46" },
+  { key: "comp-emerging-tech", label: "EMERGING TECH",   teaser: "Four technology vectors could reshape the component layer, but none reaches meaningful scale before the supply crisis peaks", color: "#5B21B6" },
+  { key: "comp-major-companies", label: "COMPANIES",     teaser: "The component layer is defined by one supplier, one dominant consumer, and four manufacturers racing to expand capacity they cannot build fast enough", color: "#155E75" },
+  { key: "comp-investment-ideas", label: "INVESTMENT",   teaser: "Three public companies capture the component-layer bottleneck, one private bet hedges it, and one binary date reprices the entire chain", color: "#9D174D" },
 ];
 
 const SUBSYSTEM_INSIGHT_BARS = [
