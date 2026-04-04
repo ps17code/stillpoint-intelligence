@@ -1228,35 +1228,6 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
                       </div>
                     </div>
                   ))}
-                  <div style={{ marginTop: '28px' }}>
-                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '12px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Supply relationship map</div>
-                    <div style={{ overflowX: 'auto' as const }}>
-                      <table style={{ width: '100%', borderCollapse: 'collapse' as const, fontSize: '10.5px', fontFamily: "Inter, -apple-system, sans-serif" }}>
-                        <thead>
-                          <tr style={{ background: '#F9FAFB' }}>
-                            {(['GeCl₄ Supplier', 'Supplies to', 'Relationship'] as string[]).map((h, hi) => (
-                              <th key={hi} style={{ padding: '7px 10px', textAlign: 'left' as const, fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, color: '#6B7280', border: '0.5px solid #E5E7EB', fontFamily: "'Geist Mono', monospace" }}>{h}</th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {([
-                            ['Umicore', 'Corning, Prysmian, Fujikura, Sumitomo, Shin-Etsu', 'Long-term supply + recycling. Receives >50% of input as recycled waste FROM these manufacturers'],
-                            ['Teck Trail', 'US defense contractor, Japanese fiber firm', '5-year defense contract; JV for GeCl₄ processing'],
-                            ['Indium Corp', 'US military fiber programs', 'Small-scale military-grade only'],
-                            ['Yunnan Chihong + Chinese state plants', 'YOFC, Hengtong, FiberHome, Shin-Etsu (China JV)', 'Domestic supply at controlled pricing'],
-                            ['JSC Germanium', 'Russian military only (Rostec)', 'Defense entity — zero connection to commercial fiber'],
-                          ] as [string, string, string][]).map(([supplier, supplies, rel], ri) => (
-                            <tr key={ri} style={{ background: ri % 2 === 0 ? '#fff' : '#FAFAFA' }}>
-                              <td style={{ padding: '7px 10px', border: '0.5px solid #E5E7EB', color: '#1C1E21', fontWeight: 500, verticalAlign: 'top' as const }}>{supplier}</td>
-                              <td style={{ padding: '7px 10px', border: '0.5px solid #E5E7EB', color: '#374151', verticalAlign: 'top' as const }}>{supplies}</td>
-                              <td style={{ padding: '7px 10px', border: '0.5px solid #E5E7EB', color: '#6B7280', verticalAlign: 'top' as const }}>{rel}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
                     Sources: Umicore Full Year Results 2025; Corning-Meta $6B agreement (Jan 2026); Corning Hickory groundbreaking (Mar 2026); Prysmian-Umicore partnership (Oct 2020); Fujikura FY2025 earnings; YOFC HCF press releases; USGS Minerals Yearbook 2023; Stimson Center (2025).
                   </div>
