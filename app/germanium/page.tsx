@@ -447,7 +447,8 @@ export default function Home() {
                         {" "}And over half of its input comes from recycling the waste of the same fiber manufacturers it supplies.
                       </p>
                       {/* Stats row */}
-                      <div style={{ display: "flex", alignItems: "baseline", marginTop: 20, marginBottom: 20 }}>
+                      <div style={{ display: "inline-block", borderTop: "0.5px solid rgba(255,255,255,0.06)", marginTop: 20, paddingTop: 16 }}>
+                      <div style={{ display: "flex", alignItems: "baseline", marginBottom: 20 }}>
                         {([
                           { value: "87t",   unit: "GeO₂ / yr",    label: "GERMANIUM INPUT",    padLeft: 0,  padRight: 24 },
                           { value: "168t",  unit: "GeCl₄ / yr",   label: "CHEMICAL PRODUCED",  padLeft: 24, padRight: 24 },
@@ -464,6 +465,7 @@ export default function Home() {
                             </div>
                           </React.Fragment>
                         ))}
+                      </div>
                       </div>
                     </>
                   ) : (
