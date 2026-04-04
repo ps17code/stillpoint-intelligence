@@ -408,7 +408,7 @@ export default function Home() {
 
               {/* THESIS BLOCK */}
               {currentThesis && (
-                <div style={{ background: "#282828", padding: "32px 36px 36px" }}>
+                <div style={{ background: appState === 2 ? "#000" : "#282828", padding: "32px 36px 36px" }}>
                   <div style={{
                     fontFamily: "'Geist Mono', 'Courier New', monospace",
                     fontSize: appState === 2 ? 7 : 6,
@@ -421,7 +421,7 @@ export default function Home() {
                   </div>
                   <div style={{
                     fontFamily: "Inter, -apple-system, sans-serif",
-                    fontSize: appState === 2 ? 18 : 23,
+                    fontSize: appState === 2 ? 25 : 23,
                     fontWeight: 500,
                     color: "rgba(255,255,255,0.9)",
                     lineHeight: 1.25,
@@ -430,50 +430,42 @@ export default function Home() {
                     {chainLabel}
                   </div>
                   {appState === 2 ? (
-                    <div style={{ display: "flex", gap: 40, marginBottom: 18 }}>
-                      {/* Left: paragraph */}
-                      <div style={{ flex: 1 }}>
-                        <p style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                          fontSize: 12.5,
-                          color: "rgba(255,255,255,0.4)",
-                          lineHeight: 1.8,
-                          margin: 0,
-                        }}>
-                          Germanium doesn&apos;t go into fiber as a metal. It has to be converted into a chemical — germanium tetrachloride — at{" "}
-                          <strong style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>99.999999% purity</strong>
-                          , then vaporized and deposited layer by layer into glass preforms that are drawn into fiber strand. The process{" "}
-                          <strong style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>loses two-thirds of the germanium input</strong>
-                          . Fewer than six facilities on earth can produce the chemical.{" "}
-                          <strong style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>Only one serves the west.</strong>
-                          {" "}And over half of its input comes from recycling the waste of the same fiber manufacturers it supplies.
-                        </p>
-                      </div>
-                      {/* Right: stats column */}
-                      <div style={{
-                        width: 180,
-                        flexShrink: 0,
-                        borderLeft: "0.5px solid rgba(255,255,255,0.04)",
-                        paddingLeft: 28,
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 20,
-                        alignSelf: "flex-start",
-                        paddingTop: 3,
+                    <>
+                      <p style={{
+                        fontFamily: "Inter, -apple-system, sans-serif",
+                        fontSize: 13,
+                        color: "rgba(255,255,255,0.4)",
+                        lineHeight: 1.8,
+                        margin: 0,
                       }}>
+                        Germanium doesn&apos;t go into fiber as a metal. It has to be converted into a chemical — germanium tetrachloride — at{" "}
+                        <strong style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>99.999999% purity</strong>
+                        , then vaporized and deposited layer by layer into glass preforms that are drawn into fiber strand. The process{" "}
+                        <strong style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>loses two-thirds of the germanium input</strong>
+                        . Fewer than six facilities on earth can produce the chemical.{" "}
+                        <strong style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>Only one serves the west.</strong>
+                        {" "}And over half of its input comes from recycling the waste of the same fiber manufacturers it supplies.
+                      </p>
+                      {/* Stats row */}
+                      <div style={{ display: "flex", alignItems: "baseline", marginTop: 20, marginBottom: 20 }}>
                         {([
-                          { value: "87t",   unit: "GeO₂ / yr",      label: "GERMANIUM INPUT" },
-                          { value: "168t",  unit: "GeCl₄ / yr",     label: "CHEMICAL PRODUCED" },
-                          { value: "~500M", unit: "fiber-km / yr",   label: "STRAND OUTPUT" },
-                        ] as const).map(({ value, unit, label }) => (
-                          <div key={label}>
-                            <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 16, fontWeight: 500, color: "rgba(255,255,255,0.75)", lineHeight: 1.1 }}>{value}</div>
-                            <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 8, color: "rgba(255,255,255,0.18)", marginTop: 2 }}>{unit}</div>
-                            <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 6.5, color: "rgba(255,255,255,0.1)", textTransform: "uppercase", letterSpacing: "0.06em", marginTop: 3 }}>{label}</div>
-                          </div>
+                          { value: "87t",   unit: "GeO₂ / yr",    label: "GERMANIUM INPUT",    padLeft: 0,  padRight: 24 },
+                          { value: "168t",  unit: "GeCl₄ / yr",   label: "CHEMICAL PRODUCED",  padLeft: 24, padRight: 24 },
+                          { value: "~500M", unit: "fiber-km / yr", label: "STRAND OUTPUT",      padLeft: 24, padRight: 0  },
+                        ] as const).map(({ value, unit, label, padLeft, padRight }, i) => (
+                          <React.Fragment key={label}>
+                            {i > 0 && (
+                              <div style={{ width: "0.5px", height: 40, background: "rgba(255,255,255,0.06)", flexShrink: 0, alignSelf: "center" }} />
+                            )}
+                            <div style={{ paddingLeft: padLeft, paddingRight: padRight }}>
+                              <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 16, fontWeight: 500, color: "rgba(255,255,255,0.75)", lineHeight: 1.1 }}>{value}</div>
+                              <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 8, color: "rgba(255,255,255,0.18)", marginTop: 2 }}>{unit}</div>
+                              <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 6.5, color: "rgba(255,255,255,0.1)", textTransform: "uppercase" as const, letterSpacing: "0.06em", marginTop: 3 }}>{label}</div>
+                            </div>
+                          </React.Fragment>
                         ))}
                       </div>
-                    </div>
+                    </>
                   ) : (
                   <div style={{
                     fontFamily: "Inter, -apple-system, sans-serif",
@@ -502,7 +494,6 @@ export default function Home() {
                       border: "none",
                       cursor: "pointer",
                       padding: 0,
-                      marginTop: appState === 2 ? 14 : 0,
                       transition: "color 0.15s",
                       display: "block",
                     }}
