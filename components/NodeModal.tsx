@@ -3,20 +3,6 @@ import React, { useEffect } from "react";
 import type { NodeData } from "@/types";
 import type { LayerGeometry } from "@/lib/treeGeometry";
 
-interface FlowSource {
-  pct?: string;
-  name: string;
-  note?: string;
-  tag?: string;
-  trend?: string;
-}
-
-interface FlowSell {
-  name: string;
-  product?: string;
-  tag?: string;
-}
-
 interface NodeModalProps {
   nodeKey: string | null;
   allNodes: Record<string, NodeData>;
@@ -26,18 +12,70 @@ interface NodeModalProps {
   onNavigate: (key: string) => void;
 }
 
+function BoldText({ text }: { text: string }) {
+  const parts = text.split(/(<b>[\s\S]*?<\/b>)/g);
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.startsWith("<b>") && part.endsWith("</b>") ? (
+          <strong key={i} style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>
+            {part.slice(3, -4)}
+          </strong>
+        ) : (
+          <React.Fragment key={i}>{part}</React.Fragment>
+        )
+      )}
+    </>
+  );
+}
+
+function BodySection({ text }: { text: string }) {
+  const paragraphs = text.split("\n\n");
+  return (
+    <div>
+      {paragraphs.map((para, i) => (
+        <p
+          key={i}
+          style={{
+            fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+            fontSize: 12,
+            color: "rgba(255,255,255,0.5)",
+            lineHeight: 1.7,
+            margin: i > 0 ? "10px 0 0 0" : "0",
+          }}
+        >
+          <BoldText text={para} />
+        </p>
+      ))}
+    </div>
+  );
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div style={{
+      fontFamily: "'Courier New', monospace",
+      fontSize: 7,
+      fontWeight: 500,
+      textTransform: "uppercase" as const,
+      letterSpacing: "0.06em",
+      color: "rgba(255,255,255,0.2)",
+      paddingBottom: 6,
+      borderBottom: "0.5px solid rgba(255,255,255,0.06)",
+      marginBottom: 8,
+    }}>
+      {children}
+    </div>
+  );
+}
+
 export default function NodeModal({
-  nodeKey, allNodes, layers, chainLabel, onClose, onNavigate,
+  nodeKey, allNodes, onClose,
 }: NodeModalProps) {
-  const node = nodeKey ? (allNodes[nodeKey] as unknown as (NodeData & Record<string, unknown>)) : null;
+  const node = nodeKey
+    ? (allNodes[nodeKey] as unknown as NodeData & Record<string, unknown>)
+    : null;
 
-  const currentLayer = layers.find(l => l.nodes.some(n => n.name === nodeKey));
-  const layerNodes = currentLayer?.nodes ?? [];
-  const nodeIdx = layerNodes.findIndex(n => n.name === nodeKey);
-  const prevNode = nodeIdx > 0 ? layerNodes[nodeIdx - 1] : null;
-  const nextNode = nodeIdx < layerNodes.length - 1 ? layerNodes[nodeIdx + 1] : null;
-
-  // Keyboard close
   useEffect(() => {
     if (!nodeKey) return;
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -45,7 +83,6 @@ export default function NodeModal({
     return () => window.removeEventListener("keydown", handler);
   }, [nodeKey, onClose]);
 
-  // Scroll lock
   useEffect(() => {
     document.body.style.overflow = nodeKey ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -54,23 +91,21 @@ export default function NodeModal({
   if (!nodeKey || !node) return null;
 
   const raw = node as Record<string, unknown>;
-  const sources = raw.sources as FlowSource[] | undefined;
-  const sells   = raw.sells   as FlowSell[]   | undefined;
-  const hasFlow = (sources && sources.length > 0) || (sells && sells.length > 0);
-  const stats   = node.stats as [string, string][];
+  const stats = (node.stats ?? []) as [string, string][];
+  const displayName = raw.displayName as string | undefined;
+  const ticker = raw.ticker as string | undefined;
+  const meta = raw.meta as string | undefined;
+  const geclRelevance = raw.geclRelevance as string | undefined;
+  const isOutputNode = node.type === "Output node";
 
-  // Truncate breadcrumb parts for display
-  const layerLabel  = currentLayer?.label ?? "";
-
-  const MONO: React.CSSProperties = { fontFamily: "Courier New, monospace" };
-  const SERIF: React.CSSProperties = { fontFamily: "'EB Garamond', Georgia, serif" };
+  const MONO: React.CSSProperties = { fontFamily: "'Courier New', monospace" };
 
   return (
     <div
       onClick={onClose}
       style={{
         position: "fixed", inset: 0,
-        background: "rgba(26,26,20,0.3)",
+        background: "rgba(0,0,0,0.6)",
         zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "center",
       }}
@@ -78,289 +113,134 @@ export default function NodeModal({
       <div
         onClick={e => e.stopPropagation()}
         style={{
-          background: "#F5F3EE",
-          border: "0.5px solid #DDD9D2",
-          borderRadius: 7,
-          width: 560,
+          background: "#1C1E21",
+          borderRadius: 12,
+          width: 380,
           maxHeight: "80vh",
           overflowY: "auto",
           position: "relative",
         }}
       >
 
-        {/* ── A) HEADER ───────────────────────────────────────────────── */}
+        {/* ── HEADER ─────────────────────────────────────────────────── */}
         <div style={{
-          padding: "16px 18px 14px",
-          borderBottom: "0.5px solid #DDD9D2",
+          padding: "18px 20px 14px",
+          borderBottom: "0.5px solid rgba(255,255,255,0.06)",
         }}>
-          {/* Close */}
-          <button
-            onClick={onClose}
-            style={{
-              position: "absolute", top: 12, right: 12,
-              width: 22, height: 22,
-              border: "0.5px solid #DDD9D2",
-              borderRadius: 4, background: "none", cursor: "pointer",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              ...MONO, fontSize: 12, color: "#888880",
-            }}
-          >×</button>
-
-          {/* Breadcrumb */}
           <div style={{
-            ...MONO, fontSize: 7.5, letterSpacing: "0.12em",
-            textTransform: "uppercase", color: "#aaaaa0", marginBottom: 6,
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            gap: 8,
+            marginBottom: meta ? 4 : 0,
           }}>
-            {[chainLabel, layerLabel, node.type].filter(Boolean).join(" · ")}
+            <span style={{
+              fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+              fontSize: 17,
+              fontWeight: 500,
+              color: "rgba(255,255,255,0.92)",
+              lineHeight: 1.3,
+            }}>
+              {displayName ?? nodeKey}
+            </span>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0, marginTop: 3 }}>
+              {ticker && (
+                <span style={{
+                  ...MONO,
+                  fontSize: 9,
+                  color: "rgba(155,168,171,0.6)",
+                  border: "0.5px solid rgba(155,168,171,0.15)",
+                  padding: "3px 8px",
+                  borderRadius: 6,
+                  whiteSpace: "nowrap" as const,
+                }}>
+                  {ticker}
+                </span>
+              )}
+              <button
+                onClick={onClose}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  ...MONO,
+                  fontSize: 12,
+                  color: "rgba(255,255,255,0.15)",
+                  padding: 0,
+                  lineHeight: 1,
+                }}
+              >✕</button>
+            </div>
           </div>
-
-          {/* Name */}
-          <div style={{
-            ...SERIF, fontSize: 21, color: "#1a1a14",
-            marginBottom: 8, paddingRight: 32,
-          }}>
-            {nodeKey}
-          </div>
-
-          {/* Pills */}
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
-            {!!raw.country && String(raw.country) !== "" && (
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 5, ...MONO, fontSize: 7.5, color: "#888880" }}>
-                <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c8a85a", display: "inline-block" }} />
-                {String(raw.country)}
-                {node.loc && node.loc !== "" && (
-                  <span style={{ color: "#aaaaa0" }}> · {node.loc}</span>
-                )}
-              </span>
-            )}
-            {!!raw.outputVolume && (
-              <Pill>{String(raw.outputVolume)}</Pill>
-            )}
-            {!!(raw.ticker || raw.ownership) && !raw.outputVolume && (
-              <Pill>{String(raw.ticker || raw.ownership)}</Pill>
-            )}
-          </div>
+          {meta && (
+            <div style={{ ...MONO, fontSize: 9, color: "rgba(255,255,255,0.2)" }}>
+              {meta}
+            </div>
+          )}
         </div>
 
-        {/* ── B) FLOW SECTION ─────────────────────────────────────────── */}
-        {hasFlow && (
-          <div style={{
-            borderBottom: "0.5px solid #DDD9D2",
-            background: "#EDE9E1",
-            display: "grid",
-            gridTemplateColumns: "1fr auto 1fr",
-          }}>
-            {/* Sources from */}
-            <div style={{ padding: "12px 14px" }}>
-              <FlowLabel>Sources from</FlowLabel>
-              {sources?.map((s, i) => (
-                <div key={i} style={{ marginBottom: 7 }}>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 5, flexWrap: "wrap" }}>
-                    {s.pct && (
-                      <span style={{ ...MONO, fontSize: 8, color: "#c8a85a", minWidth: 28 }}>{s.pct}</span>
-                    )}
-                    <span style={{ ...SERIF, fontSize: 12, color: "#1a1a14" }}>{s.name}</span>
-                    {s.tag === "closed-loop" && <SlateTag>closed loop</SlateTag>}
-                  </div>
-                  {s.note && (
-                    <div style={{ ...MONO, fontSize: 7.5, color: "#aaaaa0", marginTop: 1, marginLeft: s.pct ? 33 : 0 }}>
-                      {s.note}{s.trend === "up" && <span style={{ color: "#5a8c6a", marginLeft: 4 }}>↑</span>}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Center node */}
-            <div style={{
-              padding: "12px 10px", minWidth: 110,
-              borderLeft: "0.5px solid #DDD9D2",
-              borderRight: "0.5px solid #DDD9D2",
-              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-            }}>
-              <div style={{ ...SERIF, fontSize: 12, color: "#1a1a14", textAlign: "center", marginBottom: 3 }}>{nodeKey}</div>
-              <div style={{ ...MONO, fontSize: 7, color: "#aaaaa0", textTransform: "uppercase", textAlign: "center", marginBottom: 8 }}>{node.type}</div>
-              <div style={{ fontSize: 14, color: "#888880", marginBottom: 8 }}>↓</div>
-              <div style={{ ...MONO, fontSize: 7, color: "#aaaaa0", textTransform: "uppercase", textAlign: "center" }}>{node.stat}</div>
-            </div>
-
-            {/* Sells to */}
-            <div style={{ padding: "12px 14px" }}>
-              <FlowLabel>Sells to</FlowLabel>
-              {sells?.map((s, i) => (
-                <div key={i} style={{ marginBottom: 7 }}>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 5, flexWrap: "wrap" }}>
-                    <span style={{ ...SERIF, fontSize: 12, color: "#1a1a14" }}>{s.name}</span>
-                    {s.tag === "also-sources-from" && <SlateTag>also sources from</SlateTag>}
-                  </div>
-                  {s.product && (
-                    <div style={{ ...MONO, fontSize: 7.5, color: "#aaaaa0", marginTop: 1 }}>{s.product}</div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ── C) STATS ROW ────────────────────────────────────────────── */}
+        {/* ── STATS ROW ─────────────────────────────────────────────── */}
         {stats.length > 0 && (
           <div style={{
             display: "grid",
             gridTemplateColumns: `repeat(${Math.min(stats.length, 4)}, 1fr)`,
-            borderBottom: "0.5px solid #DDD9D2",
+            gap: 1,
+            background: "rgba(255,255,255,0.04)",
+            borderBottom: "0.5px solid rgba(255,255,255,0.06)",
           }}>
-            {stats.slice(0, 4).map(([key, value], i) => {
-              const isPositive = value.includes("+") || /\bup\b/i.test(value);
-              return (
-                <div key={i} style={{
-                  padding: "10px 14px",
-                  borderRight: i < Math.min(stats.length, 4) - 1
-                    ? "0.5px solid #DDD9D2" : "none",
+            {stats.slice(0, 4).map(([label, value], i) => (
+              <div key={i} style={{ background: "#1C1E21", padding: "10px 12px" }}>
+                <div style={{
+                  ...MONO,
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: "rgba(255,255,255,0.8)",
+                  marginBottom: 3,
+                  lineHeight: 1.2,
                 }}>
-                  <div style={{ ...MONO, fontSize: 7, textTransform: "uppercase", letterSpacing: "0.1em", color: "#aaaaa0", marginBottom: 3 }}>{key}</div>
-                  <div style={{ ...SERIF, fontSize: 13, color: isPositive ? "#5a8c6a" : "#1a1a14" }}>{value}</div>
+                  {value}
                 </div>
-              );
-            })}
+                <div style={{
+                  ...MONO,
+                  fontSize: 6.5,
+                  color: "rgba(255,255,255,0.2)",
+                  textTransform: "uppercase" as const,
+                  letterSpacing: "0.04em",
+                }}>
+                  {label}
+                </div>
+              </div>
+            ))}
           </div>
         )}
 
-        {/* ── D) BODY ─────────────────────────────────────────────────── */}
-        <div style={{ padding: "14px 18px" }}>
+        {/* ── BODY ──────────────────────────────────────────────────── */}
+        <div style={{ padding: "16px 20px 20px" }}>
           {node.role && node.role !== "" && (
-            <div style={{ marginBottom: 12 }}>
-              <SectionLabel>{raw.geclRelevance ? "What the company does" : "Role in chain"}</SectionLabel>
-              <div style={{ ...SERIF, fontSize: 13, color: "#3a3a32", lineHeight: 1.7 }}>{node.role}</div>
+            <div style={{ marginBottom: 14 }}>
+              <SectionLabel>
+                {isOutputNode ? "What it is" : "What the company does"}
+              </SectionLabel>
+              <BodySection text={node.role} />
             </div>
           )}
-          {!!raw.geclRelevance && (
-            <div style={{ marginBottom: 12 }}>
-              <SectionLabel>GeCl₄ relevance</SectionLabel>
-              <div style={{ ...SERIF, fontSize: 13, color: "#3a3a32", lineHeight: 1.7 }}>{String(raw.geclRelevance)}</div>
+          {geclRelevance && geclRelevance !== "" && (
+            <div>
+              <SectionLabel>
+                {isOutputNode ? "Layer output" : "GeCl\u2084 relevance"}
+              </SectionLabel>
+              <BodySection text={geclRelevance} />
             </div>
           )}
-          {node.inv && node.inv !== "" && !raw.geclRelevance && (
-            <div style={{ marginBottom: 12 }}>
+          {!geclRelevance && node.inv && node.inv !== "" && (
+            <div>
               <SectionLabel>Investment angle</SectionLabel>
-              <div style={{ ...SERIF, fontSize: 13, color: "#3a3a32", lineHeight: 1.7 }}>{node.inv}</div>
+              <BodySection text={node.inv} />
             </div>
           )}
-          {!!raw.keyMetrics && Array.isArray(raw.keyMetrics) && (raw.keyMetrics as [string, string][]).length > 0 && (
-            <div style={{ marginBottom: 12 }}>
-              <SectionLabel>Key metrics</SectionLabel>
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: `repeat(${Math.min((raw.keyMetrics as [string, string][]).length, 5)}, 1fr)`,
-                background: "#EDE9E1",
-                borderRadius: 4,
-                border: "0.5px solid #DDD9D2",
-                overflow: "hidden",
-              }}>
-                {(raw.keyMetrics as [string, string][]).map(([k, v], i, arr) => (
-                  <div key={i} style={{ padding: "8px 10px", borderRight: i < arr.length - 1 ? "0.5px solid #DDD9D2" : "none" }}>
-                    <div style={{ ...MONO, fontSize: 6.5, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "#aaaaa0", marginBottom: 3 }}>{k}</div>
-                    <div style={{ ...MONO, fontSize: 11, color: "#1a1a14", lineHeight: 1.3 }}>{v}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          {node.risks && node.risks.length > 0 && (
-            <div style={{
-              background: "rgba(138,48,48,0.04)",
-              border: "0.5px solid rgba(138,48,48,0.1)",
-              borderRadius: 4, padding: "8px 11px",
-            }}>
-              <span style={{ ...MONO, fontSize: 9, color: "#8a3030", marginRight: 6 }}>!</span>
-              <span style={{ ...SERIF, fontSize: 12, color: "#6b3a3a", lineHeight: 1.55 }}>
-                {node.risks.join(" · ")}
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* ── E) FOOTER ───────────────────────────────────────────────── */}
-        <div style={{
-          borderTop: "0.5px solid #DDD9D2",
-          padding: "9px 18px",
-          background: "#EDE9E1",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-        }}>
-          <div style={{ ...MONO, fontSize: 7.5, color: "#aaaaa0" }}>
-            {node.type}
-            {(raw.ticker || raw.ownership) ? ` · ${String(raw.ticker || raw.ownership)}` : ""}
-          </div>
-          <div style={{ display: "flex", gap: 6 }}>
-            <NavBtn disabled={!prevNode} onClick={() => prevNode && onNavigate(prevNode.name)}>← prev</NavBtn>
-            <NavBtn disabled={!nextNode} onClick={() => nextNode && onNavigate(nextNode.name)}>next →</NavBtn>
-          </div>
         </div>
 
       </div>
     </div>
-  );
-}
-
-// ── Small reusable sub-components ─────────────────────────────────────────────
-
-function Pill({ children }: { children: React.ReactNode }) {
-  return (
-    <span style={{
-      fontFamily: "Courier New, monospace",
-      fontSize: 7.5, color: "#888880",
-      background: "rgba(80,80,70,0.05)",
-      border: "0.5px solid #DDD9D2",
-      borderRadius: 3, padding: "2px 6px",
-    }}>{children}</span>
-  );
-}
-
-function FlowLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{
-      fontFamily: "Courier New, monospace",
-      fontSize: 7, letterSpacing: "0.12em",
-      textTransform: "uppercase", color: "#aaaaa0", marginBottom: 8,
-    }}>{children}</div>
-  );
-}
-
-function SlateTag({ children }: { children: React.ReactNode }) {
-  return (
-    <span style={{
-      fontFamily: "Courier New, monospace",
-      fontSize: 6.5, color: "#5a7a9c",
-      background: "rgba(90,122,156,0.08)",
-      border: "0.5px solid rgba(90,122,156,0.2)",
-      borderRadius: 3, padding: "1px 4px",
-    }}>{children}</span>
-  );
-}
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{
-      fontFamily: "Courier New, monospace",
-      fontSize: 7, textTransform: "uppercase",
-      letterSpacing: "0.1em", color: "#aaaaa0", marginBottom: 5,
-    }}>{children}</div>
-  );
-}
-
-function NavBtn({ children, disabled, onClick }: { children: React.ReactNode; disabled: boolean; onClick: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      style={{
-        fontFamily: "Courier New, monospace",
-        fontSize: 7.5,
-        border: "0.5px solid #DDD9D2",
-        borderRadius: 3, padding: "3px 9px",
-        background: "none",
-        cursor: disabled ? "default" : "pointer",
-        color: disabled ? "#aaaaa0" : "#3a3a32",
-      }}
-    >{children}</button>
   );
 }
