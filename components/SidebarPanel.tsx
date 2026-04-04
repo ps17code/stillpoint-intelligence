@@ -1127,28 +1127,138 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
               <div style={{ padding: 0 }}>
                 <div style={{ padding: '20px 28px 16px', borderBottom: '0.5px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'sticky', top: 0, background: '#FAF9F7', zIndex: 2 }}>
                   <div>
-                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>The component layer is defined by one supplier, one dominant consumer, and four manufacturers racing to expand capacity they cannot build fast enough</div>
+                    <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '17px', fontWeight: 600, color: '#1C1E21', lineHeight: 1.35, marginBottom: '10px' }}>Six companies define the germanium-to-fiber conversion layer — and the relationships between them reveal who actually controls supply</div>
                     <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 8px', borderRadius: '3px', background: '#ECFEFF', color: '#155E75', display: 'inline-block', fontFamily: "'Geist Mono', monospace" }}>Major companies</div>
                   </div>
                   <button onClick={() => setActivePopup(null)} style={{ fontSize: '16px', color: '#9CA3AF', cursor: 'pointer', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'none', borderRadius: '4px', flexShrink: 0, marginLeft: '12px', fontFamily: "'Geist Mono', monospace" }}>✕</button>
                 </div>
                 <div style={{ padding: '0 28px 32px' }}>
+                  <div style={{ marginTop: '20px', padding: '14px 14px', background: 'rgba(30,64,175,0.03)', borderLeft: '2px solid #1E40AF', borderRadius: '0 3px 3px 0' }}>
+                    <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#1e3a5f', lineHeight: 1.7, margin: 0 }}>This layer is defined by asymmetric dependency. ~20 fiber manufacturers depend on fewer than six GeCl₄ suppliers — and in the west, that collapses to one company: Umicore. The recycling loop that returns over 50% of germanium back into the system runs through the same company. Chinese manufacturers operate on an entirely separate domestic supply chain at structurally lower cost.</p>
+                  </div>
                   {([
-                    ['Umicore', 'Euronext Brussels: UMI · €3.6B revenue (2025) · €847M adjusted EBITDA · ~€16/share', 'Sole western producer of ultrapure GeCl₄ at meaningful scale. Refines raw germanium concentrates, purifies through multi-stage fractional distillation, and produces 6N+ purity GeCl₄ at their integrated Olen facility near Antwerp. ~35% of world GeCl₄ market. >50% of germanium feed from recycled manufacturing scrap via long-term tolling agreements. EU Commission selected two Umicore germanium projects in February 2026. Every western fiber preform manufacturer — Corning, Prysmian, Sumitomo, Fujikura — depends on Umicore for GeCl₄.'],
-                    ['Corning', 'NYSE: GLW · $16.4B core revenue (2025) · Market cap ~$110B · All-time high $160 (Feb 2026)', 'World\'s largest consumer of GeCl₄ and largest fiber preform manufacturer. Converts ultrapure GeCl₄ into GeO₂-doped silica preforms using proprietary OVD process, then draws into optical fiber. Q3 2025 optical communications revenue of $1.65B (+33% YoY). Meta\'s $6B multi-year agreement (January 2026) equals Corning\'s entire 2025 optical-communications revenue from a single customer. Springboard plan upgraded to $11B through 2028.'],
-                    ['Prysmian', 'Borsa Italiana: PRY · €17.0B revenue (2024) · Market cap ~€31B · 30M+ km/yr', 'World\'s largest fiber cable manufacturer. Recently expanded upstream into preform manufacturing through 2024 North American capacity acquisition — all glass sourced from US origin (BABA compliant). Renewed long-term germanium supply agreement with Umicore in 2025, locking in sustainable sourcing but codifying single-supplier dependency. Invested in Relativity Networks for HCF production at Eindhoven — a strategic hedge against germanium dependency.'],
-                    ['YOFC', 'HKEX: 6869 · China\'s #1 fiber producer · 3,500 t/a preform capacity', 'China\'s largest and world\'s largest fiber preform manufacturer. Produces preforms using all three major methods (PCVD, VAD, OVD) — the only company to independently develop and mass-produce via all three. Sources GeCl₄ from domestic Chinese suppliers (Yunnan Chihong, Nanjing Germanium) — completely insulated from MOFCOM export controls. Achieved world-record HCF attenuation of 0.040 dB/km. YOFC is simultaneously the largest beneficiary of the current germanium-doped fiber chain and the company most aggressively developing technology that could replace it.'],
-                    ['Shin-Etsu Chemical', 'TYO: 4063 · ¥2.56T revenue (FY2025) · Market cap ~$73B', 'Manufactures optical fiber preforms across three facilities: Kashima Plant (Japan), Shin-Etsu Jiangsu (China), and Shin-Etsu YOFC Hubei (China JV). Announced ¥18B capital investment for global preform expansion. The China JV structure provides optionality that pure western manufacturers lack — Shin-Etsu can shift production between Japanese (Umicore-sourced) and Chinese (domestically-sourced) facilities depending on export control conditions.'],
-                    ['Sumitomo Electric', 'TYO: 5802 · ¥4.68T revenue (FY2024) · Record results', 'Manufactures optical fiber preforms and draws fiber across the full value chain. Particularly focused on next-generation fiber technology — developed ultra-low-loss multi-core fiber (MCF) with 0.1397 dB/km loss, the lowest attenuation ever achieved for multi-core architectures. FY2024 net sales of ¥4.68T (6% YoY, record high), with Infocommunications segment benefiting from strong datacenter demand. Innovation-focused with proprietary low-loss fiber technology commanding premium pricing — less exposed to commodity fiber capacity constraints due to specialization.'],
-                  ] as [string, string, string][]).map(([name, meta, body], i) => (
-                    <div key={i} style={{ marginTop: '20px', paddingBottom: i < 5 ? '20px' : 0, borderBottom: i < 5 ? '0.5px solid #F3F4F6' : 'none' }}>
-                      <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '13.5px', fontWeight: 600, color: '#1C1E21', marginBottom: '2px' }}>{name}</div>
-                      <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: '9px', color: '#9CA3AF', marginBottom: '10px' }}>{meta}</div>
-                      <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '12px', color: '#374151', lineHeight: 1.7, margin: 0 }}>{body}</p>
+                    {
+                      name: 'Umicore',
+                      ticker: 'XBRU: UMI',
+                      sub: 'Brussels, Belgium · Founded 1805 · ~11,000 employees · Materials technology',
+                      stats: [['€3.9B', 'Market cap'], ['€558M', 'FY25 Specialty Materials Rev'], ['€108M', 'FY25 Adj. EBITDA (SM)'], ['€16–17', 'Share price'], ['€7–22', '52-wk range']] as [string, string][],
+                      whatTheyDo: 'Umicore operates across four business groups: Catalysis (€1.67B revenue — automotive emissions control), Recycling (€947M — precious metals recovery), Specialty Materials (€558M — germanium, cobalt, metal deposition), and Battery Materials (undergoing strategic reset). CEO Bart Sap launched the "CORE" strategy in March 2025, refocusing on cash generation from foundation businesses. Group revenue (excluding metal) reached €3.6B in 2025.',
+                      geRelevance: [
+                        'Umicore is the sole western GeCl₄ supplier at commercial fiber scale — their Olen, Belgium facility produces 8N purity (99.999999%) germanium tetrachloride and supplies the majority of the world\'s non-Chinese fiber manufacturers including Corning, Prysmian, Fujikura, Sumitomo, and Shin-Etsu. Over 50% of their germanium input comes from recycled manufacturing waste sent back by these same customers via closed-loop tolling agreements. They are simultaneously supplier and sole recycler — a circular dependency with no western alternative.',
+                        'In March 2025, the EU Commission selected two Umicore germanium projects (GePETO and ReGAIN) as the only germanium-related projects under the Critical Raw Materials Act, granting streamlined permitting and access to EU funding. They also hold the exclusive offtake partnership with STL/Gécamines for DRC germanium concentrates — the only new primary western germanium source in decades.',
+                      ],
+                      whyMatters: 'Umicore occupies a position with no parallel in any other critical mineral supply chain. They are the sole western GeCl₄ supplier at scale, the sole western germanium recycler at scale, and the exclusive recipient of the only new western primary germanium source (DRC). Any disruption at Olen cascades through the majority of non-Chinese fiber production simultaneously. Chinese export controls are structurally beneficial to Umicore — they force western buyers to Olen at any price.',
+                    },
+                    {
+                      name: 'Corning',
+                      ticker: 'NYSE: GLW',
+                      sub: 'Corning, NY, USA · Founded 1851 · ~61,000 employees · Materials science',
+                      stats: [['~$36B', 'Market cap'], ['$1.65B', "Q3'25 Optical Comms Rev"], ['33%', 'Q3 YoY growth'], ['~$47', 'Share price'], ['$33–55', '52-wk range']] as [string, string][],
+                      whatTheyDo: 'Corning invented the first low-loss optical fiber in 1970 and has dominated the fiber industry ever since. They operate across five segments: Optical Communications (fiber, cable, connectivity), Display Technologies, Specialty Materials, Environmental Technologies, and Life Sciences. Optical Communications is the growth engine — Q3 2025 revenue hit $1.65B (+33% YoY) with enterprise sales surging 58% on AI network demand. Their Springboard plan targets $11B in cumulative revenue opportunities through 2028.',
+                      geRelevance: [
+                        'Corning is the single largest non-Chinese consumer of fiber-grade germanium. They source GeCl₄ from Umicore under long-term supply agreements and use the proprietary OVD (Outside Vapor Deposition) process — which they invented — to produce preforms with higher deposition efficiency than standard MCVD. They operate two fiber manufacturing plants (Wilmington, Concord NC) and five cable plants across North Carolina.',
+                        'In January 2026, Meta signed a multiyear agreement worth up to $6 billion for Corning to supply fiber, cable, and connectivity for AI data centers — equal to Corning\'s entire 2025 optical-communications revenue from a single customer. Ground was broken on the Hickory, NC cable manufacturing expansion in March 2026, with Meta as anchor customer. Corning also developed Contour — a smaller, denser cable designed specifically for AI, addressing the fact that Nvidia Blackwell 72-GPU racks require 16x more fiber than traditional cloud racks.',
+                      ],
+                      whyMatters: "Corning passes through germanium cost increases via fiber pricing and benefits from capacity-constrained pricing power — running at near-100% utilization with multi-year backlogs. The Meta $6B deal locks in demand at premium rates. But Corning's ability to fulfill orders is ultimately constrained by GeCl₄ supply from Umicore. Every new preform line Corning builds increases demand on the GeCl₄ layer above it.",
+                    },
+                    {
+                      name: 'Prysmian',
+                      ticker: 'BIT: PRY',
+                      sub: 'Milan, Italy · Founded 2005 (Pirelli Cables spinoff) · ~30,000 employees · Cable systems',
+                      stats: [['~€17B', 'Market cap'], ['€16B+', 'FY24 revenue'], ['$115M+', 'US optical capex'], ['~€65', 'Share price'], ['€48–72', '52-wk range']] as [string, string][],
+                      whatTheyDo: "Prysmian is the world's largest cable company — energy cables, telecom cables, and submarine cable systems. Their acquisition of Encore Wire expanded their North American footprint and exposure to US electrification demand. The company covers the full cable value chain from preform manufacturing through to finished cable products for telecom, energy, and submarine applications.",
+                      geRelevance: [
+                        "Prysmian's Umicore relationship is the most publicly documented GeCl₄ supply arrangement in the industry. In 2020, they formalized a long-term supply AND recycling partnership explicitly targeting '100% sustainable germanium' through closed-loop recycling. Prysmian sends manufacturing waste back to Umicore, which reprocesses it into GeCl₄ and sells it back. This is the template for how the western germanium circular economy works.",
+                        "Prysmian acquired a North American preform facility to control the critical preform-to-fiber step rather than depending on third-party suppliers. They're investing $115M+ across US facilities (including Jackson, TN) to expand optical cable capacity for BEAD broadband and AI data center demand.",
+                      ],
+                      whyMatters: "Prysmian demonstrates how the Umicore dependency works in practice — a formalized recycling loop where manufacturer waste becomes tomorrow's input. Their vertical integration from preform to cable reduces fragility vs competitors who buy preforms from third parties. But the GeCl₄ supply still flows through Umicore, and Prysmian's fiber revenue is diluted within a much larger energy and submarine cable business.",
+                    },
+                    {
+                      name: 'Fujikura',
+                      ticker: 'TYO: 5803',
+                      sub: 'Tokyo, Japan · Founded 1885 · ~55,000 employees · Electrical & optical cables',
+                      stats: [['~¥2.5T', 'Market cap'], ['¥979B', 'FY25 revenue'], ['22.5%', 'YoY growth'], ['~¥7,000', 'Share price'], ['¥2,500–8,000', '52-wk range']] as [string, string][],
+                      whatTheyDo: 'Fujikura developed the world\'s first optical fiber in 1959 and has evolved from silk and insulated wire manufacturing into a global fiber optics leader. Revenue segments include Information Technology (optical fiber, cables, telecom components), Electronics (PCBs, connectors), Automotive (wiring harnesses), and Energy (power cables). Over 50% of revenue now comes from the United States, followed by Japan (23%) and Europe (11%). Approximately 75% of optical fiber output is exported.',
+                      geRelevance: [
+                        "Fujikura sources GeCl₄ primarily from Umicore, shipping it from Belgium to Japan. Pre-2023, Japanese manufacturers also imported germanium products from China (Japan received ~8% of China's germanium exports). MOFCOM controls have made Chinese supply unreliable, increasing Fujikura's dependence on Umicore.",
+                        "Fujikura's stock surged 160% in 2025 — vastly outperforming the Nikkei 225 (+22%) — as AI data center demand accelerated. FY2025 revenue hit ¥979B (+22.5%), operating profit surged 68% in Q1 FY2026, and dividends reached a record ¥190/share. They're investing ¥45B in a new Japanese plant for optical fiber and high-tech materials capacity. 3-year net income CAGR: 32.58%.",
+                      ],
+                      whyMatters: 'Fujikura is the closest pure-play on the germanium-to-fiber thesis among major publicly traded companies. Revenue is overwhelmingly fiber/cable, customers include Google/Alphabet, and the stock price is highly correlated to AI infrastructure spending. But their GeCl₄ supply is entirely dependent on Umicore — no domestic Japanese GeCl₄ production exists. If Umicore supply tightens, Fujikura has fewer alternatives than Corning or Prysmian.',
+                    },
+                    {
+                      name: 'YOFC — Yangtze Optical Fibre and Cable',
+                      ticker: 'HKEX: 6869',
+                      sub: 'Wuhan, China · Founded 1988 · ~10,000 employees · Fiber optic manufacturer',
+                      stats: [['~HK$18B', 'Market cap'], ['3,500t/yr', 'Preform capacity'], ['~60%', 'China fiber share'], ['HK$18', 'Share price'], ['HK$10–22', '52-wk range']] as [string, string][],
+                      whatTheyDo: 'YOFC is the world\'s largest optical fiber preform manufacturer by capacity and China\'s dominant fiber and cable producer. They are vertically integrated from preform manufacturing through fiber drawing to finished cable. YOFC holds joint ventures with Shin-Etsu Chemical (Japan) for advanced preform technology and has production bases across China.',
+                      geRelevance: [
+                        'YOFC operates on an entirely separate supply chain from western manufacturers. Their GeCl₄ comes from Chinese domestic sources — Yunnan Chihong (30t/yr dedicated GeCl₄ line), Nanjing Germanium, and state chemical plants — at controlled domestic pricing completely insulated from MOFCOM export controls and global germanium price surges. This creates a permanent structural cost advantage: when Corning pays Umicore spot-market prices for GeCl₄, YOFC pays Chinese domestic rates. Chinese manufacturers can undercut western rivals by 15–20% on fiber cable pricing.',
+                        'YOFC is also the leader in hollow-core fiber (HCF) development — the technology that eliminates germanium from fiber entirely. In late 2023, they began commercial HCF production at scale and demonstrated a world-record 0.040 dB/km attenuation. In July 2024, YOFC and ZTE demonstrated the first real-time 1.2Tb/s single-wavelength transport over 20km of HCF.',
+                      ],
+                      whyMatters: 'YOFC represents the other side of the germanium thesis. While western companies benefit from germanium scarcity (pricing power, supply security premiums), YOFC benefits from germanium abundance (domestic supply at controlled prices). They\'re also developing the technology — hollow-core fiber — that could eventually eliminate germanium from fiber entirely. YOFC is simultaneously the low-cost producer in a germanium-constrained market AND the developer of the germanium-free alternative.',
+                    },
+                  ] as { name: string; ticker: string; sub: string; stats: [string, string][]; whatTheyDo: string; geRelevance: string[]; whyMatters: string }[]).map((co, idx) => (
+                    <div key={idx} style={{ marginTop: '24px', border: '0.5px solid #E5E7EB', borderRadius: '6px', overflow: 'hidden' }}>
+                      <div style={{ padding: '14px 16px', background: '#FAFAFA', borderBottom: '0.5px solid #F3F4F6' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                          <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '14px', fontWeight: 600, color: '#1C1E21' }}>{co.name}</div>
+                          <div style={{ fontSize: '9px', fontWeight: 600, color: '#2563A0', background: '#EFF6FF', padding: '2px 8px', borderRadius: '3px', fontFamily: "'Geist Mono', monospace" }}>{co.ticker}</div>
+                        </div>
+                        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '10px', color: '#9CA3AF' }}>{co.sub}</div>
+                      </div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '6px', padding: '10px 16px', borderBottom: '0.5px solid #F3F4F6', background: '#fff' }}>
+                        {co.stats.map(([val, label], si) => (
+                          <div key={si} style={{ flex: 1, minWidth: '90px' }}>
+                            <div style={{ fontSize: '12px', fontWeight: 600, color: '#1C1E21', fontFamily: "'Geist Mono', monospace" }}>{val}</div>
+                            <div style={{ fontSize: '7px', color: '#9CA3AF', letterSpacing: '0.06em', textTransform: 'uppercase' as const, marginTop: '1px', fontFamily: "'Geist Mono', monospace" }}>{label}</div>
+                          </div>
+                        ))}
+                      </div>
+                      <div style={{ padding: '14px 16px', background: '#fff' }}>
+                        <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '6px', fontFamily: "'Geist Mono', monospace" }}>What the company does</div>
+                        <p style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.6, marginBottom: '8px' }}>{co.whatTheyDo}</p>
+                        <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: '#9CA3AF', margin: '14px 0 6px', fontFamily: "'Geist Mono', monospace" }}>GeCl₄ relevance</div>
+                        {co.geRelevance.map((para, pi) => (
+                          <p key={pi} style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '11.5px', color: '#6B7280', lineHeight: 1.6, marginBottom: '8px' }}>{para}</p>
+                        ))}
+                        <div style={{ margin: '12px 0 0', padding: '10px 12px', borderRadius: '4px', background: '#EFF6FF' }}>
+                          <div style={{ fontSize: '7px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: '#1E40AF', marginBottom: '3px', fontFamily: "'Geist Mono', monospace" }}>Why this company matters</div>
+                          <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: '10.5px', color: '#1E3A5F', lineHeight: 1.5 }}>{co.whyMatters}</div>
+                        </div>
+                      </div>
                     </div>
                   ))}
+                  <div style={{ marginTop: '28px' }}>
+                    <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#9CA3AF', marginBottom: '12px', paddingBottom: '6px', borderBottom: '0.5px solid #F3F4F6', fontFamily: "'Geist Mono', monospace" }}>Supply relationship map</div>
+                    <div style={{ overflowX: 'auto' as const }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse' as const, fontSize: '10.5px', fontFamily: "Inter, -apple-system, sans-serif" }}>
+                        <thead>
+                          <tr style={{ background: '#F9FAFB' }}>
+                            {(['GeCl₄ Supplier', 'Supplies to', 'Relationship'] as string[]).map((h, hi) => (
+                              <th key={hi} style={{ padding: '7px 10px', textAlign: 'left' as const, fontSize: '7px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' as const, color: '#6B7280', border: '0.5px solid #E5E7EB', fontFamily: "'Geist Mono', monospace" }}>{h}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {([
+                            ['Umicore', 'Corning, Prysmian, Fujikura, Sumitomo, Shin-Etsu', 'Long-term supply + recycling. Receives >50% of input as recycled waste FROM these manufacturers'],
+                            ['Teck Trail', 'US defense contractor, Japanese fiber firm', '5-year defense contract; JV for GeCl₄ processing'],
+                            ['Indium Corp', 'US military fiber programs', 'Small-scale military-grade only'],
+                            ['Yunnan Chihong + Chinese state plants', 'YOFC, Hengtong, FiberHome, Shin-Etsu (China JV)', 'Domestic supply at controlled pricing'],
+                            ['JSC Germanium', 'Russian military only (Rostec)', 'Defense entity — zero connection to commercial fiber'],
+                          ] as [string, string, string][]).map(([supplier, supplies, rel], ri) => (
+                            <tr key={ri} style={{ background: ri % 2 === 0 ? '#fff' : '#FAFAFA' }}>
+                              <td style={{ padding: '7px 10px', border: '0.5px solid #E5E7EB', color: '#1C1E21', fontWeight: 500, verticalAlign: 'top' as const }}>{supplier}</td>
+                              <td style={{ padding: '7px 10px', border: '0.5px solid #E5E7EB', color: '#374151', verticalAlign: 'top' as const }}>{supplies}</td>
+                              <td style={{ padding: '7px 10px', border: '0.5px solid #E5E7EB', color: '#6B7280', verticalAlign: 'top' as const }}>{rel}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                   <div style={{ fontSize: '7.5px', color: '#9CA3AF', fontStyle: 'italic', fontFamily: "Inter, -apple-system, sans-serif", lineHeight: 1.5, marginTop: '20px', paddingTop: '12px', borderTop: '0.5px solid #F3F4F6' }}>
-                    Sources: Umicore Germanium Solutions Product Documentation; Umicore Full Year Results 2024 and 2025; Corning Q3 2025 Earnings Release; Corning–Meta $6B Agreement January 2026; Manufacturing Dive — Corning-Meta Deal; Prysmian FY2024 Results; Prysmian–Encore Wire Acquisition Press Release; YOFC 2024 ESG Report; YOFC–China Mobile 800G HCF Press Release; Shin-Etsu Annual Report 2024; Shin-Etsu Preform Capacity Expansion Announcement; Sumitomo Electric FY2024 Financial Results; Sumitomo Electric Ultra-Low-Loss MCF Press Release March 2024.
+                    Sources: Umicore Full Year Results 2025; Corning-Meta $6B agreement (Jan 2026); Corning Hickory groundbreaking (Mar 2026); Prysmian-Umicore partnership (Oct 2020); Fujikura FY2025 earnings; YOFC HCF press releases; USGS Minerals Yearbook 2023; Stimson Center (2025).
                   </div>
                 </div>
               </div>
