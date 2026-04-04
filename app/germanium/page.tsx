@@ -410,16 +410,6 @@ export default function Home() {
               {currentThesis && (
                 <div style={{ background: appState === 2 ? "#000" : "#282828", padding: "32px 36px 36px" }}>
                   <div style={{
-                    fontFamily: "'Geist Mono', 'Courier New', monospace",
-                    fontSize: appState === 2 ? 7 : 6,
-                    letterSpacing: appState === 2 ? "0.06em" : "0.12em",
-                    textTransform: "uppercase",
-                    color: appState === 2 ? "rgba(155,168,171,0.25)" : "rgba(255,255,255,0.2)",
-                    marginBottom: appState === 2 ? 14 : 12,
-                  }}>
-                    {currentPageTitle}
-                  </div>
-                  <div style={{
                     fontFamily: "Inter, -apple-system, sans-serif",
                     fontSize: appState === 2 ? 25 : 23,
                     fontWeight: 500,
@@ -493,17 +483,17 @@ export default function Home() {
                       fontSize: 8,
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
-                      color: appState === 2 ? "rgba(196,164,108,0.45)" : "#C4836A",
-                      background: "rgb(65,65,65)",
+                      background: "rgb(37,66,82)",
                       border: "none",
                       cursor: "pointer",
                       padding: 10,
                       borderRadius: 5,
-                      transition: "color 0.15s",
+                      transition: "opacity 0.15s",
                       display: "block",
+                      color: "#000",
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.color = appState === 2 ? "rgba(196,164,108,0.85)" : "#C4836A")}
-                    onMouseLeave={e => (e.currentTarget.style.color = appState === 2 ? "rgba(196,164,108,0.45)" : "#C4836A")}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.8")}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
                   >
                     Read Full Analysis →
                   </button>
