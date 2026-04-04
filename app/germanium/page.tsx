@@ -153,6 +153,11 @@ export default function Home() {
   useEffect(() => {
     if (pendingAutoLoad.current === null) return;
     const targetState = pendingAutoLoad.current;
+    // Wait until the relevant sel field is populated (first render cycle has null values)
+    if (targetState === 1 && !sel.raw) return;
+    if (targetState === 2 && !sel.comp) return;
+    if (targetState === 3 && !sel.sub) return;
+    if (targetState === 4 && !sel.eu) return;
     pendingAutoLoad.current = null;
     if (targetState === 1) {
       setAppState(1);

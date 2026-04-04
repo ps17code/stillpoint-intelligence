@@ -453,6 +453,8 @@
   "Umicore GeCl4": {
     "type": "GeCl\u2084 chemical supplier",
     "country": "Belgium",
+    "gecl4Output": "~86t/yr",
+    "purity": "8N",
     "loc": "Olen, Belgium",
     "displayName": "Umicore",
     "ticker": "XBRU: UMI",
@@ -497,6 +499,8 @@
   "Yunnan Chihong GeCl4": {
     "type": "GeCl\u2084 chemical supplier",
     "country": "China",
+    "gecl4Output": "30t/yr",
+    "purity": "6N–7N",
     "loc": "Kunming, Yunnan, China",
     "displayName": "Yunnan Chihong",
     "ticker": "SHA: 600497",
@@ -537,6 +541,8 @@
   "Chinese State GeCl4 Plants": {
     "type": "GeCl\u2084 chemical suppliers",
     "country": "China",
+    "gecl4Output": "~50–60t/yr",
+    "purity": "6N–8N",
     "loc": "Multiple provinces, China",
     "displayName": "Chinese State GeCl\u2084 Plants",
     "ticker": "",
@@ -576,6 +582,8 @@
   "JSC Germanium GeCl4": {
     "type": "Germanium processor \u2014 military/defense",
     "country": "Russia",
+    "gecl4Output": "~15–20t/yr",
+    "purity": "Military only",
     "loc": "Moscow / Novomoskovsk, Russia",
     "displayName": "JSC Germanium",
     "ticker": "",
@@ -615,6 +623,8 @@
   "Corning": {
     "type": "Fiber optic manufacturer \u2014 vertically integrated",
     "country": "USA",
+    "fiberOutput": "~300–400M fkm/yr",
+    "geConsumption": "~25–30t/yr",
     "loc": "Corning, New York, USA",
     "displayName": "Corning",
     "ticker": "NYSE: GLW",
@@ -655,6 +665,8 @@
   "Prysmian": {
     "type": "Fiber optic manufacturer \u2014 vertically integrated",
     "country": "Italy",
+    "fiberOutput": ">30M km/yr",
+    "geConsumption": "~15–20t/yr",
     "loc": "Milan, Italy",
     "displayName": "Prysmian",
     "ticker": "BIT: PRY",
@@ -695,6 +707,8 @@
   "Fujikura": {
     "type": "Fiber optic manufacturer \u2014 vertically integrated",
     "country": "Japan",
+    "fiberOutput": "~10–15M fkm/yr",
+    "geConsumption": "~7–10t/yr",
     "loc": "Tokyo, Japan",
     "displayName": "Fujikura",
     "ticker": "TYO: 5803",
@@ -734,6 +748,8 @@
   "Sumitomo Electric": {
     "type": "Fiber optic manufacturer \u2014 vertically integrated",
     "country": "Japan",
+    "fiberOutput": "~10–15M fkm/yr",
+    "geConsumption": "~7–10t/yr",
     "loc": "Osaka, Japan",
     "displayName": "Sumitomo Electric",
     "ticker": "TYO: 5802",
@@ -772,6 +788,8 @@
   "Shin-Etsu": {
     "type": "Fiber optic preform specialist",
     "country": "Japan",
+    "fiberOutput": "~5–8M fkm/yr",
+    "geConsumption": "~4–6t/yr",
     "loc": "Tokyo, Japan",
     "displayName": "Shin-Etsu",
     "ticker": "TYO: 4063",
@@ -811,6 +829,8 @@
   "YOFC": {
     "type": "Fiber optic manufacturer \u2014 vertically integrated",
     "country": "China",
+    "fiberOutput": "3,500t preform/yr",
+    "geConsumption": "~15–20t/yr",
     "loc": "Wuhan, China",
     "displayName": "YOFC",
     "ticker": "HKEX: 6869",
