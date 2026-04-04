@@ -229,14 +229,40 @@ export default function NodeModal({
         <div style={{ padding: "14px 18px" }}>
           {node.role && node.role !== "" && (
             <div style={{ marginBottom: 12 }}>
-              <SectionLabel>Role in chain</SectionLabel>
+              <SectionLabel>{raw.geclRelevance ? "What the company does" : "Role in chain"}</SectionLabel>
               <div style={{ ...SERIF, fontSize: 13, color: "#3a3a32", lineHeight: 1.7 }}>{node.role}</div>
             </div>
           )}
-          {node.inv && node.inv !== "" && (
+          {!!raw.geclRelevance && (
+            <div style={{ marginBottom: 12 }}>
+              <SectionLabel>GeCl₄ relevance</SectionLabel>
+              <div style={{ ...SERIF, fontSize: 13, color: "#3a3a32", lineHeight: 1.7 }}>{String(raw.geclRelevance)}</div>
+            </div>
+          )}
+          {node.inv && node.inv !== "" && !raw.geclRelevance && (
             <div style={{ marginBottom: 12 }}>
               <SectionLabel>Investment angle</SectionLabel>
               <div style={{ ...SERIF, fontSize: 13, color: "#3a3a32", lineHeight: 1.7 }}>{node.inv}</div>
+            </div>
+          )}
+          {!!raw.keyMetrics && Array.isArray(raw.keyMetrics) && (raw.keyMetrics as [string, string][]).length > 0 && (
+            <div style={{ marginBottom: 12 }}>
+              <SectionLabel>Key metrics</SectionLabel>
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: `repeat(${Math.min((raw.keyMetrics as [string, string][]).length, 5)}, 1fr)`,
+                background: "#EDE9E1",
+                borderRadius: 4,
+                border: "0.5px solid #DDD9D2",
+                overflow: "hidden",
+              }}>
+                {(raw.keyMetrics as [string, string][]).map(([k, v], i, arr) => (
+                  <div key={i} style={{ padding: "8px 10px", borderRight: i < arr.length - 1 ? "0.5px solid #DDD9D2" : "none" }}>
+                    <div style={{ ...MONO, fontSize: 6.5, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "#aaaaa0", marginBottom: 3 }}>{k}</div>
+                    <div style={{ ...MONO, fontSize: 11, color: "#1a1a14", lineHeight: 1.3 }}>{v}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
           {node.risks && node.risks.length > 0 && (
