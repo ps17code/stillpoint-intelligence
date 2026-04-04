@@ -494,10 +494,11 @@ export default function Home() {
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
                       color: appState === 2 ? "rgba(196,164,108,0.45)" : "#C4836A",
-                      background: "none",
+                      background: "rgb(65,65,65)",
                       border: "none",
                       cursor: "pointer",
-                      padding: 0,
+                      padding: 10,
+                      borderRadius: 5,
                       transition: "color 0.15s",
                       display: "block",
                     }}
