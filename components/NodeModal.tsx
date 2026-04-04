@@ -59,7 +59,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
       fontWeight: 500,
       textTransform: "uppercase" as const,
       letterSpacing: "0.06em",
-      color: "rgba(255,255,255,0.2)",
+      color: "rgba(255,255,255,0.3)",
       paddingBottom: 6,
       borderBottom: "0.5px solid rgba(255,255,255,0.06)",
       marginBottom: 8,
@@ -94,7 +94,8 @@ export default function NodeModal({
   const stats = (node.stats ?? []) as [string, string][];
   const displayName = raw.displayName as string | undefined;
   const ticker = raw.ticker as string | undefined;
-  const meta = raw.meta as string | undefined;
+  const rawMeta = raw.meta as string | undefined;
+  const meta = rawMeta?.replace(/ · Founded \d+/g, "");
   const geclRelevance = raw.geclRelevance as string | undefined;
   const isOutputNode = node.type === "Output node";
 
@@ -115,7 +116,7 @@ export default function NodeModal({
         style={{
           background: "#1C1E21",
           borderRadius: 12,
-          width: 380,
+          width: 500,
           maxHeight: "80vh",
           overflowY: "auto",
           position: "relative",
@@ -132,18 +133,19 @@ export default function NodeModal({
             alignItems: "flex-start",
             justifyContent: "space-between",
             gap: 8,
-            marginBottom: meta ? 4 : 0,
+            marginBottom: meta ? 5 : 0,
           }}>
-            <span style={{
-              fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-              fontSize: 17,
-              fontWeight: 500,
-              color: "rgba(255,255,255,0.92)",
-              lineHeight: 1.3,
-            }}>
-              {displayName ?? nodeKey}
-            </span>
-            <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0, marginTop: 3 }}>
+            {/* Name + ticker inline */}
+            <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+              <span style={{
+                fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                fontSize: 17,
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.92)",
+                lineHeight: 1.3,
+              }}>
+                {displayName ?? nodeKey}
+              </span>
               {ticker && (
                 <span style={{
                   ...MONO,
@@ -157,23 +159,26 @@ export default function NodeModal({
                   {ticker}
                 </span>
               )}
-              <button
-                onClick={onClose}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  ...MONO,
-                  fontSize: 12,
-                  color: "rgba(255,255,255,0.15)",
-                  padding: 0,
-                  lineHeight: 1,
-                }}
-              >✕</button>
             </div>
+            {/* Close button */}
+            <button
+              onClick={onClose}
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                ...MONO,
+                fontSize: 12,
+                color: "rgba(255,255,255,0.15)",
+                padding: 0,
+                lineHeight: 1,
+                flexShrink: 0,
+                marginTop: 3,
+              }}
+            >✕</button>
           </div>
           {meta && (
-            <div style={{ ...MONO, fontSize: 9, color: "rgba(255,255,255,0.2)" }}>
+            <div style={{ ...MONO, fontSize: 9, color: "rgba(255,255,255,0.3)" }}>
               {meta}
             </div>
           )}
@@ -181,36 +186,39 @@ export default function NodeModal({
 
         {/* ── STATS ROW ─────────────────────────────────────────────── */}
         {stats.length > 0 && (
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${Math.min(stats.length, 4)}, 1fr)`,
-            gap: 1,
-            background: "rgba(255,255,255,0.04)",
-            borderBottom: "0.5px solid rgba(255,255,255,0.06)",
-          }}>
-            {stats.slice(0, 4).map(([label, value], i) => (
-              <div key={i} style={{ background: "#1C1E21", padding: "10px 12px" }}>
-                <div style={{
-                  ...MONO,
-                  fontSize: 13,
-                  fontWeight: 500,
-                  color: "rgba(255,255,255,0.8)",
-                  marginBottom: 3,
-                  lineHeight: 1.2,
-                }}>
-                  {value}
+          <div style={{ padding: "12px 20px 14px", borderBottom: "0.5px solid rgba(255,255,255,0.06)" }}>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: `repeat(${Math.min(stats.length, 4)}, 1fr)`,
+              gap: 1,
+              background: "rgba(255,255,255,0.04)",
+              borderRadius: 6,
+              overflow: "hidden",
+            }}>
+              {stats.slice(0, 4).map(([label, value], i) => (
+                <div key={i} style={{ background: "#1C1E21", padding: "10px 12px" }}>
+                  <div style={{
+                    ...MONO,
+                    fontSize: 13,
+                    fontWeight: 500,
+                    color: "rgba(255,255,255,0.8)",
+                    marginBottom: 3,
+                    lineHeight: 1.2,
+                  }}>
+                    {value}
+                  </div>
+                  <div style={{
+                    ...MONO,
+                    fontSize: 6.5,
+                    color: "rgba(255,255,255,0.3)",
+                    textTransform: "uppercase" as const,
+                    letterSpacing: "0.04em",
+                  }}>
+                    {label}
+                  </div>
                 </div>
-                <div style={{
-                  ...MONO,
-                  fontSize: 6.5,
-                  color: "rgba(255,255,255,0.2)",
-                  textTransform: "uppercase" as const,
-                  letterSpacing: "0.04em",
-                }}>
-                  {label}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
 
