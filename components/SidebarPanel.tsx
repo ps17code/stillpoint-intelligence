@@ -19,7 +19,6 @@ const COMPONENT_INSIGHT_BARS = [
   { key: "comp-catalysts",     label: "CATALYSTS",       teaser: "Five tightening forces converge on GeCl₄ supply before any easing catalyst can reach market scale", color: "#065F46" },
   { key: "comp-emerging-tech", label: "EMERGING TECH",   teaser: "Four technology vectors could reshape the component layer, but none reaches meaningful scale before the supply crisis peaks", color: "#5B21B6" },
   { key: "comp-major-companies", label: "COMPANIES",     teaser: "The component layer is defined by one supplier, one dominant consumer, and four manufacturers racing to expand capacity they cannot build fast enough", color: "#155E75" },
-  { key: "comp-investment-ideas", label: "INVESTMENT",   teaser: "Three public companies capture the component-layer bottleneck, one private bet hedges it, and one binary date reprices the entire chain", color: "#9D174D" },
 ];
 
 const SUBSYSTEM_INSIGHT_BARS = [
@@ -141,6 +140,25 @@ export default function SidebarPanel({ chainState }: { chainState?: number }) {
               </div>
             </div>
           ))}
+          {chainState === 2 && (
+            <div
+              onClick={() => setActivePopup("comp-investment-ideas")}
+              style={{ marginTop: 12, padding: "14px 18px", background: "#1C1E21", borderRadius: 10, borderLeft: "2px solid rgba(196,164,108,0.4)", cursor: "pointer", transition: "background 0.15s ease" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#242628"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#1C1E21"; }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="rgba(196,164,108,0.5)"><path d="M4 0L7.5 4L4 8L0.5 4Z"/></svg>
+                <span style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: "9px", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "rgba(196,164,108,0.5)" }}>Investment Ideas</span>
+              </div>
+              <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 12, color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>
+                Four positions across the GeCl₄ supply chain — from monopoly pricing to germanium obsolescence
+              </div>
+              <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: "9px", color: "rgba(196,164,108,0.35)", letterSpacing: "0.03em", marginTop: 8 }}>
+                4 ideas · 1 binary event →
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
