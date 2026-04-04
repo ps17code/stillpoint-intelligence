@@ -411,24 +411,70 @@ export default function Home() {
                 <div style={{ background: "#282828", padding: "32px 36px 36px" }}>
                   <div style={{
                     fontFamily: "'Geist Mono', 'Courier New', monospace",
-                    fontSize: 6,
-                    letterSpacing: "0.12em",
+                    fontSize: appState === 2 ? 7 : 6,
+                    letterSpacing: appState === 2 ? "0.06em" : "0.12em",
                     textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.2)",
-                    marginBottom: 12,
+                    color: appState === 2 ? "rgba(155,168,171,0.25)" : "rgba(255,255,255,0.2)",
+                    marginBottom: appState === 2 ? 14 : 12,
                   }}>
                     {currentPageTitle}
                   </div>
                   <div style={{
                     fontFamily: "Inter, -apple-system, sans-serif",
-                    fontSize: 23,
+                    fontSize: appState === 2 ? 18 : 23,
                     fontWeight: 500,
                     color: "rgba(255,255,255,0.9)",
                     lineHeight: 1.25,
-                    marginBottom: 16,
+                    marginBottom: appState === 2 ? 14 : 16,
                   }}>
                     {chainLabel}
                   </div>
+                  {appState === 2 ? (
+                    <div style={{ display: "flex", gap: 40, marginBottom: 18 }}>
+                      {/* Left: paragraph */}
+                      <div style={{ flex: 1 }}>
+                        <p style={{
+                          fontFamily: "Inter, -apple-system, sans-serif",
+                          fontSize: 12.5,
+                          color: "rgba(255,255,255,0.4)",
+                          lineHeight: 1.8,
+                          margin: 0,
+                        }}>
+                          Germanium doesn&apos;t go into fiber as a metal. It has to be converted into a chemical — germanium tetrachloride — at{" "}
+                          <strong style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>99.999999% purity</strong>
+                          , then vaporized and deposited layer by layer into glass preforms that are drawn into fiber strand. The process{" "}
+                          <strong style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>loses two-thirds of the germanium input</strong>
+                          . Fewer than six facilities on earth can produce the chemical.{" "}
+                          <strong style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>Only one serves the west.</strong>
+                          {" "}And over half of its input comes from recycling the waste of the same fiber manufacturers it supplies.
+                        </p>
+                      </div>
+                      {/* Right: stats column */}
+                      <div style={{
+                        width: 180,
+                        flexShrink: 0,
+                        borderLeft: "0.5px solid rgba(255,255,255,0.04)",
+                        paddingLeft: 28,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 20,
+                        alignSelf: "flex-start",
+                        paddingTop: 3,
+                      }}>
+                        {([
+                          { value: "87t",   unit: "GeO₂ / yr",      label: "GERMANIUM INPUT" },
+                          { value: "168t",  unit: "GeCl₄ / yr",     label: "CHEMICAL PRODUCED" },
+                          { value: "~500M", unit: "fiber-km / yr",   label: "STRAND OUTPUT" },
+                        ] as const).map(({ value, unit, label }) => (
+                          <div key={label}>
+                            <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 16, fontWeight: 500, color: "rgba(255,255,255,0.75)", lineHeight: 1.1 }}>{value}</div>
+                            <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 8, color: "rgba(255,255,255,0.18)", marginTop: 2 }}>{unit}</div>
+                            <div style={{ fontFamily: "'Geist Mono', 'Courier New', monospace", fontSize: 6.5, color: "rgba(255,255,255,0.1)", textTransform: "uppercase", letterSpacing: "0.06em", marginTop: 3 }}>{label}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
                   <div style={{
                     fontFamily: "Inter, -apple-system, sans-serif",
                     fontSize: 14,
@@ -443,6 +489,7 @@ export default function Home() {
                       </>
                     ) : currentThesis}
                   </div>
+                  )}
                   <button
                     onClick={() => { window.location.href = "/germanium/report"; }}
                     style={{
@@ -450,15 +497,17 @@ export default function Home() {
                       fontSize: 8,
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
-                      color: "#C4836A",
+                      color: appState === 2 ? "rgba(196,164,108,0.45)" : "#C4836A",
                       background: "none",
                       border: "none",
                       cursor: "pointer",
                       padding: 0,
-                      transition: "opacity 0.15s",
+                      marginTop: appState === 2 ? 14 : 0,
+                      transition: "color 0.15s",
+                      display: "block",
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.65")}
-                    onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                    onMouseEnter={e => (e.currentTarget.style.color = appState === 2 ? "rgba(196,164,108,0.85)" : "#C4836A")}
+                    onMouseLeave={e => (e.currentTarget.style.color = appState === 2 ? "rgba(196,164,108,0.45)" : "#C4836A")}
                   >
                     Read Full Analysis →
                   </button>
