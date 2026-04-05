@@ -118,7 +118,7 @@ const PORTAL_DATA: L1Item[] = [
     id: "raw-material", label: "Raw material", count: 22,
     children: [
       {
-        id: "germanium", label: "Germanium", dot: "#C4A46C", count: 22, status: "Live", href: "/germanium",
+        id: "germanium", label: "Germanium", dot: "#C4A46C", count: 22, status: "Live", href: "/chains/germanium",
         sublayers: [
           { id: "deposit", label: "Deposits", count: 8, desc: "5 in China, 1 Russia (sanctioned), 1 DRC (ramping), 1 Alaska (declining). Zinc and coal ores." },
           { id: "miner",   label: "Miners",   count: 7, desc: "Never the primary target — extracted as a byproduct of zinc smelting and coal processing." },
@@ -136,7 +136,7 @@ const PORTAL_DATA: L1Item[] = [
     id: "component", label: "Component", count: 9,
     children: [
       {
-        id: "gecl4", label: "GeO₂ / GeCl₄", dot: "#9BA8AB", count: 9, status: "Live", href: "/germanium",
+        id: "gecl4", label: "GeO₂ / GeCl₄", dot: "#9BA8AB", count: 9, status: "Live", href: "/chains/germanium",
         sublayers: [
           { id: "converter",    label: "Converters",            count: 3, desc: "Purify germanium into ultra-pure GeCl₄. In the west, virtually all flows through Umicore in Olen, Belgium." },
           { id: "manufacturer", label: "Preform manufacturers", count: 6, desc: "Corning, Shin-Etsu, Sumitomo, YOFC, Prysmian. All running at 100% capacity. Backlogs into 2027." },
@@ -150,7 +150,7 @@ const PORTAL_DATA: L1Item[] = [
     id: "subsystem", label: "Subsystem", count: 8,
     children: [
       {
-        id: "fiber-optic", label: "Fiber optic cable", dot: "#B87D5E", count: 8, status: "Live", href: "/germanium",
+        id: "fiber-optic", label: "Fiber optic cable", dot: "#B87D5E", count: 8, status: "Live", href: "/chains/germanium",
         sublayers: [
           { id: "assembler", label: "Cable manufacturers", count: 8, desc: "Corning Hickory becoming world's largest. Prysmian 27 plants. Every one traces back upstream through the same bottleneck." },
         ],
@@ -163,7 +163,7 @@ const PORTAL_DATA: L1Item[] = [
     id: "end-use", label: "End use", count: 8,
     children: [
       {
-        id: "ai-datacenter", label: "AI datacenter", dot: "#D4CCBA", count: 8, status: "Live", href: "/germanium",
+        id: "ai-datacenter", label: "AI datacenter", dot: "#D4CCBA", count: 8, status: "Live", href: "/chains/germanium",
         sublayers: [
           { id: "datacenter", label: "Hyperscaler DCs", count: 6, desc: "AWS, Azure, Google, Meta, Microsoft, Oracle. AI racks consume 36x more fiber than traditional servers." },
           { id: "telecom",    label: "Telecom / BEAD", count: 2, desc: "Federal broadband competing for the same fiber supply as AI infrastructure." },
@@ -327,7 +327,7 @@ export default function HomePage() {
       eu:   CHILD_TO_SPINE[selectedL2.get("end-use")       ?? ""] ?? null,
     };
     sessionStorage.setItem("globeSelection", JSON.stringify(globeSelection));
-    let href = "/germanium";
+    let href = "/chains/germanium";
     Array.from(selectedL2.entries()).forEach(([pid, cid]) => {
       const parent = PORTAL_DATA.find(p => p.id === pid);
       const child  = parent?.children.find(c => c.id === cid);
