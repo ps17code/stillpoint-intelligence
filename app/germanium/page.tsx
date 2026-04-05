@@ -490,7 +490,7 @@ export default function Home() {
                       borderRadius: 5,
                       transition: "opacity 0.15s",
                       display: "block",
-                      color: "#000",
+                      color: "#fff",
                     }}
                     onMouseEnter={e => (e.currentTarget.style.opacity = "0.8")}
                     onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
@@ -505,7 +505,7 @@ export default function Home() {
                 flex: 1,
                 minHeight: 400,
                 position: "relative",
-                background: "#3A3835",
+                background: appState === 2 ? "rgba(37,66,82,0.15)" : "#3A3835",
               }}>
                 <SupplyChainMap
                   chainState={appState as 1|2|3|4}
@@ -514,6 +514,7 @@ export default function Home() {
                   subSelection={sel.sub || undefined}
                   euSelection={sel.eu || undefined}
                   fillContainer
+                  mapBg={appState === 2 ? "rgba(37,66,82,0.15)" : undefined}
                 />
                 {/* World map title */}
                 <div style={{

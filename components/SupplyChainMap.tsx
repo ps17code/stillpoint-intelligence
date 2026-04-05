@@ -11,6 +11,7 @@ export interface SupplyChainMapProps {
   subSelection?: string;
   euSelection?: string;
   fillContainer?: boolean;
+  mapBg?: string;
 }
 
 // ── Core types ───────────────────────────────────────────────────────────────
@@ -91,13 +92,13 @@ const LEVEL_CONFIGS: LevelConfig[] = [
   {
     chainLevel: 2, layerKey: "component",
     subLayers: [
-      { label: "GeCl₄ Suppliers", color: "#6A8BBF", radius: 3, nodes: [
+      { label: "GeCl₄ Suppliers", color: "#4d9ab8", radius: 3, nodes: [
         { lon:5.5,   lat:51.2, name: "Umicore GeCl₄",    loc: "Olen, Belgium" },
         { lon:103.0, lat:25.8, name: "Chihong Supplier",  loc: "Yunnan, China" },
         { lon:113.5, lat:38.0, name: "Hebei Supplier",    loc: "Hebei, China" },
         { lon:132.8, lat:47.8, name: "Jilin Supplier",    loc: "Jilin, China" },
       ]},
-      { label: "Fiber Manufacturers", color: "#6A8BBF", radius: 2.5, nodes: [
+      { label: "Fiber Manufacturers", color: "#254252", radius: 2.5, nodes: [
         { lon:-77.0,  lat:42.4,  name: "Corning Preform", loc: "Wilmington, NC, USA" },
         { lon:11.25,  lat:43.77, name: "Prysmian",        loc: "Florence, Italy" },
         { lon:139.7,  lat:35.7,  name: "Fujikura",        loc: "Tokyo, Japan" },
@@ -110,8 +111,8 @@ const LEVEL_CONFIGS: LevelConfig[] = [
       { from: 0, to: 1, connections: [[0,0],[0,1],[0,2],[1,3],[1,4],[1,5],[2,3],[2,4],[2,5],[3,3]] },
     ],
     legendItems: [
-      { label: "GeCl₄ Suppliers",    color: "#6A8BBF" },
-      { label: "Fiber Manufacturers", color: "#6A8BBF" },
+      { label: "GeCl₄ Suppliers",    color: "#4d9ab8" },
+      { label: "Fiber Manufacturers", color: "#254252" },
     ],
   },
   {
@@ -343,7 +344,7 @@ const MAP_H = 380;
 
 type TooltipInfo = { name: string; loc: string; type: string; color: string; x: number; y: number } | null;
 
-export default function SupplyChainMap({ chainState, rawSelection, fillContainer }: SupplyChainMapProps) {
+export default function SupplyChainMap({ chainState, rawSelection, fillContainer, mapBg }: SupplyChainMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<TooltipInfo>(null);
   const [selectedPanel, setSelectedPanel] = useState<NodePanelData | null>(null);
@@ -551,7 +552,7 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
           viewBox={`0 0 ${MAP_W} ${MAP_H}`}
           preserveAspectRatio="xMidYMid slice"
           data-map-container
-          style={{ width: "100%", height: "100%", background: "#3A3835", display: "block" }}
+          style={{ width: "100%", height: "100%", background: mapBg ?? "#3A3835", display: "block" }}
         />
 
         {/* Legend — active layer sub-layers */}
