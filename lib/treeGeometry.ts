@@ -120,7 +120,7 @@ export const PALETTES = {
   supply:     { stroke: "#3e2c0e", text: "#3e2c0e", pip: "#3e2c0e" },
   // Component layer (steel blue family — main: #254252)
   geCl4:    { stroke: "#4d9ab8", text: "#1e3d52", pip: "#4d9ab8" },
-  fiberMfg: { stroke: "#254252", text: "#162a36", pip: "#254252" },
+  fiberMfg: { stroke: "#90aab9", text: "#2a3e4a", pip: "#90aab9" },
   compOut:  { stroke: "#162a36", text: "#162a36", pip: "#162a36" },
   // Subsystem layer (purple-slate)
   assembly: { stroke: "#5a4a6a", text: "#2e1e40", pip: "#5a4a6a" },

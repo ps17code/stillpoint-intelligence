@@ -98,7 +98,7 @@ const LEVEL_CONFIGS: LevelConfig[] = [
         { lon:113.5, lat:38.0, name: "Hebei Supplier",    loc: "Hebei, China" },
         { lon:132.8, lat:47.8, name: "Jilin Supplier",    loc: "Jilin, China" },
       ]},
-      { label: "Fiber Manufacturers", color: "#254252", radius: 2.5, nodes: [
+      { label: "Fiber Manufacturers", color: "#90aab9", radius: 2.5, nodes: [
         { lon:-77.0,  lat:42.4,  name: "Corning Preform", loc: "Wilmington, NC, USA" },
         { lon:11.25,  lat:43.77, name: "Prysmian",        loc: "Florence, Italy" },
         { lon:139.7,  lat:35.7,  name: "Fujikura",        loc: "Tokyo, Japan" },
@@ -112,7 +112,7 @@ const LEVEL_CONFIGS: LevelConfig[] = [
     ],
     legendItems: [
       { label: "GeCl₄ Suppliers",    color: "#4d9ab8" },
-      { label: "Fiber Manufacturers", color: "#254252" },
+      { label: "Fiber Manufacturers", color: "#90aab9" },
     ],
   },
   {
