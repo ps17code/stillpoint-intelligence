@@ -392,7 +392,7 @@ export default function SupplyChainMap({ chainState, rawSelection, fillContainer
         // Base map
         svg.append("path")
           .datum(topojson.feature(world, (world.objects as Record<string, GeometryCollection>).land))
-          .attr("d", path).attr("fill", "#ddd9cf");
+          .attr("d", path).attr("fill", "#b0a894");
         svg.append("path")
           .datum(topojson.mesh(world, (world.objects as Record<string, GeometryCollection>).countries, (a, b) => a !== b))
           .attr("d", path).attr("fill", "none").attr("stroke", "#d0ccc2").attr("stroke-width", 0.4);

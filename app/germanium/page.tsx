@@ -438,7 +438,7 @@ export default function Home() {
                       </p>
                       {/* Stats row */}
                       <div style={{ display: "inline-block", borderTop: "0.5px dashed rgba(255,255,255,0.26)", marginTop: 20, paddingTop: 16 }}>
-                      <div style={{ display: "flex", alignItems: "baseline", marginBottom: 20 }}>
+                      <div style={{ display: "flex", alignItems: "baseline", marginBottom: 7 }}>
                         {([
                           { value: "87t",   unit: "GeO₂ / yr",    label: "GERMANIUM INPUT",    padLeft: 0,  padRight: 24 },
                           { value: "168t",  unit: "GeCl₄ / yr",   label: "CHEMICAL PRODUCED",  padLeft: 24, padRight: 24 },
@@ -600,7 +600,7 @@ export default function Home() {
                     fontSize: 8,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "#C4836A",
+                    color: "rgb(227,202,159)",
                     background: "none",
                     border: "none",
                     cursor: "pointer",
