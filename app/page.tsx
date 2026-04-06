@@ -329,10 +329,10 @@ export default function HomePage() {
     const fl = new THREE.DirectionalLight(0xffffff, 0.3); fl.position.set(3, -2, 1);     scene.add(fl);
 
     const globeGroup = new THREE.Group();
-    // Initial rotation: center on North America (~lon -95, central US)
-    // By default, lon=-90 faces the camera; shift slightly westward
+    // Initial rotation: center on North America (~lon -95, lat ~40N)
+    // rotation.x positive = tilt north pole away from camera (brings ~40N to center)
     globeGroup.rotation.y = 0.09;
-    globeGroup.rotation.x = -0.22;
+    globeGroup.rotation.x = 0.35;
     scene.add(globeGroup);
 
     const sphereMat = new THREE.MeshPhongMaterial({ color: new THREE.Color("#B0A490"), specular: new THREE.Color("#111111"), shininess: 5 });
