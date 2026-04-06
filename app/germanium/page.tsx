@@ -17,6 +17,7 @@ import BriefModal   from "@/components/BriefModal";
 import SupplyChainMap from "@/components/SupplyChainMap";
 import Tooltip      from "@/components/Tooltip";
 import SidebarPanel from "@/components/SidebarPanel";
+import CompAnalysisTabs from "@/components/CompAnalysisTabs";
 
 // Geometry
 import {
@@ -396,44 +397,60 @@ export default function Home() {
             docId={`GE-${appState === 1 ? "RAW" : appState === 2 ? "COMP" : appState === 3 ? "SUB" : "EU"}-001 · PROPRIETARY`}
           />
 
-          {/* Page grid: left content | right sidebar — both scroll together */}
+          {/* Page layout: single-column for comp layer, 2-col grid for others */}
           <div style={{
-            display: "grid",
-            gridTemplateColumns: `1fr ${SIDEBAR_W}px`,
+            display: appState === 2 ? "block" : "grid",
+            gridTemplateColumns: appState === 2 ? undefined : `1fr ${SIDEBAR_W}px`,
             paddingTop: TOP_BAR_H,
           }}>
 
-            {/* ── LEFT COLUMN: thesis → map → tree → status ── */}
+            {/* ── LEFT COLUMN (or full-width for comp): thesis → map ── */}
             <div style={{ display: "flex", flexDirection: "column" }}>
 
               {/* THESIS BLOCK */}
               {currentThesis && (
-                <div style={{ background: appState === 2 ? "#000" : "#282828", padding: "32px 36px 36px" }}>
+                <div style={{ background: appState === 2 ? "#0F0F0E" : "#282828", padding: appState === 2 ? "28px 32px 20px" : "32px 36px 36px" }}>
+                  {appState === 2 && (
+                    <div style={{
+                      fontFamily: "'Geist Mono', 'Courier New', monospace",
+                      fontSize: 7,
+                      color: "rgba(155,168,171,0.22)",
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase" as const,
+                      marginBottom: 10,
+                    }}>
+                      GeO₂ / GeCl₄ · Component Layer
+                    </div>
+                  )}
                   <div style={{
                     fontFamily: "Inter, -apple-system, sans-serif",
-                    fontSize: appState === 2 ? 25 : 23,
+                    fontSize: appState === 2 ? 19 : 23,
                     fontWeight: 500,
-                    color: "rgba(255,255,255,0.9)",
-                    lineHeight: 1.25,
-                    marginBottom: appState === 2 ? 14 : 16,
+                    color: "rgba(255,255,255,0.88)",
+                    lineHeight: 1.4,
+                    letterSpacing: appState === 2 ? "-0.2px" : undefined,
+                    maxWidth: appState === 2 ? 600 : undefined,
+                    marginBottom: appState === 2 ? 12 : 16,
                   }}>
-                    {chainLabel}
+                    {appState === 2 ? "The chemical between germanium and every fiber strand on earth" : chainLabel}
                   </div>
                   {appState === 2 ? (
                     <>
                       <p style={{
                         fontFamily: "Inter, -apple-system, sans-serif",
-                        fontSize: 13,
-                        color: "rgba(255,255,255,0.4)",
+                        fontSize: 11.5,
+                        color: "rgba(255,255,255,0.28)",
                         lineHeight: 1.8,
+                        maxWidth: 640,
                         margin: 0,
+                        marginBottom: 16,
                       }}>
                         Germanium doesn&apos;t go into fiber as a metal. It has to be converted into a chemical — germanium tetrachloride — at{" "}
-                        <strong style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>99.999999% purity</strong>
+                        <strong style={{ color: "rgba(255,255,255,0.55)", fontWeight: 500 }}>99.999999% purity</strong>
                         , then vaporized and deposited layer by layer into glass preforms that are drawn into fiber strand. The process{" "}
-                        <strong style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>loses two-thirds of the germanium input</strong>
+                        <strong style={{ color: "rgba(255,255,255,0.55)", fontWeight: 500 }}>loses two-thirds of the germanium input</strong>
                         . Fewer than six facilities on earth can produce the chemical.{" "}
-                        <strong style={{ color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>Only one serves the west.</strong>
+                        <strong style={{ color: "rgba(255,255,255,0.55)", fontWeight: 500 }}>Only one serves the west.</strong>
                         {" "}And over half of its input comes from recycling the waste of the same fiber manufacturers it supplies.
                       </p>
                       {/* Stats row */}
@@ -506,6 +523,8 @@ export default function Home() {
                 minHeight: 400,
                 position: "relative",
                 background: appState === 2 ? "rgba(37,66,82,0.15)" : "#3A3835",
+                borderTop: appState === 2 ? "0.5px solid rgba(255,255,255,0.03)" : undefined,
+                borderBottom: appState === 2 ? "0.5px solid rgba(255,255,255,0.03)" : undefined,
               }}>
                 <SupplyChainMap
                   chainState={appState as 1|2|3|4}
@@ -560,15 +579,20 @@ export default function Home() {
 
             </div>{/* end left column */}
 
-            {/* ── RIGHT SIDEBAR — scrolls with page ── */}
-            <div style={{
-              background: "#F5F3EE",
-              borderLeft: "0.5px solid #DDD9D2",
-            }}>
-              <SidebarPanel chainState={appState} />
-            </div>
+            {/* ── RIGHT SIDEBAR — only for non-comp layers ── */}
+            {appState !== 2 && (
+              <div style={{
+                background: "#F5F3EE",
+                borderLeft: "0.5px solid #DDD9D2",
+              }}>
+                <SidebarPanel chainState={appState} />
+              </div>
+            )}
 
           </div>{/* end grid */}
+
+          {/* ── ANALYSIS TABS (comp layer only) ── */}
+          {appState === 2 && <CompAnalysisTabs />}
 
           {/* ── TREE SECTION — full width below grid ── */}
           {!treeCollapsed && (
