@@ -158,7 +158,7 @@ export default function GermaniumChainPage() {
           <div style={{
             flex: 1, maxWidth: 680,
             display: "flex", flexDirection: "column", justifyContent: "center",
-            padding: "60px 56px",
+            padding: "60px 20px 60px 56px",
           }}>
             {/* Chain label */}
             <div style={{
