@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as topojson from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
+import ChainDirectory from "@/components/ChainDirectory";
 
 const R = 1;
 
@@ -69,12 +70,6 @@ const NODE_COLOR_HEX: Record<string, number> = {
   datacenter: 0xD4CCBA, telecom: 0xD4CCBA,
 };
 
-const TRACKER_LAYERS = [
-  { id: "raw-material", label: "Raw material" },
-  { id: "component",    label: "Component" },
-  { id: "subsystem",    label: "Subsystem" },
-  { id: "end-use",      label: "End use" },
-];
 
 // ── Shape system ───────────────────────────────────────────────────────────────
 // Each node type gets a distinct shape; color stays per-layer (single color per layer)
@@ -259,7 +254,6 @@ export default function HomePage() {
   const [hoveredSub,    setHoveredSub]    = useState<string | null>(null);
   const [hovered,       setHovered]       = useState<string | null>(null);
   const [hoveredNode,   setHoveredNode]   = useState<{ name: string; type: string; location: string } | null>(null);
-  const [hoverEnter,    setHoverEnter]    = useState(false);
 
   // ── Helpers ──────────────────────────────────────────────────────────────
   const updateFilter = (l2s: Map<string, string>, l3: typeof activeL3) => {
@@ -313,28 +307,7 @@ export default function HomePage() {
     updateFilter(selectedL2, next);
   };
 
-  const hasLiveSelection = Array.from(selectedL2.entries()).some(([pid, cid]) => {
-    const parent = PORTAL_DATA.find(p => p.id === pid);
-    return parent?.children.find(c => c.id === cid)?.status === "Live";
-  });
 
-  const handleEnterChain = () => {
-    if (!hasLiveSelection) return;
-    const globeSelection = {
-      raw:  CHILD_TO_SPINE[selectedL2.get("raw-material")  ?? ""] ?? null,
-      comp: CHILD_TO_SPINE[selectedL2.get("component")     ?? ""] ?? null,
-      sub:  CHILD_TO_SPINE[selectedL2.get("subsystem")     ?? ""] ?? null,
-      eu:   CHILD_TO_SPINE[selectedL2.get("end-use")       ?? ""] ?? null,
-    };
-    sessionStorage.setItem("globeSelection", JSON.stringify(globeSelection));
-    let href = "/chains/germanium";
-    Array.from(selectedL2.entries()).forEach(([pid, cid]) => {
-      const parent = PORTAL_DATA.find(p => p.id === pid);
-      const child  = parent?.children.find(c => c.id === cid);
-      if (child?.status === "Live" && child.href) href = child.href;
-    });
-    window.location.href = href;
-  };
 
   // ── Three.js ──────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -356,10 +329,10 @@ export default function HomePage() {
     const fl = new THREE.DirectionalLight(0xffffff, 0.3); fl.position.set(3, -2, 1);     scene.add(fl);
 
     const globeGroup = new THREE.Group();
-    // Initial rotation: center on North America (~lon -95, central US)
-    // By default, lon=-90 faces the camera; shift slightly westward
+    // Initial rotation: center on North America (~lon -95, lat ~40N)
+    // rotation.x positive = tilt north pole away from camera (brings ~40N to center)
     globeGroup.rotation.y = 0.09;
-    globeGroup.rotation.x = -0.22;
+    globeGroup.rotation.x = 0.35;
     scene.add(globeGroup);
 
     const sphereMat = new THREE.MeshPhongMaterial({ color: new THREE.Color("#B0A490"), specular: new THREE.Color("#111111"), shininess: 5 });
@@ -731,59 +704,8 @@ export default function HomePage() {
         })}
       </div>
 
-      {/* ── Bottom-right chain tracker (pill) ────────────────────────────────── */}
-      <div style={{ position: "absolute", bottom: 32, right: 36, zIndex: 20, opacity: selectedL2.size > 0 ? 1 : 0, transform: selectedL2.size > 0 ? "translateY(0)" : "translateY(4px)", transition: "opacity 0.3s ease, transform 0.3s ease", pointerEvents: selectedL2.size > 0 ? "auto" : "none" }}>
-        <div style={{ background: "rgba(20,20,18,0.88)", border: "0.5px solid rgba(255,255,255,0.08)", borderRadius: 24, padding: "6px 8px", display: "flex", alignItems: "center" }}>
-          {TRACKER_LAYERS.map((layer, idx) => {
-            const selChildId = selectedL2.get(layer.id) ?? null;
-            const parentData = PORTAL_DATA.find(p => p.id === layer.id)!;
-            const childData  = selChildId ? parentData.children.find(c => c.id === selChildId) ?? null : null;
-            return (
-              <div key={layer.id} style={{ display: "flex", alignItems: "center" }}>
-                {idx > 0 && (
-                  <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.12)", padding: "0 2px" }}>→</span>
-                )}
-                <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 10px" }}>
-                  {childData ? (
-                    <>
-                      <div style={{ width: 5, height: 5, borderRadius: "50%", background: LAYER_COLORS[layer.id], flexShrink: 0 }} />
-                      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 9, fontWeight: 500, color: "rgba(255,255,255,0.55)", whiteSpace: "nowrap" }}>{childData.label}</span>
-                        <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 6, textTransform: "uppercase" as const, letterSpacing: "0.04em", color: "rgba(255,255,255,0.25)", whiteSpace: "nowrap" }}>{layer.label}</span>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div style={{ width: 5, height: 5, borderRadius: "50%", border: "0.5px solid rgba(255,255,255,0.12)", flexShrink: 0 }} />
-                      <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7, color: "rgba(255,255,255,0.15)", whiteSpace: "nowrap" }}>{layer.label}</span>
-                    </>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-          {hasLiveSelection && (
-            <div
-              onClick={handleEnterChain}
-              onMouseEnter={() => setHoverEnter(true)}
-              onMouseLeave={() => setHoverEnter(false)}
-              style={{
-                marginLeft: 6,
-                marginRight: 4,
-                padding: "7px 18px",
-                cursor: "pointer",
-                borderRadius: 20,
-                background: hoverEnter ? "rgba(255,255,255,0.1)"  : "rgba(255,255,255,0.05)",
-                border:     hoverEnter ? "0.5px solid rgba(255,255,255,0.12)" : "0.5px solid rgba(255,255,255,0.06)",
-                transition: "background 0.15s ease, border 0.15s ease",
-                flexShrink: 0,
-              }}
-            >
-              <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 9.5, color: hoverEnter ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.4)", transition: "color 0.15s ease", whiteSpace: "nowrap" }}>Enter chain →</span>
-            </div>
-          )}
-        </div>
-      </div>
+      {/* ── Chain directory ───────────────────────────────────────────────────── */}
+      <ChainDirectory />
 
     </div>
   );
