@@ -128,54 +128,53 @@ const LAYER_COLORS: [string, string][] = [
   ["#c8a85a", "#8a6828"],   // EU   — amber / dark amber
 ];
 
-// Clickable layer-tier header separator (no explore button — that lives below the tree)
+// Layer header: tier (left) · name (center) · explore button (right)
 function LayerHeader({ tier, name, layerIdx }: { tier: string; name: string; layerIdx: number }) {
+  const [hovered, setHovered] = useState(false);
   const [tierColor, nameColor] = LAYER_COLORS[layerIdx];
   return (
     <div style={{
-      display: "flex", alignItems: "center", gap: 14,
+      display: "flex", alignItems: "center",
       padding: "18px 0 12px",
       borderTop: "0.5px solid rgba(255,255,255,0.07)",
     }}>
-      <div style={{
-        ...MONO, fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase" as const,
-        color: tierColor, whiteSpace: "nowrap" as const,
-      }}>
-        {tier}
+      {/* Left: tier label */}
+      <div style={{ flex: 1 }}>
+        <div style={{
+          ...MONO, fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase" as const,
+          color: tierColor, whiteSpace: "nowrap" as const,
+        }}>
+          {tier}
+        </div>
       </div>
-      <div style={{ flex: 1, height: "0.5px", background: "rgba(255,255,255,0.05)" }} />
-      <span style={{ ...MONO, fontSize: 12, color: nameColor, letterSpacing: "0.04em" }}>
-        {name}
-      </span>
-    </div>
-  );
-}
 
-// Explore button rendered at the bottom-right of each tree section
-function ExploreButton({ layerIdx }: { layerIdx: number }) {
-  const [hovered, setHovered] = useState(false);
-  const [tierColor] = LAYER_COLORS[layerIdx];
-  return (
-    <div style={{ display: "flex", justifyContent: "center", padding: "12px 0 4px", marginBottom: 20 }}>
-      <button
-        onClick={() => navigateTo(layerIdx)}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          ...MONO,
-          fontSize: 10,
-          letterSpacing: "0.06em",
-          cursor: "pointer",
-          padding: "9px 18px",
-          border: `0.5px solid ${hovered ? tierColor : "rgba(255,255,255,0.12)"}`,
-          borderRadius: 6,
-          background: hovered ? `${tierColor}18` : "rgba(255,255,255,0.03)",
-          color: hovered ? tierColor : "rgba(255,255,255,0.45)",
-          transition: "color 0.15s, border-color 0.15s, background 0.15s",
-        }}
-      >
-        Explore layer →
-      </button>
+      {/* Center: subtitle name */}
+      <div style={{ flex: 1, textAlign: "center" as const }}>
+        <span style={{ ...MONO, fontSize: 12, color: nameColor, letterSpacing: "0.04em" }}>
+          {name}
+        </span>
+      </div>
+
+      {/* Right: explore button */}
+      <div style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+        <button
+          onClick={() => navigateTo(layerIdx)}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          style={{
+            ...MONO, fontSize: 9, letterSpacing: "0.05em",
+            cursor: "pointer",
+            padding: "6px 14px",
+            border: `0.5px solid ${hovered ? tierColor : "rgba(255,255,255,0.1)"}`,
+            borderRadius: 6,
+            background: hovered ? `${tierColor}18` : "rgba(255,255,255,0.03)",
+            color: hovered ? tierColor : "rgba(255,255,255,0.35)",
+            transition: "color 0.15s, border-color 0.15s, background 0.15s",
+          }}
+        >
+          Explore layer →
+        </button>
+      </div>
     </div>
   );
 }
@@ -246,7 +245,6 @@ export default function FullChainMap() {
           onLayerClick={() => {}}
           layerPanels={{}}
         />
-        <ExploreButton layerIdx={0} />
       </div>
 
       {/* Bridge Raw → Comp */}
@@ -274,7 +272,6 @@ export default function FullChainMap() {
             geCl4CY={geCl4CY} fiberCY={fiberCY}
           />
         </div>
-        <ExploreButton layerIdx={1} />
       </div>
 
       {/* Bridge Comp → Sub */}
@@ -295,7 +292,6 @@ export default function FullChainMap() {
           onLayerClick={() => {}}
           layerPanels={{}}
         />
-        <ExploreButton layerIdx={2} />
       </div>
 
       {/* Bridge Sub → EU */}
@@ -316,7 +312,6 @@ export default function FullChainMap() {
           onLayerClick={() => {}}
           layerPanels={{}}
         />
-        <ExploreButton layerIdx={3} />
       </div>
 
       {/* Node modal */}
