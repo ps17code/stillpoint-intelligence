@@ -118,10 +118,10 @@ export const PALETTES = {
   recyclers:  { stroke: "#5a7a9c", text: "#2a3e54", pip: "#5a7a9c" },
   supplyNodes:{ stroke: "#6a7a5a", text: "#3a4a2a", pip: "#6a7a5a" },
   supply:     { stroke: "#3e2c0e", text: "#3e2c0e", pip: "#3e2c0e" },
-  // Component layer (teal/slate)
-  geCl4:    { stroke: "#3a6b6b", text: "#1e4040", pip: "#3a6b6b" },
-  fiberMfg: { stroke: "#3a5070", text: "#1e2e48", pip: "#3a5070" },
-  compOut:  { stroke: "#1a2e4a", text: "#1a2e4a", pip: "#1a2e4a" },
+  // Component layer (steel blue family — main: #254252)
+  geCl4:    { stroke: "#4d9ab8", text: "#1e3d52", pip: "#4d9ab8" },
+  fiberMfg: { stroke: "#90aab9", text: "#2a3e4a", pip: "#90aab9" },
+  compOut:  { stroke: "#162a36", text: "#162a36", pip: "#162a36" },
   // Subsystem layer (purple-slate)
   assembly: { stroke: "#5a4a6a", text: "#2e1e40", pip: "#5a4a6a" },
   cableType:{ stroke: "#2e4a5a", text: "#0e1e2e", pip: "#2e4a5a" },

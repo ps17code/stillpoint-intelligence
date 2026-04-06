@@ -453,397 +453,460 @@
   "Umicore GeCl4": {
     "type": "GeCl\u2084 chemical supplier",
     "country": "Belgium",
+    "gecl4Output": "~86t/yr",
+    "purity": "8N",
     "loc": "Olen, Belgium",
-    "stat": "World's leading GeCl\u2084 supplier \u00b7 western market dominant",
-    "gecl4Output": "~40-50 t Ge equiv/yr",
-    "purity": "8N \u2014 99.999999%",
+    "displayName": "Umicore",
+    "ticker": "XBRU: UMI",
+    "meta": "Brussels, Belgium \u00b7 GeCl\u2084 supplier \u00b7 Founded 1805",
+    "stat": "\u20ac3.9B market cap \u00b7 Sole western GeCl\u2084 supplier at scale",
     "ownership": "Listed \u00b7 UMI \u00b7 Euronext Brussels",
-    "risk": "DRC supply ramp risk. Export control dependency on recycled scrap feed.",
-    "role": "Umicore is the world's leading supplier of ultrapure GeCl\u2084 for the telecom optical fiber market, supplying the majority of western fiber manufacturers including Corning, Prysmian, and Fujikura. GeCl\u2084 is produced by chlorinating GeO\u2082 from recycled fiber manufacturing scrap and primary concentrate. Purity reaches 8N (99.999999%) \u2014 required to minimize signal attenuation in single-mode fiber. During fiber production a large portion of germanium is lost in waste streams \u2014 Umicore recovers this scrap and refines it back into GeCl\u2084, creating a closed-loop tolling system with most major western fiber manufacturers.",
-    "inv": "UMI is the most direct western investment vehicle for germanium supply chain exposure. Chinese export controls structurally improve Umicore's pricing power.",
+    "risk": "DRC supply ramp risk. Single-facility concentration at Olen.",
+    "role": "Global materials technology and recycling group operating across four business groups: Catalysis, Recycling, Specialty Materials, and Battery Materials. Specialty Materials (\u20ac558M revenue, +4% YoY) houses the germanium business. CEO Bart Sap launched the \u2018CORE\u2019 strategy in March 2025, refocusing on cash generation from foundation businesses.",
+    "geclRelevance": "<b>Sole western GeCl\u2084 supplier at commercial fiber scale.</b> Olen, Belgium facility produces the highest-purity GeCl\u2084 in the industry (8N \u2014 99.999999%) and supplies the majority of western and Japanese fiber manufacturers \u2014 Corning, Prysmian, Fujikura, Sumitomo, Shin-Etsu \u2014 under long-term agreements.\n\nOver 50% of germanium input comes from <b>recycled manufacturing waste</b> sent back by these same customers via closed-loop tolling. Umicore is simultaneously supplier and sole recycler \u2014 a circular dependency with no western alternative.\n\nHolds <b>exclusive offtake</b> on the only new western primary germanium source \u2014 the DRC Big Hill project (STL/G\u00e9camines, 30t/yr capacity, first concentrates shipped October 2024). EU Commission selected both Umicore germanium projects (GePETO, ReGAIN) as the only germanium-related projects under the Critical Raw Materials Act.",
+    "inv": "UMI is the most direct western investment vehicle for germanium supply chain exposure. Chinese export controls structurally improve Umicore\u2019s pricing power.",
     "stats": [
-      [
-        "Ticker",
-        "UMI \u00b7 Euronext"
-      ],
-      [
-        "GeCl\u2084 purity",
-        "8N (99.999999%)"
-      ],
-      [
-        "Market position",
-        "#1 western supplier"
-      ],
-      [
-        "Tolling model",
-        "Scrap recovery loop with Corning, Prysmian"
-      ]
+      ["Market cap", "\u20ac3.9B"],
+      ["Revenue", "\u20ac3.6B"],
+      ["Adj. EBITDA", "\u20ac847M"],
+      ["GeCl\u2084 output/yr", "~86t"]
+    ],
+    "keyMetrics": [
+      ["Ge input/yr", "~40\u201350t"],
+      ["GeCl\u2084 output (Ge equiv.)", "~26\u201333t"],
+      ["Purity grade", "8N"],
+      [">50% input from recycling", "closed-loop tolling"],
+      ["DRC capacity (ramping)", "30t/yr"]
     ],
     "risks": [
       "DRC Big Hill ramp timeline uncertain",
       "Recycled scrap feed shrinks if Chinese fiber output declines",
       "Single facility concentration risk \u2014 Olen, Belgium"
+    ],
+    "sources": [
+      { "pct": "~55%", "name": "Fiber optic scrap", "note": "Corning, Prysmian, OFS off-cuts", "tag": "closed-loop" },
+      { "pct": "~30%", "name": "IR optics & military scrap", "note": "End-of-life thermal imaging equipment" },
+      { "pct": "~15%", "name": "DRC concentrate", "note": "Chemaf/STL partnership \u2014 primary feed since 2024", "trend": "up" }
+    ],
+    "sells": [
+      { "name": "Corning", "product": "GeCl\u2084 for OVD preform process", "tag": "also-sources-from" },
+      { "name": "Prysmian", "product": "GeCl\u2084 for MCVD process", "tag": "also-sources-from" },
+      { "name": "Fujikura", "product": "GeCl\u2084 for fiber preforms", "tag": "also-sources-from" },
+      { "name": "Sumitomo Electric", "product": "GeCl\u2084 for fiber preforms", "tag": "also-sources-from" },
+      { "name": "Shin-Etsu", "product": "GeCl\u2084 for Japan Kashima Plant", "tag": "also-sources-from" }
     ]
   },
   "Yunnan Chihong GeCl4": {
     "type": "GeCl\u2084 chemical supplier",
     "country": "China",
-    "loc": "Qujing, Yunnan, China",
-    "stat": "Largest Chinese GeCl\u2084 producer \u00b7 ~66 t Ge/yr refined",
-    "gecl4Output": "~50-60 t Ge equiv/yr",
-    "purity": "6N-7N purity",
-    "ownership": "Listed \u00b7 600497 \u00b7 SSE",
+    "gecl4Output": "30t/yr",
+    "purity": "6N–7N",
+    "loc": "Kunming, Yunnan, China",
+    "displayName": "Yunnan Chihong",
+    "ticker": "SHA: 600497",
+    "meta": "Kunming, China \u00b7 GeCl\u2084 supplier \u00b7 State-owned (Chinalco)",
+    "stat": "CNY ~8B market cap \u00b7 China\u2019s largest integrated Ge producer",
+    "ownership": "Listed \u00b7 600497 \u00b7 SSE \u00b7 Chinalco subsidiary",
     "risk": "Subject to Chinese export controls. Full US export ban since December 2024.",
-    "role": "Yunnan Chihong is China's largest integrated germanium producer, refining germanium from zinc smelting byproduct and producing GeCl\u2084 for domestic fiber manufacturers including YOFC. Subject to Chinese export controls \u2014 GeCl\u2084 exports to western markets require licensing approval since August 2023, with a full ban to the US imposed December 2024.",
+    "role": "State-owned subsidiary of Chinalco (Aluminum Corporation of China). China\u2019s largest integrated germanium producer \u2014 vertically integrated from mining through refining to downstream products. Operates the Huize mine in Yunnan with 443 tonnes of germanium reserves. Produced 65.9 tonnes of germanium products in 2023.",
+    "geclRelevance": "<b>Operates a dedicated 30t/yr GeCl\u2084 production line</b> specifically for optical fiber applications. Serves China\u2019s domestic fiber manufacturers \u2014 YOFC, Hengtong, FiberHome \u2014 at domestic pricing completely insulated from MOFCOM export controls.\n\nThis creates a <b>permanent structural cost advantage</b> for Chinese fiber production. When western manufacturers pay Umicore spot-linked prices for GeCl\u2084, Chihong\u2019s domestic customers pay controlled rates. The price differential enables Chinese fiber cable to undercut western rivals by 15-20%.",
     "inv": "Chinese A-share listed. Indirect proxy for Chinese germanium pricing. No direct western investment vehicle.",
     "stats": [
-      [
-        "Ticker",
-        "600497 \u00b7 SSE"
-      ],
-      [
-        "Ge output",
-        "~66 t/yr refined"
-      ],
-      [
-        "Export status",
-        "Controlled \u00b7 US banned Dec 2024"
-      ],
-      [
-        "Primary customer",
-        "YOFC \u00b7 domestic fiber mfg"
-      ]
+      ["Market cap", "CNY ~8B"],
+      ["Ge products (2023)", "65.9t"],
+      ["Dedicated GeCl\u2084 line", "30t/yr"],
+      ["Huize reserves", "443t"]
+    ],
+    "keyMetrics": [
+      ["Total Ge output", "60t Ge/yr"],
+      ["Dedicated GeCl\u2084 capacity", "30t/yr"],
+      ["Purity range", "6N\u20137N"],
+      ["Huize mine reserves", "443t"],
+      ["Pricing", "Domestic controlled"]
     ],
     "risks": [
       "Export controls prevent western market access",
       "Price manipulation risk from Chinese state policy",
       "Geopolitical escalation could trigger further restrictions"
+    ],
+    "sources": [
+      { "name": "Huize mine", "note": "Own deposit \u2014 443t Ge reserves, zinc-hosted", "tag": "closed-loop" },
+      { "name": "Yunnan mining operations", "note": "Third-party zinc smelter byproducts" }
+    ],
+    "sells": [
+      { "name": "YOFC", "product": "GeCl\u2084 for fiber preforms" },
+      { "name": "Hengtong / FiberHome", "product": "GeCl\u2084 for domestic fiber mfg" }
     ]
   },
   "Chinese State GeCl4 Plants": {
     "type": "GeCl\u2084 chemical suppliers",
     "country": "China",
+    "gecl4Output": "~50–60t/yr",
+    "purity": "6N–8N",
     "loc": "Multiple provinces, China",
-    "stat": "~50-60 t combined \u00b7 Lincang Xinyuan \u00b7 smaller operators",
-    "gecl4Output": "~50-60 t Ge equiv/yr combined",
-    "purity": "6N-8N various",
-    "ownership": "State-owned / listed entities",
-    "risk": "Export controls block western access. Aggregated opacity.",
-    "role": "Aggregated node representing smaller Chinese GeCl\u2084 producers including Lincang Xinyuan Refinery and other state-affiliated operators. Supply primarily domestic fiber manufacturers. Subject to export controls. Combined output feeds China's significant domestic fiber optic manufacturing base \u2014 China produces ~40% of global optical fiber.",
+    "displayName": "Chinese State GeCl\u2084 Plants",
+    "ticker": "",
+    "meta": "Multiple sites, China \u00b7 GeCl\u2084 suppliers \u00b7 State-affiliated",
+    "stat": "~50\u201360t Ge/yr combined \u00b7 Nanjing Ge, GRINM, Lincang Xinyuan",
+    "ownership": "State-owned / state-linked entities",
+    "risk": "Export controls block western access. MOFCOM licensed for any international shipments.",
+    "role": "Multiple Chinese state-linked processors produce GeCl\u2084 at various scales and purity levels. Includes Nanjing Germanium, GRINM Goujing (formerly Vital Materials), and Yunnan Lincang Xinyuan Germanium Industry. Collectively serve China\u2019s domestic fiber optic market alongside Yunnan Chihong.",
+    "geclRelevance": "Provide the <b>remaining domestic GeCl\u2084 supply</b> for Chinese fiber manufacturers beyond what Chihong produces. Combined output estimated at ~50-60 tonnes Ge equivalent per year. Subject to MOFCOM export licensing for any international shipments.\n\nYunnan Lincang Xinyuan has been <b>documented supplying germanium to Russian defense entities</b> including JSC Germanium (a Rostec subsidiary), per OCCRP/Schemes investigation (January 2025).",
     "inv": "No direct western investment vehicle. Exposure only via Chinese state-owned enterprise listings.",
     "stats": [
-      [
-        "Output",
-        "~50-60 t Ge equiv/yr combined"
-      ],
-      [
-        "Export status",
-        "Controlled \u00b7 US banned"
-      ],
-      [
-        "Customers",
-        "Domestic Chinese fiber mfg"
-      ],
-      [
-        "Purity",
-        "6N-8N depending on operator"
-      ]
+      ["Ge equiv./yr", "~50-60t"],
+      ["Purity range", "6N-8N"],
+      ["Pricing", "Domestic"],
+      ["MOFCOM", "Export-controlled"]
+    ],
+    "keyMetrics": [
+      ["Ge equiv/yr combined", "~50\u201360t"],
+      ["Purity range", "6N\u20138N"],
+      ["Pricing", "Domestic controlled"],
+      ["Export status", "MOFCOM licensed"]
     ],
     "risks": [
       "Export controls block all western supply",
       "Aggregated opacity \u2014 actual output uncertain",
       "State directive risk could redirect supply to strategic uses"
+    ],
+    "sources": [
+      { "name": "Chinese coal ash processing", "note": "Lincang, Inner Mongolia lignite operations" },
+      { "name": "Zinc smelting byproducts", "note": "Various Yunnan and Gansu smelter operations" }
+    ],
+    "sells": [
+      { "name": "YOFC / Hengtong / FiberHome", "product": "GeCl\u2084 for domestic fiber manufacturing" },
+      { "name": "Shin-Etsu China JVs", "product": "GeCl\u2084 at domestic pricing" }
     ]
   },
   "JSC Germanium GeCl4": {
-    "type": "GeCl\u2084 chemical supplier",
+    "type": "Germanium processor \u2014 military/defense",
     "country": "Russia",
-    "loc": "Krasnoyarsk, Russia",
-    "stat": "~15-20 t capacity \u00b7 sanctioned \u00b7 western-blocked",
-    "gecl4Output": "~15-20 t Ge equiv/yr",
-    "purity": "6N-7N purity",
-    "ownership": "State-owned \u00b7 Rostec / Shvabe",
-    "risk": "Fully sanctioned. Zero western market access since 2022.",
-    "role": "JSC Germanium historically supplied GeCl\u2084 to European and Asian fiber manufacturers. Capacity of ~20t Ge equivalent/yr. Post-2022 Russia sanctions have cut off all western market access. Now serves only the Russian domestic fiber market and potentially Chinese buyers through non-sanctioned channels.",
+    "gecl4Output": "~15–20t/yr",
+    "purity": "Military only",
+    "loc": "Moscow / Novomoskovsk, Russia",
+    "displayName": "JSC Germanium",
+    "ticker": "",
+    "meta": "Moscow, Russia \u00b7 Military processor \u00b7 Rostec subsidiary",
+    "stat": "~15\u201320t capacity \u00b7 Sanctioned \u00b7 Zero commercial fiber connection",
+    "ownership": "State-owned \u00b7 Rostec subsidiary",
+    "risk": "Fully sanctioned. Zero western market access. Not a fiber supply chain participant.",
+    "role": "Direct subsidiary of Rostec, Russia\u2019s state defense conglomerate that provides approximately 80% of Russia\u2019s weapons. Processes germanium for military applications \u2014 IR optics for aircraft, combat equipment, night vision systems. Recovers germanium from Spetsugli coal deposit in Russia\u2019s Far East.",
+    "geclRelevance": "<b>Does NOT produce GeCl\u2084 for commercial fiber optics.</b> This is a military entity operating entirely within Russia\u2019s defense-industrial complex. Its germanium output goes to IR optics, military electronics, and defense systems \u2014 not to fiber manufacturers.\n\nSubject to western sanctions. Included on this map for completeness as a germanium processor, but has <b>zero connection to the commercial fiber supply chain</b>. Receives germanium feedstock from Chinese suppliers including Yunnan Lincang Xinyuan.",
     "inv": "No investment case. Sanctioned entity. Historically removed ~9% of western-accessible germanium supply.",
     "stats": [
-      [
-        "Capacity",
-        "~15-20 t Ge equiv/yr"
-      ],
-      [
-        "Purity",
-        "6N-7N"
-      ],
-      [
-        "Status",
-        "Sanctioned \u00b7 western-blocked since 2022"
-      ],
-      [
-        "Customers",
-        "Russian domestic only"
-      ]
+      ["Ge capacity/yr", "~15-20t"],
+      ["End use", "Military only"],
+      ["Status", "Sanctioned"],
+      ["Fiber connection", "Zero"]
+    ],
+    "keyMetrics": [
+      ["Ge capacity/yr", "~15\u201320t"],
+      ["End use", "Military only"],
+      ["Status", "Sanctioned"],
+      ["Commercial fiber role", "Zero connection"]
     ],
     "risks": [
       "Fully sanctioned \u2014 no western access",
       "Permanently removed from western supply picture",
       "Cannot serve as emergency alternative"
+    ],
+    "sources": [
+      { "name": "Spetsugli coal deposit", "note": "Russia\u2019s Far East \u2014 coal fly ash germanium recovery" },
+      { "name": "Chinese suppliers", "note": "Yunnan Lincang Xinyuan (per OCCRP investigation)" }
+    ],
+    "sells": [
+      { "name": "Urals Optical & Mechanical Plant", "product": "Germanium optics for military aircraft" },
+      { "name": "Foton / Rostec subsidiaries", "product": "IR optics for combat gear and night vision" }
     ]
   },
   "Corning": {
     "type": "Fiber optic manufacturer \u2014 vertically integrated",
     "country": "USA",
+    "fiberOutput": "~300–400M fkm/yr",
+    "geConsumption": "~25–30t/yr",
     "loc": "Corning, New York, USA",
-    "stat": "~25-30% global fiber \u00b7 largest western Ge consumer",
-    "fiberOutput": "~300-400M km/yr capacity",
-    "geConsumption": "~25-30 t Ge/yr est.",
-    "annualRevenue": "$1.65B optical Q3 2025",
-    "cableOutput": "~25M fiber-km/yr",
-    "primaryMarket": "AI datacenters \u00b7 hyperscale",
+    "displayName": "Corning",
+    "ticker": "NYSE: GLW",
+    "meta": "Corning, NY, USA \u00b7 Fiber manufacturer \u00b7 Founded 1851",
+    "stat": "~$36B market cap \u00b7 $1.65B optical comms Q3\u201925 (+33%)",
     "ownership": "Listed \u00b7 GLW \u00b7 NYSE",
-    "risk": "AI demand backlog \u2014 multi-year order book.",
-    "role": "Corning's cable division assembles the world's highest-density fiber optic cables for AI datacenters. Enterprise (datacenter) sales grew 58% YoY in Q3 2025. Meta's $6B agreement reserves a significant portion of Corning's global output. Corning's Springboard plan targets 30% CAGR for its enterprise division through AI network growth. Designs include 1,728+ fiber count cables for GPU cluster interconnect.",
+    "risk": "GeO\u2082/GeCl\u2084 supply constraint limits capacity expansion.",
+    "role": "Invented low-loss optical fiber in 1970. World\u2019s largest western fiber manufacturer operating across Optical Communications, Display, Specialty Materials, Environmental, and Life Sciences. Optical communications is the growth engine \u2014 Q3 2025 revenue hit $1.65B (+33% YoY) with enterprise sales surging 58% on AI network demand.",
+    "geclRelevance": "<b>Single largest non-Chinese consumer of fiber-grade germanium.</b> Sources GeCl\u2084 from Umicore under long-term agreements and uses the proprietary OVD process \u2014 which Corning invented \u2014 producing larger preforms with higher deposition efficiency than standard MCVD.\n\nIn January 2026, <b>Meta signed a $6B multiyear agreement</b> \u2014 equal to Corning\u2019s entire 2025 optical-communications revenue from a single customer. Ground broken on Hickory, NC cable expansion March 2026 \u2014 will be one of the largest cable plants in the US. Also developed <b>Contour</b>, a denser cable for AI data centers where Nvidia Blackwell racks require 16x more fiber than traditional cloud racks.\n\nRunning at <b>95-100% capacity utilization</b> with multi-year backlogs. Every new preform line increases demand for GeCl\u2084 from Umicore \u2014 expanding at this layer tightens the layer above it.",
     "inv": "GLW is the most liquid western proxy for AI infrastructure fiber demand. Multi-year datacenter backlogs give rare earnings visibility.",
     "stats": [
-      [
-        "Ticker",
-        "GLW \u00b7 NYSE"
-      ],
-      [
-        "Q3 2025 optical",
-        "$1.65B (+33% YoY)"
-      ],
-      [
-        "Enterprise growth",
-        "58% YoY Q3 2025"
-      ],
-      [
-        "Key deal",
-        "Meta $6B AI datacenter"
-      ]
+      ["Market cap", "~$36B"],
+      ["Q3\u201925 optical rev", "$1.65B"],
+      ["Q3\u201925 net income", "$530M"],
+      ["Fiber-km/yr", "~300-400M"]
+    ],
+    "keyMetrics": [
+      ["Fiber-km/yr capacity", "~300\u2013400M"],
+      ["Ge consumption/yr est.", "~25\u201330t"],
+      ["Meta deal value", "$6B"],
+      ["Utilization", "95\u2013100%"],
+      ["Process type", "OVD"]
     ],
     "risks": [
       "GeO\u2082/GeCl\u2084 supply constraint limits capacity",
       "Significant China revenue exposure (~$1B+ annually)",
       "Overcapacity risk if datacenter buildout slows"
+    ],
+    "sources": [
+      { "name": "Umicore", "note": "Primary GeCl\u2084 supplier \u2014 long-term supply agreement, Belgium", "tag": "closed-loop" }
+    ],
+    "sells": [
+      { "name": "Meta", "product": "Fiber, cable & connectivity \u2014 $6B multiyear anchor deal" },
+      { "name": "Hyperscalers / telecom operators", "product": "Optical fiber strand, cable, connectivity products" },
+      { "name": "BEAD broadband projects", "product": "Domestic-manufactured fiber for federal programs" }
     ]
   },
   "Prysmian": {
     "type": "Fiber optic manufacturer \u2014 vertically integrated",
     "country": "Italy",
+    "fiberOutput": ">30M km/yr",
+    "geConsumption": "~15–20t/yr",
     "loc": "Milan, Italy",
-    "stat": ">18% global fiber \u00b7 30M+ km/yr \u00b7 27 plants",
-    "fiberOutput": ">30M km/yr cable output",
-    "geConsumption": "~15-20 t Ge/yr est.",
-    "annualRevenue": ">$5B cable revenue",
-    "cableOutput": ">30M fiber-km/yr",
-    "primaryMarket": "Telecom \u00b7 submarine \u00b7 FTTH",
+    "displayName": "Prysmian",
+    "ticker": "BIT: PRY",
+    "meta": "Milan, Italy \u00b7 Fiber manufacturer \u00b7 Founded 2005",
+    "stat": "~\u20ac17B market cap \u00b7 15% global fiber share \u00b7 World\u2019s largest cable co.",
     "ownership": "Listed \u00b7 PRY \u00b7 Borsa Italiana",
-    "risk": "European supply chain exposure. High datacenter exposure.",
-    "role": "Prysmian is the world's largest cable manufacturer, producing over 30M km/yr across 27 plants in telecom, datacenter, and submarine segments. Largest global market share in fiber cable at >18%. Expanding capacity to meet AI datacenter demand but constrained by 18-24 month preform lead time.",
+    "risk": "European telecom capex cycles. 18\u201324 month preform expansion lag.",
+    "role": "World\u2019s largest cable company \u2014 energy cables, telecom cables, and submarine cable systems. 15% global fiber market share, the single largest. Acquired Encore Wire to expand North American footprint. Covers full cable value chain from preform manufacturing through finished cable.",
+    "geclRelevance": "Holds the <b>most publicly documented GeCl\u2084 supply arrangement</b> in the industry. In 2020, formalized a long-term supply AND recycling partnership with Umicore targeting \u2018100% sustainable germanium\u2019 through closed-loop recycling \u2014 Prysmian sends waste to Umicore, who reprocesses it into GeCl\u2084 and sells it back.\n\n<b>Acquired a North American preform facility</b> to vertically integrate the preform-to-fiber step. Investing $115M+ across US facilities including Jackson, Tennessee. In July 2025, <b>invested in Relativity Networks</b> \u2014 an HCF startup \u2014 hedging against the germanium-doped fiber thesis with exposure to the replacement technology.",
     "inv": "PRY offers terrestrial and subsea exposure. Subsea demand is driven by AI hyperscalers building private subsea networks.",
     "stats": [
-      [
-        "Ticker",
-        "PRY \u00b7 Borsa Italiana"
-      ],
-      [
-        "Cable output",
-        ">30M km/yr"
-      ],
-      [
-        "Market share",
-        ">18% global fiber cable"
-      ],
-      [
-        "Focus",
-        "AI datacenters + submarine"
-      ]
+      ["Market cap", "~\u20ac17B"],
+      ["FY24 revenue", "\u20ac16B+"],
+      ["US optical capex", "$115M+"],
+      ["Cable-km/yr", ">30M"]
+    ],
+    "keyMetrics": [
+      ["Cable-km/yr output", ">30M"],
+      ["Ge consumption/yr est.", "~15\u201320t"],
+      ["Global fiber share", "15%"],
+      ["Recycling partnership", "Umicore closed-loop"],
+      ["HCF investment (2025)", "Relativity Networks"]
     ],
     "risks": [
       "More exposed to European telecom capex cycles",
       "Italian listing reduces liquidity for US investors",
       "Currency risk (EUR-denominated)"
+    ],
+    "sources": [
+      { "name": "Umicore", "note": "Formalized long-term GeCl\u2084 supply + recycling partnership since 2020", "tag": "closed-loop" }
+    ],
+    "sells": [
+      { "name": "Telecom operators", "product": "Optical fiber cable (terrestrial and FTTH)" },
+      { "name": "Hyperscalers", "product": "Submarine cable systems and AI datacenter fiber" },
+      { "name": "Utilities / energy sector", "product": "Energy cables (Encore Wire) and HVDC systems" }
     ]
   },
   "Fujikura": {
     "type": "Fiber optic manufacturer \u2014 vertically integrated",
     "country": "Japan",
+    "fiberOutput": "~10–15M fkm/yr",
+    "geConsumption": "~7–10t/yr",
     "loc": "Tokyo, Japan",
-    "stat": "~8-10% global share \u00b7 major APAC supplier",
-    "fiberOutput": "~10-15M km/yr est.",
-    "geConsumption": "~7-10 t Ge/yr est.",
-    "annualRevenue": "~$600M cable est.",
-    "cableOutput": "~10M fiber-km/yr est.",
-    "primaryMarket": "APAC telecom \u00b7 enterprise",
+    "displayName": "Fujikura",
+    "ticker": "TYO: 5803",
+    "meta": "Tokyo, Japan \u00b7 Fiber manufacturer \u00b7 Founded 1885",
+    "stat": "~\u00a52.5T market cap \u00b7 \u00a5979B revenue (+22.5%) FY25 \u00b7 +160% stock 2025",
     "ownership": "Listed \u00b7 5803 \u00b7 TSE",
-    "risk": "Japanese supply chain \u2014 limited western direct investment.",
-    "role": "Fujikura assembles fiber optic cables primarily for the Asia-Pacific market through its direct operations and via OFS Fitel in the US. Produces specialty cables for datacenter, telecom, and utility applications. Key supplier to Japanese and Southeast Asian telecom operators.",
-    "inv": "TSE-listed with limited western investor access. Asian AI datacenter buildout is a regional demand driver.",
+    "risk": "Full Umicore dependency for GeCl\u2084 \u2014 no domestic Japanese alternative.",
+    "role": "Developed the world\u2019s first optical fiber in 1959. Revenue from Information Technology (fiber, cables), Electronics (PCBs), Automotive (wiring harnesses), and Energy (power cables). Over 50% of revenue from the US. ~75% of optical fiber output exported. Stock surged 160% in 2025 on AI data center demand.",
+    "geclRelevance": "Sources GeCl\u2084 <b>primarily from Umicore</b>, shipping it from Belgium to Japan. Pre-2023, also imported germanium from China (~8% of China\u2019s Ge exports went to Japan). MOFCOM controls made Chinese supply unreliable, <b>increasing dependence on Umicore</b>.\n\nClosest <b>pure-play public equity</b> exposure to the germanium-to-fiber thesis. Customers include Google/Alphabet. Investing \u00a545B in new Japanese plant for optical fiber capacity. 3-year net income CAGR of 32.58%. Record dividend \u00a5190/share. No domestic Japanese GeCl\u2084 production exists \u2014 Fujikura has fewer alternative supply options than any western competitor.",
+    "inv": "TSE-listed with meaningful western investor access. Closest pure-play on the AI fiber demand + germanium supply constraint thesis.",
     "stats": [
-      [
-        "Ticker",
-        "5803 \u00b7 TSE"
-      ],
-      [
-        "Region",
-        "APAC primary"
-      ],
-      [
-        "US ops",
-        "OFS Fitel"
-      ],
-      [
-        "Specialty",
-        "Datacenter + telecom cable"
-      ]
+      ["Market cap", "~\u00a52.5T"],
+      ["FY25 revenue", "\u00a5979B"],
+      ["FY26 net income (fcst)", "\u00a5132B"],
+      ["Fiber-km/yr", "~10-15M"]
+    ],
+    "keyMetrics": [
+      ["Fiber-km/yr est.", "~10\u201315M"],
+      ["Ge consumption/yr est.", "~7\u201310t"],
+      ["Output exported", "75%"],
+      ["Stock gain 2025", "160%"],
+      ["New plant investment", "\u00a545B"]
     ],
     "risks": [
-      "TSE listing limits western access",
+      "Full Umicore dependency \u2014 no domestic Japanese GeCl\u2084 production",
       "Yen depreciation impacts USD returns",
-      "More telecom-weighted than datacenter-weighted"
+      "Post-AI-surge valuation re-rating risk if growth decelerates"
+    ],
+    "sources": [
+      { "name": "Umicore", "note": "Primary GeCl\u2084 supplier \u2014 Belgium to Japan shipments", "tag": "closed-loop" }
+    ],
+    "sells": [
+      { "name": "Google / Alphabet", "product": "Optical fiber strand and cable \u2014 major anchor customer" },
+      { "name": "US / European / Asian telecom operators", "product": "Fiber optic cable for telecom and datacenter" }
     ]
   },
   "Sumitomo Electric": {
     "type": "Fiber optic manufacturer \u2014 vertically integrated",
     "country": "Japan",
+    "fiberOutput": "~10–15M fkm/yr",
+    "geConsumption": "~7–10t/yr",
     "loc": "Osaka, Japan",
-    "stat": "Top 3 global \u00b7 next-gen fiber leader",
-    "fiberOutput": "~10-15M km/yr est.",
-    "geConsumption": "~7-10 t Ge/yr est.",
-    "annualRevenue": "~$800M cable est.",
-    "cableOutput": "~10M fiber-km/yr est.",
-    "primaryMarket": "Next-gen fiber \u00b7 global",
+    "displayName": "Sumitomo Electric",
+    "ticker": "TYO: 5802",
+    "meta": "Osaka, Japan \u00b7 Fiber manufacturer \u00b7 Founded 1897",
+    "stat": "~\u00a52.8T market cap \u00b7 \u00a54.1T FY24 revenue \u00b7 Top 3 global fiber",
     "ownership": "Listed \u00b7 5802 \u00b7 TSE",
-    "risk": "Diversified across wiring harnesses \u2014 fiber is one segment.",
-    "role": "Sumitomo Electric produces fiber optic cables for telecom, datacenter, and specialty applications globally. Pioneer in next-generation multi-core and ultra-low-loss fiber cable designs. Set world record 1.02 Pbit/s transmission Jan 2025 using 19-core fiber \u2014 next-gen cable types requiring higher germanium precision.",
-    "inv": "Unique dual exposure: AI fiber demand and EV wiring demand.",
+    "risk": "Fiber is a minority of revenue \u2014 diversified industrial reduces direct germanium exposure.",
+    "role": "One of Japan\u2019s largest diversified industrial companies. Business includes Automotive (wiring harnesses \u2014 largest segment), Infocommunications (optical fiber, cables, photonic devices), Electronics, Environment & Energy, and Industrial Materials. Optical fiber is a meaningful but minority portion of total revenue.",
+    "geclRelevance": "Same supply profile as Fujikura \u2014 sources GeCl\u2084 <b>primarily from Umicore</b> with some historical Chinese imports now reduced under MOFCOM controls. <b>Does NOT source from Russian JSC Germanium.</b>\n\nGermanium and fiber are a <b>smaller share of total revenue</b> than Fujikura, making Sumitomo a less direct play on the germanium-to-fiber thesis. One of the original fiber optic manufacturers with decades of preform and fiber production expertise.",
+    "inv": "Unique dual exposure: AI fiber demand and EV wiring harness demand. Less pure-play than Fujikura given diversified revenue base.",
     "stats": [
-      [
-        "Ticker",
-        "5802 \u00b7 TSE"
-      ],
-      [
-        "Specialty",
-        "Multi-core + ULL cable"
-      ],
-      [
-        "Record",
-        "1.02 Pbit/s Jan 2025"
-      ],
-      [
-        "Market",
-        "Global top 3"
-      ]
+      ["Market cap", "~\u00a52.8T"],
+      ["FY24 revenue", "\u00a54.1T"],
+      ["Net income", "\u2014"],
+      ["Fiber-km/yr", "~10-15M"]
+    ],
+    "keyMetrics": [
+      ["Fiber-km/yr est.", "~10\u201315M"],
+      ["Ge consumption/yr est.", "~7\u201310t"],
+      ["GeCl\u2084 source", "Umicore primary"],
+      ["Fiber vs. total rev", "Minority segment"]
     ],
     "risks": [
-      "Fiber is a minority of revenue",
-      "Auto wiring harness slowdown could weigh on valuation",
-      "TSE listing limits western access"
+      "Fiber is a minority of revenue \u2014 auto wiring harness dominates valuation",
+      "TSE listing limits western direct access",
+      "Auto wiring harness slowdown could weigh on overall valuation"
+    ],
+    "sources": [
+      { "name": "Umicore", "note": "Primary GeCl\u2084 supplier \u2014 Belgium to Japan, closed-loop recycling", "tag": "closed-loop" }
+    ],
+    "sells": [
+      { "name": "Japanese and global telecom operators", "product": "Optical fiber strand and cable" },
+      { "name": "Specialty applications", "product": "Multi-core and ultra-low-loss fiber for next-gen transmission" }
     ]
   },
   "Shin-Etsu": {
     "type": "Fiber optic preform specialist",
     "country": "Japan",
+    "fiberOutput": "~5–8M fkm/yr",
+    "geConsumption": "~4–6t/yr",
     "loc": "Tokyo, Japan",
-    "stat": "Major preform supplier \u00b7 silicon + Ge dual chemistry",
-    "fiberOutput": "~5-8M km/yr est.",
-    "geConsumption": "~4-6 t Ge/yr est.",
+    "displayName": "Shin-Etsu",
+    "ticker": "TYO: 4063",
+    "meta": "Tokyo, Japan \u00b7 Preform manufacturer \u00b7 Founded 1926",
+    "stat": "~\u00a58T market cap \u00b7 Japan\u2019s largest chemical co. \u00b7 Dual Si + Ge expertise",
     "ownership": "Listed \u00b7 4063 \u00b7 TSE",
-    "risk": "Dual exposure: fiber optics + semiconductor wafers.",
-    "role": "Shin-Etsu Chemical is a major fiber optic preform manufacturer with unique dual expertise in both silicon and germanium chemistry \u2014 it supplies both SiO\u2082 cladding and GeO\u2082 core materials. This vertical integration in glass chemistry makes Shin-Etsu less exposed to GeCl\u2084 supply volatility than pure fiber drawers. Supplies preforms to third-party fiber manufacturers.",
+    "risk": "Silicon wafer oversupply risk if AI chip demand cycles down.",
+    "role": "Japan\u2019s largest chemical company. World leader in PVC, semiconductor silicon wafers, and silicones. Optical fiber preform is part of the Electronics Materials segment. Produces preforms at Kashima (Japan), plus two China JVs \u2014 Shin-Etsu Jiangsu (with Fasten Group) and Shin-Etsu YOFC (Hubei, with YOFC).",
+    "geclRelevance": "<b>Unique dual sourcing</b> among Japanese manufacturers. Japanese Kashima Plant sources GeCl\u2084 from Umicore. China JV operations source domestically from Yunnan Chihong and Chinese state plants at controlled pricing.\n\nThis gives Shin-Etsu <b>more supply flexibility</b> than Fujikura or Sumitomo, but creates a split cost structure \u2014 Japanese output at Umicore prices, Chinese output at domestic prices. Invested <b>\u00a518B in preform capacity expansion</b> across all three manufacturing sites.",
     "inv": "Unique dual-exposure play: AI chip demand drives silicon wafer volumes AND AI datacenter buildout drives fiber preform volumes.",
     "stats": [
-      [
-        "Ticker",
-        "4063 \u00b7 TSE"
-      ],
-      [
-        "Specialty",
-        "Silicon + Ge dual chemistry"
-      ],
-      [
-        "Model",
-        "Preform supplier to 3rd parties"
-      ],
-      [
-        "Advantage",
-        "Lower GeCl\u2084 supply risk"
-      ]
+      ["Market cap", "~\u00a58T"],
+      ["FY24 revenue", "\u00a52.4T"],
+      ["Net income", "\u2014"],
+      ["Fiber-km/yr (Japan)", "~5-8M"]
+    ],
+    "keyMetrics": [
+      ["Fiber-km/yr est. (Japan)", "~5\u20138M"],
+      ["Ge consumption/yr est. (Japan)", "~4\u20136t"],
+      ["GeCl\u2084 sourcing", "Dual (Umicore + Chinese domestic)"],
+      ["Manufacturing plants", "Japan + 2 China JVs"],
+      ["Preform expansion", "\u00a518B"]
     ],
     "risks": [
       "Silicon wafer oversupply risk if AI chip demand cycles",
       "Japanese listed \u2014 limited western direct access",
       "Yen exposure for USD investors"
+    ],
+    "sources": [
+      { "name": "Umicore", "note": "GeCl\u2084 for Kashima Plant (Japan operations)", "tag": "closed-loop" },
+      { "name": "Yunnan Chihong / Chinese domestic", "note": "GeCl\u2084 at domestic pricing for China JV operations" }
+    ],
+    "sells": [
+      { "name": "Fiber drawing operations", "product": "Optical fiber preforms (own plants + third-party fiber manufacturers)" }
     ]
   },
   "YOFC": {
     "type": "Fiber optic manufacturer \u2014 vertically integrated",
     "country": "China",
+    "fiberOutput": "3,500t preform/yr",
+    "geConsumption": "~15–20t/yr",
     "loc": "Wuhan, China",
-    "stat": "Largest in China \u00b7 ~10% global \u00b7 Corning JV",
-    "fiberOutput": "Largest Chinese output",
-    "geConsumption": "~15-20 t Ge/yr est. (domestic supply)",
-    "ownership": "Listed \u00b7 601869 \u00b7 SSE \u00b7 Corning JV",
-    "risk": "Chinese state-backed. Partial Corning JV. Geopolitically complex.",
-    "role": "YOFC is China's largest fiber manufacturer and among the top globally. State-controlled with Corning as JV partner \u2014 giving access to western preform technology while retaining direct access to domestic Chinese GeCl\u2084 unaffected by export controls. In November 2023 began commercial production of hollow-core fiber at scale. China's domestic fiber manufacturers are insulated from export control risk \u2014 they source GeCl\u2084 from Yunnan Chihong and state chemical plants.",
-    "inv": "Chinese listed A-share with limited western access. The Corning JV structure creates a direct link between Chinese Ge supply and western fiber manufacturing IP.",
+    "displayName": "YOFC",
+    "ticker": "HKEX: 6869",
+    "meta": "Wuhan, China \u00b7 Fiber manufacturer \u00b7 Founded 1988",
+    "stat": "~HK$18B market cap \u00b7 World\u2019s largest preform capacity \u00b7 3,500t/yr",
+    "ownership": "Listed \u00b7 HKEX: 6869 \u00b7 Corning JV",
+    "risk": "Chinese state-backed. Geopolitically complex. Corning JV creates IP exposure.",
+    "role": "World\u2019s largest optical fiber preform manufacturer by capacity. China\u2019s dominant fiber and cable producer. Vertically integrated from preform to cable. JVs with Shin-Etsu for advanced preform technology. International plants in Mexico, Indonesia, South Africa, Brazil, and Poland. Supplies China Mobile (30% of their fiber needs).",
+    "geclRelevance": "Operates on an <b>entirely separate supply chain</b> from western manufacturers. GeCl\u2084 from Yunnan Chihong, Nanjing Germanium, and Chinese state plants at <b>controlled domestic pricing</b> insulated from export controls and global price surges. Chinese manufacturers undercut western rivals by 15-20%.\n\nAlso the <b>global leader in hollow-core fiber</b> \u2014 the technology that eliminates germanium entirely. Began commercial HCF production late 2023. World-record 0.040 dB/km attenuation. Demonstrated 1.2Tb/s over HCF with ZTE (July 2024). Positioned on <b>both sides of the germanium thesis</b> \u2014 profiting from the incumbent technology while developing its replacement.",
+    "inv": "HKEX-listed with more western accessibility than SSE. The Corning JV structure creates a direct link between Chinese Ge supply and western fiber manufacturing IP.",
     "stats": [
-      [
-        "Ticker",
-        "601869 \u00b7 SSE"
-      ],
-      [
-        "Ownership",
-        "State + Corning JV"
-      ],
-      [
-        "Ge advantage",
-        "Direct domestic GeCl\u2084 access"
-      ],
-      [
-        "Innovation",
-        "Hollow-core fiber 2023"
-      ]
+      ["Market cap", "~HK$18B"],
+      ["2025 rev (proj.)", "~$5B"],
+      ["Preform capacity", "3,500t/yr"],
+      ["Export countries", "100+"]
+    ],
+    "keyMetrics": [
+      ["Preform capacity (world #1)", "3,500t/yr"],
+      ["Ge consumption/yr est.", "~15\u201320t"],
+      ["GeCl\u2084 pricing", "Domestic controlled"],
+      ["Cost advantage vs west", "15\u201320%"],
+      ["Hollow-core fiber status", "Commercial leader"]
     ],
     "risks": [
       "Geopolitical risk \u2014 Chinese state ownership",
       "Corning JV creates IP transfer concerns",
       "Export control risk limits western sales potential"
+    ],
+    "sources": [
+      { "name": "Yunnan Chihong", "note": "30t/yr dedicated GeCl\u2084 line at domestic pricing" },
+      { "name": "Nanjing Germanium / State GeCl\u2084 plants", "note": "Supplementary domestic supply" },
+      { "name": "Shin-Etsu JV (Hubei)", "note": "Advanced preform technology access" }
+    ],
+    "sells": [
+      { "name": "China Mobile", "product": "Fiber and cable \u2014 30% of their supply needs" },
+      { "name": "Global telecom operators (100+ countries)", "product": "Optical fiber strand and cable, Belt and Road projects" }
     ]
   },
   "Optical Fiber Strand": {
     "type": "Output node",
     "country": "",
     "loc": "Global",
-    "stat": "~500M fiber-km/yr current \u00b7 ~1.3B km needed for AI by 2026",
-    "totalOutput": "~500M fiber-km/yr",
-    "aiDemand": "~1.3B fiber-km needed 2026",
-    "risk": "Supply cannot triple in time without proportional GeCl\u2084 increase.",
-    "role": "Global optical fiber strand production is currently ~500 million fiber-km per year. AI datacenter buildout is driving demand toward ~1.3 billion fiber-km per year by 2026 \u2014 a 2.6x increase requiring a proportional increase in GeCl\u2084 supply. Each fiber-km contains approximately 0.02-0.05g of germanium in the core. At 1.3B km annual deployment, fiber alone would require ~180 tonnes of germanium per year \u2014 against total global supply of ~220 tonnes.",
-    "inv": "Do not invest at the strand level. Invest upstream at GeCl\u2084 suppliers or downstream at hyperscale operators.",
+    "displayName": "Optical Fiber Strand",
+    "ticker": "",
+    "meta": "Output product \u00b7 Component layer",
+    "stat": ">1B fiber-km/yr produced \u00b7 ~700M km/yr deployed \u00b7 China 60% of output",
+    "risk": "Supply gap cannot close before late 2027 due to 18\u201324 month preform expansion lag.",
+    "role": "Continuous strands of germanium-doped silica glass, 125 micrometers in diameter \u2014 thinner than a human hair. Drawn from preforms at 10-20 meters per second. Each strand carries data as pulses of light through the germanium-doped core. The germanium doping raises the refractive index by ~0.35%, creating the waveguide effect that makes fiber optic communication possible.",
+    "geclRelevance": "Global production exceeds 1 billion fiber-km per year. China produces ~60% of global output. Annual new deployment is ~700 million fiber-km, with forecasts projecting <b>1.3-1.4 billion fiber-km by 2030</b> driven by AI datacenter buildouts, BEAD broadband, and 5G.\n\nEach kilometer of fiber strand requires <b>~0.09 grams of germanium input</b> \u2014 of which roughly a third ends up embedded in the glass and the rest is recycled. The numbers are small per kilometer. But at 700 million new fiber-km per year and growing, the aggregate is enormous.",
+    "inv": "The cable itself is a commodity. Invest in manufacturers with highest datacenter/subsea mix (Corning, Prysmian) or at the hyperscale operator level.",
     "stats": [
-      [
-        "Current output",
-        "~500M fiber-km/yr"
-      ],
-      [
-        "AI demand 2026",
-        "~1.3B fiber-km/yr"
-      ],
-      [
-        "Ge per km",
-        "~0.03g Ge (trace dopant)"
-      ],
-      [
-        "Supply implication",
-        "180 t Ge/yr for fiber alone vs 220 t total"
-      ]
+      ["Fiber-km/yr produced", ">1B"],
+      ["Fiber-km/yr deployed", "~700M"],
+      ["2030 forecast", "1.3-1.4B"],
+      ["Ge per fiber-km", "0.087g"]
+    ],
+    "keyMetrics": [
+      ["Fiber-km/yr produced", ">1B"],
+      ["Fiber-km/yr deployed", "~700M"],
+      ["2030 deployment forecast", "1.3\u20131.4B"],
+      ["China\u2019s share of output", "~60%"],
+      ["Ge input per fiber-km", "0.087g"]
     ],
     "risks": [
-      "Supply cannot triple without proportional GeCl\u2084 increase",
+      "Supply gap cannot close before late 2027 due to 18\u201324 month preform lag",
       "Chinese export controls directly constrain capacity expansion",
       "Demand pull-forward could exhaust western GeCl\u2084 stocks"
+    ],
+    "sources": [
+      { "name": "Corning / Prysmian / Fujikura / Sumitomo / Shin-Etsu", "note": "Western preform manufacturers feeding fiber drawing operations" },
+      { "name": "YOFC / Hengtong / FiberHome", "note": "Chinese manufacturers producing ~60% of global fiber output" }
+    ],
+    "sells": [
+      { "name": "Subsystem layer \u2014 fiber optic cable manufacturers", "product": "Strand input for stranding, jacketing, and armoring into finished cable" },
+      { "name": "Submarine cable systems", "product": "Ultra-low-loss strand for transoceanic routes" },
+      { "name": "Datacenter interconnects", "product": "High-fiber-count strand for AI cluster interconnect" }
     ]
   },
   "Vertiv": {

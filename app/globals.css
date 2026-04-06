@@ -48,6 +48,12 @@ body {
 .thin-scroll::-webkit-scrollbar { width: 3px; }
 .thin-scroll::-webkit-scrollbar-thumb { background: rgba(80,80,70,0.3); }
 
+/* ── Animations ────────────────────────────────────────────────── */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ── Grain overlay ─────────────────────────────────────────────── */
 .grain {
   position: fixed;

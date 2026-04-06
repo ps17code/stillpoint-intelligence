@@ -61,16 +61,21 @@ export default function InsightsColumn() {
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         {/* Stat cards */}
         <div style={{ display: "flex", gap: "8px" }}>
-          <div style={{ flex: 1, padding: "10px 12px 6px", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "4px", background: "white" }}>
-            <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "7px", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#a8a49a", marginBottom: "3px" }}>GeO₂ spot price</div>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "5px" }}>
-              <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "14px", fontWeight: 600, color: "#5a5647", letterSpacing: "-0.3px" }}>$2,840/kg</span>
-              <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "8px", fontWeight: 600, color: "#9a7b3c" }}>+202%</span>
+          <div style={{ flex: 1, display: "flex", alignItems: "stretch", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "4px", background: "white", overflow: "hidden" }}>
+            <div style={{ padding: "10px 12px 8px", flexShrink: 0 }}>
+              <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "7px", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#a8a49a", marginBottom: "3px" }}>Ge Metal Spot Price</div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "5px" }}>
+                <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "14px", fontWeight: 600, color: "#5a5647", letterSpacing: "-0.3px" }}>$8,597</span>
+                <span style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "8px", fontWeight: 600, color: "#9a7b3c" }}>+202%</span>
+              </div>
+              <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "6.5px", color: "#b8b4aa", marginTop: "4px", whiteSpace: "nowrap" as const }}>per kg · Fastmarkets Mar 2026</div>
             </div>
-            <svg width="100%" viewBox="0 0 200 32" preserveAspectRatio="none" style={{ marginTop: "4px" }}>
-              <path d="M0,28 L12,27 L24,26 L36,25 L48,27 L60,28 L72,27 L84,26 L96,25 L108,23 L120,20 L126,16 L132,12 L140,17 L150,12 L160,8 L168,4 L174,6 L180,4 L186,3 L192,2 L200,1" fill="none" stroke="#9a7b3c" strokeWidth="1.5" />
-              <path d="M0,28 L12,27 L24,26 L36,25 L48,27 L60,28 L72,27 L84,26 L96,25 L108,23 L120,20 L126,16 L132,12 L140,17 L150,12 L160,8 L168,4 L174,6 L180,4 L186,3 L192,2 L200,1 L200,32 L0,32 Z" fill="#9a7b3c" opacity="0.07" />
-            </svg>
+            <div style={{ flex: 1, display: "flex", alignItems: "stretch", minWidth: 0 }}>
+              <svg width="100%" height="100%" viewBox="0 0 200 52" preserveAspectRatio="none">
+                <path d="M0,44 L12,43 L24,42 L36,41 L48,43 L60,44 L72,43 L84,42 L96,41 L108,39 L120,36 L126,32 L132,28 L140,33 L150,28 L160,22 L168,16 L174,18 L180,16 L186,14 L192,12 L200,10" fill="none" stroke="#9a7b3c" strokeWidth="1.5" />
+                <path d="M0,44 L12,43 L24,42 L36,41 L48,43 L60,44 L72,43 L84,42 L96,41 L108,39 L120,36 L126,32 L132,28 L140,33 L150,28 L160,22 L168,16 L174,18 L180,16 L186,14 L192,12 L200,10 L200,52 L0,52 Z" fill="#9a7b3c" opacity="0.07" />
+              </svg>
+            </div>
           </div>
           <div style={{ flex: 1, padding: "10px 12px 6px", border: "0.5px solid rgba(80,80,70,0.2)", borderRadius: "4px", background: "white" }}>
             <div style={{ fontFamily: "var(--font-mono, 'Courier New', monospace)", fontSize: "7px", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#a8a49a", marginBottom: "3px" }}>Western supply</div>
