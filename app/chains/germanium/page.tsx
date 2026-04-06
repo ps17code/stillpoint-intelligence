@@ -113,6 +113,16 @@ const CARDS_META = [
   { name: "Deployment",    desc: "AI datacenter, broadband, submarine",      layerIdx: 3 },
 ];
 
+const SECTION_IDS = ["chain-raw", "chain-comp", "chain-sub", "chain-eu"];
+const NAV_HEIGHT = 36;
+
+function scrollToLayer(layerIdx: number) {
+  const el = document.getElementById(SECTION_IDS[layerIdx]);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - NAV_HEIGHT;
+  window.scrollTo({ top, behavior: "smooth" });
+}
+
 export default function GermaniumChainPage() {
   const [activeIdx, setActiveIdx] = useState(1);
   const [hovered, setHovered]     = useState<number | null>(null);
@@ -198,7 +208,7 @@ export default function GermaniumChainPage() {
           <div style={{
             width: 340, flexShrink: 0,
             display: "flex", flexDirection: "column", justifyContent: "center",
-            padding: "48px 36px 48px 0",
+            padding: "48px 36px 0 0",
           }}>
             {CARDS_META.map((card, i) => {
               const isActive  = i === activeIdx;
@@ -222,13 +232,13 @@ export default function GermaniumChainPage() {
                 <div key={card.name}>
                   {i > 0 && (
                     <div style={{
-                      width: "0.5px", height: 8,
+                      width: "0.5px", height: 20,
                       background: "rgba(255,255,255,0.08)",
                       margin: "0 auto",
                     }} />
                   )}
                   <div
-                    onClick={() => navigateTo(card.layerIdx)}
+                    onClick={() => scrollToLayer(card.layerIdx)}
                     onMouseEnter={() => setHovered(i)}
                     onMouseLeave={() => setHovered(null)}
                     style={{
@@ -258,7 +268,7 @@ export default function GermaniumChainPage() {
 
                     {/* Arrow */}
                     <div style={{ ...MONO, fontSize: 13, color: arrowColor, flexShrink: 0, transition: "color 0.15s" }}>
-                      →
+                      ↓
                     </div>
                   </div>
                 </div>

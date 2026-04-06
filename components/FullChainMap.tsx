@@ -226,7 +226,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── RAW MATERIAL ───────────────────────────────────────────── */}
-      <div style={{ padding: "0 24px" }}>
+      <div id="chain-raw" style={{ padding: "0 24px" }}>
         <LayerHeader
           tier="Raw Material" name="Germanium" layerIdx={0}
           hovered={hoveredHeader === 0}
@@ -251,7 +251,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── COMPONENT ──────────────────────────────────────────────── */}
-      <div style={{ padding: "0 24px" }}>
+      <div id="chain-comp" style={{ padding: "0 24px" }}>
         <LayerHeader
           tier="Component" name="GeO₂ / GeCl₄" layerIdx={1}
           hovered={hoveredHeader === 1}
@@ -283,7 +283,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── SUBSYSTEM ──────────────────────────────────────────────── */}
-      <div style={{ padding: "0 24px" }}>
+      <div id="chain-sub" style={{ padding: "0 24px" }}>
         <LayerHeader
           tier="Subsystem" name="Fiber Optics" layerIdx={2}
           hovered={hoveredHeader === 2}
@@ -308,7 +308,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── END USE ────────────────────────────────────────────────── */}
-      <div style={{ padding: "0 24px 80px" }}>
+      <div id="chain-eu" style={{ padding: "0 24px 80px" }}>
         <LayerHeader
           tier="End Use" name="AI Datacenter" layerIdx={3}
           hovered={hoveredHeader === 3}
