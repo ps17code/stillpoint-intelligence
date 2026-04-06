@@ -409,7 +409,11 @@ export default function Home() {
 
               {/* THESIS BLOCK */}
               {currentThesis && (
-                <div style={{ background: appState === 2 ? "#0F0F0E" : "#282828", padding: appState === 2 ? "28px 32px 20px" : "32px 36px 36px" }}>
+                <div style={{
+                  background: appState === 2 ? "#0F0F0E" : "#282828",
+                  padding: appState === 2 ? "28px 32px 20px" : "32px 36px 36px",
+                  ...(appState === 2 ? { maxWidth: 720, margin: "0 auto" } : {}),
+                }}>
                   {appState === 2 && (
                     <div style={{
                       fontFamily: "'Geist Mono', 'Courier New', monospace",

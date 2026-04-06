@@ -528,7 +528,7 @@ export default function CompAnalysisTabs() {
       </div>
 
       {/* ─── Content area ─── */}
-      <div style={{ padding: "28px 32px 40px", maxWidth: 720 }}>
+      <div style={{ padding: "28px 32px 40px", maxWidth: 720, margin: "0 auto" }}>
         {/* Takeaway */}
         <div
           style={{
@@ -638,6 +638,7 @@ export default function CompAnalysisTabs() {
           borderTop: "0.5px solid rgba(196,164,108,0.08)",
           padding: 32,
           maxWidth: 720,
+          margin: "0 auto",
         }}
       >
         <div
