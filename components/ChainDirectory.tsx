@@ -203,30 +203,30 @@ export default function ChainDirectory() {
         onMouseLeave={() => setHoverCollapsed(false)}
         style={{
           position: "fixed", bottom: 16, right: 16, zIndex: 200,
-          display: "flex", alignItems: "center", gap: 8,
-          padding: "8px 14px",
-          background: hoverCollapsed ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.03)",
-          border: `0.5px solid ${hoverCollapsed ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.06)"}`,
+          display: "flex", alignItems: "center", gap: 10,
+          padding: "10px 18px",
+          background: hoverCollapsed ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.10)",
+          border: `0.5px solid ${hoverCollapsed ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.14)"}`,
           borderRadius: 8,
           cursor: "pointer",
           transition: "background 0.15s, border-color 0.15s",
         }}
       >
         {/* Stacked lines icon */}
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ flexShrink: 0 }}>
-          <line x1="2" y1="4"  x2="10" y2="4"  stroke="rgba(255,255,255,0.15)" strokeWidth="0.5"/>
-          <line x1="2" y1="7"  x2="10" y2="7"  stroke="rgba(255,255,255,0.10)" strokeWidth="0.5"/>
-          <line x1="2" y1="10" x2="10" y2="10" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5"/>
+        <svg width="14" height="14" viewBox="0 0 12 12" fill="none" style={{ flexShrink: 0 }}>
+          <line x1="2" y1="4"  x2="10" y2="4"  stroke="rgba(255,255,255,0.7)" strokeWidth="0.5"/>
+          <line x1="2" y1="7"  x2="10" y2="7"  stroke="rgba(255,255,255,0.5)" strokeWidth="0.5"/>
+          <line x1="2" y1="10" x2="10" y2="10" stroke="rgba(255,255,255,0.35)" strokeWidth="0.5"/>
         </svg>
         {/* Label */}
-        <span style={{ ...MONO, fontSize: 8, color: "rgba(255,255,255,0.25)", letterSpacing: "0.03em" }}>
+        <span style={{ ...MONO, fontSize: 10, color: "rgba(255,255,255,0.85)", letterSpacing: "0.03em" }}>
           Chains
         </span>
         {/* Count badge */}
         <span style={{
-          ...MONO, fontSize: 7, color: "rgba(255,255,255,0.1)",
-          background: "rgba(255,255,255,0.03)",
-          padding: "2px 5px", borderRadius: 4,
+          ...MONO, fontSize: 8, color: "rgba(255,255,255,0.5)",
+          background: "rgba(255,255,255,0.08)",
+          padding: "2px 6px", borderRadius: 4,
         }}>
           {CHAINS.length}
         </span>
@@ -242,8 +242,8 @@ export default function ChainDirectory() {
         position: "fixed", bottom: 16, right: 16, zIndex: 200,
         width: 260,
         maxHeight: 320,
-        background: "rgba(15,15,14,0.97)",
-        border: "0.5px solid rgba(255,255,255,0.06)",
+        background: "rgba(30,30,28,0.96)",
+        border: "0.5px solid rgba(255,255,255,0.14)",
         borderRadius: 10,
         overflow: "hidden",
         display: "flex", flexDirection: "column",
@@ -260,11 +260,11 @@ export default function ChainDirectory() {
       {/* Header */}
       <div style={{
         padding: "10px 14px 8px",
-        borderBottom: "0.5px solid rgba(255,255,255,0.03)",
+        borderBottom: "0.5px solid rgba(255,255,255,0.08)",
         display: "flex", alignItems: "center", justifyContent: "space-between",
         flexShrink: 0,
       }}>
-        <span style={{ ...MONO, fontSize: 8, color: "rgba(255,255,255,0.15)", letterSpacing: "0.06em" }}>
+        <span style={{ ...MONO, fontSize: 8, color: "rgba(255,255,255,0.5)", letterSpacing: "0.06em" }}>
           CHAINS
         </span>
         <button
@@ -272,11 +272,11 @@ export default function ChainDirectory() {
           onMouseEnter={() => setHoverClose(true)}
           onMouseLeave={() => setHoverClose(false)}
           style={{
-            background: hoverClose ? "rgba(255,255,255,0.03)" : "none",
+            background: hoverClose ? "rgba(255,255,255,0.06)" : "none",
             border: "none",
             cursor: "pointer",
             ...MONO, fontSize: 11,
-            color: hoverClose ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.1)",
+            color: hoverClose ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.3)",
             width: 18, height: 18,
             display: "flex", alignItems: "center", justifyContent: "center",
             borderRadius: 4,
@@ -292,7 +292,7 @@ export default function ChainDirectory() {
       {showSearch && (
         <div style={{
           padding: "8px 14px",
-          borderBottom: "0.5px solid rgba(255,255,255,0.03)",
+          borderBottom: "0.5px solid rgba(255,255,255,0.08)",
           flexShrink: 0,
         }}>
           <input
@@ -302,12 +302,12 @@ export default function ChainDirectory() {
             placeholder="Search chains..."
             style={{
               width: "100%", boxSizing: "border-box" as const,
-              background: "rgba(255,255,255,0.02)",
-              border: "0.5px solid rgba(255,255,255,0.04)",
+              background: "rgba(255,255,255,0.05)",
+              border: "0.5px solid rgba(255,255,255,0.1)",
               borderRadius: 6,
               padding: "7px 10px",
               ...MONO, fontSize: 8,
-              color: "rgba(255,255,255,0.3)",
+              color: "rgba(255,255,255,0.6)",
               outline: "none",
             }}
           />
@@ -319,14 +319,14 @@ export default function ChainDirectory() {
         {filtered.map((chain, i) => {
           const isHov = hoverItem === i;
           const nameColor = chain.live
-            ? isHov ? "rgba(196,164,108,0.8)"  : "rgba(196,164,108,0.55)"
-            : isHov ? "rgba(255,255,255,0.6)"  : "rgba(255,255,255,0.3)";
+            ? isHov ? "rgba(196,164,108,0.95)" : "rgba(196,164,108,0.7)"
+            : isHov ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)";
           const bg = chain.live
-            ? isHov ? "rgba(196,164,108,0.04)" : "rgba(196,164,108,0.02)"
-            : isHov ? "rgba(255,255,255,0.02)" : "transparent";
+            ? isHov ? "rgba(196,164,108,0.08)" : "rgba(196,164,108,0.03)"
+            : isHov ? "rgba(255,255,255,0.06)" : "transparent";
           const arrowColor = chain.live
-            ? isHov ? "rgba(196,164,108,0.25)" : "rgba(196,164,108,0.1)"
-            : isHov ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.04)";
+            ? isHov ? "rgba(196,164,108,0.5)"  : "rgba(196,164,108,0.25)"
+            : isHov ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.12)";
 
           return (
             <div
@@ -361,7 +361,7 @@ export default function ChainDirectory() {
                 </div>
                 <div style={{
                   ...MONO, fontSize: 6.5,
-                  color: "rgba(255,255,255,0.07)",
+                  color: "rgba(255,255,255,0.25)",
                   letterSpacing: "0.02em",
                   whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis",
                 }}>
