@@ -1,26 +1,18 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FullChainMap from "@/components/FullChainMap";
 
 const MONO: React.CSSProperties = { fontFamily: "'Geist Mono', 'Courier New', monospace" };
 const SYS: React.CSSProperties  = { fontFamily: "Inter, -apple-system, system-ui, sans-serif" };
 
-const GOLD   = "rgba(196,164,108,";
-const SILVER = "rgba(155,168,171,";
-
-// Active card = index of the card highlighted in gold
-function activeFromStorage(): number {
-  try {
-    const raw = sessionStorage.getItem("globeSelection");
-    if (!raw) return 1;
-    const g = JSON.parse(raw) as { raw: string | null; comp: string | null; sub: string | null; eu: string | null };
-    if (g.eu)   return 3;
-    if (g.sub)  return 2;
-    if (g.comp) return 1;
-    if (g.raw)  return 0;
-  } catch { /* */ }
-  return 1;
-}
+// rgba prefix for each layer's tree color (no closing paren)
+const CARD_PREFIXES = [
+  "rgba(200,168,90,",   // Raw   — warm gold
+  "rgba(77,154,184,",   // Comp  — teal
+  "rgba(138,122,170,",  // Sub   — purple
+  "rgba(200,168,90,",   // EU    — amber
+];
+const DIM = "rgba(155,168,171,";
 
 function navigateTo(layerIdx: number) {
   const maps = [
@@ -52,56 +44,52 @@ interface Card {
   icon: React.ReactNode;
 }
 
-function OreIcon({ gold }: { gold: boolean }) {
-  const s = gold ? `${GOLD}` : `${SILVER}`;
+function OreIcon({ prefix }: { prefix: string }) {
   return (
     <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <rect x="6" y="9" width="10" height="9" rx="0.5" stroke={`${s}0.2)`} strokeWidth="0.5" transform="rotate(-10 11 13)"/>
-      <rect x="17" y="11" width="8" height="7" rx="0.5" stroke={`${s}0.14)`} strokeWidth="0.5" transform="rotate(8 21 14)"/>
-      <rect x="11" y="19" width="9" height="7" rx="0.5" stroke={`${s}0.1)`} strokeWidth="0.5" transform="rotate(-5 15 22)"/>
+      <rect x="6" y="9" width="10" height="9" rx="0.5" stroke={`${prefix}0.2)`} strokeWidth="0.5" transform="rotate(-10 11 13)"/>
+      <rect x="17" y="11" width="8" height="7" rx="0.5" stroke={`${prefix}0.14)`} strokeWidth="0.5" transform="rotate(8 21 14)"/>
+      <rect x="11" y="19" width="9" height="7" rx="0.5" stroke={`${prefix}0.1)`} strokeWidth="0.5" transform="rotate(-5 15 22)"/>
     </svg>
   );
 }
 
-function ChemIcon() {
-  const s = GOLD;
+function ChemIcon({ prefix }: { prefix: string }) {
   return (
     <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <line x1="18" y1="4" x2="18" y2="11" stroke={`${s}0.2)`} strokeWidth="0.5"/>
-      <line x1="13" y1="4" x2="13" y2="11" stroke={`${s}0.2)`} strokeWidth="0.5"/>
-      <rect x="10" y="11" width="12" height="19" rx="2" stroke={`${s}0.3)`} strokeWidth="0.5"/>
-      <circle cx="14" cy="20" r="0.8" fill={`${s}0.25)`}/>
-      <circle cx="17" cy="17" r="0.6" fill={`${s}0.2)`}/>
-      <circle cx="15" cy="24" r="0.7" fill={`${s}0.18)`}/>
-      <circle cx="19" cy="22" r="0.5" fill={`${s}0.2)`}/>
-      <circle cx="16" cy="14" r="0.5" fill={`${s}0.15)`}/>
-      <path d="M13,18 Q16,16 19,18" stroke={`${s}0.12)`} strokeWidth="0.5"/>
-      <path d="M12.5,21 Q16,19 19.5,21" stroke={`${s}0.1)`} strokeWidth="0.5"/>
+      <line x1="18" y1="4" x2="18" y2="11" stroke={`${prefix}0.2)`} strokeWidth="0.5"/>
+      <line x1="13" y1="4" x2="13" y2="11" stroke={`${prefix}0.2)`} strokeWidth="0.5"/>
+      <rect x="10" y="11" width="12" height="19" rx="2" stroke={`${prefix}0.3)`} strokeWidth="0.5"/>
+      <circle cx="14" cy="20" r="0.8" fill={`${prefix}0.25)`}/>
+      <circle cx="17" cy="17" r="0.6" fill={`${prefix}0.2)`}/>
+      <circle cx="15" cy="24" r="0.7" fill={`${prefix}0.18)`}/>
+      <circle cx="19" cy="22" r="0.5" fill={`${prefix}0.2)`}/>
+      <circle cx="16" cy="14" r="0.5" fill={`${prefix}0.15)`}/>
+      <path d="M13,18 Q16,16 19,18" stroke={`${prefix}0.12)`} strokeWidth="0.5"/>
+      <path d="M12.5,21 Q16,19 19.5,21" stroke={`${prefix}0.1)`} strokeWidth="0.5"/>
     </svg>
   );
 }
 
-function FiberIcon({ gold }: { gold: boolean }) {
-  const s = gold ? GOLD : SILVER;
+function FiberIcon({ prefix }: { prefix: string }) {
   return (
     <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <circle cx="18" cy="18" r="14" stroke={`${s}0.08)`} strokeWidth="0.5"/>
-      <circle cx="18" cy="18" r="9"  stroke={`${s}0.06)`} strokeWidth="0.5"/>
-      <circle cx="18" cy="18" r="2.5" fill={`${s}0.12)`}/>
-      <circle cx="18" cy="18" r="2.5" stroke={`${s}0.18)`} strokeWidth="0.5"/>
+      <circle cx="18" cy="18" r="14" stroke={`${prefix}0.08)`} strokeWidth="0.5"/>
+      <circle cx="18" cy="18" r="9"  stroke={`${prefix}0.06)`} strokeWidth="0.5"/>
+      <circle cx="18" cy="18" r="2.5" fill={`${prefix}0.12)`}/>
+      <circle cx="18" cy="18" r="2.5" stroke={`${prefix}0.18)`} strokeWidth="0.5"/>
     </svg>
   );
 }
 
-function PulseIcon({ gold }: { gold: boolean }) {
-  const s = gold ? GOLD : SILVER;
+function PulseIcon({ prefix }: { prefix: string }) {
   return (
     <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <line x1="4" y1="18" x2="32" y2="18" stroke={`${s}0.12)`} strokeWidth="0.5"/>
-      <circle cx="8"  cy="18" r="3"   fill={`${s}0.10)`}/>
-      <circle cx="15" cy="18" r="2.2" fill={`${s}0.07)`}/>
-      <circle cx="21" cy="18" r="1.6" fill={`${s}0.05)`}/>
-      <circle cx="26" cy="18" r="1"   fill={`${s}0.03)`}/>
+      <line x1="4" y1="18" x2="32" y2="18" stroke={`${prefix}0.12)`} strokeWidth="0.5"/>
+      <circle cx="8"  cy="18" r="3"   fill={`${prefix}0.10)`}/>
+      <circle cx="15" cy="18" r="2.2" fill={`${prefix}0.07)`}/>
+      <circle cx="21" cy="18" r="1.6" fill={`${prefix}0.05)`}/>
+      <circle cx="26" cy="18" r="1"   fill={`${prefix}0.03)`}/>
     </svg>
   );
 }
@@ -124,20 +112,14 @@ function scrollToLayer(layerIdx: number) {
 }
 
 export default function GermaniumChainPage() {
-  const [activeIdx, setActiveIdx] = useState(1);
-  const [hovered, setHovered]     = useState<number | null>(null);
+  const [hovered, setHovered]         = useState<number | null>(null);
   const [hoverExplore, setHoverExplore] = useState(false);
 
-  useEffect(() => {
-    setActiveIdx(activeFromStorage());
-    // Keep globeSelection so /germanium can read it if user navigates back
-  }, []);
-
-  function icon(i: number, isActive: boolean) {
-    if (i === 0) return <OreIcon gold={isActive} />;
-    if (i === 1) return <ChemIcon />;
-    if (i === 2) return <FiberIcon gold={isActive} />;
-    return <PulseIcon gold={isActive} />;
+  function icon(i: number, prefix: string) {
+    if (i === 0) return <OreIcon prefix={prefix} />;
+    if (i === 1) return <ChemIcon prefix={prefix} />;
+    if (i === 2) return <FiberIcon prefix={prefix} />;
+    return <PulseIcon prefix={prefix} />;
   }
 
   return (
@@ -211,22 +193,15 @@ export default function GermaniumChainPage() {
             padding: "48px 36px 0 0",
           }}>
             {CARDS_META.map((card, i) => {
-              const isActive  = i === activeIdx;
               const isHovered = hovered === i;
+              const cp = CARD_PREFIXES[i];
+              const prefix = isHovered ? cp : DIM;
 
-              const bg     = isActive
-                ? isHovered ? `${GOLD}0.06)` : `${GOLD}0.03)`
-                : isHovered ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.015)";
-              const border = isActive
-                ? isHovered ? `0.5px solid ${GOLD}0.35)` : `0.5px solid ${GOLD}0.2)`
-                : isHovered ? "0.5px solid rgba(255,255,255,0.1)" : "0.5px solid rgba(255,255,255,0.04)";
-              const nameColor = isActive
-                ? `${GOLD}0.75)`
-                : isHovered ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.4)";
-              const descColor = isActive
-                ? `${GOLD}0.25)`
-                : isHovered ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.12)";
-              const arrowColor = isHovered ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.06)";
+              const bg        = isHovered ? `${cp}0.07)` : "rgba(255,255,255,0.015)";
+              const border    = isHovered ? `0.5px solid ${cp}0.3)` : "0.5px solid rgba(255,255,255,0.04)";
+              const nameColor = isHovered ? `${cp}0.9)` : "rgba(255,255,255,0.4)";
+              const descColor = isHovered ? `${cp}0.35)` : "rgba(255,255,255,0.12)";
+              const arrowColor = isHovered ? `${cp}0.5)` : "rgba(255,255,255,0.06)";
 
               return (
                 <div key={card.name}>
@@ -253,7 +228,7 @@ export default function GermaniumChainPage() {
                   >
                     {/* Icon */}
                     <div style={{ width: 36, height: 36, flexShrink: 0 }}>
-                      {icon(i, isActive)}
+                      {icon(i, prefix)}
                     </div>
 
                     {/* Name + desc */}
@@ -288,14 +263,14 @@ export default function GermaniumChainPage() {
             >
               <span style={{
                 ...MONO, fontSize: 9, letterSpacing: "0.04em",
-                color: hoverExplore ? `${GOLD}0.6)` : "rgba(255,255,255,0.2)",
+                color: hoverExplore ? "rgba(200,168,90,0.6)" : "rgba(255,255,255,0.2)",
                 transition: "color 0.15s",
               }}>
                 Explore full chain
               </span>
               <span style={{
                 ...MONO, fontSize: 12,
-                color: hoverExplore ? `${GOLD}0.4)` : "rgba(255,255,255,0.08)",
+                color: hoverExplore ? "rgba(200,168,90,0.4)" : "rgba(255,255,255,0.08)",
                 transition: "color 0.15s",
               }}>
                 →
