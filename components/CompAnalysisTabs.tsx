@@ -1,19 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const MONO: React.CSSProperties = { fontFamily: "'Geist Mono', 'Courier New', monospace" };
 const SYS: React.CSSProperties = { fontFamily: "Inter, -apple-system, system-ui, sans-serif" };
 
 /* ─── Tab identifiers ─── */
-type TabId = "supply-demand" | "bottlenecks" | "geopolitical" | "catalysts" | "emerging-tech";
+type TabId = "supply-demand" | "bottlenecks" | "geopolitical" | "catalysts" | "emerging-tech" | "investment-ideas";
 
-const TABS: { id: TabId; label: string }[] = [
+const TABS: { id: TabId; label: string; gold?: boolean }[] = [
   { id: "supply-demand", label: "SUPPLY / DEMAND" },
   { id: "bottlenecks", label: "BOTTLENECKS" },
   { id: "geopolitical", label: "GEOPOLITICAL" },
   { id: "catalysts", label: "CATALYSTS" },
   { id: "emerging-tech", label: "EMERGING TECH" },
+  { id: "investment-ideas", label: "INVESTMENT IDEAS", gold: true },
 ];
 
 /* ─── Content types ─── */
@@ -315,6 +316,58 @@ const emergingTech: TabContent = {
     "Sources: YOFC Hollow-Core Fiber Press Releases; Microsoft Blog \u2014 Lumenisity Acquisition; Data Center Dynamics \u2014 Microsoft HCF Deployment; IEEE Xplore \u2014 Germanium Recovery from Optical Fiber Manufacturing; Grand View Research \u2014 Silicon Photonics Market.",
 };
 
+/* ─── Tab 6: Investment Ideas ─── */
+const investmentIdeas: TabContent = {
+  takeaway:
+    "Four positions across the GeCl\u2084 supply chain \u2014 from monopoly pricing to germanium obsolescence",
+  sections: [
+    {
+      title: "Umicore \u2014 The mispriced monopoly",
+      paragraphs: [
+        "**XBRU: UMI** \u00b7 \u20ac3.9B market cap \u00b7 \u20ac558M FY25 Specialty Materials Rev \u00b7 \u20ac108M FY25 SM EBITDA (+11%) \u00b7 \u20ac16\u201317 share price",
+        "Umicore is the only company in the west vertically integrated from germanium refining through recycling to GeCl\u2084 production. They hold exclusive offtake on the only new western primary germanium source \u2014 the DRC Big Hill project, where STL\u2019s hydrometallurgical plant has a 30 tonne/year capacity, with potential to supply up to 30% of global germanium demand at full ramp. They supply the majority of western and Japanese fiber manufacturers with the highest-purity GeCl\u2084 in the industry (8N \u2014 99.999999%).",
+        "The stock has been beaten down by the battery materials slump \u2014 from \u20ac60 in 2021 to the \u20ac16 range today. But the core foundation businesses are growing: Specialty Materials revenue hit \u20ac558M in 2025 (+4% YoY), EBITDA grew 11% to \u20ac108M. The EU Commission selected two Umicore germanium projects (GePETO and ReGAIN) as the only germanium-related projects under the Critical Raw Materials Act.",
+        "The margin structure is asymmetric. Over 50% of Umicore\u2019s germanium input comes from recycled manufacturing scrap under tolling agreements. In tolling, the processing fee is largely fixed regardless of germanium spot price. So when germanium surges from $1,340/kg to $8,597/kg, Umicore\u2019s cost on recycled input barely moves while their output pricing follows the market. **Roughly 25\u201335% of input cost tracks spot while 100% of output pricing tracks spot. Every price increase widens the spread.**",
+      ],
+    },
+    {
+      title: "YOFC \u2014 Both sides of the trade",
+      paragraphs: [
+        "**HKEX: 6869** \u00b7 ~HK$18B market cap \u00b7 3,500t/yr preform capacity \u00b7 100+ export countries \u00b7 12% global fiber share",
+        "Every other position at this layer picks a side: germanium scarcity gets worse, or germanium becomes irrelevant. YOFC doesn\u2019t have to choose. They are the world\u2019s largest preform manufacturer, sourcing GeCl\u2084 domestically from Yunnan Chihong and Chinese state plants at controlled prices completely insulated from MOFCOM export controls. When Corning pays Umicore elevated spot-linked prices for GeCl\u2084, YOFC pays domestic rates. **Chinese fiber manufacturers undercut western rivals by 15\u201320% on cable pricing \u2014 a structural cost advantage, not a cyclical one.**",
+        "YOFC is also the global leader in hollow-core fiber \u2014 the technology that eliminates germanium from fiber entirely. They achieved world-record 0.040 dB/km HCF attenuation, began commercial production in late 2023, and demonstrated 1.2Tb/s single-wavelength transport over HCF with ZTE in July 2024. If HCF achieves meaningful market share by 2028\u20132030, YOFC will have developed the replacement while profiting from the incumbent technology.",
+      ],
+    },
+    {
+      title: "Corning & Prysmian \u2014 The known beneficiaries",
+      paragraphs: [
+        "**Corning (NYSE: GLW)** \u00b7 ~$36B market cap \u00b7 Meta signed a multiyear agreement worth up to $6 billion for Corning to supply fiber, cable, and connectivity for AI data centers. Optical communications revenue hit $1.65B in Q3 2025 (+33% YoY), enterprise sales surged 58%. Springboard plan upgraded to $11B through 2028.",
+        "**Prysmian (BIT: PRY)** \u00b7 ~\u20ac17B market cap \u00b7 Formalized a long-term GeCl\u2084 supply and recycling partnership with Umicore targeting \u201c100% sustainable germanium.\u201d Acquired a North American preform facility to vertically integrate. Invested $115M+ in US optical cable capacity. Also invested in Relativity Networks \u2014 an HCF startup \u2014 hedging against germanium-doped fiber.",
+        "**Why these are watching positions:** Corning\u2019s stock has nearly tripled from mid-2024 levels (~$16 to ~$47). The AI fiber thesis is increasingly consensus. The risk/reward has shifted \u2014 there is more downside exposure to an AI capex pause or germanium supply constraint than remaining upside from demand acceleration that is already expected and contracted.",
+      ],
+    },
+    {
+      title: "Hollow-core fiber \u2014 The germanium extinction thesis",
+      paragraphs: [
+        "Hollow-core fiber eliminates germanium from the fiber core entirely. Light propagates through air instead of germanium-doped glass \u2014 47% faster transmission, 33% lower latency, broader spectrum, fewer repeaters, lower power consumption. If HCF reaches meaningful adoption in datacenter interconnects by 2028\u20132030, the entire germanium-for-fiber thesis weakens.",
+        "HCF is no longer theoretical. Microsoft deployed over 1,280 km of live HCF in Azure with zero field failures. Their team measured 0.091 dB/km \u2014 the lowest operational loss ever recorded. In September 2025, Microsoft announced industrial-scale production with Corning (North Carolina) and Heraeus (Europe/US). Microsoft\u2019s goal is 15,000 km by late 2026.",
+        "**Current global HCF deployment is measured in thousands of km against billions installed and ~700M km deployed annually.** Even with Microsoft\u2019s 15,000 km target, HCF is a fraction of 1% of annual fiber deployment. The germanium supply crisis peaks in 2026\u20132028. HCF cannot relieve it in that window. This is a 3\u20135 year structural thesis, not a near-term catalyst.",
+      ],
+    },
+    {
+      title: "The binary event: November 27, 2026",
+      paragraphs: [
+        "Every position at this layer is affected by a single date. China\u2019s MOFCOM export ban suspension expires November 27, 2026. Markets will begin pricing the probability of reimposition 3\u20136 months in advance.",
+        "**If China reimpose the ban:** Umicore becomes the sole western germanium gateway. GeCl\u2084 prices surge further. Corning and Prysmian face supply constraints. YOFC\u2019s domestic cost advantage widens. HCF urgency accelerates.",
+        "**If China extends or lifts controls:** Germanium prices moderate. Umicore\u2019s recycling spread compresses. Western manufacturers regain Chinese supply access. YOFC\u2019s cost advantage narrows. HCF urgency diminishes.",
+        "The structural shortage of preform capacity and AI/BEAD demand persists through 2027\u20132028 independent of what China decides. But the magnitude of the germanium premium \u2014 and therefore the magnitude of every position described above \u2014 depends heavily on this single policy decision.",
+      ],
+    },
+  ],
+  footnote:
+    "This section presents objective analysis of market dynamics and company positioning. It does not constitute financial advice or a recommendation to buy, sell, or hold any security. All projections are estimates based on publicly available data and involve significant uncertainty.",
+};
+
 /* ─── Content map ─── */
 const TAB_CONTENT: Record<TabId, TabContent> = {
   "supply-demand": supplyDemand,
@@ -322,6 +375,7 @@ const TAB_CONTENT: Record<TabId, TabContent> = {
   geopolitical,
   catalysts,
   "emerging-tech": emergingTech,
+  "investment-ideas": investmentIdeas,
 };
 
 /* ─── Render helpers ─── */
@@ -411,11 +465,26 @@ function renderTable(table: TableData) {
 /* ─── Main component ─── */
 export default function CompAnalysisTabs() {
   const [activeTab, setActiveTab] = useState<TabId>("supply-demand");
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Reset scroll to top when switching tabs
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 });
+  }, [activeTab]);
 
   const content = TAB_CONTENT[activeTab];
+  const isGold = activeTab === "investment-ideas";
 
   return (
-    <div style={{ width: "100%", background: "#0F0F0E", minHeight: "100vh" }}>
+    <div style={{ width: "100%", background: "#0F0F0E" }}>
+      {/* ─── Custom scrollbar styles ─── */}
+      <style>{`
+        .analysis-scroll::-webkit-scrollbar { width: 3px; }
+        .analysis-scroll::-webkit-scrollbar-track { background: transparent; }
+        .analysis-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 2px; }
+        .analysis-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.12); }
+      `}</style>
+
       {/* ─── Sticky tab bar ─── */}
       <div
         style={{
@@ -424,122 +493,67 @@ export default function CompAnalysisTabs() {
           zIndex: 10,
           background: "#0F0F0E",
           borderBottom: "0.5px solid rgba(255,255,255,0.04)",
-          padding: "0 32px",
+          padding: "0 20px",
           display: "flex",
+          justifyContent: "center",
           alignItems: "center",
         }}
       >
-        {/* Left label */}
-        <span
-          style={{
-            ...MONO,
-            fontSize: "7px",
-            color: "rgba(255,255,255,0.08)",
-            letterSpacing: "0.06em",
-            textTransform: "uppercase",
-            marginRight: 20,
-            flexShrink: 0,
-          }}
-        >
-          CORE ANALYSIS
-        </span>
-
-        {/* Tabs */}
-        <div style={{ display: "flex", alignItems: "center", flex: 1, minWidth: 0 }}>
-          {TABS.map((tab) => {
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                style={{
-                  ...MONO,
-                  fontSize: "7px",
-                  letterSpacing: "0.05em",
-                  textTransform: "uppercase",
-                  padding: "12px 16px 10px",
-                  background: "none",
-                  border: "none",
-                  borderBottom: isActive
-                    ? "1px solid rgba(255,255,255,0.25)"
-                    : "1px solid transparent",
-                  color: isActive
-                    ? "rgba(255,255,255,0.5)"
-                    : "rgba(255,255,255,0.12)",
-                  cursor: "pointer",
-                  transition: "color 0.15s",
-                  flexShrink: 0,
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive)
-                    (e.currentTarget as HTMLButtonElement).style.color =
-                      "rgba(255,255,255,0.3)";
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive)
-                    (e.currentTarget as HTMLButtonElement).style.color =
-                      "rgba(255,255,255,0.12)";
-                }}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Right-aligned market data */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "baseline",
-            gap: 8,
-            flexShrink: 0,
-            marginLeft: "auto",
-          }}
-        >
-          <span
-            style={{
-              ...MONO,
-              fontSize: "6px",
-              color: "rgba(255,255,255,0.08)",
-            }}
-          >
-            GE SPOT
-          </span>
-          <span
-            style={{
-              ...MONO,
-              fontSize: "11px",
-              color: "rgba(255,255,255,0.5)",
-            }}
-          >
-            $8,597
-          </span>
-          <span
-            style={{
-              ...MONO,
-              fontSize: "8px",
-              color: "#7DA06A",
-            }}
-          >
-            +202%
-          </span>
-        </div>
+        {TABS.map((tab) => {
+          const isActive = activeTab === tab.id;
+          const g = tab.gold;
+          const defaultC = g ? "rgba(196,164,108,0.15)" : "rgba(255,255,255,0.1)";
+          const hoverC   = g ? "rgba(196,164,108,0.35)" : "rgba(255,255,255,0.25)";
+          const activeC  = g ? "rgba(196,164,108,0.55)" : "rgba(255,255,255,0.45)";
+          const indC     = g ? "rgba(196,164,108,0.3)"  : "rgba(255,255,255,0.2)";
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                ...MONO, fontSize: "7px", fontWeight: 500,
+                letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap",
+                padding: "11px 14px 9px",
+                background: "none", border: "none",
+                borderBottom: isActive ? `1px solid ${indC}` : "1px solid transparent",
+                color: isActive ? activeC : defaultC,
+                cursor: "pointer", transition: "color 0.15s",
+                display: "flex", alignItems: "center", gap: 4,
+              }}
+              onMouseEnter={(e) => { if (!isActive) e.currentTarget.style.color = hoverC; }}
+              onMouseLeave={(e) => { if (!isActive) e.currentTarget.style.color = defaultC; }}
+            >
+              {g && (
+                <svg width="6" height="6" viewBox="0 0 6 6" style={{ verticalAlign: "middle" }}>
+                  <path d="M3 0L5.5 3L3 6L0.5 3Z" fill="rgba(196,164,108,0.3)"/>
+                </svg>
+              )}
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
 
-      {/* ─── Content area ─── */}
-      <div style={{ padding: "28px 32px 40px", maxWidth: 720, margin: "0 auto" }}>
+      {/* ─── Content area (fixed height, scrollable) ─── */}
+      <div style={{ position: "relative", height: 500 }}>
+        <div
+          ref={scrollRef}
+          className="analysis-scroll"
+          style={{ height: "100%", overflowY: "auto" }}
+        >
+          <div style={{ padding: "24px 32px 40px", maxWidth: 640, margin: "0 auto" }}>
         {/* Takeaway */}
         <div
           style={{
             ...SYS,
-            fontSize: "15px",
+            fontSize: "14px",
             fontWeight: 500,
-            color: "rgba(255,255,255,0.75)",
-            lineHeight: 1.5,
+            color: isGold ? "rgba(196,164,108,0.7)" : "rgba(255,255,255,0.7)",
+            lineHeight: 1.55,
+            textAlign: "center",
             marginBottom: 20,
             paddingBottom: 16,
-            borderBottom: "0.5px dashed rgba(255,255,255,0.06)",
+            borderBottom: "0.5px dashed rgba(255,255,255,0.05)",
           }}
         >
           {content.takeaway}
@@ -557,9 +571,9 @@ export default function CompAnalysisTabs() {
                     fontSize: "7px",
                     textTransform: "uppercase",
                     color: "rgba(255,255,255,0.12)",
-                    letterSpacing: "0.1em",
-                    marginTop: 28,
-                    marginBottom: 10,
+                    letterSpacing: "0.05em",
+                    marginTop: 24,
+                    marginBottom: 12,
                     paddingBottom: 6,
                     borderBottom: "0.5px solid rgba(255,255,255,0.04)",
                   }}
@@ -572,11 +586,11 @@ export default function CompAnalysisTabs() {
                   key={pi}
                   style={{
                     ...SYS,
-                    fontSize: "12px",
-                    color: "rgba(255,255,255,0.3)",
+                    fontSize: "11.5px",
+                    color: "rgba(255,255,255,0.28)",
                     lineHeight: 1.85,
                     margin: 0,
-                    marginBottom: 10,
+                    marginBottom: 14,
                   }}
                 >
                   {renderBold(p)}
@@ -629,67 +643,17 @@ export default function CompAnalysisTabs() {
             {content.footnote}
           </div>
         )}
-      </div>
+          </div>{/* end inner content */}
+        </div>{/* end scrollable */}
 
-      {/* ─── Investment Ideas Section ─── */}
-      <div
-        style={{
-          background: "rgba(196,164,108,0.02)",
-          borderTop: "0.5px solid rgba(196,164,108,0.08)",
-          padding: 32,
-          maxWidth: 720,
-          margin: "0 auto",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            marginBottom: 12,
-          }}
-        >
-          <span style={{ color: "rgba(196,164,108,0.5)", fontSize: "10px" }}>
-            &#9670;
-          </span>
-          <span
-            style={{
-              ...MONO,
-              fontSize: "8px",
-              color: "rgba(196,164,108,0.5)",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-            }}
-          >
-            INVESTMENT IDEAS
-          </span>
-        </div>
-
-        <div
-          style={{
-            ...SYS,
-            fontSize: "14px",
-            fontWeight: 500,
-            color: "rgba(196,164,108,0.7)",
-            lineHeight: 1.5,
-            maxWidth: 500,
-            marginBottom: 8,
-          }}
-        >
-          Four positions across the GeCl&#x2084; supply chain &mdash; from monopoly
-          pricing to germanium obsolescence
-        </div>
-
-        <div
-          style={{
-            ...MONO,
-            fontSize: "8px",
-            color: "rgba(196,164,108,0.25)",
-          }}
-        >
-          4 ideas &middot; 1 binary event &middot; Click to explore &rarr;
-        </div>
-      </div>
+        {/* Fade overlay at bottom */}
+        <div style={{
+          position: "absolute", bottom: 0, left: 0, right: 0,
+          height: 40,
+          background: "linear-gradient(transparent, #0F0F0E)",
+          pointerEvents: "none",
+        }} />
+      </div>{/* end fixed-height container */}
     </div>
   );
 }

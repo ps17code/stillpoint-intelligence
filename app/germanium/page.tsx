@@ -411,14 +411,17 @@ export default function Home() {
               {currentThesis && (
                 <div style={{
                   background: appState === 2 ? "#0F0F0E" : "#282828",
-                  padding: appState === 2 ? "28px 32px 20px" : "32px 36px 36px",
-                  ...(appState === 2 ? { maxWidth: 720, margin: "0 auto" } : {}),
+                  padding: appState === 2 ? "28px 40px 24px" : "32px 36px 36px",
+                  borderBottom: appState === 2 ? "0.5px solid rgba(255,255,255,0.03)" : undefined,
+                  ...(appState === 2 ? { display: "flex", alignItems: "center", gap: 32 } : {}),
                 }}>
+                  {/* Left: text content */}
+                  <div style={appState === 2 ? { flex: 1, maxWidth: 520 } : {}}>
                   {appState === 2 && (
                     <div style={{
                       fontFamily: "'Geist Mono', 'Courier New', monospace",
                       fontSize: 7,
-                      color: "rgba(155,168,171,0.22)",
+                      color: "rgba(155,168,171,0.2)",
                       letterSpacing: "0.06em",
                       textTransform: "uppercase" as const,
                       marginBottom: 10,
@@ -428,12 +431,11 @@ export default function Home() {
                   )}
                   <div style={{
                     fontFamily: "Inter, -apple-system, sans-serif",
-                    fontSize: appState === 2 ? 19 : 23,
+                    fontSize: appState === 2 ? 17 : 23,
                     fontWeight: 500,
                     color: "rgba(255,255,255,0.88)",
                     lineHeight: 1.4,
                     letterSpacing: appState === 2 ? "-0.2px" : undefined,
-                    maxWidth: appState === 2 ? 600 : undefined,
                     marginBottom: appState === 2 ? 12 : 16,
                   }}>
                     {appState === 2 ? "The chemical between germanium and every fiber strand on earth" : chainLabel}
@@ -442,10 +444,9 @@ export default function Home() {
                     <>
                       <p style={{
                         fontFamily: "Inter, -apple-system, sans-serif",
-                        fontSize: 11.5,
-                        color: "rgba(255,255,255,0.28)",
+                        fontSize: 11,
+                        color: "rgba(255,255,255,0.25)",
                         lineHeight: 1.8,
-                        maxWidth: 640,
                         margin: 0,
                         marginBottom: 16,
                       }}>
@@ -497,6 +498,7 @@ export default function Home() {
                     ) : currentThesis}
                   </div>
                   )}
+                  {appState !== 2 && (
                   <button
                     onClick={() => { window.location.href = "/germanium/report"; }}
                     style={{
@@ -518,6 +520,33 @@ export default function Home() {
                   >
                     Read Full Analysis →
                   </button>
+                  )}
+                  </div>{/* end left text wrapper */}
+
+                  {/* Fiber cross-section illustration (comp layer only) */}
+                  {appState === 2 && (
+                    <div style={{ width: 200, height: 200, flexShrink: 0 }}>
+                      <svg width="190" height="190" viewBox="0 0 190 190">
+                        <circle cx="95" cy="95" r="88" fill="none" stroke="rgba(155,168,171,0.03)" strokeWidth="0.5"/>
+                        <circle cx="95" cy="95" r="72" fill="none" stroke="rgba(155,168,171,0.04)" strokeWidth="0.5"/>
+                        <circle cx="95" cy="95" r="56" fill="none" stroke="rgba(155,168,171,0.05)" strokeWidth="0.5"/>
+                        <circle cx="95" cy="95" r="40" fill="none" stroke="rgba(155,168,171,0.06)" strokeWidth="0.5"/>
+                        <circle cx="95" cy="95" r="26" fill="none" stroke="rgba(155,168,171,0.07)" strokeWidth="0.5"/>
+                        <circle cx="95" cy="95" r="14" fill="none" stroke="rgba(196,164,108,0.1)" strokeWidth="0.5"/>
+                        <circle cx="95" cy="95" r="7" fill="rgba(196,164,108,0.03)"/>
+                        <circle cx="95" cy="95" r="7" fill="none" stroke="rgba(196,164,108,0.15)" strokeWidth="0.5"/>
+                        <circle cx="95" cy="95" r="3" fill="rgba(196,164,108,0.1)"/>
+                        <circle cx="95" cy="95" r="3" fill="none" stroke="rgba(196,164,108,0.25)" strokeWidth="0.5"/>
+                        <circle cx="95" cy="95" r="1" fill="rgba(196,164,108,0.45)"/>
+                        <line x1="98" y1="92" x2="130" y2="62" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" strokeDasharray="2 3"/>
+                        <text x="133" y="60" fontFamily="monospace" fontSize="5.5" fill="rgba(196,164,108,0.2)">Ge-doped core</text>
+                        <text x="133" y="68" fontFamily="monospace" fontSize="4.5" fill="rgba(255,255,255,0.08)">8μm · +0.35% refractive index</text>
+                        <line x1="108" y1="82" x2="134" y2="82" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" strokeDasharray="2 3"/>
+                        <text x="137" y="80" fontFamily="monospace" fontSize="5.5" fill="rgba(255,255,255,0.1)">Silica cladding</text>
+                        <text x="137" y="88" fontFamily="monospace" fontSize="4.5" fill="rgba(255,255,255,0.06)">125μm</text>
+                      </svg>
+                    </div>
+                  )}
                 </div>
               )}
 
