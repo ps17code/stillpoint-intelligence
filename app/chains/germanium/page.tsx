@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import FullChainMap from "@/components/FullChainMap";
 
 const MONO: React.CSSProperties = { fontFamily: "'Geist Mono', 'Courier New', monospace" };
 const SYS: React.CSSProperties  = { fontFamily: "Inter, -apple-system, system-ui, sans-serif" };
@@ -294,6 +295,9 @@ export default function GermaniumChainPage() {
 
         </div>
       </div>
+
+      {/* ── FULL CHAIN MAP ───────────────────────────────────────────── */}
+      <FullChainMap />
 
       {/* ── FOOTER ──────────────────────────────────────────────────── */}
       <div style={{
