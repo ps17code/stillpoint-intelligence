@@ -120,6 +120,14 @@ function RecyclingOverlay({
   );
 }
 
+// Layer-specific color pairs: [tierColor (bright), nameColor (darker)]
+const LAYER_COLORS: [string, string][] = [
+  ["#c8a85a", "#8a6828"],   // Raw  — warm gold / dark gold
+  ["#4d9ab8", "#2a6a88"],   // Comp — teal / deep teal
+  ["#8a7aaa", "#4e3a6e"],   // Sub  — bright purple / deep purple
+  ["#c8a85a", "#8a6828"],   // EU   — amber / dark amber
+];
+
 // Clickable layer-tier header separator
 function LayerHeader({
   tier, name, layerIdx,
@@ -128,6 +136,7 @@ function LayerHeader({
   tier: string; name: string; layerIdx: number;
   hovered: boolean; onHover: () => void; onLeave: () => void;
 }) {
+  const [tierColor, nameColor] = LAYER_COLORS[layerIdx];
   return (
     <div style={{
       display: "flex", alignItems: "center", gap: 14,
@@ -135,14 +144,14 @@ function LayerHeader({
       borderTop: "0.5px solid rgba(255,255,255,0.07)",
     }}>
       <div style={{
-        ...MONO, fontSize: 8, letterSpacing: "0.12em", textTransform: "uppercase" as const,
-        color: "rgba(255,255,255,0.22)", whiteSpace: "nowrap" as const,
+        ...MONO, fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase" as const,
+        color: tierColor, whiteSpace: "nowrap" as const,
       }}>
         {tier}
       </div>
       <div style={{ flex: 1, height: "0.5px", background: "rgba(255,255,255,0.05)" }} />
       <span style={{
-        ...MONO, fontSize: 8, color: "rgba(255,255,255,0.28)",
+        ...MONO, fontSize: 12, color: nameColor,
         letterSpacing: "0.04em",
       }}>
         {name}
@@ -216,10 +225,11 @@ export default function FullChainMap() {
       <div style={{
         padding: "28px 24px 0",
         borderTop: "0.5px solid rgba(255,255,255,0.06)",
+        textAlign: "center",
       }}>
         <span style={{
-          ...MONO, fontSize: 8, letterSpacing: "0.1em", textTransform: "uppercase" as const,
-          color: "rgba(255,255,255,0.16)",
+          ...MONO, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase" as const,
+          color: "rgba(255,255,255,0.16)", paddingBottom: 20, display: "inline-block",
         }}>
           Full Value Chain · Germanium → Fiber · 4 Layers · 32 Nodes
         </span>
