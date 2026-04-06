@@ -156,7 +156,7 @@ function ExploreButton({ layerIdx }: { layerIdx: number }) {
   const [hovered, setHovered] = useState(false);
   const [tierColor] = LAYER_COLORS[layerIdx];
   return (
-    <div style={{ display: "flex", justifyContent: "flex-end", padding: "12px 0 4px" }}>
+    <div style={{ display: "flex", justifyContent: "center", padding: "12px 0 4px", marginBottom: 20 }}>
       <button
         onClick={() => navigateTo(layerIdx)}
         onMouseEnter={() => setHovered(true)}
