@@ -128,14 +128,8 @@ const LAYER_COLORS: [string, string][] = [
   ["#c8a85a", "#8a6828"],   // EU   — amber / dark amber
 ];
 
-// Clickable layer-tier header separator
-function LayerHeader({
-  tier, name, layerIdx,
-  hovered, onHover, onLeave,
-}: {
-  tier: string; name: string; layerIdx: number;
-  hovered: boolean; onHover: () => void; onLeave: () => void;
-}) {
+// Clickable layer-tier header separator (no explore button — that lives below the tree)
+function LayerHeader({ tier, name, layerIdx }: { tier: string; name: string; layerIdx: number }) {
   const [tierColor, nameColor] = LAYER_COLORS[layerIdx];
   return (
     <div style={{
@@ -150,40 +144,44 @@ function LayerHeader({
         {tier}
       </div>
       <div style={{ flex: 1, height: "0.5px", background: "rgba(255,255,255,0.05)" }} />
-      <span style={{
-        ...MONO, fontSize: 12, color: nameColor,
-        letterSpacing: "0.04em",
-      }}>
+      <span style={{ ...MONO, fontSize: 12, color: nameColor, letterSpacing: "0.04em" }}>
         {name}
       </span>
-      <div
+    </div>
+  );
+}
+
+// Explore button rendered at the bottom-right of each tree section
+function ExploreButton({ layerIdx }: { layerIdx: number }) {
+  const [hovered, setHovered] = useState(false);
+  const [tierColor] = LAYER_COLORS[layerIdx];
+  return (
+    <div style={{ display: "flex", justifyContent: "flex-end", padding: "12px 0 4px" }}>
+      <button
         onClick={() => navigateTo(layerIdx)}
-        onMouseEnter={onHover}
-        onMouseLeave={onLeave}
-        style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          ...MONO,
+          fontSize: 10,
+          letterSpacing: "0.06em",
+          cursor: "pointer",
+          padding: "9px 18px",
+          border: `0.5px solid ${hovered ? tierColor : "rgba(255,255,255,0.12)"}`,
+          borderRadius: 6,
+          background: hovered ? `${tierColor}18` : "rgba(255,255,255,0.03)",
+          color: hovered ? tierColor : "rgba(255,255,255,0.45)",
+          transition: "color 0.15s, border-color 0.15s, background 0.15s",
+        }}
       >
-        <span style={{
-          ...MONO, fontSize: 7, letterSpacing: "0.04em",
-          color: hovered ? `${GOLD}0.7)` : "rgba(255,255,255,0.18)",
-          transition: "color 0.15s",
-        }}>
-          Explore layer
-        </span>
-        <span style={{
-          ...MONO, fontSize: 10,
-          color: hovered ? `${GOLD}0.5)` : "rgba(255,255,255,0.10)",
-          transition: "color 0.15s",
-        }}>
-          →
-        </span>
-      </div>
+        Explore layer →
+      </button>
     </div>
   );
 }
 
 export default function FullChainMap() {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
-  const [hoveredHeader, setHoveredHeader] = useState<number | null>(null);
 
   const rawChain  = chainsData.RAW_DATA["Germanium"];
   const compChain = chainsData.COMP_DATA["GeO₂ / GeCl₄"];
@@ -237,12 +235,7 @@ export default function FullChainMap() {
 
       {/* ── RAW MATERIAL ───────────────────────────────────────────── */}
       <div id="chain-raw" style={{ padding: "0 24px" }}>
-        <LayerHeader
-          tier="Raw Material" name="Germanium" layerIdx={0}
-          hovered={hoveredHeader === 0}
-          onHover={() => setHoveredHeader(0)}
-          onLeave={() => setHoveredHeader(null)}
-        />
+        <LayerHeader tier="Raw Material" name="Germanium" layerIdx={0} />
         <TreeMap
           geometry={rawGeo}
           nodes={allNodes}
@@ -253,6 +246,7 @@ export default function FullChainMap() {
           onLayerClick={() => {}}
           layerPanels={{}}
         />
+        <ExploreButton layerIdx={0} />
       </div>
 
       {/* Bridge Raw → Comp */}
@@ -262,12 +256,7 @@ export default function FullChainMap() {
 
       {/* ── COMPONENT ──────────────────────────────────────────────── */}
       <div id="chain-comp" style={{ padding: "0 24px" }}>
-        <LayerHeader
-          tier="Component" name="GeO₂ / GeCl₄" layerIdx={1}
-          hovered={hoveredHeader === 1}
-          onHover={() => setHoveredHeader(1)}
-          onLeave={() => setHoveredHeader(null)}
-        />
+        <LayerHeader tier="Component" name="GeO₂ / GeCl₄" layerIdx={1} />
         <div style={{ position: "relative" }}>
           <TreeMap
             geometry={compGeo}
@@ -285,6 +274,7 @@ export default function FullChainMap() {
             geCl4CY={geCl4CY} fiberCY={fiberCY}
           />
         </div>
+        <ExploreButton layerIdx={1} />
       </div>
 
       {/* Bridge Comp → Sub */}
@@ -294,12 +284,7 @@ export default function FullChainMap() {
 
       {/* ── SUBSYSTEM ──────────────────────────────────────────────── */}
       <div id="chain-sub" style={{ padding: "0 24px" }}>
-        <LayerHeader
-          tier="Subsystem" name="Fiber Optics" layerIdx={2}
-          hovered={hoveredHeader === 2}
-          onHover={() => setHoveredHeader(2)}
-          onLeave={() => setHoveredHeader(null)}
-        />
+        <LayerHeader tier="Subsystem" name="Fiber Optics" layerIdx={2} />
         <TreeMap
           geometry={subGeo}
           nodes={allNodes}
@@ -310,6 +295,7 @@ export default function FullChainMap() {
           onLayerClick={() => {}}
           layerPanels={{}}
         />
+        <ExploreButton layerIdx={2} />
       </div>
 
       {/* Bridge Sub → EU */}
@@ -319,12 +305,7 @@ export default function FullChainMap() {
 
       {/* ── END USE ────────────────────────────────────────────────── */}
       <div id="chain-eu" style={{ padding: "0 24px 80px" }}>
-        <LayerHeader
-          tier="End Use" name="AI Datacenter" layerIdx={3}
-          hovered={hoveredHeader === 3}
-          onHover={() => setHoveredHeader(3)}
-          onLeave={() => setHoveredHeader(null)}
-        />
+        <LayerHeader tier="End Use" name="AI Datacenter" layerIdx={3} />
         <TreeMap
           geometry={euGeo}
           nodes={allNodes}
@@ -335,6 +316,7 @@ export default function FullChainMap() {
           onLayerClick={() => {}}
           layerPanels={{}}
         />
+        <ExploreButton layerIdx={3} />
       </div>
 
       {/* Node modal */}
