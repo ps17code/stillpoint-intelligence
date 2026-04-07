@@ -385,11 +385,15 @@ export default function ExplorePage() {
       </div>
 
       {/* ── MAIN ────────────────────────────────────────────────────── */}
-      <div style={{ flex: 1, display: "flex", alignItems: "center", padding: "0 64px" }}>
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 40px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 32, maxWidth: 680 }}>
         {/* Left: vertical selector */}
-        <div style={{ width: 340, flexShrink: 0 }}>
-          <div style={{ ...MONO, fontSize: 8, color: "rgba(255,255,255,0.1)", letterSpacing: "0.08em", textTransform: "uppercase" as const, marginBottom: 24 }}>
-            Explore
+        <div style={{ width: 320, flexShrink: 0 }}>
+          <div style={{
+            ...SYS, fontSize: 20, fontWeight: 500, color: "rgba(255,255,255,0.85)",
+            letterSpacing: "-0.3px", lineHeight: 1.3, marginBottom: 20,
+          }}>
+            Explore a frontier
           </div>
 
           {VERTICALS.map((v, i) => {
@@ -453,11 +457,12 @@ export default function ExplorePage() {
         </div>
 
         {/* Right: illustration */}
-        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 20px" }}>
-          <div key={selected} style={{ animation: "exploreIllusIn 0.3s ease", maxWidth: 260, width: "100%" }}>
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div key={selected} style={{ animation: "exploreIllusIn 0.3s ease", maxWidth: 220, width: "100%" }}>
             <Illus />
           </div>
         </div>
+        </div>{/* end centered container */}
       </div>
 
       {/* ── FOOTER ──────────────────────────────────────────────────── */}
