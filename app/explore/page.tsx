@@ -385,16 +385,19 @@ export default function ExplorePage() {
       </div>
 
       {/* ── MAIN ────────────────────────────────────────────────────── */}
-      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 40px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 32, maxWidth: 680 }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 40px" }}>
+        {/* Headline above content */}
+        <div style={{
+          ...SYS, fontSize: 40, fontWeight: 500, color: "rgba(255,255,255,0.85)",
+          letterSpacing: "-0.5px", lineHeight: 1.2, marginBottom: 32,
+          width: "100%", maxWidth: 680,
+        }}>
+          Explore a frontier
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 32, maxWidth: 680, width: "100%" }}>
         {/* Left: vertical selector */}
         <div style={{ width: 320, flexShrink: 0 }}>
-          <div style={{
-            ...SYS, fontSize: 20, fontWeight: 500, color: "rgba(255,255,255,0.85)",
-            letterSpacing: "-0.3px", lineHeight: 1.3, marginBottom: 20,
-          }}>
-            Explore a frontier
-          </div>
 
           {VERTICALS.map((v, i) => {
             const isSel = selected === i;
