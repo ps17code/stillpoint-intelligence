@@ -216,10 +216,11 @@ function LayerContextPanel({ panelKey }: { panelKey: string }) {
   if (!p) return null;
   return (
     <div style={{
-      position: "absolute", bottom: 6, right: 20,
-      width: 300, background: "#1a1816",
+      width: 300, marginLeft: "auto", marginTop: -100,
+      position: "relative", zIndex: 5,
+      background: "#1a1816",
       border: "1px solid #252220", borderRadius: 10,
-      padding: "16px 20px", zIndex: 5,
+      padding: "16px 20px",
     }}>
       <div style={{
         ...MONO, fontSize: 9, fontWeight: 500, letterSpacing: "0.1em",
@@ -299,7 +300,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── RAW MATERIAL ───────────────────────────────────────────── */}
-      <div id="chain-raw" style={{ padding: "0 24px", position: "relative", paddingBottom: 10 }}>
+      <div id="chain-raw" style={{ padding: "0 24px", overflow: "visible" }}>
         <LayerHeader tier="Raw Material" name="Germanium" layerIdx={0} />
         <TreeMap
           geometry={rawGeo}
@@ -320,7 +321,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── COMPONENT ──────────────────────────────────────────────── */}
-      <div id="chain-comp" style={{ padding: "0 24px", position: "relative", paddingBottom: 10 }}>
+      <div id="chain-comp" style={{ padding: "0 24px", overflow: "visible" }}>
         <LayerHeader tier="Component" name="GeO₂ / GeCl₄" layerIdx={1} />
         <div style={{ position: "relative" }}>
           <TreeMap
@@ -348,7 +349,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── SUBSYSTEM ──────────────────────────────────────────────── */}
-      <div id="chain-sub" style={{ padding: "0 24px", position: "relative", paddingBottom: 10 }}>
+      <div id="chain-sub" style={{ padding: "0 24px", overflow: "visible" }}>
         <LayerHeader tier="Subsystem" name="Fiber Optics" layerIdx={2} />
         <TreeMap
           geometry={subGeo}
