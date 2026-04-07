@@ -388,7 +388,7 @@ export default function ExplorePage() {
       <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 40px" }}>
         {/* Unified container */}
         <div style={{
-          maxWidth: 1000, width: "100%",
+          maxWidth: 700, width: "100%",
           background: "rgba(19,19,19,0.5)",
           border: "1px solid #1e1e1e",
           borderRadius: 16,
@@ -409,7 +409,7 @@ export default function ExplorePage() {
             fontFamily: "'Cormorant Garamond', Garamond, serif",
             fontSize: 18, fontWeight: 400, lineHeight: 1.5,
             color: "#555",
-            margin: 0, marginBottom: 36, maxWidth: 560,
+            margin: 0, maxWidth: 560,
           }}>
             Trace value chains from raw material to end use — every node, every bottleneck, every player.
           </p>
@@ -428,7 +428,7 @@ export default function ExplorePage() {
                 onMouseEnter={() => { setHovered(i); setSelected(i); }}
                 onMouseLeave={() => setHovered(null)}
                 style={{
-                  padding: isHov ? "14px 0 18px" : "12px 0",
+                  padding: "14px 0 18px",
                   borderBottom: "0.5px solid rgba(255,255,255,0.04)",
                   borderTop: i === 0 ? "0.5px solid rgba(255,255,255,0.04)" : undefined,
                   cursor: v.live ? "pointer" : "default",
