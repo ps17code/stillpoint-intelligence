@@ -411,7 +411,7 @@ export default function ExplorePage() {
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 16, fontWeight: 400, lineHeight: 1.5,
             color: "#706a60",
-            margin: 0, maxWidth: 520,
+            margin: 0, maxWidth: 700,
           }}>
             Trace value chains from raw material to end use — every node, every bottleneck, every player.
           </p>
@@ -420,7 +420,7 @@ export default function ExplorePage() {
           <div style={{ height: 1, background: "#252220", margin: "28px 0 0" }} />
 
           {/* Two-column: selector + illustration */}
-          <div style={{ display: "flex", alignItems: "flex-start", gap: 40 }}>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 20 }}>
             {/* Left: vertical selector */}
             <div style={{ flex: "1 1 55%" }}>
 
@@ -457,26 +457,30 @@ export default function ExplorePage() {
                     →
                   </span>
                 </div>
-                {/* Description (on hover) */}
-                {isActive && (
+                {/* Description (smooth expand/collapse) */}
+                <div style={{
+                  maxHeight: isActive ? 200 : 0,
+                  opacity: isActive ? 1 : 0,
+                  overflow: "hidden",
+                  transition: "max-height 0.3s ease, opacity 0.25s ease",
+                }}>
                   <div style={{
                     fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#5a5550", lineHeight: 1.55,
                     marginTop: 10, maxWidth: 400,
-                    animation: "exploreDescIn 0.3s ease",
                   }}>
                     {v.description}
                     {!v.live && (
                       <span style={{ fontStyle: "italic", fontSize: 10, color: "#444", marginLeft: 6 }}>Coming soon</span>
                     )}
                   </div>
-                )}
+                </div>
               </div>
             );
           })}
         </div>
 
         {/* Right: illustration */}
-        <div style={{ flex: "0 0 280px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ flex: "0 0 280px", display: "flex", alignItems: "center", justifyContent: "center", padding: 25 }}>
           <div key={activeIdx} style={{ animation: "exploreIllusIn 0.3s ease", maxWidth: 260, width: "100%", opacity: 0.85 }}>
             <Illus />
           </div>
