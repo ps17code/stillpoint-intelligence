@@ -390,36 +390,39 @@ export default function ExplorePage() {
       <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 40px" }}>
         {/* Unified container */}
         <div style={{
-          maxWidth: 700, width: "100%",
-          background: "rgba(19,19,19,0.5)",
-          border: "1px solid #1e1e1e",
+          maxWidth: 960, width: "100%",
+          background: "#161414",
+          border: "1px solid #1e1c1a",
           borderRadius: 16,
-          padding: "40px 48px",
+          padding: "48px 52px",
         }}>
           {/* Headline */}
           <h1 style={{
-            fontFamily: "'Cormorant Garamond', Garamond, serif",
-            fontSize: 42, fontWeight: 500, lineHeight: 1.2,
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: 52, fontWeight: 400, lineHeight: 1.12,
             letterSpacing: "-0.01em",
-            color: "#e8e4df",
-            margin: 0, marginBottom: 8,
+            color: "#ece8e1",
+            margin: 0, marginBottom: 10,
           }}>
             Explore emerging frontiers.
           </h1>
           {/* Subheadline */}
           <p style={{
-            fontFamily: "'Cormorant Garamond', Garamond, serif",
-            fontSize: 18, fontWeight: 400, lineHeight: 1.5,
-            color: "#555",
-            margin: 0, maxWidth: 560,
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 16, fontWeight: 400, lineHeight: 1.5,
+            color: "#706a60",
+            margin: 0, maxWidth: 520,
           }}>
             Trace value chains from raw material to end use — every node, every bottleneck, every player.
           </p>
 
+          {/* Divider */}
+          <div style={{ height: 1, background: "#252220", margin: "28px 0 0" }} />
+
           {/* Two-column: selector + illustration */}
-          <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 40 }}>
             {/* Left: vertical selector */}
-            <div style={{ width: 320, flexShrink: 0 }}>
+            <div style={{ flex: "1 1 55%" }}>
 
           {VERTICALS.map((v, i) => {
             const isActive = hovered === i || (hovered === null && i === 0);
@@ -430,9 +433,8 @@ export default function ExplorePage() {
                 onMouseEnter={() => { setHovered(i); setSelected(i); }}
                 onMouseLeave={() => setHovered(null)}
                 style={{
-                  padding: "14px 0 18px",
-                  borderBottom: "0.5px solid rgba(255,255,255,0.04)",
-                  borderTop: i === 0 ? "0.5px solid rgba(255,255,255,0.04)" : undefined,
+                  padding: "16px 0",
+                  borderBottom: "1px solid #1e1c1a",
                   cursor: v.live ? "pointer" : "default",
                   transition: "all 0.2s",
                 }}
@@ -440,16 +442,16 @@ export default function ExplorePage() {
                 {/* Name row */}
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{
-                    ...SYS, fontSize: 15,
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 15,
                     fontWeight: isActive ? 500 : 400,
-                    color: isActive ? "rgba(255,255,255,0.88)" : "rgba(255,255,255,0.2)",
-                    transition: "color 0.2s",
+                    color: isActive ? "#ece8e1" : "#6a6560",
+                    transition: "color 0.2s, font-weight 0.2s",
                   }}>
                     {v.name}
                   </span>
                   <span style={{
                     ...MONO, fontSize: 11,
-                    color: isActive ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.05)",
+                    color: isActive ? "#555" : "#333",
                     transition: "color 0.2s",
                   }}>
                     →
@@ -458,13 +460,13 @@ export default function ExplorePage() {
                 {/* Description (on hover) */}
                 {isActive && (
                   <div style={{
-                    ...SYS, fontSize: 10, color: "rgba(255,255,255,0.15)", lineHeight: 1.7,
-                    marginTop: 8, maxWidth: 300,
-                    animation: "exploreDescIn 0.2s ease",
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#5a5550", lineHeight: 1.55,
+                    marginTop: 10, maxWidth: 400,
+                    animation: "exploreDescIn 0.3s ease",
                   }}>
                     {v.description}
                     {!v.live && (
-                      <span style={{ ...MONO, fontSize: 7, color: "rgba(255,255,255,0.08)", marginLeft: 6 }}>Coming soon</span>
+                      <span style={{ fontStyle: "italic", fontSize: 10, color: "#444", marginLeft: 6 }}>Coming soon</span>
                     )}
                   </div>
                 )}
@@ -474,8 +476,8 @@ export default function ExplorePage() {
         </div>
 
         {/* Right: illustration */}
-        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div key={activeIdx} style={{ animation: "exploreIllusIn 0.3s ease", maxWidth: 220, width: "100%" }}>
+        <div style={{ flex: "0 0 280px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div key={activeIdx} style={{ animation: "exploreIllusIn 0.3s ease", maxWidth: 260, width: "100%", opacity: 0.85 }}>
             <Illus />
           </div>
         </div>
