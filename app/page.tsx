@@ -254,6 +254,8 @@ export default function HomePage() {
   const [hoveredSub,    setHoveredSub]    = useState<string | null>(null);
   const [hovered,       setHovered]       = useState<string | null>(null);
   const [hoveredNode,   setHoveredNode]   = useState<{ name: string; type: string; location: string } | null>(null);
+  const [domainOpen,    setDomainOpen]    = useState(false);
+  const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
 
   // ── Helpers ──────────────────────────────────────────────────────────────
   const updateFilter = (l2s: Map<string, string>, l3: typeof activeL3) => {
@@ -595,6 +597,50 @@ export default function HomePage() {
 
       {/* ── Left navigation — dropdown column ─────────────────────────────────── */}
       <div style={{ position: "absolute", left: 36, top: "50%", transform: "translateY(-50%)", zIndex: 20 }}>
+
+        {/* Domain filter accordion */}
+        <div>
+          <div
+            onClick={() => setDomainOpen(prev => !prev)}
+            onMouseEnter={() => setHovered("l1:domain")}
+            onMouseLeave={() => setHovered(null)}
+            style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 0", cursor: "pointer" }}
+          >
+            <div style={{ width: 14, height: 0.5, background: domainOpen ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.08)", flexShrink: 0, transition: "background 0.25s ease" }} />
+            <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 12, fontWeight: domainOpen ? 500 : 400, color: domainOpen ? "rgba(255,255,255,0.7)" : hovered === "l1:domain" ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.4)", transition: "color 0.2s ease", whiteSpace: "nowrap" as const }}>
+              Domain
+            </span>
+          </div>
+          {domainOpen && (
+            <div style={{ padding: "4px 0 6px 22px", borderLeft: "0.5px solid rgba(255,255,255,0.04)", marginLeft: 7, animation: "fadeInDown 0.25s ease" }}>
+              {([
+                { id: "connectivity", label: "Connectivity", dot: "rgba(100,200,140,0.35)" },
+                { id: "power",        label: "Power",        dot: "rgba(196,164,108,0.35)" },
+                { id: "compute",      label: "Compute",      dot: "rgba(100,150,200,0.35)" },
+                { id: "cooling",      label: "Cooling",      dot: "rgba(100,180,210,0.35)" },
+                { id: "physical",     label: "Physical",     dot: "rgba(155,168,171,0.25)" },
+              ] as const).map(d => {
+                const isActive = selectedDomain === d.id;
+                const isHov = hovered === `domain:${d.id}`;
+                return (
+                  <div
+                    key={d.id}
+                    onClick={() => setSelectedDomain(prev => prev === d.id ? null : d.id)}
+                    onMouseEnter={() => setHovered(`domain:${d.id}`)}
+                    onMouseLeave={() => setHovered(null)}
+                    style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 0", cursor: "pointer" }}
+                  >
+                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: d.dot, flexShrink: 0, opacity: isActive ? 1 : 0.7 }} />
+                    <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, fontWeight: 500, color: isActive ? "rgba(255,255,255,0.7)" : isHov ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.35)", transition: "color 0.12s ease", whiteSpace: "nowrap" as const }}>
+                      {d.label}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
         {PORTAL_DATA.map((parent) => {
           const selChildId  = selectedL2.get(parent.id) ?? null;
           const selChild    = selChildId ? parent.children.find(c => c.id === selChildId) ?? null : null;
