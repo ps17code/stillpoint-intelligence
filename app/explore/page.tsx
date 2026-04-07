@@ -378,7 +378,7 @@ export default function ExplorePage() {
       <div style={{
         height: 42, background: "#030302",
         borderBottom: "0.5px solid rgba(255,255,255,0.03)",
-        display: "flex", alignItems: "center", padding: "0 28px",
+        display: "flex", alignItems: "center", justifyContent: "center", padding: "0 28px",
         flexShrink: 0,
       }}>
         <span style={{ ...SYS, fontSize: 11, fontWeight: 300, letterSpacing: "0.06em", color: "rgba(255,255,255,0.45)", textTransform: "uppercase" as const }}>Stillpoint</span>
@@ -439,37 +439,39 @@ export default function ExplorePage() {
                   transition: "all 0.2s",
                 }}
               >
-                {/* Name row */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  {/* Left: name + description */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <span style={{
+                      fontFamily: "'DM Sans', sans-serif", fontSize: 15,
+                      fontWeight: isActive ? 500 : 400,
+                      color: isActive ? "#ece8e1" : "#6a6560",
+                      transition: "color 0.2s, font-weight 0.2s",
+                    }}>
+                      {v.name}
+                    </span>
+                    {isActive && (
+                      <div style={{
+                        fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#5a5550", lineHeight: 1.55,
+                        marginTop: 10, maxWidth: 400,
+                        animation: "exploreDescIn 0.3s ease",
+                      }}>
+                        {v.description}
+                        {!v.live && (
+                          <span style={{ fontStyle: "italic", fontSize: 10, color: "#444", marginLeft: 6 }}>Coming soon</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  {/* Right: arrow, vertically centered */}
                   <span style={{
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 15,
-                    fontWeight: isActive ? 500 : 400,
-                    color: isActive ? "#ece8e1" : "#6a6560",
-                    transition: "color 0.2s, font-weight 0.2s",
-                  }}>
-                    {v.name}
-                  </span>
-                  <span style={{
-                    ...MONO, fontSize: 11,
+                    ...MONO, fontSize: 16, flexShrink: 0,
                     color: isActive ? "#555" : "#333",
                     transition: "color 0.2s",
                   }}>
                     →
                   </span>
                 </div>
-                {/* Description (on hover) */}
-                {isActive && (
-                  <div style={{
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#5a5550", lineHeight: 1.55,
-                    marginTop: 10, maxWidth: 400,
-                    animation: "exploreDescIn 0.3s ease",
-                  }}>
-                    {v.description}
-                    {!v.live && (
-                      <span style={{ fontStyle: "italic", fontSize: 10, color: "#444", marginLeft: 6 }}>Coming soon</span>
-                    )}
-                  </div>
-                )}
               </div>
             );
           })}
