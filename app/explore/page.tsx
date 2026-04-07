@@ -387,13 +387,16 @@ export default function ExplorePage() {
       {/* ── MAIN ────────────────────────────────────────────────────── */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 40px" }}>
         {/* Headline above content */}
-        <div style={{
-          ...SYS, fontSize: 40, fontWeight: 500, color: "rgba(255,255,255,0.85)",
-          letterSpacing: "-0.5px", lineHeight: 1.2, marginBottom: 32,
-          width: "100%", maxWidth: 680,
+        <h1 style={{
+          fontFamily: "'Cormorant Garamond', Garamond, serif",
+          fontSize: 42, fontWeight: 500, lineHeight: 1.45,
+          letterSpacing: "-0.01em", maxWidth: 600,
+          margin: 0, marginBottom: 32, width: "100%",
         }}>
-          Explore a frontier
-        </div>
+          <span style={{ color: "#e8e4df" }}>Explore emerging frontiers.</span>
+          <br />
+          <span style={{ color: "#666" }}>Trace value chains from raw material to end use — every node, every bottleneck, every player.</span>
+        </h1>
 
         <div style={{ display: "flex", alignItems: "center", gap: 32, maxWidth: 680, width: "100%" }}>
         {/* Left: vertical selector */}
