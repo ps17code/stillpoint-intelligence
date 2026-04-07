@@ -229,7 +229,7 @@ const DOMAINS: Domain[] = [
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function ChainDirectory() {
-  const [panel, setPanel] = useState<PanelState>("collapsed");
+  const [panel, setPanel] = useState<PanelState>("step1");
   const [domainIdx, setDomainIdx] = useState<number>(0);
   const [slideDir, setSlideDir] = useState<SlideDir>("none");
   const [hoverCollapsed, setHoverCollapsed] = useState(false);
@@ -368,8 +368,8 @@ export default function ChainDirectory() {
         bottom: 14,
         right: 14,
         zIndex: 200,
-        width: 240,
-        maxHeight: 320,
+        width: 280,
+        maxHeight: 400,
         background: "rgba(12,12,11,0.97)",
         border: "0.5px solid rgba(255,255,255,0.05)",
         borderRadius: 9,

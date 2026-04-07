@@ -574,8 +574,8 @@ export default function HomePage() {
   return (
     <div style={{ background: "#0C0C0B", width: "100vw", height: "100vh", overflow: "hidden", position: "relative" }}>
 
-      {/* Brand header */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 40, display: "flex", alignItems: "center", padding: "0 28px", zIndex: 10 }}>
+      {/* Brand header — centered */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 40, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10 }}>
         <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 300, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Stillpoint</span>
         <span style={{ width: 5, display: "inline-block" }} />
         <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 200, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)" }}>Intelligence</span>
@@ -597,6 +597,9 @@ export default function HomePage() {
 
       {/* ── Left navigation — dropdown column ─────────────────────────────────── */}
       <div style={{ position: "absolute", left: 36, top: "50%", transform: "translateY(-50%)", zIndex: 20 }}>
+        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 18, fontWeight: 500, color: "rgba(255,255,255,0.8)", marginBottom: 16 }}>
+          AI Infrastructure
+        </div>
 
         {/* Domain filter accordion */}
         <div>
