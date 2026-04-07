@@ -523,27 +523,41 @@ export default function Home() {
                   )}
                   </div>{/* end left text wrapper */}
 
-                  {/* Fiber cross-section illustration (comp layer only) */}
+                  {/* Material transformation flow illustration (comp layer only) */}
                   {appState === 2 && (
-                    <div style={{ width: 200, height: 200, flexShrink: 0 }}>
-                      <svg width="190" height="190" viewBox="0 0 190 190">
-                        <circle cx="95" cy="95" r="88" fill="none" stroke="rgba(155,168,171,0.03)" strokeWidth="0.5"/>
-                        <circle cx="95" cy="95" r="72" fill="none" stroke="rgba(155,168,171,0.04)" strokeWidth="0.5"/>
-                        <circle cx="95" cy="95" r="56" fill="none" stroke="rgba(155,168,171,0.05)" strokeWidth="0.5"/>
-                        <circle cx="95" cy="95" r="40" fill="none" stroke="rgba(155,168,171,0.06)" strokeWidth="0.5"/>
-                        <circle cx="95" cy="95" r="26" fill="none" stroke="rgba(155,168,171,0.07)" strokeWidth="0.5"/>
-                        <circle cx="95" cy="95" r="14" fill="none" stroke="rgba(196,164,108,0.1)" strokeWidth="0.5"/>
-                        <circle cx="95" cy="95" r="7" fill="rgba(196,164,108,0.03)"/>
-                        <circle cx="95" cy="95" r="7" fill="none" stroke="rgba(196,164,108,0.15)" strokeWidth="0.5"/>
-                        <circle cx="95" cy="95" r="3" fill="rgba(196,164,108,0.1)"/>
-                        <circle cx="95" cy="95" r="3" fill="none" stroke="rgba(196,164,108,0.25)" strokeWidth="0.5"/>
-                        <circle cx="95" cy="95" r="1" fill="rgba(196,164,108,0.45)"/>
-                        <line x1="98" y1="92" x2="130" y2="62" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" strokeDasharray="2 3"/>
-                        <text x="133" y="60" fontFamily="monospace" fontSize="5.5" fill="rgba(196,164,108,0.2)">Ge-doped core</text>
-                        <text x="133" y="68" fontFamily="monospace" fontSize="4.5" fill="rgba(255,255,255,0.08)">8μm · +0.35% refractive index</text>
-                        <line x1="108" y1="82" x2="134" y2="82" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" strokeDasharray="2 3"/>
-                        <text x="137" y="80" fontFamily="monospace" fontSize="5.5" fill="rgba(255,255,255,0.1)">Silica cladding</text>
-                        <text x="137" y="88" fontFamily="monospace" fontSize="4.5" fill="rgba(255,255,255,0.06)">125μm</text>
+                    <div style={{ width: 200, height: 200, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <svg width="180" height="190" viewBox="0 0 180 190">
+                        {/* Stage 1: GeO2 powder */}
+                        <rect x="30" y="15" width="20" height="16" rx="1" fill="none" stroke="rgba(155,168,171,0.15)" strokeWidth="0.5" transform="rotate(-8 40 23)"/>
+                        <rect x="55" y="18" width="15" height="12" rx="1" fill="none" stroke="rgba(155,168,171,0.1)" strokeWidth="0.5" transform="rotate(5 62 24)"/>
+                        <rect x="40" y="28" width="17" height="11" rx="1" fill="none" stroke="rgba(155,168,171,0.08)" strokeWidth="0.5" transform="rotate(-3 48 33)"/>
+                        <text x="80" y="28" fontFamily="monospace" fontSize="6" fill="rgba(155,168,171,0.2)">GeO₂ powder</text>
+                        {/* Arrow 1 */}
+                        <line x1="50" y1="45" x2="50" y2="58" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" strokeDasharray="2 3"/>
+                        <text x="58" y="54" fontFamily="monospace" fontSize="5" fill="rgba(224,75,74,0.25)">-35% lost</text>
+                        {/* Stage 2: GeCl4 liquid */}
+                        <path d="M50,65 C56,72 54,82 52,88 C51,91 49,91 48,88 C46,82 44,72 50,65Z" fill="rgba(196,164,108,0.06)" stroke="rgba(196,164,108,0.25)" strokeWidth="0.5"/>
+                        <circle cx="49" cy="80" r="1" fill="rgba(196,164,108,0.2)"/>
+                        <circle cx="51" cy="76" r="0.8" fill="rgba(196,164,108,0.15)"/>
+                        <text x="62" y="80" fontFamily="monospace" fontSize="6" fill="rgba(196,164,108,0.3)">GeCl₄ liquid</text>
+                        <text x="62" y="89" fontFamily="monospace" fontSize="5" fill="rgba(196,164,108,0.15)">8N purity</text>
+                        {/* Arrow 2 */}
+                        <line x1="50" y1="95" x2="50" y2="108" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" strokeDasharray="2 3"/>
+                        <text x="58" y="104" fontFamily="monospace" fontSize="5" fill="rgba(224,75,74,0.25)">-40-60% lost</text>
+                        {/* Stage 3: Preform */}
+                        <rect x="38" y="112" width="24" height="34" rx="3" fill="rgba(155,168,171,0.02)" stroke="rgba(155,168,171,0.12)" strokeWidth="0.5"/>
+                        <rect x="44" y="112" width="12" height="34" rx="1.5" fill="rgba(196,164,108,0.03)" stroke="rgba(196,164,108,0.08)" strokeWidth="0.5"/>
+                        <line x1="50" y1="112" x2="50" y2="146" stroke="rgba(196,164,108,0.15)" strokeWidth="0.5"/>
+                        <text x="68" y="128" fontFamily="monospace" fontSize="6" fill="rgba(155,168,171,0.18)">Preform</text>
+                        {/* Arrow 3 */}
+                        <line x1="50" y1="148" x2="50" y2="158" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" strokeDasharray="2 3"/>
+                        {/* Stage 4: Fiber strand */}
+                        <line x1="20" y1="168" x2="140" y2="168" stroke="rgba(196,164,108,0.2)" strokeWidth="0.5"/>
+                        <circle cx="25" cy="168" r="3" fill="rgba(196,164,108,0.15)"/>
+                        <circle cx="50" cy="168" r="2" fill="rgba(196,164,108,0.1)"/>
+                        <circle cx="75" cy="168" r="1.5" fill="rgba(196,164,108,0.07)"/>
+                        <circle cx="100" cy="168" r="1" fill="rgba(196,164,108,0.05)"/>
+                        <text x="68" y="180" fontFamily="monospace" fontSize="6" fill="rgba(196,164,108,0.25)">~500M fiber-km/yr</text>
                       </svg>
                     </div>
                   )}
