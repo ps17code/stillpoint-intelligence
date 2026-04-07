@@ -400,19 +400,18 @@ export default function ExplorePage() {
         <div style={{ width: 320, flexShrink: 0 }}>
 
           {VERTICALS.map((v, i) => {
-            const isSel = selected === i;
             const isHov = hovered === i;
             return (
               <div
                 key={v.name}
-                onClick={() => setSelected(i)}
-                onMouseEnter={() => setHovered(i)}
+                onClick={() => { if (v.live && v.href !== "#") window.location.href = v.href; }}
+                onMouseEnter={() => { setHovered(i); setSelected(i); }}
                 onMouseLeave={() => setHovered(null)}
                 style={{
-                  padding: isSel ? "14px 0 18px" : "12px 0",
+                  padding: isHov ? "14px 0 18px" : "12px 0",
                   borderBottom: "0.5px solid rgba(255,255,255,0.04)",
                   borderTop: i === 0 ? "0.5px solid rgba(255,255,255,0.04)" : undefined,
-                  cursor: "pointer",
+                  cursor: v.live ? "pointer" : "default",
                   transition: "all 0.2s",
                 }}
               >
@@ -420,29 +419,22 @@ export default function ExplorePage() {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{
                     ...SYS, fontSize: 15,
-                    fontWeight: isSel ? 500 : 400,
-                    color: isSel ? "rgba(255,255,255,0.88)" : isHov ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)",
+                    fontWeight: isHov ? 500 : 400,
+                    color: isHov ? "rgba(255,255,255,0.88)" : "rgba(255,255,255,0.2)",
                     transition: "color 0.2s",
                   }}>
                     {v.name}
                   </span>
-                  <span
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (v.live && v.href !== "#") window.location.href = v.href;
-                    }}
-                    style={{
-                      ...MONO, fontSize: 11,
-                      color: isSel ? "rgba(255,255,255,0.2)" : isHov ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.05)",
-                      cursor: v.live ? "pointer" : "default",
-                      transition: "color 0.2s",
-                    }}
-                  >
+                  <span style={{
+                    ...MONO, fontSize: 11,
+                    color: isHov ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.05)",
+                    transition: "color 0.2s",
+                  }}>
                     →
                   </span>
                 </div>
-                {/* Description (selected only) */}
-                {isSel && (
+                {/* Description (on hover) */}
+                {isHov && (
                   <div style={{
                     ...SYS, fontSize: 10, color: "rgba(255,255,255,0.15)", lineHeight: 1.7,
                     marginTop: 8, maxWidth: 300,
