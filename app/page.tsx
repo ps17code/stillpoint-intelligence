@@ -609,7 +609,6 @@ export default function HomePage() {
             onMouseLeave={() => setHovered(null)}
             style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 0", cursor: "pointer" }}
           >
-            <div style={{ width: 14, height: 0.5, background: domainOpen ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.08)", flexShrink: 0, transition: "background 0.25s ease" }} />
             <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 12, fontWeight: domainOpen ? 500 : 400, color: domainOpen ? "rgba(255,255,255,0.7)" : hovered === "l1:domain" ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.4)", transition: "color 0.2s ease", whiteSpace: "nowrap" as const }}>
               Domain
             </span>
@@ -671,7 +670,6 @@ export default function HomePage() {
                 onMouseLeave={() => setHovered(null)}
                 style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 0", cursor: "pointer" }}
               >
-                <div style={{ width: 14, height: 0.5, background: lineBackground, opacity: lineOpacity, flexShrink: 0, transition: "background 0.25s ease, opacity 0.25s ease" }} />
                 <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 12, fontWeight: nameWeight, color: nameColor, opacity: nameOpacity, transition: "color 0.2s ease, opacity 0.2s ease", whiteSpace: "nowrap" }}>
                   {nameText}
                 </span>

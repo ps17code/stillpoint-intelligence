@@ -334,20 +334,10 @@ export default function ChainDirectory() {
               </div>
 
               {isExp && (
-                <div style={{ padding: "2px 0 6px 24px", animation: "cdChainIn 0.15s ease" }}>
+                <div style={{ padding: "2px 0 6px 16px", animation: "cdChainIn 0.15s ease" }}>
                   {domain.chains.map((chain) => {
                     const ck = `${di}-${chain.name}`;
                     const isChHov = hoverChain === ck;
-                    const isLive = chain.live;
-                    const bg = isLive
-                      ? isChHov ? "rgba(196,164,108,0.03)" : "rgba(196,164,108,0.015)"
-                      : isChHov ? "rgba(255,255,255,0.02)" : "transparent";
-                    const nc = isLive
-                      ? isChHov ? "rgba(196,164,108,0.7)" : "rgba(196,164,108,0.45)"
-                      : isChHov ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.22)";
-                    const ac = isLive
-                      ? isChHov ? "rgba(196,164,108,0.2)" : "rgba(196,164,108,0.04)"
-                      : isChHov ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.04)";
                     return (
                       <div
                         key={chain.name}
@@ -355,20 +345,23 @@ export default function ChainDirectory() {
                         onMouseEnter={() => setHoverChain(ck)}
                         onMouseLeave={() => setHoverChain(null)}
                         style={{
-                          display: "flex", alignItems: "center", gap: 9,
-                          padding: "7px 8px", borderRadius: 6,
+                          display: "flex", alignItems: "center",
+                          padding: "5px 8px", borderRadius: 4,
                           cursor: chain.href !== "#" ? "pointer" : "default",
-                          background: bg, transition: "background 0.15s",
+                          background: isChHov ? "rgba(255,255,255,0.02)" : "transparent",
+                          transition: "background 0.15s",
                         }}
                       >
-                        <div style={{ flexShrink: 0, width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          {chain.icon}
-                        </div>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ ...SYS, fontSize: 9.5, fontWeight: 500, color: nc, marginBottom: 1, transition: "color 0.15s" }}>{chain.name}</div>
-                          <div style={{ ...MONO, fontSize: 6.5, color: "rgba(255,255,255,0.06)" }}>{chain.desc}</div>
-                        </div>
-                        <span style={{ ...MONO, fontSize: 8, color: ac, flexShrink: 0, transition: "color 0.15s" }}>→</span>
+                        <span style={{
+                          ...SYS, fontSize: 9.5, fontWeight: 400, flex: 1,
+                          color: isChHov ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.22)",
+                          transition: "color 0.15s",
+                        }}>{chain.name}</span>
+                        <span style={{
+                          ...MONO, fontSize: 8, flexShrink: 0,
+                          color: isChHov ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.04)",
+                          transition: "color 0.15s",
+                        }}>→</span>
                       </div>
                     );
                   })}
