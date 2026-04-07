@@ -216,11 +216,10 @@ function LayerContextPanel({ panelKey }: { panelKey: string }) {
   if (!p) return null;
   return (
     <div style={{
-      width: 300, marginLeft: "auto", marginTop: -100,
-      position: "relative", zIndex: 5,
-      background: "#1a1816",
+      position: "absolute", bottom: -40, right: 20,
+      width: 250, background: "#1a1816",
       border: "1px solid #252220", borderRadius: 10,
-      padding: "16px 20px",
+      padding: 15, zIndex: 5,
     }}>
       <div style={{
         ...MONO, fontSize: 9, fontWeight: 500, letterSpacing: "0.1em",
@@ -236,7 +235,7 @@ function LayerContextPanel({ panelKey }: { panelKey: string }) {
           </div>
           <div style={{
             fontFamily: "Inter, -apple-system, system-ui, sans-serif",
-            fontSize: 11, color: "#908880", lineHeight: 1.55,
+            fontSize: 9, color: "#908880", lineHeight: 1.55,
           }}>
             {s.text}
           </div>
@@ -300,7 +299,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── RAW MATERIAL ───────────────────────────────────────────── */}
-      <div id="chain-raw" style={{ padding: "0 24px", overflow: "visible" }}>
+      <div id="chain-raw" style={{ padding: "0 24px", position: "relative" }}>
         <LayerHeader tier="Raw Material" name="Germanium" layerIdx={0} />
         <TreeMap
           geometry={rawGeo}
@@ -321,7 +320,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── COMPONENT ──────────────────────────────────────────────── */}
-      <div id="chain-comp" style={{ padding: "0 24px", overflow: "visible" }}>
+      <div id="chain-comp" style={{ padding: "0 24px", position: "relative" }}>
         <LayerHeader tier="Component" name="GeO₂ / GeCl₄" layerIdx={1} />
         <div style={{ position: "relative" }}>
           <TreeMap
@@ -349,7 +348,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── SUBSYSTEM ──────────────────────────────────────────────── */}
-      <div id="chain-sub" style={{ padding: "0 24px", overflow: "visible" }}>
+      <div id="chain-sub" style={{ padding: "0 24px", position: "relative" }}>
         <LayerHeader tier="Subsystem" name="Fiber Optics" layerIdx={2} />
         <TreeMap
           geometry={subGeo}
