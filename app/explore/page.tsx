@@ -385,22 +385,39 @@ export default function ExplorePage() {
       </div>
 
       {/* ── MAIN ────────────────────────────────────────────────────── */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 40px" }}>
-        {/* Headline above content */}
-        <h1 style={{
-          fontFamily: "'Cormorant Garamond', Garamond, serif",
-          fontSize: 42, fontWeight: 500, lineHeight: 1.45,
-          letterSpacing: "-0.01em", maxWidth: 600,
-          margin: 0, marginBottom: 32, width: "100%",
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 40px" }}>
+        {/* Unified container */}
+        <div style={{
+          maxWidth: 1000, width: "100%",
+          background: "rgba(19,19,19,0.5)",
+          border: "1px solid #1e1e1e",
+          borderRadius: 16,
+          padding: "40px 48px",
         }}>
-          <span style={{ color: "#e8e4df" }}>Explore emerging frontiers.</span>
-          <br />
-          <span style={{ color: "#666" }}>Trace value chains from raw material to end use — every node, every bottleneck, every player.</span>
-        </h1>
+          {/* Headline */}
+          <h1 style={{
+            fontFamily: "'Cormorant Garamond', Garamond, serif",
+            fontSize: 42, fontWeight: 500, lineHeight: 1.2,
+            letterSpacing: "-0.01em",
+            color: "#e8e4df",
+            margin: 0, marginBottom: 8,
+          }}>
+            Explore emerging frontiers.
+          </h1>
+          {/* Subheadline */}
+          <p style={{
+            fontFamily: "'Cormorant Garamond', Garamond, serif",
+            fontSize: 18, fontWeight: 400, lineHeight: 1.5,
+            color: "#555",
+            margin: 0, marginBottom: 36, maxWidth: 560,
+          }}>
+            Trace value chains from raw material to end use — every node, every bottleneck, every player.
+          </p>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 32, maxWidth: 680, width: "100%" }}>
-        {/* Left: vertical selector */}
-        <div style={{ width: 320, flexShrink: 0 }}>
+          {/* Two-column: selector + illustration */}
+          <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
+            {/* Left: vertical selector */}
+            <div style={{ width: 320, flexShrink: 0 }}>
 
           {VERTICALS.map((v, i) => {
             const isHov = hovered === i;
@@ -460,7 +477,8 @@ export default function ExplorePage() {
             <Illus />
           </div>
         </div>
-        </div>{/* end centered container */}
+          </div>{/* end two-column */}
+        </div>{/* end unified container */}
       </div>
 
       {/* ── FOOTER ──────────────────────────────────────────────────── */}
