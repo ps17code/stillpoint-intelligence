@@ -138,20 +138,13 @@ function LayerHeader({ tier, name, layerIdx }: { tier: string; name: string; lay
       padding: "18px 0 12px",
       borderTop: "0.5px solid rgba(255,255,255,0.07)",
     }}>
-      {/* Left: tier label */}
+      {/* Left: tier | name */}
       <div style={{ flex: 1 }}>
-        <div style={{
-          ...MONO, fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase" as const,
-          color: tierColor, whiteSpace: "nowrap" as const,
+        <span style={{
+          ...MONO, fontSize: 12, letterSpacing: "0.04em",
+          color: "rgba(255,255,255,0.5)", whiteSpace: "nowrap" as const,
         }}>
-          {tier}
-        </div>
-      </div>
-
-      {/* Center: subtitle name */}
-      <div style={{ flex: 1, textAlign: "center" as const }}>
-        <span style={{ ...MONO, fontSize: 12, color: nameColor, letterSpacing: "0.04em" }}>
-          {name}
+          {tier} | {name}
         </span>
       </div>
 
