@@ -433,7 +433,7 @@ export default function ExplorePage() {
                 onMouseEnter={() => { setHovered(i); setSelected(i); }}
                 onMouseLeave={() => setHovered(null)}
                 style={{
-                  padding: "16px 0",
+                  padding: i === 0 ? "40px 0 16px 0" : "16px 0",
                   borderBottom: "1px solid #1e1c1a",
                   cursor: v.live ? "pointer" : "default",
                   transition: "all 0.2s",
@@ -457,23 +457,19 @@ export default function ExplorePage() {
                     →
                   </span>
                 </div>
-                {/* Description (smooth expand/collapse) */}
-                <div style={{
-                  maxHeight: isActive ? 200 : 0,
-                  opacity: isActive ? 1 : 0,
-                  overflow: "hidden",
-                  transition: "max-height 0.3s ease, opacity 0.25s ease",
-                }}>
+                {/* Description (on hover) */}
+                {isActive && (
                   <div style={{
                     fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#5a5550", lineHeight: 1.55,
                     marginTop: 10, maxWidth: 400,
+                    animation: "exploreDescIn 0.3s ease",
                   }}>
                     {v.description}
                     {!v.live && (
                       <span style={{ fontStyle: "italic", fontSize: 10, color: "#444", marginLeft: 6 }}>Coming soon</span>
                     )}
                   </div>
-                </div>
+                )}
               </div>
             );
           })}
