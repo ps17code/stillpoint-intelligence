@@ -179,6 +179,72 @@ function LayerHeader({ tier, name, layerIdx }: { tier: string; name: string; lay
   );
 }
 
+// Context panel data
+interface CtxSection { label: string; text: string }
+interface CtxPanel { title: string; accent: string; sections: CtxSection[] }
+
+const CTX_PANELS: Record<string, CtxPanel> = {
+  raw: {
+    title: "GERMANIUM · RAW MATERIAL",
+    accent: "#c9a84c",
+    sections: [
+      { label: "DEPOSITS", text: "8 deposits globally. 5 in China. Germanium is a trace element in zinc ore and coal ash — recovered as a byproduct, never mined directly." },
+      { label: "MINERS", text: "7 miners. Output tied to zinc and coal cycles — germanium supply can\u2019t scale independently." },
+      { label: "REFINERS & RECYCLERS", text: "7 refiners produce zone-refined metal, GeO\u2082 powder, and intermediates. China controls ~83% of refined output." },
+    ],
+  },
+  comp: {
+    title: "GeO\u2082 / GeCl\u2084 · COMPONENT",
+    accent: "#6a9ab8",
+    sections: [
+      { label: "GeCl\u2084 SUPPLIERS", text: "4 suppliers convert germanium powder into GeCl\u2084 — a volatile liquid chemical that can be vaporized and deposited into glass. Without it, light won\u2019t pass through fiber. Only one western source: Umicore." },
+      { label: "FIBER MANUFACTURERS", text: "6 manufacturers produce preforms — thick glass rods with a GeCl\u2084-doped core. A single 1m preform is drawn into ~200km of fiber strand. Corning alone accounts for ~40% of global output." },
+    ],
+  },
+  sub: {
+    title: "FIBER OPTICS · SUBSYSTEM",
+    accent: "#9b6fbd",
+    sections: [
+      { label: "ASSEMBLY", text: "8 cable assemblers bundle fiber strands into sheathed cables. Some vertically integrated from preform to cable. Subsea and long-haul require specialized armoring and amplifier integration that only a few can do." },
+      { label: "CABLE TYPE", text: "Three categories — datacenter (short, high-density, up to 6,912 fibers per cable), terrestrial long-haul (hundreds of km per route), and subsea (thousands of km, 8\u201324 fiber pairs). Each has different germanium loading per km." },
+    ],
+  },
+};
+
+function LayerContextPanel({ panelKey }: { panelKey: string }) {
+  const p = CTX_PANELS[panelKey];
+  if (!p) return null;
+  return (
+    <div style={{
+      position: "absolute", bottom: 20, right: 20,
+      width: 300, background: "#1a1816",
+      border: "1px solid #252220", borderRadius: 10,
+      padding: "16px 20px", zIndex: 5,
+    }}>
+      <div style={{
+        ...MONO, fontSize: 9, fontWeight: 500, letterSpacing: "0.1em",
+        color: p.accent, marginBottom: 12,
+      }}>
+        {p.title}
+      </div>
+      {p.sections.map((s, i) => (
+        <React.Fragment key={s.label}>
+          {i > 0 && <div style={{ height: 1, background: "#222018", margin: "10px 0" }} />}
+          <div style={{ ...MONO, fontSize: 9, letterSpacing: "0.08em", color: "#5a5550", marginBottom: 5 }}>
+            {s.label}
+          </div>
+          <div style={{
+            fontFamily: "Inter, -apple-system, system-ui, sans-serif",
+            fontSize: 11, color: "#908880", lineHeight: 1.55,
+          }}>
+            {s.text}
+          </div>
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+
 export default function FullChainMap() {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
 
@@ -233,7 +299,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── RAW MATERIAL ───────────────────────────────────────────── */}
-      <div id="chain-raw" style={{ padding: "0 24px" }}>
+      <div id="chain-raw" style={{ padding: "0 24px", position: "relative", paddingBottom: 40 }}>
         <LayerHeader tier="Raw Material" name="Germanium" layerIdx={0} />
         <TreeMap
           geometry={rawGeo}
@@ -245,6 +311,7 @@ export default function FullChainMap() {
           onLayerClick={() => {}}
           layerPanels={{}}
         />
+        <LayerContextPanel panelKey="raw" />
       </div>
 
       {/* Bridge Raw → Comp */}
@@ -253,7 +320,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── COMPONENT ──────────────────────────────────────────────── */}
-      <div id="chain-comp" style={{ padding: "0 24px" }}>
+      <div id="chain-comp" style={{ padding: "0 24px", position: "relative", paddingBottom: 40 }}>
         <LayerHeader tier="Component" name="GeO₂ / GeCl₄" layerIdx={1} />
         <div style={{ position: "relative" }}>
           <TreeMap
@@ -272,6 +339,7 @@ export default function FullChainMap() {
             geCl4CY={geCl4CY} fiberCY={fiberCY}
           />
         </div>
+        <LayerContextPanel panelKey="comp" />
       </div>
 
       {/* Bridge Comp → Sub */}
@@ -280,7 +348,7 @@ export default function FullChainMap() {
       </div>
 
       {/* ── SUBSYSTEM ──────────────────────────────────────────────── */}
-      <div id="chain-sub" style={{ padding: "0 24px" }}>
+      <div id="chain-sub" style={{ padding: "0 24px", position: "relative", paddingBottom: 40 }}>
         <LayerHeader tier="Subsystem" name="Fiber Optics" layerIdx={2} />
         <TreeMap
           geometry={subGeo}
@@ -292,6 +360,7 @@ export default function FullChainMap() {
           onLayerClick={() => {}}
           layerPanels={{}}
         />
+        <LayerContextPanel panelKey="sub" />
       </div>
 
       {/* Bridge Sub → EU */}
