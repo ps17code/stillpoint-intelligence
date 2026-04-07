@@ -572,7 +572,7 @@ export default function HomePage() {
   const expandedKey  = hoveredSub ?? activeSubKey;
 
   return (
-    <div style={{ background: "#0C0C0B", width: "100vw", height: "100vh", overflow: "hidden", position: "relative" }}>
+    <div style={{ background: "#161414", width: "100vw", height: "100vh", overflow: "hidden", position: "relative" }}>
 
       {/* Brand header — centered */}
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 40, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10 }}>

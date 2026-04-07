@@ -286,7 +286,7 @@ export default function ChainDirectory() {
         display: "flex", alignItems: "center", justifyContent: "space-between",
         flexShrink: 0, borderBottom: "0.5px solid rgba(255,255,255,0.05)",
       }}>
-        <span style={{ ...MONO, fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.06em" }}>CHAINS</span>
+        <span style={{ ...MONO, fontSize: 9, color: "rgba(255,255,255,0.8)", letterSpacing: "0.06em" }}>CHAINS</span>
         <button
           onClick={collapse}
           onMouseEnter={() => setHoverClose(true)}
@@ -315,14 +315,21 @@ export default function ChainDirectory() {
                 style={{
                   display: "flex", alignItems: "center", gap: 10,
                   padding: "9px 8px", borderRadius: 6, cursor: "pointer",
-                  background: isExp ? "rgba(255,255,255,0.02)" : isHov ? "rgba(255,255,255,0.015)" : "transparent",
-                  transition: "background 0.15s",
+                  background: isExp ? "rgba(255,255,255,0.04)" : isHov ? "rgba(255,255,255,0.03)" : "transparent",
+                  transform: isHov && !isExp ? "translateX(2px)" : "none",
+                  transition: "background 0.15s, transform 0.15s",
                 }}
               >
-                <div style={{ width: 6, height: 6, borderRadius: "50%", background: domain.dot, flexShrink: 0 }} />
+                <div style={{
+                  width: 6, height: 6, borderRadius: "50%", flexShrink: 0,
+                  background: domain.dot,
+                  opacity: isHov || isExp ? 1 : 0.7,
+                  filter: isHov || isExp ? "brightness(1.5)" : "none",
+                  transition: "opacity 0.15s, filter 0.15s",
+                }} />
                 <span style={{
                   ...SYS, fontSize: 10, fontWeight: 500, flex: 1,
-                  color: isExp ? "rgba(255,255,255,0.65)" : isHov ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.48)",
+                  color: isExp ? "rgba(255,255,255,0.8)" : isHov ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.48)",
                   transition: "color 0.15s",
                 }}>{domain.name}</span>
                 <span style={{ ...MONO, fontSize: 7, color: "rgba(255,255,255,0.48)", flexShrink: 0 }}>{domain.count}</span>
