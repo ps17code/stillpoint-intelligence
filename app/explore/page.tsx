@@ -358,153 +358,7 @@ function SpaceIllustration() {
   );
 }
 
-function DefaultIllustration() {
-  return (
-    <svg viewBox="0 0 320 380" style={{ width: "100%", maxWidth: 320, height: "auto" }}>
-      <defs>
-        <filter id="gl" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="3" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <filter id="glW" x="-80%" y="-80%" width="260%" height="260%">
-          <feGaussianBlur stdDeviation="5" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <style>{`
-          @keyframes fd { to { stroke-dashoffset: -14; } }
-          @keyframes spD { 0%,100% { opacity:.6; } 50% { opacity:1; } }
-          .fl { stroke-dasharray: 3 5; animation: fd 2.5s linear infinite; }
-          .spD { animation: spD 3s ease-in-out infinite; }
-        `}</style>
-      </defs>
-
-      {/* LAYER 1: RAW MATERIALS */}
-      <line x1="30" y1="55" x2="280" y2="55" stroke="#e2b84a" strokeWidth="0.6" opacity="0.35"/>
-      {[
-        { cx: 42, r: 4 }, { cx: 82, r: 4.5 }, { cx: 118, r: 3.5 }, { cx: 155, r: 5 },
-        { cx: 192, r: 4 }, { cx: 232, r: 4.5 }, { cx: 268, r: 3.5 },
-      ].map(({ cx, r }) => (
-        <g key={cx}>
-          <circle cx={cx} cy={30} r={r + 3.5} fill="none" stroke="#e2b84a" strokeWidth="0.4" opacity="0.25"/>
-          <circle cx={cx} cy={30} r={r} fill="#1c1810" stroke="#e2b84a" strokeWidth="1" opacity="0.85"/>
-          <line x1={cx} y1={30 + r} x2={cx} y2={55} stroke="#e2b84a" strokeWidth="0.6" opacity="0.35"/>
-          <circle cx={cx} cy={30} r={1.3} fill="#e2b84a" opacity="1" className="spD"/>
-        </g>
-      ))}
-      <text x="305" y="32" fill="#4a4a4a" fontSize="6" fontFamily="'DM Sans',sans-serif" textAnchor="end" letterSpacing="0.1em">RAW</text>
-      <text x="305" y="39" fill="#4a4a4a" fontSize="6" fontFamily="'DM Sans',sans-serif" textAnchor="end" letterSpacing="0.1em">MATERIAL</text>
-
-      {/* Drops to components */}
-      {[82, 155, 228].map(x => (
-        <line key={x} x1={x} y1={55} x2={x} y2={95} stroke="#e2b84a" strokeWidth="0.7" opacity="0.3" className="fl"/>
-      ))}
-
-      {/* LAYER 2: COMPONENTS */}
-      {[{ x: 65, y: 100, cx: 82, cy: 107 }, { x: 138, y: 98, cx: 155, cy: 105 }, { x: 211, y: 101, cx: 228, cy: 108 }].map(p => (
-        <g key={p.cx}>
-          <rect x={p.x} y={p.y} width={34} height={14} rx={7} fill="#161a20" stroke="#7eb4d8" strokeWidth="0.9" opacity="0.8"/>
-          <line x1={p.cx - 9} y1={p.cy} x2={p.cx + 9} y2={p.cy} stroke="#7eb4d8" strokeWidth="0.4" opacity="0.45"/>
-          <circle cx={p.cx} cy={p.cy} r={1.3} fill="#7eb4d8" opacity="0.9" className="spD"/>
-        </g>
-      ))}
-      <text x="305" y="108" fill="#4a4a4a" fontSize="6" fontFamily="'DM Sans',sans-serif" textAnchor="end" letterSpacing="0.1em">COMPONENT</text>
-
-      {/* Converging to chokepoint */}
-      <path d="M82,116 C82,145 155,145 155,162" fill="none" stroke="#7eb4d8" strokeWidth="0.7" opacity="0.35" className="fl"/>
-      <path d="M155,114 C155,140 155,140 155,162" fill="none" stroke="#7eb4d8" strokeWidth="0.7" opacity="0.35" className="fl"/>
-      <path d="M228,117 C228,145 155,145 155,162" fill="none" stroke="#7eb4d8" strokeWidth="0.7" opacity="0.35" className="fl"/>
-
-      {/* CHOKEPOINT */}
-      <circle cx="155" cy="185" r="20" fill="none" stroke="#e2b84a" strokeWidth="0.4" opacity="0.15">
-        <animate attributeName="r" values="18;22;18" dur="3s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.15;0.35;0.15" dur="3s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="155" cy="185" r="14" fill="none" stroke="#e2b84a" strokeWidth="0.5" opacity="0.2">
-        <animate attributeName="opacity" values="0.2;0.45;0.2" dur="3s" repeatCount="indefinite" begin="0.4s"/>
-      </circle>
-      <circle cx="155" cy="185" r="10" fill="#e2b84a" opacity="0.06" filter="url(#glW)"/>
-      <g filter="url(#gl)">
-        <rect x="144" y="174" width="22" height="22" rx="2.5" fill="#1c1810" stroke="#e2b84a" strokeWidth="1.2" transform="rotate(45 155 185)" opacity="1"/>
-      </g>
-      <circle cx="155" cy="185" r="2.8" fill="#e2b84a" opacity="1" filter="url(#gl)"/>
-      <line x1="172" y1="185" x2="192" y2="185" stroke="#e2b84a" strokeWidth="0.5" opacity="0.4"/>
-      <circle cx="192" cy="185" r="0.8" fill="#e2b84a" opacity="0.5"/>
-      <text x="197" y="183" fill="#e2b84a" fontSize="6" fontFamily="'DM Sans',sans-serif" opacity="0.65" letterSpacing="0.08em">CHOKEPOINT</text>
-      <text x="197" y="190.5" fill="#e2b84a" fontSize="5" fontFamily="'DM Sans',sans-serif" opacity="0.35">Single source dependency</text>
-
-      {/* Fan out to subsystems */}
-      <path d="M155,202 C155,226 68,226 68,250" fill="none" stroke="#e2b84a" strokeWidth="0.7" opacity="0.3" className="fl"/>
-      <path d="M155,202 C155,226 155,226 155,248" fill="none" stroke="#e2b84a" strokeWidth="0.7" opacity="0.3" className="fl"/>
-      <path d="M155,202 C155,226 242,226 242,252" fill="none" stroke="#e2b84a" strokeWidth="0.7" opacity="0.3" className="fl"/>
-
-      {/* LAYER 3: SUBSYSTEMS */}
-      {[{ x: 54, y: 254, cx: 68, cy: 264 }, { x: 141, y: 252, cx: 155, cy: 262 }, { x: 228, y: 256, cx: 242, cy: 266 }].map(p => (
-        <g key={p.cx} opacity="0.75">
-          <rect x={p.x} y={p.y} width={28} height={20} rx={2.5} fill="#141c1a" stroke="#5cd4c8" strokeWidth="0.8"/>
-          {[0, 7.5, 15].map((dx, j) => (
-            <g key={j}>
-              <rect x={p.x + 5 + dx} y={p.y + 4.5} width={4.5} height={3.5} rx={0.5} fill="#5cd4c8" opacity={0.1 + j * 0.04}/>
-              <rect x={p.x + 5 + dx} y={p.y + 12} width={4.5} height={3.5} rx={0.5} fill="#5cd4c8" opacity={0.14 + j * 0.04}/>
-            </g>
-          ))}
-          <circle cx={p.cx} cy={p.cy} r={1.2} fill="#5cd4c8" opacity="0.8" className="spD"/>
-        </g>
-      ))}
-      <text x="305" y="265" fill="#4a4a4a" fontSize="6" fontFamily="'DM Sans',sans-serif" textAnchor="end" letterSpacing="0.1em">SUBSYSTEM</text>
-
-      {/* Bus to end use */}
-      <line x1="22" y1="310" x2="288" y2="310" stroke="#5cd4c8" strokeWidth="0.5" opacity="0.2"/>
-      {[68, 155, 242].map(x => (
-        <line key={x} x1={x} y1={x === 155 ? 275 : x === 68 ? 276 : 278} x2={x} y2={310} stroke="#5cd4c8" strokeWidth="0.6" opacity="0.2" className="fl"/>
-      ))}
-      {[40, 100, 155, 210, 270].map(x => (
-        <line key={x} x1={x} y1={310} x2={x} y2={325} stroke="#7acc8e" strokeWidth="0.5" opacity="0.2"/>
-      ))}
-
-      {/* LAYER 4: END USE */}
-      {/* Server rack */}
-      <g opacity="0.7">
-        <rect x="29" y="327" width="22" height="28" rx="2" fill="#141c18" stroke="#7acc8e" strokeWidth="0.7"/>
-        {[330.5, 336.5, 342.5, 348.5].map(y => (
-          <g key={y}><rect x="32" y={y} width="13" height="3.8" rx="0.8" fill="#7acc8e" opacity="0.12"/><circle cx="42" cy={y + 2} r="0.6" fill="#7acc8e" opacity="0.6"/></g>
-        ))}
-      </g>
-      {/* Network hub */}
-      <g opacity="0.7">
-        <circle cx="100" cy="341" r="10" fill="#141c18" stroke="#7acc8e" strokeWidth="0.7"/>
-        {[{x:106,y:335},{x:109.5,y:341},{x:106,y:347},{x:94,y:347},{x:90.5,y:341}].map((p,i) => (
-          <circle key={i} cx={p.x} cy={p.y} r="1" fill="#7acc8e" opacity="0.4"/>
-        ))}
-        <circle cx="100" cy="341" r="1" fill="#7acc8e" opacity="0.7"/>
-      </g>
-      {/* Chip */}
-      <g opacity="0.7">
-        <rect x="143" y="330" width="24" height="22" rx="2" fill="#141c18" stroke="#7acc8e" strokeWidth="0.7"/>
-        <rect x="148" y="335" width="14" height="12" rx="1" fill="none" stroke="#7acc8e" strokeWidth="0.35" opacity="0.35"/>
-        {[149, 154, 159].map(x => (<g key={x}><line x1={x} y1={330} x2={x} y2={327} stroke="#7acc8e" strokeWidth="0.4" opacity="0.4"/><line x1={x} y1={352} x2={x} y2={355} stroke="#7acc8e" strokeWidth="0.4" opacity="0.4"/></g>))}
-        <circle cx="155" cy="341" r="1" fill="#7acc8e" opacity="0.6"/>
-      </g>
-      {/* Antenna */}
-      <g opacity="0.7">
-        <line x1="210" y1="330" x2="210" y2="355" stroke="#7acc8e" strokeWidth="0.8"/>
-        <line x1="203" y1="355" x2="217" y2="355" stroke="#7acc8e" strokeWidth="0.5"/>
-        <path d="M204,335 Q210,330 216,335" fill="none" stroke="#7acc8e" strokeWidth="0.5" opacity="0.55"/>
-        <path d="M201,339 Q210,332 219,339" fill="none" stroke="#7acc8e" strokeWidth="0.4" opacity="0.35"/>
-        <circle cx="210" cy="331" r="1.5" fill="#7acc8e" opacity="0.5"/>
-      </g>
-      {/* Satellite */}
-      <g opacity="0.7">
-        <rect x="263" y="336" width="14" height="9" rx="1.5" fill="#141c18" stroke="#7acc8e" strokeWidth="0.6"/>
-        <line x1="263" y1="340.5" x2="257" y2="340.5" stroke="#7acc8e" strokeWidth="0.5"/>
-        <line x1="277" y1="340.5" x2="283" y2="340.5" stroke="#7acc8e" strokeWidth="0.5"/>
-        <rect x="253" y="336" width="5" height="9" rx="0.5" fill="#7acc8e" opacity="0.1" stroke="#7acc8e" strokeWidth="0.3"/>
-        <rect x="282" y="336" width="5" height="9" rx="0.5" fill="#7acc8e" opacity="0.1" stroke="#7acc8e" strokeWidth="0.3"/>
-      </g>
-      <text x="305" y="343" fill="#4a4a4a" fontSize="6" fontFamily="'DM Sans',sans-serif" textAnchor="end" letterSpacing="0.1em">END USE</text>
-    </svg>
-  );
-}
-
+/* DefaultIllustration removed — replaced by showing AI Infra by default */
 const ILLUSTRATIONS = [AIInfraIllustration, EnergyIllustration, UAVIllustration, RoboticsIllustration, SpaceIllustration];
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -515,8 +369,8 @@ export default function ExplorePage() {
   const [selected, setSelected] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
 
-  const isHovering = hovered !== null;
-  const Illus = isHovering ? ILLUSTRATIONS[selected] : DefaultIllustration;
+  const activeIdx = hovered ?? 0;
+  const Illus = ILLUSTRATIONS[activeIdx];
 
   return (
     <div style={{ minHeight: "100vh", background: "#050504", display: "flex", flexDirection: "column" }}>
@@ -568,7 +422,7 @@ export default function ExplorePage() {
             <div style={{ width: 320, flexShrink: 0 }}>
 
           {VERTICALS.map((v, i) => {
-            const isHov = hovered === i;
+            const isActive = hovered === i || (hovered === null && i === 0);
             return (
               <div
                 key={v.name}
@@ -587,22 +441,22 @@ export default function ExplorePage() {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{
                     ...SYS, fontSize: 15,
-                    fontWeight: isHov ? 500 : 400,
-                    color: isHov ? "rgba(255,255,255,0.88)" : "rgba(255,255,255,0.2)",
+                    fontWeight: isActive ? 500 : 400,
+                    color: isActive ? "rgba(255,255,255,0.88)" : "rgba(255,255,255,0.2)",
                     transition: "color 0.2s",
                   }}>
                     {v.name}
                   </span>
                   <span style={{
                     ...MONO, fontSize: 11,
-                    color: isHov ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.05)",
+                    color: isActive ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.05)",
                     transition: "color 0.2s",
                   }}>
                     →
                   </span>
                 </div>
                 {/* Description (on hover) */}
-                {isHov && (
+                {isActive && (
                   <div style={{
                     ...SYS, fontSize: 10, color: "rgba(255,255,255,0.15)", lineHeight: 1.7,
                     marginTop: 8, maxWidth: 300,
@@ -621,7 +475,7 @@ export default function ExplorePage() {
 
         {/* Right: illustration */}
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div key={isHovering ? `sector-${selected}` : "default"} style={{ animation: "exploreIllusIn 0.3s ease", maxWidth: isHovering ? 220 : 280, width: "100%", transition: "max-width 0.3s ease" }}>
+          <div key={activeIdx} style={{ animation: "exploreIllusIn 0.3s ease", maxWidth: 220, width: "100%" }}>
             <Illus />
           </div>
         </div>
