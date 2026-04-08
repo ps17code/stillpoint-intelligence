@@ -28,9 +28,9 @@ const LAYERS: LayerRow[] = [
       {
         id: "germanium",
         name: "Germanium",
-        description: "Trace element found in zinc ore and coal ash. Doped into glass to allow light transmission through fiber optics. Only 220 tonnes produced per year globally.",
+        description: "Trace metal found in zinc ore and coal ash. Doped into glass to allow light to travel through fiber optic cable.",
         players: "Yunnan Chihong, Umicore, 5N Plus, Teck Resources",
-        insight: "83% of supply is in China, now export-restricted. AI datacenter demand requires ~325t by 2026 against 220t supply. Structural deficit with no near-term fix.",
+        insight: "Fixed supply, rising AI demand. Structural deficit by 2026. Prices already 2x.",
         mapped: true,
         downstream: ["gecl4", "fiber-cable", "datacenter", "subsea", "broadband"],
         upstream: [],
@@ -44,9 +44,9 @@ const LAYERS: LayerRow[] = [
       {
         id: "gecl4",
         name: "GeO\u2082 / GeCl\u2084",
-        description: "Germanium tetrachloride \u2014 a volatile liquid chemical vaporized and deposited into glass preforms. Without it, light cannot pass through fiber.",
+        description: "Germanium converted into a volatile liquid chemical that gets vaporized and deposited into glass. Without it, light won\u2019t pass through fiber.",
         players: "Umicore, Yunnan Chihong, Chinese State GeCl\u2084 Plants, JSC Germanium",
-        insight: "Only one non-Chinese supplier exists: Umicore, operating from a single facility in Belgium. The entire western fiber optic supply chain runs through it.",
+        insight: "Only one western supplier of GeCl\u2084. One facility in Belgium.",
         mapped: true,
         downstream: ["fiber-cable", "datacenter", "subsea", "broadband"],
         upstream: ["germanium"],
@@ -60,9 +60,9 @@ const LAYERS: LayerRow[] = [
       {
         id: "fiber-cable",
         name: "Fiber optic cable",
-        description: "Germanium-doped glass strands bundled into cables for datacenter interconnect, terrestrial networks, and subsea systems. Over 1 billion strands produced annually.",
+        description: "Germanium-doped glass strands bundled into cables connecting servers, cities, and continents. The physical backbone of the internet.",
         players: "Corning, Prysmian, Sumitomo Electric, Fujikura, CommScope, YOFC",
-        insight: "A single AI GPU rack requires 16x more fiber than traditional infrastructure. Every new hyperscale datacenter campus is a step-change in fiber demand.",
+        insight: "A single 36MW datacenter requires ~120,000 km of fiber.",
         mapped: true,
         downstream: ["datacenter", "subsea", "broadband"],
         upstream: ["germanium", "gecl4"],
@@ -76,9 +76,9 @@ const LAYERS: LayerRow[] = [
       {
         id: "datacenter",
         name: "AI datacenter",
-        description: "Hyperscale and enterprise GPU clusters for AI training and inference. The primary demand driver for all upstream inputs in this chain.",
+        description: "Hyperscale GPU clusters for AI training and inference. The primary demand driver pulling through every layer of this chain.",
         players: "AWS, Microsoft Azure, Google Cloud, Meta, Oracle",
-        insight: "$700B+ in planned datacenter capex through 2030. Each facility pulls demand through every layer of this chain.",
+        insight: "~35 GW of new datacenter capacity coming online by 2027.",
         mapped: true,
         downstream: [],
         upstream: ["germanium", "gecl4", "fiber-cable"],
@@ -86,7 +86,7 @@ const LAYERS: LayerRow[] = [
       {
         id: "broadband",
         name: "Broadband / telecom",
-        description: "Terrestrial fiber networks connecting cities, homes, and enterprises. Global buildout ongoing, accelerated by government subsidy programs.",
+        description: "Terrestrial fiber networks connecting homes, cities, and enterprises. Ongoing global buildout.",
         players: "AT&T, Verizon, Deutsche Telekom, NTT, BT",
         insight: "Competing with AI datacenters for the same constrained fiber supply.",
         mapped: false,
@@ -96,9 +96,9 @@ const LAYERS: LayerRow[] = [
       {
         id: "subsea",
         name: "Subsea networks",
-        description: "Undersea cable systems connecting continents. Each system spans 2,000\u201350,000 km with 8\u201324 fiber pairs requiring higher germanium loading per km.",
+        description: "Undersea cable systems connecting continents. Each system spans thousands of kilometers with higher germanium loading per km than terrestrial.",
         players: "SubCom, Alcatel Submarine Networks, NEC, Google, Meta",
-        insight: "New routes announced by Google and Meta are adding incremental germanium demand that wasn\u2019t in pre-2023 forecasts.",
+        insight: "New transpacific routes from Google and Meta adding unplanned demand.",
         mapped: false,
         downstream: [],
         upstream: ["germanium", "gecl4", "fiber-cable"],
@@ -150,12 +150,12 @@ export default function AnatomyView() {
             letterSpacing: "-0.01em", color: "#ece8e1",
             margin: 0, marginBottom: 12,
           }}>
-            What powers AI.
+            What goes in a data center.
           </h1>
           <p style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 15, color: "#706a60", lineHeight: 1.55,
-            margin: 0, maxWidth: 560,
+            margin: 0, maxWidth: 1000,
           }}>
             Every critical input from raw minerals to hyperscale datacenters. Select any input to trace its dependencies across the full stack.
           </p>
