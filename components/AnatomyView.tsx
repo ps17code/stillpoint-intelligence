@@ -230,6 +230,33 @@ export default function AnatomyView() {
                         {card.insight}
                       </div>
                     )}
+
+                    {/* Dive deeper / Coming soon */}
+                    <div style={{
+                      maxHeight: isSel ? 30 : 0,
+                      opacity: isSel ? 1 : 0,
+                      overflow: "hidden",
+                      transition: "max-height 0.25s ease, opacity 0.2s ease",
+                    }}>
+                      {card.mapped ? (
+                        <div
+                          onClick={(e) => { e.stopPropagation(); window.location.href = "/chains/germanium"; }}
+                          style={{
+                            ...MONO, fontSize: 9, color: "#c9a84c", letterSpacing: "0.03em",
+                            margin: "10px 0 0 0", cursor: "pointer",
+                          }}
+                        >
+                          Dive deeper →
+                        </div>
+                      ) : (
+                        <div style={{
+                          ...MONO, fontSize: 9, color: "#3a3835", fontStyle: "italic",
+                          margin: "10px 0 0 0",
+                        }}>
+                          Coming soon
+                        </div>
+                      )}
+                    </div>
                   </div>
                 );
               })}
