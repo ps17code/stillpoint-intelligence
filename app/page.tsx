@@ -6,6 +6,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as topojson from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
 import ChainDirectory from "@/components/ChainDirectory";
+import AnatomyView from "@/components/AnatomyView";
 
 const R = 1;
 
@@ -255,6 +256,7 @@ export default function HomePage() {
   const [hovered,       setHovered]       = useState<string | null>(null);
   const [hoveredNode,   setHoveredNode]   = useState<{ name: string; type: string; location: string } | null>(null);
   const [domainOpen,    setDomainOpen]    = useState(false);
+  const [viewMode,      setViewMode]      = useState<"map" | "anatomy">("map");
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
 
   // ── Helpers ──────────────────────────────────────────────────────────────
@@ -581,11 +583,41 @@ export default function HomePage() {
         <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 200, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)" }}>Intelligence</span>
       </div>
 
+      {/* View toggle */}
+      <div style={{
+        position: "absolute", top: 10, left: "50%", transform: "translateX(-50%)", zIndex: 20,
+        background: "#1a1816", border: "1px solid #252220", borderRadius: 8, padding: 2,
+        display: "flex", gap: 0,
+      }}>
+        {(["map", "anatomy"] as const).map(mode => {
+          const active = viewMode === mode;
+          return (
+            <button
+              key={mode}
+              onClick={() => setViewMode(mode)}
+              style={{
+                fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.05em",
+                background: active ? "#252220" : "transparent",
+                color: active ? "#ece8e1" : "#555",
+                border: "none", borderRadius: 6, padding: "5px 14px",
+                cursor: "pointer", transition: "color 0.15s, background 0.15s",
+                textTransform: "capitalize" as const,
+              }}
+            >
+              {mode === "map" ? "Map" : "Anatomy"}
+            </button>
+          );
+        })}
+      </div>
+
       {/* Globe */}
-      <div ref={mountRef} style={{ position: "absolute", inset: 0, cursor: hoveredNode ? "crosshair" : "grab" }} />
+      <div ref={mountRef} style={{ position: "absolute", inset: 0, cursor: hoveredNode ? "crosshair" : "grab", display: viewMode === "map" ? "block" : "none" }} />
+
+      {/* Anatomy view */}
+      {viewMode === "anatomy" && <AnatomyView />}
 
       {/* Hover tooltip */}
-      <div ref={tooltipRef} style={{ position: "absolute", pointerEvents: "none", zIndex: 30, opacity: hoveredNode ? 1 : 0, transition: "opacity 0.1s ease", transform: "translate(-50%, -100%)", left: 0, top: 0 }}>
+      <div ref={tooltipRef} style={{ position: "absolute", pointerEvents: "none", zIndex: 30, opacity: hoveredNode && viewMode === "map" ? 1 : 0, transition: "opacity 0.1s ease", transform: "translate(-50%, -100%)", left: 0, top: 0 }}>
         {hoveredNode && (
           <div style={{ background: "rgba(20,20,18,0.92)", border: "0.5px solid rgba(255,255,255,0.08)", padding: "6px 10px" }}>
             <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 10, fontWeight: 500, color: "rgba(255,255,255,0.7)", marginBottom: 2 }}>{hoveredNode.name}</div>
@@ -596,7 +628,7 @@ export default function HomePage() {
       </div>
 
       {/* ── Left navigation — dropdown column ─────────────────────────────────── */}
-      <div style={{ position: "absolute", left: 36, top: "50%", transform: "translateY(-50%)", zIndex: 20 }}>
+      <div style={{ position: "absolute", left: 36, top: "50%", transform: "translateY(-50%)", zIndex: 20, display: viewMode === "map" ? "block" : "none" }}>
         <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 18, fontWeight: 500, color: "rgba(255,255,255,0.8)", marginBottom: 16 }}>
           AI Infrastructure
         </div>
