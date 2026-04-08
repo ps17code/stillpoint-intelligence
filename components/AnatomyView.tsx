@@ -192,9 +192,6 @@ export default function AnatomyView() {
                       transition: "color 0.2s",
                     }}>
                       {card.name}
-                      {card.mapped && (
-                        <span style={{ color: layer.accent, opacity: 0.4, fontSize: 11 }}>\u2192</span>
-                      )}
                     </div>
 
                     {/* Description */}
@@ -205,8 +202,20 @@ export default function AnatomyView() {
                       {card.description}
                     </div>
 
+                    {/* Insight (only when selected) */}
+                    {isSel && card.insight && (
+                      <div style={{
+                        fontFamily: "'DM Sans', sans-serif", fontSize: 10.5,
+                        color: layer.accent, opacity: 0.7, lineHeight: 1.45,
+                        borderLeft: `2px solid ${layer.accent}30`,
+                        paddingLeft: 8, marginBottom: 8,
+                      }}>
+                        {card.insight}
+                      </div>
+                    )}
+
                     {/* Key players */}
-                    <div style={{ marginBottom: 8 }}>
+                    <div>
                       <div style={{
                         ...MONO, fontSize: 9, color: "#3a3835", letterSpacing: "0.05em", marginBottom: 2,
                       }}>
@@ -218,18 +227,6 @@ export default function AnatomyView() {
                         {card.players}
                       </div>
                     </div>
-
-                    {/* Insight (only when selected) */}
-                    {isSel && card.insight && (
-                      <div style={{
-                        fontFamily: "'DM Sans', sans-serif", fontSize: 10.5,
-                        color: layer.accent, opacity: 0.7, lineHeight: 1.45,
-                        borderLeft: `2px solid ${layer.accent}30`,
-                        paddingLeft: 8, marginTop: 8,
-                      }}>
-                        {card.insight}
-                      </div>
-                    )}
 
                     {/* Dive deeper / Coming soon */}
                     <div style={{
