@@ -25,16 +25,16 @@ const LAYERS: LayerRow[] = [
     label: "RAW MATERIALS",
     accent: "#c9a84c",
     cards: [
-      {
-        id: "germanium",
-        name: "Germanium",
-        description: "Trace metal found in zinc ore and coal ash. Doped into glass to allow light to travel through fiber optic cable.",
-        players: "Yunnan Chihong, Umicore, 5N Plus, Teck Resources",
-        insight: "Fixed supply, rising AI demand. Structural deficit by 2026. Prices already 2x.",
-        mapped: true,
-        downstream: ["gecl4", "fiber-cable", "datacenter", "subsea", "broadband"],
-        upstream: [],
-      },
+      { id: "germanium", name: "Germanium", description: "Trace metal found in zinc ore and coal ash. Doped into glass to allow light to travel through fiber optic cable.", players: "Yunnan Chihong, Umicore, 5N Plus, Teck Resources", insight: "Fixed supply, rising AI demand. Structural deficit by 2026. Prices already 2x.", mapped: true, downstream: ["gecl4", "fiber-cable", "datacenter", "subsea", "broadband"], upstream: [] },
+      { id: "copper", name: "Copper", description: "Base metal mined from sulfide and oxide ores. Conducts power and signal across every datacenter system \u2014 bus bars, wiring harnesses, PCB traces, and heat exchangers. Each MW of capacity embeds roughly 25 tonnes.", players: "Codelco, Freeport-McMoRan, BHP, Southern Copper", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "silicon", name: "Silicon", description: "Metalloid refined from quartz sand into ultra-high-purity wafers. The semiconductor substrate for every chip in the facility \u2014 GPUs, CPUs, memory, networking ASICs, power management ICs.", players: "Shin-Etsu, SUMCO, Siltronic, SK Siltron", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "gallium", name: "Gallium", description: "Soft metal extracted as a byproduct of aluminum refining. Used to manufacture gallium arsenide and gallium nitride semiconductors that power optical transceivers and high-frequency RF components.", players: "China-dominated production, Indium Corp, AXT, Freiberger", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "aluminum", name: "Aluminum", description: "Lightweight metal smelted from bauxite ore. Used in heat sinks, server chassis, rack frames, cooling assemblies, and structural enclosures. The dominant material for thermal management at scale.", players: "Alcoa, Rio Tinto, Norsk Hydro, Hindalco", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "lithium", name: "Lithium", description: "Alkali metal extracted from brine pools and hard rock deposits. Powers lithium-ion battery backup systems (UPS) that maintain uninterrupted datacenter operation during grid failures.", players: "Albemarle, SQM, Ganfeng Lithium, Pilbara Minerals", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "tantalum", name: "Tantalum", description: "Refractory metal mined primarily from coltan ore in Central Africa. Used in high-reliability capacitors on server boards that ensure stable power delivery under high temperatures.", players: "AMG Advanced Metallurgical, Global Advanced Metals, Kemet", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "silver", name: "Silver", description: "Precious metal with the highest electrical conductivity of any element. Used in high-performance connectors, soldering materials, and signal-critical pathways where minimal resistance matters.", players: "Fresnillo, Newmont, Pan American Silver, KGHM", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "tin", name: "Tin", description: "Base metal mined from cassiterite ore. The primary material in lead-free solder that bonds components to every circuit board in the facility.", players: "Yunnan Tin, PT Timah, Minsur, Alphamin Resources", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "rare-earths", name: "Rare earths", description: "Mined from monazite and bastn\u00e4site deposits. Used to make permanent magnets found in cooling fan motors, hard drive actuators, and power converter inductors.", players: "MP Materials, Lynas, China Northern Rare Earth, Shenghe Resources", insight: "", mapped: false, downstream: [], upstream: [] },
     ],
   },
   {
@@ -243,15 +243,17 @@ export default function AnatomyView() {
                       </div>
                     </div>
 
-                    {/* Insight */}
-                    <div style={{
-                      fontFamily: "'DM Sans', sans-serif", fontSize: 10.5,
-                      color: layer.accent, opacity: 0.7, lineHeight: 1.45,
-                      borderLeft: `2px solid ${layer.accent}30`,
-                      paddingLeft: 8, marginTop: 8,
-                    }}>
-                      {card.insight}
-                    </div>
+                    {/* Insight (only when selected) */}
+                    {isSel && card.insight && (
+                      <div style={{
+                        fontFamily: "'DM Sans', sans-serif", fontSize: 10.5,
+                        color: layer.accent, opacity: 0.7, lineHeight: 1.45,
+                        borderLeft: `2px solid ${layer.accent}30`,
+                        paddingLeft: 8, marginTop: 8,
+                      }}>
+                        {card.insight}
+                      </div>
+                    )}
                   </div>
                 );
               })}
