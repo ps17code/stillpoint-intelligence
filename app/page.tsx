@@ -585,7 +585,7 @@ export default function HomePage() {
 
       {/* View toggle */}
       <div style={{
-        position: "absolute", top: 10, left: "50%", transform: "translateX(-50%)", zIndex: 20,
+        position: "absolute", top: 10, right: 28, zIndex: 20,
         background: "#1a1816", border: "1px solid #252220", borderRadius: 8, padding: 2,
         display: "flex", gap: 0,
       }}>

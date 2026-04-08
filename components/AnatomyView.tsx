@@ -130,11 +130,42 @@ export default function AnatomyView() {
 
   return (
     <div style={{
-      position: "absolute", inset: 0, paddingTop: 50,
-      display: "flex", flexDirection: "column", justifyContent: "center",
+      position: "absolute", inset: 0, paddingTop: 52,
+      display: "flex", flexDirection: "column",
       overflow: "auto",
     }}>
-      <div style={{ padding: "0 36px", maxWidth: 1200, margin: "0 auto", width: "100%" }}>
+      <div style={{ padding: "0 40px", maxWidth: 1200, margin: "0 auto", width: "100%" }}>
+
+        {/* Header */}
+        <div style={{ padding: "32px 0 28px" }}>
+          <div style={{
+            ...MONO, fontSize: 9, letterSpacing: "0.12em", color: "#5a5550",
+            marginBottom: 14, textTransform: "uppercase" as const,
+          }}>
+            AI Infrastructure · Product Class
+          </div>
+          <h1 style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: 42, fontWeight: 400, lineHeight: 1.12,
+            letterSpacing: "-0.01em", color: "#ece8e1",
+            margin: 0, marginBottom: 12,
+          }}>
+            What powers AI.
+          </h1>
+          <p style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 15, color: "#706a60", lineHeight: 1.55,
+            margin: 0, maxWidth: 560,
+          }}>
+            Every critical input from raw minerals to hyperscale datacenters. Select any input to trace its dependencies across the full stack.
+          </p>
+        </div>
+
+        {/* Product overview container */}
+        <div style={{
+          border: "1px solid #252220", borderRadius: 12,
+          padding: "24px 24px 16px", background: "#131210",
+        }}>
         {LAYERS.map((layer) => (
           <div key={layer.label} style={{ marginBottom: 24 }}>
             {/* Layer label */}
@@ -193,33 +224,9 @@ export default function AnatomyView() {
                     {/* Description */}
                     <div style={{
                       fontFamily: "'DM Sans', sans-serif", fontSize: 10.5, color: "#706a60",
-                      lineHeight: 1.5, marginBottom: 8,
+                      lineHeight: 1.5,
                     }}>
                       {card.description}
-                    </div>
-
-                    {/* Key players */}
-                    <div style={{ marginBottom: 8 }}>
-                      <div style={{
-                        ...MONO, fontSize: 9, color: "#3a3835", letterSpacing: "0.05em", marginBottom: 2,
-                      }}>
-                        Key players
-                      </div>
-                      <div style={{
-                        fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: "#4a4540", lineHeight: 1.45,
-                      }}>
-                        {card.players}
-                      </div>
-                    </div>
-
-                    {/* Insight */}
-                    <div style={{
-                      fontFamily: "'DM Sans', sans-serif", fontSize: 10.5,
-                      color: layer.accent, opacity: 0.7, lineHeight: 1.45,
-                      borderLeft: `2px solid ${layer.accent}30`,
-                      paddingLeft: 8, marginTop: 8,
-                    }}>
-                      {card.insight}
                     </div>
                   </div>
                 );
@@ -227,6 +234,7 @@ export default function AnatomyView() {
             </div>
           </div>
         ))}
+        </div>{/* end product overview container */}
 
         {/* Info bar when selected */}
         {selected && selectedCard && (
