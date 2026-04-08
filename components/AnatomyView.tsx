@@ -224,9 +224,33 @@ export default function AnatomyView() {
                     {/* Description */}
                     <div style={{
                       fontFamily: "'DM Sans', sans-serif", fontSize: 10.5, color: "#706a60",
-                      lineHeight: 1.5,
+                      lineHeight: 1.5, marginBottom: 8,
                     }}>
                       {card.description}
+                    </div>
+
+                    {/* Key players */}
+                    <div style={{ marginBottom: 8 }}>
+                      <div style={{
+                        ...MONO, fontSize: 9, color: "#3a3835", letterSpacing: "0.05em", marginBottom: 2,
+                      }}>
+                        Key players
+                      </div>
+                      <div style={{
+                        fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: "#4a4540", lineHeight: 1.45,
+                      }}>
+                        {card.players}
+                      </div>
+                    </div>
+
+                    {/* Insight */}
+                    <div style={{
+                      fontFamily: "'DM Sans', sans-serif", fontSize: 10.5,
+                      color: layer.accent, opacity: 0.7, lineHeight: 1.45,
+                      borderLeft: `2px solid ${layer.accent}30`,
+                      paddingLeft: 8, marginTop: 8,
+                    }}>
+                      {card.insight}
                     </div>
                   </div>
                 );
