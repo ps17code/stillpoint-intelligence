@@ -25,7 +25,7 @@ const LAYERS: LayerRow[] = [
     label: "RAW MATERIALS",
     accent: "#c9a84c",
     cards: [
-      { id: "germanium", name: "Germanium", description: "Trace metal found in zinc ore and coal ash. Doped into glass to allow light to travel through fiber optic cable.", players: "Yunnan Chihong, Umicore, 5N Plus, Teck Resources", insight: "Fixed supply, rising AI demand. Structural deficit by 2026. Prices already 2x.", mapped: true, downstream: ["fiber-optic-cable", "datacenter", "subsea", "broadband"], upstream: [] },
+      { id: "germanium", name: "Germanium", description: "Trace metal found in zinc ore and coal ash. Doped into glass to allow light to travel through fiber optic cable.", players: "Yunnan Chihong, Umicore, 5N Plus, Teck Resources", insight: "Fixed supply, rising AI demand. Structural deficit by 2026. Prices already 2x.", mapped: true, downstream: ["fiber-optic-cable", "connectivity", "datacenter", "subsea", "broadband"], upstream: [] },
       { id: "copper", name: "Copper", description: "Base metal mined from sulfide and oxide ores. Conducts power and signal across every datacenter system \u2014 bus bars, wiring harnesses, PCB traces, and heat exchangers. Each MW of capacity embeds roughly 25 tonnes.", players: "Codelco, Freeport-McMoRan, BHP, Southern Copper", insight: "", mapped: false, downstream: [], upstream: [] },
       { id: "silicon", name: "Silicon", description: "Metalloid refined from quartz sand into ultra-high-purity wafers. The semiconductor substrate for every chip in the facility \u2014 GPUs, CPUs, memory, networking ASICs, power management ICs.", players: "Shin-Etsu, SUMCO, Siltronic, SK Siltron", insight: "", mapped: false, downstream: [], upstream: [] },
       { id: "gallium", name: "Gallium", description: "Soft metal extracted as a byproduct of aluminum refining. Used to manufacture gallium arsenide and gallium nitride semiconductors that power optical transceivers and high-frequency RF components.", players: "China-dominated production, Indium Corp, AXT, Freiberger", insight: "", mapped: false, downstream: [], upstream: [] },
@@ -41,7 +41,7 @@ const LAYERS: LayerRow[] = [
     label: "COMPONENTS",
     accent: "#6a9ab8",
     cards: [
-      { id: "fiber-optic-cable", name: "Fiber optic cable", description: "Glass strands doped with germanium that carry light between servers and across continents. Germanium is converted to liquid GeCl\u2084, deposited into glass preform rods, drawn into fiber, and bundled into cable.", players: "Umicore (GeCl\u2084), Corning, Prysmian, Sumitomo Electric, Fujikura, YOFC", insight: "", mapped: true, downstream: ["datacenter", "subsea", "broadband"], upstream: ["germanium"] },
+      { id: "fiber-optic-cable", name: "Fiber optic cable", description: "Glass strands doped with germanium that carry light between servers and across continents. Germanium is converted to liquid GeCl\u2084, deposited into glass preform rods, drawn into fiber, and bundled into cable.", players: "Umicore (GeCl\u2084), Corning, Prysmian, Sumitomo Electric, Fujikura, YOFC", insight: "", mapped: true, downstream: ["connectivity", "datacenter", "subsea", "broadband"], upstream: ["germanium"] },
       { id: "optical-transceivers", name: "Optical transceivers", description: "Modules that convert electrical signals to light and back. Built on gallium arsenide laser chips. Every fiber connection in a datacenter needs one on each end.", players: "Coherent, Lumentum, Broadcom, Intel, Cisco", insight: "", mapped: false, downstream: [], upstream: [] },
       { id: "network-switches", name: "Network switches", description: "Route data between servers and racks at high speed. Built around custom silicon ASICs designed for packet processing at terabit scale.", players: "Broadcom, Cisco, Arista, Juniper, NVIDIA (Spectrum)", insight: "", mapped: false, downstream: [], upstream: [] },
       { id: "gpu", name: "GPUs / AI accelerators", description: "Parallel processors for AI training and inference. Fabricated on silicon wafers at 3-5nm, packaged with stacked memory. The highest-value component in any AI datacenter.", players: "NVIDIA, AMD, Broadcom, Google (TPU), Intel", insight: "", mapped: false, downstream: [], upstream: [] },
@@ -60,7 +60,13 @@ const LAYERS: LayerRow[] = [
   {
     label: "SUBSYSTEMS",
     accent: "#5cd4c8",
-    cards: [],
+    cards: [
+      { id: "connectivity", name: "Connectivity", description: "The network infrastructure moving data between servers, racks, buildings, and the outside world. Assembled from fiber optic cables, optical transceivers, and network switches into a structured cabling and switching fabric.", players: "Corning, Cisco, Arista, Juniper, CommScope", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "compute", name: "Compute", description: "The processing infrastructure where AI training and inference happens. GPUs, HBM memory, and CPUs assembled onto server boards and mounted into rack-scale systems. The highest-value and most power-hungry subsystem.", players: "NVIDIA, Dell, HPE, Supermicro, Quanta, Wiwynn", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "power", name: "Power", description: "The electrical infrastructure delivering energy from grid to chip. Transformers, distribution units, battery backup, and generators integrated into a redundant power chain. A single facility can draw 100MW+ from the grid.", players: "Eaton, Schneider Electric, Vertiv, ABB, Caterpillar", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "cooling", name: "Cooling", description: "The thermal infrastructure removing heat from high-density compute. Liquid cooling loops, chillers, and air handling working together to keep GPU temperatures stable. Fastest-growing subsystem as rack density increases.", players: "Vertiv, CoolIT, Schneider Electric, Trane, Stulz", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "physical-structure", name: "Physical structure", description: "The building and mechanical infrastructure housing everything. Steel structure, rack enclosures, raised flooring, fire suppression, and physical security. The shell that contains all other subsystems.", players: "Rittal, Schneider Electric, Legrand, various general contractors", insight: "", mapped: false, downstream: [], upstream: [] },
+    ],
   },
   {
     label: "END USE",
