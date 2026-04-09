@@ -237,7 +237,7 @@ export default function AnatomyView() {
                     }}>
                       {card.mapped ? (
                         <div
-                          onClick={(e) => { e.stopPropagation(); window.location.href = "/chains/germanium"; }}
+                          onClick={(e) => { e.stopPropagation(); window.location.href = `/input/${card.id}`; }}
                           style={{
                             ...MONO, fontSize: 9, color: "#c9a84c", letterSpacing: "0.03em",
                             margin: "10px 0 0 0", cursor: "pointer",
