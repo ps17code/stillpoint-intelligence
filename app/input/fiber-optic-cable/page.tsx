@@ -27,7 +27,6 @@ export default function FiberOpticInputPage() {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [treeExpanded, setTreeExpanded] = useState(false);
   const [soWhatOpen, setSoWhatOpen] = useState<string | null>(null);
-  const toggleSoWhat = (id: string) => setSoWhatOpen(soWhatOpen === id ? null : id);
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
   const accent = "#6a9ab8";
   const gold = "#c9a84c";
@@ -316,123 +315,113 @@ export default function FiberOpticInputPage() {
         </div>
 
         {/* ═══ SECTION 5: SO WHAT ═══ */}
-        <div style={{ marginBottom: "56px" }}>
-          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 24px 0" }}>
-            SO WHAT
-          </p>
-          <div style={{ background: cardBg, border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden" }}>
-            {([
-              { id: "signals", label: "Market signals", question: "What is the price telling us?",
-                bullets: ["Standard telecom fiber (G.652D) has surged 70-120% to a 7-year high. Datacenter fiber (G.657A) spiked 80% in a single month.", "Germanium metal has risen from $1,500/kg to over $7,000/kg since January 2024 \u2014 a 4.5x increase driven by demand and Chinese export controls.", "Lead times have stretched from a normal 8-12 weeks to over 60 weeks for ribbon fiber. At least one major manufacturer is sold out through 2026."],
-                content: (<>
-                  <div style={{ display: "flex", gap: "10px", margin: "0 0 18px 0" }}>
-                    {[{ value: "70-120%", desc: "G.652D fiber price surge", sub: "~20 \u2192 35-50+ RMB/core-km" }, { value: "80%", desc: "G.657A datacenter fiber", sub: "Single month, Jan 2026" }, { value: "4.5x", desc: "Germanium metal price", sub: "$1,500 \u2192 $7,000+/kg" }, { value: "135%", desc: "Helium price increase", sub: "Draw tower coolant" }].map((s, i) => (
-                      <div key={i} style={{ flex: 1 }}><p style={{ fontSize: "20px", fontWeight: 500, color: warmWhite, margin: "0 0 4px 0" }}>{s.value}</p><p style={{ fontSize: "10px", color: muted, margin: "0 0 2px 0", lineHeight: 1.35 }}>{s.desc}</p><p style={{ fontSize: "9px", color: dimmer, margin: 0 }}>{s.sub}</p></div>
-                    ))}
-                  </div>
-                  <p style={{ fontSize: "12.5px", color: "#a09888", lineHeight: 1.7, margin: "0 0 14px 0" }}>Lead times for ribbon fiber have stretched past 60 weeks. Loose tube fiber booked into Q3 2026. Normal lead times are 8-12 weeks \u2014 last time they reached these levels was during the dot-com fiber buildout in 2000.</p>
-                  <div style={{ borderLeft: `1px solid ${borderColor}`, paddingLeft: "14px", margin: "16px 0" }}>
-                    <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "15px", color: warmWhite, lineHeight: 1.5, margin: "0 0 4px 0", fontStyle: "italic" }}>{"\u201CIn my professional career I\u2019ve never seen anything like this inflationary crunch.\u201D"}</p>
-                    <p style={{ fontSize: "9px", color: dimmer, margin: 0 }}>\u2014 Wendell Weeks, CEO Corning, to the Financial Times</p>
-                  </div>
-                  <p style={{ fontSize: "12.5px", color: "#a09888", lineHeight: 1.7, margin: "0 0 0 0" }}>Silicon tetrachloride, the bulk preform material, is up 50% (CRU). Corning reportedly stopped selling bare glass to other cable manufacturers in October 2025 to preserve supply for anchor customers.</p>
-                </>)
-              },
-              { id: "constraints", label: "Supply constraints", question: "Why can\u2019t supply respond?",
-                bullets: ["Preform deposition equipment is monopolized by a single private Austrian company \u2014 Rosendahl Nextrom. Every manufacturer is trying to expand. Backlogs are 18-24 months.", "Only one facility in the western world converts germanium to fiber-grade GeCl\u2084: Umicore in Belgium. Maximum throughput: 40-50 tonnes.", "Helium, essential for drawing fiber, is up 135% in two years.", "CRU estimates a 138M fiber-km shortfall in 2026 \u2014 a 16.7% gap."],
-                content: (<>
-                  <p style={{ fontSize: "11.5px", color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>Preform equipment</p>
-                  <p style={{ fontSize: "12.5px", color: "#a09888", lineHeight: 1.7, margin: "0 0 14px 0" }}>Manufacturing lines at full utilization globally. Expanding capacity requires new deposition systems from Rosendahl Nextrom \u2014 a private Austrian company with near-monopoly on MCVD and PCVD equipment. Delivery backlogs: 18-24 months. Capacity ordered today produces fiber in 2028 at the earliest.</p>
-                  <p style={{ fontSize: "11.5px", color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>GeCl\u2084 conversion</p>
-                  <p style={{ fontSize: "12.5px", color: "#a09888", lineHeight: 1.7, margin: "0 0 14px 0" }}>Only six facilities worldwide convert germanium to fiber-grade GeCl\u2084. Four in China, one in Russia, one in the west: Umicore in Belgium. As demand scales beyond current production, germanium availability becomes a structural cap on how much fiber the world can produce.</p>
-                  <p style={{ fontSize: "11.5px", color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>Helium</p>
-                  <p style={{ fontSize: "12.5px", color: "#a09888", lineHeight: 1.7, margin: "0 0 14px 0" }}>Fiber draw towers require ultra-pure helium to cool glass strand as it\u2019s pulled. Supply disrupted by plant outages. Prices soared to $15/m\u00b3 in 2025. When constrained, producers reduce draw speeds \u2014 directly cutting global fiber output.</p>
-                  <div style={{ borderLeft: `2px solid ${accent}50`, paddingLeft: "14px", margin: "16px 0" }}><p style={{ fontSize: "12px", color: "#a09888", lineHeight: 1.65, margin: 0, fontWeight: 500 }}>CRU estimates a global fiber shortfall of ~138M fiber-km in 2026 \u2014 a 16.7% gap. New preform capacity won\u2019t come online until end of 2027 at earliest.</p></div>
-                </>)
-              },
-              { id: "competing", label: "Competing demand", question: "Who else needs this?",
-                bullets: ["The $42B US BEAD broadband program needs ~500,000 miles of fiber and is rolling out in 2026.", "Military drone systems consume 50-60M fiber-km per year \u2014 roughly 10% of global production.", "Manufacturers are cannibalizing standard telecom fiber for higher-margin datacenter fiber."],
-                content: (<>
-                  <p style={{ fontSize: "11.5px", color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>Federal broadband (BEAD)</p>
-                  <p style={{ fontSize: "12.5px", color: "#a09888", lineHeight: 1.7, margin: "0 0 14px 0" }}>The $42B US BEAD program needs ~500,000 miles of fiber to connect rural America. Finally rolling out in 2026 \u2014 at the exact same time as the AI datacenter surge. Only three US vendors produce BABA-compliant glass: Corning, OFS, Prysmian. Datacenter builds have leapfrogged BEAD in the queue.</p>
-                  <p style={{ fontSize: "11.5px", color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>Military drones</p>
-                  <p style={{ fontSize: "12.5px", color: "#a09888", lineHeight: 1.7, margin: "0 0 14px 0" }}>UAV communication systems use G.657A fiber \u2014 the same type AI datacenters require. Annual drone fiber demand reached 50-60M fiber-km in 2025, approximately 10% of total global production.</p>
-                  <p style={{ fontSize: "11.5px", color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>Capacity cannibalization</p>
-                  <p style={{ fontSize: "12.5px", color: "#a09888", lineHeight: 1.7, margin: "0 0 0 0" }}>Fiber manufacturers are shifting production from standard G.652D to higher-margin G.657A for datacenters. Total output doesn\u2019t increase \u2014 it redirects. Telecom operators get squeezed.</p>
-                </>)
-              },
-              { id: "geopolitical", label: "Geopolitical risk", question: "How could it get worse?",
-                bullets: ["China placed export licensing on six germanium products in August 2023. Exports dropped 55%.", "Western buyers now pay a 3.5x premium over Chinese domestic prices.", "A reimposition of the ban would send a supply shock into an already constrained market."],
-                content: (<>
-                  <p style={{ fontSize: "12.5px", color: "#a09888", lineHeight: 1.7, margin: "0 0 14px 0" }}>August 2023: MOFCOM placed export licensing on six germanium products. Chinese exports dropped 55%. December 2024: China banned all germanium exports to the US. Suspended until November 2026 \u2014 but the global dual-use license requirement remains in full force.</p>
-                  <div style={{ display: "flex", gap: "10px", margin: "16px 0" }}>
-                    {[{ value: "~130t", desc: "Chinese Ge under export controls", sub: "Of ~230t global supply" }, { value: "3.5x", desc: "Western vs Chinese price premium", sub: "$7,000/kg vs ~$2,000/kg" }, { value: "55%", desc: "Drop in Chinese Ge exports", sub: "Following Aug 2023 controls" }].map((s, i) => (
-                      <div key={i} style={{ flex: 1 }}><p style={{ fontSize: "20px", fontWeight: 500, color: warmWhite, margin: "0 0 4px 0" }}>{s.value}</p><p style={{ fontSize: "10px", color: muted, margin: "0 0 2px 0", lineHeight: 1.35 }}>{s.desc}</p><p style={{ fontSize: "9px", color: dimmer, margin: 0 }}>{s.sub}</p></div>
-                    ))}
-                  </div>
-                  <div style={{ borderLeft: `2px solid ${accent}50`, paddingLeft: "14px", margin: "16px 0" }}><p style={{ fontSize: "12px", color: "#a09888", lineHeight: 1.65, margin: 0, fontWeight: 500 }}>A reimposition of the US export ban in November 2026 would send a supply shock into an already constrained market. Even without a ban, the uncertainty forces western buyers to pay a premium for supply security.</p></div>
-                </>)
-              },
-              { id: "response", label: "Supply response", question: "What\u2019s being done?",
-                bullets: ["5N Plus in Canada is evaluating a germanium refining facility with decision expected November 2026.", "A DRC tailings deposit began shipping germanium concentrate to Umicore in 2024 under exclusive offtake.", "Every expansion project adds raw feedstock. None add GeCl\u2084 conversion capacity outside of Umicore."],
-                content: (<>
-                  {[{ name: "Umicore \u2014 EU CRM Act projects", text: "Two EU-backed initiatives to increase recovery yields and develop new recycling technologies. Process improvements at Olen \u2014 not greenfield expansion." }, { name: "5N Plus (TSX: VNP) \u2014 Canada", text: "Received $14.4M from US DoD. Evaluating broader germanium refining facility with decision expected November 2026. If approved, adds ~15-20t/yr. The single most binary catalyst for western supply independence." }, { name: "DRC / G\u00e9camines \u2192 Umicore", text: "STL\u2019s Big Hill tailings site. First concentrate exports October 2024 under exclusive Umicore offtake. Target: 30% of global germanium demand at full scale. But all material flows to Umicore for conversion." }, { name: "Kazakhstan \u2014 Pavlodar", text: "Reportedly targeting ~15t/yr germanium restart. Adds raw feedstock, not conversion capacity." }].map((item, i) => (
-                    <div key={i} style={{ margin: "0 0 14px 0" }}><p style={{ fontSize: "12px", color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{item.name}</p><p style={{ fontSize: "12px", color: muted, lineHeight: 1.6, margin: 0 }}>{item.text}</p></div>
-                  ))}
-                  <div style={{ borderLeft: `2px solid ${accent}50`, paddingLeft: "14px", margin: "16px 0" }}><p style={{ fontSize: "12px", color: "#a09888", lineHeight: 1.65, margin: 0, fontWeight: 500 }}>Every expansion project adds raw germanium feedstock. None add GeCl\u2084 conversion capacity outside of Umicore. The conversion bottleneck concentrates further.</p></div>
-                </>)
-              },
-              { id: "technology", label: "Technology", question: "What could change the game?",
-                bullets: ["Hollow-core fiber eliminates germanium entirely. Microsoft deployed 1,280 km on Azure. But total deployment by end of 2026 is ~20,000 km against billions installed.", "PCVD deposition doubles germanium utilization efficiency. But MCVD is the dominant installed base with 25+ year equipment lifespans."],
-                content: (<>
-                  <p style={{ fontSize: "11.5px", color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>Hollow-core fiber (HCF)</p>
-                  <p style={{ fontSize: "12.5px", color: "#a09888", lineHeight: 1.7, margin: "0 0 14px 0" }}>Eliminates germanium entirely \u2014 light travels through air instead of doped glass. 30% lower latency. Microsoft deployed 1,280 km across Azure with zero field failures. YOFC achieved world-record 0.040 dB/km. But total HCF deployment by end of 2026 will be ~20,000 km against billions installed. It is the structural bear case \u2014 but arrives after the supply crisis peaks.</p>
-                  <p style={{ fontSize: "11.5px", color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>PCVD deposition</p>
-                  <p style={{ fontSize: "12.5px", color: "#a09888", lineHeight: 1.7, margin: "0 0 0 0" }}>Plasma chemical vapor deposition achieves over 95% GeCl\u2084 collection efficiency versus MCVD\u2019s 40-60%. But MCVD remains the dominant installed base \u2014 hundreds of systems with 25+ year lifespans. Adoption slows demand growth; it does not reverse it.</p>
-                </>)
-              },
-            ] as { id: string; label: string; question: string; bullets: string[]; content: React.ReactNode }[]).map((block, i) => {
-              const isOpen = soWhatOpen === block.id;
-              return (
-                <div key={block.id}>
-                  <div
-                    onClick={() => toggleSoWhat(block.id)}
-                    style={{ padding: "20px 24px", cursor: "pointer", borderTop: i > 0 ? `1px solid ${borderColor}` : "none", background: isOpen ? "#1e1c18" : "transparent", transition: "background 0.15s" }}
-                    onMouseEnter={(e) => { if (!isOpen) e.currentTarget.style.background = "#1c1a16"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = isOpen ? "#1e1c18" : "transparent"; }}
-                  >
-                    <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "10px" }}>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "12px" }}>
-                        <p style={{ fontSize: "12px", color: isOpen ? warmWhite : "#a09888", fontWeight: 500, margin: 0, transition: "color 0.15s" }}>{block.label}</p>
-                        <p style={{ fontSize: "11px", color: isOpen ? muted : dimText, margin: 0, fontStyle: "italic", transition: "color 0.15s" }}>{block.question}</p>
-                      </div>
-                      <div style={{ fontSize: "11px", color: isOpen ? "#a09888" : muted, flexShrink: 0, display: "flex", alignItems: "center", gap: "6px", padding: "4px 10px", borderRadius: "4px", border: `1px solid ${isOpen ? "#333" : borderColor}`, transition: "all 0.15s" }}>
-                        <span>{isOpen ? "Collapse" : "Expand"}</span>
-                        <span style={{ transition: "transform 0.2s", transform: isOpen ? "rotate(90deg)" : "none", display: "inline-block", lineHeight: 1, fontSize: "12px" }}>{"\u203A"}</span>
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column" as const, gap: "6px", paddingLeft: "1px" }}>
-                      {block.bullets.map((bullet, j) => (
-                        <div key={j} style={{ display: "flex", gap: "10px", alignItems: "baseline" }}>
-                          <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: dimText, flexShrink: 0, marginTop: "6px" }} />
-                          <p style={{ fontSize: "11.5px", color: muted, lineHeight: 1.55, margin: 0 }}>{bullet}</p>
+        {(() => {
+          const body = "#a09888";
+          const analysisBg = "#141210";
+          const blue = "#6a9ab8";
+          const soWhatBlocks: { id: string; label: string; question: string; teaser: string; analysis: { type: string; text?: string; author?: string; name?: string; desc?: string }[] }[] = [
+            { id: "signals", label: "Market signals", question: "What is the price telling us?", teaser: "Fiber prices at 7-year high. Germanium up 4.5x since Jan 2024. Lead times past 60 weeks. At least one major manufacturer sold out through 2026.",
+              analysis: [
+                { type: "prose", text: "The fiber optic supply chain is exhibiting classic shortage pricing across every major input simultaneously \u2014 a pattern not seen since the telecom buildout of 2000. Standard telecom fiber (G.652D) has surged from approximately 20 RMB per core-km to 35-50+ RMB, a 70-120% increase representing a 7-year high." },
+                { type: "prose", text: "Datacenter-grade fiber (G.657A) has seen even steeper gains \u2014 surging from over 30 yuan per fiber-km to more than 50 yuan per fiber-km in a single month. Germanium metal prices have risen from $1,500/kg in January 2024 to over $7,000/kg \u2014 a 4.5x increase. Helium, essential as a coolant in fiber draw towers, has increased 135% over two years." },
+                { type: "prose", text: "Lead times tell the operational story. Ribbon fiber has stretched past 60 weeks from order to delivery. Normal lead times are 8-12 weeks. At least one major fiber manufacturer has sold all of its inventory through 2026." },
+                { type: "quote", text: "In my professional career I\u2019ve never seen anything like this inflationary crunch.", author: "Wendell Weeks, CEO of Corning \u2014 the world\u2019s largest fiber producer \u2014 to the Financial Times" },
+                { type: "prose", text: "Corning reportedly stopped selling bare glass fiber to other cable manufacturers in October 2025 to preserve supply for anchor customers. Globally, fiber optic cable prices have climbed from a 2021 low of $3.70 per fibre-km to $6.30 \u2014 a 70% increase." },
+              ] },
+            { id: "constraints", label: "Supply constraints", question: "Why can\u2019t supply respond?", teaser: "Three independent bottlenecks \u2014 preform equipment, GeCl\u2084 conversion, helium. CRU estimates 138M fiber-km shortfall in 2026. New capacity won\u2019t arrive until end of 2027.",
+              analysis: [
+                { type: "subhead", text: "Preform manufacturing equipment" },
+                { type: "prose", text: "The global preform manufacturing base is operating at full utilization. Nearly all preform deposition systems worldwide are manufactured by a single company: Rosendahl Nextrom, a private Austrian firm. Every major fiber manufacturer is now attempting to expand simultaneously. Delivery backlogs of 18-24 months. Capacity ordered today will not produce fiber until 2028." },
+                { type: "prose", text: "Corning broke ground on the Hickory project in North Carolina \u2014 anchored by a $6 billion multi-year supply agreement with Meta." },
+                { type: "subhead", text: "GeCl\u2084 conversion capacity" },
+                { type: "prose", text: "Only six facilities in the world convert germanium to fiber-grade GeCl\u2084 at 8N purity. Four in China, one in Russia, one in the west: Umicore in Olen, Belgium. Maximum facility capacity: 40-50 tonnes. As new germanium sources come online, Umicore\u2019s conversion capacity becomes the new ceiling." },
+                { type: "prose", text: "This creates a paradox: the more successful western germanium diversification becomes, the more concentrated the downstream conversion bottleneck gets." },
+                { type: "subhead", text: "Helium supply" },
+                { type: "prose", text: "Drawing fiber requires ultra-pure helium as a coolant. Supply disrupted by plant outages in Russia and the US. Prices soared to $15/m\u00b3 in 2025. When constrained, producers reduce draw speeds \u2014 directly cutting global fiber output." },
+                { type: "callout", text: "CRU estimates the global fiber shortfall will reach approximately 138 million fiber-km in 2026 \u2014 a shortfall rate of 16.7%. New preform capacity won\u2019t reach commercialization until end of 2027. Industry consensus: tight supply persists 2-3 years minimum." },
+              ] },
+            { id: "competing", label: "Competing demand", question: "Who else needs this?", teaser: "AI datacenters, $42B federal broadband, military drones \u2014 all competing for the same fiber. Manufacturers cannibalizing telecom production for higher-margin datacenter fiber.",
+              analysis: [
+                { type: "subhead", text: "Federal broadband (BEAD)" },
+                { type: "prose", text: "The $42B US BEAD program needs ~500,000 miles of fiber. Finally rolling out in 2026 \u2014 at the exact same time as the AI datacenter surge. Only three US vendors produce BABA-compliant glass: Corning, OFS, Prysmian. Datacenter builds have leapfrogged BEAD in the manufacturing queue." },
+                { type: "subhead", text: "Military drone systems" },
+                { type: "prose", text: "UAV communication systems use G.657A fiber \u2014 the exact same type AI datacenters need. Annual drone fiber demand reached 50-60M fiber-km in 2025, approximately 10% of total global production. Defense-grade procurement competing directly with commercial hyperscaler orders." },
+                { type: "subhead", text: "Capacity cannibalization" },
+                { type: "prose", text: "Fiber manufacturers are shifting production from standard G.652D to higher-margin G.657A for datacenters and drones. Total output doesn\u2019t increase \u2014 it redirects. Hyperscalers spent $416B on infrastructure in 2025 vs flat-to-declining telco capex. Whoever pays more gets served first." },
+              ] },
+            { id: "geopolitical", label: "Geopolitical risk", question: "How could it get worse?", teaser: "China controls 83% of germanium under export licensing. US ban suspended until Nov 2026. Western buyers paying 3.5x premium. Reimposition = supply shock.",
+              analysis: [
+                { type: "prose", text: "In August 2023, MOFCOM placed export licensing requirements on six germanium products. Chinese germanium exports dropped approximately 55%. In December 2024, China banned all germanium exports to the US. Suspended until November 2026 \u2014 but the global dual-use license requirement remains in full force." },
+                { type: "prose", text: "Western germanium now trades at ~$7,000/kg versus Chinese domestic ~$2,000/kg \u2014 a 3.5x premium. The export licensing regime has severed the arbitrage mechanism." },
+                { type: "prose", text: "Prysmian renewed its Umicore supply agreement in 2025, accepting a significant premium for supply security. Umicore, positioned between Chinese supply and western demand, captures the spread." },
+                { type: "callout", text: "The November 2026 deadline represents a binary risk event for the entire supply chain. A reimposition would send an immediate supply shock through an already constrained market." },
+              ] },
+            { id: "response", label: "Supply response", question: "What\u2019s being done?", teaser: "DRC ramping to Umicore. 5N Plus facility decision Nov 2026. All projects add feedstock \u2014 none add GeCl\u2084 conversion outside Umicore. Bottleneck concentrates further.",
+              analysis: [
+                { type: "item", name: "Umicore \u2014 EU Critical Raw Materials Act", desc: "Two EU-backed projects: increased germanium recovery yields and new recycling technologies. Process improvements at Olen \u2014 not greenfield expansion." },
+                { type: "item", name: "5N Plus (TSX: VNP) \u2014 St. George, Utah", desc: "Received $14.4M from US DoD. Evaluating broader germanium refining facility, decision expected November 2026. If approved, adds ~15-20t/yr. The single most binary catalyst for western supply independence." },
+                { type: "item", name: "DRC / G\u00e9camines \u2192 Umicore", desc: "STL\u2019s Big Hill tailings \u2014 14 million tonnes of century-old slag. First germanium concentrate exports October 2024 under exclusive Umicore offtake. Target: 30% of global demand at full scale. But all material flows to Umicore for GeCl\u2084 conversion." },
+                { type: "item", name: "Kazakhstan \u2014 Pavlodar", desc: "Targeting ~15t/yr germanium restart. Adds raw feedstock, not conversion capacity." },
+                { type: "item", name: "PPM Pure Metals \u2014 Langelsheim, Germany", desc: "Acquired by China\u2019s Vital Materials in December 2020. Not independent western capacity." },
+                { type: "callout", text: "Every expansion project adds raw germanium feedstock. None add GeCl\u2084 conversion capacity outside of Umicore\u2019s single facility. The feedstock constraint eases over time. The conversion bottleneck concentrates further." },
+              ] },
+            { id: "technology", label: "Technology", question: "What could change the game?", teaser: "Hollow-core fiber eliminates germanium entirely. Microsoft deploying. ~20,000 km by end 2026 vs billions installed. Arrives after the crisis peaks.",
+              analysis: [
+                { type: "subhead", text: "Hollow-core fiber (HCF)" },
+                { type: "prose", text: "Eliminates germanium entirely \u2014 light travels through air instead of doped glass. 30% lower latency. Microsoft deployed 1,280 km across Azure with zero field failures (0.091 dB/km loss), targeting 15,000 km by late 2026. YOFC achieved world-record 0.040 dB/km." },
+                { type: "prose", text: "But total HCF deployment by end of 2026 will be ~20,000 km against billions installed. Trades at ~1,000x the price of standard G.652D. It is the structural bear case for germanium demand on a 5-10 year horizon, not a near-term solution." },
+                { type: "subhead", text: "PCVD deposition technology" },
+                { type: "prose", text: "Achieves over 95% GeCl\u2084 collection efficiency versus MCVD\u2019s 40-60%. Also manufactured by Rosendahl Nextrom. But MCVD remains the dominant installed base \u2014 hundreds of systems with 25+ year lifespans. Adoption slows demand growth; it does not reverse it." },
+              ] },
+          ];
+          return (
+            <div style={{ marginBottom: "56px" }}>
+              <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 24px 0" }}>SO WHAT</p>
+              <div style={{ display: "flex", flexDirection: "column" as const }}>
+                {soWhatBlocks.map((block, i) => {
+                  const isOpen = soWhatOpen === block.id;
+                  return (
+                    <div key={block.id}>
+                      <div
+                        onClick={() => setSoWhatOpen(isOpen ? null : block.id)}
+                        style={{ display: "flex", alignItems: "stretch", cursor: "pointer", padding: "20px 0", borderTop: i > 0 ? `1px solid ${borderColor}` : "none" }}
+                      >
+                        <div style={{ minWidth: 180, maxWidth: 180, display: "flex", flexDirection: "column" as const, justifyContent: "center", gap: 4, paddingRight: 20, flexShrink: 0 }}>
+                          <p style={{ fontSize: 12, color: isOpen ? warmWhite : body, fontWeight: 500, margin: 0, lineHeight: 1.3, transition: "color 0.15s" }}>{block.label}</p>
+                          <p style={{ fontSize: 11, color: isOpen ? muted : dimText, margin: 0, fontStyle: "italic", lineHeight: 1.3, transition: "color 0.15s" }}>{block.question}</p>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                  {isOpen && (
-                    <div style={{ padding: "0 24px 24px 24px", background: "#1e1c18" }}>
-                      <div style={{ borderTop: `1px solid ${borderColor}`, paddingTop: "20px" }}>
-                        <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: dimText, margin: "0 0 14px 0" }}>ANALYSIS</p>
-                        {block.content}
+                        <div style={{ width: 1, background: borderColor, flexShrink: 0, alignSelf: "stretch" }} />
+                        <div style={{ flex: 1, paddingLeft: 20, display: "flex", alignItems: "center" }}>
+                          <p style={{ fontSize: 12, color: muted, lineHeight: 1.6, margin: 0 }}>{block.teaser}</p>
+                        </div>
+                        <div style={{ flexShrink: 0, display: "flex", alignItems: "center", marginLeft: 16 }}>
+                          <div style={{ fontSize: 11, color: isOpen ? body : muted, display: "flex", alignItems: "center", gap: 5, padding: "5px 12px", borderRadius: 5, border: `1px solid ${borderColor}`, transition: "all 0.15s", whiteSpace: "nowrap" as const }}>
+                            <span>{isOpen ? "Collapse" : "Expand"}</span>
+                            <span style={{ transition: "transform 0.2s", transform: isOpen ? "rotate(90deg)" : "none", display: "inline-block", lineHeight: 1, fontSize: 12 }}>{"\u203A"}</span>
+                          </div>
+                        </div>
                       </div>
+                      {isOpen && (
+                        <div style={{ background: analysisBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "28px 32px", marginBottom: 8, marginTop: -4 }}>
+                          <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimText, margin: "0 0 20px 0" }}>ANALYSIS</p>
+                          {block.analysis.map((item, j) => {
+                            if (item.type === "prose") return <p key={j} style={{ fontSize: 13, color: body, lineHeight: 1.75, margin: "0 0 16px 0" }}>{item.text}</p>;
+                            if (item.type === "subhead") return <p key={j} style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: j === 0 ? "0 0 10px 0" : "24px 0 10px 0" }}>{item.text}</p>;
+                            if (item.type === "quote") return (<div key={j} style={{ borderLeft: `1px solid ${borderColor}`, paddingLeft: 16, margin: "20px 0" }}><p style={{ fontFamily: "'Instrument Serif', serif", fontSize: 16, color: warmWhite, lineHeight: 1.5, margin: "0 0 6px 0", fontStyle: "italic" }}>{"\u201C"}{item.text}{"\u201D"}</p><p style={{ fontSize: 10, color: dimmer, margin: 0 }}>\u2014 {item.author}</p></div>);
+                            if (item.type === "callout") return (<div key={j} style={{ borderLeft: `2px solid ${blue}50`, paddingLeft: 16, margin: "20px 0 0 0" }}><p style={{ fontSize: 12.5, color: body, lineHeight: 1.7, margin: 0, fontWeight: 500 }}>{item.text}</p></div>);
+                            if (item.type === "item") return (<div key={j} style={{ margin: j === 0 ? "0 0 18px 0" : "18px 0" }}><p style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{item.name}</p><p style={{ fontSize: 12.5, color: muted, lineHeight: 1.7, margin: 0 }}>{item.desc}</p></div>);
+                            return null;
+                          })}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+                  );
+                })}
+                <div style={{ borderTop: `1px solid ${borderColor}` }} />
+              </div>
+            </div>
+          );
+        })()}
 
         {/* ═══ SECTION 6: BIG PICTURE ═══ */}
         <div style={{ marginBottom: "40px" }}>
