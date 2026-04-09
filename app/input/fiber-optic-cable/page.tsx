@@ -191,13 +191,21 @@ export default function FiberOpticInputPage() {
               Expand ↗
             </button>
           </div>
-          {/* Summary */}
-          <p style={{
-            fontSize: "12px", color: "#908880", lineHeight: 1.65,
-            margin: "0 0 20px 0",
-          }}>
-            ~87 tonnes of refined germanium enters the fiber optic supply chain annually — about 38% of total global supply. It is converted into fiber-grade germanium tetrachloride (GeCl₄) by just six facilities worldwide, four in China, one in Russia, and one in the west: Umicore in Belgium, which supplies the majority of GeCl₄ to fiber manufacturers across the US, Europe, and Japan. From there, ~20 preform manufacturers deposit GeCl₄ into glass to produce preforms, which are drawn into fiber strand and assembled into cable. Corning holds ~40% of global fiber manufacturing capacity. Most major players — Corning, Prysmian, Sumitomo, YOFC — are vertically integrated from preform through assembly. The output: ~720 million fiber strand-km per year, serving datacenter, terrestrial telecom, and subsea cable markets.
-          </p>
+          {/* Key takeaway */}
+          <div style={{ marginBottom: 32 }}>
+            <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: "#555", margin: "0 0 12px 0" }}>KEY TAKEAWAY</p>
+            <div style={{ borderLeft: "2px solid #c9a84c30", paddingLeft: 20, display: "flex", flexDirection: "column" as const, gap: 10 }}>
+              <p style={{ fontSize: 14, color: "#a09888", lineHeight: 1.6, margin: 0 }}>
+                <span style={{ color: "#ece8e1", fontWeight: 500 }}>~87t</span> of refined germanium enters the fiber supply chain annually — 38% of global supply.
+              </p>
+              <p style={{ fontSize: 14, color: "#a09888", lineHeight: 1.6, margin: 0 }}>
+                Converted to fiber-grade GeCl₄ by just 6 facilities worldwide. 4 in China, 1 in Russia, 1 in the west: Umicore, Belgium — sole supplier to the US, Europe, and Japan.
+              </p>
+              <p style={{ fontSize: 14, color: "#a09888", lineHeight: 1.6, margin: 0 }}>
+                ~20 preform manufacturers deposit GeCl₄ into glass. Corning holds ~40% of fiber manufacturing. Most players vertically integrated to assembly. Total output: <span style={{ color: "#ece8e1", fontWeight: 500 }}>~720M fiber strand-km/yr</span> serving datacenter, telecom, and subsea markets.
+              </p>
+            </div>
+          </div>
           <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210" }}>
             <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
             <svg viewBox={`0 0 ${subW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
