@@ -2,22 +2,28 @@
 import React, { useMemo, useState } from "react";
 import TreeMap from "@/components/TreeMap";
 import NodeModal from "@/components/NodeModal";
-import { buildCompGeometry, computeCompSvgWidth } from "@/lib/treeGeometry";
+import { buildCompGeometry, buildSubGeometry, computeCompSvgWidth, computeSubSvgWidth } from "@/lib/treeGeometry";
 import chainsJson from "@/data/chains.json";
 import nodesJson from "@/data/nodes.json";
-import type { CompChain, NodeData } from "@/types";
+import type { CompChain, SubChain, NodeData } from "@/types";
 
 const chainsData = chainsJson as unknown as {
   layerConfig: Record<string, { label?: string; displayFields: { key: string; label: string }[] }>;
   COMP_DATA: Record<string, CompChain>;
+  SUB_DATA: Record<string, SubChain>;
 };
 const allNodes = nodesJson as unknown as Record<string, NodeData>;
 
 export default function FiberOpticInputPage() {
   const compChain = chainsData.COMP_DATA["GeO₂ / GeCl₄"];
+  const subChain = chainsData.SUB_DATA["Fiber Optics"];
   const compW = useMemo(() => computeCompSvgWidth(compChain), []);
+  const subW = useMemo(() => computeSubSvgWidth(subChain), []);
   const compGeo = useMemo(() => buildCompGeometry(compChain, compW / 2, 80), []);
+  const subGeo = useMemo(() => buildSubGeometry(subChain, subW / 2, 80), []);
   const compH = compGeo.outputNode.cy + 120;
+  const subH = subGeo.outputNode.cy + 120;
+  const subFirstXs = subGeo.layers[0].nodes.map(n => n.cx);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
   const accent = "#6a9ab8";
@@ -169,13 +175,37 @@ export default function FiberOpticInputPage() {
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
             SUPPLY TREE
           </p>
-          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210", display: "flex", justifyContent: "center" }}>
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210" }}>
+            {/* Comp tree: GeCl₄ Suppliers → Fiber Manufacturers → Output */}
             <TreeMap
               geometry={compGeo}
               nodes={allNodes}
               layerConfig={lc}
               svgWidth={compW}
               svgHeight={compH}
+              onNodeClick={setSelectedNode}
+              onLayerClick={() => {}}
+              layerPanels={{}}
+            />
+            {/* Bridge connector */}
+            <svg
+              viewBox={`0 0 ${subW} 80`}
+              preserveAspectRatio="xMidYMid meet"
+              style={{ display: "block", width: "100%", height: "auto" }}
+            >
+              {subFirstXs.map((tx, i) => {
+                const fromX = subW / 2;
+                const d = `M ${fromX},0 C ${fromX},40 ${tx},40 ${tx},80`;
+                return <path key={i} d={d} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />;
+              })}
+            </svg>
+            {/* Sub tree: Assembly → Cable Type → Output */}
+            <TreeMap
+              geometry={subGeo}
+              nodes={allNodes}
+              layerConfig={lc}
+              svgWidth={subW}
+              svgHeight={subH}
               onNodeClick={setSelectedNode}
               onLayerClick={() => {}}
               layerPanels={{}}
