@@ -194,15 +194,9 @@ export default function FiberOpticInputPage() {
           {/* Key takeaway */}
           <div style={{ marginBottom: 32 }}>
             <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: "#555", margin: "0 0 12px 0" }}>KEY TAKEAWAY</p>
-            <div style={{ borderLeft: "2px solid #c9a84c30", paddingLeft: 20, display: "flex", flexDirection: "column" as const, gap: 10 }}>
-              <p style={{ fontSize: 14, color: "#a09888", lineHeight: 1.6, margin: 0 }}>
-                <span style={{ color: "#ece8e1", fontWeight: 500 }}>~87t</span> of refined germanium enters the fiber supply chain annually — 38% of global supply.
-              </p>
-              <p style={{ fontSize: 14, color: "#a09888", lineHeight: 1.6, margin: 0 }}>
-                Converted to fiber-grade GeCl₄ by just 6 facilities worldwide. 4 in China, 1 in Russia, 1 in the west: Umicore, Belgium — sole supplier to the US, Europe, and Japan.
-              </p>
-              <p style={{ fontSize: 14, color: "#a09888", lineHeight: 1.6, margin: 0 }}>
-                ~20 preform manufacturers deposit GeCl₄ into glass. Corning holds ~40% of fiber manufacturing. Most players vertically integrated to assembly. Total output: <span style={{ color: "#ece8e1", fontWeight: 500 }}>~720M fiber strand-km/yr</span> serving datacenter, telecom, and subsea markets.
+            <div style={{ borderLeft: "2px solid #3a6a8030", paddingLeft: 20 }}>
+              <p style={{ fontSize: 12, color: "#a09888", lineHeight: 1.3, margin: 0 }}>
+                <span style={{ color: "#ece8e1", fontWeight: 500 }}>~87t</span> of refined germanium enters the fiber supply chain annually — 38% of global supply. Converted to fiber-grade GeCl₄ by just 6 facilities worldwide. 4 in China, 1 in Russia, 1 in the west: Umicore, Belgium — sole supplier to the US, Europe, and Japan. ~20 preform manufacturers deposit GeCl₄ into glass. Corning holds ~40% of fiber manufacturing. Most players vertically integrated to assembly. Total output: <span style={{ color: "#ece8e1", fontWeight: 500 }}>~720M fiber strand-km/yr</span> serving datacenter, telecom, and subsea markets.
               </p>
             </div>
           </div>
