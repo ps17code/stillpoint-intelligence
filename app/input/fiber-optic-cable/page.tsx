@@ -78,35 +78,6 @@ export default function FiberOpticInputPage() {
           </p>
         </div>
 
-        {/* ═══ SUPPLY TREE ═══ */}
-        <div style={{ marginBottom: "56px", maxWidth: 1000, marginLeft: "auto", marginRight: "auto" }}>
-          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
-            SUPPLY TREE
-          </p>
-          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210" }}>
-            <TreeMap
-              geometry={compGeo}
-              nodes={allNodes}
-              layerConfig={lc}
-              svgWidth={compW}
-              svgHeight={compH}
-              onNodeClick={setSelectedNode}
-              onLayerClick={() => {}}
-              layerPanels={{}}
-            />
-          </div>
-        </div>
-
-        {/* Node modal */}
-        <NodeModal
-          nodeKey={selectedNode}
-          allNodes={allNodes}
-          layers={[]}
-          chainLabel="GeO₂ / GeCl₄ Supply Tree"
-          onClose={() => setSelectedNode(null)}
-          onNavigate={() => {}}
-        />
-
         {/* ═══ SECTION 2: HOW IT'S MADE ═══ */}
         <div style={{ marginBottom: "56px" }}>
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
@@ -192,6 +163,35 @@ export default function FiberOpticInputPage() {
 
           </div>
         </div>
+
+        {/* ═══ SUPPLY TREE ═══ */}
+        <div style={{ marginBottom: "56px" }}>
+          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
+            SUPPLY TREE
+          </p>
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210", padding: "0 12px" }}>
+            <TreeMap
+              geometry={compGeo}
+              nodes={allNodes}
+              layerConfig={lc}
+              svgWidth={1200}
+              svgHeight={compH}
+              onNodeClick={setSelectedNode}
+              onLayerClick={() => {}}
+              layerPanels={{}}
+            />
+          </div>
+        </div>
+
+        {/* Node modal */}
+        <NodeModal
+          nodeKey={selectedNode}
+          allNodes={allNodes}
+          layers={[]}
+          chainLabel="GeO₂ / GeCl₄ Supply Tree"
+          onClose={() => setSelectedNode(null)}
+          onNavigate={() => {}}
+        />
 
         {/* ═══ SECTION 3: INPUT → OUTPUT ═══ */}
         <div style={{ marginBottom: "56px" }}>
