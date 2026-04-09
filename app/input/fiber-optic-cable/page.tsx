@@ -25,6 +25,7 @@ export default function FiberOpticInputPage() {
   const subH = subGeo.outputNode.cy + 120;
   const subFirstXs = subGeo.layers[0].nodes.map(n => n.cx);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
+  const [treeExpanded, setTreeExpanded] = useState(false);
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
   const accent = "#6a9ab8";
   const gold = "#c9a84c";
@@ -172,46 +173,72 @@ export default function FiberOpticInputPage() {
 
         {/* ═══ SUPPLY TREE ═══ */}
         <div style={{ marginBottom: "56px" }}>
-          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
-            SUPPLY TREE
-          </p>
-          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210" }}>
-            {/* Comp tree: GeCl₄ Suppliers → Fiber Manufacturers → Output */}
-            <TreeMap
-              geometry={compGeo}
-              nodes={allNodes}
-              layerConfig={lc}
-              svgWidth={compW}
-              svgHeight={compH}
-              onNodeClick={setSelectedNode}
-              onLayerClick={() => {}}
-              layerPanels={{}}
-            />
-            {/* Bridge connector */}
-            <svg
-              viewBox={`0 0 ${subW} 80`}
-              preserveAspectRatio="xMidYMid meet"
-              style={{ display: "block", width: "100%", height: "auto" }}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", margin: "0 0 20px 0" }}>
+            <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: 0 }}>
+              SUPPLY TREE
+            </p>
+            <button
+              onClick={() => setTreeExpanded(true)}
+              style={{
+                fontFamily: "'Geist Mono', monospace", fontSize: 9, letterSpacing: "0.04em",
+                color: "#555", background: "none", border: `1px solid ${borderColor}`,
+                borderRadius: 6, padding: "5px 12px", cursor: "pointer",
+                transition: "color 0.15s, border-color 0.15s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "#3a3835"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = "#555"; e.currentTarget.style.borderColor = borderColor; }}
             >
-              {subFirstXs.map((tx, i) => {
-                const fromX = subW / 2;
-                const d = `M ${fromX},0 C ${fromX},40 ${tx},40 ${tx},80`;
-                return <path key={i} d={d} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />;
-              })}
+              Expand ↗
+            </button>
+          </div>
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210" }}>
+            <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+            <svg viewBox={`0 0 ${subW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+              {subFirstXs.map((tx, i) => { const fx = subW / 2; return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />; })}
             </svg>
-            {/* Sub tree: Assembly → Cable Type → Output */}
-            <TreeMap
-              geometry={subGeo}
-              nodes={allNodes}
-              layerConfig={lc}
-              svgWidth={subW}
-              svgHeight={subH}
-              onNodeClick={setSelectedNode}
-              onLayerClick={() => {}}
-              layerPanels={{}}
-            />
+            <TreeMap geometry={subGeo} nodes={allNodes} layerConfig={lc} svgWidth={subW} svgHeight={subH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
           </div>
         </div>
+
+        {/* ═══ FULLSCREEN SUPPLY TREE OVERLAY ═══ */}
+        {treeExpanded && (
+          <div style={{
+            position: "fixed", inset: 0, zIndex: 100,
+            background: "#111", overflow: "auto",
+            display: "flex", flexDirection: "column" as const,
+          }}>
+            {/* Header bar */}
+            <div style={{
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              padding: "14px 28px", borderBottom: `1px solid ${borderColor}`, flexShrink: 0,
+            }}>
+              <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: "0.1em", color: dimText }}>
+                FIBER OPTIC CABLE · SUPPLY TREE
+              </span>
+              <button
+                onClick={() => setTreeExpanded(false)}
+                style={{
+                  fontFamily: "'Geist Mono', monospace", fontSize: 9,
+                  color: "#555", background: "none", border: `1px solid ${borderColor}`,
+                  borderRadius: 6, padding: "5px 12px", cursor: "pointer",
+                  transition: "color 0.15s, border-color 0.15s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "#3a3835"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "#555"; e.currentTarget.style.borderColor = borderColor; }}
+              >
+                Close ✕
+              </button>
+            </div>
+            {/* Full tree */}
+            <div style={{ flex: 1, padding: "20px" }}>
+              <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+              <svg viewBox={`0 0 ${subW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+                {subFirstXs.map((tx, i) => { const fx = subW / 2; return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />; })}
+              </svg>
+              <TreeMap geometry={subGeo} nodes={allNodes} layerConfig={lc} svgWidth={subW} svgHeight={subH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+            </div>
+          </div>
+        )}
 
         {/* Node modal */}
         <NodeModal
