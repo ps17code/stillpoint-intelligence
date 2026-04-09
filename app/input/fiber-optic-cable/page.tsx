@@ -395,10 +395,7 @@ export default function FiberOpticInputPage() {
                           <p style={{ fontSize: 12, color: muted, lineHeight: 1.6, margin: 0 }}>{block.teaser}</p>
                         </div>
                         <div style={{ flexShrink: 0, display: "flex", alignItems: "center", marginLeft: 16 }}>
-                          <div style={{ fontSize: 11, color: isOpen ? body : muted, display: "flex", alignItems: "center", gap: 5, padding: "5px 12px", borderRadius: 5, border: `1px solid ${borderColor}`, transition: "all 0.15s", whiteSpace: "nowrap" as const }}>
-                            <span>{isOpen ? "Collapse" : "Expand"}</span>
-                            <span style={{ transition: "transform 0.2s", transform: isOpen ? "rotate(90deg)" : "none", display: "inline-block", lineHeight: 1, fontSize: 12 }}>{"\u203A"}</span>
-                          </div>
+                          <span style={{ fontSize: 14, color: isOpen ? body : "#444", transition: "transform 0.2s, color 0.15s", transform: isOpen ? "rotate(90deg)" : "none", display: "inline-block", lineHeight: 1 }}>{"\u203A"}</span>
                         </div>
                       </div>
                       {isOpen && (
