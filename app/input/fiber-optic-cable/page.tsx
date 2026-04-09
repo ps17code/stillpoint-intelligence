@@ -91,6 +91,86 @@ export default function FiberOpticInputPage() {
             HOW IT&apos;S MADE
           </p>
 
+          {/* Process illustration */}
+          <div style={{ marginBottom: 20 }}>
+            <svg width="100%" viewBox="0 0 680 200">
+              {/* 1. Germanium powder */}
+              <circle cx="48" cy="108" r="5" fill="#B4B2A9" opacity="0.7"/>
+              <circle cx="58" cy="104" r="4.5" fill="#D3D1C7" opacity="0.8"/>
+              <circle cx="42" cy="102" r="4" fill="#D3D1C7" opacity="0.6"/>
+              <circle cx="53" cy="96" r="3.5" fill="#B4B2A9" opacity="0.7"/>
+              <circle cx="63" cy="110" r="4" fill="#B4B2A9" opacity="0.6"/>
+              <circle cx="37" cy="110" r="3.5" fill="#D3D1C7" opacity="0.5"/>
+              <circle cx="48" cy="114" r="3" fill="#B4B2A9" opacity="0.5"/>
+              <circle cx="55" cy="114" r="3.5" fill="#D3D1C7" opacity="0.6"/>
+              <circle cx="66" cy="103" r="3" fill="#B4B2A9" opacity="0.5"/>
+              <circle cx="44" cy="95" r="3" fill="#D3D1C7" opacity="0.5"/>
+              <text x="52" y="138" textAnchor="middle" fill="#706a60" fontSize="11" fontFamily="DM Sans, sans-serif">Germanium</text>
+              <text x="52" y="152" textAnchor="middle" fill="#706a60" fontSize="11" fontFamily="DM Sans, sans-serif" opacity="0.45">powder</text>
+
+              {/* Arrow 1→2 */}
+              <line x1="82" y1="105" x2="105" y2="105" stroke="#555" strokeWidth="0.8" opacity="0.3"/>
+              <path d="M103 102 L109 105 L103 108" fill="none" stroke="#555" strokeWidth="0.8" opacity="0.3"/>
+
+              {/* 2. GeCl₄ cylinder */}
+              <rect x="118" y="72" width="36" height="66" rx="5" fill="none" stroke="#706a60" strokeWidth="1"/>
+              <rect x="118" y="72" width="36" height="66" rx="5" fill="#1a1816" opacity="0.3"/>
+              <rect x="120" y="90" width="32" height="46" rx="3" fill="#3B8BD4" opacity="0.12"/>
+              <rect x="128" y="64" width="16" height="10" rx="3" fill="none" stroke="#706a60" strokeWidth="0.8"/>
+              <circle cx="136" cy="62" r="2.5" fill="none" stroke="#706a60" strokeWidth="0.6"/>
+              <text x="136" y="152" textAnchor="middle" fill="#706a60" fontSize="11" fontFamily="DM Sans, sans-serif">GeCl₄</text>
+              <text x="136" y="166" textAnchor="middle" fill="#706a60" fontSize="11" fontFamily="DM Sans, sans-serif" opacity="0.45">liquid</text>
+
+              {/* Arrow 2→3 */}
+              <line x1="164" y1="105" x2="191" y2="105" stroke="#555" strokeWidth="0.8" opacity="0.3"/>
+              <path d="M189 102 L195 105 L189 108" fill="none" stroke="#555" strokeWidth="0.8" opacity="0.3"/>
+
+              {/* 3. MCVD tube + torch */}
+              <rect x="204" y="90" width="160" height="30" rx="8" fill="none" stroke="#706a60" strokeWidth="0.8"/>
+              <rect x="204" y="90" width="160" height="30" rx="8" fill="#1a1816" opacity="0.15"/>
+              <rect x="210" y="94" width="148" height="22" rx="5" fill="#3B8BD4" opacity="0.06"/>
+              <rect x="210" y="100" width="148" height="10" rx="3" fill="#EF9F27" opacity="0.15"/>
+              <rect x="210" y="102" width="148" height="6" rx="2" fill="#EF9F27" opacity="0.25"/>
+              <path d="M275 124 L280 134 L285 124" fill="#E8593C" opacity="0.5"/>
+              <path d="M283 124 L289 137 L295 124" fill="#EF9F27" opacity="0.45"/>
+              <path d="M293 124 L298 133 L303 124" fill="#E8593C" opacity="0.4"/>
+              <rect x="276" y="137" width="30" height="8" rx="2" fill="none" stroke="#706a60" strokeWidth="0.5" opacity="0.4"/>
+              <path d="M200 92 A6 6 0 0 1 200 102" fill="none" stroke="#706a60" strokeWidth="0.4" opacity="0.3"/>
+              <path d="M368 92 A6 6 0 0 0 368 102" fill="none" stroke="#706a60" strokeWidth="0.4" opacity="0.3"/>
+              <text x="284" y="163" textAnchor="middle" fill="#706a60" fontSize="11" fontFamily="DM Sans, sans-serif">Vapor deposition</text>
+              <text x="284" y="177" textAnchor="middle" fill="#706a60" fontSize="11" fontFamily="DM Sans, sans-serif" opacity="0.45">in rotating tube</text>
+
+              {/* Arrow 3→4 */}
+              <line x1="374" y1="105" x2="407" y2="105" stroke="#555" strokeWidth="0.8" opacity="0.3"/>
+              <path d="M405 102 L411 105 L405 108" fill="none" stroke="#555" strokeWidth="0.8" opacity="0.3"/>
+
+              {/* 4. Preform rod */}
+              <rect x="424" y="60" width="28" height="90" rx="6" fill="none" stroke="#706a60" strokeWidth="0.8"/>
+              <rect x="424" y="60" width="28" height="90" rx="6" fill="#1a1816" opacity="0.15"/>
+              <rect x="426" y="62" width="24" height="86" rx="4" fill="#3B8BD4" opacity="0.05"/>
+              <rect x="434" y="62" width="8" height="86" rx="2" fill="#EF9F27" opacity="0.18"/>
+              <rect x="436" y="62" width="4" height="86" rx="1" fill="#EF9F27" opacity="0.3"/>
+              <text x="438" y="163" textAnchor="middle" fill="#706a60" fontSize="11" fontFamily="DM Sans, sans-serif">Glass preform</text>
+              <text x="438" y="177" textAnchor="middle" fill="#706a60" fontSize="11" fontFamily="DM Sans, sans-serif" opacity="0.45">~1m rod</text>
+
+              {/* Arrow 4→5 */}
+              <line x1="462" y1="105" x2="495" y2="105" stroke="#555" strokeWidth="0.8" opacity="0.3"/>
+              <path d="M493 102 L499 105 L493 108" fill="none" stroke="#555" strokeWidth="0.8" opacity="0.3"/>
+
+              {/* 5. Drawn fiber */}
+              <line x1="540" y1="46" x2="540" y2="155" stroke="#EF9F27" strokeWidth="1.2" opacity="0.5"/>
+              <line x1="540" y1="46" x2="540" y2="155" stroke="#706a60" strokeWidth="0.3"/>
+              <circle cx="540" cy="46" r="4" fill="none" stroke="#706a60" strokeWidth="0.4"/>
+              <circle cx="540" cy="46" r="1.2" fill="#EF9F27" opacity="0.4"/>
+              <ellipse cx="540" cy="155" rx="22" ry="6" fill="none" stroke="#706a60" strokeWidth="0.5" opacity="0.4"/>
+              <ellipse cx="540" cy="148" rx="22" ry="6" fill="none" stroke="#706a60" strokeWidth="0.5" opacity="0.3"/>
+              <line x1="518" y1="148" x2="518" y2="155" stroke="#706a60" strokeWidth="0.5" opacity="0.3"/>
+              <line x1="562" y1="148" x2="562" y2="155" stroke="#706a60" strokeWidth="0.5" opacity="0.3"/>
+              <text x="540" y="177" textAnchor="middle" fill="#706a60" fontSize="11" fontFamily="DM Sans, sans-serif">Fiber strand</text>
+              <text x="540" y="191" textAnchor="middle" fill="#706a60" fontSize="11" fontFamily="DM Sans, sans-serif" opacity="0.45">125 μm</text>
+            </svg>
+          </div>
+
           <div style={{ display: "flex", gap: "12px" }}>
 
             {/* Card 1: GeCl₄ Conversion */}
