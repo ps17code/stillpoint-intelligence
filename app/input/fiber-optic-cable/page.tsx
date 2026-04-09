@@ -169,12 +169,12 @@ export default function FiberOpticInputPage() {
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
             SUPPLY TREE
           </p>
-          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210", padding: "0 12px" }}>
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210", display: "flex", justifyContent: "center" }}>
             <TreeMap
               geometry={compGeo}
               nodes={allNodes}
               layerConfig={lc}
-              svgWidth={1200}
+              svgWidth={compW}
               svgHeight={compH}
               onNodeClick={setSelectedNode}
               onLayerClick={() => {}}
