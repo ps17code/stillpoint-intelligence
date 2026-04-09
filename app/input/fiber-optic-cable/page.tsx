@@ -1,6 +1,25 @@
 "use client";
+import React, { useMemo, useState } from "react";
+import TreeMap from "@/components/TreeMap";
+import NodeModal from "@/components/NodeModal";
+import { buildCompGeometry, computeCompSvgWidth } from "@/lib/treeGeometry";
+import chainsJson from "@/data/chains.json";
+import nodesJson from "@/data/nodes.json";
+import type { CompChain, NodeData } from "@/types";
+
+const chainsData = chainsJson as unknown as {
+  layerConfig: Record<string, { label?: string; displayFields: { key: string; label: string }[] }>;
+  COMP_DATA: Record<string, CompChain>;
+};
+const allNodes = nodesJson as unknown as Record<string, NodeData>;
 
 export default function FiberOpticInputPage() {
+  const compChain = chainsData.COMP_DATA["GeO₂ / GeCl₄"];
+  const compW = useMemo(() => computeCompSvgWidth(compChain), []);
+  const compGeo = useMemo(() => buildCompGeometry(compChain, compW / 2, 80), []);
+  const compH = compGeo.outputNode.cy + 120;
+  const [selectedNode, setSelectedNode] = useState<string | null>(null);
+  const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
   const accent = "#6a9ab8";
   const gold = "#c9a84c";
   const warmWhite = "#ece8e1";
@@ -58,6 +77,35 @@ export default function FiberOpticInputPage() {
             Every AI model runs on infrastructure connected by fiber. AI datacenters consume 4–5x more fiber connections per rack than traditional compute. As hyperscale campuses scale past gigawatt power capacity, fiber demand is outpacing the supply chain&apos;s ability to deliver — and the upstream raw material that makes it all possible cannot scale.
           </p>
         </div>
+
+        {/* ═══ SUPPLY TREE ═══ */}
+        <div style={{ marginBottom: "56px", maxWidth: 1000, marginLeft: "auto", marginRight: "auto" }}>
+          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
+            SUPPLY TREE
+          </p>
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210" }}>
+            <TreeMap
+              geometry={compGeo}
+              nodes={allNodes}
+              layerConfig={lc}
+              svgWidth={compW}
+              svgHeight={compH}
+              onNodeClick={setSelectedNode}
+              onLayerClick={() => {}}
+              layerPanels={{}}
+            />
+          </div>
+        </div>
+
+        {/* Node modal */}
+        <NodeModal
+          nodeKey={selectedNode}
+          allNodes={allNodes}
+          layers={[]}
+          chainLabel="GeO₂ / GeCl₄ Supply Tree"
+          onClose={() => setSelectedNode(null)}
+          onNavigate={() => {}}
+        />
 
         {/* ═══ SECTION 2: HOW IT'S MADE ═══ */}
         <div style={{ marginBottom: "56px" }}>
