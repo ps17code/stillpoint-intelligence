@@ -139,22 +139,19 @@ export default function AnatomyView() {
 
         {/* Featured analysis */}
         <div style={{ marginBottom: 28 }}>
-          <div style={{
-            ...MONO, fontSize: 9, letterSpacing: "0.12em", color: "#5a5550",
-            marginBottom: 14, textTransform: "uppercase" as const,
-          }}>
-            Featured Analysis
-          </div>
+          <p style={{ ...MONO, fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 16px 0" }}>
+            &#9670; FEATURED ANALYSIS
+          </p>
           <a
             href="/chains/germanium"
             style={{
               display: "flex", alignItems: "center", gap: 20,
-              background: "#161414", border: "1px solid #1e1c1a", borderRadius: 10,
+              background: "#1e1c18", border: "1px solid #2a2620", borderRadius: 10,
               padding: "20px 24px", textDecoration: "none",
               transition: "border-color 0.15s, background 0.15s",
             }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = "#2e2a25"; e.currentTarget.style.background = "#1a1816"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e1c1a"; e.currentTarget.style.background = "#161414"; }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "#3a3630"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "#2a2620"; }}
           >
             <div style={{ flex: 1 }}>
               <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 500, color: "#ece8e1", margin: "0 0 4px 0" }}>
@@ -164,21 +161,23 @@ export default function AnatomyView() {
                 Severe supply constraints from raw germanium to preform equipment. Prices at 7-year highs. Lead times past 60 weeks. Deficit can&#39;t close before 2027.
               </p>
             </div>
-            <span style={{ ...MONO, fontSize: 10, color: "#555", flexShrink: 0 }}>Read analysis →</span>
+            <div style={{ fontSize: 11, color: "#706a60", display: "flex", alignItems: "center", gap: 6, padding: "6px 14px", borderRadius: 5, border: "1px solid #252220", flexShrink: 0, whiteSpace: "nowrap" as const }}>
+              Read analysis <span style={{ fontSize: 13 }}>→</span>
+            </div>
           </a>
         </div>
 
         {/* Product overview container */}
         <div style={{
-          border: "1px solid #252220", borderRadius: 12,
-          padding: "24px 24px 16px", background: "#131210",
+          border: "1px solid #1e1c18", borderRadius: 12,
+          padding: "24px 24px 16px", background: "#161412",
         }}>
         {LAYERS.map((layer) => (
           <div key={layer.label} style={{ marginBottom: 24 }}>
             {/* Layer label */}
             <div style={{
               ...MONO, fontSize: 9, fontWeight: 500, letterSpacing: "0.12em",
-              color: layer.accent, marginBottom: 10,
+              color: "#4a4540", marginBottom: 10,
             }}>
               {layer.label}
             </div>
@@ -211,9 +210,11 @@ export default function AnatomyView() {
                       borderRadius: 10,
                       padding: "14px 16px",
                       cursor: "pointer",
-                      opacity: dimmed ? 0.15 : 1,
+                      opacity: dimmed ? 0.15 : (card.mapped || isSel || isConn) ? 1 : 0.6,
                       transition: "opacity 0.25s ease, background 0.2s ease, border-color 0.2s ease",
                     }}
+                    onMouseEnter={e => { if (!card.mapped && !isSel && !isConn && !dimmed) e.currentTarget.style.opacity = "1"; }}
+                    onMouseLeave={e => { if (!card.mapped && !isSel && !isConn && !dimmed) e.currentTarget.style.opacity = "0.6"; }}
                   >
                     {/* Name */}
                     <div style={{
@@ -223,6 +224,9 @@ export default function AnatomyView() {
                       transition: "color 0.2s",
                     }}>
                       {card.name}
+                      {card.mapped && (
+                        <span style={{ fontSize: 8, color: "#555", letterSpacing: "0.06em", padding: "2px 6px", border: "1px solid #252220", borderRadius: 3, marginLeft: 6 }}>LIVE</span>
+                      )}
                     </div>
 
                     {/* Description */}
