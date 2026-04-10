@@ -147,7 +147,7 @@ export default function FiberOpticInputPage() {
         </div>
 
         {/* ═══ WHERE THE MONEY IS ═══ */}
-        <div id="money" style={{ marginBottom: "40px" }}>
+        <div id="money" style={{ marginBottom: "40px", paddingTop: 20 }}>
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 12px 0" }}>
             WHERE THE MONEY IS
           </p>
@@ -214,7 +214,7 @@ export default function FiberOpticInputPage() {
           ))}
         </div>
         {/* ═══ SUPPLY → DEMAND ═══ */}
-        <div id="supply-demand" style={{ marginBottom: "56px" }}>
+        <div id="supply-demand" style={{ marginBottom: "56px", paddingTop: 20 }}>
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
             SUPPLY → DEMAND
           </p>
@@ -247,7 +247,7 @@ export default function FiberOpticInputPage() {
         </div>
 
         {/* ═══ SECTION 5: SO WHAT ═══ */}
-        <div id="so-what">
+        <div id="so-what" style={{ paddingTop: 20 }}>
         {(() => {
           const body = "#a09888";
           const analysisBg = "#141210";
@@ -358,7 +358,7 @@ export default function FiberOpticInputPage() {
         </div>
 
         {/* ═══ SECTION 2: HOW IT'S MADE ═══ */}
-        <div id="how-its-made" style={{ marginBottom: "56px" }}>
+        <div id="how-its-made" style={{ marginBottom: "56px", paddingTop: 20 }}>
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
             HOW IT&apos;S MADE
           </p>
@@ -444,7 +444,7 @@ export default function FiberOpticInputPage() {
         </div>
 
         {/* ═══ SUPPLY TREE ═══ */}
-        <div id="supply-tree" style={{ marginBottom: "56px" }}>
+        <div id="supply-tree" style={{ marginBottom: "56px", paddingTop: 20 }}>
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
             SUPPLY TREE
           </p>
