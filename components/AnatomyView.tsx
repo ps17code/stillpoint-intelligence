@@ -23,7 +23,7 @@ interface LayerRow {
 const LAYERS: LayerRow[] = [
   {
     label: "RAW MATERIALS",
-    accent: "#908880",
+    accent: "#C4A46C",
     cards: [
       { id: "germanium", name: "Germanium", description: "Trace metal that dopes glass to carry light through fiber optic cable. Essential for all fiber-based connectivity.", players: "Yunnan Chihong, Umicore, 5N Plus, Teck Resources", insight: "Fixed supply, rising AI demand. Structural deficit by 2026. Prices already 2x.", mapped: true, downstream: ["fiber-optic-cable", "connectivity", "datacenter"], upstream: [] },
       { id: "copper", name: "Copper", description: "Conducts power and signal across every datacenter system \u2014 wiring, bus bars, PCB traces, heat exchangers, and cooling loops.", players: "Codelco, Freeport-McMoRan, BHP, Southern Copper", insight: "", mapped: false, downstream: ["fiber-optic-cable", "server-boards", "power-transformers", "pdu", "liquid-cooling", "chillers", "air-handling", "power", "cooling", "connectivity", "compute", "datacenter"], upstream: [] },
@@ -39,7 +39,7 @@ const LAYERS: LayerRow[] = [
   },
   {
     label: "COMPONENTS",
-    accent: "#7a7570",
+    accent: "#9BA8AB",
     cards: [
       { id: "fiber-optic-cable", name: "Fiber optic cable", description: "Glass strands doped with germanium that carry light signals between servers, racks, buildings, and continents. The physical backbone of all datacenter connectivity.", players: "Umicore (GeCl\u2084), Corning, Prysmian, Sumitomo Electric, Fujikura, YOFC", insight: "", mapped: true, downstream: ["connectivity", "datacenter"], upstream: ["germanium"] },
       { id: "optical-transceivers", name: "Optical transceivers", description: "Modules that convert electrical signals to light and back. Built on gallium-based laser chips. Every fiber connection in a datacenter needs one on each end.", players: "Coherent, Lumentum, Broadcom, Intel, Cisco", insight: "", mapped: false, downstream: ["connectivity", "datacenter"], upstream: [] },
@@ -59,7 +59,7 @@ const LAYERS: LayerRow[] = [
   },
   {
     label: "SUBSYSTEMS",
-    accent: "#6a6560",
+    accent: "#B87D5E",
     cards: [
       { id: "connectivity", name: "Connectivity", description: "The network infrastructure moving data between servers, racks, buildings, and the outside world. Assembled from fiber optic cables, optical transceivers, and network switches into a structured cabling and switching fabric.", players: "Corning, Cisco, Arista, Juniper, CommScope", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
       { id: "compute", name: "Compute", description: "The processing infrastructure where AI training and inference happens. GPUs, HBM memory, and CPUs assembled onto server boards and mounted into rack-scale systems. The highest-value and most power-hungry subsystem.", players: "NVIDIA, Dell, HPE, Supermicro, Quanta, Wiwynn", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
@@ -70,7 +70,7 @@ const LAYERS: LayerRow[] = [
   },
   {
     label: "END USE",
-    accent: "#5a5550",
+    accent: "#D4CCBA",
     cards: [
       { id: "datacenter", name: "AI datacenter", description: "The facility where compute, connectivity, power, cooling, and physical structure come together to run AI workloads at scale. The primary demand driver pulling through every upstream layer.", players: "AWS, Microsoft Azure, Google Cloud, Meta, Oracle, CoreWeave", insight: "", mapped: false, downstream: [], upstream: [] },
     ],
@@ -170,14 +170,14 @@ export default function AnatomyView() {
         {/* Product overview container */}
         <div style={{
           border: "1px solid #1e1c18", borderRadius: 12,
-          padding: "24px 24px 16px", background: "#161412",
+          padding: "24px 24px 16px", background: "rgba(11,11,11,1)",
         }}>
         {LAYERS.map((layer) => (
           <div key={layer.label} style={{ marginBottom: 24 }}>
             {/* Layer label */}
             <div style={{
               ...MONO, fontSize: 9, fontWeight: 500, letterSpacing: "0.12em",
-              color: "#4a4540", marginBottom: 10,
+              color: layer.accent, marginBottom: 10,
             }}>
               {layer.label}
             </div>
