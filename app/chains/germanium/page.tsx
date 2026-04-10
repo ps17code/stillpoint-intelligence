@@ -111,6 +111,19 @@ function scrollToLayer(layerIdx: number) {
   window.scrollTo({ top, behavior: "smooth" });
 }
 
+const COMPANY_LINKS: Record<string, string> = {
+  "Corning": "/input/fiber-optic-cable#corning",
+  "Umicore": "/input/fiber-optic-cable#umicore",
+  "Germanium": "/input/germanium",
+  "Rosendahl Nextrom": "/input/fiber-optic-cable#rosendahl-nextrom",
+  "5N Plus": "/input/fiber-optic-cable#5n-plus",
+  "Prysmian": "/input/fiber-optic-cable#prysmian",
+  "DRC / G\u00e9camines": "/input/germanium#drc-gecamines",
+  "Hollow-core fiber": "/input/fiber-optic-cable#hcf",
+  "YOFC": "/input/fiber-optic-cable#yofc",
+  "Relativity Networks": "/input/fiber-optic-cable#relativity-networks",
+};
+
 export default function GermaniumChainPage() {
   const [hovered, setHovered]         = useState<number | null>(null);
   const [hoverExplore, setHoverExplore] = useState(false);
@@ -123,7 +136,7 @@ export default function GermaniumChainPage() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0F0F0E", display: "flex", flexDirection: "column" }}>
+    <div style={{ minHeight: "100vh", background: "#0F0F0E", display: "flex", flexDirection: "column", fontFamily: "'DM Sans', sans-serif" }}>
 
       {/* ── NAV ─────────────────────────────────────────────────────── */}
       <div style={{
@@ -359,7 +372,7 @@ export default function GermaniumChainPage() {
                 <p style={{ fontSize: 9, letterSpacing: "0.08em", color: "#555", margin: "0 0 8px 0" }}>{tier.tier}</p>
                 {tier.items.map((item, ii) => (
                   <div key={ii} style={{ display: "flex", alignItems: "baseline", gap: 8, padding: "5px 0" }}>
-                    <p style={{ ...SYS, fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, minWidth: 140, flexShrink: 0 }}>{item.name}</p>
+                    <a href={COMPANY_LINKS[item.name] || "#"} style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, textDecoration: "none", margin: 0, minWidth: 140, flexShrink: 0, cursor: "pointer" }} onMouseEnter={(e) => { e.currentTarget.style.textDecoration = "underline"; }} onMouseLeave={(e) => { e.currentTarget.style.textDecoration = "none"; }}>{item.name}</a>
                     <p style={{ fontSize: 10, color: ["Private", "Commodity", "Thematic", "Startup", "Offtake"].includes(item.tag) ? "#4a4540" : "#6a9ab8", margin: 0, minWidth: 60, flexShrink: 0 }}>{item.tag}</p>
                     <p style={{ ...SYS, fontSize: 11, color: "#706a60", margin: 0 }}>{item.desc}</p>
                   </div>

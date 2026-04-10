@@ -184,7 +184,7 @@ export default function FiberOpticInputPage() {
               </div>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" as const }}>
                 {cat.ideas.map((idea, ii) => (
-                  <div key={ii} style={{
+                  <div key={ii} id={idea.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")} style={{
                     flex: cat.ideas.length <= 3 ? "1 1 0" : "1 1 calc(25% - 8px)",
                     minWidth: cat.ideas.length <= 3 ? 0 : 200,
                     background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "16px 18px",
