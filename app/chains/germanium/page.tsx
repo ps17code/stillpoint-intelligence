@@ -183,19 +183,25 @@ export default function GermaniumChainPage() {
 
             {/* Headline */}
             <div style={{
-              ...SYS, fontSize: 26, fontWeight: 500, lineHeight: 1.4,
-              letterSpacing: "-0.3px", color: "rgba(255,255,255,0.9)",
-              maxWidth: 480, marginBottom: 22,
+              fontFamily: "'Instrument Serif', serif", fontSize: 32, fontWeight: 400, lineHeight: 1.3,
+              letterSpacing: "-0.01em", color: "rgba(255,255,255,0.9)",
+              maxWidth: 480,
             }}>
               Every AI model runs on infrastructure connected by fiber optic cable. Every fiber optic cable depends on germanium.
             </div>
 
             {/* Chain thesis */}
-            <div style={{ marginTop: 32 }}>
+            <div style={{ marginTop: 24 }}>
               <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#555", margin: "0 0 8px 0" }}>CHAIN THESIS</p>
-              <p style={{ ...SYS, fontSize: 14, color: "#ece8e1", lineHeight: 1.65, margin: 0, maxWidth: 480 }}>
+              <p style={{ fontSize: 14, color: "rgba(236,232,225,0.62)", lineHeight: 1.65, margin: 0, maxWidth: 480 }}>
                 The germanium-to-fiber chain is constrained at three independent points: raw material supply (83% Chinese, under export licensing), chemical conversion (one western facility), and preform equipment (one supplier, 18-24 month backlogs). The constraints compound at each layer. The structural deficit cannot close before 2027.
               </p>
+            </div>
+
+            {/* Input page links */}
+            <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
+              <a href="/input/germanium" style={{ ...MONO, fontSize: 11, color: "#6a9ab8", textDecoration: "none", padding: "6px 14px", borderRadius: 5, border: "1px solid #252220" }}>Germanium → full analysis</a>
+              <a href="/input/fiber-optic-cable" style={{ ...MONO, fontSize: 11, color: "#6a9ab8", textDecoration: "none", padding: "6px 14px", borderRadius: 5, border: "1px solid #252220" }}>Fiber optic cable → full analysis</a>
             </div>
           </div>
 
@@ -263,32 +269,6 @@ export default function GermaniumChainPage() {
               );
             })}
 
-            {/* Explore full chain */}
-            <div
-              onClick={() => navigateTo(0)}
-              onMouseEnter={() => setHoverExplore(true)}
-              onMouseLeave={() => setHoverExplore(false)}
-              style={{
-                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                marginTop: 12, padding: "14px 0",
-                cursor: "pointer",
-              }}
-            >
-              <span style={{
-                ...MONO, fontSize: 9, letterSpacing: "0.04em",
-                color: hoverExplore ? "rgba(200,168,90,0.6)" : "rgba(255,255,255,0.2)",
-                transition: "color 0.15s",
-              }}>
-                Explore full chain
-              </span>
-              <span style={{
-                ...MONO, fontSize: 12,
-                color: hoverExplore ? "rgba(200,168,90,0.4)" : "rgba(255,255,255,0.08)",
-                transition: "color 0.15s",
-              }}>
-                →
-              </span>
-            </div>
           </div>
 
         </div>
@@ -379,10 +359,6 @@ export default function GermaniumChainPage() {
                 ))}
               </div>
             ))}
-            <div style={{ borderTop: "1px solid #252220", marginTop: 16, paddingTop: 16, display: "flex", gap: 12 }}>
-              <a href="/input/germanium" style={{ ...MONO, fontSize: 11, color: "#6a9ab8", textDecoration: "none", padding: "6px 14px", borderRadius: 5, border: "1px solid #252220" }}>Germanium → full analysis</a>
-              <a href="/input/fiber-optic-cable" style={{ ...MONO, fontSize: 11, color: "#6a9ab8", textDecoration: "none", padding: "6px 14px", borderRadius: 5, border: "1px solid #252220" }}>Fiber optic cable → full analysis</a>
-            </div>
           </div>
         </div>
 
