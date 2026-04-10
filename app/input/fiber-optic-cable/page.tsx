@@ -27,7 +27,26 @@ export default function FiberOpticInputPage() {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [treeExpanded, setTreeExpanded] = useState(false);
   const [soWhatOpen, setSoWhatOpen] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState("thesis");
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
+
+  // Scroll spy
+  React.useEffect(() => {
+    const ids = ["thesis", "money", "supply-demand", "so-what", "how-its-made", "supply-tree"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: "-20% 0px -60% 0px" }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
   const accent = "#6a9ab8";
   const gold = "#c9a84c";
   const warmWhite = "#ece8e1";
@@ -58,11 +77,49 @@ export default function FiberOpticInputPage() {
         </button>
       </div>
 
+      {/* Table of contents — fixed left */}
+      <nav style={{
+        position: "fixed", top: 120, left: 32, zIndex: 10,
+        display: "flex", flexDirection: "column" as const, gap: 12,
+      }}>
+        <style>{`@media (max-width: 1399px) { .toc-nav { display: none !important; } }`}</style>
+        {[
+          { id: "thesis", label: "Thesis" },
+          { id: "money", label: "Where the money is" },
+          { id: "supply-demand", label: "Supply \u2192 Demand" },
+          { id: "so-what", label: "So what" },
+          { id: "how-its-made", label: "How it\u2019s made" },
+          { id: "supply-tree", label: "Supply tree" },
+        ].map((s) => (
+          <div
+            key={s.id}
+            onClick={() => document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            className="toc-nav"
+            style={{
+              display: "flex", alignItems: "center", gap: 8, cursor: "pointer",
+            }}
+          >
+            <div style={{
+              width: 2, height: 14,
+              background: activeSection === s.id ? "#555" : "transparent",
+              borderRadius: 1, transition: "background 0.2s",
+            }} />
+            <span style={{
+              fontSize: 10, letterSpacing: "0.04em",
+              color: activeSection === s.id ? "#ece8e1" : "#3a3835",
+              transition: "color 0.2s",
+            }}>
+              {s.label}
+            </span>
+          </div>
+        ))}
+      </nav>
+
       {/* Page content — single column */}
       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "48px 32px 80px" }}>
 
         {/* ═══ SECTION 1: HOOK ═══ */}
-        <div style={{ marginBottom: "56px" }}>
+        <div id="thesis" style={{ marginBottom: "56px" }}>
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
             COMPONENT · AI INFRASTRUCTURE
           </p>
@@ -90,7 +147,7 @@ export default function FiberOpticInputPage() {
         </div>
 
         {/* ═══ WHERE THE MONEY IS ═══ */}
-        <div style={{ marginBottom: "40px" }}>
+        <div id="money" style={{ marginBottom: "40px" }}>
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 12px 0" }}>
             WHERE THE MONEY IS
           </p>
@@ -157,7 +214,7 @@ export default function FiberOpticInputPage() {
           ))}
         </div>
         {/* ═══ SUPPLY → DEMAND ═══ */}
-        <div style={{ marginBottom: "56px" }}>
+        <div id="supply-demand" style={{ marginBottom: "56px" }}>
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
             SUPPLY → DEMAND
           </p>
@@ -190,6 +247,7 @@ export default function FiberOpticInputPage() {
         </div>
 
         {/* ═══ SECTION 5: SO WHAT ═══ */}
+        <div id="so-what">
         {(() => {
           const body = "#a09888";
           const analysisBg = "#141210";
@@ -297,9 +355,10 @@ export default function FiberOpticInputPage() {
             </div>
           );
         })()}
+        </div>
 
         {/* ═══ SECTION 2: HOW IT'S MADE ═══ */}
-        <div style={{ marginBottom: "56px" }}>
+        <div id="how-its-made" style={{ marginBottom: "56px" }}>
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
             HOW IT&apos;S MADE
           </p>
@@ -385,7 +444,7 @@ export default function FiberOpticInputPage() {
         </div>
 
         {/* ═══ SUPPLY TREE ═══ */}
-        <div style={{ marginBottom: "56px" }}>
+        <div id="supply-tree" style={{ marginBottom: "56px" }}>
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
             SUPPLY TREE
           </p>
