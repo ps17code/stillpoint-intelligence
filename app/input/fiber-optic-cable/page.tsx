@@ -76,13 +76,16 @@ export default function FiberOpticInputPage() {
           }}>
             Fiber optic cable
           </h1>
-          <p style={{
-            fontSize: "16px",
-            color: "#908880",
-            lineHeight: 1.6,
-            margin: 0,
-          }}>
-            Every AI model runs on infrastructure connected by fiber. AI datacenters consume 4–5x more fiber connections per rack than traditional compute. As hyperscale campuses scale past gigawatt power capacity, fiber demand is outpacing the supply chain&apos;s ability to deliver — and the upstream raw material that makes it all possible cannot scale.
+          {/* Thesis */}
+          <div style={{ marginBottom: "20px" }}>
+            <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: "#555", margin: "0 0 8px 0" }}>THESIS</p>
+            <p style={{ fontSize: "14px", color: "#ece8e1", lineHeight: 1.6, margin: 0 }}>
+              Severe supply constraints across the fiber optic value chain — from raw germanium to preform equipment — are driving prices to 7-year highs and lead times past 60 weeks. The chokepoint holders, capacity builders, and technology developers positioned along this chain stand to profit from a structural deficit that cannot close before 2027.
+            </p>
+          </div>
+          {/* Description */}
+          <p style={{ fontSize: "15px", color: "#908880", lineHeight: 1.6, margin: 0 }}>
+            Fiber optic cable transmits data as pulses of light through hair-thin strands of glass. It is the physical layer connecting everything inside and between AI datacenters, telecom networks, and cross-ocean subsea systems. Every GPU cluster, every cloud region, every intercontinental data route depends on fiber.
           </p>
         </div>
 
@@ -406,13 +409,6 @@ export default function FiberOpticInputPage() {
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 12px 0" }}>
             WHERE THE MONEY IS
           </p>
-          <p style={{
-            fontFamily: "'Instrument Serif', serif", fontSize: "18px",
-            color: warmWhite, lineHeight: 1.45, margin: "0 0 32px 0",
-          }}>
-            The fiber supply chain is structurally unable to meet AI-driven demand. The companies that control the bottlenecks, capacity expansion, and substitution technology will capture outsized value.
-          </p>
-
           {([
             { label: "CHOKEPOINT HOLDERS", desc: "Pricing power today. Control the tightest nodes. No catalyst needed.", ideas: [
               { name: "Corning", tag: "GLW \u00b7 NYSE", detail: "~40% of global fiber manufacturing. Sold out through 2026. Stopped selling bare glass to competitors. $6B Meta anchor deal. Building world\u2019s largest cable plant. Inventor of Contour cable for AI workloads." },
