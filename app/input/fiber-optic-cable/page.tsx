@@ -401,32 +401,79 @@ export default function FiberOpticInputPage() {
           );
         })()}
 
-        {/* ═══ SECTION 6: BIG PICTURE ═══ */}
+        {/* ═══ WHERE THE MONEY IS ═══ */}
         <div style={{ marginBottom: "40px" }}>
-          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
-            BIG PICTURE
+          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 12px 0" }}>
+            WHERE THE MONEY IS
           </p>
-          <div style={{ borderLeft: `2px solid ${gold}30`, paddingLeft: "20px" }}>
-            <p style={{
-              fontFamily: "'Instrument Serif', serif", fontSize: "20px",
-              color: warmWhite, lineHeight: 1.45, margin: "0 0 16px 0",
-            }}>
-              The fiber supply chain is structurally unable to meet AI-driven demand. The companies that control the bottlenecks will capture outsized value.
-            </p>
-            <div style={{ display: "flex", flexDirection: "column" as const, gap: "10px" }}>
-              {[
-                { company: "Corning (GLW)", text: "Dominant fiber manufacturer. Invented Contour cable for AI workloads. $6B Meta deal. Sold out through 2026. Pricing power from constrained supply." },
-                { company: "Umicore (UMI.BR)", text: "Only western GeCl₄ supplier. Exclusive DRC offtake could triple germanium throughput. Germanium upside hidden inside larger diversified company." },
-                { company: "5N Plus (VNP.TSX)", text: "Canadian germanium refiner. Facility decision Nov 2026. DoD awarded $14.4M to expand wafer capacity. Binary catalyst for western supply independence." },
-                { company: "Prysmian (PRY.MI)", text: "Largest cable manufacturer globally. Acquired North American preform capacity. Vertically integrated from preform to installed cable." },
-              ].map((item, i) => (
-                <div key={i}>
-                  <p style={{ fontSize: "12px", color: warmWhite, fontWeight: 500, margin: "0 0 2px 0" }}>{item.company}</p>
-                  <p style={{ fontSize: "11px", color: muted, lineHeight: 1.5, margin: 0 }}>{item.text}</p>
+          <p style={{
+            fontFamily: "'Instrument Serif', serif", fontSize: "18px",
+            color: warmWhite, lineHeight: 1.45, margin: "0 0 32px 0",
+          }}>
+            The fiber supply chain is structurally unable to meet AI-driven demand. The companies that control the bottlenecks, capacity expansion, and substitution technology will capture outsized value.
+          </p>
+
+          {([
+            { label: "CHOKEPOINT HOLDERS", desc: "Pricing power today. Control the tightest nodes. No catalyst needed.", ideas: [
+              { name: "Corning", tag: "GLW \u00b7 NYSE", detail: "~40% of global fiber manufacturing. Sold out through 2026. Stopped selling bare glass to competitors. $6B Meta anchor deal. Building world\u2019s largest cable plant. Inventor of Contour cable for AI workloads." },
+              { name: "Umicore", tag: "UMI \u00b7 Euronext Brussels", detail: "Only western GeCl\u2084 converter. Exclusive DRC feedstock offtake. Capturing the 3.5x price arbitrage between Chinese and western germanium. Germanium upside hidden inside a diversified materials company." },
+              { name: "Germanium metal", tag: "Commodity \u00b7 Physical", detail: "Structurally constrained byproduct of zinc mining. $1,500 \u2192 $7,000+/kg in 18 months. Supply fixed at ~230t, 83% Chinese under export licensing." },
+              { name: "Rosendahl Nextrom", tag: "Private \u00b7 Knill Gruppe (Austria)", detail: "Near-monopoly on preform deposition equipment. Defines the capacity ceiling for the entire fiber industry. 18-24 month backlogs. Not directly investable but determines the timeline for everyone else." },
+            ], startups: [] as { name: string; desc: string }[] },
+            { label: "CAPACITY BUILDERS", desc: "Investing to expand supply. Value accrues on execution.", ideas: [
+              { name: "5N Plus", tag: "VNP \u00b7 TSX", detail: "Canadian germanium refiner. $14.4M DoD backing. Facility decision Nov 2026. Binary catalyst: approval roughly doubles western germanium capacity in 2-3 years." },
+              { name: "Prysmian", tag: "PRY \u00b7 Borsa Italiana", detail: "Largest cable manufacturer globally. Acquired North American preform capacity. Renewed Umicore GeCl\u2084 supply at premium. Also lead investor in Relativity Networks (HCF)." },
+              { name: "Corning \u2014 Hickory expansion", tag: "GLW \u00b7 NYSE", detail: "World\u2019s largest optical cable plant under construction. Meta-anchored with $6B multi-year agreement. 18-24 month timeline to full production." },
+            ], startups: [
+              { name: "DRC / G\u00e9camines (STL)", desc: "Big Hill tailings \u2014 14M tonnes of slag. Targeting 30% of global Ge supply. Exclusive Umicore offtake. Value accrues to Umicore, not the mine." },
+              { name: "Kazakhstan \u2014 Pavlodar", desc: "~15t/yr germanium restart. Adds feedstock, not conversion capacity." },
+            ] },
+            { label: "TECHNOLOGY", desc: "Building technology that replaces or improves the value chain. Highest risk, largest potential payoff.", ideas: [
+              { name: "Hollow-core fiber ecosystem", tag: "Thematic", detail: "Eliminates germanium entirely. Light through air, not doped glass. 30% lower latency. ~1,000x current fiber price. Microsoft scaling production with Corning and Heraeus. Pre-commercial but rapidly advancing." },
+              { name: "YOFC", tag: "6869 \u00b7 HKEX", detail: "China\u2019s largest fiber manufacturer. World-record 0.040 dB/km HCF in lab. Dual exposure: benefits from conventional supply tightness today while building HCF optionality long-term." },
+              { name: "Multicore fiber", tag: "Thematic", detail: "4x bandwidth per strand using space division multiplexing. Doesn\u2019t reduce germanium usage per core but multiplies capacity per cable \u2014 easing the strand-km gap without proportional material increase." },
+            ], startups: [
+              { name: "Relativity Networks", desc: "Orlando. HCF startup. $10.7M raised (Prysmian-led seed). Manufacturing at Prysmian\u2019s Eindhoven facility." },
+              { name: "Lumenisity (Microsoft)", desc: "Southampton spin-out acquired by Microsoft Dec 2022. Core HCF R&D. Achieved 0.091 dB/km." },
+              { name: "Lightera (Furukawa Electric)", desc: "Global entity from Furukawa\u2019s optical fiber businesses. Developing HCF splicing tools and multicore fiber ecosystem." },
+              { name: "HFCL Limited", desc: "Indian fiber manufacturer. Partnered with IIT Delhi on DoT-funded HCF research for 6G and quantum communication." },
+              { name: "Heraeus Covantis", desc: "German specialty glass manufacturer. Partnered with Microsoft and Corning on industrial-scale HCF production." },
+            ] },
+          ] as { label: string; desc: string; ideas: { name: string; tag: string; detail: string }[]; startups: { name: string; desc: string }[] }[]).map((cat, ci) => (
+            <div key={ci} style={{ paddingBottom: 32 }}>
+              <div style={{ paddingBottom: 16, borderTop: ci > 0 ? `1px solid ${borderColor}` : "none", paddingTop: ci > 0 ? 28 : 0 }}>
+                <p style={{ fontSize: 10, letterSpacing: "0.08em", color: warmWhite, fontWeight: 500, margin: 0 }}>{cat.label}</p>
+              </div>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" as const }}>
+                {cat.ideas.map((idea, ii) => (
+                  <div key={ii} style={{
+                    flex: cat.ideas.length <= 3 ? "1 1 0" : "1 1 calc(25% - 8px)",
+                    minWidth: cat.ideas.length <= 3 ? 0 : 200,
+                    background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "16px 18px",
+                  }}>
+                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
+                    <p style={{ fontSize: 10, color: idea.tag.includes("Private") || idea.tag.includes("Thematic") || idea.tag.includes("Commodity") ? dimmer : accent, margin: "0 0 10px 0" }}>{idea.tag}</p>
+                    <p style={{ fontSize: 11, color: muted, lineHeight: 1.6, margin: 0 }}>{idea.detail}</p>
+                  </div>
+                ))}
+              </div>
+              {cat.startups.length > 0 && (
+                <div style={{ marginTop: 14, paddingLeft: 2 }}>
+                  <p style={{ fontSize: 9, letterSpacing: "0.06em", color: dimmer, margin: "0 0 8px 0" }}>ALSO WATCHING</p>
+                  <div style={{ display: "flex", flexDirection: "column" as const, gap: 6 }}>
+                    {cat.startups.map((s, si) => (
+                      <div key={si} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                        <span style={{ width: 3, height: 3, borderRadius: "50%", background: dimmer, flexShrink: 0, marginTop: 6 }} />
+                        <p style={{ fontSize: 11, color: muted, lineHeight: 1.5, margin: 0 }}>
+                          <span style={{ color: "#a09888", fontWeight: 500 }}>{s.name}</span>{" \u2014 "}{s.desc}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
+              )}
             </div>
-          </div>
+          ))}
         </div>
 
       </div>
