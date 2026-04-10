@@ -146,7 +146,7 @@ export default function AnatomyView() {
             Featured Analysis
           </div>
           <a
-            href="/input/fiber-optic-cable"
+            href="/chains/germanium"
             style={{
               display: "flex", alignItems: "center", gap: 20,
               background: "#161414", border: "1px solid #1e1c1a", borderRadius: 10,
@@ -158,10 +158,10 @@ export default function AnatomyView() {
           >
             <div style={{ flex: 1 }}>
               <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 500, color: "#ece8e1", margin: "0 0 4px 0" }}>
-                Fiber optic cable
+                Germanium → Fiber
               </p>
               <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#706a60", lineHeight: 1.5, margin: 0 }}>
-                Prices at 7-year high. Lead times past 60 weeks. Three independent bottlenecks — germanium supply, GeCl₄ conversion, preform equipment — compound at each layer. The structural deficit cannot close before 2027.
+                Severe supply constraints from raw germanium to preform equipment. Prices at 7-year highs. Lead times past 60 weeks. Deficit can&#39;t close before 2027.
               </p>
             </div>
             <span style={{ ...MONO, fontSize: 10, color: "#555", flexShrink: 0 }}>Read analysis →</span>
