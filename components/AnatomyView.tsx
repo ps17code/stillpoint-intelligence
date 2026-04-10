@@ -23,7 +23,7 @@ interface LayerRow {
 const LAYERS: LayerRow[] = [
   {
     label: "RAW MATERIALS",
-    accent: "#c9a84c",
+    accent: "#908880",
     cards: [
       { id: "germanium", name: "Germanium", description: "Trace metal that dopes glass to carry light through fiber optic cable. Essential for all fiber-based connectivity.", players: "Yunnan Chihong, Umicore, 5N Plus, Teck Resources", insight: "Fixed supply, rising AI demand. Structural deficit by 2026. Prices already 2x.", mapped: true, downstream: ["fiber-optic-cable", "connectivity", "datacenter"], upstream: [] },
       { id: "copper", name: "Copper", description: "Conducts power and signal across every datacenter system \u2014 wiring, bus bars, PCB traces, heat exchangers, and cooling loops.", players: "Codelco, Freeport-McMoRan, BHP, Southern Copper", insight: "", mapped: false, downstream: ["fiber-optic-cable", "server-boards", "power-transformers", "pdu", "liquid-cooling", "chillers", "air-handling", "power", "cooling", "connectivity", "compute", "datacenter"], upstream: [] },
@@ -39,7 +39,7 @@ const LAYERS: LayerRow[] = [
   },
   {
     label: "COMPONENTS",
-    accent: "#6a9ab8",
+    accent: "#7a7570",
     cards: [
       { id: "fiber-optic-cable", name: "Fiber optic cable", description: "Glass strands doped with germanium that carry light signals between servers, racks, buildings, and continents. The physical backbone of all datacenter connectivity.", players: "Umicore (GeCl\u2084), Corning, Prysmian, Sumitomo Electric, Fujikura, YOFC", insight: "", mapped: true, downstream: ["connectivity", "datacenter"], upstream: ["germanium"] },
       { id: "optical-transceivers", name: "Optical transceivers", description: "Modules that convert electrical signals to light and back. Built on gallium-based laser chips. Every fiber connection in a datacenter needs one on each end.", players: "Coherent, Lumentum, Broadcom, Intel, Cisco", insight: "", mapped: false, downstream: ["connectivity", "datacenter"], upstream: [] },
@@ -59,7 +59,7 @@ const LAYERS: LayerRow[] = [
   },
   {
     label: "SUBSYSTEMS",
-    accent: "#5cd4c8",
+    accent: "#6a6560",
     cards: [
       { id: "connectivity", name: "Connectivity", description: "The network infrastructure moving data between servers, racks, buildings, and the outside world. Assembled from fiber optic cables, optical transceivers, and network switches into a structured cabling and switching fabric.", players: "Corning, Cisco, Arista, Juniper, CommScope", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
       { id: "compute", name: "Compute", description: "The processing infrastructure where AI training and inference happens. GPUs, HBM memory, and CPUs assembled onto server boards and mounted into rack-scale systems. The highest-value and most power-hungry subsystem.", players: "NVIDIA, Dell, HPE, Supermicro, Quanta, Wiwynn", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
@@ -70,7 +70,7 @@ const LAYERS: LayerRow[] = [
   },
   {
     label: "END USE",
-    accent: "#7acc8e",
+    accent: "#5a5550",
     cards: [
       { id: "datacenter", name: "AI datacenter", description: "The facility where compute, connectivity, power, cooling, and physical structure come together to run AI workloads at scale. The primary demand driver pulling through every upstream layer.", players: "AWS, Microsoft Azure, Google Cloud, Meta, Oracle, CoreWeave", insight: "", mapped: false, downstream: [], upstream: [] },
     ],
@@ -137,6 +137,37 @@ export default function AnatomyView() {
           </p>
         </div>
 
+        {/* Featured analysis */}
+        <div style={{ marginBottom: 28 }}>
+          <div style={{
+            ...MONO, fontSize: 9, letterSpacing: "0.12em", color: "#5a5550",
+            marginBottom: 14, textTransform: "uppercase" as const,
+          }}>
+            Featured Analysis
+          </div>
+          <a
+            href="/input/fiber-optic-cable"
+            style={{
+              display: "flex", alignItems: "center", gap: 20,
+              background: "#161414", border: "1px solid #1e1c1a", borderRadius: 10,
+              padding: "20px 24px", textDecoration: "none",
+              transition: "border-color 0.15s, background 0.15s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "#2e2a25"; e.currentTarget.style.background = "#1a1816"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e1c1a"; e.currentTarget.style.background = "#161414"; }}
+          >
+            <div style={{ flex: 1 }}>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 500, color: "#ece8e1", margin: "0 0 4px 0" }}>
+                Fiber optic cable
+              </p>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#706a60", lineHeight: 1.5, margin: 0 }}>
+                Prices at 7-year high. Lead times past 60 weeks. Three independent bottlenecks — germanium supply, GeCl₄ conversion, preform equipment — compound at each layer. The structural deficit cannot close before 2027.
+              </p>
+            </div>
+            <span style={{ ...MONO, fontSize: 10, color: "#555", flexShrink: 0 }}>Read analysis →</span>
+          </a>
+        </div>
+
         {/* Product overview container */}
         <div style={{
           border: "1px solid #252220", borderRadius: 12,
@@ -160,12 +191,12 @@ export default function AnatomyView() {
                 const dimmed = selected !== null && !isSel && !isConn;
 
                 const bg = isSel
-                  ? `${layer.accent}12`
-                  : isConn ? "#1e1c18"
+                  ? "#1e1c1a"
+                  : isConn ? "#1a1816"
                   : "#161414";
                 const border = isSel
-                  ? `${layer.accent}50`
-                  : isConn ? "#2e2a25"
+                  ? "#3a3835"
+                  : isConn ? "#2a2825"
                   : "#1e1c1a";
                 const nameColor = isSel ? "#ece8e1" : "#908880";
 
@@ -206,8 +237,8 @@ export default function AnatomyView() {
                     {isSel && card.insight && (
                       <div style={{
                         fontFamily: "'DM Sans', sans-serif", fontSize: 10.5,
-                        color: layer.accent, opacity: 0.7, lineHeight: 1.45,
-                        borderLeft: `2px solid ${layer.accent}30`,
+                        color: "#a09888", opacity: 0.7, lineHeight: 1.45,
+                        borderLeft: "2px solid #3a383530",
                         paddingLeft: 8, marginBottom: 8,
                       }}>
                         {card.insight}
@@ -239,7 +270,7 @@ export default function AnatomyView() {
                         <div
                           onClick={(e) => { e.stopPropagation(); window.location.href = `/input/${card.id}`; }}
                           style={{
-                            ...MONO, fontSize: 9, color: "#c9a84c", letterSpacing: "0.03em",
+                            ...MONO, fontSize: 9, color: "#ece8e1", letterSpacing: "0.03em",
                             margin: "10px 0 0 0", cursor: "pointer",
                           }}
                         >
