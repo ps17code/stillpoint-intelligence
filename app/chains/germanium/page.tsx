@@ -98,7 +98,7 @@ const CARDS_META = [
   { name: "Germanium",     desc: "Coal and zinc ore to refined powder",      layerIdx: 0 },
   { name: "GeO₂ / GeCl₄", desc: "Chemical conversion for fiber doping",     layerIdx: 1 },
   { name: "Fiber cable",   desc: "Strand to cable assembly",                 layerIdx: 2 },
-  { name: "Deployment",    desc: "AI datacenter, broadband, submarine",      layerIdx: 3 },
+  { name: "Deployed cable", desc: "Datacenter, terrestrial, subsea",           layerIdx: 3 },
 ];
 
 const SECTION_IDS = ["chain-raw", "chain-comp", "chain-sub", "chain-eu"];
@@ -177,13 +177,13 @@ export default function GermaniumChainPage() {
               Every AI model runs on infrastructure connected by fiber optic cable. Every fiber optic cable depends on germanium.
             </div>
 
-            {/* Body */}
-            <p style={{
-              ...SYS, fontSize: 13, fontWeight: 300, lineHeight: 1.85,
-              color: "rgba(255,255,255,0.3)", maxWidth: 460, margin: 0,
-            }}>
-              {parseBody(BODY)}
-            </p>
+            {/* Chain thesis */}
+            <div style={{ marginTop: 32 }}>
+              <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#555", margin: "0 0 8px 0" }}>CHAIN THESIS</p>
+              <p style={{ ...SYS, fontSize: 14, color: "#ece8e1", lineHeight: 1.65, margin: 0, maxWidth: 480 }}>
+                The germanium-to-fiber chain is constrained at three independent points: raw material supply (83% Chinese, under export licensing), chemical conversion (one western facility), and preform equipment (one supplier, 18-24 month backlogs). The constraints compound at each layer. The structural deficit cannot close before 2027.
+              </p>
+            </div>
           </div>
 
           {/* RIGHT: layer cards */}
@@ -279,6 +279,100 @@ export default function GermaniumChainPage() {
           </div>
 
         </div>
+      </div>
+
+      {/* ── NEW SECTIONS ───────────────────────────────────────────── */}
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 56px 0" }}>
+
+        {/* Supply → Demand */}
+        <div style={{ marginBottom: 48 }}>
+          <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>SUPPLY → DEMAND</p>
+          <div style={{ display: "flex", gap: 12 }}>
+            <div style={{ flex: 1, background: "#1a1816", border: "1px solid #252220", borderRadius: 10, padding: "20px 22px" }}>
+              <p style={{ fontSize: 9, letterSpacing: "0.08em", color: "#555", margin: "0 0 10px 0" }}>SUPPLY</p>
+              <p style={{ ...SYS, fontSize: 22, fontWeight: 500, color: "#ece8e1", margin: "0 0 8px 0" }}>~230t / yr</p>
+              <p style={{ ...SYS, fontSize: 11.5, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Global germanium supply. Byproduct of zinc and coal — cannot scale independently. ~130t Chinese (export controlled), ~11t Russian (sanctioned), ~26t western accessible.</p>
+            </div>
+            <div style={{ flex: 1, background: "#1a1816", border: "1px solid #252220", borderRadius: 10, padding: "20px 22px" }}>
+              <p style={{ fontSize: 9, letterSpacing: "0.08em", color: "#555", margin: "0 0 10px 0" }}>DEMAND</p>
+              <p style={{ ...SYS, fontSize: 22, fontWeight: 500, color: "#ece8e1", margin: "0 0 8px 0" }}>~246t / yr</p>
+              <p style={{ ...SYS, fontSize: 11.5, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Projected by 2027. Fiber optics (~40%), IR optics (~25%), electronics/solar (~20%), defense (~15%). Fiber demand alone requires ~103t at current growth rates.</p>
+            </div>
+            <div style={{ flex: 1, background: "#161a1e", border: "1px solid rgba(106,154,184,0.2)", borderRadius: 10, padding: "20px 22px" }}>
+              <p style={{ fontSize: 9, letterSpacing: "0.08em", color: "#6a9ab8", margin: "0 0 10px 0", opacity: 0.7 }}>GAP</p>
+              <p style={{ ...SYS, fontSize: 22, fontWeight: 500, color: "#6a9ab8", margin: "0 0 8px 0" }}>~16t</p>
+              <p style={{ ...SYS, fontSize: 11.5, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Shortfall driven by fiber demand alone. Translates to 130M fiber strand-km that cannot be produced. Western-accessible supply of ~26t cannot cover the gap without Chinese cooperation.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Key Catalysts */}
+        <div style={{ marginBottom: 48 }}>
+          <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>KEY CATALYSTS</p>
+          <div style={{ background: "#1a1816", border: "1px solid #252220", borderRadius: 10, padding: "24px 28px" }}>
+            <div style={{ position: "relative" as const, marginBottom: 8 }}>
+              <div style={{ position: "absolute" as const, top: 8, left: 0, right: 0, height: 1, background: "#252220" }} />
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                {[
+                  { date: "Q4 2026", label: "5N Plus facility decision", highlight: true },
+                  { date: "NOV 2026", label: "China US export ban deadline", highlight: true },
+                  { date: "2027", label: "Corning Hickory ramp begins", highlight: false },
+                  { date: "2027", label: "DRC germanium ramp target", highlight: false },
+                  { date: "2027-28", label: "New preform capacity online", highlight: false },
+                  { date: "2028+", label: "HCF cost curve viability", highlight: false },
+                ].map((event, i) => (
+                  <div key={i} style={{ textAlign: "center" as const, position: "relative" as const, flex: 1 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: event.highlight ? "#6a9ab8" : "#555", margin: "4px auto 12px", position: "relative" as const, zIndex: 1 }} />
+                    <p style={{ fontSize: 9, letterSpacing: "0.06em", color: event.highlight ? "#ece8e1" : "#555", fontWeight: 500, margin: "0 0 4px 0" }}>{event.date}</p>
+                    <p style={{ fontSize: 10, color: event.highlight ? "#a09888" : "#4a4540", lineHeight: 1.4, margin: 0 }}>{event.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Where The Money Is */}
+        <div style={{ marginBottom: 48 }}>
+          <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>WHERE THE MONEY IS</p>
+          <div style={{ display: "flex", flexDirection: "column" as const }}>
+            {([
+              { tier: "CHOKEPOINT HOLDERS", items: [
+                { name: "Corning", tag: "GLW", desc: "40% fiber market share. Sold out through 2026." },
+                { name: "Umicore", tag: "UMI.BR", desc: "Sole western GeCl\u2084 converter. 3.5x price arbitrage." },
+                { name: "Germanium", tag: "Commodity", desc: "$1,500 \u2192 $7,000+/kg. Supply fixed at ~230t." },
+                { name: "Rosendahl Nextrom", tag: "Private", desc: "Preform equipment monopoly. 18-24mo backlogs." },
+              ]},
+              { tier: "CAPACITY BUILDERS", items: [
+                { name: "5N Plus", tag: "VNP.TSX", desc: "Facility decision Nov 2026. Binary catalyst." },
+                { name: "Prysmian", tag: "PRY.MI", desc: "Largest cable company. Vertically integrated." },
+                { name: "DRC / G\u00e9camines", tag: "Offtake", desc: "30% Ge supply target. Exclusive to Umicore." },
+              ]},
+              { tier: "TECHNOLOGY", items: [
+                { name: "Hollow-core fiber", tag: "Thematic", desc: "Eliminates germanium. Microsoft deploying on Azure." },
+                { name: "YOFC", tag: "6869.HK", desc: "World-record HCF in lab. Dual conventional + HCF exposure." },
+                { name: "Relativity Networks", tag: "Startup", desc: "$10.7M raised. Manufacturing with Prysmian." },
+              ]},
+            ] as { tier: string; items: { name: string; tag: string; desc: string }[] }[]).map((tier, ti) => (
+              <div key={ti}>
+                {ti > 0 && <div style={{ borderTop: "1px solid #252220", margin: "12px 0" }} />}
+                <p style={{ fontSize: 9, letterSpacing: "0.08em", color: "#555", margin: "0 0 8px 0" }}>{tier.tier}</p>
+                {tier.items.map((item, ii) => (
+                  <div key={ii} style={{ display: "flex", alignItems: "baseline", gap: 8, padding: "5px 0" }}>
+                    <p style={{ ...SYS, fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, minWidth: 140, flexShrink: 0 }}>{item.name}</p>
+                    <p style={{ fontSize: 10, color: ["Private", "Commodity", "Thematic", "Startup", "Offtake"].includes(item.tag) ? "#4a4540" : "#6a9ab8", margin: 0, minWidth: 60, flexShrink: 0 }}>{item.tag}</p>
+                    <p style={{ ...SYS, fontSize: 11, color: "#706a60", margin: 0 }}>{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            ))}
+            <div style={{ borderTop: "1px solid #252220", marginTop: 16, paddingTop: 16, display: "flex", gap: 12 }}>
+              <a href="/input/germanium" style={{ ...MONO, fontSize: 11, color: "#6a9ab8", textDecoration: "none", padding: "6px 14px", borderRadius: 5, border: "1px solid #252220" }}>Germanium → full analysis</a>
+              <a href="/input/fiber-optic-cable" style={{ ...MONO, fontSize: 11, color: "#6a9ab8", textDecoration: "none", padding: "6px 14px", borderRadius: 5, border: "1px solid #252220" }}>Fiber optic cable → full analysis</a>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       {/* ── FULL CHAIN MAP ───────────────────────────────────────────── */}
