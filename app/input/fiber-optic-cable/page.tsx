@@ -259,58 +259,36 @@ export default function FiberOpticInputPage() {
           onNavigate={() => {}}
         />
 
-        {/* ═══ SECTION 3: INPUT → OUTPUT ═══ */}
+        {/* ═══ SUPPLY → DEMAND ═══ */}
         <div style={{ marginBottom: "56px" }}>
           <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
-            INPUT → OUTPUT
-          </p>
-          <div style={{
-            display: "flex", alignItems: "center", gap: "0",
-            background: cardBg, border: `1px solid ${borderColor}`,
-            borderRadius: "10px", padding: "20px 24px",
-          }}>
-            {[
-              { value: "~87t", label: "Germanium\ninput", sub: "of ~230t global supply" },
-              { value: "~220t", label: "Fiber-grade\nGeCl₄ produced", sub: "after purification" },
-              { value: "~24Kt", label: "Preform\nmanufactured", sub: "tonnes per year" },
-              { value: "720M", label: "Fiber strand-km\nproduced", sub: "current annual output" },
-            ].map((step, i) => (
-              <div key={i} style={{ flex: 1, textAlign: "center" as const, position: "relative" as const }}>
-                {i > 0 && (
-                  <div style={{
-                    position: "absolute" as const, left: "-4px", top: "50%",
-                    transform: "translateY(-50%)", color: "#333", fontSize: "14px",
-                  }}>→</div>
-                )}
-                <p style={{ fontSize: "20px", fontWeight: 500, color: warmWhite, margin: "0 0 4px 0" }}>{step.value}</p>
-                <p style={{ fontSize: "10px", color: muted, lineHeight: 1.4, margin: "0 0 2px 0", whiteSpace: "pre-line" as const }}>{step.label}</p>
-                <p style={{ fontSize: "9px", color: dimmer, margin: 0 }}>{step.sub}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ═══ SECTION 4: DEMAND PICTURE ═══ */}
-        <div style={{ marginBottom: "56px" }}>
-          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
-            DEMAND PICTURE
+            SUPPLY → DEMAND
           </p>
           <div style={{ display: "flex", gap: "12px" }}>
-            {[
-              { number: "~20 GW", label: "AI datacenter capacity entering construction annually", detail: "23 GW under construction as of Sept 2025 (BNEF)", highlight: false },
-              { number: "6.5M km", label: "Fiber strand-km required per GW of AI datacenter", detail: "Meta Hyperion: 2+ GW campus, 13M km of fiber (Corning)", highlight: false },
-              { number: "130M km", label: "Incremental fiber demand — the supply gap", detail: "Total demand rises from 720M to ~850M km/yr", highlight: true },
-            ].map((stat, i) => (
-              <div key={i} style={{
-                flex: 1, background: stat.highlight ? "#1c1a14" : cardBg,
-                border: `1px solid ${stat.highlight ? gold + "33" : borderColor}`,
-                borderRadius: "10px", padding: "16px 18px",
-              }}>
-                <p style={{ fontSize: "22px", fontWeight: 500, color: stat.highlight ? gold : warmWhite, margin: "0 0 6px 0" }}>{stat.number}</p>
-                <p style={{ fontSize: "11px", color: "#a09888", lineHeight: 1.45, margin: "0 0 4px 0" }}>{stat.label}</p>
-                <p style={{ fontSize: "10px", color: dimText, margin: 0 }}>{stat.detail}</p>
-              </div>
-            ))}
+            {/* Supply */}
+            <div style={{ flex: 1, background: cardBg, border: `1px solid ${borderColor}`, borderRadius: "10px", padding: "20px 22px" }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: dimText, margin: "0 0 10px 0" }}>SUPPLY</p>
+              <p style={{ fontSize: "22px", fontWeight: 500, color: warmWhite, margin: "0 0 8px 0" }}>720M km</p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", margin: 0, lineHeight: 1.6 }}>
+                Global annual fiber strand production. 87t germanium → 220t GeCl₄ → 24Kt preform → 720M strand-km. Preform lines at full utilization. One equipment supplier. Expansion cycle: 18-24 months.
+              </p>
+            </div>
+            {/* Demand */}
+            <div style={{ flex: 1, background: cardBg, border: `1px solid ${borderColor}`, borderRadius: "10px", padding: "20px 22px" }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: dimText, margin: "0 0 10px 0" }}>DEMAND</p>
+              <p style={{ fontSize: "22px", fontWeight: 500, color: warmWhite, margin: "0 0 8px 0" }}>~850M km</p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", margin: 0, lineHeight: 1.6 }}>
+                Projected by 2027. Datacenter share of fiber demand rising from 5% to 30% (CRU). ~20 GW of AI capacity entering construction annually, each GW consuming ~6.5M strand-km. Compounded by $42B BEAD program and 50-60M km/yr drone demand.
+              </p>
+            </div>
+            {/* Gap */}
+            <div style={{ flex: 1, background: "#161a1e", border: `1px solid ${accent}33`, borderRadius: "10px", padding: "20px 22px" }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 10px 0", opacity: 0.7 }}>GAP</p>
+              <p style={{ fontSize: "22px", fontWeight: 500, color: accent, margin: "0 0 8px 0" }}>130M km</p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", margin: 0, lineHeight: 1.6 }}>
+                18% shortfall. Requires ~16t additional germanium from a supply fixed at ~230t and already fully allocated. New preform capacity won&apos;t arrive until end of 2027. CRU estimates the deficit widens before it narrows.
+              </p>
+            </div>
           </div>
         </div>
 
