@@ -447,49 +447,51 @@ export default function FiberOpticInputPage() {
         {/* ═══ DEPENDENCIES ═══ */}
         <div id="dependencies" style={{ paddingTop: 20 }}>
 
+        <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 24px 0" }}>DEPENDENCIES</p>
+
         {/* Upstream table */}
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>UPSTREAM — WHAT GOES INTO FIBER</p>
           <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "Input", w: "20%" }, { l: "Form", w: "14%" }, { l: "Per km", w: "10%" }, { l: "Cost/km", w: "10%" }, { l: "% of cost", w: "10%" }, { l: "Trend", w: "10%" }, { l: "Status", w: "12%", right: true }].map(h => (
+            {[{ l: "Input", w: "18%" }, { l: "Form", w: "13%" }, { l: "Per km", w: "10%" }, { l: "Cost/km", w: "10%" }, { l: "% of cost", w: "10%" }, { l: "Trend", w: "12%" }, { l: "Status", w: "12%", right: true }].map(h => (
               <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
             ))}
           </div>
           {[
-            { input: "Germanium", form: "as GeCl\u2084", perKm: "0.12g", costKm: "$0.84", share: "12%", trend: "\u2191 4.5x", status: "Constrained", linked: true },
-            { input: "Silicon tetrachloride", form: "SiCl\u2084 vapor", perKm: "~8g", costKm: "$0.40", share: "6%", trend: "\u2191 50%", status: "Tightening", linked: false },
-            { input: "Helium", form: "Ultra-pure gas", perKm: "~0.5L", costKm: "$0.30", share: "4%", trend: "\u2191 135%", status: "Constrained", linked: false },
+            { input: "Germanium", form: "as GeCl₄", perKm: "0.12g", costKm: "$0.84", share: "12%", trend: "↑ 4.5x", status: "Constrained", linked: true },
+            { input: "Silicon tetrachloride", form: "SiCl₄ vapor", perKm: "~8g", costKm: "$0.40", share: "6%", trend: "↑ 50%", status: "Tightening", linked: false },
+            { input: "Helium", form: "Ultra-pure gas", perKm: "~0.5L", costKm: "$0.30", share: "4%", trend: "↑ 135%", status: "Constrained", linked: false },
             { input: "Silica substrate", form: "Glass tube", perKm: "~0.005 tubes", costKm: "$2.50", share: "35%", trend: "Stable", status: "Available", linked: false },
             { input: "UV coating", form: "Acrylate", perKm: "~0.3g", costKm: "$0.15", share: "2%", trend: "Stable", status: "Available", linked: false },
             { input: "Energy", form: "Draw tower", perKm: "~0.8 kWh", costKm: "$0.08", share: "1%", trend: "Stable", status: "Available", linked: false },
-            { input: "Labor + overhead", form: "\u2014", perKm: "\u2014", costKm: "$2.50", share: "35%", trend: "\u2014", status: "\u2014", linked: false },
+            { input: "Labor + overhead", form: "—", perKm: "—", costKm: "$2.50", share: "35%", trend: "—", status: "—", linked: false },
           ].map((row, i) => (
             <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220", cursor: row.linked ? "pointer" : "default", transition: "background 0.15s" }}
-              onMouseEnter={e => { if (row.linked) e.currentTarget.style.background = "#1a1816"; }}
-              onMouseLeave={e => { if (row.linked) e.currentTarget.style.background = "transparent"; }}
+              onMouseEnter={e => { if (row.linked) { e.currentTarget.style.background = "#1a1816"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#ece8e1"; } }}
+              onMouseLeave={e => { if (row.linked) { e.currentTarget.style.background = "transparent"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#a09888"; } }}
               onClick={() => { if (row.linked) window.location.href = "/input/germanium"; }}
             >
-              <div style={{ width: "20%", display: "flex", alignItems: "baseline", gap: 6 }}>
-                <p style={{ fontSize: 12, color: row.linked ? "#ece8e1" : "#a09888", fontWeight: 500, margin: 0 }}>{row.input}</p>
-                {row.linked && <span style={{ fontSize: 10, color: "#4a4540" }}>\u2192</span>}
+              <div style={{ width: "18%", display: "flex", alignItems: "baseline", gap: 6 }}>
+                <p data-name="" style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, transition: "color 0.15s" }}>{row.input}</p>
+                {row.linked && <span style={{ fontSize: 10, color: "#4a4540" }}>→</span>}
               </div>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "14%" }}>{row.form}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>{row.form}</p>
               <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.perKm}</p>
               <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.costKm}</p>
               <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
-              <p style={{ fontSize: 11, color: row.trend.includes("\u2191") ? "#ece8e1" : "#706a60", fontWeight: row.trend.includes("\u2191") ? 500 : 400, margin: 0, width: "10%" }}>{row.trend}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const, color: row.status === "Constrained" ? "#ece8e1" : row.status === "Tightening" ? "#a09888" : "#706a60" }}>{row.status}</p>
+              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "12%" }}>{row.trend}</p>
+              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const, color: row.status === "Constrained" ? "#e07a5f" : row.status === "Tightening" ? "#c9a84c" : row.status === "Available" ? "#5bbf6a" : "#4a4540" }}>{row.status}</p>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0" }}>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "20%" }}>Total production cost</p>
-            <p style={{ margin: 0, width: "14%" }} /><p style={{ margin: 0, width: "10%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>Total production cost</p>
+            <p style={{ margin: 0, width: "13%" }} /><p style={{ margin: 0, width: "10%" }} />
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~$6.80</p>
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
-            <p style={{ margin: 0, width: "10%" }} /><p style={{ margin: 0, width: "12%" }} />
+            <p style={{ margin: 0, width: "12%" }} /><p style={{ margin: 0, width: "12%" }} />
           </div>
           <div style={{ borderTop: "1px solid #252220", paddingTop: 14, marginTop: 4 }}>
-            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Three inputs are constrained simultaneously — germanium, SiCl\u2084, and helium — representing 22% of production cost. Germanium alone has driven a ~40% increase in fiber production cost since January 2024.</p>
+            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Three inputs are constrained simultaneously — germanium, SiCl₄, and helium — representing 22% of production cost. Germanium alone has driven a ~40% increase in fiber production cost since January 2024.</p>
           </div>
         </div>
 
@@ -497,7 +499,7 @@ export default function FiberOpticInputPage() {
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>DOWNSTREAM — WHERE FIBER GOES</p>
           <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "End use", w: "18%" }, { l: "Fiber type", w: "12%" }, { l: "Demand", w: "12%" }, { l: "Share", w: "8%" }, { l: "Driver", w: "38%" }, { l: "Growth", w: "12%", right: true }].map(h => (
+            {[{ l: "End use", w: "18%" }, { l: "Fiber type", w: "10%" }, { l: "Demand", w: "12%" }, { l: "Share", w: "8%" }, { l: "Driver", w: "37%" }, { l: "Growth", w: "12%", right: true }].map(h => (
               <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
             ))}
           </div>
@@ -511,11 +513,11 @@ export default function FiberOpticInputPage() {
           ].map((row, i) => (
             <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
               <p style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, width: "18%" }}>{row.use}</p>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "12%" }}>{row.fiberType}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>{row.fiberType}</p>
               <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "12%" }}>{row.demand}</p>
               <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "8%" }}>{row.share}</p>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "38%", lineHeight: 1.5 }}>{row.driver}</p>
-              <p style={{ fontSize: 11, fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const, color: row.growth === "Surging" ? "#ece8e1" : row.growth === "Growing" || row.growth === "Ramping" ? "#a09888" : "#706a60" }}>{row.growth}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "37%", lineHeight: 1.5 }}>{row.driver}</p>
+              <p style={{ fontSize: 11, fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const, color: row.growth === "Surging" ? "#e07a5f" : row.growth === "Growing" || row.growth === "Ramping" ? "#c9a84c" : "#5bbf6a" }}>{row.growth}</p>
             </div>
           ))}
           <div style={{ paddingTop: 14, marginTop: 4 }}>
