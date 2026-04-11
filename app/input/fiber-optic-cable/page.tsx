@@ -129,7 +129,7 @@ export default function FiberOpticInputPage() {
             fontSize: "36px",
             fontWeight: 400,
             color: warmWhite,
-            margin: "0 0 16px 0",
+            margin: "0 0 46px 0",
             lineHeight: 1.2,
           }}>
             Fiber optic cable
@@ -149,7 +149,7 @@ export default function FiberOpticInputPage() {
 
         {/* ═══ WHERE THE MONEY IS ═══ */}
         <div id="money" style={{ marginBottom: "40px", paddingTop: 20 }}>
-          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 12px 0" }}>
+          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
             WHERE THE MONEY IS
           </p>
           {([
@@ -216,7 +216,7 @@ export default function FiberOpticInputPage() {
         </div>
         {/* ═══ SUPPLY → DEMAND ═══ */}
         <div id="supply-demand" style={{ marginBottom: "56px", paddingTop: 20 }}>
-          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
+          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
             SUPPLY → DEMAND
           </p>
           <div style={{ display: "flex", gap: "12px" }}>
@@ -313,7 +313,7 @@ export default function FiberOpticInputPage() {
           ];
           return (
             <div style={{ marginBottom: "56px" }}>
-              <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 24px 0" }}>SO WHAT</p>
+              <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>SO WHAT</p>
               <div style={{ display: "flex", flexDirection: "column" as const }}>
                 {soWhatBlocks.map((block, i) => {
                   const isOpen = soWhatOpen === block.id;
@@ -360,7 +360,7 @@ export default function FiberOpticInputPage() {
 
         {/* ═══ SECTION 2: HOW IT'S MADE ═══ */}
         <div id="how-its-made" style={{ marginBottom: "56px", paddingTop: 20 }}>
-          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
+          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
             HOW IT&apos;S MADE
           </p>
 
@@ -447,13 +447,13 @@ export default function FiberOpticInputPage() {
         {/* ═══ DEPENDENCIES ═══ */}
         <div id="dependencies" style={{ paddingTop: 20 }}>
 
-        <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 24px 0" }}>DEPENDENCIES</p>
+        <p style={{ fontSize: 20, letterSpacing: "0.06em", color: "#555", margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>DEPENDENCIES</p>
 
         {/* Upstream table */}
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>UPSTREAM — WHAT GOES INTO FIBER</p>
           <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "Input", w: "18%" }, { l: "Form", w: "13%" }, { l: "Per km", w: "10%" }, { l: "Cost/km", w: "10%" }, { l: "% of cost", w: "10%" }, { l: "Trend", w: "12%" }, { l: "Status", w: "12%", right: true }].map(h => (
+            {[{ l: "Input", w: "18%" }, { l: "Form", w: "13%" }, { l: "Status", w: "12%" }, { l: "Per km", w: "10%" }, { l: "% of cost", w: "10%" }, { l: "Trend", w: "12%" }, { l: "Cost/km", w: "12%", right: true }].map(h => (
               <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
             ))}
           </div>
@@ -476,19 +476,20 @@ export default function FiberOpticInputPage() {
                 {row.linked && <span style={{ fontSize: 10, color: "#4a4540" }}>→</span>}
               </div>
               <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>{row.form}</p>
+              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", color: row.status === "Constrained" ? "#8a5a4a" : row.status === "Tightening" ? "#8a7a3a" : row.status === "Available" ? "#4a7a4a" : "#4a4540" }}>{row.status}</p>
               <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.perKm}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.costKm}</p>
               <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
               <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "12%" }}>{row.trend}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const, color: row.status === "Constrained" ? "#e07a5f" : row.status === "Tightening" ? "#c9a84c" : row.status === "Available" ? "#5bbf6a" : "#4a4540" }}>{row.status}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "12%", textAlign: "right" as const }}>{row.costKm}</p>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0" }}>
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>Total production cost</p>
-            <p style={{ margin: 0, width: "13%" }} /><p style={{ margin: 0, width: "10%" }} />
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~$6.80</p>
+            <p style={{ margin: 0, width: "13%" }} /><p style={{ margin: 0, width: "12%" }} />
+            <p style={{ margin: 0, width: "10%" }} />
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
-            <p style={{ margin: 0, width: "12%" }} /><p style={{ margin: 0, width: "12%" }} />
+            <p style={{ margin: 0, width: "12%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const }}>~$6.80</p>
           </div>
           <div style={{ borderTop: "1px solid #252220", paddingTop: 14, marginTop: 4 }}>
             <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Three inputs are constrained simultaneously — germanium, SiCl₄, and helium — representing 22% of production cost. Germanium alone has driven a ~40% increase in fiber production cost since January 2024.</p>
@@ -499,27 +500,35 @@ export default function FiberOpticInputPage() {
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>DOWNSTREAM — WHERE FIBER GOES</p>
           <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "End use", w: "18%" }, { l: "Fiber type", w: "10%" }, { l: "Demand", w: "12%" }, { l: "Share", w: "8%" }, { l: "Driver", w: "37%" }, { l: "Growth", w: "12%", right: true }].map(h => (
+            {[{ l: "End use", w: "18%" }, { l: "Fiber type", w: "13%" }, { l: "Status", w: "12%" }, { l: "Share", w: "10%" }, { l: "Driver", w: "22%" }, { l: "Demand", w: "12%", right: true }].map(h => (
               <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
             ))}
           </div>
           {[
-            { use: "AI datacenters", fiberType: "G.657A", demand: "~210M km", share: "29%", driver: "GPU cluster interconnect, DCI", growth: "Surging" },
-            { use: "Terrestrial telecom", fiberType: "G.652D", demand: "~290M km", share: "40%", driver: "FTTH, 5G backhaul, metro", growth: "Stable" },
-            { use: "Subsea cables", fiberType: "G.654E", demand: "~70M km", share: "10%", driver: "Intercontinental capacity", growth: "Growing" },
-            { use: "Military / UAV", fiberType: "G.657A", demand: "~55M km", share: "8%", driver: "Drone communication systems", growth: "Surging" },
-            { use: "BEAD broadband", fiberType: "G.652D", demand: "~65M km", share: "9%", driver: "Federal rural program, $42B", growth: "Ramping" },
-            { use: "Other", fiberType: "Mixed", demand: "~30M km", share: "4%", driver: "Enterprise, industrial, sensing", growth: "Stable" },
+            { use: "AI datacenters", fiberType: "G.657A", demand: "~210M km", share: "29%", driver: "GPU cluster interconnect, DCI", status: "Surging" },
+            { use: "Terrestrial telecom", fiberType: "G.652D", demand: "~290M km", share: "40%", driver: "FTTH, 5G backhaul, metro", status: "Stable" },
+            { use: "Subsea cables", fiberType: "G.654E", demand: "~70M km", share: "10%", driver: "Intercontinental capacity", status: "Growing" },
+            { use: "Military / UAV", fiberType: "G.657A", demand: "~55M km", share: "8%", driver: "Drone communication systems", status: "Surging" },
+            { use: "BEAD broadband", fiberType: "G.652D", demand: "~65M km", share: "9%", driver: "Federal rural program, $42B", status: "Ramping" },
+            { use: "Other", fiberType: "Mixed", demand: "~30M km", share: "4%", driver: "Enterprise, industrial, sensing", status: "Stable" },
           ].map((row, i) => (
             <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
               <p style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, width: "18%" }}>{row.use}</p>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>{row.fiberType}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "12%" }}>{row.demand}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "8%" }}>{row.share}</p>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "37%", lineHeight: 1.5 }}>{row.driver}</p>
-              <p style={{ fontSize: 11, fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const, color: row.growth === "Surging" ? "#e07a5f" : row.growth === "Growing" || row.growth === "Ramping" ? "#c9a84c" : "#5bbf6a" }}>{row.growth}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>{row.fiberType}</p>
+              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", color: row.status === "Surging" ? "#8a5a4a" : row.status === "Growing" || row.status === "Ramping" ? "#8a7a3a" : "#4a7a4a" }}>{row.status}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "22%", lineHeight: 1.5 }}>{row.driver}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "12%", textAlign: "right" as const }}>{row.demand}</p>
             </div>
           ))}
+          <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>Total</p>
+            <p style={{ margin: 0, width: "13%" }} />
+            <p style={{ margin: 0, width: "12%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
+            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "22%" }}>Every segment stable or growing</p>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const }}>~720M km</p>
+          </div>
           <div style={{ paddingTop: 14, marginTop: 4 }}>
             <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>AI datacenters and military drones both consume G.657A fiber — competing for the same production lines. Manufacturers are cannibalizing G.652D telecom output for higher-margin G.657A, squeezing telecom operators and the BEAD program simultaneously.</p>
           </div>
@@ -529,7 +538,7 @@ export default function FiberOpticInputPage() {
 
         {/* ═══ SUPPLY TREE ═══ */}
         <div id="supply-tree" style={{ marginBottom: "56px", paddingTop: 20 }}>
-          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: dimText, margin: "0 0 20px 0" }}>
+          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
             SUPPLY TREE
           </p>
           {/* Key takeaway */}
