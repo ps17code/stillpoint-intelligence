@@ -26,7 +26,7 @@ export default function GermaniumInputPage() {
 
   // Scroll spy
   React.useEffect(() => {
-    const ids = ["thesis", "money", "supply-demand", "so-what", "how-its-made", "dependencies", "supply-tree"];
+    const ids = ["thesis", "how-its-made", "supply-tree", "dependencies", "supply-demand", "so-what", "money", "risk"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -79,12 +79,13 @@ export default function GermaniumInputPage() {
         <style>{`@media (max-width: 1399px) { .toc-nav { display: none !important; } }`}</style>
         {[
           { id: "thesis", label: "Thesis" },
-          { id: "money", label: "Where the money is" },
+          { id: "how-its-made", label: "How it\u2019s made" },
+          { id: "supply-tree", label: "Supply tree" },
+          { id: "dependencies", label: "Dependencies" },
           { id: "supply-demand", label: "Supply \u2192 Demand" },
           { id: "so-what", label: "So what" },
-          { id: "how-its-made", label: "How it\u2019s made" },
-          { id: "dependencies", label: "Dependencies" },
-          { id: "supply-tree", label: "Supply tree" },
+          { id: "money", label: "Where the money is" },
+          { id: "risk", label: "Risk" },
         ].map((s) => (
           <div
             key={s.id}
@@ -130,8 +131,8 @@ export default function GermaniumInputPage() {
           </h1>
           {/* Executive summary */}
           <div style={{ background: "#1a1816", border: "1px solid #252220", borderRadius: 10, padding: "24px 28px", marginBottom: 56 }}>
-            <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#555", margin: "0 0 16px 0" }}>EXECUTIVE SUMMARY</p>
-            <div style={{ display: "flex", flexDirection: "column" as const, gap: 5 }}>
+            <p style={{ fontSize: 20, letterSpacing: "0.1em", color: "#555", margin: "0 0 16px 0" }}>EXECUTIVE SUMMARY</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
                 "Trace element recovered as a byproduct of zinc smelting and coal combustion. Cannot be mined directly.",
                 "Doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in infrared defense optics, satellite solar cells, and SiGe semiconductors.",
@@ -150,64 +151,204 @@ export default function GermaniumInputPage() {
           </div>
         </div>
 
-        {/* WHERE THE MONEY IS */}
-        <div id="money" style={{ marginBottom: "40px", paddingTop: 20 }}>
+        {/* HOW IT'S MADE */}
+        <div id="how-its-made" style={{ marginBottom: "56px", paddingTop: 20 }}>
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
-            WHERE THE MONEY IS
+            HOW IT&apos;S MADE
           </p>
-          {([
-            { label: "CHOKEPOINT HOLDERS", desc: "Pricing power today. Control the tightest nodes. No catalyst needed.", ideas: [
-              { name: "Umicore", tag: "UMI.BR", detail: "Sole western germanium refiner at scale. Olen, Belgium. >50% from recycled scrap. Exclusive DRC offtake. Capturing 3.5x price arbitrage. Germanium upside hidden inside \u20AC3.9B diversified company." },
-              { name: "Germanium metal", tag: "Commodity \u00b7 Physical", detail: "$1,500 \u2192 $8,500+/kg in two years. 4x spread between Chinese and western markets. No futures market. Nov 2026 ban expiry is binary event." },
-              { name: "Yunnan Chihong", tag: "600497.SH", detail: "China\u2019s largest Ge producer. ~66t/yr. State-owned Chinalco subsidiary. Domestic pricing creates 15-20% structural cost advantage for Chinese fiber manufacturers." },
-            ], startups: [] as { name: string; desc: string }[] },
-            { label: "CAPACITY BUILDERS", desc: "Investing to expand supply. Value accrues on execution.", ideas: [
-              { name: "5N Plus", tag: "VNP \u00b7 TSX", detail: "Canadian germanium refiner. $14.4M DoD backing. Facility decision Nov 2026. Approval roughly doubles western capacity. Binary catalyst." },
-              { name: "DRC / G\u00e9camines", tag: "Offtake", detail: "Big Hill tailings. 14M tonnes of slag. 700+ tonnes Ge potential. Target: 30% of global supply. Exclusive Umicore offtake." },
-            ], startups: [] as { name: string; desc: string }[] },
-            { label: "TECHNOLOGY", desc: "Building technology that replaces or improves the value chain. Highest risk, largest potential payoff.", ideas: [
-              { name: "LightPath Technologies", tag: "LPTH \u00b7 NASDAQ", detail: "BlackDiamond chalcogenide glass replaces germanium in IR optics. FQ2 2026 revenue $16.4M (+120% YoY). NDAA mandates eliminating foreign optical glass by Jan 2030." },
-              { name: "Blue Moon Metals", tag: "MOON \u00b7 TSXV", detail: "Acquired Apex mine in Utah from Teck (March 2026). First dedicated US germanium mine if it reaches production ~2028." },
-              { name: "KoBold Metals", tag: "Private", detail: "AI-driven mineral exploration. $537M Series C. Could find new deposits but 10-15 year timeline." },
-            ], startups: [
-              { name: "Indium Corporation", desc: "US-based germanium recycler. Smaller scale than Umicore." },
-              { name: "Teck Resources (TECK)", desc: "Red Dog mine in Alaska. Only US germanium source. Declining deposit." },
-            ] },
-          ] as { label: string; desc: string; ideas: { name: string; tag: string; detail: string }[]; startups: { name: string; desc: string }[] }[]).map((cat, ci) => (
-            <div key={ci} style={{ paddingBottom: 32 }}>
-              <div style={{ paddingBottom: 16, borderTop: ci > 0 ? `1px solid ${borderColor}` : "none", paddingTop: ci > 0 ? 28 : 0 }}>
-                <p style={{ fontSize: 10, letterSpacing: "0.08em", color: warmWhite, fontWeight: 500, margin: 0 }}>{cat.label}</p>
+
+          <div style={{ display: "flex", gap: "12px" }}>
+
+            {/* Card 1: Extraction */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                01 &middot; EXTRACTION FROM HOST ORE
+              </p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Germanium is recovered as a byproduct of zinc smelting and coal combustion. Zinc concentrate is roasted and leached; germanium-rich residues are collected from flue dust and leach solutions.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Germanium exists at 50-800 ppm in host ores. Recovery requires specialized hydrometallurgical circuits that most zinc smelters don&apos;t install. Production cannot scale independently of zinc economics.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                ~10 zinc smelters worldwide recover germanium. China dominates with ~83% of primary production. DRC tailings represent a new non-smelter source via Umicore offtake.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~140t</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>primary germanium extracted annually</span>
               </div>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" as const }}>
-                {cat.ideas.map((idea, ii) => (
-                  <div key={ii} id={idea.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")} style={{
-                    flex: cat.ideas.length <= 3 ? "1 1 0" : "1 1 calc(25% - 8px)",
-                    minWidth: cat.ideas.length <= 3 ? 0 : 200,
-                    background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "16px 18px",
-                  }}>
-                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
-                    <p style={{ fontSize: 10, color: idea.tag.includes("Private") || idea.tag.includes("Thematic") || idea.tag.includes("Commodity") || idea.tag.includes("Offtake") ? dimmer : accent, margin: "0 0 10px 0" }}>{idea.tag}</p>
-                    <p style={{ fontSize: 11, color: muted, lineHeight: 1.6, margin: 0 }}>{idea.detail}</p>
-                  </div>
-                ))}
+            </div>
+
+            {/* Card 2: Refining */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                02 &middot; REFINING TO HIGH PURITY
+              </p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Crude germanium dioxide is reduced to metal, then purified through zone refining to 5N+ (99.999%) purity. For fiber optics, it is converted to GeCl&#8324; and further purified to 8N (99.999999%).
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Fiber-grade GeCl&#8324; requires removing arsenic and other trace contaminants to parts-per-billion levels. Proprietary techniques that cannot be purchased off the shelf. Zone refining is energy-intensive and slow.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                Only 6 facilities produce fiber-grade GeCl&#8324;. 4 in China, 1 in Russia, 1 in the west: Umicore in Olen, Belgium. 5N Plus could become the second western refiner.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~230t</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>refined germanium produced annually (primary + recycled)</span>
               </div>
-              {cat.startups.length > 0 && (
-                <div style={{ marginTop: 14, paddingLeft: 2 }}>
-                  <p style={{ fontSize: 9, letterSpacing: "0.06em", color: dimmer, margin: "0 0 8px 0" }}>ALSO WATCHING</p>
-                  <div style={{ display: "flex", flexDirection: "column" as const, gap: 6 }}>
-                    {cat.startups.map((s, si) => (
-                      <div key={si} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                        <span style={{ width: 3, height: 3, borderRadius: "50%", background: dimmer, flexShrink: 0, marginTop: 6 }} />
-                        <p style={{ fontSize: 11, color: muted, lineHeight: 1.5, margin: 0 }}>
-                          <span style={{ color: "#a09888", fontWeight: 500 }}>{s.name}</span>{" \u2014 "}{s.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+            </div>
+
+            {/* Card 3: Conversion to end products */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                03 &middot; CONVERSION TO END PRODUCTS
+              </p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Refined germanium is converted into application-specific forms: GeCl&#8324; for fiber optic preforms, GeO&#8322; blanks for IR optics, single-crystal wafers for satellite solar cells, and SiGe substrates for semiconductors.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Each end product requires different purity levels and crystal structures. Fiber-grade GeCl&#8324; needs 8N purity. IR blanks need specific optical homogeneity. Solar wafers need precise crystal orientation. No single facility serves all markets.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                Specialized converters for each application. Umicore (GeCl&#8324;), Umicore + Chinese firms (IR blanks), AXT and others (solar wafers), IQE and GlobalFoundries (SiGe substrates).
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>5 markets</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>competing for the same ~230t supply</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* SUPPLY TREE */}
+        <div id="supply-tree" style={{ marginBottom: "56px", paddingTop: 20 }}>
+          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
+            SUPPLY TREE
+          </p>
+          {/* Key takeaway */}
+          <div style={{ marginBottom: 32 }}>
+            <div style={{ borderLeft: `2px solid ${accent}30`, paddingLeft: 20 }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: accent, margin: "0 0 10px 0" }}>KEY TAKEAWAY</p>
+              <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.3, margin: 0 }}>
+                <span style={{ color: "#ece8e1", fontWeight: 500 }}>~230t</span> of germanium enters the global supply chain annually. ~120t from Chinese zinc smelters and coal operations (export controlled since Aug 2023). ~90t from recycling (near maximum recovery). ~11t from Russia (sanctioned). Deposits in Yunnan, Inner Mongolia, DRC tailings, and Alaska feed into ~10 smelter-refiners. Umicore in Belgium is the sole western refiner at scale. All material converges to <span style={{ color: "#ece8e1", fontWeight: 500 }}>5 competing end markets</span> with no demand declining.
+              </p>
+            </div>
+          </div>
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210", position: "relative" as const }}>
+            <button
+              onClick={() => setTreeExpanded(true)}
+              style={{
+                position: "absolute" as const, top: 12, right: 12, zIndex: 5,
+                fontFamily: "'Geist Mono', monospace", fontSize: 9, letterSpacing: "0.04em",
+                color: "#555", background: "rgba(19,18,16,0.8)", border: `1px solid ${borderColor}`,
+                borderRadius: 6, padding: "5px 12px", cursor: "pointer",
+                transition: "color 0.15s, border-color 0.15s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "#3a3835"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = "#555"; e.currentTarget.style.borderColor = borderColor; }}
+            >
+              Expand &#8599;
+            </button>
+            <TreeMap geometry={rawGeo} nodes={allNodes} layerConfig={lc} svgWidth={rawW} svgHeight={rawH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+          </div>
+        </div>
+
+        {/* FULLSCREEN SUPPLY TREE OVERLAY */}
+        {treeExpanded && (
+          <div style={{
+            position: "fixed", inset: 0, zIndex: 100,
+            background: "#111", overflow: "auto",
+            display: "flex", flexDirection: "column" as const,
+          }}>
+            {/* Header bar */}
+            <div style={{
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              padding: "14px 28px", borderBottom: `1px solid ${borderColor}`, flexShrink: 0,
+            }}>
+              <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: "0.1em", color: dimText }}>
+                GERMANIUM &middot; SUPPLY TREE
+              </span>
+              <button
+                onClick={() => setTreeExpanded(false)}
+                style={{
+                  fontFamily: "'Geist Mono', monospace", fontSize: 9,
+                  color: "#555", background: "none", border: `1px solid ${borderColor}`,
+                  borderRadius: 6, padding: "5px 12px", cursor: "pointer",
+                  transition: "color 0.15s, border-color 0.15s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "#3a3835"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "#555"; e.currentTarget.style.borderColor = borderColor; }}
+              >
+                Close &#10005;
+              </button>
+            </div>
+            {/* Full tree */}
+            <div style={{ flex: 1, padding: "20px" }}>
+              <TreeMap geometry={rawGeo} nodes={allNodes} layerConfig={lc} svgWidth={rawW} svgHeight={rawH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+        {/* DEPENDENCIES */}
+        <div id="dependencies" style={{ paddingTop: 20 }}>
+
+        <p style={{ fontSize: 20, letterSpacing: "0.06em", color: "#555", margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>DEPENDENCIES</p>
+
+        {/* Downstream table */}
+        <div style={{ marginBottom: 48 }}>
+          <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>DOWNSTREAM &mdash; WHERE GERMANIUM GOES</p>
+          <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
+            {[{ l: "Product", w: "18%" }, { l: "Usage", w: "13%" }, { l: "Share", w: "10%" }, { l: "End uses", w: "24%" }, { l: "Growth", w: "12%", right: true }].map(h => (
+              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as { right?: boolean }).right ? "right" as const : undefined }}>{h.l}</p>
+            ))}
+          </div>
+          {[
+            { product: "Fiber optic cable", usage: "~87t/yr", share: "38%", endUses: "AI datacenters, telecom, subsea, UAVs", growth: "Surging", linked: true },
+            { product: "IR optics", usage: "~55t/yr", share: "24%", endUses: "Thermal imaging, missile guidance", growth: "Growing", linked: false },
+            { product: "Satellite solar cells", usage: "~35t/yr", share: "15%", endUses: "Space systems, LEO constellations", growth: "Growing", linked: false },
+            { product: "SiGe semiconductors", usage: "~25t/yr", share: "11%", endUses: "5G RF, radar, electronic warfare", growth: "Stable", linked: false },
+            { product: "Other", usage: "~28t/yr", share: "12%", endUses: "Catalysts, phosphors, PET", growth: "Stable", linked: false },
+          ].map((row, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220", cursor: row.linked ? "pointer" : "default", transition: "background 0.15s" }}
+              onMouseEnter={e => { if (row.linked) { e.currentTarget.style.background = "#1a1816"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#ece8e1"; } }}
+              onMouseLeave={e => { if (row.linked) { e.currentTarget.style.background = "transparent"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#a09888"; } }}
+              onClick={() => { if (row.linked) window.location.href = "/input/fiber-optic-cable"; }}
+            >
+              <div style={{ width: "18%", display: "flex", alignItems: "baseline", gap: 6 }}>
+                <p data-name="" style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, transition: "color 0.15s" }}>{row.product}</p>
+                {row.linked && <span style={{ fontSize: 10, color: "#4a4540" }}>&rarr;</span>}
+              </div>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>{row.usage}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "24%", lineHeight: 1.5 }}>{row.endUses}</p>
+              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const, color: row.growth === "Surging" ? "#8a5a4a" : row.growth === "Growing" ? "#8a7a3a" : "#4a7a4a" }}>{row.growth}</p>
             </div>
           ))}
+          <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>Total</p>
+            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>~230t/yr</p>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
+            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "24%" }}>Every segment stable or growing</p>
+            <p style={{ margin: 0, width: "12%" }} />
+          </div>
+          <div style={{ paddingTop: 14, marginTop: 4 }}>
+            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Fiber optics is the dominant consumer at 38% of supply. All five end markets are stable or growing. No demand destruction pathway exists on a 2-3 year horizon. Substitution (BlackDiamond for IR, hollow-core for fiber) is real but arrives after the deficit peaks.</p>
+          </div>
+        </div>
+
         </div>
 
         {/* SUPPLY -> DEMAND */}
@@ -347,8 +488,68 @@ export default function GermaniumInputPage() {
         })()}
         </div>
 
+        {/* WHERE THE MONEY IS */}
+        <div id="money" style={{ marginBottom: "40px", paddingTop: 20 }}>
+          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
+            WHERE THE MONEY IS
+          </p>
+          {([
+            { label: "CHOKEPOINT HOLDERS", desc: "Pricing power today. Control the tightest nodes. No catalyst needed.", ideas: [
+              { name: "Umicore", tag: "UMI.BR", detail: "Sole western germanium refiner at scale. Olen, Belgium. >50% from recycled scrap. Exclusive DRC offtake. Capturing 3.5x price arbitrage. Germanium upside hidden inside \u20AC3.9B diversified company." },
+              { name: "Germanium metal", tag: "Commodity \u00b7 Physical", detail: "$1,500 \u2192 $8,500+/kg in two years. 4x spread between Chinese and western markets. No futures market. Nov 2026 ban expiry is binary event." },
+              { name: "Yunnan Chihong", tag: "600497.SH", detail: "China\u2019s largest Ge producer. ~66t/yr. State-owned Chinalco subsidiary. Domestic pricing creates 15-20% structural cost advantage for Chinese fiber manufacturers." },
+            ], startups: [] as { name: string; desc: string }[] },
+            { label: "CAPACITY BUILDERS", desc: "Investing to expand supply. Value accrues on execution.", ideas: [
+              { name: "5N Plus", tag: "VNP \u00b7 TSX", detail: "Canadian germanium refiner. $14.4M DoD backing. Facility decision Nov 2026. Approval roughly doubles western capacity. Binary catalyst." },
+              { name: "DRC / G\u00e9camines", tag: "Offtake", detail: "Big Hill tailings. 14M tonnes of slag. 700+ tonnes Ge potential. Target: 30% of global supply. Exclusive Umicore offtake." },
+            ], startups: [] as { name: string; desc: string }[] },
+            { label: "TECHNOLOGY", desc: "Building technology that replaces or improves the value chain. Highest risk, largest potential payoff.", ideas: [
+              { name: "LightPath Technologies", tag: "LPTH \u00b7 NASDAQ", detail: "BlackDiamond chalcogenide glass replaces germanium in IR optics. FQ2 2026 revenue $16.4M (+120% YoY). NDAA mandates eliminating foreign optical glass by Jan 2030." },
+              { name: "Blue Moon Metals", tag: "MOON \u00b7 TSXV", detail: "Acquired Apex mine in Utah from Teck (March 2026). First dedicated US germanium mine if it reaches production ~2028." },
+              { name: "KoBold Metals", tag: "Private", detail: "AI-driven mineral exploration. $537M Series C. Could find new deposits but 10-15 year timeline." },
+            ], startups: [
+              { name: "Indium Corporation", desc: "US-based germanium recycler. Smaller scale than Umicore." },
+              { name: "Teck Resources (TECK)", desc: "Red Dog mine in Alaska. Only US germanium source. Declining deposit." },
+            ] },
+          ] as { label: string; desc: string; ideas: { name: string; tag: string; detail: string }[]; startups: { name: string; desc: string }[] }[]).map((cat, ci) => (
+            <div key={ci} style={{ paddingBottom: 32 }}>
+              <div style={{ paddingBottom: 16, borderTop: ci > 0 ? `1px solid ${borderColor}` : "none", paddingTop: ci > 0 ? 28 : 0 }}>
+                <p style={{ fontSize: 10, letterSpacing: "0.08em", color: warmWhite, fontWeight: 500, margin: 0 }}>{cat.label}</p>
+              </div>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" as const }}>
+                {cat.ideas.map((idea, ii) => (
+                  <div key={ii} id={idea.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")} style={{
+                    flex: cat.ideas.length <= 3 ? "1 1 0" : "1 1 calc(25% - 8px)",
+                    minWidth: cat.ideas.length <= 3 ? 0 : 200,
+                    background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "16px 18px",
+                  }}>
+                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
+                    <p style={{ fontSize: 10, color: idea.tag.includes("Private") || idea.tag.includes("Thematic") || idea.tag.includes("Commodity") || idea.tag.includes("Offtake") ? dimmer : accent, margin: "0 0 10px 0" }}>{idea.tag}</p>
+                    <p style={{ fontSize: 11, color: muted, lineHeight: 1.6, margin: 0 }}>{idea.detail}</p>
+                  </div>
+                ))}
+              </div>
+              {cat.startups.length > 0 && (
+                <div style={{ marginTop: 14, paddingLeft: 2 }}>
+                  <p style={{ fontSize: 9, letterSpacing: "0.06em", color: dimmer, margin: "0 0 8px 0" }}>ALSO WATCHING</p>
+                  <div style={{ display: "flex", flexDirection: "column" as const, gap: 6 }}>
+                    {cat.startups.map((s, si) => (
+                      <div key={si} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                        <span style={{ width: 3, height: 3, borderRadius: "50%", background: dimmer, flexShrink: 0, marginTop: 6 }} />
+                        <p style={{ fontSize: 11, color: muted, lineHeight: 1.5, margin: 0 }}>
+                          <span style={{ color: "#a09888", fontWeight: 500 }}>{s.name}</span>{" \u2014 "}{s.desc}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
         {/* RISK */}
-        <div style={{ marginBottom: 56, paddingTop: 20 }}>
+        <div id="risk" style={{ marginBottom: 56, paddingTop: 20 }}>
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>RISK</p>
           <div style={{ display: "flex", gap: 16 }}>
             <div style={{ flex: 1 }}>
@@ -390,206 +591,6 @@ export default function GermaniumInputPage() {
           </div>
         </div>
 
-        {/* HOW IT'S MADE */}
-        <div id="how-its-made" style={{ marginBottom: "56px", paddingTop: 20 }}>
-          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
-            HOW IT&apos;S MADE
-          </p>
-
-          <div style={{ display: "flex", gap: "12px" }}>
-
-            {/* Card 1: Extraction */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                01 &middot; EXTRACTION FROM HOST ORE
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Germanium is recovered as a byproduct of zinc smelting and coal combustion. Zinc concentrate is roasted and leached; germanium-rich residues are collected from flue dust and leach solutions.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Germanium exists at 50-800 ppm in host ores. Recovery requires specialized hydrometallurgical circuits that most zinc smelters don&apos;t install. Production cannot scale independently of zinc economics.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                ~10 zinc smelters worldwide recover germanium. China dominates with ~83% of primary production. DRC tailings represent a new non-smelter source via Umicore offtake.
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~140t</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>primary germanium extracted annually</span>
-              </div>
-            </div>
-
-            {/* Card 2: Refining */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                02 &middot; REFINING TO HIGH PURITY
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Crude germanium dioxide is reduced to metal, then purified through zone refining to 5N+ (99.999%) purity. For fiber optics, it is converted to GeCl&#8324; and further purified to 8N (99.999999%).
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Fiber-grade GeCl&#8324; requires removing arsenic and other trace contaminants to parts-per-billion levels. Proprietary techniques that cannot be purchased off the shelf. Zone refining is energy-intensive and slow.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                Only 6 facilities produce fiber-grade GeCl&#8324;. 4 in China, 1 in Russia, 1 in the west: Umicore in Olen, Belgium. 5N Plus could become the second western refiner.
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~230t</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>refined germanium produced annually (primary + recycled)</span>
-              </div>
-            </div>
-
-            {/* Card 3: Conversion to end products */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                03 &middot; CONVERSION TO END PRODUCTS
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Refined germanium is converted into application-specific forms: GeCl&#8324; for fiber optic preforms, GeO&#8322; blanks for IR optics, single-crystal wafers for satellite solar cells, and SiGe substrates for semiconductors.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Each end product requires different purity levels and crystal structures. Fiber-grade GeCl&#8324; needs 8N purity. IR blanks need specific optical homogeneity. Solar wafers need precise crystal orientation. No single facility serves all markets.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                Specialized converters for each application. Umicore (GeCl&#8324;), Umicore + Chinese firms (IR blanks), AXT and others (solar wafers), IQE and GlobalFoundries (SiGe substrates).
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>5 markets</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>competing for the same ~230t supply</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        {/* DEPENDENCIES */}
-        <div id="dependencies" style={{ paddingTop: 20 }}>
-
-        <p style={{ fontSize: 20, letterSpacing: "0.06em", color: "#555", margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>DEPENDENCIES</p>
-
-        {/* Downstream table */}
-        <div style={{ marginBottom: 48 }}>
-          <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>DOWNSTREAM &mdash; WHERE GERMANIUM GOES</p>
-          <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "Product", w: "18%" }, { l: "Usage", w: "13%" }, { l: "Share", w: "10%" }, { l: "End uses", w: "24%" }, { l: "Growth", w: "12%", right: true }].map(h => (
-              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as { right?: boolean }).right ? "right" as const : undefined }}>{h.l}</p>
-            ))}
-          </div>
-          {[
-            { product: "Fiber optic cable", usage: "~87t/yr", share: "38%", endUses: "AI datacenters, telecom, subsea, UAVs", growth: "Surging", linked: true },
-            { product: "IR optics", usage: "~55t/yr", share: "24%", endUses: "Thermal imaging, missile guidance", growth: "Growing", linked: false },
-            { product: "Satellite solar cells", usage: "~35t/yr", share: "15%", endUses: "Space systems, LEO constellations", growth: "Growing", linked: false },
-            { product: "SiGe semiconductors", usage: "~25t/yr", share: "11%", endUses: "5G RF, radar, electronic warfare", growth: "Stable", linked: false },
-            { product: "Other", usage: "~28t/yr", share: "12%", endUses: "Catalysts, phosphors, PET", growth: "Stable", linked: false },
-          ].map((row, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220", cursor: row.linked ? "pointer" : "default", transition: "background 0.15s" }}
-              onMouseEnter={e => { if (row.linked) { e.currentTarget.style.background = "#1a1816"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#ece8e1"; } }}
-              onMouseLeave={e => { if (row.linked) { e.currentTarget.style.background = "transparent"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#a09888"; } }}
-              onClick={() => { if (row.linked) window.location.href = "/input/fiber-optic-cable"; }}
-            >
-              <div style={{ width: "18%", display: "flex", alignItems: "baseline", gap: 6 }}>
-                <p data-name="" style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, transition: "color 0.15s" }}>{row.product}</p>
-                {row.linked && <span style={{ fontSize: 10, color: "#4a4540" }}>&rarr;</span>}
-              </div>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>{row.usage}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "24%", lineHeight: 1.5 }}>{row.endUses}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const, color: row.growth === "Surging" ? "#8a5a4a" : row.growth === "Growing" ? "#8a7a3a" : "#4a7a4a" }}>{row.growth}</p>
-            </div>
-          ))}
-          <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>Total</p>
-            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>~230t/yr</p>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
-            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "24%" }}>Every segment stable or growing</p>
-            <p style={{ margin: 0, width: "12%" }} />
-          </div>
-          <div style={{ paddingTop: 14, marginTop: 4 }}>
-            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Fiber optics is the dominant consumer at 38% of supply. All five end markets are stable or growing. No demand destruction pathway exists on a 2-3 year horizon. Substitution (BlackDiamond for IR, hollow-core for fiber) is real but arrives after the deficit peaks.</p>
-          </div>
-        </div>
-
-        </div>
-
-        {/* SUPPLY TREE */}
-        <div id="supply-tree" style={{ marginBottom: "56px", paddingTop: 20 }}>
-          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
-            SUPPLY TREE
-          </p>
-          {/* Key takeaway */}
-          <div style={{ marginBottom: 32 }}>
-            <div style={{ borderLeft: `2px solid ${accent}30`, paddingLeft: 20 }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: accent, margin: "0 0 10px 0" }}>KEY TAKEAWAY</p>
-              <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.3, margin: 0 }}>
-                <span style={{ color: "#ece8e1", fontWeight: 500 }}>~230t</span> of germanium enters the global supply chain annually. ~120t from Chinese zinc smelters and coal operations (export controlled since Aug 2023). ~90t from recycling (near maximum recovery). ~11t from Russia (sanctioned). Deposits in Yunnan, Inner Mongolia, DRC tailings, and Alaska feed into ~10 smelter-refiners. Umicore in Belgium is the sole western refiner at scale. All material converges to <span style={{ color: "#ece8e1", fontWeight: 500 }}>5 competing end markets</span> with no demand declining.
-              </p>
-            </div>
-          </div>
-          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210", position: "relative" as const }}>
-            <button
-              onClick={() => setTreeExpanded(true)}
-              style={{
-                position: "absolute" as const, top: 12, right: 12, zIndex: 5,
-                fontFamily: "'Geist Mono', monospace", fontSize: 9, letterSpacing: "0.04em",
-                color: "#555", background: "rgba(19,18,16,0.8)", border: `1px solid ${borderColor}`,
-                borderRadius: 6, padding: "5px 12px", cursor: "pointer",
-                transition: "color 0.15s, border-color 0.15s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "#3a3835"; }}
-              onMouseLeave={e => { e.currentTarget.style.color = "#555"; e.currentTarget.style.borderColor = borderColor; }}
-            >
-              Expand &#8599;
-            </button>
-            <TreeMap geometry={rawGeo} nodes={allNodes} layerConfig={lc} svgWidth={rawW} svgHeight={rawH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
-          </div>
-        </div>
-
-        {/* FULLSCREEN SUPPLY TREE OVERLAY */}
-        {treeExpanded && (
-          <div style={{
-            position: "fixed", inset: 0, zIndex: 100,
-            background: "#111", overflow: "auto",
-            display: "flex", flexDirection: "column" as const,
-          }}>
-            {/* Header bar */}
-            <div style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              padding: "14px 28px", borderBottom: `1px solid ${borderColor}`, flexShrink: 0,
-            }}>
-              <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: "0.1em", color: dimText }}>
-                GERMANIUM &middot; SUPPLY TREE
-              </span>
-              <button
-                onClick={() => setTreeExpanded(false)}
-                style={{
-                  fontFamily: "'Geist Mono', monospace", fontSize: 9,
-                  color: "#555", background: "none", border: `1px solid ${borderColor}`,
-                  borderRadius: 6, padding: "5px 12px", cursor: "pointer",
-                  transition: "color 0.15s, border-color 0.15s",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "#3a3835"; }}
-                onMouseLeave={e => { e.currentTarget.style.color = "#555"; e.currentTarget.style.borderColor = borderColor; }}
-              >
-                Close &#10005;
-              </button>
-            </div>
-            {/* Full tree */}
-            <div style={{ flex: 1, padding: "20px" }}>
-              <TreeMap geometry={rawGeo} nodes={allNodes} layerConfig={lc} svgWidth={rawW} svgHeight={rawH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
             </div>
           </div>
         )}

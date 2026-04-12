@@ -32,7 +32,7 @@ export default function FiberOpticInputPage() {
 
   // Scroll spy
   React.useEffect(() => {
-    const ids = ["thesis", "money", "supply-demand", "so-what", "how-its-made", "dependencies", "supply-tree"];
+    const ids = ["thesis", "how-its-made", "supply-tree", "dependencies", "supply-demand", "so-what", "money", "risk"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -85,12 +85,13 @@ export default function FiberOpticInputPage() {
         <style>{`@media (max-width: 1399px) { .toc-nav { display: none !important; } }`}</style>
         {[
           { id: "thesis", label: "Thesis" },
-          { id: "money", label: "Where the money is" },
+          { id: "how-its-made", label: "How it\u2019s made" },
+          { id: "supply-tree", label: "Supply tree" },
+          { id: "dependencies", label: "Dependencies" },
           { id: "supply-demand", label: "Supply \u2192 Demand" },
           { id: "so-what", label: "So what" },
-          { id: "how-its-made", label: "How it\u2019s made" },
-          { id: "dependencies", label: "Dependencies" },
-          { id: "supply-tree", label: "Supply tree" },
+          { id: "money", label: "Where the money is" },
+          { id: "risk", label: "Risk" },
         ].map((s) => (
           <div
             key={s.id}
@@ -136,8 +137,8 @@ export default function FiberOpticInputPage() {
           </h1>
           {/* Executive summary */}
           <div style={{ background: "#1a1816", border: "1px solid #252220", borderRadius: 10, padding: "24px 28px", marginBottom: 56 }}>
-            <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#555", margin: "0 0 16px 0" }}>EXECUTIVE SUMMARY</p>
-            <div style={{ display: "flex", flexDirection: "column" as const, gap: 5 }}>
+            <p style={{ fontSize: 20, letterSpacing: "0.1em", color: "#555", margin: "0 0 16px 0" }}>EXECUTIVE SUMMARY</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
                 "Glass strands that transmit data as pulses of light. The physical layer connecting everything inside and between AI datacenters, telecom networks, and cross-ocean subsea systems.",
                 "Doped with germanium to create the refractive index gradient that guides light through the core. Without germanium, fiber is just glass.",
@@ -156,73 +157,257 @@ export default function FiberOpticInputPage() {
           </div>
         </div>
 
-        {/* ═══ WHERE THE MONEY IS ═══ */}
-        <div id="money" style={{ marginBottom: "40px", paddingTop: 20 }}>
+        {/* ═══ SECTION 2: HOW IT'S MADE ═══ */}
+        <div id="how-its-made" style={{ marginBottom: "56px", paddingTop: 20 }}>
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
-            WHERE THE MONEY IS
+            HOW IT&apos;S MADE
           </p>
-          {([
-            { label: "CHOKEPOINT HOLDERS", desc: "Pricing power today. Control the tightest nodes. No catalyst needed.", ideas: [
-              { name: "Corning", tag: "GLW \u00b7 NYSE", detail: "~40% of global fiber manufacturing. Sold out through 2026. Stopped selling bare glass to competitors. $6B Meta anchor deal. Building world\u2019s largest cable plant. Inventor of Contour cable for AI workloads." },
-              { name: "Umicore", tag: "UMI \u00b7 Euronext Brussels", detail: "Only western GeCl\u2084 converter. Exclusive DRC feedstock offtake. Capturing the 3.5x price arbitrage between Chinese and western germanium. Germanium upside hidden inside a diversified materials company." },
-              { name: "Germanium metal", tag: "Commodity \u00b7 Physical", detail: "Structurally constrained byproduct of zinc mining. $1,500 \u2192 $7,000+/kg in 18 months. Supply fixed at ~230t, 83% Chinese under export licensing." },
-              { name: "Rosendahl Nextrom", tag: "Private \u00b7 Knill Gruppe (Austria)", detail: "Near-monopoly on preform deposition equipment. Defines the capacity ceiling for the entire fiber industry. 18-24 month backlogs. Not directly investable but determines the timeline for everyone else." },
-            ], startups: [] as { name: string; desc: string }[] },
-            { label: "CAPACITY BUILDERS", desc: "Investing to expand supply. Value accrues on execution.", ideas: [
-              { name: "5N Plus", tag: "VNP \u00b7 TSX", detail: "Canadian germanium refiner. $14.4M DoD backing. Facility decision Nov 2026. Binary catalyst: approval roughly doubles western germanium capacity in 2-3 years." },
-              { name: "Prysmian", tag: "PRY \u00b7 Borsa Italiana", detail: "Largest cable manufacturer globally. Acquired North American preform capacity. Renewed Umicore GeCl\u2084 supply at premium. Also lead investor in Relativity Networks (HCF)." },
-              { name: "Corning \u2014 Hickory expansion", tag: "GLW \u00b7 NYSE", detail: "World\u2019s largest optical cable plant under construction. Meta-anchored with $6B multi-year agreement. 18-24 month timeline to full production." },
-            ], startups: [
-              { name: "DRC / G\u00e9camines (STL)", desc: "Big Hill tailings \u2014 14M tonnes of slag. Targeting 30% of global Ge supply. Exclusive Umicore offtake. Value accrues to Umicore, not the mine." },
-              { name: "Kazakhstan \u2014 Pavlodar", desc: "~15t/yr germanium restart. Adds feedstock, not conversion capacity." },
-            ] },
-            { label: "TECHNOLOGY", desc: "Building technology that replaces or improves the value chain. Highest risk, largest potential payoff.", ideas: [
-              { name: "Hollow-core fiber ecosystem", tag: "Thematic", detail: "Eliminates germanium entirely. Light through air, not doped glass. 30% lower latency. ~1,000x current fiber price. Microsoft scaling production with Corning and Heraeus. Pre-commercial but rapidly advancing." },
-              { name: "YOFC", tag: "6869 \u00b7 HKEX", detail: "China\u2019s largest fiber manufacturer. World-record 0.040 dB/km HCF in lab. Dual exposure: benefits from conventional supply tightness today while building HCF optionality long-term." },
-              { name: "Multicore fiber", tag: "Thematic", detail: "4x bandwidth per strand using space division multiplexing. Doesn\u2019t reduce germanium usage per core but multiplies capacity per cable \u2014 easing the strand-km gap without proportional material increase." },
-            ], startups: [
-              { name: "Relativity Networks", desc: "Orlando. HCF startup. $10.7M raised (Prysmian-led seed). Manufacturing at Prysmian\u2019s Eindhoven facility." },
-              { name: "Lumenisity (Microsoft)", desc: "Southampton spin-out acquired by Microsoft Dec 2022. Core HCF R&D. Achieved 0.091 dB/km." },
-              { name: "Lightera (Furukawa Electric)", desc: "Global entity from Furukawa\u2019s optical fiber businesses. Developing HCF splicing tools and multicore fiber ecosystem." },
-              { name: "HFCL Limited", desc: "Indian fiber manufacturer. Partnered with IIT Delhi on DoT-funded HCF research for 6G and quantum communication." },
-              { name: "Heraeus Covantis", desc: "German specialty glass manufacturer. Partnered with Microsoft and Corning on industrial-scale HCF production." },
-            ] },
-          ] as { label: string; desc: string; ideas: { name: string; tag: string; detail: string }[]; startups: { name: string; desc: string }[] }[]).map((cat, ci) => (
-            <div key={ci} style={{ paddingBottom: 32 }}>
-              <div style={{ paddingBottom: 16, borderTop: ci > 0 ? `1px solid ${borderColor}` : "none", paddingTop: ci > 0 ? 28 : 0 }}>
-                <p style={{ fontSize: 10, letterSpacing: "0.08em", color: warmWhite, fontWeight: 500, margin: 0 }}>{cat.label}</p>
+
+          <div style={{ display: "flex", gap: "12px" }}>
+
+            {/* Card 1: GeCl₄ Conversion */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                01 · GeCl₄ CONVERSION
+              </p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Refined germanium powder is chemically converted into germanium tetrachloride — a volatile liquid that can be vaporized and deposited into glass to carry light.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Fiber-grade GeCl₄ requires ultra-high purity — specifically removing arsenic contamination. This demands proprietary techniques and specialized equipment that can&apos;t be purchased off the shelf.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                Only 6 facilities worldwide produce fiber-grade GeCl₄. 4 are in China, 1 in Russia, and 1 in the west — a single site in Belgium.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~220t</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>GeCl₄ produced annually</span>
               </div>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" as const }}>
-                {cat.ideas.map((idea, ii) => (
-                  <div key={ii} id={idea.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")} style={{
-                    flex: cat.ideas.length <= 3 ? "1 1 0" : "1 1 calc(25% - 8px)",
-                    minWidth: cat.ideas.length <= 3 ? 0 : 200,
-                    background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "16px 18px",
-                  }}>
-                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
-                    <p style={{ fontSize: 10, color: idea.tag.includes("Private") || idea.tag.includes("Thematic") || idea.tag.includes("Commodity") ? dimmer : accent, margin: "0 0 10px 0" }}>{idea.tag}</p>
-                    <p style={{ fontSize: 11, color: muted, lineHeight: 1.6, margin: 0 }}>{idea.detail}</p>
-                  </div>
-                ))}
+            </div>
+
+            {/* Card 2: Preform Manufacturing */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                02 · PREFORM MANUFACTURING
+              </p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                GeCl₄ is vaporized and deposited layer by layer inside a silica tube, building up a glass preform rod with a germanium-doped core. This step determines the optical properties of the final fiber.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                The process itself is well understood — nearly 20 manufacturers produce preforms globally. The constraint is equipment. Only one company makes the deposition systems. Adding a new line takes 18–24 months.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                ~20 preform manufacturers globally. Most are vertically integrated — they also draw fiber and assemble cable. Lines running at full utilization.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~24,000t</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>preform produced annually</span>
               </div>
-              {cat.startups.length > 0 && (
-                <div style={{ marginTop: 14, paddingLeft: 2 }}>
-                  <p style={{ fontSize: 9, letterSpacing: "0.06em", color: dimmer, margin: "0 0 8px 0" }}>ALSO WATCHING</p>
-                  <div style={{ display: "flex", flexDirection: "column" as const, gap: 6 }}>
-                    {cat.startups.map((s, si) => (
-                      <div key={si} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                        <span style={{ width: 3, height: 3, borderRadius: "50%", background: dimmer, flexShrink: 0, marginTop: 6 }} />
-                        <p style={{ fontSize: 11, color: muted, lineHeight: 1.5, margin: 0 }}>
-                          <span style={{ color: "#a09888", fontWeight: 500 }}>{s.name}</span>{" \u2014 "}{s.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+            </div>
+
+            {/* Card 3: Draw & Cable Assembly */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                03 · DRAW & CABLE ASSEMBLY
+              </p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                The preform is heated in a draw tower and pulled into hair-thin fiber strands, coated for protection, then bundled with strength members and sheathing into finished cable.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Drawing and assembly are the least constrained steps. The bottleneck is upstream — you can only draw as much fiber as you have preforms. This step scales more easily than the ones before it.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                Most of the ~20 preform manufacturers plus ~10 dedicated cable assemblers who buy fiber strand and bundle it into finished products.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~720M</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>fiber strand-km produced annually</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* ═══ SUPPLY TREE ═══ */}
+        <div id="supply-tree" style={{ marginBottom: "56px", paddingTop: 20 }}>
+          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
+            SUPPLY TREE
+          </p>
+          {/* Key takeaway */}
+          <div style={{ marginBottom: 32 }}>
+            <div style={{ borderLeft: "2px solid #3a6a8030", paddingLeft: 20 }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: "#6a9ab8", margin: "0 0 10px 0" }}>KEY TAKEAWAY</p>
+              <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.3, margin: 0 }}>
+                <span style={{ color: "#ece8e1", fontWeight: 500 }}>~87t</span> of refined germanium enters the fiber supply chain annually — 38% of global supply. Converted to fiber-grade GeCl₄ by just 6 facilities worldwide. 4 in China, 1 in Russia, 1 in the west: Umicore, Belgium — sole supplier to the US, Europe, and Japan. ~20 preform manufacturers deposit GeCl₄ into glass. Corning holds ~40% of fiber manufacturing. Most players vertically integrated to assembly. Total output: <span style={{ color: "#ece8e1", fontWeight: 500 }}>~720M fiber strand-km/yr</span> serving datacenter, telecom, and subsea markets.
+              </p>
+            </div>
+          </div>
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210", position: "relative" as const }}>
+            <button
+              onClick={() => setTreeExpanded(true)}
+              style={{
+                position: "absolute" as const, top: 12, right: 12, zIndex: 5,
+                fontFamily: "'Geist Mono', monospace", fontSize: 9, letterSpacing: "0.04em",
+                color: "#555", background: "rgba(19,18,16,0.8)", border: `1px solid ${borderColor}`,
+                borderRadius: 6, padding: "5px 12px", cursor: "pointer",
+                transition: "color 0.15s, border-color 0.15s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "#3a3835"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = "#555"; e.currentTarget.style.borderColor = borderColor; }}
+            >
+              Expand ↗
+            </button>
+            <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+            <svg viewBox={`0 0 ${subW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+              {subFirstXs.map((tx, i) => { const fx = subW / 2; return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />; })}
+            </svg>
+            <TreeMap geometry={subGeo} nodes={allNodes} layerConfig={lc} svgWidth={subW} svgHeight={subH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+          </div>
+        </div>
+
+        {/* ═══ FULLSCREEN SUPPLY TREE OVERLAY ═══ */}
+        {treeExpanded && (
+          <div style={{
+            position: "fixed", inset: 0, zIndex: 100,
+            background: "#111", overflow: "auto",
+            display: "flex", flexDirection: "column" as const,
+          }}>
+            {/* Header bar */}
+            <div style={{
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              padding: "14px 28px", borderBottom: `1px solid ${borderColor}`, flexShrink: 0,
+            }}>
+              <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: "0.1em", color: dimText }}>
+                FIBER OPTIC CABLE · SUPPLY TREE
+              </span>
+              <button
+                onClick={() => setTreeExpanded(false)}
+                style={{
+                  fontFamily: "'Geist Mono', monospace", fontSize: 9,
+                  color: "#555", background: "none", border: `1px solid ${borderColor}`,
+                  borderRadius: 6, padding: "5px 12px", cursor: "pointer",
+                  transition: "color 0.15s, border-color 0.15s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "#3a3835"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "#555"; e.currentTarget.style.borderColor = borderColor; }}
+              >
+                Close ✕
+              </button>
+            </div>
+            {/* Full tree */}
+            <div style={{ flex: 1, padding: "20px" }}>
+              <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+              <svg viewBox={`0 0 ${subW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+                {subFirstXs.map((tx, i) => { const fx = subW / 2; return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />; })}
+              </svg>
+              <TreeMap geometry={subGeo} nodes={allNodes} layerConfig={lc} svgWidth={subW} svgHeight={subH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+        {/* ═══ DEPENDENCIES ═══ */}
+        <div id="dependencies" style={{ paddingTop: 20 }}>
+
+        <p style={{ fontSize: 20, letterSpacing: "0.06em", color: "#555", margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>DEPENDENCIES</p>
+
+        {/* Upstream table */}
+        <div style={{ marginBottom: 48 }}>
+          <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>UPSTREAM — WHAT GOES INTO FIBER</p>
+          <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
+            {[{ l: "Input", w: "18%" }, { l: "Form", w: "13%" }, { l: "Status", w: "12%" }, { l: "Per km", w: "10%" }, { l: "% of cost", w: "10%" }, { l: "Trend", w: "12%" }, { l: "Cost/km", w: "12%", right: true }].map(h => (
+              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
+            ))}
+          </div>
+          {[
+            { input: "Germanium", form: "as GeCl₄", perKm: "0.12g", costKm: "$0.84", share: "12%", trend: "↑ 4.5x", status: "Constrained", linked: true },
+            { input: "Silicon tetrachloride", form: "SiCl₄ vapor", perKm: "~8g", costKm: "$0.40", share: "6%", trend: "↑ 50%", status: "Tightening", linked: false },
+            { input: "Helium", form: "Ultra-pure gas", perKm: "~0.5L", costKm: "$0.30", share: "4%", trend: "↑ 135%", status: "Constrained", linked: false },
+            { input: "Silica substrate", form: "Glass tube", perKm: "~0.005 tubes", costKm: "$2.50", share: "35%", trend: "Stable", status: "Available", linked: false },
+            { input: "UV coating", form: "Acrylate", perKm: "~0.3g", costKm: "$0.15", share: "2%", trend: "Stable", status: "Available", linked: false },
+            { input: "Energy", form: "Draw tower", perKm: "~0.8 kWh", costKm: "$0.08", share: "1%", trend: "Stable", status: "Available", linked: false },
+            { input: "Labor + overhead", form: "—", perKm: "—", costKm: "$2.50", share: "35%", trend: "—", status: "—", linked: false },
+          ].map((row, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220", cursor: row.linked ? "pointer" : "default", transition: "background 0.15s" }}
+              onMouseEnter={e => { if (row.linked) { e.currentTarget.style.background = "#1a1816"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#ece8e1"; } }}
+              onMouseLeave={e => { if (row.linked) { e.currentTarget.style.background = "transparent"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#a09888"; } }}
+              onClick={() => { if (row.linked) window.location.href = "/input/germanium"; }}
+            >
+              <div style={{ width: "18%", display: "flex", alignItems: "baseline", gap: 6 }}>
+                <p data-name="" style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, transition: "color 0.15s" }}>{row.input}</p>
+                {row.linked && <span style={{ fontSize: 10, color: "#4a4540" }}>→</span>}
+              </div>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>{row.form}</p>
+              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", color: row.status === "Constrained" ? "#8a5a4a" : row.status === "Tightening" ? "#8a7a3a" : row.status === "Available" ? "#4a7a4a" : "#4a4540" }}>{row.status}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.perKm}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
+              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "12%" }}>{row.trend}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "12%", textAlign: "right" as const }}>{row.costKm}</p>
             </div>
           ))}
+          <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0" }}>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>Total production cost</p>
+            <p style={{ margin: 0, width: "13%" }} /><p style={{ margin: 0, width: "12%" }} />
+            <p style={{ margin: 0, width: "10%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
+            <p style={{ margin: 0, width: "12%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const }}>~$6.80</p>
+          </div>
+          <div style={{ borderTop: "1px solid #252220", paddingTop: 14, marginTop: 4 }}>
+            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Three inputs are constrained simultaneously — germanium, SiCl₄, and helium — representing 22% of production cost. Germanium alone has driven a ~40% increase in fiber production cost since January 2024.</p>
+          </div>
         </div>
+
+        {/* Downstream table */}
+        <div style={{ marginBottom: 48 }}>
+          <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>DOWNSTREAM — WHERE FIBER GOES</p>
+          <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
+            {[{ l: "End use", w: "18%" }, { l: "Fiber type", w: "13%" }, { l: "Status", w: "12%" }, { l: "Share", w: "10%" }, { l: "Driver", w: "22%" }, { l: "Demand", w: "12%", right: true }].map(h => (
+              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
+            ))}
+          </div>
+          {[
+            { use: "AI datacenters", fiberType: "G.657A", demand: "~210M km", share: "29%", driver: "GPU cluster interconnect, DCI", status: "Surging" },
+            { use: "Terrestrial telecom", fiberType: "G.652D", demand: "~290M km", share: "40%", driver: "FTTH, 5G backhaul, metro", status: "Stable" },
+            { use: "Subsea cables", fiberType: "G.654E", demand: "~70M km", share: "10%", driver: "Intercontinental capacity", status: "Growing" },
+            { use: "Military / UAV", fiberType: "G.657A", demand: "~55M km", share: "8%", driver: "Drone communication systems", status: "Surging" },
+            { use: "BEAD broadband", fiberType: "G.652D", demand: "~65M km", share: "9%", driver: "Federal rural program, $42B", status: "Ramping" },
+            { use: "Other", fiberType: "Mixed", demand: "~30M km", share: "4%", driver: "Enterprise, industrial, sensing", status: "Stable" },
+          ].map((row, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
+              <p style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, width: "18%" }}>{row.use}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>{row.fiberType}</p>
+              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", color: row.status === "Surging" ? "#8a5a4a" : row.status === "Growing" || row.status === "Ramping" ? "#8a7a3a" : "#4a7a4a" }}>{row.status}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "22%", lineHeight: 1.5 }}>{row.driver}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "12%", textAlign: "right" as const }}>{row.demand}</p>
+            </div>
+          ))}
+          <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>Total</p>
+            <p style={{ margin: 0, width: "13%" }} />
+            <p style={{ margin: 0, width: "12%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
+            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "22%" }}>Every segment stable or growing</p>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const }}>~720M km</p>
+          </div>
+          <div style={{ paddingTop: 14, marginTop: 4 }}>
+            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>AI datacenters and military drones both consume G.657A fiber — competing for the same production lines. Manufacturers are cannibalizing G.652D telecom output for higher-margin G.657A, squeezing telecom operators and the BEAD program simultaneously.</p>
+          </div>
+        </div>
+
+        </div>
+
         {/* ═══ SUPPLY → DEMAND ═══ */}
         <div id="supply-demand" style={{ marginBottom: "56px", paddingTop: 20 }}>
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
@@ -367,8 +552,75 @@ export default function FiberOpticInputPage() {
         })()}
         </div>
 
+        {/* ═══ WHERE THE MONEY IS ═══ */}
+        <div id="money" style={{ marginBottom: "40px", paddingTop: 20 }}>
+          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
+            WHERE THE MONEY IS
+          </p>
+          {([
+            { label: "CHOKEPOINT HOLDERS", desc: "Pricing power today. Control the tightest nodes. No catalyst needed.", ideas: [
+              { name: "Corning", tag: "GLW \u00b7 NYSE", detail: "~40% of global fiber manufacturing. Sold out through 2026. Stopped selling bare glass to competitors. $6B Meta anchor deal. Building world\u2019s largest cable plant. Inventor of Contour cable for AI workloads." },
+              { name: "Umicore", tag: "UMI \u00b7 Euronext Brussels", detail: "Only western GeCl\u2084 converter. Exclusive DRC feedstock offtake. Capturing the 3.5x price arbitrage between Chinese and western germanium. Germanium upside hidden inside a diversified materials company." },
+              { name: "Germanium metal", tag: "Commodity \u00b7 Physical", detail: "Structurally constrained byproduct of zinc mining. $1,500 \u2192 $7,000+/kg in 18 months. Supply fixed at ~230t, 83% Chinese under export licensing." },
+              { name: "Rosendahl Nextrom", tag: "Private \u00b7 Knill Gruppe (Austria)", detail: "Near-monopoly on preform deposition equipment. Defines the capacity ceiling for the entire fiber industry. 18-24 month backlogs. Not directly investable but determines the timeline for everyone else." },
+            ], startups: [] as { name: string; desc: string }[] },
+            { label: "CAPACITY BUILDERS", desc: "Investing to expand supply. Value accrues on execution.", ideas: [
+              { name: "5N Plus", tag: "VNP \u00b7 TSX", detail: "Canadian germanium refiner. $14.4M DoD backing. Facility decision Nov 2026. Binary catalyst: approval roughly doubles western germanium capacity in 2-3 years." },
+              { name: "Prysmian", tag: "PRY \u00b7 Borsa Italiana", detail: "Largest cable manufacturer globally. Acquired North American preform capacity. Renewed Umicore GeCl\u2084 supply at premium. Also lead investor in Relativity Networks (HCF)." },
+              { name: "Corning \u2014 Hickory expansion", tag: "GLW \u00b7 NYSE", detail: "World\u2019s largest optical cable plant under construction. Meta-anchored with $6B multi-year agreement. 18-24 month timeline to full production." },
+            ], startups: [
+              { name: "DRC / G\u00e9camines (STL)", desc: "Big Hill tailings \u2014 14M tonnes of slag. Targeting 30% of global Ge supply. Exclusive Umicore offtake. Value accrues to Umicore, not the mine." },
+              { name: "Kazakhstan \u2014 Pavlodar", desc: "~15t/yr germanium restart. Adds feedstock, not conversion capacity." },
+            ] },
+            { label: "TECHNOLOGY", desc: "Building technology that replaces or improves the value chain. Highest risk, largest potential payoff.", ideas: [
+              { name: "Hollow-core fiber ecosystem", tag: "Thematic", detail: "Eliminates germanium entirely. Light through air, not doped glass. 30% lower latency. ~1,000x current fiber price. Microsoft scaling production with Corning and Heraeus. Pre-commercial but rapidly advancing." },
+              { name: "YOFC", tag: "6869 \u00b7 HKEX", detail: "China\u2019s largest fiber manufacturer. World-record 0.040 dB/km HCF in lab. Dual exposure: benefits from conventional supply tightness today while building HCF optionality long-term." },
+              { name: "Multicore fiber", tag: "Thematic", detail: "4x bandwidth per strand using space division multiplexing. Doesn\u2019t reduce germanium usage per core but multiplies capacity per cable \u2014 easing the strand-km gap without proportional material increase." },
+            ], startups: [
+              { name: "Relativity Networks", desc: "Orlando. HCF startup. $10.7M raised (Prysmian-led seed). Manufacturing at Prysmian\u2019s Eindhoven facility." },
+              { name: "Lumenisity (Microsoft)", desc: "Southampton spin-out acquired by Microsoft Dec 2022. Core HCF R&D. Achieved 0.091 dB/km." },
+              { name: "Lightera (Furukawa Electric)", desc: "Global entity from Furukawa\u2019s optical fiber businesses. Developing HCF splicing tools and multicore fiber ecosystem." },
+              { name: "HFCL Limited", desc: "Indian fiber manufacturer. Partnered with IIT Delhi on DoT-funded HCF research for 6G and quantum communication." },
+              { name: "Heraeus Covantis", desc: "German specialty glass manufacturer. Partnered with Microsoft and Corning on industrial-scale HCF production." },
+            ] },
+          ] as { label: string; desc: string; ideas: { name: string; tag: string; detail: string }[]; startups: { name: string; desc: string }[] }[]).map((cat, ci) => (
+            <div key={ci} style={{ paddingBottom: 32 }}>
+              <div style={{ paddingBottom: 16, borderTop: ci > 0 ? `1px solid ${borderColor}` : "none", paddingTop: ci > 0 ? 28 : 0 }}>
+                <p style={{ fontSize: 10, letterSpacing: "0.08em", color: warmWhite, fontWeight: 500, margin: 0 }}>{cat.label}</p>
+              </div>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" as const }}>
+                {cat.ideas.map((idea, ii) => (
+                  <div key={ii} id={idea.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")} style={{
+                    flex: cat.ideas.length <= 3 ? "1 1 0" : "1 1 calc(25% - 8px)",
+                    minWidth: cat.ideas.length <= 3 ? 0 : 200,
+                    background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "16px 18px",
+                  }}>
+                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
+                    <p style={{ fontSize: 10, color: idea.tag.includes("Private") || idea.tag.includes("Thematic") || idea.tag.includes("Commodity") ? dimmer : accent, margin: "0 0 10px 0" }}>{idea.tag}</p>
+                    <p style={{ fontSize: 11, color: muted, lineHeight: 1.6, margin: 0 }}>{idea.detail}</p>
+                  </div>
+                ))}
+              </div>
+              {cat.startups.length > 0 && (
+                <div style={{ marginTop: 14, paddingLeft: 2 }}>
+                  <p style={{ fontSize: 9, letterSpacing: "0.06em", color: dimmer, margin: "0 0 8px 0" }}>ALSO WATCHING</p>
+                  <div style={{ display: "flex", flexDirection: "column" as const, gap: 6 }}>
+                    {cat.startups.map((s, si) => (
+                      <div key={si} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                        <span style={{ width: 3, height: 3, borderRadius: "50%", background: dimmer, flexShrink: 0, marginTop: 6 }} />
+                        <p style={{ fontSize: 11, color: muted, lineHeight: 1.5, margin: 0 }}>
+                          <span style={{ color: "#a09888", fontWeight: 500 }}>{s.name}</span>{" \u2014 "}{s.desc}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
         {/* ═══ RISK ═══ */}
-        <div style={{ marginBottom: 56, paddingTop: 20 }}>
+        <div id="risk" style={{ marginBottom: 56, paddingTop: 20 }}>
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>RISK</p>
           <div style={{ display: "flex", gap: 16 }}>
             <div style={{ flex: 1 }}>
@@ -410,257 +662,6 @@ export default function FiberOpticInputPage() {
           </div>
         </div>
 
-        {/* ═══ SECTION 2: HOW IT'S MADE ═══ */}
-        <div id="how-its-made" style={{ marginBottom: "56px", paddingTop: 20 }}>
-          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
-            HOW IT&apos;S MADE
-          </p>
-
-          <div style={{ display: "flex", gap: "12px" }}>
-
-            {/* Card 1: GeCl₄ Conversion */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                01 · GeCl₄ CONVERSION
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Refined germanium powder is chemically converted into germanium tetrachloride — a volatile liquid that can be vaporized and deposited into glass to carry light.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Fiber-grade GeCl₄ requires ultra-high purity — specifically removing arsenic contamination. This demands proprietary techniques and specialized equipment that can&apos;t be purchased off the shelf.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                Only 6 facilities worldwide produce fiber-grade GeCl₄. 4 are in China, 1 in Russia, and 1 in the west — a single site in Belgium.
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~220t</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>GeCl₄ produced annually</span>
-              </div>
-            </div>
-
-            {/* Card 2: Preform Manufacturing */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                02 · PREFORM MANUFACTURING
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                GeCl₄ is vaporized and deposited layer by layer inside a silica tube, building up a glass preform rod with a germanium-doped core. This step determines the optical properties of the final fiber.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                The process itself is well understood — nearly 20 manufacturers produce preforms globally. The constraint is equipment. Only one company makes the deposition systems. Adding a new line takes 18–24 months.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                ~20 preform manufacturers globally. Most are vertically integrated — they also draw fiber and assemble cable. Lines running at full utilization.
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~24,000t</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>preform produced annually</span>
-              </div>
-            </div>
-
-            {/* Card 3: Draw & Cable Assembly */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                03 · DRAW & CABLE ASSEMBLY
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                The preform is heated in a draw tower and pulled into hair-thin fiber strands, coated for protection, then bundled with strength members and sheathing into finished cable.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Drawing and assembly are the least constrained steps. The bottleneck is upstream — you can only draw as much fiber as you have preforms. This step scales more easily than the ones before it.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                Most of the ~20 preform manufacturers plus ~10 dedicated cable assemblers who buy fiber strand and bundle it into finished products.
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~720M</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>fiber strand-km produced annually</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        {/* ═══ DEPENDENCIES ═══ */}
-        <div id="dependencies" style={{ paddingTop: 20 }}>
-
-        <p style={{ fontSize: 20, letterSpacing: "0.06em", color: "#555", margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>DEPENDENCIES</p>
-
-        {/* Upstream table */}
-        <div style={{ marginBottom: 48 }}>
-          <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>UPSTREAM — WHAT GOES INTO FIBER</p>
-          <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "Input", w: "18%" }, { l: "Form", w: "13%" }, { l: "Status", w: "12%" }, { l: "Per km", w: "10%" }, { l: "% of cost", w: "10%" }, { l: "Trend", w: "12%" }, { l: "Cost/km", w: "12%", right: true }].map(h => (
-              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
-            ))}
-          </div>
-          {[
-            { input: "Germanium", form: "as GeCl₄", perKm: "0.12g", costKm: "$0.84", share: "12%", trend: "↑ 4.5x", status: "Constrained", linked: true },
-            { input: "Silicon tetrachloride", form: "SiCl₄ vapor", perKm: "~8g", costKm: "$0.40", share: "6%", trend: "↑ 50%", status: "Tightening", linked: false },
-            { input: "Helium", form: "Ultra-pure gas", perKm: "~0.5L", costKm: "$0.30", share: "4%", trend: "↑ 135%", status: "Constrained", linked: false },
-            { input: "Silica substrate", form: "Glass tube", perKm: "~0.005 tubes", costKm: "$2.50", share: "35%", trend: "Stable", status: "Available", linked: false },
-            { input: "UV coating", form: "Acrylate", perKm: "~0.3g", costKm: "$0.15", share: "2%", trend: "Stable", status: "Available", linked: false },
-            { input: "Energy", form: "Draw tower", perKm: "~0.8 kWh", costKm: "$0.08", share: "1%", trend: "Stable", status: "Available", linked: false },
-            { input: "Labor + overhead", form: "—", perKm: "—", costKm: "$2.50", share: "35%", trend: "—", status: "—", linked: false },
-          ].map((row, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220", cursor: row.linked ? "pointer" : "default", transition: "background 0.15s" }}
-              onMouseEnter={e => { if (row.linked) { e.currentTarget.style.background = "#1a1816"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#ece8e1"; } }}
-              onMouseLeave={e => { if (row.linked) { e.currentTarget.style.background = "transparent"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#a09888"; } }}
-              onClick={() => { if (row.linked) window.location.href = "/input/germanium"; }}
-            >
-              <div style={{ width: "18%", display: "flex", alignItems: "baseline", gap: 6 }}>
-                <p data-name="" style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, transition: "color 0.15s" }}>{row.input}</p>
-                {row.linked && <span style={{ fontSize: 10, color: "#4a4540" }}>→</span>}
-              </div>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>{row.form}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", color: row.status === "Constrained" ? "#8a5a4a" : row.status === "Tightening" ? "#8a7a3a" : row.status === "Available" ? "#4a7a4a" : "#4a4540" }}>{row.status}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.perKm}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
-              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "12%" }}>{row.trend}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "12%", textAlign: "right" as const }}>{row.costKm}</p>
-            </div>
-          ))}
-          <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0" }}>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>Total production cost</p>
-            <p style={{ margin: 0, width: "13%" }} /><p style={{ margin: 0, width: "12%" }} />
-            <p style={{ margin: 0, width: "10%" }} />
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
-            <p style={{ margin: 0, width: "12%" }} />
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const }}>~$6.80</p>
-          </div>
-          <div style={{ borderTop: "1px solid #252220", paddingTop: 14, marginTop: 4 }}>
-            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Three inputs are constrained simultaneously — germanium, SiCl₄, and helium — representing 22% of production cost. Germanium alone has driven a ~40% increase in fiber production cost since January 2024.</p>
-          </div>
-        </div>
-
-        {/* Downstream table */}
-        <div style={{ marginBottom: 48 }}>
-          <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>DOWNSTREAM — WHERE FIBER GOES</p>
-          <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "End use", w: "18%" }, { l: "Fiber type", w: "13%" }, { l: "Status", w: "12%" }, { l: "Share", w: "10%" }, { l: "Driver", w: "22%" }, { l: "Demand", w: "12%", right: true }].map(h => (
-              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
-            ))}
-          </div>
-          {[
-            { use: "AI datacenters", fiberType: "G.657A", demand: "~210M km", share: "29%", driver: "GPU cluster interconnect, DCI", status: "Surging" },
-            { use: "Terrestrial telecom", fiberType: "G.652D", demand: "~290M km", share: "40%", driver: "FTTH, 5G backhaul, metro", status: "Stable" },
-            { use: "Subsea cables", fiberType: "G.654E", demand: "~70M km", share: "10%", driver: "Intercontinental capacity", status: "Growing" },
-            { use: "Military / UAV", fiberType: "G.657A", demand: "~55M km", share: "8%", driver: "Drone communication systems", status: "Surging" },
-            { use: "BEAD broadband", fiberType: "G.652D", demand: "~65M km", share: "9%", driver: "Federal rural program, $42B", status: "Ramping" },
-            { use: "Other", fiberType: "Mixed", demand: "~30M km", share: "4%", driver: "Enterprise, industrial, sensing", status: "Stable" },
-          ].map((row, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
-              <p style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, width: "18%" }}>{row.use}</p>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>{row.fiberType}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", color: row.status === "Surging" ? "#8a5a4a" : row.status === "Growing" || row.status === "Ramping" ? "#8a7a3a" : "#4a7a4a" }}>{row.status}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "22%", lineHeight: 1.5 }}>{row.driver}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "12%", textAlign: "right" as const }}>{row.demand}</p>
-            </div>
-          ))}
-          <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>Total</p>
-            <p style={{ margin: 0, width: "13%" }} />
-            <p style={{ margin: 0, width: "12%" }} />
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
-            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "22%" }}>Every segment stable or growing</p>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const }}>~720M km</p>
-          </div>
-          <div style={{ paddingTop: 14, marginTop: 4 }}>
-            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>AI datacenters and military drones both consume G.657A fiber — competing for the same production lines. Manufacturers are cannibalizing G.652D telecom output for higher-margin G.657A, squeezing telecom operators and the BEAD program simultaneously.</p>
-          </div>
-        </div>
-
-        </div>
-
-        {/* ═══ SUPPLY TREE ═══ */}
-        <div id="supply-tree" style={{ marginBottom: "56px", paddingTop: 20 }}>
-          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
-            SUPPLY TREE
-          </p>
-          {/* Key takeaway */}
-          <div style={{ marginBottom: 32 }}>
-            <div style={{ borderLeft: "2px solid #3a6a8030", paddingLeft: 20 }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: "#6a9ab8", margin: "0 0 10px 0" }}>KEY TAKEAWAY</p>
-              <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.3, margin: 0 }}>
-                <span style={{ color: "#ece8e1", fontWeight: 500 }}>~87t</span> of refined germanium enters the fiber supply chain annually — 38% of global supply. Converted to fiber-grade GeCl₄ by just 6 facilities worldwide. 4 in China, 1 in Russia, 1 in the west: Umicore, Belgium — sole supplier to the US, Europe, and Japan. ~20 preform manufacturers deposit GeCl₄ into glass. Corning holds ~40% of fiber manufacturing. Most players vertically integrated to assembly. Total output: <span style={{ color: "#ece8e1", fontWeight: 500 }}>~720M fiber strand-km/yr</span> serving datacenter, telecom, and subsea markets.
-              </p>
-            </div>
-          </div>
-          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210", position: "relative" as const }}>
-            <button
-              onClick={() => setTreeExpanded(true)}
-              style={{
-                position: "absolute" as const, top: 12, right: 12, zIndex: 5,
-                fontFamily: "'Geist Mono', monospace", fontSize: 9, letterSpacing: "0.04em",
-                color: "#555", background: "rgba(19,18,16,0.8)", border: `1px solid ${borderColor}`,
-                borderRadius: 6, padding: "5px 12px", cursor: "pointer",
-                transition: "color 0.15s, border-color 0.15s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "#3a3835"; }}
-              onMouseLeave={e => { e.currentTarget.style.color = "#555"; e.currentTarget.style.borderColor = borderColor; }}
-            >
-              Expand ↗
-            </button>
-            <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
-            <svg viewBox={`0 0 ${subW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
-              {subFirstXs.map((tx, i) => { const fx = subW / 2; return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />; })}
-            </svg>
-            <TreeMap geometry={subGeo} nodes={allNodes} layerConfig={lc} svgWidth={subW} svgHeight={subH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
-          </div>
-        </div>
-
-        {/* ═══ FULLSCREEN SUPPLY TREE OVERLAY ═══ */}
-        {treeExpanded && (
-          <div style={{
-            position: "fixed", inset: 0, zIndex: 100,
-            background: "#111", overflow: "auto",
-            display: "flex", flexDirection: "column" as const,
-          }}>
-            {/* Header bar */}
-            <div style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              padding: "14px 28px", borderBottom: `1px solid ${borderColor}`, flexShrink: 0,
-            }}>
-              <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, letterSpacing: "0.1em", color: dimText }}>
-                FIBER OPTIC CABLE · SUPPLY TREE
-              </span>
-              <button
-                onClick={() => setTreeExpanded(false)}
-                style={{
-                  fontFamily: "'Geist Mono', monospace", fontSize: 9,
-                  color: "#555", background: "none", border: `1px solid ${borderColor}`,
-                  borderRadius: 6, padding: "5px 12px", cursor: "pointer",
-                  transition: "color 0.15s, border-color 0.15s",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "#3a3835"; }}
-                onMouseLeave={e => { e.currentTarget.style.color = "#555"; e.currentTarget.style.borderColor = borderColor; }}
-              >
-                Close ✕
-              </button>
-            </div>
-            {/* Full tree */}
-            <div style={{ flex: 1, padding: "20px" }}>
-              <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
-              <svg viewBox={`0 0 ${subW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
-                {subFirstXs.map((tx, i) => { const fx = subW / 2; return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />; })}
-              </svg>
-              <TreeMap geometry={subGeo} nodes={allNodes} layerConfig={lc} svgWidth={subW} svgHeight={subH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
             </div>
           </div>
         )}
