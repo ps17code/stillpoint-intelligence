@@ -302,6 +302,10 @@ export default function GermaniumInputPage() {
             {/* Full tree */}
             <div style={{ flex: 1, padding: "20px" }}>
               <TreeMap geometry={rawGeo} nodes={allNodes} layerConfig={lc} svgWidth={rawW} svgHeight={rawH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+            </div>
+          </div>
+        )}
+
         {/* DEPENDENCIES */}
         <div id="dependencies" style={{ paddingTop: 20 }}>
 
@@ -590,10 +594,6 @@ export default function GermaniumInputPage() {
             <p style={{ fontSize: 12, color: muted, lineHeight: 1.6, margin: 0 }}>None of the supply-side or demand-side risks resolve before 2027-2028. The structural constraint persists through the investable window.</p>
           </div>
         </div>
-
-            </div>
-          </div>
-        )}
 
         {/* Node modal */}
         <NodeModal
