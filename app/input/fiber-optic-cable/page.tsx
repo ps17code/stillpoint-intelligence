@@ -367,6 +367,49 @@ export default function FiberOpticInputPage() {
         })()}
         </div>
 
+        {/* ═══ RISK ═══ */}
+        <div style={{ marginBottom: 56, paddingTop: 20 }}>
+          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>RISK</p>
+          <div style={{ display: "flex", gap: 16 }}>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: 10, letterSpacing: "0.08em", color: "#4a4540", margin: "0 0 14px 0" }}>WHAT COULD EASE SUPPLY</p>
+              <div style={{ display: "flex", flexDirection: "column" as const, gap: 14 }}>
+                {[
+                  { risk: "Preform capacity expansion arrives", assessment: "New lines ordered now won\u2019t produce until 2028. Rosendahl Nextrom backlogs at 18-24 months. But when capacity does arrive, supply pressure eases." },
+                  { risk: "Germanium supply increases", assessment: "DRC ramp, 5N Plus facility, improved recovery \u2014 all add feedstock. But GeCl\u2084 conversion remains bottlenecked at Umicore." },
+                  { risk: "China lifts germanium export controls", assessment: "Would reduce input costs for western fiber manufacturers. But preform equipment and helium constraints remain independent bottlenecks." },
+                  { risk: "Helium supply stabilizes", assessment: "Qatar North Field and Namibia projects expected 2027-2028. Would remove one of three compounding constraints on draw tower throughput." },
+                ].map((item, i) => (
+                  <div key={i}>
+                    <p style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{item.risk}</p>
+                    <p style={{ fontSize: 11.5, color: muted, lineHeight: 1.6, margin: 0 }}>{item.assessment}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div style={{ width: 1, background: borderColor, flexShrink: 0 }} />
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: 10, letterSpacing: "0.08em", color: "#4a4540", margin: "0 0 14px 0" }}>WHAT COULD SOFTEN DEMAND</p>
+              <div style={{ display: "flex", flexDirection: "column" as const, gap: 14 }}>
+                {[
+                  { risk: "AI infrastructure spending slows", assessment: "Datacenter share of fiber demand rising from 5% to 30%. A correction reduces the growth rate but telecom, BEAD, and defense demand persist independently." },
+                  { risk: "Hollow-core fiber reaches scale", assessment: "Eliminates germanium dependency entirely. Microsoft deploying. But ~20,000 km vs billions installed, ~1,000x standard fiber price. 2030+ risk." },
+                  { risk: "Capacity cannibalization reverses", assessment: "If datacenter demand softens, manufacturers shift back to G.652D telecom fiber. Eases telecom shortage but signals broader demand weakness." },
+                  { risk: "BEAD program delayed further", assessment: "Reduces near-term demand for BABA-compliant fiber. But frees capacity for datacenter builds \u2014 net neutral for total fiber demand." },
+                ].map((item, i) => (
+                  <div key={i}>
+                    <p style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{item.risk}</p>
+                    <p style={{ fontSize: 11.5, color: muted, lineHeight: 1.6, margin: 0 }}>{item.assessment}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div style={{ borderTop: `1px solid ${borderColor}`, paddingTop: 16, marginTop: 20 }}>
+            <p style={{ fontSize: 12, color: muted, lineHeight: 1.6, margin: 0 }}>Three independent bottlenecks \u2014 preform equipment, GeCl\u2084 conversion, and helium \u2014 must all ease simultaneously for supply to normalize. None resolve before 2027.</p>
+          </div>
+        </div>
+
         {/* ═══ SECTION 2: HOW IT'S MADE ═══ */}
         <div id="how-its-made" style={{ marginBottom: "56px", paddingTop: 20 }}>
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>

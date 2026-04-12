@@ -347,6 +347,49 @@ export default function GermaniumInputPage() {
         })()}
         </div>
 
+        {/* RISK */}
+        <div style={{ marginBottom: 56, paddingTop: 20 }}>
+          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>RISK</p>
+          <div style={{ display: "flex", gap: 16 }}>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: 10, letterSpacing: "0.08em", color: "#4a4540", margin: "0 0 14px 0" }}>WHAT COULD EASE SUPPLY</p>
+              <div style={{ display: "flex", flexDirection: "column" as const, gap: 14 }}>
+                {[
+                  { risk: "China lifts export controls", assessment: "Collapses the 3.5x western premium overnight. Currently no diplomatic signal suggesting this \u2014 but the Nov 2026 suspension expiry is a binary event." },
+                  { risk: "DRC ramps faster than expected", assessment: "Could add 30t/yr by 2027-2028. But all flows through Umicore for conversion \u2014 eases feedstock, doesn\u2019t break the bottleneck." },
+                  { risk: "Recovery rates improve at zinc smelters", assessment: "Currently only 10% of germanium captured. Technology exists to push higher \u2014 but requires capex at smelters who treat germanium as a low-priority byproduct." },
+                  { risk: "New deposits discovered or brought online", assessment: "Blue Moon Apex targeting 2028. Even in the best case, 2-3 years from decision to meaningful production. No other western deposits in pipeline." },
+                ].map((item, i) => (
+                  <div key={i}>
+                    <p style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{item.risk}</p>
+                    <p style={{ fontSize: 11.5, color: muted, lineHeight: 1.6, margin: 0 }}>{item.assessment}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div style={{ width: 1, background: borderColor, flexShrink: 0 }} />
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: 10, letterSpacing: "0.08em", color: "#4a4540", margin: "0 0 14px 0" }}>WHAT COULD SOFTEN DEMAND</p>
+              <div style={{ display: "flex", flexDirection: "column" as const, gap: 14 }}>
+                {[
+                  { risk: "AI infrastructure spending slows", assessment: "Recession, bubble correction, or model efficiency breakthroughs reducing compute needs. But fiber demand was growing 5-8% annually before AI. A slowdown reduces severity \u2014 doesn\u2019t create a surplus." },
+                  { risk: "Hollow-core fiber reaches scale", assessment: "Eliminates germanium from fiber optics (38% of demand). Currently ~20,000 km deployed vs billions installed, ~1,000x the price. 2030+ risk at earliest." },
+                  { risk: "Germanium replaced in IR optics", assessment: "LightPath\u2019s BlackDiamond chalcogenide glass. NDAA mandates transition by 2030. Real but multi-year \u2014 and bullish for LightPath, bearish for germanium demand." },
+                  { risk: "PCVD doubles germanium efficiency", assessment: "Reduces demand per fiber-km by ~50%. But MCVD installed base has 25+ year lifespans. Slows demand growth \u2014 doesn\u2019t reverse it." },
+                ].map((item, i) => (
+                  <div key={i}>
+                    <p style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{item.risk}</p>
+                    <p style={{ fontSize: 11.5, color: muted, lineHeight: 1.6, margin: 0 }}>{item.assessment}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div style={{ borderTop: `1px solid ${borderColor}`, paddingTop: 16, marginTop: 20 }}>
+            <p style={{ fontSize: 12, color: muted, lineHeight: 1.6, margin: 0 }}>None of the supply-side or demand-side risks resolve before 2027-2028. The structural constraint persists through the investable window.</p>
+          </div>
+        </div>
+
         {/* HOW IT'S MADE */}
         <div id="how-its-made" style={{ marginBottom: "56px", paddingTop: 20 }}>
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
