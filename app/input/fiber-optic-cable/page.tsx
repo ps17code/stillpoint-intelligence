@@ -134,17 +134,26 @@ export default function FiberOpticInputPage() {
           }}>
             Fiber optic cable
           </h1>
-          {/* Thesis */}
-          <div style={{ marginBottom: "20px" }}>
-            <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: "#555", margin: "0 0 8px 0" }}>THESIS</p>
-            <p style={{ fontSize: "14px", color: "#ece8e1", lineHeight: 1.6, margin: 0 }}>
-              Severe supply constraints across the fiber optic value chain — from raw germanium to preform equipment — are driving prices to 7-year highs and lead times past 60 weeks. The chokepoint holders, capacity builders, and technology developers positioned along this chain stand to profit from a structural deficit that cannot close before 2027.
-            </p>
+          {/* Executive summary */}
+          <div style={{ background: "#1a1816", border: "1px solid #252220", borderRadius: 10, padding: "24px 28px", marginBottom: 56 }}>
+            <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#555", margin: "0 0 16px 0" }}>EXECUTIVE SUMMARY</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
+              {[
+                "Glass strands that transmit data as pulses of light. The physical layer connecting everything inside and between AI datacenters, telecom networks, and cross-ocean subsea systems.",
+                "Doped with germanium to create the refractive index gradient that guides light through the core. Without germanium, fiber is just glass.",
+                "Global production at ~720M fiber strand-km/yr. Preform lines at full utilization. One equipment supplier \u2014 Rosendahl Nextrom \u2014 with 18-24 month backlogs.",
+                "Prices at 7-year highs. G.652D up 70-120%. G.657A datacenter fiber surged 80% in a single month. Lead times past 60 weeks.",
+                "~20 GW of AI datacenter capacity entering construction annually. Each GW requires ~6.5M fiber strand-km. 130M km supply gap that cannot close before 2027.",
+                "New preform capacity, DRC germanium ramp, and hollow-core fiber all target 2027-2028. Supply constraints persist through at least 2027.",
+                "Corning, Umicore, 5N Plus, Prysmian, and Rosendahl Nextrom are the primary names positioned across the chokepoint, capacity expansion, and technology layers of this chain.",
+              ].map((point, i, arr) => (
+                <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
+                  <span style={{ width: 4, height: 4, borderRadius: "50%", background: i === arr.length - 1 ? "#6a9ab8" : "#3a3835", flexShrink: 0, marginTop: 7 }} />
+                  <p style={{ fontSize: 13.5, color: i === arr.length - 1 ? "#ece8e1" : "#a09888", lineHeight: 1.65, margin: 0, fontWeight: i === arr.length - 1 ? 500 : 400 }}>{point}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          {/* Description */}
-          <p style={{ fontSize: "15px", color: "#908880", lineHeight: 1.6, margin: 0 }}>
-            Fiber optic cable transmits data as pulses of light through hair-thin strands of glass. It is the physical layer connecting everything inside and between AI datacenters, telecom networks, and cross-ocean subsea systems. Every GPU cluster, every cloud region, every intercontinental data route depends on fiber.
-          </p>
         </div>
 
         {/* ═══ WHERE THE MONEY IS ═══ */}
@@ -545,7 +554,7 @@ export default function FiberOpticInputPage() {
           <div style={{ marginBottom: 32 }}>
             <div style={{ borderLeft: "2px solid #3a6a8030", paddingLeft: 20 }}>
               <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: "#6a9ab8", margin: "0 0 10px 0" }}>KEY TAKEAWAY</p>
-              <p style={{ fontSize: 12, color: "#a09888", lineHeight: 1.3, margin: 0 }}>
+              <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.3, margin: 0 }}>
                 <span style={{ color: "#ece8e1", fontWeight: 500 }}>~87t</span> of refined germanium enters the fiber supply chain annually — 38% of global supply. Converted to fiber-grade GeCl₄ by just 6 facilities worldwide. 4 in China, 1 in Russia, 1 in the west: Umicore, Belgium — sole supplier to the US, Europe, and Japan. ~20 preform manufacturers deposit GeCl₄ into glass. Corning holds ~40% of fiber manufacturing. Most players vertically integrated to assembly. Total output: <span style={{ color: "#ece8e1", fontWeight: 500 }}>~720M fiber strand-km/yr</span> serving datacenter, telecom, and subsea markets.
               </p>
             </div>

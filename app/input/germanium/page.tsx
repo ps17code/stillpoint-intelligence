@@ -128,17 +128,26 @@ export default function GermaniumInputPage() {
           }}>
             Germanium
           </h1>
-          {/* Thesis */}
-          <div style={{ marginBottom: "20px" }}>
-            <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: "#555", margin: "0 0 8px 0" }}>THESIS</p>
-            <p style={{ fontSize: "14px", color: "#ece8e1", lineHeight: 1.6, margin: 0 }}>
-              Germanium is a trace element that cannot be mined directly &mdash; it is recovered as a byproduct of zinc smelting and coal combustion. Global supply is fixed at ~230 tonnes per year. China controls 83% under export licensing. The only western refiner operates a single facility in Belgium. Price has risen from $1,500 to over $8,500/kg in two years. Every end market &mdash; fiber optics, IR defense optics, satellite solar, semiconductors &mdash; is stable or growing. The chokepoint holders, capacity builders, and substitution plays positioned along this chain stand to profit from a structural deficit with no near-term resolution.
-            </p>
+          {/* Executive summary */}
+          <div style={{ background: "#1a1816", border: "1px solid #252220", borderRadius: 10, padding: "24px 28px", marginBottom: 56 }}>
+            <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#555", margin: "0 0 16px 0" }}>EXECUTIVE SUMMARY</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
+              {[
+                "Trace element recovered as a byproduct of zinc smelting and coal combustion. Cannot be mined directly.",
+                "Doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in infrared defense optics, satellite solar cells, and SiGe semiconductors.",
+                "Global supply fixed at ~230t/yr. 83% Chinese under export licensing. One western refiner \u2014 Umicore, Belgium \u2014 processes all non-Chinese, non-Russian supply through a single facility.",
+                "Price has risen from $1,500/kg to over $8,500/kg in two years. 3.5x premium between western and Chinese markets persists because export controls prevent arbitrage.",
+                "Demand accelerating from AI datacenter fiber buildout, defense IR optics spending, and satellite constellation expansion. Every end market stable or growing.",
+                "No near-term supply relief. Hollow-core fiber, new mine capacity, and DRC feedstock ramp all target 2027-2028 at earliest.",
+                "Umicore, 5N Plus, LightPath Technologies, and Blue Moon Metals are the primary names positioned across the chokepoint, capacity expansion, and substitution layers of this chain.",
+              ].map((point, i, arr) => (
+                <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
+                  <span style={{ width: 4, height: 4, borderRadius: "50%", background: i === arr.length - 1 ? "#6a9ab8" : "#3a3835", flexShrink: 0, marginTop: 7 }} />
+                  <p style={{ fontSize: 13.5, color: i === arr.length - 1 ? "#ece8e1" : "#a09888", lineHeight: 1.65, margin: 0, fontWeight: i === arr.length - 1 ? 500 : 400 }}>{point}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          {/* Description */}
-          <p style={{ fontSize: "15px", color: "#908880", lineHeight: 1.6, margin: 0 }}>
-            A trace metal recovered as a byproduct of zinc smelting and coal combustion. Germanium is never mined directly &mdash; it exists at 50-800 parts per million inside host ores. When doped into glass, it creates the refractive index gradient that allows fiber optic cable to carry light. It is also the substrate for satellite solar cells, the lens material for infrared optics, and the base for SiGe semiconductor devices.
-          </p>
         </div>
 
         {/* WHERE THE MONEY IS */}
@@ -482,7 +491,7 @@ export default function GermaniumInputPage() {
           <div style={{ marginBottom: 32 }}>
             <div style={{ borderLeft: `2px solid ${accent}30`, paddingLeft: 20 }}>
               <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: accent, margin: "0 0 10px 0" }}>KEY TAKEAWAY</p>
-              <p style={{ fontSize: 12, color: "#a09888", lineHeight: 1.3, margin: 0 }}>
+              <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.3, margin: 0 }}>
                 <span style={{ color: "#ece8e1", fontWeight: 500 }}>~230t</span> of germanium enters the global supply chain annually. ~120t from Chinese zinc smelters and coal operations (export controlled since Aug 2023). ~90t from recycling (near maximum recovery). ~11t from Russia (sanctioned). Deposits in Yunnan, Inner Mongolia, DRC tailings, and Alaska feed into ~10 smelter-refiners. Umicore in Belgium is the sole western refiner at scale. All material converges to <span style={{ color: "#ece8e1", fontWeight: 500 }}>5 competing end markets</span> with no demand declining.
               </p>
             </div>
