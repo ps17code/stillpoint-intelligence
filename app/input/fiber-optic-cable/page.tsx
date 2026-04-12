@@ -137,7 +137,7 @@ export default function FiberOpticInputPage() {
           {/* Executive summary */}
           <div style={{ background: "#1a1816", border: "1px solid #252220", borderRadius: 10, padding: "24px 28px", marginBottom: 56 }}>
             <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#555", margin: "0 0 16px 0" }}>EXECUTIVE SUMMARY</p>
-            <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 5 }}>
               {[
                 "Glass strands that transmit data as pulses of light. The physical layer connecting everything inside and between AI datacenters, telecom networks, and cross-ocean subsea systems.",
                 "Doped with germanium to create the refractive index gradient that guides light through the core. Without germanium, fiber is just glass.",
@@ -149,7 +149,7 @@ export default function FiberOpticInputPage() {
               ].map((point, i, arr) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
                   <span style={{ width: 4, height: 4, borderRadius: "50%", background: i === arr.length - 1 ? "#6a9ab8" : "#3a3835", flexShrink: 0, marginTop: 7 }} />
-                  <p style={{ fontSize: 13.5, color: i === arr.length - 1 ? "#ece8e1" : "#a09888", lineHeight: 1.65, margin: 0, fontWeight: i === arr.length - 1 ? 500 : 400 }}>{point}</p>
+                  <p style={{ fontSize: 13.5, color: i === arr.length - 1 ? "#ece8e1" : "#a09888", lineHeight: 1.4, margin: 0, fontWeight: i === arr.length - 1 ? 500 : 300 }}>{point}</p>
                 </div>
               ))}
             </div>
