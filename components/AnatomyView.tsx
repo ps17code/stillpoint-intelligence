@@ -118,7 +118,7 @@ export default function AnatomyView() {
       display: "flex", flexDirection: "column",
       overflow: "auto",
     }}>
-      <div style={{ padding: "0 40px", maxWidth: 1200, margin: "0 auto", width: "100%", transform: "scale(0.8)", transformOrigin: "top center" }}>
+      <div style={{ padding: "0 40px", maxWidth: 1200, margin: "0 auto", width: "100%", transform: "scale(0.8)", transformOrigin: "top center", fontSize: "110%" }}>
 
         {/* Header */}
         <div style={{ padding: "32px 0 28px" }}>
