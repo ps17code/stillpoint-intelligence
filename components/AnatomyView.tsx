@@ -11,7 +11,20 @@ interface InputCard {
   mapped: boolean;
   downstream: string[];
   upstream: string[];
+  status?: string;
 }
+
+const STATUS_COLOR: Record<string, string> = {
+  "Constrained": "#a05a4a",
+  "Tightening": "#9a8540",
+  "Available": "#4a8a55",
+  "Oversupplied": "#5a7a8a",
+};
+
+const INPUT_PAGES: Record<string, string> = {
+  "Germanium": "/input/germanium",
+  "Fiber optic cable": "/input/fiber-optic-cable",
+};
 
 interface LayerRow {
   label: string;
@@ -25,54 +38,54 @@ const LAYERS: LayerRow[] = [
     label: "RAW MATERIALS",
     accent: "#C4A46C",
     cards: [
-      { id: "germanium", name: "Germanium", description: "Trace metal that dopes glass to carry light through fiber optic cable. Essential for all fiber-based connectivity.", players: "Yunnan Chihong, Umicore, 5N Plus, Teck Resources", insight: "Fixed supply, rising AI demand. Structural deficit by 2026. Prices already 2x.", mapped: true, downstream: ["fiber-optic-cable", "connectivity", "datacenter"], upstream: [] },
-      { id: "copper", name: "Copper", description: "Conducts power and signal across every datacenter system \u2014 wiring, bus bars, PCB traces, heat exchangers, and cooling loops.", players: "Codelco, Freeport-McMoRan, BHP, Southern Copper", insight: "", mapped: false, downstream: ["fiber-optic-cable", "server-boards", "power-transformers", "pdu", "liquid-cooling", "chillers", "air-handling", "power", "cooling", "connectivity", "compute", "datacenter"], upstream: [] },
-      { id: "silicon", name: "Silicon", description: "The semiconductor substrate for every chip in the facility \u2014 GPUs, CPUs, memory, networking ASICs, and power management.", players: "Shin-Etsu, SUMCO, Siltronic, SK Siltron", insight: "", mapped: false, downstream: ["gpu", "hbm", "network-switches", "optical-transceivers", "server-boards", "compute", "connectivity", "datacenter"], upstream: [] },
-      { id: "gallium", name: "Gallium", description: "Enables the high-speed laser chips inside optical transceivers that convert electrical signals to light for fiber communication.", players: "China-dominated production, Indium Corp, AXT, Freiberger", insight: "", mapped: false, downstream: ["optical-transceivers", "connectivity", "datacenter"], upstream: [] },
-      { id: "aluminum", name: "Aluminum", description: "Lightweight and thermally conductive. Used in heat sinks, rack frames, cooling assemblies, and structural enclosures.", players: "Alcoa, Rio Tinto, Norsk Hydro, Hindalco", insight: "", mapped: false, downstream: ["liquid-cooling", "air-handling", "rack-enclosures", "cooling", "physical-structure", "datacenter"], upstream: [] },
-      { id: "lithium", name: "Lithium", description: "Powers the battery backup systems that keep datacenters running through grid outages.", players: "Albemarle, SQM, Ganfeng Lithium, Pilbara Minerals", insight: "", mapped: false, downstream: ["ups-battery", "power", "datacenter"], upstream: [] },
-      { id: "tantalum", name: "Tantalum", description: "Used in high-reliability capacitors on server boards that ensure stable power delivery under high temperatures.", players: "AMG Advanced Metallurgical, Global Advanced Metals, Kemet", insight: "", mapped: false, downstream: ["server-boards", "compute", "datacenter"], upstream: [] },
-      { id: "silver", name: "Silver", description: "Highest electrical conductivity of any metal. Used in connectors, solder, and signal-critical pathways where minimal resistance matters.", players: "Fresnillo, Newmont, Pan American Silver, KGHM", insight: "", mapped: false, downstream: ["server-boards", "compute", "datacenter"], upstream: [] },
-      { id: "tin", name: "Tin", description: "The primary material in lead-free solder bonding components to every circuit board in the facility.", players: "Yunnan Tin, PT Timah, Minsur, Alphamin Resources", insight: "", mapped: false, downstream: ["server-boards", "compute", "datacenter"], upstream: [] },
-      { id: "rare-earths", name: "Rare earths", description: "Used to make permanent magnets found in cooling fan motors, hard drive actuators, and generator alternators.", players: "MP Materials, Lynas, China Northern Rare Earth, Shenghe Resources", insight: "", mapped: false, downstream: ["air-handling", "generators", "cooling", "power", "datacenter"], upstream: [] },
+      { id: "germanium", name: "Germanium", status: "Constrained", description: "Trace metal that dopes glass to carry light through fiber optic cable. Essential for all fiber-based connectivity.", players: "Yunnan Chihong, Umicore, 5N Plus, Teck Resources", insight: "Fixed supply, rising AI demand. Structural deficit by 2026. Prices already 2x.", mapped: true, downstream: ["fiber-optic-cable", "connectivity", "datacenter"], upstream: [] },
+      { id: "copper", name: "Copper", status: "Tightening", description: "Conducts power and signal across every datacenter system \u2014 wiring, bus bars, PCB traces, heat exchangers, and cooling loops.", players: "Codelco, Freeport-McMoRan, BHP, Southern Copper", insight: "", mapped: false, downstream: ["fiber-optic-cable", "server-boards", "power-transformers", "pdu", "liquid-cooling", "chillers", "air-handling", "power", "cooling", "connectivity", "compute", "datacenter"], upstream: [] },
+      { id: "silicon", name: "Silicon", status: "Available", description: "The semiconductor substrate for every chip in the facility \u2014 GPUs, CPUs, memory, networking ASICs, and power management.", players: "Shin-Etsu, SUMCO, Siltronic, SK Siltron", insight: "", mapped: false, downstream: ["gpu", "hbm", "network-switches", "optical-transceivers", "server-boards", "compute", "connectivity", "datacenter"], upstream: [] },
+      { id: "gallium", name: "Gallium", status: "Constrained", description: "Enables the high-speed laser chips inside optical transceivers that convert electrical signals to light for fiber communication.", players: "China-dominated production, Indium Corp, AXT, Freiberger", insight: "", mapped: false, downstream: ["optical-transceivers", "connectivity", "datacenter"], upstream: [] },
+      { id: "aluminum", name: "Aluminum", status: "Available", description: "Lightweight and thermally conductive. Used in heat sinks, rack frames, cooling assemblies, and structural enclosures.", players: "Alcoa, Rio Tinto, Norsk Hydro, Hindalco", insight: "", mapped: false, downstream: ["liquid-cooling", "air-handling", "rack-enclosures", "cooling", "physical-structure", "datacenter"], upstream: [] },
+      { id: "lithium", name: "Lithium", status: "Oversupplied", description: "Powers the battery backup systems that keep datacenters running through grid outages.", players: "Albemarle, SQM, Ganfeng Lithium, Pilbara Minerals", insight: "", mapped: false, downstream: ["ups-battery", "power", "datacenter"], upstream: [] },
+      { id: "tantalum", name: "Tantalum", status: "Available", description: "Used in high-reliability capacitors on server boards that ensure stable power delivery under high temperatures.", players: "AMG Advanced Metallurgical, Global Advanced Metals, Kemet", insight: "", mapped: false, downstream: ["server-boards", "compute", "datacenter"], upstream: [] },
+      { id: "silver", name: "Silver", status: "Available", description: "Highest electrical conductivity of any metal. Used in connectors, solder, and signal-critical pathways where minimal resistance matters.", players: "Fresnillo, Newmont, Pan American Silver, KGHM", insight: "", mapped: false, downstream: ["server-boards", "compute", "datacenter"], upstream: [] },
+      { id: "tin", name: "Tin", status: "Available", description: "The primary material in lead-free solder bonding components to every circuit board in the facility.", players: "Yunnan Tin, PT Timah, Minsur, Alphamin Resources", insight: "", mapped: false, downstream: ["server-boards", "compute", "datacenter"], upstream: [] },
+      { id: "rare-earths", name: "Rare earths", status: "Tightening", description: "Used to make permanent magnets found in cooling fan motors, hard drive actuators, and generator alternators.", players: "MP Materials, Lynas, China Northern Rare Earth, Shenghe Resources", insight: "", mapped: false, downstream: ["air-handling", "generators", "cooling", "power", "datacenter"], upstream: [] },
     ],
   },
   {
     label: "COMPONENTS",
     accent: "#9BA8AB",
     cards: [
-      { id: "fiber-optic-cable", name: "Fiber optic cable", description: "Glass strands doped with germanium that carry light signals between servers, racks, buildings, and continents. The physical backbone of all datacenter connectivity.", players: "Umicore (GeCl\u2084), Corning, Prysmian, Sumitomo Electric, Fujikura, YOFC", insight: "", mapped: true, downstream: ["connectivity", "datacenter"], upstream: ["germanium"] },
-      { id: "optical-transceivers", name: "Optical transceivers", description: "Modules that convert electrical signals to light and back. Built on gallium-based laser chips. Every fiber connection in a datacenter needs one on each end.", players: "Coherent, Lumentum, Broadcom, Intel, Cisco", insight: "", mapped: false, downstream: ["connectivity", "datacenter"], upstream: [] },
-      { id: "network-switches", name: "Network switches", description: "Route data between servers and racks at terabit scale. Built around custom silicon ASICs for high-speed packet processing.", players: "Broadcom, Cisco, Arista, Juniper, NVIDIA (Spectrum)", insight: "", mapped: false, downstream: ["connectivity", "datacenter"], upstream: [] },
-      { id: "gpu", name: "GPUs / AI accelerators", description: "Parallel processors that handle AI training and inference workloads. The highest-value and most supply-constrained component in any AI datacenter.", players: "NVIDIA, AMD, Broadcom, Google (TPU), Intel", insight: "", mapped: false, downstream: ["compute", "datacenter"], upstream: [] },
-      { id: "hbm", name: "HBM memory", description: "Memory stacked vertically and bonded directly to GPUs. Enables the data throughput AI workloads require \u2014 without it, GPUs can\u2019t be fed fast enough.", players: "SK Hynix, Samsung, Micron", insight: "", mapped: false, downstream: ["compute", "datacenter"], upstream: [] },
-      { id: "server-boards", name: "Server boards", description: "Circuit boards that connect GPUs, CPUs, memory, and networking into a single server unit.", players: "Foxconn, Quanta, Wiwynn, Supermicro", insight: "", mapped: false, downstream: ["compute", "datacenter"], upstream: [] },
-      { id: "power-transformers", name: "Power transformers", description: "Step down high-voltage utility power to usable datacenter levels. Lead times currently 2-3 years due to competing demand from grid expansion.", players: "Hitachi Energy, Siemens Energy, ABB, GE Vernova", insight: "", mapped: false, downstream: ["power", "datacenter"], upstream: [] },
-      { id: "ups-battery", name: "UPS / battery systems", description: "Battery packs that provide uninterrupted power during grid failures. Lithium-ion cells competing with the EV sector for supply.", players: "Eaton, Vertiv, Schneider Electric, CATL, Samsung SDI", insight: "", mapped: false, downstream: ["power", "datacenter"], upstream: [] },
-      { id: "pdu", name: "Power distribution units", description: "Distribute power from the transformer to individual racks. Bus bars, breakers, and metering in switchgear cabinets.", players: "Eaton, Schneider Electric, Vertiv, Legrand", insight: "", mapped: false, downstream: ["power", "datacenter"], upstream: [] },
-      { id: "generators", name: "Backup generators", description: "Diesel or gas engines that supply emergency power within seconds of a grid outage. Required for uptime SLAs.", players: "Caterpillar, Cummins, Rolls-Royce (MTU), Generac", insight: "", mapped: false, downstream: ["power", "datacenter"], upstream: [] },
-      { id: "liquid-cooling", name: "Liquid cooling systems", description: "Cold plates mounted on GPUs circulate liquid coolant to remove heat. Essential as GPU power density exceeds what air cooling can handle.", players: "Vertiv, CoolIT, GRC, LiquidCool Solutions, Motivair", insight: "", mapped: false, downstream: ["cooling", "datacenter"], upstream: [] },
-      { id: "chillers", name: "Chillers", description: "Refrigeration units that cool the water or coolant circulating through the facility.", players: "Trane (Ingersoll Rand), Carrier, Johnson Controls, Daikin", insight: "", mapped: false, downstream: ["cooling", "datacenter"], upstream: [] },
-      { id: "air-handling", name: "Air handling units", description: "Fan and coil systems that circulate and condition air through server rooms.", players: "Schneider Electric, Vertiv, Stulz, Munters", insight: "", mapped: false, downstream: ["cooling", "datacenter"], upstream: [] },
-      { id: "rack-enclosures", name: "Rack enclosures", description: "Steel and aluminum frames that house servers, switches, and cabling in standardized form factors.", players: "Rittal, Schneider Electric (APC), Vertiv, CPI", insight: "", mapped: false, downstream: ["physical-structure", "datacenter"], upstream: [] },
+      { id: "fiber-optic-cable", name: "Fiber optic cable", status: "Constrained", description: "Glass strands doped with germanium that carry light signals between servers, racks, buildings, and continents. The physical backbone of all datacenter connectivity.", players: "Umicore (GeCl\u2084), Corning, Prysmian, Sumitomo Electric, Fujikura, YOFC", insight: "", mapped: true, downstream: ["connectivity", "datacenter"], upstream: ["germanium"] },
+      { id: "optical-transceivers", name: "Optical transceivers", status: "Constrained", description: "Modules that convert electrical signals to light and back. Built on gallium-based laser chips. Every fiber connection in a datacenter needs one on each end.", players: "Coherent, Lumentum, Broadcom, Intel, Cisco", insight: "", mapped: false, downstream: ["connectivity", "datacenter"], upstream: [] },
+      { id: "network-switches", name: "Network switches", status: "Available", description: "Route data between servers and racks at terabit scale. Built around custom silicon ASICs for high-speed packet processing.", players: "Broadcom, Cisco, Arista, Juniper, NVIDIA (Spectrum)", insight: "", mapped: false, downstream: ["connectivity", "datacenter"], upstream: [] },
+      { id: "gpu", name: "GPUs / AI accelerators", status: "Constrained", description: "Parallel processors that handle AI training and inference workloads. The highest-value and most supply-constrained component in any AI datacenter.", players: "NVIDIA, AMD, Broadcom, Google (TPU), Intel", insight: "", mapped: false, downstream: ["compute", "datacenter"], upstream: [] },
+      { id: "hbm", name: "HBM memory", status: "Constrained", description: "Memory stacked vertically and bonded directly to GPUs. Enables the data throughput AI workloads require \u2014 without it, GPUs can\u2019t be fed fast enough.", players: "SK Hynix, Samsung, Micron", insight: "", mapped: false, downstream: ["compute", "datacenter"], upstream: [] },
+      { id: "server-boards", name: "Server boards", status: "Tightening", description: "Circuit boards that connect GPUs, CPUs, memory, and networking into a single server unit.", players: "Foxconn, Quanta, Wiwynn, Supermicro", insight: "", mapped: false, downstream: ["compute", "datacenter"], upstream: [] },
+      { id: "power-transformers", name: "Power transformers", status: "Constrained", description: "Step down high-voltage utility power to usable datacenter levels. Lead times currently 2-3 years due to competing demand from grid expansion.", players: "Hitachi Energy, Siemens Energy, ABB, GE Vernova", insight: "", mapped: false, downstream: ["power", "datacenter"], upstream: [] },
+      { id: "ups-battery", name: "UPS / battery systems", status: "Available", description: "Battery packs that provide uninterrupted power during grid failures. Lithium-ion cells competing with the EV sector for supply.", players: "Eaton, Vertiv, Schneider Electric, CATL, Samsung SDI", insight: "", mapped: false, downstream: ["power", "datacenter"], upstream: [] },
+      { id: "pdu", name: "Power distribution units", status: "Available", description: "Distribute power from the transformer to individual racks. Bus bars, breakers, and metering in switchgear cabinets.", players: "Eaton, Schneider Electric, Vertiv, Legrand", insight: "", mapped: false, downstream: ["power", "datacenter"], upstream: [] },
+      { id: "generators", name: "Backup generators", status: "Available", description: "Diesel or gas engines that supply emergency power within seconds of a grid outage. Required for uptime SLAs.", players: "Caterpillar, Cummins, Rolls-Royce (MTU), Generac", insight: "", mapped: false, downstream: ["power", "datacenter"], upstream: [] },
+      { id: "liquid-cooling", name: "Liquid cooling systems", status: "Tightening", description: "Cold plates mounted on GPUs circulate liquid coolant to remove heat. Essential as GPU power density exceeds what air cooling can handle.", players: "Vertiv, CoolIT, GRC, LiquidCool Solutions, Motivair", insight: "", mapped: false, downstream: ["cooling", "datacenter"], upstream: [] },
+      { id: "chillers", name: "Chillers", status: "Available", description: "Refrigeration units that cool the water or coolant circulating through the facility.", players: "Trane (Ingersoll Rand), Carrier, Johnson Controls, Daikin", insight: "", mapped: false, downstream: ["cooling", "datacenter"], upstream: [] },
+      { id: "air-handling", name: "Air handling units", status: "Available", description: "Fan and coil systems that circulate and condition air through server rooms.", players: "Schneider Electric, Vertiv, Stulz, Munters", insight: "", mapped: false, downstream: ["cooling", "datacenter"], upstream: [] },
+      { id: "rack-enclosures", name: "Rack enclosures", status: "Available", description: "Steel and aluminum frames that house servers, switches, and cabling in standardized form factors.", players: "Rittal, Schneider Electric (APC), Vertiv, CPI", insight: "", mapped: false, downstream: ["physical-structure", "datacenter"], upstream: [] },
     ],
   },
   {
     label: "SUBSYSTEMS",
     accent: "#B87D5E",
     cards: [
-      { id: "connectivity", name: "Connectivity", description: "The network infrastructure moving data between servers, racks, buildings, and the outside world. Assembled from fiber optic cables, optical transceivers, and network switches into a structured cabling and switching fabric.", players: "Corning, Cisco, Arista, Juniper, CommScope", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
-      { id: "compute", name: "Compute", description: "The processing infrastructure where AI training and inference happens. GPUs, HBM memory, and CPUs assembled onto server boards and mounted into rack-scale systems. The highest-value and most power-hungry subsystem.", players: "NVIDIA, Dell, HPE, Supermicro, Quanta, Wiwynn", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
-      { id: "power", name: "Power", description: "The electrical infrastructure delivering energy from grid to chip. Transformers, distribution units, battery backup, and generators integrated into a redundant power chain. A single facility can draw 100MW+ from the grid.", players: "Eaton, Schneider Electric, Vertiv, ABB, Caterpillar", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
-      { id: "cooling", name: "Cooling", description: "The thermal infrastructure removing heat from high-density compute. Liquid cooling loops, chillers, and air handling working together to keep GPU temperatures stable. Fastest-growing subsystem as rack density increases.", players: "Vertiv, CoolIT, Schneider Electric, Trane, Stulz", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
-      { id: "physical-structure", name: "Physical structure", description: "The building and mechanical infrastructure housing everything. Steel structure, rack enclosures, raised flooring, fire suppression, and physical security. The shell that contains all other subsystems.", players: "Rittal, Schneider Electric, Legrand, various general contractors", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
+      { id: "connectivity", name: "Connectivity", status: "Constrained", description: "The network infrastructure moving data between servers, racks, buildings, and the outside world. Assembled from fiber optic cables, optical transceivers, and network switches into a structured cabling and switching fabric.", players: "Corning, Cisco, Arista, Juniper, CommScope", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
+      { id: "compute", name: "Compute", status: "Constrained", description: "The processing infrastructure where AI training and inference happens. GPUs, HBM memory, and CPUs assembled onto server boards and mounted into rack-scale systems. The highest-value and most power-hungry subsystem.", players: "NVIDIA, Dell, HPE, Supermicro, Quanta, Wiwynn", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
+      { id: "power", name: "Power", status: "Constrained", description: "The electrical infrastructure delivering energy from grid to chip. Transformers, distribution units, battery backup, and generators integrated into a redundant power chain. A single facility can draw 100MW+ from the grid.", players: "Eaton, Schneider Electric, Vertiv, ABB, Caterpillar", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
+      { id: "cooling", name: "Cooling", status: "Tightening", description: "The thermal infrastructure removing heat from high-density compute. Liquid cooling loops, chillers, and air handling working together to keep GPU temperatures stable. Fastest-growing subsystem as rack density increases.", players: "Vertiv, CoolIT, Schneider Electric, Trane, Stulz", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
+      { id: "physical-structure", name: "Physical structure", status: "Available", description: "The building and mechanical infrastructure housing everything. Steel structure, rack enclosures, raised flooring, fire suppression, and physical security. The shell that contains all other subsystems.", players: "Rittal, Schneider Electric, Legrand, various general contractors", insight: "", mapped: false, downstream: ["datacenter"], upstream: [] },
     ],
   },
   {
     label: "END USE",
     accent: "#D4CCBA",
     cards: [
-      { id: "datacenter", name: "AI datacenter", description: "The facility where compute, connectivity, power, cooling, and physical structure come together to run AI workloads at scale. The primary demand driver pulling through every upstream layer.", players: "AWS, Microsoft Azure, Google Cloud, Meta, Oracle, CoreWeave", insight: "", mapped: false, downstream: [], upstream: [] },
+      { id: "datacenter", name: "AI datacenter", status: "Constrained", description: "The facility where compute, connectivity, power, cooling, and physical structure come together to run AI workloads at scale. The primary demand driver pulling through every upstream layer.", players: "AWS, Microsoft Azure, Google Cloud, Meta, Oracle, CoreWeave", insight: "", mapped: false, downstream: [], upstream: [] },
     ],
   },
 ];
@@ -167,135 +180,73 @@ export default function AnatomyView() {
           </a>
         </div>
 
-        {/* Product overview container */}
-        <div style={{
-          border: "1px solid #1e1c18", borderRadius: 12,
-          padding: "24px 24px 16px", background: "rgba(11,11,11,1)",
-        }}>
+        {/* Product overview — table layout */}
+        <div style={{ background: "rgba(11,11,11,1)", border: "1px solid #1e1c18", borderRadius: 12, padding: "24px 24px 16px" }}>
         {LAYERS.map((layer) => (
-          <div key={layer.label} style={{ marginBottom: 24 }}>
-            {/* Layer label */}
-            <div style={{
-              ...MONO, fontSize: 9, fontWeight: 500, letterSpacing: "0.12em",
-              color: layer.accent, marginBottom: 10,
-            }}>
-              {layer.label}
+          <div key={layer.label} style={{ marginBottom: 36 }}>
+            <p style={{ ...MONO, fontSize: 10, letterSpacing: "0.12em", color: layer.accent, margin: "0 0 12px 0" }}>{layer.label}</p>
+            {/* Table header */}
+            <div style={{ display: "flex", padding: "0 0 8px 0", borderBottom: "1px solid #252220" }}>
+              <p style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: "18%" }}>Input</p>
+              <p style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: "37%" }}>Description</p>
+              <p style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: "12%" }}>Supply status</p>
+              <p style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: "33%", textAlign: "right" as const }}>Key companies</p>
             </div>
+            {/* Rows */}
+            {layer.cards.map((card) => {
+              const isSel = selected === card.id;
+              const isConn = connected?.has(card.id);
+              const dimmed = selected !== null && !isSel && !isConn;
+              const isLive = !!INPUT_PAGES[card.name];
+              const isHighlighted = selected !== null && isConn && !isSel;
 
-            {/* Cards row */}
-            <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 4 }}>
-              {layer.cards.map((card) => {
-                const isSel = selected === card.id;
-                const isConn = connected?.has(card.id);
-                const dimmed = selected !== null && !isSel && !isConn;
-
-                const bg = isSel
-                  ? "#1e1c1a"
-                  : isConn ? "#1a1816"
-                  : "#161414";
-                const border = isSel
-                  ? "#3a3835"
-                  : isConn ? "#2a2825"
-                  : "#1e1c1a";
-                const nameColor = isSel ? "#ece8e1" : "#908880";
-
-                return (
-                  <div
-                    key={card.id}
-                    onClick={() => setSelected(prev => prev === card.id ? null : card.id)}
-                    style={{
-                      width: 195, flexShrink: 0,
-                      background: bg,
-                      border: `1px solid ${border}`,
-                      borderRadius: 10,
-                      padding: "14px 16px",
-                      cursor: "pointer",
-                      opacity: dimmed ? 0.15 : (card.mapped || isSel || isConn) ? 1 : 0.6,
-                      transition: "opacity 0.25s ease, background 0.2s ease, border-color 0.2s ease",
-                    }}
-                    onMouseEnter={e => { if (!card.mapped && !isSel && !isConn && !dimmed) e.currentTarget.style.opacity = "1"; }}
-                    onMouseLeave={e => { if (!card.mapped && !isSel && !isConn && !dimmed) e.currentTarget.style.opacity = "0.6"; }}
-                  >
-                    {/* Name */}
-                    <div style={{
-                      fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 500,
-                      color: nameColor, marginBottom: 6,
-                      display: "flex", alignItems: "center", gap: 4,
-                      transition: "color 0.2s",
-                    }}>
-                      {card.name}
-                      {card.mapped && (
-                        <span style={{ fontSize: 8, color: "#555", letterSpacing: "0.06em", padding: "2px 6px", border: "1px solid #252220", borderRadius: 3, marginLeft: 6 }}>LIVE</span>
-                      )}
-                    </div>
-
-                    {/* Description */}
-                    <div style={{
-                      fontFamily: "'DM Sans', sans-serif", fontSize: 10.5, color: "#706a60",
-                      lineHeight: 1.5, marginBottom: 8,
-                    }}>
-                      {card.description}
-                    </div>
-
-                    {/* Insight (only when selected) */}
-                    {isSel && card.insight && (
-                      <div style={{
-                        fontFamily: "'DM Sans', sans-serif", fontSize: 10.5,
-                        color: "#a09888", opacity: 0.7, lineHeight: 1.45,
-                        borderLeft: "2px solid #3a383530",
-                        paddingLeft: 8, marginBottom: 8,
-                      }}>
-                        {card.insight}
-                      </div>
+              return (
+                <div
+                  key={card.id}
+                  style={{
+                    display: "flex", alignItems: "baseline", padding: "12px 8px",
+                    borderBottom: "1px solid #252220",
+                    cursor: "pointer",
+                    opacity: dimmed ? 0.35 : 1,
+                    background: isSel ? "#1a1816" : isHighlighted ? "#161412" : "transparent",
+                    borderLeft: isHighlighted ? "2px solid #333" : "2px solid transparent",
+                    marginLeft: -10, paddingLeft: 8,
+                    transition: "opacity 0.2s, background 0.2s",
+                  }}
+                  onClick={(e) => {
+                    if ((e.target as HTMLElement).closest("[data-name-link]")) return;
+                    setSelected(prev => prev === card.id ? null : card.id);
+                  }}
+                >
+                  <div style={{ width: "18%", display: "flex", alignItems: "baseline", gap: 6 }}>
+                    {isLive ? (
+                      <a data-name-link="true" href={INPUT_PAGES[card.name]} style={{ fontSize: 12, color: isSel ? "#ece8e1" : "#a09888", fontWeight: 500, margin: 0, textDecoration: "none" }}
+                        onMouseEnter={e => { e.currentTarget.style.textDecoration = "underline"; }}
+                        onMouseLeave={e => { e.currentTarget.style.textDecoration = "none"; }}
+                      >{card.name}</a>
+                    ) : (
+                      <p style={{ fontSize: 12, color: isSel ? "#ece8e1" : "#a09888", fontWeight: 500, margin: 0 }}>{card.name}</p>
                     )}
-
-                    {/* Key players */}
-                    <div>
-                      <div style={{
-                        ...MONO, fontSize: 9, color: "#3a3835", letterSpacing: "0.05em", marginBottom: 2,
-                      }}>
-                        Key players
-                      </div>
-                      <div style={{
-                        fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: "#4a4540", lineHeight: 1.45,
-                      }}>
-                        {card.players}
-                      </div>
-                    </div>
-
-                    {/* Dive deeper / Coming soon */}
-                    <div style={{
-                      maxHeight: isSel ? 30 : 0,
-                      opacity: isSel ? 1 : 0,
-                      overflow: "hidden",
-                      transition: "max-height 0.25s ease, opacity 0.2s ease",
-                    }}>
-                      {card.mapped ? (
-                        <div
-                          onClick={(e) => { e.stopPropagation(); window.location.href = `/input/${card.id}`; }}
-                          style={{
-                            ...MONO, fontSize: 9, color: "#ece8e1", letterSpacing: "0.03em",
-                            margin: "10px 0 0 0", cursor: "pointer",
-                          }}
-                        >
-                          Dive deeper →
-                        </div>
-                      ) : (
-                        <div style={{
-                          ...MONO, fontSize: 9, color: "#3a3835", fontStyle: "italic",
-                          margin: "10px 0 0 0",
-                        }}>
-                          Coming soon
-                        </div>
-                      )}
-                    </div>
+                    {isSel && isLive && <span style={{ fontSize: 11, color: "#555" }}>→</span>}
+                    {isLive && !isSel && <span style={{ fontSize: 8, color: "#555", letterSpacing: "0.06em", padding: "1px 5px", border: "1px solid #252220", borderRadius: 3 }}>LIVE</span>}
+                    {isHighlighted && (
+                      <span style={{ fontSize: 9, color: "#4a4540" }}>
+                        {(() => { const selCard = LAYERS.flatMap(l => l.cards).find(c => c.id === selected); return selCard?.downstream.includes(card.id) ? "↓" : "↑"; })()}
+                      </span>
+                    )}
                   </div>
-                );
-              })}
-            </div>
+                  <p style={{ fontSize: 11, color: dimmed ? "#4a4540" : "#706a60", margin: 0, width: "37%", lineHeight: 1.5, paddingRight: 16 }}>{card.description}</p>
+                  <p style={{ fontSize: 11, fontWeight: 500, color: dimmed ? "#2a2620" : (STATUS_COLOR[card.status || ""] || "#4a4540"), margin: 0, width: "12%" }}>{card.status || "—"}</p>
+                  <p style={{ fontSize: 10, color: dimmed ? "#2a2620" : "#4a4540", margin: 0, width: "33%", textAlign: "right" as const, lineHeight: 1.5 }}>{card.players}</p>
+                </div>
+              );
+            })}
           </div>
         ))}
-        </div>{/* end product overview container */}
+        {!selected && (
+          <p style={{ fontSize: 10, color: "#4a4540", textAlign: "center" as const, marginTop: 8 }}>Select any input to see its dependencies across the stack</p>
+        )}
+        </div>{/* end product overview */}
 
         {/* Info bar when selected */}
         {selected && selectedCard && (
