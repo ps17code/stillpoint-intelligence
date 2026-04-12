@@ -316,6 +316,10 @@ export default function FiberOpticInputPage() {
                 {subFirstXs.map((tx, i) => { const fx = subW / 2; return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />; })}
               </svg>
               <TreeMap geometry={subGeo} nodes={allNodes} layerConfig={lc} svgWidth={subW} svgHeight={subH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+            </div>
+          </div>
+        )}
+
         {/* ═══ DEPENDENCIES ═══ */}
         <div id="dependencies" style={{ paddingTop: 20 }}>
 
@@ -662,10 +666,6 @@ export default function FiberOpticInputPage() {
           </div>
         </div>
 
-            </div>
-          </div>
-        )}
-
         {/* Node modal */}
         <NodeModal
           nodeKey={selectedNode}
@@ -675,7 +675,6 @@ export default function FiberOpticInputPage() {
           onClose={() => setSelectedNode(null)}
           onNavigate={() => {}}
         />
-
 
       </div>
     </div>
