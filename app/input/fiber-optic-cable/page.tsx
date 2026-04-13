@@ -65,15 +65,15 @@ export default function FiberOpticInputPage() {
       color: "#908880",
     }}>
       {/* Header */}
-      <div style={{ padding: "18px 28px", borderBottom: "1px solid #1a1816" }}>
-        <button
-          onClick={() => window.history.back()}
-          style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "inline-flex", alignItems: "center", gap: 8 }}
-        >
-          <span style={{ fontSize: "12px", letterSpacing: "0.2em", textTransform: "uppercase" as const }}>
-            <span style={{ color: warmWhite, fontWeight: 500 }}>Stillpoint</span>{" "}
-            <span style={{ color: dimText }}>Intelligence</span>
-          </span>
+      <div style={{
+        height: 42, flexShrink: 0,
+        background: "#131210", borderBottom: "1px solid #252220",
+        display: "flex", alignItems: "center", paddingLeft: 16,
+      }}>
+        <button onClick={() => window.history.back()} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "inline-flex", alignItems: "center" }}>
+          <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 300, letterSpacing: "0.04em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.5)" }}>Stillpoint</span>
+          <span style={{ width: 5, display: "inline-block" }} />
+          <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 200, letterSpacing: "0.04em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.22)" }}>Intelligence</span>
         </button>
       </div>
 

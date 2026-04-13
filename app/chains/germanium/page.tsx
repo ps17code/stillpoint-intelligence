@@ -140,11 +140,11 @@ export default function GermaniumChainPage() {
 
       {/* ── NAV ─────────────────────────────────────────────────────── */}
       <div style={{
-        position: "fixed", top: 0, left: 0, right: 0, height: 36,
-        background: "#111110",
-        borderBottom: "0.5px solid rgba(255,255,255,0.06)",
+        position: "fixed", top: 0, left: 0, right: 0, height: 42,
+        background: "#131210",
+        borderBottom: "1px solid #252220",
         display: "flex", alignItems: "center",
-        zIndex: 100, padding: "0 20px",
+        zIndex: 100, paddingLeft: 16,
       }}>
         <button
           onClick={() => { window.location.href = "/"; }}

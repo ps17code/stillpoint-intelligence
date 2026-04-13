@@ -376,14 +376,14 @@ export default function ExplorePage() {
     <div style={{ minHeight: "100vh", background: "#050504", display: "flex", flexDirection: "column" }}>
       {/* ── NAV ─────────────────────────────────────────────────────── */}
       <div style={{
-        height: 42, background: "#030302",
-        borderBottom: "0.5px solid rgba(255,255,255,0.03)",
-        display: "flex", alignItems: "center", justifyContent: "center", padding: "0 28px",
+        height: 42, background: "#131210",
+        borderBottom: "1px solid #252220",
+        display: "flex", alignItems: "center", paddingLeft: 16,
         flexShrink: 0,
       }}>
-        <span style={{ ...SYS, fontSize: 11, fontWeight: 300, letterSpacing: "0.06em", color: "rgba(255,255,255,0.45)", textTransform: "uppercase" as const }}>Stillpoint</span>
+        <span style={{ ...SYS, fontSize: 11, fontWeight: 300, letterSpacing: "0.04em", color: "rgba(255,255,255,0.5)", textTransform: "uppercase" as const }}>Stillpoint</span>
         <span style={{ display: "inline-block", width: 5 }}/>
-        <span style={{ ...SYS, fontSize: 11, fontWeight: 200, letterSpacing: "0.06em", color: "rgba(255,255,255,0.15)", textTransform: "uppercase" as const }}>Intelligence</span>
+        <span style={{ ...SYS, fontSize: 11, fontWeight: 200, letterSpacing: "0.04em", color: "rgba(255,255,255,0.22)", textTransform: "uppercase" as const }}>Intelligence</span>
       </div>
 
       {/* ── MAIN ────────────────────────────────────────────────────── */}
