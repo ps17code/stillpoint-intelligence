@@ -320,12 +320,14 @@ export default function HomePage() {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    const mW = mount.clientWidth;
+    const mH = mount.clientHeight;
+    renderer.setSize(mW, mH);
     renderer.setClearColor(0x000000, 0);
     mount.appendChild(renderer.domElement);
 
     const scene  = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(46, window.innerWidth / window.innerHeight, 0.1, 100);
+    const camera = new THREE.PerspectiveCamera(46, mW / mH, 0.1, 100);
     camera.position.set(0, 0, 3.2);
 
     scene.add(new THREE.AmbientLight(0xffffff, 0.5));
@@ -462,7 +464,7 @@ export default function HomePage() {
     };
     mount.addEventListener("pointerdown", onPointerDown);
     mount.addEventListener("click",       onClick);
-    const onResize = () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); };
+    const onResize = () => { if (!mount) return; const w = mount.clientWidth; const h = mount.clientHeight; camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h); };
     window.addEventListener("resize", onResize);
 
     let animId: number;
@@ -537,8 +539,10 @@ export default function HomePage() {
           if (worldNormal.dot(camDir) < 0 || no.currentMult < 0.3) return;
           tooltipPos.copy(no.dot.position).applyQuaternion(globeGroup.quaternion);
           tooltipProj.copy(tooltipPos).project(camera);
-          const sx = (tooltipProj.x * 0.5 + 0.5) * window.innerWidth;
-          const sy = (-tooltipProj.y * 0.5 + 0.5) * window.innerHeight;
+          const cw = mount?.clientWidth ?? window.innerWidth;
+          const ch = mount?.clientHeight ?? window.innerHeight;
+          const sx = (tooltipProj.x * 0.5 + 0.5) * cw + (mount?.getBoundingClientRect().left ?? 0);
+          const sy = (-tooltipProj.y * 0.5 + 0.5) * ch;
           const d  = Math.sqrt((sx - mouseScreen.x) ** 2 + (sy - mouseScreen.y) ** 2);
           if (d < closestDist) { closestDist = d; closest = idx; cSX = sx; cSY = sy; }
         });
