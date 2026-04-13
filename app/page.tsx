@@ -621,7 +621,7 @@ export default function HomePage() {
       <div style={{
         height: 42, flexShrink: 0,
         background: "#131210", borderBottom: "1px solid #252220",
-        display: "flex", alignItems: "center", justifyContent: "center",
+        display: "flex", alignItems: "center", paddingLeft: 16,
       }}>
         <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 300, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Stillpoint</span>
         <span style={{ width: 5, display: "inline-block" }} />
@@ -680,6 +680,31 @@ export default function HomePage() {
               </div>
             )}
           </div>
+
+          {/* Explore input button — only when an item is selected */}
+          {panelItem && viewMode === "map" && (
+            <div style={{ position: "absolute", bottom: 20, right: 20, zIndex: 20 }}>
+              <button
+                onClick={() => {
+                  const slug = panelItem.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "");
+                  window.location.href = `/input/${slug}`;
+                }}
+                style={{
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 12,
+                  color: "#ece8e1", background: "#1a1816",
+                  border: "1px solid #252220", borderRadius: 8,
+                  padding: "10px 20px", cursor: "pointer",
+                  display: "flex", alignItems: "center", gap: 8,
+                  transition: "border-color 0.15s, background 0.15s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "#3a3835"; e.currentTarget.style.background = "#1e1c18"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "#252220"; e.currentTarget.style.background = "#1a1816"; }}
+              >
+                {panelItem}
+                <span style={{ fontSize: 11, color: "#706a60" }}>→</span>
+              </button>
+            </div>
+          )}
 
         </div>{/* end main area */}
       </div>{/* end content area */}
