@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
 const MONO: React.CSSProperties = { fontFamily: "'Geist Mono', 'Courier New', monospace" };
 
@@ -17,7 +17,7 @@ const LAYERS = [
   { name: "End use", count: 15 },
 ];
 
-const LAYER_CONTENT: Record<string, { name: string; nodes: number; status: string; verticals: string[] }[]> = {
+export const LAYER_CONTENT: Record<string, { name: string; nodes: number; status: string; verticals: string[] }[]> = {
   "Raw materials": [
     { name: "Germanium", nodes: 7, status: "Constrained", verticals: ["AI Infrastructure", "Space"] },
     { name: "Gallium", nodes: 5, status: "Constrained", verticals: ["AI Infrastructure"] },
@@ -55,18 +55,23 @@ const LAYER_CONTENT: Record<string, { name: string; nodes: number; status: strin
 };
 
 const VERTICALS = [
-  { name: "AI Infrastructure", count: 17, color: "#8a7a5a" },
-  { name: "Robotics", count: 4, color: "#5a6a7a" },
-  { name: "Energy transition", count: 6, color: "#5a7a65" },
-  { name: "UAVs", count: 3, color: "#7a7050" },
-  { name: "Space", count: 2, color: "#7a5a5a" },
+  { name: "AI Infrastructure", count: 17 },
+  { name: "Robotics", count: 4 },
+  { name: "Energy transition", count: 6 },
+  { name: "UAVs", count: 3 },
+  { name: "Space", count: 2 },
 ];
 
-export default function GlobePanel() {
-  const [activeLayer, setActiveLayer] = useState("Raw materials");
-  const [activeItem, setActiveItem] = useState<string | null>(null);
-  const [activeVertical, setActiveVertical] = useState<string | null>(null);
+interface GlobePanelProps {
+  activeLayer: string;
+  activeItem: string | null;
+  activeVertical: string | null;
+  onLayerChange: (layer: string) => void;
+  onItemChange: (item: string | null) => void;
+  onVerticalChange: (vertical: string | null) => void;
+}
 
+export default function GlobePanel({ activeLayer, activeItem, activeVertical, onLayerChange, onItemChange, onVerticalChange }: GlobePanelProps) {
   const allItems = LAYER_CONTENT[activeLayer] || [];
   const items = activeVertical
     ? allItems.filter(item => item.verticals.includes(activeVertical))
@@ -85,14 +90,55 @@ export default function GlobePanel() {
       fontFamily: "'DM Sans', sans-serif",
     }}>
 
+      {/* Global scope indicator */}
+      <div
+        onClick={() => onVerticalChange(null)}
+        style={{
+          fontSize: 13, color: activeVertical ? "#706a60" : "#ece8e1",
+          fontWeight: 500, cursor: "pointer", padding: "4px 8px", marginBottom: 4,
+          borderRadius: 5, background: !activeVertical ? "#1e1c18" : "transparent",
+          transition: "background 0.15s",
+          flexShrink: 0,
+        }}
+      >
+        Global
+      </div>
 
-      {/* Section 1: Layers */}
+      {/* Verticals */}
+      <div style={{ flexShrink: 0, marginBottom: 4 }}>
+        <p style={{ ...MONO, fontSize: 9, letterSpacing: "0.1em", color: "#4a4540", margin: "12px 0 8px 0" }}>VERTICALS</p>
+        {VERTICALS.map((v) => {
+          const isActive = activeVertical === v.name;
+          return (
+            <div
+              key={v.name}
+              onClick={() => { onVerticalChange(isActive ? null : v.name); onItemChange(null); }}
+              style={{
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                padding: "7px 8px", borderRadius: 5, cursor: "pointer",
+                background: isActive ? "#1e1c18" : "transparent",
+                transition: "background 0.15s",
+              }}
+              onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "#1e1c18"; }}
+              onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+            >
+              <span style={{ fontSize: 12, color: isActive ? "#ece8e1" : "#a09888" }}>{v.name}</span>
+              <span style={{ fontSize: 10, color: "#4a4540" }}>{v.count} chains</span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Divider */}
+      <div style={{ height: 1, background: "#252220", margin: "12px 0", flexShrink: 0 }} />
+
+      {/* Layers */}
       <div style={{ flexShrink: 0 }}>
-        <p style={{ ...MONO, fontSize: 9, letterSpacing: "0.1em", color: "#4a4540", margin: "0 0 10px 0" }}>LAYERS</p>
+        <p style={{ ...MONO, fontSize: 9, letterSpacing: "0.1em", color: "#4a4540", margin: "0 0 8px 0" }}>LAYERS</p>
         {LAYERS.map((layer) => (
           <div
             key={layer.name}
-            onClick={() => { setActiveLayer(layer.name); setActiveItem(null); }}
+            onClick={() => { onLayerChange(layer.name); onItemChange(null); }}
             style={{
               display: "flex", alignItems: "center", justifyContent: "space-between",
               padding: "7px 8px", borderRadius: 5, cursor: "pointer",
@@ -109,21 +155,21 @@ export default function GlobePanel() {
       </div>
 
       {/* Divider */}
-      <div style={{ height: 1, background: "#252220", margin: "16px 0", flexShrink: 0 }} />
+      <div style={{ height: 1, background: "#252220", margin: "12px 0", flexShrink: 0 }} />
 
-      {/* Section 2: Dynamic content (scrollable) */}
+      {/* Dynamic content (scrollable) */}
       <div style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
-        <p style={{ ...MONO, fontSize: 9, letterSpacing: "0.1em", color: "#4a4540", margin: "0 0 10px 0", flexShrink: 0 }}>{sectionLabel}</p>
+        <p style={{ ...MONO, fontSize: 9, letterSpacing: "0.1em", color: "#4a4540", margin: "0 0 8px 0", flexShrink: 0 }}>{sectionLabel}</p>
         <div style={{ flex: 1, overflowY: "auto" }}>
           {items.map((item) => {
             const isActive = activeItem === item.name;
             return (
               <div
                 key={item.name}
-                onClick={() => setActiveItem(isActive ? null : item.name)}
+                onClick={() => onItemChange(isActive ? null : item.name)}
                 style={{
                   display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "6px 8px 6px 8px", borderRadius: 5, cursor: "pointer",
+                  padding: "6px 8px", borderRadius: 5, cursor: "pointer",
                   background: isActive ? "#1e1c18" : "transparent",
                   transition: "background 0.15s",
                 }}
@@ -145,37 +191,6 @@ export default function GlobePanel() {
             <p style={{ fontSize: 10, color: "#4a4540", padding: "8px 8px", fontStyle: "italic" }}>No items in this vertical</p>
           )}
         </div>
-      </div>
-
-      {/* Divider */}
-      <div style={{ height: 1, background: "#252220", margin: "16px 0", flexShrink: 0 }} />
-
-      {/* Section 3: Verticals */}
-      <div style={{ flexShrink: 0 }}>
-        <p style={{ ...MONO, fontSize: 9, letterSpacing: "0.1em", color: "#4a4540", margin: "0 0 10px 0" }}>VERTICALS</p>
-        {VERTICALS.map((v) => {
-          const isActive = activeVertical === v.name;
-          return (
-            <div
-              key={v.name}
-              onClick={() => { setActiveVertical(isActive ? null : v.name); setActiveItem(null); }}
-              style={{
-                display: "flex", alignItems: "center", justifyContent: "space-between",
-                padding: "7px 8px", borderRadius: 5, cursor: "pointer",
-                background: isActive ? "#1e1c18" : "transparent",
-                transition: "background 0.15s",
-              }}
-              onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "#1e1c18"; }}
-              onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
-            >
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <div style={{ width: 4, height: 4, borderRadius: "50%", background: v.color, marginRight: 8, opacity: 0.7 }} />
-                <span style={{ fontSize: 11.5, color: isActive ? "#ece8e1" : "#a09888" }}>{v.name}</span>
-              </div>
-              <span style={{ fontSize: 10, color: "#4a4540" }}>{v.count} chains</span>
-            </div>
-          );
-        })}
       </div>
     </div>
   );

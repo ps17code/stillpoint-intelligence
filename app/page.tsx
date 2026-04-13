@@ -27,6 +27,24 @@ function layerFromType(type: string): string {
   return "end-use";
 }
 
+// Map node type to panel layer name
+function panelLayerFromType(type: string): string {
+  if (["deposit", "miner", "refiner"].includes(type))  return "Raw materials";
+  if (["converter", "manufacturer"].includes(type))     return "Components";
+  if (["assembler", "recycler"].includes(type))         return "Subsystems";
+  return "End use";
+}
+
+// Map node type to the item name in the panel (all current nodes are Germanium chain)
+function panelItemFromType(type: string): string {
+  if (["deposit", "miner", "refiner"].includes(type))  return "Germanium";
+  if (["converter"].includes(type))                     return "Fiber optic cable";
+  if (["manufacturer"].includes(type))                  return "Fiber optic cable";
+  if (["assembler"].includes(type))                     return "Connectivity";
+  if (["recycler"].includes(type))                      return "Connectivity";
+  return "AI datacenters";
+}
+
 function hexToRgba(hex: string, alpha: number): string {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
@@ -257,6 +275,15 @@ export default function HomePage() {
   const [hoveredNode,   setHoveredNode]   = useState<{ name: string; type: string; location: string } | null>(null);
   const [domainOpen,    setDomainOpen]    = useState(false);
   const [viewMode,      setViewMode]      = useState<"map" | "anatomy">("map");
+  const [panelLayer,    setPanelLayer]    = useState("Raw materials");
+  const [panelItem,     setPanelItem]     = useState<string | null>(null);
+  const [panelVertical, setPanelVertical] = useState<string | null>(null);
+  const panelFilterRef = useRef({ item: null as string | null, layer: "Raw materials", vertical: null as string | null });
+
+  // Keep ref in sync with state for use in Three.js render loop
+  useEffect(() => {
+    panelFilterRef.current = { item: panelItem, layer: panelLayer, vertical: panelVertical };
+  }, [panelItem, panelLayer, panelVertical]);
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
 
   // ── Helpers ──────────────────────────────────────────────────────────────
@@ -372,7 +399,7 @@ export default function HomePage() {
     };
     const ringGeo = new THREE.RingGeometry(DOT_SIZE * 1.3, DOT_SIZE * 2.2, 32);
 
-    type NodeObj = { dot: THREE.Mesh; ring: THREE.Mesh; ringMat: THREE.MeshBasicMaterial; normal: THREE.Vector3; pulseOffset: number; layer: string; nodeType: string; isKey: boolean; currentMult: number; currentScale: number; currentColor: THREE.Color; shape: string };
+    type NodeObj = { dot: THREE.Mesh; ring: THREE.Mesh; ringMat: THREE.MeshBasicMaterial; normal: THREE.Vector3; pulseOffset: number; layer: string; nodeType: string; isKey: boolean; currentMult: number; currentScale: number; currentColor: THREE.Color; shape: string; panelLayer: string; panelItem: string };
     const nodeObjs: NodeObj[] = [];
     let pOffset = 0;
 
@@ -401,7 +428,7 @@ export default function HomePage() {
       globeGroup.add(ring);
 
       pOffset += 0.8;
-      nodeObjs.push({ dot, ring, ringMat, normal, pulseOffset: pOffset, layer, nodeType: n.type, isKey: n.key, currentMult: 1, currentScale: 1, currentColor, shape });
+      nodeObjs.push({ dot, ring, ringMat, normal, pulseOffset: pOffset, layer, nodeType: n.type, isKey: n.key, currentMult: 1, currentScale: 1, currentColor, shape, panelLayer: panelLayerFromType(n.type), panelItem: panelItemFromType(n.type) });
     });
 
     const nodeByName = Object.fromEntries(NODES.map(n => [n.name, n]));
@@ -480,10 +507,20 @@ export default function HomePage() {
       const lerpK = Math.min(1, delta * 4.5);
       const { selectedLayers, activeSubType, activeSubParent } = filterRef.current;
       const hasSelection = selectedLayers.size > 0;
+      const pf = panelFilterRef.current;
+      const hasPanelFilter = !!pf.item;
 
       nodeObjs.forEach((no) => {
         let targetMult: number, targetScale: number, targetHex: number, ringEnabled: boolean;
-        if (!hasSelection) {
+
+        // Panel item filter takes priority
+        if (hasPanelFilter) {
+          if (no.panelItem === pf.item) {
+            targetMult = 1; targetScale = 1; targetHex = LAYER_COLOR_HEX[no.layer] ?? NEUTRAL_HEX; ringEnabled = true;
+          } else {
+            targetMult = 0.08; targetScale = 1; targetHex = NEUTRAL_HEX; ringEnabled = false;
+          }
+        } else if (!hasSelection) {
           targetMult = 1; targetScale = 1; targetHex = NEUTRAL_HEX; ringEnabled = false;
         } else if (selectedLayers.has(no.layer)) {
           const lc = LAYER_COLOR_HEX[no.layer];
@@ -595,7 +632,7 @@ export default function HomePage() {
       <div style={{ flex: 1, display: "flex", overflow: "hidden" }}>
 
         {/* Left panel — only on map view */}
-        {viewMode === "map" && <GlobePanel />}
+        {viewMode === "map" && <GlobePanel activeLayer={panelLayer} activeItem={panelItem} activeVertical={panelVertical} onLayerChange={setPanelLayer} onItemChange={setPanelItem} onVerticalChange={setPanelVertical} />}
 
         {/* Main area */}
         <div style={{ flex: 1, position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
