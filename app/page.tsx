@@ -5,8 +5,8 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as topojson from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
-import ChainDirectory from "@/components/ChainDirectory";
 import AnatomyView from "@/components/AnatomyView";
+import GlobePanel from "@/components/GlobePanel";
 
 const R = 1;
 
@@ -574,14 +574,13 @@ export default function HomePage() {
   const expandedKey  = hoveredSub ?? activeSubKey;
 
   return (
-    <div style={{ background: "#161414", width: "100vw", height: "100vh", overflow: "hidden", position: "relative" }}>
+    <div style={{ background: "#161414", width: "100vw", height: "100vh", overflow: "hidden", display: "flex" }}>
 
-      {/* Brand header — centered */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 40, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10 }}>
-        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 300, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Stillpoint</span>
-        <span style={{ width: 5, display: "inline-block" }} />
-        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 200, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)" }}>Intelligence</span>
-      </div>
+      {/* Left panel */}
+      <GlobePanel />
+
+      {/* Main area */}
+      <div style={{ flex: 1, position: "relative" }}>
 
       {/* View toggle */}
       <div style={{
@@ -627,165 +626,8 @@ export default function HomePage() {
         )}
       </div>
 
-      {/* ── Left navigation — dropdown column ─────────────────────────────────── */}
-      <div style={{ position: "absolute", left: 36, top: "50%", transform: "translateY(-50%)", zIndex: 20, display: viewMode === "map" ? "block" : "none" }}>
-        <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 18, fontWeight: 500, color: "rgba(255,255,255,0.8)", marginBottom: 16 }}>
-          AI Infrastructure
-        </div>
 
-        {/* Domain filter accordion */}
-        <div>
-          <div
-            onClick={() => setDomainOpen(prev => !prev)}
-            onMouseEnter={() => setHovered("l1:domain")}
-            onMouseLeave={() => setHovered(null)}
-            style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 0", cursor: "pointer" }}
-          >
-            <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 12, fontWeight: domainOpen ? 500 : 400, color: domainOpen ? "rgba(255,255,255,0.7)" : hovered === "l1:domain" ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.4)", transition: "color 0.2s ease", whiteSpace: "nowrap" as const }}>
-              Domain
-            </span>
-          </div>
-          {domainOpen && (
-            <div style={{ padding: "4px 0 6px 22px", borderLeft: "0.5px solid rgba(255,255,255,0.04)", marginLeft: 7, animation: "fadeInDown 0.25s ease" }}>
-              {([
-                { id: "connectivity", label: "Connectivity", dot: "rgba(100,200,140,0.35)" },
-                { id: "power",        label: "Power",        dot: "rgba(196,164,108,0.35)" },
-                { id: "compute",      label: "Compute",      dot: "rgba(100,150,200,0.35)" },
-                { id: "cooling",      label: "Cooling",      dot: "rgba(100,180,210,0.35)" },
-                { id: "physical",     label: "Physical",     dot: "rgba(155,168,171,0.25)" },
-              ] as const).map(d => {
-                const isActive = selectedDomain === d.id;
-                const isHov = hovered === `domain:${d.id}`;
-                return (
-                  <div
-                    key={d.id}
-                    onClick={() => setSelectedDomain(prev => prev === d.id ? null : d.id)}
-                    onMouseEnter={() => setHovered(`domain:${d.id}`)}
-                    onMouseLeave={() => setHovered(null)}
-                    style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 0", cursor: "pointer" }}
-                  >
-                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: d.dot, flexShrink: 0, opacity: isActive ? 1 : 0.7 }} />
-                    <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, fontWeight: 500, color: isActive ? "rgba(255,255,255,0.7)" : isHov ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.35)", transition: "color 0.12s ease", whiteSpace: "nowrap" as const }}>
-                      {d.label}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
-        {PORTAL_DATA.map((parent) => {
-          const selChildId  = selectedL2.get(parent.id) ?? null;
-          const selChild    = selChildId ? parent.children.find(c => c.id === selChildId) ?? null : null;
-          const isStateC    = !!selChild;
-          const isStateB    = !isStateC && openDropdown === parent.id;
-          const isHovParent = hovered === `l1:${parent.id}`;
-          const lc          = LAYER_COLORS[parent.id];
-
-          // Line styling
-          const lineBackground = (isStateC || isStateB) ? lc : "rgba(255,255,255,0.08)";
-          const lineOpacity    = isStateB ? 0.4 : 1;
-
-          // Name styling
-          const nameText   = isStateC ? selChild!.label : parent.label;
-          const nameColor  = (isStateC || isStateB) ? lc : (isHovParent ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.4)");
-          const nameOpacity= isStateB ? 0.6 : 1;
-          const nameWeight = (isStateC || isStateB) ? 500 : 400;
-
-          return (
-            <div key={parent.id}>
-              {/* Parent row */}
-              <div
-                onClick={() => handleParentClick(parent.id)}
-                onMouseEnter={() => setHovered(`l1:${parent.id}`)}
-                onMouseLeave={() => setHovered(null)}
-                style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 0", cursor: "pointer" }}
-              >
-                <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 12, fontWeight: nameWeight, color: nameColor, opacity: nameOpacity, transition: "color 0.2s ease, opacity 0.2s ease", whiteSpace: "nowrap" }}>
-                  {nameText}
-                </span>
-              </div>
-
-              {/* State B — material dropdown (in-flow, pushes siblings down) */}
-              {isStateB && (
-                <div
-                  style={{ padding: "4px 0 6px 22px", borderLeft: `0.5px solid ${hexToRgba(lc, 0.08)}`, marginLeft: 7, animation: "fadeInDown 0.25s ease" }}
-                >
-                  {parent.children.map((child) => {
-                    const isUnavail = !child.status;
-                    const isHovCh   = hovered === `l2:${parent.id}/${child.id}` && !isUnavail;
-                    return (
-                      <div
-                        key={child.id}
-                        onClick={() => handleSelectMaterial(parent.id, child.id, child.status)}
-                        onMouseEnter={() => !isUnavail && setHovered(`l2:${parent.id}/${child.id}`)}
-                        onMouseLeave={() => setHovered(null)}
-                        style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 0", cursor: isUnavail ? "default" : "pointer" }}
-                      >
-                        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, color: isHovCh ? "rgba(255,255,255,0.65)" : isUnavail ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.4)", transition: "color 0.12s ease", whiteSpace: "nowrap" }}>
-                          {child.label}
-                        </span>
-                        {child.status && (
-                          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 6, textTransform: "uppercase" as const, letterSpacing: "0.05em", padding: "1.5px 5px", color: child.status === "Live" ? "#7DA06A" : "rgba(255,255,255,0.15)", background: child.status === "Live" ? "rgba(125,160,106,0.1)" : "rgba(255,255,255,0.03)" }}>
-                            {child.status}
-                          </span>
-                        )}
-                        {child.count !== null && (
-                          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.12)" }}>{child.count}</span>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-
-              {/* State C — sub-layer list (replaces dropdown) */}
-              {isStateC && selChild!.sublayers && (
-                <div style={{ padding: "4px 0 4px 22px", borderLeft: `0.5px solid ${hexToRgba(lc, 0.08)}`, marginLeft: 7, animation: "fadeInDown 0.25s ease" }}>
-                  {selChild!.sublayers.map((sub) => {
-                    const subKey    = `${parent.id}/${sub.id}`;
-                    const isActive  = activeL3?.parentId === parent.id && activeL3?.nodeType === sub.id;
-                    const isHovSub  = hoveredSub === subKey;
-                    const isExpanded= expandedKey === subKey;
-
-                    return (
-                      <div
-                        key={sub.id}
-                        onClick={() => handleSelectL3(parent.id, sub.id)}
-                        onMouseEnter={() => setHoveredSub(subKey)}
-                        onMouseLeave={() => setHoveredSub(null)}
-                        style={{ padding: "5px 0 5px 6px", cursor: "pointer", background: isActive ? hexToRgba(lc, 0.04) : "transparent", borderRadius: 3, transition: "background 0.15s ease" }}
-                      >
-                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                          {/* Shape icon teaches the visual language */}
-                          <ShapeIcon shape={SUB_SHAPE[sub.id] ?? "circle"} color={isActive || isHovSub ? lc : "rgba(255,255,255,0.2)"} />
-                          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 10, fontWeight: 500, color: (isActive || isHovSub) ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.45)", transition: "color 0.12s ease", whiteSpace: "nowrap" }}>
-                            {sub.label}
-                          </span>
-                          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.25)" }}>{sub.count}</span>
-                        </div>
-                        {/* Description — expands on hover (preview) or click (sticky) */}
-                        <div style={{ display: "grid", gridTemplateRows: isExpanded ? "1fr" : "0fr", opacity: isExpanded ? 1 : 0, transition: "grid-template-rows 0.2s ease, opacity 0.2s ease", maxWidth: 300 }}>
-                          <div style={{ overflow: "hidden" }}>
-                            <p style={{ margin: "4px 0 2px 0", fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, color: "rgba(255,255,255,0.35)", lineHeight: 1.6 }}>
-                              {sub.desc}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* ── Chain directory ───────────────────────────────────────────────────── */}
-      <ChainDirectory />
-
+      </div>{/* end main area */}
     </div>
   );
 }
