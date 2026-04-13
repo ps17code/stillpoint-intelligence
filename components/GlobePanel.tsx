@@ -85,12 +85,6 @@ export default function GlobePanel() {
       fontFamily: "'DM Sans', sans-serif",
     }}>
 
-      {/* Logo */}
-      <div style={{ textAlign: "center", marginBottom: 24, flexShrink: 0 }}>
-        <span style={{ fontSize: 11, fontWeight: 300, letterSpacing: "0.04em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.5)" }}>Stillpoint</span>
-        <span style={{ display: "inline-block", width: 5 }} />
-        <span style={{ fontSize: 11, fontWeight: 200, letterSpacing: "0.04em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.22)" }}>Intelligence</span>
-      </div>
 
       {/* Section 1: Layers */}
       <div style={{ flexShrink: 0 }}>

@@ -578,60 +578,74 @@ export default function HomePage() {
   const expandedKey  = hoveredSub ?? activeSubKey;
 
   return (
-    <div style={{ background: "#161414", width: "100vw", height: "100vh", overflow: "hidden", display: "flex" }}>
+    <div style={{ background: "#161414", width: "100vw", height: "100vh", overflow: "hidden", display: "flex", flexDirection: "column" }}>
 
-      {/* Left panel */}
-      <GlobePanel />
-
-      {/* Main area */}
-      <div style={{ flex: 1, position: "relative" }}>
-
-      {/* View toggle */}
+      {/* Header */}
       <div style={{
-        position: "absolute", top: 10, right: 28, zIndex: 20,
-        background: "#1a1816", border: "1px solid #252220", borderRadius: 8, padding: 2,
-        display: "flex", gap: 0,
+        height: 42, flexShrink: 0,
+        background: "#131210", borderBottom: "1px solid #252220",
+        display: "flex", alignItems: "center", justifyContent: "center",
       }}>
-        {(["map", "anatomy"] as const).map(mode => {
-          const active = viewMode === mode;
-          return (
-            <button
-              key={mode}
-              onClick={() => setViewMode(mode)}
-              style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.05em",
-                background: active ? "#252220" : "transparent",
-                color: active ? "#ece8e1" : "#555",
-                border: "none", borderRadius: 6, padding: "5px 14px",
-                cursor: "pointer", transition: "color 0.15s, background 0.15s",
-                textTransform: "capitalize" as const,
-              }}
-            >
-              {mode === "map" ? "Map" : "Anatomy"}
-            </button>
-          );
-        })}
+        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 300, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Stillpoint</span>
+        <span style={{ width: 5, display: "inline-block" }} />
+        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 200, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)" }}>Intelligence</span>
       </div>
 
-      {/* Globe */}
-      <div ref={mountRef} style={{ position: "absolute", inset: 0, cursor: hoveredNode ? "crosshair" : "grab", display: viewMode === "map" ? "block" : "none" }} />
+      {/* Content area below header */}
+      <div style={{ flex: 1, display: "flex", overflow: "hidden" }}>
 
-      {/* Anatomy view */}
-      {viewMode === "anatomy" && <AnatomyView />}
+        {/* Left panel — only on map view */}
+        {viewMode === "map" && <GlobePanel />}
 
-      {/* Hover tooltip */}
-      <div ref={tooltipRef} style={{ position: "absolute", pointerEvents: "none", zIndex: 30, opacity: hoveredNode && viewMode === "map" ? 1 : 0, transition: "opacity 0.1s ease", transform: "translate(-50%, -100%)", left: 0, top: 0 }}>
-        {hoveredNode && (
-          <div style={{ background: "rgba(20,20,18,0.92)", border: "0.5px solid rgba(255,255,255,0.08)", padding: "6px 10px" }}>
-            <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 10, fontWeight: 500, color: "rgba(255,255,255,0.7)", marginBottom: 2 }}>{hoveredNode.name}</div>
-            <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7, color: TYPE_DISPLAY[hoveredNode.type].color, marginBottom: 1 }}>{TYPE_DISPLAY[hoveredNode.type].label}</div>
-            <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7, color: "rgba(255,255,255,0.25)" }}>{hoveredNode.location}</div>
+        {/* Main area */}
+        <div style={{ flex: 1, position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
+
+          {/* View toggle — top right */}
+          <div style={{
+            position: "absolute", top: 10, right: 20, zIndex: 20,
+            background: "#1a1816", border: "1px solid #252220", borderRadius: 8, padding: 2,
+            display: "flex", gap: 0,
+          }}>
+            {(["map", "anatomy"] as const).map(mode => {
+              const active = viewMode === mode;
+              return (
+                <button
+                  key={mode}
+                  onClick={() => setViewMode(mode)}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.05em",
+                    background: active ? "#252220" : "transparent",
+                    color: active ? "#ece8e1" : "#555",
+                    border: "none", borderRadius: 6, padding: "5px 14px",
+                    cursor: "pointer", transition: "color 0.15s, background 0.15s",
+                    textTransform: "capitalize" as const,
+                  }}
+                >
+                  {mode === "map" ? "Map" : "Anatomy"}
+                </button>
+              );
+            })}
           </div>
-        )}
-      </div>
 
+          {/* Globe */}
+          <div ref={mountRef} style={{ position: "absolute", inset: 0, cursor: hoveredNode ? "crosshair" : "grab", display: viewMode === "map" ? "block" : "none" }} />
 
-      </div>{/* end main area */}
+          {/* Anatomy view */}
+          {viewMode === "anatomy" && <AnatomyView />}
+
+          {/* Hover tooltip */}
+          <div ref={tooltipRef} style={{ position: "absolute", pointerEvents: "none", zIndex: 30, opacity: hoveredNode && viewMode === "map" ? 1 : 0, transition: "opacity 0.1s ease", transform: "translate(-50%, -100%)", left: 0, top: 0 }}>
+            {hoveredNode && (
+              <div style={{ background: "rgba(20,20,18,0.92)", border: "0.5px solid rgba(255,255,255,0.08)", padding: "6px 10px" }}>
+                <div style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 10, fontWeight: 500, color: "rgba(255,255,255,0.7)", marginBottom: 2 }}>{hoveredNode.name}</div>
+                <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7, color: TYPE_DISPLAY[hoveredNode.type].color, marginBottom: 1 }}>{TYPE_DISPLAY[hoveredNode.type].label}</div>
+                <div style={{ fontFamily: "'Geist Mono', monospace", fontSize: 7, color: "rgba(255,255,255,0.25)" }}>{hoveredNode.location}</div>
+              </div>
+            )}
+          </div>
+
+        </div>{/* end main area */}
+      </div>{/* end content area */}
     </div>
   );
 }
