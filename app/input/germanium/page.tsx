@@ -51,7 +51,7 @@ export default function GermaniumInputPage() {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
-  const accent = "#c9a84c";
+  const accent = "#81713c";
   const warmWhite = "#ece8e1";
   const muted = "#706a60";
   const dimText = "#555";
@@ -543,7 +543,7 @@ export default function GermaniumInputPage() {
               ].map((point, i, arr) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
                   <span style={{ width: 4, height: 4, borderRadius: "50%", background: i === arr.length - 1 ? "#6a9ab8" : "#3a3835", flexShrink: 0, marginTop: 7 }} />
-                  <p style={{ fontSize: 13.5, color: i === arr.length - 1 ? "#ece8e1" : "#a09888", lineHeight: 1.4, margin: 0, fontWeight: i === arr.length - 1 ? 500 : 300 }}>{point}</p>
+                  <p style={{ fontSize: 13.5, color: i === arr.length - 1 ? "#dad9d8" : "#a09888", lineHeight: 1.4, margin: 0, fontWeight: 300 }}>{point}</p>
                 </div>
               ))}
             </div>
@@ -714,7 +714,7 @@ export default function GermaniumInputPage() {
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>DOWNSTREAM &mdash; WHERE GERMANIUM GOES</p>
           <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "Product", w: "16%" }, { l: "Usage", w: "10%" }, { l: "Est. value", w: "10%" }, { l: "Share", w: "8%" }, { l: "End uses", w: "34%" }, { l: "Growth", w: "10%", right: true }].map(h => (
+            {[{ l: "Product", w: "25%" }, { l: "Usage", w: "10%" }, { l: "Est. value", w: "10%" }, { l: "Share", w: "10%" }, { l: "End uses", w: "34%" }, { l: "Growth", w: "10%", right: true }].map(h => (
               <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as { right?: boolean }).right ? "right" as const : undefined }}>{h.l}</p>
             ))}
           </div>
@@ -730,22 +730,22 @@ export default function GermaniumInputPage() {
               onMouseLeave={e => { if (row.linked) { e.currentTarget.style.background = "transparent"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#a09888"; } }}
               onClick={() => { if (row.linked) window.location.href = "/input/fiber-optic-cable"; }}
             >
-              <div style={{ width: "16%", display: "flex", alignItems: "baseline", gap: 6 }}>
+              <div style={{ width: "25%", display: "flex", alignItems: "baseline", gap: 6 }}>
                 <p data-name="" style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, transition: "color 0.15s" }}>{row.product}</p>
                 {row.linked && <span style={{ fontSize: 10, color: "#4a4540" }}>&rarr;</span>}
               </div>
               <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>{row.usage}</p>
               <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>{row.value}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "8%" }}>{row.share}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
               <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "34%", lineHeight: 1.5 }}>{row.endUses}</p>
               <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const, color: row.growth === "Surging" ? "#8a5a4a" : row.growth === "Growing" ? "#8a7a3a" : "#4a7a4a" }}>{row.growth}</p>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "16%" }}>Total</p>
-            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>~230t/yr</p>
-            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>~$1.98B</p>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "8%" }}>100%</p>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "25%" }}>Total</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~230t/yr</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~$1.98B</p>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
             <p style={{ margin: 0, width: "34%" }} />
             <p style={{ fontSize: 10, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const }}>All growing</p>
           </div>
@@ -794,7 +794,7 @@ export default function GermaniumInputPage() {
         {(() => {
           const body = "#a09888";
           const analysisBg = "#141210";
-          const gold = "#c9a84c";
+          const gold = "#81713c";
           const soWhatBlocks: { id: string; label: string; question: string; teaser: string; analysis: { type: string; text?: string; author?: string; name?: string; desc?: string }[] }[] = [
             { id: "signals", label: "Market signals", question: "What is the price telling us?", teaser: "$1,500 \u2192 $8,500+/kg in two years. 4x spread between Chinese and western markets. No futures market. Physical commodity with no hedging mechanism.", analysis: [
                 { type: "prose", text: "Germanium prices have risen from approximately $1,500/kg in early 2024 to over $8,500/kg in international markets \u2014 a 5.7x increase in two years. This is not a speculative bubble: germanium has no futures market, no ETF, no derivatives. The price is set by physical transactions between a small number of producers and consumers." },
