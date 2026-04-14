@@ -124,8 +124,8 @@ export default function FiberOpticInputPage() {
           { name: "Helium", linked: false, href: "" },
         ].map((item, i) => (
           <div key={`u${i}`} onClick={() => { if (item.linked) window.location.href = item.href; }}
-            style={{ display: "flex", alignItems: "center", padding: "4px 0 4px 12px", cursor: item.linked ? "pointer" : "default" }}>
-            <span style={{ fontSize: 12, color: item.linked ? "#a09888" : "#4a4540", transition: "color 0.15s" }}
+            style={{ display: "flex", alignItems: "center", padding: "1px 0 1px 12px", cursor: item.linked ? "pointer" : "default" }}>
+            <span style={{ fontSize: 10, color: item.linked ? "#a09888" : "#4a4540", transition: "color 0.15s" }}
               onMouseEnter={e => { if (item.linked) e.currentTarget.style.color = "#ece8e1"; }}
               onMouseLeave={e => { if (item.linked) e.currentTarget.style.color = "#a09888"; }}>
               {item.name}
@@ -139,8 +139,8 @@ export default function FiberOpticInputPage() {
           { name: "Subsea cables" },
           { name: "Military / UAV" },
         ].map((item, i) => (
-          <div key={`d${i}`} style={{ display: "flex", alignItems: "center", padding: "4px 0 4px 12px" }}>
-            <span style={{ fontSize: 12, color: "#4a4540" }}>{item.name}</span>
+          <div key={`d${i}`} style={{ display: "flex", alignItems: "center", padding: "1px 0 1px 12px" }}>
+            <span style={{ fontSize: 10, color: "#4a4540" }}>{item.name}</span>
           </div>
         ))}
       </nav>
