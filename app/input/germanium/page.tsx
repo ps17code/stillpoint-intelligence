@@ -714,38 +714,40 @@ export default function GermaniumInputPage() {
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>DOWNSTREAM &mdash; WHERE GERMANIUM GOES</p>
           <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "Product", w: "18%" }, { l: "Usage", w: "13%" }, { l: "Share", w: "10%" }, { l: "End uses", w: "24%" }, { l: "Growth", w: "12%", right: true }].map(h => (
+            {[{ l: "Product", w: "16%" }, { l: "Usage", w: "10%" }, { l: "Est. value", w: "10%" }, { l: "Share", w: "8%" }, { l: "End uses", w: "34%" }, { l: "Growth", w: "10%", right: true }].map(h => (
               <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as { right?: boolean }).right ? "right" as const : undefined }}>{h.l}</p>
             ))}
           </div>
           {[
-            { product: "Fiber optic cable", usage: "~87t/yr", share: "38%", endUses: "AI datacenters, telecom, subsea, UAVs", growth: "Surging", linked: true },
-            { product: "IR optics", usage: "~55t/yr", share: "24%", endUses: "Thermal imaging, missile guidance", growth: "Growing", linked: false },
-            { product: "Satellite solar cells", usage: "~35t/yr", share: "15%", endUses: "Space systems, LEO constellations", growth: "Growing", linked: false },
-            { product: "SiGe semiconductors", usage: "~25t/yr", share: "11%", endUses: "5G RF, radar, electronic warfare", growth: "Stable", linked: false },
-            { product: "Other", usage: "~28t/yr", share: "12%", endUses: "Catalysts, phosphors, PET", growth: "Stable", linked: false },
+            { product: "Fiber optic cable", usage: "~87t/yr", value: "~$748M", share: "38%", endUses: "AI datacenters, telecom, subsea, UAVs", growth: "Surging", linked: true },
+            { product: "IR optics", usage: "~55t/yr", value: "~$473M", share: "24%", endUses: "Thermal imaging, missile guidance", growth: "Growing", linked: false },
+            { product: "Satellite solar cells", usage: "~35t/yr", value: "~$301M", share: "15%", endUses: "Space systems, LEO constellations", growth: "Growing", linked: false },
+            { product: "SiGe semiconductors", usage: "~25t/yr", value: "~$215M", share: "11%", endUses: "5G RF, radar, electronic warfare", growth: "Stable", linked: false },
+            { product: "Other", usage: "~28t/yr", value: "~$241M", share: "12%", endUses: "Catalysts, phosphors, PET", growth: "Stable", linked: false },
           ].map((row, i) => (
             <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220", cursor: row.linked ? "pointer" : "default", transition: "background 0.15s" }}
               onMouseEnter={e => { if (row.linked) { e.currentTarget.style.background = "#1a1816"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#ece8e1"; } }}
               onMouseLeave={e => { if (row.linked) { e.currentTarget.style.background = "transparent"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#a09888"; } }}
               onClick={() => { if (row.linked) window.location.href = "/input/fiber-optic-cable"; }}
             >
-              <div style={{ width: "18%", display: "flex", alignItems: "baseline", gap: 6 }}>
+              <div style={{ width: "16%", display: "flex", alignItems: "baseline", gap: 6 }}>
                 <p data-name="" style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, transition: "color 0.15s" }}>{row.product}</p>
                 {row.linked && <span style={{ fontSize: 10, color: "#4a4540" }}>&rarr;</span>}
               </div>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>{row.usage}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "24%", lineHeight: 1.5 }}>{row.endUses}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const, color: row.growth === "Surging" ? "#8a5a4a" : row.growth === "Growing" ? "#8a7a3a" : "#4a7a4a" }}>{row.growth}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>{row.usage}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>{row.value}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "8%" }}>{row.share}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "34%", lineHeight: 1.5 }}>{row.endUses}</p>
+              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const, color: row.growth === "Surging" ? "#8a5a4a" : row.growth === "Growing" ? "#8a7a3a" : "#4a7a4a" }}>{row.growth}</p>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>Total</p>
-            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>~230t/yr</p>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
-            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "24%" }}>Every segment stable or growing</p>
-            <p style={{ margin: 0, width: "12%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "16%" }}>Total</p>
+            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>~230t/yr</p>
+            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>~$1.98B</p>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "8%" }}>100%</p>
+            <p style={{ margin: 0, width: "34%" }} />
+            <p style={{ fontSize: 10, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const }}>All growing</p>
           </div>
           <div style={{ paddingTop: 14, marginTop: 4 }}>
             <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Fiber optics is the dominant consumer at 38% of supply. All five end markets are stable or growing. No demand destruction pathway exists on a 2-3 year horizon. Substitution (BlackDiamond for IR, hollow-core for fiber) is real but arrives after the deficit peaks.</p>
@@ -908,7 +910,7 @@ export default function GermaniumInputPage() {
               { id: "stl-gecamines", name: "STL / G\u00e9camines", ticker: "Private \u00b7 DRC", category: "Feedstock supplier", line1: "Largest new non-Chinese germanium source in development \u2014 14M tonnes of slag, 700+ tonnes Ge potential.", line2: "First germanium concentrates exported October 2024. Targeting 30% of global supply. Exclusive Umicore offtake \u2014 all value accrues to Umicore, not the mine." },
               { id: "germanium-metal", name: "Germanium metal", ticker: "Physical commodity", category: "Direct exposure", line1: "$1,500 \u2192 $8,500+/kg in two years on relatively fixed global supply of ~230t/yr.", line2: "Nov 2026 ban review is a binary event for the entire chain. No futures market, no exchange pricing \u2014 all OTC. 3.5x spread between Chinese domestic and western market price." },
             ].map((idea, i) => (
-              <div key={idea.id} style={{ display: "flex", background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "18px 22px", transition: "border-color 0.15s", cursor: "pointer" }}
+              <div key={idea.id} style={{ display: "flex", background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "10px 20px", transition: "border-color 0.15s", cursor: "pointer" }}
                 onClick={() => setActiveIdea(idea.id)}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = "#333"; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
@@ -920,8 +922,8 @@ export default function GermaniumInputPage() {
                 </div>
                 <div style={{ width: 1, background: "#2a2620", flexShrink: 0, marginRight: 20 }} />
                 <div style={{ flex: 1, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
-                  <p style={{ fontSize: 12.5, color: "#c4bdb2", lineHeight: 1.6, margin: "0 0 4px 0", fontWeight: 500 }}>{idea.line1}</p>
-                  <p style={{ fontSize: 12, color: "#a09888", lineHeight: 1.6, margin: 0 }}>{idea.line2}</p>
+                  <p style={{ fontSize: 12, color: "#c4bdb2", lineHeight: 1.6, margin: "0 0 4px 0", fontWeight: 500 }}>{idea.line1}</p>
+                  <p style={{ fontSize: 11, color: "#a09888", lineHeight: 1.6, margin: 0 }}>{idea.line2}</p>
                 </div>
               </div>
             ))}
