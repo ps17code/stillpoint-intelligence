@@ -539,7 +539,7 @@ export default function GermaniumInputPage() {
                 "Price has risen from $1,500/kg to over $8,500/kg in two years. 3.5x premium between western and Chinese markets persists because export controls prevent arbitrage.",
                 "Demand accelerating from AI datacenter fiber buildout, defense IR optics spending, and satellite constellation expansion. Every end market stable or growing.",
                 "No near-term supply relief. Hollow-core fiber, new mine capacity, and DRC feedstock ramp all target 2027-2028 at earliest.",
-                "Umicore, 5N Plus, LightPath Technologies, and Blue Moon Metals are the primary names positioned across the chokepoint, capacity expansion, and substitution layers of this chain.",
+                "Eight entities control the western germanium value chain. Several are positioned to capture outsized value from a supply gap driven by an AI boom.",
               ].map((point, i, arr) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
                   <span style={{ width: 4, height: 4, borderRadius: "50%", background: i === arr.length - 1 ? "#6a9ab8" : "#3a3835", flexShrink: 0, marginTop: 7 }} />
