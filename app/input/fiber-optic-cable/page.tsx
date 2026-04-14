@@ -561,67 +561,36 @@ export default function FiberOpticInputPage() {
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
             WHERE THE MONEY IS
           </p>
-          {([
-            { label: "CHOKEPOINT HOLDERS", desc: "Pricing power today. Control the tightest nodes. No catalyst needed.", ideas: [
-              { name: "Corning", tag: "GLW \u00b7 NYSE", detail: "~40% of global fiber manufacturing. Sold out through 2026. Stopped selling bare glass to competitors. $6B Meta anchor deal. Building world\u2019s largest cable plant. Inventor of Contour cable for AI workloads." },
-              { name: "Umicore", tag: "UMI \u00b7 Euronext Brussels", detail: "Only western GeCl\u2084 converter. Exclusive DRC feedstock offtake. Capturing the 3.5x price arbitrage between Chinese and western germanium. Germanium upside hidden inside a diversified materials company." },
-              { name: "Germanium metal", tag: "Commodity \u00b7 Physical", detail: "Structurally constrained byproduct of zinc mining. $1,500 \u2192 $7,000+/kg in 18 months. Supply fixed at ~230t, 83% Chinese under export licensing." },
-              { name: "Rosendahl Nextrom", tag: "Private \u00b7 Knill Gruppe (Austria)", detail: "Near-monopoly on preform deposition equipment. Defines the capacity ceiling for the entire fiber industry. 18-24 month backlogs. Not directly investable but determines the timeline for everyone else." },
-            ], startups: [] as { name: string; desc: string }[] },
-            { label: "CAPACITY BUILDERS", desc: "Investing to expand supply. Value accrues on execution.", ideas: [
-              { name: "5N Plus", tag: "VNP \u00b7 TSX", detail: "Canadian germanium refiner. $14.4M DoD backing. Facility decision Nov 2026. Binary catalyst: approval roughly doubles western germanium capacity in 2-3 years." },
-              { name: "Prysmian", tag: "PRY \u00b7 Borsa Italiana", detail: "Largest cable manufacturer globally. Acquired North American preform capacity. Renewed Umicore GeCl\u2084 supply at premium. Also lead investor in Relativity Networks (HCF)." },
-              { name: "Corning \u2014 Hickory expansion", tag: "GLW \u00b7 NYSE", detail: "World\u2019s largest optical cable plant under construction. Meta-anchored with $6B multi-year agreement. 18-24 month timeline to full production." },
-            ], startups: [
-              { name: "DRC / G\u00e9camines (STL)", desc: "Big Hill tailings \u2014 14M tonnes of slag. Targeting 30% of global Ge supply. Exclusive Umicore offtake. Value accrues to Umicore, not the mine." },
-              { name: "Kazakhstan \u2014 Pavlodar", desc: "~15t/yr germanium restart. Adds feedstock, not conversion capacity." },
-            ] },
-            { label: "TECHNOLOGY", desc: "Building technology that replaces or improves the value chain. Highest risk, largest potential payoff.", ideas: [
-              { name: "Hollow-core fiber ecosystem", tag: "Thematic", detail: "Eliminates germanium entirely. Light through air, not doped glass. 30% lower latency. ~1,000x current fiber price. Microsoft scaling production with Corning and Heraeus. Pre-commercial but rapidly advancing." },
-              { name: "YOFC", tag: "6869 \u00b7 HKEX", detail: "China\u2019s largest fiber manufacturer. World-record 0.040 dB/km HCF in lab. Dual exposure: benefits from conventional supply tightness today while building HCF optionality long-term." },
-              { name: "Multicore fiber", tag: "Thematic", detail: "4x bandwidth per strand using space division multiplexing. Doesn\u2019t reduce germanium usage per core but multiplies capacity per cable \u2014 easing the strand-km gap without proportional material increase." },
-            ], startups: [
-              { name: "Relativity Networks", desc: "Orlando. HCF startup. $10.7M raised (Prysmian-led seed). Manufacturing at Prysmian\u2019s Eindhoven facility." },
-              { name: "Lumenisity (Microsoft)", desc: "Southampton spin-out acquired by Microsoft Dec 2022. Core HCF R&D. Achieved 0.091 dB/km." },
-              { name: "Lightera (Furukawa Electric)", desc: "Global entity from Furukawa\u2019s optical fiber businesses. Developing HCF splicing tools and multicore fiber ecosystem." },
-              { name: "HFCL Limited", desc: "Indian fiber manufacturer. Partnered with IIT Delhi on DoT-funded HCF research for 6G and quantum communication." },
-              { name: "Heraeus Covantis", desc: "German specialty glass manufacturer. Partnered with Microsoft and Corning on industrial-scale HCF production." },
-            ] },
-          ] as { label: string; desc: string; ideas: { name: string; tag: string; detail: string }[]; startups: { name: string; desc: string }[] }[]).map((cat, ci) => (
-            <div key={ci} style={{ paddingBottom: 32 }}>
-              <div style={{ paddingBottom: 16, borderTop: ci > 0 ? `1px solid ${borderColor}` : "none", paddingTop: ci > 0 ? 28 : 0 }}>
-                <p style={{ fontSize: 10, letterSpacing: "0.08em", color: warmWhite, fontWeight: 500, margin: 0 }}>{cat.label}</p>
-              </div>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" as const }}>
-                {cat.ideas.map((idea, ii) => (
-                  <div key={ii} id={idea.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")} style={{
-                    flex: cat.ideas.length <= 3 ? "1 1 0" : "1 1 calc(25% - 8px)",
-                    minWidth: cat.ideas.length <= 3 ? 0 : 200,
-                    background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "16px 18px",
-                  }}>
-                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
-                    <p style={{ fontSize: 10, color: idea.tag.includes("Private") || idea.tag.includes("Thematic") || idea.tag.includes("Commodity") ? dimmer : accent, margin: "0 0 10px 0" }}>{idea.tag}</p>
-                    <p style={{ fontSize: 11, color: muted, lineHeight: 1.6, margin: 0 }}>{idea.detail}</p>
-                  </div>
-                ))}
-              </div>
-              {cat.startups.length > 0 && (
-                <div style={{ marginTop: 14, paddingLeft: 2 }}>
-                  <p style={{ fontSize: 9, letterSpacing: "0.06em", color: dimmer, margin: "0 0 8px 0" }}>ALSO WATCHING</p>
-                  <div style={{ display: "flex", flexDirection: "column" as const, gap: 6 }}>
-                    {cat.startups.map((s, si) => (
-                      <div key={si} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                        <span style={{ width: 3, height: 3, borderRadius: "50%", background: dimmer, flexShrink: 0, marginTop: 6 }} />
-                        <p style={{ fontSize: 11, color: muted, lineHeight: 1.5, margin: 0 }}>
-                          <span style={{ color: "#a09888", fontWeight: 500 }}>{s.name}</span>{" \u2014 "}{s.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+
+          <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
+            {[
+              { name: "Corning", ticker: "GLW \u00b7 NYSE", category: "Chokepoint holder", line1: "~40% of global fiber manufacturing capacity. Inventor of Contour cable for AI datacenter workloads.", line2: "Sold out through 2026. Stopped selling bare glass to competitors. $6B Meta anchor deal. Building world\u2019s largest cable plant in Hickory, NC. Pricing power from structural shortage." },
+              { name: "Umicore", ticker: "UMI \u00b7 Euronext", category: "Chokepoint holder", line1: "Only western GeCl\u2084 converter. Sole supplier to every western and Japanese fiber manufacturer.", line2: "Exclusive DRC feedstock offtake. Capturing 3.5x arbitrage between Chinese and western germanium. Recycling monopoly through closed-loop tolling. Germanium upside hidden inside \u20ac3.9B diversified company." },
+              { name: "5N Plus", ticker: "VNP \u00b7 TSX", category: "Capacity builder", line1: "Canadian germanium refiner with $14.4M DoD backing. Facility decision November 2026.", line2: "Approval roughly doubles western germanium capacity in 2-3 years. ~$300M market cap. The single most binary catalyst for western supply independence." },
+              { name: "Prysmian", ticker: "PRY \u00b7 Borsa Italiana", category: "Capacity builder", line1: "Largest cable manufacturer globally. Vertically integrated from preform to installed cable.", line2: "Acquired North American preform capacity. Renewed Umicore GeCl\u2084 supply at premium. Lead investor in Relativity Networks (HCF startup). Positioned across conventional tightness and next-gen optionality." },
+              { name: "Rosendahl Nextrom", ticker: "Private \u00b7 Knill Gruppe (Austria)", category: "Chokepoint holder", line1: "Near-monopoly on preform deposition equipment \u2014 MCVD, PCVD, OVD, VAD systems.", line2: "Defines the capacity ceiling for the entire fiber industry. 18-24 month delivery backlogs. Hundreds of systems delivered since 1990. Not directly investable but determines the timeline for everyone else." },
+              { name: "YOFC", ticker: "6869 \u00b7 HKEX", category: "Technology", line1: "China\u2019s largest fiber manufacturer. World-record 0.040 dB/km hollow-core fiber in lab.", line2: "3,500t/yr preform capacity. Dual exposure: benefits from conventional supply tightness today while building HCF optionality. 91.2 km drawn from a single preform. Also developing multicore fiber." },
+              { name: "Hollow-core fiber ecosystem", ticker: "Thematic", category: "Technology", line1: "Eliminates germanium from fiber entirely. Light through air, not doped glass. 30% lower latency.", line2: "Microsoft deploying on Azure (1,280 km, zero failures). Relativity Networks ($10.7M raised, Prysmian-backed). Lumenisity (Microsoft acquisition). ~1,000x current fiber price. Pre-commercial but rapidly advancing." },
+              { name: "Germanium metal", ticker: "Physical commodity", category: "Direct exposure", line1: "$1,500 \u2192 $7,000+/kg in 18 months. Supply fixed at ~230t, 83% Chinese under export licensing.", line2: "No futures market. All OTC. 3.5x spread between Chinese domestic and western pricing persists because export controls prevent arbitrage. Nov 2026 ban expiry is binary event." },
+            ].map((idea, i) => (
+              <div key={i} style={{ display: "flex", background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "18px 22px", transition: "border-color 0.15s", cursor: "default" }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "#333"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
+              >
+                <div style={{ width: 180, flexShrink: 0, paddingRight: 20, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
+                  <p style={{ fontSize: 13.5, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
+                  <p style={{ fontSize: 10.5, color: muted, margin: "0 0 6px 0", letterSpacing: "0.02em" }}>{idea.ticker}</p>
+                  <p style={{ fontSize: 9, color: dimText, letterSpacing: "0.06em", margin: 0, textTransform: "uppercase" as const }}>{idea.category}</p>
                 </div>
-              )}
-            </div>
-          ))}
+                <div style={{ width: 1, background: "#2a2620", flexShrink: 0, marginRight: 20 }} />
+                <div style={{ flex: 1, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
+                  <p style={{ fontSize: 12.5, color: "#c4bdb2", lineHeight: 1.6, margin: "0 0 4px 0", fontWeight: 500 }}>{idea.line1}</p>
+                  <p style={{ fontSize: 12, color: "#a09888", lineHeight: 1.6, margin: 0 }}>{idea.line2}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
         {/* ═══ RISK ═══ */}
         <div id="risk" style={{ marginBottom: 56, paddingTop: 20 }}>

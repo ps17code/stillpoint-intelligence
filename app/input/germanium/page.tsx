@@ -493,63 +493,40 @@ export default function GermaniumInputPage() {
         </div>
 
         {/* WHERE THE MONEY IS */}
-        <div id="money" style={{ marginBottom: "40px", paddingTop: 20 }}>
+        <div id="money" style={{ marginBottom: "56px", paddingTop: 20 }}>
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
             WHERE THE MONEY IS
           </p>
-          {([
-            { label: "CHOKEPOINT HOLDERS", desc: "Pricing power today. Control the tightest nodes. No catalyst needed.", ideas: [
-              { name: "Umicore", tag: "UMI.BR", detail: "Sole western germanium refiner at scale. Olen, Belgium. >50% from recycled scrap. Exclusive DRC offtake. Capturing 3.5x price arbitrage. Germanium upside hidden inside \u20AC3.9B diversified company." },
-              { name: "Germanium metal", tag: "Commodity \u00b7 Physical", detail: "$1,500 \u2192 $8,500+/kg in two years. 4x spread between Chinese and western markets. No futures market. Nov 2026 ban expiry is binary event." },
-              { name: "Yunnan Chihong", tag: "600497.SH", detail: "China\u2019s largest Ge producer. ~66t/yr. State-owned Chinalco subsidiary. Domestic pricing creates 15-20% structural cost advantage for Chinese fiber manufacturers." },
-            ], startups: [] as { name: string; desc: string }[] },
-            { label: "CAPACITY BUILDERS", desc: "Investing to expand supply. Value accrues on execution.", ideas: [
-              { name: "5N Plus", tag: "VNP \u00b7 TSX", detail: "Canadian germanium refiner. $14.4M DoD backing. Facility decision Nov 2026. Approval roughly doubles western capacity. Binary catalyst." },
-              { name: "DRC / G\u00e9camines", tag: "Offtake", detail: "Big Hill tailings. 14M tonnes of slag. 700+ tonnes Ge potential. Target: 30% of global supply. Exclusive Umicore offtake." },
-            ], startups: [] as { name: string; desc: string }[] },
-            { label: "TECHNOLOGY", desc: "Building technology that replaces or improves the value chain. Highest risk, largest potential payoff.", ideas: [
-              { name: "LightPath Technologies", tag: "LPTH \u00b7 NASDAQ", detail: "BlackDiamond chalcogenide glass replaces germanium in IR optics. FQ2 2026 revenue $16.4M (+120% YoY). NDAA mandates eliminating foreign optical glass by Jan 2030." },
-              { name: "Blue Moon Metals", tag: "MOON \u00b7 TSXV", detail: "Acquired Apex mine in Utah from Teck (March 2026). First dedicated US germanium mine if it reaches production ~2028." },
-              { name: "KoBold Metals", tag: "Private", detail: "AI-driven mineral exploration. $537M Series C. Could find new deposits but 10-15 year timeline." },
-            ], startups: [
-              { name: "Indium Corporation", desc: "US-based germanium recycler. Smaller scale than Umicore." },
-              { name: "Teck Resources (TECK)", desc: "Red Dog mine in Alaska. Only US germanium source. Declining deposit." },
-            ] },
-          ] as { label: string; desc: string; ideas: { name: string; tag: string; detail: string }[]; startups: { name: string; desc: string }[] }[]).map((cat, ci) => (
-            <div key={ci} style={{ paddingBottom: 32 }}>
-              <div style={{ paddingBottom: 16, borderTop: ci > 0 ? `1px solid ${borderColor}` : "none", paddingTop: ci > 0 ? 28 : 0 }}>
-                <p style={{ fontSize: 10, letterSpacing: "0.08em", color: warmWhite, fontWeight: 500, margin: 0 }}>{cat.label}</p>
-              </div>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" as const }}>
-                {cat.ideas.map((idea, ii) => (
-                  <div key={ii} id={idea.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")} style={{
-                    flex: cat.ideas.length <= 3 ? "1 1 0" : "1 1 calc(25% - 8px)",
-                    minWidth: cat.ideas.length <= 3 ? 0 : 200,
-                    background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "16px 18px",
-                  }}>
-                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
-                    <p style={{ fontSize: 10, color: idea.tag.includes("Private") || idea.tag.includes("Thematic") || idea.tag.includes("Commodity") || idea.tag.includes("Offtake") ? dimmer : accent, margin: "0 0 10px 0" }}>{idea.tag}</p>
-                    <p style={{ fontSize: 11, color: muted, lineHeight: 1.6, margin: 0 }}>{idea.detail}</p>
-                  </div>
-                ))}
-              </div>
-              {cat.startups.length > 0 && (
-                <div style={{ marginTop: 14, paddingLeft: 2 }}>
-                  <p style={{ fontSize: 9, letterSpacing: "0.06em", color: dimmer, margin: "0 0 8px 0" }}>ALSO WATCHING</p>
-                  <div style={{ display: "flex", flexDirection: "column" as const, gap: 6 }}>
-                    {cat.startups.map((s, si) => (
-                      <div key={si} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                        <span style={{ width: 3, height: 3, borderRadius: "50%", background: dimmer, flexShrink: 0, marginTop: 6 }} />
-                        <p style={{ fontSize: 11, color: muted, lineHeight: 1.5, margin: 0 }}>
-                          <span style={{ color: "#a09888", fontWeight: 500 }}>{s.name}</span>{" \u2014 "}{s.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+
+          <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
+            {[
+              { name: "Umicore", ticker: "UMI \u00b7 Euronext", category: "Chokepoint holder", line1: "Sole western GeCl\u2084 supplier for commercial fiber optics.", line2: "Exclusive DRC feedstock offtake ramping. Closed-loop recycling from fiber manufacturers creates circular barrier to entry. Major revenue upside from AI-driven fiber demand." },
+              { name: "5N Plus", ticker: "VNP \u00b7 TSX", category: "Capacity builder", line1: "Only vertically integrated western supplier from refined germanium to finished space solar cells.", line2: "Capacity expanding 25-35% annually with $395M backlog maxed out. $32.5M in DoD funding for wafer and refining expansion. FY25: revenue +35%, EBITDA +73%." },
+              { name: "LightPath Technologies", ticker: "LPTH \u00b7 NASDAQ", category: "Technology", line1: "Holds exclusive license to BlackDiamond glass that replaces germanium in IR optics.", line2: "$40M camera supply deal through 2027. F-35 combat aircraft program validated. Revenue +40% last quarter. Wins when germanium gets too scarce or too expensive." },
+              { name: "Blue Moon Metals", ticker: "MOON \u00b7 TSXV / NASDAQ", category: "Capacity builder", line1: "Acquired Apex \u2014 the only past-producing primary germanium and gallium mine in the United States.", line2: "Backed by Oaktree, Hartree ($12B stockpile partner), Teck (8%), Wheaton PM, Altius. Ge grades 10-100x higher than most deposits. 1Mt resource. Production target 2028." },
+              { name: "Teck Resources", ticker: "TECK \u00b7 TSX / NYSE", category: "Feedstock supplier", line1: "Only North American primary feedstock source of germanium, recovered as zinc by-product at Trail smelter in BC.", line2: "Feeds 5N Plus, defense contractors, and GeCl\u2084 production. 8-10t/yr output with 4t expansion by 2027. 8% stake in Blue Moon. Anglo Teck merger commits C$850M to Trail critical minerals." },
+              { name: "Yunnan Chihong", ticker: "600497 \u00b7 Shanghai", category: "Market maker", line1: "China\u2019s largest germanium producer at 56t/yr output with 600+ tonnes in proven reserves.", line2: "Produces ingots, GeCl\u2084, GeO\u2082, tetrahydride, and wafers \u2014 covers every downstream use. State-controlled Chinalco subsidiary. The entity whose MOFCOM export licenses determine whether the western scarcity premium holds or collapses." },
+              { name: "STL / G\u00e9camines", ticker: "Private \u00b7 DRC", category: "Feedstock supplier", line1: "Largest new non-Chinese germanium source in development \u2014 14M tonnes of slag, 700+ tonnes Ge potential.", line2: "First germanium concentrates exported October 2024. Targeting 30% of global supply. Exclusive Umicore offtake \u2014 all value accrues to Umicore, not the mine." },
+              { name: "Germanium metal", ticker: "Physical commodity", category: "Direct exposure", line1: "$1,500 \u2192 $8,500+/kg in two years on relatively fixed global supply of ~230t/yr.", line2: "Nov 2026 ban review is a binary event for the entire chain. No futures market, no exchange pricing \u2014 all OTC. 3.5x spread between Chinese domestic and western market price." },
+            ].map((idea, i) => (
+              <div key={i} style={{ display: "flex", background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "18px 22px", transition: "border-color 0.15s", cursor: "default" }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "#333"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
+              >
+                <div style={{ width: 180, flexShrink: 0, paddingRight: 20, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
+                  <p style={{ fontSize: 13.5, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
+                  <p style={{ fontSize: 10.5, color: muted, margin: "0 0 6px 0", letterSpacing: "0.02em" }}>{idea.ticker}</p>
+                  <p style={{ fontSize: 9, color: dimText, letterSpacing: "0.06em", margin: 0, textTransform: "uppercase" as const }}>{idea.category}</p>
                 </div>
-              )}
-            </div>
-          ))}
+                <div style={{ width: 1, background: "#2a2620", flexShrink: 0, marginRight: 20 }} />
+                <div style={{ flex: 1, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
+                  <p style={{ fontSize: 12.5, color: "#c4bdb2", lineHeight: 1.6, margin: "0 0 4px 0", fontWeight: 500 }}>{idea.line1}</p>
+                  <p style={{ fontSize: 12, color: "#a09888", lineHeight: 1.6, margin: 0 }}>{idea.line2}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
 
         {/* RISK */}
