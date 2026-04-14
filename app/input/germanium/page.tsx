@@ -561,7 +561,7 @@ export default function GermaniumInputPage() {
                 "Eight entities control the western germanium value chain. Several are positioned to capture outsized value from a supply gap driven by an AI boom.",
               ].map((point, i, arr) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
-                  <span style={{ width: 4, height: 4, borderRadius: "50%", background: i === arr.length - 1 ? "#6a9ab8" : "#3a3835", flexShrink: 0, marginTop: 7 }} />
+                  {i < arr.length - 1 && <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 7 }} />}
                   <p style={{ fontSize: 13.5, color: i === arr.length - 1 ? "#dad9d8" : "#a09888", lineHeight: 1.4, margin: 0, fontWeight: 300 }}>{point}</p>
                 </div>
               ))}
