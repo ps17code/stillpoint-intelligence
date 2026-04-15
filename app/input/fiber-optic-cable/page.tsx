@@ -476,46 +476,51 @@ export default function FiberOpticInputPage() {
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>UPSTREAM — WHAT GOES INTO FIBER</p>
           <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "Input", w: "18%" }, { l: "Form", w: "13%" }, { l: "Status", w: "12%" }, { l: "Per km", w: "10%" }, { l: "% of cost", w: "10%" }, { l: "Trend", w: "12%" }, { l: "Cost/km", w: "12%", right: true }].map(h => (
+            {[{ l: "Input", w: "22%" }, { l: "Form", w: "16%" }, { l: "Status", w: "14%" }, { l: "Per km", w: "14%" }, { l: "% of cost (baseline)", w: "18%" }, { l: "Price trend", w: "16%", right: true }].map(h => (
               <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
             ))}
           </div>
           {[
-            { input: "Germanium", form: "as GeCl₄", perKm: "0.12g", costKm: "$0.84", share: "12%", trend: "↑ 4.5x", status: "Constrained", linked: true },
-            { input: "Silicon tetrachloride", form: "SiCl₄ vapor", perKm: "~8g", costKm: "$0.40", share: "6%", trend: "↑ 50%", status: "Tightening", linked: false },
-            { input: "Helium", form: "Ultra-pure gas", perKm: "~0.5L", costKm: "$0.30", share: "4%", trend: "↑ 135%", status: "Constrained", linked: false },
-            { input: "Silica substrate", form: "Glass tube", perKm: "~0.005 tubes", costKm: "$2.50", share: "35%", trend: "Stable", status: "Available", linked: false },
-            { input: "UV coating", form: "Acrylate", perKm: "~0.3g", costKm: "$0.15", share: "2%", trend: "Stable", status: "Available", linked: false },
-            { input: "Energy", form: "Draw tower", perKm: "~0.8 kWh", costKm: "$0.08", share: "1%", trend: "Stable", status: "Available", linked: false },
-            { input: "Labor + overhead", form: "—", perKm: "—", costKm: "$2.50", share: "35%", trend: "—", status: "—", linked: false },
+            { input: "Germanium", form: "as GeCl₄", perKm: "0.12g", share: "~10%", trend: "↑ 4.5x", status: "Constrained", linked: true },
+            { input: "Silicon tetrachloride", form: "SiCl₄ vapor", perKm: "~8g", share: "~15%", trend: "↑ 2x", status: "Tightening", linked: false },
+            { input: "Helium", form: "Ultra-pure gas", perKm: "~0.5L", share: "~5%", trend: "↑ 4x", status: "Constrained", linked: false },
+            { input: "Silica substrate", form: "Glass tube", perKm: "—", share: "~25%", trend: "Stable", status: "Available", linked: false },
+            { input: "UV coating", form: "Acrylate", perKm: "~0.3g", share: "~3%", trend: "Stable", status: "Available", linked: false },
+            { input: "Energy", form: "Draw tower", perKm: "~0.5 kWh", share: "~7%", trend: "Stable", status: "Available", linked: false },
+            { input: "Labor + overhead", form: "—", perKm: "—", share: "~35%", trend: "—", status: "—", linked: false },
           ].map((row, i) => (
             <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220", cursor: row.linked ? "pointer" : "default", transition: "background 0.15s" }}
               onMouseEnter={e => { if (row.linked) { e.currentTarget.style.background = "#1a1816"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#ece8e1"; } }}
               onMouseLeave={e => { if (row.linked) { e.currentTarget.style.background = "transparent"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#a09888"; } }}
               onClick={() => { if (row.linked) window.location.href = "/input/germanium"; }}
             >
-              <div style={{ width: "18%", display: "flex", alignItems: "baseline", gap: 6 }}>
+              <div style={{ width: "22%", display: "flex", alignItems: "baseline", gap: 6 }}>
                 <p data-name="" style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, transition: "color 0.15s" }}>{row.input}</p>
                 {row.linked && <span style={{ fontSize: 10, color: "#4a4540" }}>→</span>}
               </div>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>{row.form}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", color: row.status === "Constrained" ? "#8a5a4a" : row.status === "Tightening" ? "#8a7a3a" : row.status === "Available" ? "#4a7a4a" : "#4a4540" }}>{row.status}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.perKm}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
-              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "12%" }}>{row.trend}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "12%", textAlign: "right" as const }}>{row.costKm}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "16%" }}>{row.form}</p>
+              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "14%", color: row.status === "Constrained" ? "#8a5a4a" : row.status === "Tightening" ? "#8a7a3a" : row.status === "Available" ? "#4a7a4a" : "#4a4540" }}>{row.status}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "14%" }}>{row.perKm}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "18%" }}>{row.share}</p>
+              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "16%", textAlign: "right" as const }}>{row.trend}</p>
             </div>
           ))}
+          <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "22%" }}>Production cost / km</p>
+            <p style={{ margin: 0, width: "16%" }} /><p style={{ margin: 0, width: "14%" }} />
+            <p style={{ margin: 0, width: "14%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>~$3.50</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "16%", textAlign: "right" as const }}>~$5</p>
+          </div>
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0" }}>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>Total production cost</p>
-            <p style={{ margin: 0, width: "13%" }} /><p style={{ margin: 0, width: "12%" }} />
-            <p style={{ margin: 0, width: "10%" }} />
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
-            <p style={{ margin: 0, width: "12%" }} />
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const }}>~$6.80</p>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "22%" }}>Market price / km (G.652D)</p>
+            <p style={{ margin: 0, width: "16%" }} /><p style={{ margin: 0, width: "14%" }} />
+            <p style={{ margin: 0, width: "14%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>~$5–6</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "16%", textAlign: "right" as const }}>~$12–17</p>
           </div>
           <div style={{ borderTop: "1px solid #252220", paddingTop: 14, marginTop: 4 }}>
-            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Three inputs are constrained simultaneously — germanium, SiCl₄, and helium — representing 22% of production cost. Germanium alone has driven a ~40% increase in fiber production cost since January 2024.</p>
+            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Three inputs are constrained simultaneously — germanium, SiCl₄, and helium — representing ~30% of baseline production cost. Their combined price surges have pushed estimated production cost up ~40%. But G.652D market prices have surged over 150%, reflecting demand shock from AI datacenters and military drone programs layered on top of input cost inflation.</p>
           </div>
         </div>
 
