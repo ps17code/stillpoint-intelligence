@@ -168,17 +168,16 @@ export default function FiberOpticInputPage() {
             <p style={{ fontSize: 20, letterSpacing: "0.1em", color: "#555", margin: "0 0 16px 0" }}>EXECUTIVE SUMMARY</p>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
-                "Glass strands that transmit data as pulses of light. The physical layer connecting everything inside and between AI datacenters, telecom networks, and cross-ocean subsea systems.",
-                "Doped with germanium to create the refractive index gradient that guides light through the core. Without germanium, fiber is just glass.",
-                "Global production at ~720M fiber strand-km/yr. Preform lines at full utilization. One equipment supplier \u2014 Rosendahl Nextrom \u2014 with 18-24 month backlogs.",
-                "Prices at 7-year highs. G.652D up 70-120%. G.657A datacenter fiber surged 80% in a single month. Lead times past 60 weeks.",
-                "~20 GW of AI datacenter capacity entering construction annually. Each GW requires ~6.5M fiber strand-km. 130M km supply gap that cannot close before 2027.",
+                "Fiber optics are glass strands that transmit data as pulses of light. They serve as the physical layer connecting everything inside and between AI datacenters, telecom networks, and cross-ocean subsea systems.",
+                "The core inputs are high-purity silica, germanium, and helium. Silica glass forms the fiber body. Germanium is used as a dopant to create the refractive index gradient that guides light through the core. Helium \u2014 for which there is no substitute \u2014 cools the glass during the fiber drawing process. Without these three materials, there is no fiber.",
+                "Supply is constrained. Global production sits at ~720M fiber strand-km/yr. Preform lines are at full utilization. One equipment supplier \u2014 Rosendahl Nextrom \u2014 carries 18-24 month backlogs. Prices are at 7-year highs.",
+                "Driven by AI. ~20 GW of AI datacenter capacity is entering construction annually. Each GW requires ~6.5M fiber strand-km. A 130M km supply gap cannot close before 2027.",
                 "New preform capacity, DRC germanium ramp, and hollow-core fiber all target 2027-2028. Supply constraints persist through at least 2027.",
-                "Corning, Umicore, 5N Plus, Prysmian, and Rosendahl Nextrom are the primary names positioned across the chokepoint, capacity expansion, and technology layers of this chain.",
+                "The suppliers of germanium tetrachloride, fiber preform manufacturers, and proprietary equipment suppliers positioned at chokepoints will capture most of the value at this layer.",
               ].map((point, i, arr) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
-                  <span style={{ width: 4, height: 4, borderRadius: "50%", background: i === arr.length - 1 ? "#6a9ab8" : "#3a3835", flexShrink: 0, marginTop: 7 }} />
-                  <p style={{ fontSize: 13.5, color: i === arr.length - 1 ? "#ece8e1" : "#a09888", lineHeight: 1.4, margin: 0, fontWeight: i === arr.length - 1 ? 500 : 300 }}>{point}</p>
+                  {i < arr.length - 1 && <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 7 }} />}
+                  <p style={{ fontSize: 13.5, color: i === arr.length - 1 ? "#dad9d8" : "#a09888", lineHeight: 1.4, margin: 0, fontWeight: 300 }}>{point}</p>
                 </div>
               ))}
             </div>
