@@ -327,11 +327,12 @@ export default function FiberOpticInputPage() {
                   <text x={compW / 2} y={16} textAnchor="middle" fontFamily="'Courier New', monospace" fontSize={11} fontWeight={600} letterSpacing="0.12em" fill="rgba(255,255,255,0.35)">INPUTS</text>
                   {/* Three category nodes */}
                   {[
-                    { x: compW / 2 - 180, label: "GeCl\u2084", sub: "4 suppliers", clickable: true, targetX: compW / 2 - 60 },
-                    { x: compW / 2, label: "Helium", sub: "4 sources", clickable: false, targetX: compW / 2 },
-                    { x: compW / 2 + 180, label: "Silica / SiCl\u2084", sub: "4 suppliers", clickable: false, targetX: compW / 2 + 60 },
+                    { x: compW / 2 - 180, label: "GeCl\u2084", sub: "4 suppliers", clickable: true },
+                    { x: compW / 2, label: "Helium", sub: "4 sources", clickable: false },
+                    { x: compW / 2 + 180, label: "Silica / SiCl\u2084", sub: "4 suppliers", clickable: false },
                   ].map((cat, i) => {
-                    const y1 = 54; const y2 = 140; const midY = (y1 + y2) / 2;
+                    const y1 = 95; const y2 = 140; const midY = (y1 + y2) / 2;
+                    const cx2 = compW / 2;
                     return (
                     <g key={i}
                       style={{ cursor: cat.clickable ? "pointer" : "default" }}
@@ -342,8 +343,8 @@ export default function FiberOpticInputPage() {
                       {/* Label */}
                       <text x={cat.x} y={72} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{cat.label}</text>
                       <text x={cat.x} y={88} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.35)">{cat.sub}</text>
-                      {/* Connecting line to manufacturer row */}
-                      <path d={`M ${cat.x},${y1} C ${cat.x},${midY} ${cat.targetX},${midY} ${cat.targetX},${y2}`} fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth={0.8} strokeDasharray="4,3" />
+                      {/* Connecting line converging to center */}
+                      <path d={`M ${cat.x},${y1} C ${cat.x},${midY} ${cx2},${midY} ${cx2},${y2}`} fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth={0.8} strokeDasharray="4,3" />
                     </g>
                     );
                   })}
@@ -412,17 +413,18 @@ export default function FiberOpticInputPage() {
                   <svg viewBox={`0 0 ${compW} 140`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
                     <text x={compW / 2} y={16} textAnchor="middle" fontFamily="'Courier New', monospace" fontSize={11} fontWeight={600} letterSpacing="0.12em" fill="rgba(255,255,255,0.35)">INPUTS</text>
                     {[
-                      { x: compW / 2 - 180, label: "GeCl\u2084", sub: "4 suppliers", clickable: true, targetX: compW / 2 - 60 },
-                      { x: compW / 2, label: "Helium", sub: "4 sources", clickable: false, targetX: compW / 2 },
-                      { x: compW / 2 + 180, label: "Silica / SiCl\u2084", sub: "4 suppliers", clickable: false, targetX: compW / 2 + 60 },
+                      { x: compW / 2 - 180, label: "GeCl\u2084", sub: "4 suppliers", clickable: true },
+                      { x: compW / 2, label: "Helium", sub: "4 sources", clickable: false },
+                      { x: compW / 2 + 180, label: "Silica / SiCl\u2084", sub: "4 suppliers", clickable: false },
                     ].map((cat, i) => {
-                      const y1 = 54; const y2 = 140; const midY = (y1 + y2) / 2;
+                      const y1 = 95; const y2 = 140; const midY = (y1 + y2) / 2;
+                      const cx2 = compW / 2;
                       return (
                       <g key={i} style={{ cursor: cat.clickable ? "pointer" : "default" }} onClick={() => { if (cat.clickable) setExpandedInput("gecl4"); }}>
                         <circle cx={cat.x} cy={48} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
                         <text x={cat.x} y={72} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{cat.label}</text>
                         <text x={cat.x} y={88} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.35)">{cat.sub}</text>
-                        <path d={`M ${cat.x},${y1} C ${cat.x},${midY} ${cat.targetX},${midY} ${cat.targetX},${y2}`} fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth={0.8} strokeDasharray="4,3" />
+                        <path d={`M ${cat.x},${y1} C ${cat.x},${midY} ${cx2},${midY} ${cx2},${y2}`} fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth={0.8} strokeDasharray="4,3" />
                       </g>
                       );
                     })}
