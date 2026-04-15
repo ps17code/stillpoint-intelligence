@@ -26,6 +26,7 @@ export default function FiberOpticInputPage() {
   const subFirstXs = subGeo.layers[0].nodes.map(n => n.cx);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [treeExpanded, setTreeExpanded] = useState(false);
+  const [expandedInput, setExpandedInput] = useState<string | null>(null);
   const [soWhatOpen, setSoWhatOpen] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState("thesis");
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
@@ -299,6 +300,70 @@ export default function FiberOpticInputPage() {
             >
               Expand ↗
             </button>
+            {/* Input category nodes */}
+            <div style={{ padding: "20px 24px 0", display: "flex", justifyContent: "center", gap: 16 }}>
+              {([
+                { id: "gecl4", label: "GeCl\u2084", desc: "4 suppliers \u00b7 Constrained", suppliers: [
+                  { name: "Umicore", detail: "Belgium \u00b7 Sole western supplier" },
+                  { name: "Yunnan Chihong", detail: "China \u00b7 30t/yr dedicated line" },
+                  { name: "Chinese State Plants", detail: "China \u00b7 ~50-60t/yr combined" },
+                  { name: "JSC Germanium", detail: "Russia \u00b7 Military only" },
+                ]},
+                { id: "helium", label: "Helium", desc: "4 sources \u00b7 Constrained", suppliers: [
+                  { name: "Qatar (North Field)", detail: "Largest global source" },
+                  { name: "US Federal Reserve", detail: "Depleting \u00b7 Near end of life" },
+                  { name: "Russia (Gazprom)", detail: "Sanctioned supply" },
+                  { name: "Algeria", detail: "Secondary source" },
+                ]},
+                { id: "silica", label: "Silica / SiCl\u2084", desc: "4 suppliers \u00b7 Tightening", suppliers: [
+                  { name: "Heraeus", detail: "High-purity synthetic silica tubes" },
+                  { name: "Shin-Etsu Quartz", detail: "Substrate tubes" },
+                  { name: "Momentive", detail: "Fused quartz" },
+                  { name: "Wacker Chemie", detail: "SiCl\u2084 supplier" },
+                ]},
+              ] as { id: string; label: string; desc: string; suppliers: { name: string; detail: string }[] }[]).map(cat => {
+                const isExp = expandedInput === cat.id;
+                return (
+                  <div key={cat.id} style={{ display: "flex", flexDirection: "column" as const, alignItems: "center", flex: 1 }}>
+                    {/* Expanded supplier row */}
+                    <div style={{ overflow: "hidden", maxHeight: isExp ? 300 : 0, opacity: isExp ? 1 : 0, transition: "max-height 0.2s ease-out, opacity 0.15s ease-out", width: "100%", marginBottom: isExp ? 12 : 0 }}>
+                      <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
+                        {cat.suppliers.map(s => (
+                          <div key={s.name} style={{ background: "#1a1816", border: "1px solid #252220", borderRadius: 6, padding: "8px 12px", textAlign: "center" as const, minWidth: 120 }}>
+                            <p style={{ fontSize: 10, color: "#ece8e1", fontWeight: 500, margin: "0 0 2px 0" }}>{s.name}</p>
+                            <p style={{ fontSize: 8, color: "#555", margin: 0 }}>{s.detail}</p>
+                          </div>
+                        ))}
+                      </div>
+                      {/* Lines from suppliers down to category node */}
+                      <svg width="100%" height="20" style={{ display: "block" }}>
+                        <line x1="50%" y1="0" x2="50%" y2="20" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" strokeDasharray="3 4" />
+                      </svg>
+                    </div>
+                    {/* Category node card */}
+                    <div
+                      onClick={() => setExpandedInput(isExp ? null : cat.id)}
+                      style={{
+                        background: isExp ? "#1e1c18" : "#1a1816", border: `1px solid ${isExp ? "#333" : "#252220"}`,
+                        borderRadius: 8, padding: "12px 16px", cursor: "pointer",
+                        textAlign: "center" as const, width: "100%",
+                        transition: "border-color 0.15s, background 0.15s",
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = "#333"; }}
+                      onMouseLeave={e => { if (!isExp) e.currentTarget.style.borderColor = "#252220"; }}
+                    >
+                      <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: "0 0 2px 0" }}>{cat.label}</p>
+                      <p style={{ fontSize: 9, color: "#555", margin: 0 }}>{cat.desc}</p>
+                    </div>
+                    {/* Line down to manufacturer row */}
+                    <svg width="2" height="24" style={{ display: "block" }}>
+                      <line x1="1" y1="0" x2="1" y2="24" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" strokeDasharray="3 4" />
+                    </svg>
+                  </div>
+                );
+              })}
+            </div>
+
             <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
             <svg viewBox={`0 0 ${subW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
               {subFirstXs.map((tx, i) => { const fx = subW / 2; return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />; })}
