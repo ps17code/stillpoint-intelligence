@@ -192,16 +192,16 @@ export default function FiberOpticInputPage() {
 
           <div style={{ display: "flex", gap: "12px" }}>
 
-            {/* Card 1: GeCl₄ Conversion */}
+            {/* Card 1: Raw Material Inputs */}
             <div style={{
               flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
               borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
             }}>
               <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                01 · GeCl₄ CONVERSION
+                01 · RAW MATERIAL INPUTS
               </p>
               <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Refined germanium powder is chemically converted into germanium tetrachloride — a volatile liquid that can be vaporized and deposited into glass to carry light.
+                Refined germanium is chemically converted into germanium tetrachloride (GeCl₄) — the dopant that creates the refractive index gradient in the fiber core. High-purity silica (SiCl₄) forms the glass body itself. Both require extreme purity levels measured in parts per billion.
               </p>
               <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
@@ -242,20 +242,20 @@ export default function FiberOpticInputPage() {
               </div>
             </div>
 
-            {/* Card 3: Draw & Cable Assembly */}
+            {/* Card 3: Fiber Draw & Cable Assembly */}
             <div style={{
               flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
               borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
             }}>
               <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                03 · DRAW & CABLE ASSEMBLY
+                03 · FIBER DRAW & CABLE ASSEMBLY
               </p>
               <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                The preform is heated in a draw tower and pulled into hair-thin fiber strands, coated for protection, then bundled with strength members and sheathing into finished cable.
+                The preform is heated in a draw tower and pulled into hair-thin fiber strands, coated for protection, then bundled with strength members and sheathed into finished cable. Helium gas is used to cool the fiber during drawing — there is no substitute.
               </p>
               <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Drawing and assembly are the least constrained steps. The bottleneck is upstream — you can only draw as much fiber as you have preforms. This step scales more easily than the ones before it.
+                Drawing and assembly are the least constrained steps. The bottleneck is upstream — you can only draw as much fiber as you have preforms. Helium supply is tight, with a third of global production disrupted by conflict in the Middle East.
               </p>
               <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
