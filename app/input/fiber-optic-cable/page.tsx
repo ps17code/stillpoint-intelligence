@@ -20,12 +20,26 @@ export default function FiberOpticInputPage() {
   const compW = useMemo(() => computeCompSvgWidth(compChain), []);
   const subW = useMemo(() => computeSubSvgWidth(subChain), []);
   const compGeo = useMemo(() => buildCompGeometry(compChain, compW / 2, 80), []);
+  // Compact geometry: skip GeCl₄ layer, start fiber mfg at top
+  const compGeoCompact = useMemo(() => {
+    const full = buildCompGeometry(compChain, compW / 2, 80);
+    // Shift layers 1+ up by removing layer 0 (GeCl₄) and adjusting cy
+    const shift = full.layers[0].cy; // 80
+    const gap = full.layers[1].cy - full.layers[0].cy; // 170
+    return {
+      layers: full.layers.slice(1).map(l => ({ ...l, cy: l.cy - gap, nodes: l.nodes.map(n => ({ ...n, cy: n.cy - gap })) })),
+      edges: full.edges.filter(e => e.fromLayer >= 1).map(e => ({ ...e, fromLayer: e.fromLayer - 1, y1: e.y1 - gap, y2: e.y2 - gap })),
+      outputNode: { ...full.outputNode, cy: full.outputNode.cy - gap },
+    };
+  }, []);
   const subGeo = useMemo(() => buildSubGeometry(subChain, subW / 2, 80), []);
   const compH = compGeo.outputNode.cy + 120;
+  const compHCompact = compGeoCompact.outputNode.cy + 120;
   const subH = subGeo.outputNode.cy + 120;
   const subFirstXs = subGeo.layers[0].nodes.map(n => n.cx);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [treeExpanded, setTreeExpanded] = useState(false);
+  const [expandedInput, setExpandedInput] = useState<string | null>(null);
   const [soWhatOpen, setSoWhatOpen] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState("thesis");
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
@@ -299,7 +313,50 @@ export default function FiberOpticInputPage() {
             >
               Expand ↗
             </button>
-            <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+            {/* Input category nodes — shown when GeCl₄ not expanded */}
+            {expandedInput !== "gecl4" && (
+              <svg viewBox={`0 0 ${compW} 140`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+                {/* Three category nodes */}
+                {[
+                  { x: compW / 2 - 300, label: "GeCl\u2084", sub: "4 suppliers", clickable: true },
+                  { x: compW / 2, label: "Helium", sub: "4 sources", clickable: false },
+                  { x: compW / 2 + 300, label: "Silica / SiCl\u2084", sub: "4 suppliers", clickable: false },
+                ].map((cat, i) => (
+                  <g key={i}
+                    style={{ cursor: cat.clickable ? "pointer" : "default" }}
+                    onClick={() => { if (cat.clickable) setExpandedInput("gecl4"); }}
+                  >
+                    {/* Ring */}
+                    <circle cx={cat.x} cy={40} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
+                    {/* Label */}
+                    <text x={cat.x} y={64} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{cat.label}</text>
+                    <text x={cat.x} y={80} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.35)">{cat.sub}</text>
+                    {/* Line down to fiber mfg row */}
+                    <line x1={cat.x} y1={46} x2={cat.x} y2={140} stroke="rgba(255,255,255,0.12)" strokeWidth={0.8} strokeDasharray="4,3" />
+                  </g>
+                ))}
+                {/* Label */}
+                <text x={180} y={44} textAnchor="end" fontFamily="'Courier New', monospace" fontSize={11} fontWeight={600} letterSpacing="0.12em" fill="rgba(255,255,255,0.35)">INPUTS</text>
+              </svg>
+            )}
+
+            {/* Full comp tree with GeCl₄ suppliers — shown when expanded */}
+            {expandedInput === "gecl4" && (
+              <>
+                <div style={{ display: "flex", justifyContent: "center", padding: "8px 0" }}>
+                  <button onClick={() => setExpandedInput(null)} style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "#555", background: "none", border: `1px solid ${borderColor}`, borderRadius: 4, padding: "3px 10px", cursor: "pointer" }}>
+                    Collapse GeCl₄ suppliers ↑
+                  </button>
+                </div>
+                <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+              </>
+            )}
+
+            {/* Compact tree (fiber mfg + output only) — shown when collapsed */}
+            {expandedInput !== "gecl4" && (
+              <TreeMap geometry={compGeoCompact} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compHCompact} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+            )}
+
             <svg viewBox={`0 0 ${subW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
               {subFirstXs.map((tx, i) => { const fx = subW / 2; return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />; })}
             </svg>
