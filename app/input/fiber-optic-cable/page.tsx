@@ -35,6 +35,12 @@ export default function FiberOpticInputPage() {
   const subGeo = useMemo(() => buildSubGeometry(subChain, subW / 2, 80), []);
   const compH = compGeo.outputNode.cy + 120;
   const compHCompact = compGeoCompact.outputNode.cy + 120;
+  const fiberMfgXs = compGeoCompact.layers[0].nodes.map(n => n.cx);
+  const catNodes = [
+    { x: compW / 2 - 300, label: "GeCl\u2084", sub: "4 suppliers", clickable: true, targets: [0, 1, 2, 3, 4, 5] },
+    { x: compW / 2, label: "Helium", sub: "4 sources", clickable: false, targets: [0, 1, 2, 3, 4, 5] },
+    { x: compW / 2 + 300, label: "Silica / SiCl\u2084", sub: "4 suppliers", clickable: false, targets: [0, 1, 2, 3, 4, 5] },
+  ];
   const subH = subGeo.outputNode.cy + 120;
   const subFirstXs = subGeo.layers[0].nodes.map(n => n.cx);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
@@ -331,8 +337,10 @@ export default function FiberOpticInputPage() {
                     {/* Label */}
                     <text x={cat.x} y={64} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{cat.label}</text>
                     <text x={cat.x} y={80} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.35)">{cat.sub}</text>
-                    {/* Line down to fiber mfg row */}
-                    <line x1={cat.x} y1={46} x2={cat.x} y2={95} stroke="rgba(255,255,255,0.12)" strokeWidth={0.8} strokeDasharray="4,3" />
+                    {/* Fan-out lines to fiber mfg nodes */}
+                    {fiberMfgXs.map((mfgX, j) => (
+                      <path key={j} d={`M ${cat.x},46 C ${cat.x},72 ${mfgX},72 ${mfgX},95`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth={0.8} strokeDasharray="4,3" />
+                    ))}
                   </g>
                 ))}
                 {/* Label */}
@@ -407,7 +415,9 @@ export default function FiberOpticInputPage() {
                       <circle cx={cat.x} cy={40} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
                       <text x={cat.x} y={64} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{cat.label}</text>
                       <text x={cat.x} y={80} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.35)">{cat.sub}</text>
-                      <line x1={cat.x} y1={46} x2={cat.x} y2={95} stroke="rgba(255,255,255,0.12)" strokeWidth={0.8} strokeDasharray="4,3" />
+                      {fiberMfgXs.map((mfgX, j) => (
+                        <path key={j} d={`M ${cat.x},46 C ${cat.x},72 ${mfgX},72 ${mfgX},95`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth={0.8} strokeDasharray="4,3" />
+                      ))}
                     </g>
                   ))}
                   <text x={180} y={44} textAnchor="end" fontFamily="'Courier New', monospace" fontSize={11} fontWeight={600} letterSpacing="0.12em" fill="rgba(255,255,255,0.35)">INPUTS</text>
