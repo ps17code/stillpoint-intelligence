@@ -315,7 +315,7 @@ export default function FiberOpticInputPage() {
             </button>
             {/* Input category nodes — shown when GeCl₄ not expanded */}
             {expandedInput !== "gecl4" && (
-              <svg viewBox={`0 0 ${compW} 140`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+              <svg viewBox={`0 0 ${compW} 95`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
                 {/* Three category nodes */}
                 {[
                   { x: compW / 2 - 300, label: "GeCl\u2084", sub: "4 suppliers", clickable: true },
@@ -332,7 +332,7 @@ export default function FiberOpticInputPage() {
                     <text x={cat.x} y={64} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{cat.label}</text>
                     <text x={cat.x} y={80} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.35)">{cat.sub}</text>
                     {/* Line down to fiber mfg row */}
-                    <line x1={cat.x} y1={46} x2={cat.x} y2={140} stroke="rgba(255,255,255,0.12)" strokeWidth={0.8} strokeDasharray="4,3" />
+                    <line x1={cat.x} y1={46} x2={cat.x} y2={95} stroke="rgba(255,255,255,0.12)" strokeWidth={0.8} strokeDasharray="4,3" />
                   </g>
                 ))}
                 {/* Label */}
@@ -393,9 +393,37 @@ export default function FiberOpticInputPage() {
                 Close ✕
               </button>
             </div>
-            {/* Full tree */}
+            {/* Full tree with category nodes */}
             <div style={{ flex: 1, padding: "20px" }}>
-              <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+              {/* Input category nodes */}
+              {expandedInput !== "gecl4" && (
+                <svg viewBox={`0 0 ${compW} 95`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+                  {[
+                    { x: compW / 2 - 300, label: "GeCl\u2084", sub: "4 suppliers", clickable: true },
+                    { x: compW / 2, label: "Helium", sub: "4 sources", clickable: false },
+                    { x: compW / 2 + 300, label: "Silica / SiCl\u2084", sub: "4 suppliers", clickable: false },
+                  ].map((cat, i) => (
+                    <g key={i} style={{ cursor: cat.clickable ? "pointer" : "default" }} onClick={() => { if (cat.clickable) setExpandedInput("gecl4"); }}>
+                      <circle cx={cat.x} cy={40} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
+                      <text x={cat.x} y={64} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{cat.label}</text>
+                      <text x={cat.x} y={80} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.35)">{cat.sub}</text>
+                      <line x1={cat.x} y1={46} x2={cat.x} y2={95} stroke="rgba(255,255,255,0.12)" strokeWidth={0.8} strokeDasharray="4,3" />
+                    </g>
+                  ))}
+                  <text x={180} y={44} textAnchor="end" fontFamily="'Courier New', monospace" fontSize={11} fontWeight={600} letterSpacing="0.12em" fill="rgba(255,255,255,0.35)">INPUTS</text>
+                </svg>
+              )}
+              {expandedInput === "gecl4" && (
+                <>
+                  <div style={{ display: "flex", justifyContent: "center", padding: "8px 0" }}>
+                    <button onClick={() => setExpandedInput(null)} style={{ fontFamily: "'Geist Mono', monospace", fontSize: 8, color: "#555", background: "none", border: `1px solid ${borderColor}`, borderRadius: 4, padding: "3px 10px", cursor: "pointer" }}>Collapse GeCl₄ suppliers ↑</button>
+                  </div>
+                  <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+                </>
+              )}
+              {expandedInput !== "gecl4" && (
+                <TreeMap geometry={compGeoCompact} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compHCompact} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+              )}
               <svg viewBox={`0 0 ${subW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
                 {subFirstXs.map((tx, i) => { const fx = subW / 2; return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />; })}
               </svg>
