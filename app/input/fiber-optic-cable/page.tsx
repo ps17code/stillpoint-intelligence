@@ -364,6 +364,15 @@ export default function FiberOpticInputPage() {
               </>
             )}
 
+            {/* Fan-out bridge from convergence point to fiber mfg nodes */}
+            {expandedInput !== "gecl4" && (
+              <svg viewBox={`0 0 ${compW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+                {fiberMfgXs.map((tx, i) => {
+                  const fx = compW / 2;
+                  return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth={0.8} strokeDasharray="4,3" />;
+                })}
+              </svg>
+            )}
             {/* Compact tree (fiber mfg + output only) — shown when collapsed */}
             {expandedInput !== "gecl4" && (
               <TreeMap geometry={compGeoCompact} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compHCompact} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
@@ -438,6 +447,14 @@ export default function FiberOpticInputPage() {
                   </div>
                   <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
                 </>
+              )}
+              {expandedInput !== "gecl4" && (
+                <svg viewBox={`0 0 ${compW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+                  {fiberMfgXs.map((tx, i) => {
+                    const fx = compW / 2;
+                    return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth={0.8} strokeDasharray="4,3" />;
+                  })}
+                </svg>
               )}
               {expandedInput !== "gecl4" && (
                 <TreeMap geometry={compGeoCompact} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compHCompact} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
