@@ -533,7 +533,7 @@ export default function FiberOpticInputPage() {
             ))}
           </div>
           {[
-            { use: "AI datacenters", fiberType: "G.657A", demand: "~210M km", price: "~$25", value: "~$5.3B", share: "30%", driver: "GPU cluster interconnect, DCI", status: "Surging" },
+            { use: "AI datacenters", fiberType: "G.657A", demand: "~210M km", price: "~$25", value: "~$5.3B", share: "30%", driver: "GPU cluster interconnect, DCI", status: "Surging (+62%)" },
             { use: "Terrestrial telecom", fiberType: "G.652D", demand: "~290M km", price: "~$15", value: "~$4.4B", share: "25%", driver: "FTTH, 5G backhaul, metro", status: "Stable" },
             { use: "Subsea cables", fiberType: "G.654E", demand: "~70M km", price: "~$75", value: "~$5.3B", share: "30%", driver: "Intercontinental capacity", status: "Growing" },
             { use: "Military / UAV", fiberType: "G.657A", demand: "~55M km", price: "~$25", value: "~$1.4B", share: "8%", driver: "Drone communication systems", status: "Surging" },
@@ -548,7 +548,7 @@ export default function FiberOpticInputPage() {
               <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "10%" }}>{row.value}</p>
               <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
               <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "20%", lineHeight: 1.5 }}>{row.driver}</p>
-              <p style={{ fontSize: 11, fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const, color: row.status === "Surging" ? "#8a5a4a" : row.status === "Growing" || row.status === "Ramping" ? "#8a7a3a" : "#4a7a4a" }}>{row.status}</p>
+              <p style={{ fontSize: 11, fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const, color: row.status.startsWith("Surging") ? "#8a5a4a" : row.status === "Growing" || row.status === "Ramping" ? "#8a7a3a" : "#4a7a4a" }}>{row.status}</p>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
@@ -558,7 +558,7 @@ export default function FiberOpticInputPage() {
             <p style={{ margin: 0, width: "10%" }} />
             <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~$17.9B</p>
             <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
-            <p style={{ margin: 0, width: "20%" }} /><p style={{ margin: 0, width: "10%" }} />
+            <p style={{ margin: 0, width: "20%" }} /><p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const }}>850M+ km (+18%)</p>
           </div>
           <div style={{ borderTop: "1px solid #252220", paddingTop: 14, marginTop: 4 }}>
             <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Measured by volume, terrestrial telecom still dominates at 40%. Measured by value, AI datacenters and subsea cables each account for ~30% — the premium fiber segments now capture most of the revenue. AI datacenters and military drones both consume G.657A fiber, competing for the same production lines. Manufacturers are cannibalizing G.652D telecom output for higher-margin G.657A, squeezing telecom operators and the BEAD program simultaneously.</p>
