@@ -476,8 +476,8 @@ export default function FiberOpticInputPage() {
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>UPSTREAM — WHAT GOES INTO FIBER</p>
           <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "Input", w: "14%" }, { l: "Form", w: "28%" }, { l: "Status", w: "11%" }, { l: "Per km", w: "10%" }, { l: "% of cost (baseline)", w: "18%" }, { l: "Price trend", w: "12%", right: true }].map(h => (
-              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
+            {[{ l: "Input", w: "25%" }, { l: "Per km", w: "14%" }, { l: "% of cost (base)", w: "18%" }, { l: "Price trend", w: "14%" }, { l: "Form", w: "40%" }, { l: "Status", w: "14%" }].map(h => (
+              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w }}>{h.l}</p>
             ))}
           </div>
           {[
@@ -494,30 +494,30 @@ export default function FiberOpticInputPage() {
               onMouseLeave={e => { if (row.linked) { e.currentTarget.style.background = "transparent"; const n = e.currentTarget.querySelector("[data-name]") as HTMLElement; if (n) n.style.color = "#a09888"; } }}
               onClick={() => { if (row.linked) window.location.href = "/input/germanium"; }}
             >
-              <div style={{ width: "14%", display: "flex", alignItems: "baseline", gap: 6 }}>
+              <div style={{ width: "25%", display: "flex", alignItems: "baseline", gap: 6 }}>
                 <p data-name="" style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, transition: "color 0.15s" }}>{row.input}</p>
                 {row.linked && <span style={{ fontSize: 10, color: "#4a4540" }}>→</span>}
               </div>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "28%" }}>{row.form}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "11%", color: row.status === "Constrained" ? "#8a5a4a" : row.status === "Tightening" ? "#8a7a3a" : row.status === "Available" ? "#4a7a4a" : "#4a4540" }}>{row.status}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.perKm}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "14%" }}>{row.perKm}</p>
               <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "18%" }}>{row.share}</p>
-              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "12%", textAlign: "right" as const }}>{row.trend}</p>
+              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "14%" }}>{row.trend}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "40%" }}>{row.form}</p>
+              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "14%", color: row.status === "Constrained" ? "#8a5a4a" : row.status === "Tightening" ? "#8a7a3a" : row.status === "Available" ? "#4a7a4a" : "#4a4540" }}>{row.status}</p>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "14%" }}>Production cost / km</p>
-            <p style={{ margin: 0, width: "28%" }} /><p style={{ margin: 0, width: "11%" }} />
-            <p style={{ margin: 0, width: "10%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "25%" }}>Production cost / km</p>
+            <p style={{ margin: 0, width: "14%" }} />
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>~$3.50</p>
-            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const }}>~$5</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "14%" }}>~$5</p>
+            <p style={{ margin: 0, width: "40%" }} /><p style={{ margin: 0, width: "14%" }} />
           </div>
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0" }}>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "14%" }}>Market price / km (G.652D)</p>
-            <p style={{ margin: 0, width: "28%" }} /><p style={{ margin: 0, width: "11%" }} />
-            <p style={{ margin: 0, width: "10%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "25%" }}>Market price / km (G.652D)</p>
+            <p style={{ margin: 0, width: "14%" }} />
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>~$5–6</p>
-            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const }}>~$12–17</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "14%" }}>~$12–17</p>
+            <p style={{ margin: 0, width: "40%" }} /><p style={{ margin: 0, width: "14%" }} />
           </div>
           <div style={{ borderTop: "1px solid #252220", paddingTop: 14, marginTop: 4 }}>
             <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Three inputs are constrained simultaneously — germanium, SiCl₄, and helium — representing ~30% of baseline production cost. Their combined price surges have pushed estimated production cost up ~40%. But G.652D market prices have surged over 150%, reflecting demand shock from AI datacenters and military drone programs layered on top of input cost inflation.</p>
