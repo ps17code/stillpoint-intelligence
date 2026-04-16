@@ -498,24 +498,24 @@ export default function FiberOpticInputPage() {
                 <p data-name="" style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, transition: "color 0.15s" }}>{row.input}</p>
                 {row.linked && <span style={{ fontSize: 10, color: "#4a4540" }}>→</span>}
               </div>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "14%" }}>{row.perKm}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "18%" }}>{row.share}</p>
+              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "14%" }}>{row.perKm}</p>
+              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "18%" }}>{row.share}</p>
               <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "14%" }}>{row.trend}</p>
               <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "40%" }}>{row.form}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "14%", color: row.status === "Constrained" ? "#8a5a4a" : row.status === "Tightening" ? "#8a7a3a" : row.status === "Available" ? "#4a7a4a" : "#4a4540" }}>{row.status}</p>
+              <p style={{ fontSize: 11, fontWeight: 500, margin: 0, width: "14%", color: row.status === "Constrained" ? "#8a5a4a" : row.status === "Tightening" ? "#8a7a3a" : row.status === "Available" ? "#4a7a4a" : "#4a4540" }}>{row.status}</p>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "25%" }}>Production cost / km</p>
             <p style={{ margin: 0, width: "14%" }} />
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>~$3.50</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>~$3.50</p>
             <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "14%" }}>~$5</p>
             <p style={{ margin: 0, width: "40%" }} /><p style={{ margin: 0, width: "14%" }} />
           </div>
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0" }}>
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "25%" }}>Market price / km (G.652D)</p>
             <p style={{ margin: 0, width: "14%" }} />
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>~$5–6</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>~$5–6</p>
             <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "14%" }}>~$12–17</p>
             <p style={{ margin: 0, width: "40%" }} /><p style={{ margin: 0, width: "14%" }} />
           </div>
@@ -543,21 +543,21 @@ export default function FiberOpticInputPage() {
             <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
               <p style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, width: "20%" }}>{row.use}</p>
               <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>{row.fiberType}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.demand}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.price}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.value}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
+              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "10%" }}>{row.demand}</p>
+              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "10%" }}>{row.price}</p>
+              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "10%" }}>{row.value}</p>
+              <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
               <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "20%", lineHeight: 1.5 }}>{row.driver}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const, color: row.status === "Surging" ? "#8a5a4a" : row.status === "Growing" || row.status === "Ramping" ? "#8a7a3a" : "#4a7a4a" }}>{row.status}</p>
+              <p style={{ fontSize: 11, fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const, color: row.status === "Surging" ? "#8a5a4a" : row.status === "Growing" || row.status === "Ramping" ? "#8a7a3a" : "#4a7a4a" }}>{row.status}</p>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "20%" }}>Total</p>
             <p style={{ margin: 0, width: "10%" }} />
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~720M km</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~720M km</p>
             <p style={{ margin: 0, width: "10%" }} />
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~$17.9B</p>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~$17.9B</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
             <p style={{ margin: 0, width: "20%" }} /><p style={{ margin: 0, width: "10%" }} />
           </div>
           <div style={{ borderTop: "1px solid #252220", paddingTop: 14, marginTop: 4 }}>
