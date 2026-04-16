@@ -528,8 +528,8 @@ export default function FiberOpticInputPage() {
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>DOWNSTREAM — WHERE FIBER GOES</p>
           <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "End use", w: "20%" }, { l: "Fiber type", w: "10%" }, { l: "Demand", w: "10%" }, { l: "Price/km", w: "10%" }, { l: "Est. value", w: "10%" }, { l: "Share", w: "10%" }, { l: "Driver", w: "20%" }, { l: "Status", w: "10%" }].map(h => (
-              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w }}>{h.l}</p>
+            {[{ l: "End use", w: "20%" }, { l: "Fiber type", w: "10%" }, { l: "Demand", w: "10%" }, { l: "Price/km", w: "10%" }, { l: "Est. value", w: "10%" }, { l: "Share", w: "10%" }, { l: "Driver", w: "20%" }, { l: "Status", w: "10%", right: true }].map(h => (
+              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
             ))}
           </div>
           {[
@@ -548,7 +548,7 @@ export default function FiberOpticInputPage() {
               <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.value}</p>
               <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
               <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "20%", lineHeight: 1.5 }}>{row.driver}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "10%", color: row.status === "Surging" ? "#8a5a4a" : row.status === "Growing" || row.status === "Ramping" ? "#8a7a3a" : "#4a7a4a" }}>{row.status}</p>
+              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const, color: row.status === "Surging" ? "#8a5a4a" : row.status === "Growing" || row.status === "Ramping" ? "#8a7a3a" : "#4a7a4a" }}>{row.status}</p>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
