@@ -476,8 +476,8 @@ export default function FiberOpticInputPage() {
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>UPSTREAM — WHAT GOES INTO FIBER</p>
           <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "Input", w: "25%" }, { l: "Per km", w: "14%" }, { l: "% of cost (base)", w: "18%" }, { l: "Price trend", w: "14%" }, { l: "Form", w: "40%" }, { l: "Status", w: "14%" }].map(h => (
-              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w }}>{h.l}</p>
+            {[{ l: "Input", w: "25%" }, { l: "Per km", w: "14%" }, { l: "% of cost (base)", w: "18%" }, { l: "Price trend", w: "14%" }, { l: "Form", w: "40%" }, { l: "Status", w: "14%", right: true }].map(h => (
+              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
             ))}
           </div>
           {[
@@ -502,7 +502,7 @@ export default function FiberOpticInputPage() {
               <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "18%" }}>{row.share}</p>
               <p style={{ fontSize: 11, color: "#a09888", margin: 0, width: "14%" }}>{row.trend}</p>
               <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "40%" }}>{row.form}</p>
-              <p style={{ fontSize: 11, fontWeight: 500, margin: 0, width: "14%", color: row.status === "Constrained" ? "#8a5a4a" : row.status === "Tightening" ? "#8a7a3a" : row.status === "Available" ? "#4a7a4a" : "#4a4540" }}>{row.status}</p>
+              <p style={{ fontSize: 11, fontWeight: 500, margin: 0, width: "14%", textAlign: "right" as const, color: row.status === "Constrained" ? "#8a5a4a" : row.status === "Tightening" ? "#8a7a3a" : row.status === "Available" ? "#4a7a4a" : "#4a4540" }}>{row.status}</p>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
