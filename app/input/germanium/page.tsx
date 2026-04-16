@@ -739,8 +739,8 @@ export default function GermaniumInputPage() {
           </div>
           {[
             { product: "Fiber optic cable", usage: "~87t/yr", value: "~$748M", share: "38%", endUses: "AI datacenters, telecom, subsea, UAVs", growth: "Surging (+19%)", linked: true },
-            { product: "IR optics", usage: "~55t/yr", value: "~$473M", share: "24%", endUses: "Thermal imaging, missile guidance", growth: "Growing (+18%)", linked: false },
-            { product: "Satellite solar cells", usage: "~35t/yr", value: "~$301M", share: "15%", endUses: "Space systems, LEO constellations", growth: "Growing (+57%)", linked: false },
+            { product: "IR optics", usage: "~55t/yr", value: "~$473M", share: "24%", endUses: "Thermal imaging, missile guidance", growth: "Surging (+18%)", linked: false },
+            { product: "Satellite solar cells", usage: "~35t/yr", value: "~$301M", share: "15%", endUses: "Space systems, LEO constellations", growth: "Surging (+57%)", linked: false },
             { product: "SiGe semiconductors", usage: "~25t/yr", value: "~$215M", share: "11%", endUses: "5G RF, radar, electronic warfare", growth: "Stable", linked: false },
             { product: "Other", usage: "~28t/yr", value: "~$241M", share: "12%", endUses: "Catalysts, phosphors, PET", growth: "Stable", linked: false },
           ].map((row, i) => (
