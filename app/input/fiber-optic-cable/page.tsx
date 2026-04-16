@@ -528,37 +528,40 @@ export default function FiberOpticInputPage() {
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>DOWNSTREAM — WHERE FIBER GOES</p>
           <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "End use", w: "18%" }, { l: "Fiber type", w: "13%" }, { l: "Status", w: "12%" }, { l: "Share", w: "10%" }, { l: "Driver", w: "22%" }, { l: "Demand", w: "12%", right: true }].map(h => (
-              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as {right?: boolean}).right ? "right" as const : undefined }}>{h.l}</p>
+            {[{ l: "End use", w: "14%" }, { l: "Fiber type", w: "10%" }, { l: "Demand", w: "11%" }, { l: "Price/km", w: "9%" }, { l: "Est. value", w: "10%" }, { l: "Share", w: "7%" }, { l: "Driver", w: "25%" }, { l: "Status", w: "10%" }].map(h => (
+              <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w }}>{h.l}</p>
             ))}
           </div>
           {[
-            { use: "AI datacenters", fiberType: "G.657A", demand: "~210M km", share: "29%", driver: "GPU cluster interconnect, DCI", status: "Surging" },
-            { use: "Terrestrial telecom", fiberType: "G.652D", demand: "~290M km", share: "40%", driver: "FTTH, 5G backhaul, metro", status: "Stable" },
-            { use: "Subsea cables", fiberType: "G.654E", demand: "~70M km", share: "10%", driver: "Intercontinental capacity", status: "Growing" },
-            { use: "Military / UAV", fiberType: "G.657A", demand: "~55M km", share: "8%", driver: "Drone communication systems", status: "Surging" },
-            { use: "BEAD broadband", fiberType: "G.652D", demand: "~65M km", share: "9%", driver: "Federal rural program, $42B", status: "Ramping" },
-            { use: "Other", fiberType: "Mixed", demand: "~30M km", share: "4%", driver: "Enterprise, industrial, sensing", status: "Stable" },
+            { use: "AI datacenters", fiberType: "G.657A", demand: "~210M km", price: "~$25", value: "~$5.3B", share: "30%", driver: "GPU cluster interconnect, DCI", status: "Surging" },
+            { use: "Terrestrial telecom", fiberType: "G.652D", demand: "~290M km", price: "~$15", value: "~$4.4B", share: "25%", driver: "FTTH, 5G backhaul, metro", status: "Stable" },
+            { use: "Subsea cables", fiberType: "G.654E", demand: "~70M km", price: "~$75", value: "~$5.3B", share: "30%", driver: "Intercontinental capacity", status: "Growing" },
+            { use: "Military / UAV", fiberType: "G.657A", demand: "~55M km", price: "~$25", value: "~$1.4B", share: "8%", driver: "Drone communication systems", status: "Surging" },
+            { use: "BEAD broadband", fiberType: "G.652D", demand: "~65M km", price: "~$15", value: "~$1.0B", share: "5%", driver: "Federal rural program, $42B", status: "Ramping" },
+            { use: "Other", fiberType: "Mixed", demand: "~30M km", price: "~$18", value: "~$0.5B", share: "2%", driver: "Enterprise, industrial, sensing", status: "Stable" },
           ].map((row, i) => (
             <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
-              <p style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, width: "18%" }}>{row.use}</p>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "13%" }}>{row.fiberType}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "12%", color: row.status === "Surging" ? "#8a5a4a" : row.status === "Growing" || row.status === "Ramping" ? "#8a7a3a" : "#4a7a4a" }}>{row.status}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
-              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "22%", lineHeight: 1.5 }}>{row.driver}</p>
-              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "12%", textAlign: "right" as const }}>{row.demand}</p>
+              <p style={{ fontSize: 12, color: "#a09888", fontWeight: 500, margin: 0, width: "14%" }}>{row.use}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>{row.fiberType}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "11%" }}>{row.demand}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "9%" }}>{row.price}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.value}</p>
+              <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "7%" }}>{row.share}</p>
+              <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "25%", lineHeight: 1.5 }}>{row.driver}</p>
+              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "10%", color: row.status === "Surging" ? "#8a5a4a" : row.status === "Growing" || row.status === "Ramping" ? "#8a7a3a" : "#4a7a4a" }}>{row.status}</p>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>Total</p>
-            <p style={{ margin: 0, width: "13%" }} />
-            <p style={{ margin: 0, width: "12%" }} />
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
-            <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "22%" }}>Every segment stable or growing</p>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "12%", textAlign: "right" as const }}>~720M km</p>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "14%" }}>Total</p>
+            <p style={{ margin: 0, width: "10%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "11%" }}>~720M km</p>
+            <p style={{ margin: 0, width: "9%" }} />
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~$17.9B</p>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "7%" }}>100%</p>
+            <p style={{ margin: 0, width: "25%" }} /><p style={{ margin: 0, width: "10%" }} />
           </div>
-          <div style={{ paddingTop: 14, marginTop: 4 }}>
-            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>AI datacenters and military drones both consume G.657A fiber — competing for the same production lines. Manufacturers are cannibalizing G.652D telecom output for higher-margin G.657A, squeezing telecom operators and the BEAD program simultaneously.</p>
+          <div style={{ borderTop: "1px solid #252220", paddingTop: 14, marginTop: 4 }}>
+            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Measured by volume, terrestrial telecom still dominates at 40%. Measured by value, AI datacenters and subsea cables each account for ~30% — the premium fiber segments now capture most of the revenue. AI datacenters and military drones both consume G.657A fiber, competing for the same production lines. Manufacturers are cannibalizing G.652D telecom output for higher-margin G.657A, squeezing telecom operators and the BEAD program simultaneously.</p>
           </div>
         </div>
 
