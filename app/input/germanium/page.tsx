@@ -792,17 +792,17 @@ export default function GermaniumInputPage() {
             {/* Demand */}
             <div style={{ flex: 1, background: cardBg, border: `1px solid ${borderColor}`, borderRadius: "10px", padding: "20px 22px" }}>
               <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: dimText, margin: "0 0 10px 0" }}>DEMAND</p>
-              <p style={{ fontSize: "22px", fontWeight: 500, color: warmWhite, margin: "0 0 8px 0" }}>~246t/yr</p>
+              <p style={{ fontSize: "22px", fontWeight: 500, color: warmWhite, margin: "0 0 8px 0" }}>~258–286t by 2027</p>
               <p style={{ fontSize: "11.5px", color: "#a09888", margin: 0, lineHeight: 1.6 }}>
-                Projected. Fiber optics (~87t, 38%), IR optics (~55t, 24%), satellite solar (~35t, 15%), SiGe semiconductors (~25t, 11%), other (~28t, 12%). Every end market stable or growing.
+                Projected across all end markets. Fiber +16–19t (AI datacenters). Satellite solar +10–20t (LEO constellations). IR optics +3–10t (defense, offset by substitution). SiGe +2–5t (5G). Every segment growing simultaneously — no demand in decline.
               </p>
             </div>
             {/* Gap */}
             <div style={{ flex: 1, background: "#1a1810", border: `1px solid ${accent}33`, borderRadius: "10px", padding: "20px 22px" }}>
               <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 10px 0", opacity: 0.7 }}>GAP</p>
-              <p style={{ fontSize: "22px", fontWeight: 500, color: accent, margin: "0 0 8px 0" }}>~16t</p>
+              <p style={{ fontSize: "22px", fontWeight: 500, color: accent, margin: "0 0 8px 0" }}>28–56t</p>
               <p style={{ fontSize: "11.5px", color: "#a09888", margin: 0, lineHeight: 1.6 }}>
-                Shortfall from fiber demand growth alone. Western-accessible supply of ~26t cannot cover the gap without Chinese cooperation.
+                12–24% shortfall. At current pricing ($8,500/kg), the unmet demand represents $240–475M in germanium that doesn{"'"}t exist. Western-accessible supply covers only ~26t of this — the rest requires Chinese cooperation.
               </p>
             </div>
           </div>
