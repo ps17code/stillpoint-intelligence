@@ -738,9 +738,9 @@ export default function GermaniumInputPage() {
             ))}
           </div>
           {[
-            { product: "Fiber optic cable", usage: "~87t/yr", value: "~$748M", share: "38%", endUses: "AI datacenters, telecom, subsea, UAVs", growth: "Surging", linked: true },
-            { product: "IR optics", usage: "~55t/yr", value: "~$473M", share: "24%", endUses: "Thermal imaging, missile guidance", growth: "Growing", linked: false },
-            { product: "Satellite solar cells", usage: "~35t/yr", value: "~$301M", share: "15%", endUses: "Space systems, LEO constellations", growth: "Growing", linked: false },
+            { product: "Fiber optic cable", usage: "~87t/yr", value: "~$748M", share: "38%", endUses: "AI datacenters, telecom, subsea, UAVs", growth: "Surging (+19%)", linked: true },
+            { product: "IR optics", usage: "~55t/yr", value: "~$473M", share: "24%", endUses: "Thermal imaging, missile guidance", growth: "Growing (+18%)", linked: false },
+            { product: "Satellite solar cells", usage: "~35t/yr", value: "~$301M", share: "15%", endUses: "Space systems, LEO constellations", growth: "Growing (+57%)", linked: false },
             { product: "SiGe semiconductors", usage: "~25t/yr", value: "~$215M", share: "11%", endUses: "5G RF, radar, electronic warfare", growth: "Stable", linked: false },
             { product: "Other", usage: "~28t/yr", value: "~$241M", share: "12%", endUses: "Catalysts, phosphors, PET", growth: "Stable", linked: false },
           ].map((row, i) => (
@@ -757,7 +757,7 @@ export default function GermaniumInputPage() {
               <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "10%" }}>{row.value}</p>
               <p style={{ fontSize: 12, color: "#a09888", margin: 0, width: "10%" }}>{row.share}</p>
               <p style={{ fontSize: 11, color: "#706a60", margin: 0, width: "34%", lineHeight: 1.5 }}>{row.endUses}</p>
-              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const, color: row.growth === "Surging" ? "#8a5a4a" : row.growth === "Growing" ? "#8a7a3a" : "#4a7a4a" }}>{row.growth}</p>
+              <p style={{ fontSize: 10, fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const, color: row.growth.startsWith("Surging") ? "#8a5a4a" : row.growth.startsWith("Growing") ? "#8a7a3a" : "#4a7a4a" }}>{row.growth}</p>
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
@@ -766,7 +766,7 @@ export default function GermaniumInputPage() {
             <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~$1.98B</p>
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
             <p style={{ margin: 0, width: "34%" }} />
-            <p style={{ fontSize: 10, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const }}>All growing</p>
+            <p style={{ fontSize: 10, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const }}>~286t (+24%)</p>
           </div>
           <div style={{ paddingTop: 14, marginTop: 4 }}>
             <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Fiber optics is the dominant consumer at 38% of supply. All five end markets are stable or growing. No demand destruction pathway exists on a 2-3 year horizon. Substitution (BlackDiamond for IR, hollow-core for fiber) is real but arrives after the deficit peaks.</p>
