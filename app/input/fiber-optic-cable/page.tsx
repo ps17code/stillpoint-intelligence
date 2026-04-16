@@ -508,19 +508,19 @@ export default function FiberOpticInputPage() {
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "25%" }}>Production cost / km</p>
             <p style={{ margin: 0, width: "14%" }} />
-            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>~$3.50</p>
-            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "14%" }}>~$5</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>~$5.50</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "14%" }}>~$8.50</p>
             <p style={{ margin: 0, width: "40%" }} /><p style={{ margin: 0, width: "14%" }} />
           </div>
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0" }}>
-            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "25%" }}>Market price / km (G.652D)</p>
+            <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "25%" }}>Market price / km (G.657A)</p>
             <p style={{ margin: 0, width: "14%" }} />
-            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>~$5–6</p>
-            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "14%" }}>~$12–17</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "18%" }}>~$7–8</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "14%" }}>~$22–28</p>
             <p style={{ margin: 0, width: "40%" }} /><p style={{ margin: 0, width: "14%" }} />
           </div>
           <div style={{ borderTop: "1px solid #252220", paddingTop: 14, marginTop: 4 }}>
-            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Three inputs are constrained simultaneously — germanium, SiCl₄, and helium — representing ~30% of baseline production cost. Their combined price surges have pushed estimated production cost up ~40%. But G.652D market prices have surged over 150%, reflecting demand shock from AI datacenters and military drone programs layered on top of input cost inflation.</p>
+            <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>Three inputs are constrained simultaneously — germanium, SiCl₄, and helium — representing ~30% of baseline production cost. Their combined price surges have pushed estimated production cost up ~55%. But G.657A datacenter-grade fiber prices have surged over 210%, as AI datacenter and military drone demand compete for the same production lines.</p>
           </div>
         </div>
 
