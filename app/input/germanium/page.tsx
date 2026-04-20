@@ -64,13 +64,13 @@ export default function GermaniumInputPage() {
       name: "Umicore",
       ticker: "UMI \u00b7 Euronext Brussels",
       category: "Refined Materials / Conversion",
-      metrics: [
-        { label: "Share price", value: "\u20AC17.26 (Apr 2026)" },
-        { label: "Market cap", value: "~\u20AC4.1B" },
-        { label: "EV", value: "~\u20AC5.5B" },
-        { label: "EV/EBITDA", value: "5.74x" },
-        { label: "FY25", value: "\u20AC3.6B revenue, \u20AC847M adj. EBITDA, \u20AC558M Specialty Materials revenue" },
-      ],
+          metrics: [
+      { label: "Market cap", value: "€4.1B" },
+      { label: "Revenue", value: "€3.6B" },
+      { label: "EBITDA", value: "€847M" },
+      { label: "Price", value: "€17.26" },
+      { label: "12mo", value: "+131%" },
+    ],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "Umicore operates the only facility in the western world that produces fiber-grade germanium tetrachloride at commercial scale. GeCl\u2084 is the volatile liquid deposited into glass preforms to control the refractive index of fiber optic cable \u2014 without it, light doesn\\u2019t travel through fiber. Umicore\\u2019s Olen, Belgium plant processes approximately 40-50 tonnes of germanium per year, refining it to 8N purity (99.999999%) and shipping the resulting GeCl\u2084 to every major western and Japanese fiber manufacturer: Corning, Prysmian, Fujikura, Sumitomo Electric, Shin-Etsu." },
@@ -117,13 +117,13 @@ export default function GermaniumInputPage() {
       name: "5N Plus",
       ticker: "VNP \u00b7 TSX",
       category: "Refined Materials / Components",
-      metrics: [
-        { label: "Share price", value: "C$35.64 (Apr 2026)" },
-        { label: "Market cap", value: "~C$3.2B (~US$2.3B)" },
-        { label: "P/E", value: "~44x TTM" },
-        { label: "Net debt/EBITDA", value: "0.54x" },
-        { label: "FY25", value: "$391.1M revenue (+35%), $92.4M adj. EBITDA (+73%)" },
-      ],
+          metrics: [
+      { label: "Market cap", value: "C$3.2B" },
+      { label: "Revenue", value: "$391M" },
+      { label: "EBITDA", value: "$92.4M" },
+      { label: "Price", value: "C$35.64" },
+      { label: "12mo", value: "+596%" },
+    ],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "5N Plus is the only company in the western world that takes raw germanium and turns it into a finished space solar cell. The chain runs end to end: refined germanium metal \u2192 zone-refined crystal \u2192 sliced wafers \u2192 epitaxial III-V semiconductor layers \u2192 completed multi-junction solar cell. This vertical integration lives across three sites \u2014 Montreal (refining), St. George, Utah (wafer production), and Heilbronn, Germany (AZUR SPACE, solar cell manufacturing)." },
@@ -169,13 +169,13 @@ export default function GermaniumInputPage() {
       name: "LightPath Technologies",
       ticker: "LPTH \u00b7 NASDAQ",
       category: "Technology / Substitution",
-      metrics: [
-        { label: "Share price", value: "~$12.83 (NASDAQ, Apr 2026)" },
-        { label: "Market cap", value: "~$700M" },
-        { label: "FY25 revenue", value: "$37.2M" },
-        { label: "Q1 FY26 revenue", value: "$15.1M (+79% YoY)" },
-        { label: "Backlog", value: "~$90M" },
-      ],
+          metrics: [
+      { label: "Market cap", value: "$700M" },
+      { label: "Revenue", value: "$37.2M" },
+      { label: "EBITDA", value: "-$7.7M" },
+      { label: "Price", value: "$12.83" },
+      { label: "12mo", value: "+285%" },
+    ],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "LightPath is the germanium substitution play. The company holds an exclusive license from the US Naval Research Laboratory for BlackDiamond chalcogenide glass \u2014 a proprietary material that can replace germanium in infrared optics while delivering comparable or superior performance. IR optics accounts for roughly 24% of global germanium demand. Every thermal camera in military service \u2014 drones, targeting pods, armored vehicle sights, soldier helmet-mounted systems \u2014 traditionally requires a germanium lens. LightPath\\u2019s BlackDiamond technology makes that germanium optional." },
@@ -215,11 +215,13 @@ export default function GermaniumInputPage() {
       name: "Blue Moon Metals",
       ticker: "MOON \u00b7 TSXV / NASDAQ",
       category: "Mining / Primary Supply",
-      metrics: [
-        { label: "Share price", value: "TSXV: MOON / NASDAQ: BMM" },
-        { label: "Stage", value: "Pre-revenue, exploration/development" },
-        { label: "Key asset", value: "Apex germanium-gallium mine, Washington County, Utah" },
-      ],
+          metrics: [
+      { label: "Market cap", value: "C$885M" },
+      { label: "Revenue", value: "Pre-revenue" },
+      { label: "EBITDA", value: "—" },
+      { label: "Price", value: "C$11.63" },
+      { label: "12mo", value: "+336%" },
+    ],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "Blue Moon Metals acquired the Apex mine \u2014 the only site in the United States with a documented history of primary germanium and gallium production. Every other western germanium source produces it as a by-product of zinc smelting (Teck), recycling (Umicore), or slag processing (STL/DRC). Apex is the only deposit where germanium and gallium were the primary target minerals." },
@@ -259,11 +261,13 @@ export default function GermaniumInputPage() {
       name: "Teck Resources",
       ticker: "TECK \u00b7 TSX / NYSE",
       category: "Primary Production / Feedstock",
-      metrics: [
-        { label: "Market cap", value: "~C$30B+ (major diversified miner)" },
-        { label: "Germanium output", value: "8-10 tonnes/yr from Trail Operations, BC" },
-        { label: "Primary business", value: "Copper and zinc mining" },
-      ],
+          metrics: [
+      { label: "Market cap", value: "C$30B+" },
+      { label: "Revenue", value: "C$14.5B" },
+      { label: "EBITDA", value: "C$5.2B" },
+      { label: "Price", value: "~C$65" },
+      { label: "12mo", value: "+18%" },
+    ],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "Teck\\u2019s Trail Operations in British Columbia is one of only two non-Chinese facilities in the world that produces primary germanium (the other being Chinese zinc smelters). Trail recovers germanium as a by-product during zinc concentrate processing \u2014 the germanium arrives embedded in zinc ore from Teck\\u2019s Red Dog mine in Alaska, one of the world\\u2019s largest zinc operations, and is extracted from flue dust and leach residues during smelting." },
@@ -294,12 +298,13 @@ export default function GermaniumInputPage() {
       name: "Yunnan Chihong Zinc & Germanium",
       ticker: "600497 \u00b7 Shanghai",
       category: "Primary Production (China)",
-      metrics: [
-        { label: "Listed", value: "Shanghai Stock Exchange" },
-        { label: "Parent", value: "Aluminum Corporation of China (Chinalco) \u2014 state-owned" },
-        { label: "Germanium output", value: "56 tonnes/yr (2022), capacity for 47.6t ingot + 60t tetrahydride + 300,000 wafers" },
-        { label: "Proven Ge reserves", value: "600+ tonnes (~17% of China\\u2019s total)" },
-      ],
+          metrics: [
+      { label: "Market cap", value: "CNY 39.3B" },
+      { label: "Revenue", value: "CNY 22.3B" },
+      { label: "EBITDA", value: "—" },
+      { label: "Price", value: "CNY 7.80" },
+      { label: "12mo", value: "+42%" },
+    ],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "Yunnan Chihong is not an investment idea for western capital. It\\u2019s the single most important entity in the global germanium market \u2014 the supply-side counterparty whose actions determine whether the western scarcity premium exists or collapses." },
@@ -329,10 +334,7 @@ export default function GermaniumInputPage() {
       name: "STL / Gécamines \u2014 Big Hill",
       ticker: "Private \u00b7 DRC",
       category: "Primary Production / New Supply",
-      metrics: [
-        { label: "Entity", value: "Société du Terril de Lubumbashi (STL)" },
-        { label: "Ownership", value: "George Forrest International (70%) / Gécamines (30%, DRC state)" },
-      ],
+          metrics: [],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "The Big Hill slag heap in Lubumbashi is the accumulated waste from over a century of copper mining in the DRC \u2014 14 million tonnes of metallurgical slag containing an estimated 700+ tonnes of germanium. STL, a joint venture between Belgian-Congolese industrial group George Forrest International and DRC state mining company Gécamines, operates a new hydrometallurgical plant at the site commissioned in October 2023." },
@@ -363,9 +365,7 @@ export default function GermaniumInputPage() {
       name: "Germanium Metal",
       ticker: "",
       category: "Raw Material / Commodity",
-      metrics: [
-        { label: "Current price", value: "~$8,597/kg (Fastmarkets, March 2026)" },
-      ],
+          metrics: [],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "Germanium metal is the raw material that feeds every other entity on this page. Umicore converts it to GeCl\u2084 for fiber optics. 5N Plus grows it into wafers for space solar cells. LightPath exists because it\\u2019s too expensive. Blue Moon wants to mine it. Teck produces it as a by-product. Yunnan Chihong controls most of the global supply. STL is extracting it from a century-old slag heap. The price of germanium metal is the fundamental variable that determines the economics of the entire chain." },
@@ -979,6 +979,7 @@ export default function GermaniumInputPage() {
                     </button>
                   </div>
                   {/* Metrics row */}
+                  {brief.metrics.length > 0 && (
                   <div style={{
                     display: "flex", marginTop: 20, gap: 0,
                     borderTop: "1px solid #252220", paddingTop: 14,
@@ -994,6 +995,7 @@ export default function GermaniumInputPage() {
                       </div>
                     ))}
                   </div>
+                  )}
                 </div>
                 {/* Scrollable content */}
                 <div style={{ flex: 1, overflowY: "auto" as const, padding: "24px 28px" }}>

@@ -82,13 +82,13 @@ export default function FiberOpticInputPage() {
       name: "Corning",
       ticker: "GLW \u00b7 NYSE",
       category: "Manufacturing / Integration",
-      metrics: [
-        { label: "Share price", value: "~$164 (Apr 2026)" },
-        { label: "Market cap", value: "~$141B" },
-        { label: "FY25", value: "$16.4B revenue (+13%), $2.52 core EPS (+29%)" },
-        { label: "Optical Communications FY25", value: "$6.3B revenue (+35%), $1B net income (+71%)" },
-        { label: "Free cash flow", value: "$1.72B (nearly doubled YoY)" },
-      ],
+          metrics: [
+      { label: "Market cap", value: "$141B" },
+      { label: "Revenue", value: "$16.4B" },
+      { label: "EBITDA", value: "$3.7B" },
+      { label: "Price", value: "$164" },
+      { label: "12mo", value: "+311%" },
+    ],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "Corning invented low-loss optical fiber in 1970 and today controls approximately 40% of global fiber manufacturing capacity \u2014 the single largest share of any company. It is the dominant western producer of optical fiber, cable, and connectivity hardware, and the largest non-Chinese consumer of fiber-grade germanium tetrachloride. When Umicore ships GeCl\u2084 from Olen, a disproportionate share goes to Corning." },
@@ -128,13 +128,13 @@ export default function FiberOpticInputPage() {
       name: "Prysmian",
       ticker: "PRY \u00b7 Borsa Italiana",
       category: "Manufacturing / Cable Systems",
-      metrics: [
-        { label: "Share price", value: "~\u20AC100 (Apr 2026)" },
-        { label: "Market cap", value: "~\u20AC28B (~$31B)" },
-        { label: "FY25", value: "\u20AC19.65B revenue (+5.4% organic), \u20AC2.40B adj. EBITDA (+24%)" },
-        { label: "Free cash flow", value: "\u20AC1.17B" },
-        { label: "Transmission backlog", value: "\u20AC17B" },
-      ],
+          metrics: [
+      { label: "Market cap", value: "€28B" },
+      { label: "Revenue", value: "€19.7B" },
+      { label: "EBITDA", value: "€2.4B" },
+      { label: "Price", value: "~€100" },
+      { label: "12mo", value: "+57%" },
+    ],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "Prysmian is the world\\u2019s largest cable company \u2014 not just fiber, but energy cables, subsea power systems, and industrial wiring across 109 production sites worldwide. In the fiber optic supply chain, Prysmian holds approximately 15% of global fiber market share and is vertically integrated from preform manufacturing through finished cable installation. Where Corning dominates in the US and in fiber manufacturing, Prysmian dominates in cable systems \u2014 particularly subsea and high-voltage transmission." },
@@ -176,13 +176,13 @@ export default function FiberOpticInputPage() {
       name: "Fujikura",
       ticker: "5803 \u00b7 TSE",
       category: "Manufacturing / Pure-Play",
-      metrics: [
-        { label: "Share price", value: "~\u00A527,630 (Apr 2026) \u2014 6-for-1 stock split announced" },
-        { label: "Market cap", value: "~\u00A59.3T (~$62B)" },
-        { label: "FY25 (Mar 2025)", value: "\u00A5979B revenue (+22.5%)" },
-        { label: "FY26 forecast", value: "EPS \u00A5469 (+40%), datacenter telecom sales 1.6x YoY" },
-        { label: "52-week performance", value: "+155% in 2025, all-time high \u00A55,644 (Apr 10, 2026)" },
-      ],
+          metrics: [
+      { label: "Market cap", value: "¥9.3T" },
+      { label: "Revenue", value: "¥979B" },
+      { label: "EBITDA", value: "¥206B" },
+      { label: "Price", value: "¥27,630" },
+      { label: "12mo", value: "+155%" },
+    ],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "Fujikura is the closest thing to a pure-play on AI-driven fiber demand among listed equities. The Japanese industrial company \u2014 which developed the world\\u2019s first optical fiber in 1959 \u2014 generates over 50% of its revenue from the United States and exports approximately 75% of its optical fiber output. Its Information Technology segment is the primary growth driver, with datacenter application sales projected to grow 1.6x year-over-year in FY26." },
@@ -218,13 +218,7 @@ export default function FiberOpticInputPage() {
       name: "Rosendahl Nextrom",
       ticker: "Private \u00b7 Knill Gruppe, Austria",
       category: "Equipment / Chokepoint",
-      metrics: [
-        { label: "Entity", value: "Rosendahl Nextrom GmbH" },
-        { label: "Parent", value: "Knill Gruppe (est. 1712, Austria, family-owned)" },
-        { label: "Headquarters", value: "Pischelsdorf (Austria) / Vantaa (Finland, operations)" },
-        { label: "Employees", value: "~800 across group" },
-        { label: "Status", value: "Private \u2014 not directly investable" },
-      ],
+          metrics: [],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "Rosendahl Nextrom manufactures virtually all of the preform deposition equipment used by every major fiber optic manufacturer in the world. Their MCVD, PCVD, OVD, and VAD systems are the machines that build fiber preforms \u2014 the glass rods from which optical fiber is drawn. Without Nextrom equipment, you cannot make preforms. Without preforms, you cannot make fiber." },
@@ -257,13 +251,13 @@ export default function FiberOpticInputPage() {
       name: "YOFC",
       ticker: "6869 \u00b7 HKEX",
       category: "Manufacturing (China)",
-      metrics: [
-        { label: "Listed", value: "Hong Kong Exchange (6869)" },
-        { label: "Market cap", value: "~HK$18B" },
-        { label: "Preform capacity", value: "3,500 tonnes/yr \u2014 world\\u2019s largest" },
-        { label: "Key relationships", value: "Corning JV, Shin-Etsu JV" },
-        { label: "HCF record", value: "0.040 dB/km (world record, lab conditions)" },
-      ],
+          metrics: [
+      { label: "Market cap", value: "HK$18B" },
+      { label: "Revenue", value: "HK$17.7B" },
+      { label: "EBITDA", value: "—" },
+      { label: "Price", value: "~HK$23" },
+      { label: "12mo", value: "+85%" },
+    ],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "YOFC is China\\u2019s largest and the world\\u2019s most prolific fiber optic manufacturer by preform capacity. With 3,500 tonnes/year, YOFC dwarfs any individual western manufacturer. It supplies approximately 30% of China Mobile\\u2019s fiber needs and exports to over 100 countries with plants in Mexico, Indonesia, South Africa, Brazil, and Poland." },
@@ -296,13 +290,7 @@ export default function FiberOpticInputPage() {
       name: "Hollow-Core Fiber Ecosystem",
       ticker: "Thematic",
       category: "Technology / Substitution",
-      metrics: [
-        { label: "Status", value: "Pre-commercial / early deployment" },
-        { label: "Key entities", value: "Microsoft/Lumenisity, Relativity Networks (Prysmian-backed), YOFC, Lightera (OFS)" },
-        { label: "Deployment", value: "~20,000 km globally by end 2026" },
-        { label: "Installed base comparison", value: "Billions of km of germanium-doped fiber" },
-        { label: "Price", value: "~1,000x standard G.652D" },
-      ],
+          metrics: [],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "Hollow-core fiber is the structural bear case for germanium demand in fiber optics. Instead of guiding light through a germanium-doped glass core, HCF transmits light through air enclosed within a microstructured cladding. This eliminates germanium from the manufacturing process entirely. Light travels approximately 30% faster through air than glass, delivering a latency advantage for AI training synchronization, high-frequency trading, and real-time inference." },
@@ -334,12 +322,7 @@ export default function FiberOpticInputPage() {
       name: "Helium",
       ticker: "Physical Input",
       category: "Raw Material / Constrained Input",
-      metrics: [
-        { label: "Current price", value: "~$15/m³ spot (2025)" },
-        { label: "Supply", value: "~160M m³/yr global" },
-        { label: "Status", value: "Third independent bottleneck in fiber production" },
-        { label: "Substitute", value: "None" },
-      ],
+          metrics: [],
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "Helium is the third independent bottleneck in the fiber optic supply chain \u2014 alongside preform equipment (Rosendahl Nextrom) and GeCl\u2084 conversion (Umicore). Drawing fiber from a preform requires ultra-pure helium as a coolant: the glass strand exits the 2,000°C furnace at 10-20 meters per second and must be rapidly cooled. There is no commercially viable substitute. No other gas has the necessary combination of thermal conductivity, inertness, and low molecular weight." },
@@ -1130,6 +1113,7 @@ export default function FiberOpticInputPage() {
                     </button>
                   </div>
                   {/* Metrics row */}
+                  {brief.metrics.length > 0 && (
                   <div style={{
                     display: "flex", marginTop: 20, gap: 0,
                     borderTop: "1px solid #252220", paddingTop: 14,
@@ -1145,6 +1129,7 @@ export default function FiberOpticInputPage() {
                       </div>
                     ))}
                   </div>
+                  )}
                 </div>
                 {/* Scrollable content */}
                 <div style={{ flex: 1, overflowY: "auto" as const, padding: "24px 28px" }}>
