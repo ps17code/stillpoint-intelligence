@@ -2,32 +2,37 @@
   "layerConfig": {
     "byproductSource": {
       "displayFields": [
-        { "key": "loc", "label": "Location" },
-        { "key": "stat", "label": "Output" }
+        { "key": "country", "label": "Country" },
+        { "key": "descriptor_pill", "label": "Type" },
+        { "key": "quantity_pill", "label": "Output" }
       ]
     },
     "primaryProducer": {
       "displayFields": [
-        { "key": "loc", "label": "Location" },
-        { "key": "stat", "label": "Status" }
+        { "key": "country", "label": "Country" },
+        { "key": "descriptor_pill", "label": "Type" },
+        { "key": "quantity_pill", "label": "Output" }
       ]
     },
     "refiner": {
       "displayFields": [
-        { "key": "loc", "label": "Location" },
-        { "key": "stat", "label": "Output" }
+        { "key": "country", "label": "Country" },
+        { "key": "descriptor_pill", "label": "Type" },
+        { "key": "quantity_pill", "label": "Output" }
       ]
     },
     "substrateMfg": {
       "displayFields": [
-        { "key": "loc", "label": "Location" },
-        { "key": "stat", "label": "Capacity" }
+        { "key": "country", "label": "Country" },
+        { "key": "descriptor_pill", "label": "Type" },
+        { "key": "quantity_pill", "label": "Revenue" }
       ]
     },
     "deviceMfg": {
       "displayFields": [
-        { "key": "loc", "label": "Location" },
-        { "key": "stat", "label": "Revenue" }
+        { "key": "country", "label": "Country" },
+        { "key": "descriptor_pill", "label": "Type" },
+        { "key": "quantity_pill", "label": "Revenue" }
       ]
     }
   },

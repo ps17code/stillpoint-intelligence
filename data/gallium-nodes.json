@@ -5,14 +5,31 @@
     "stat": "~97M t/yr bauxite · ~4,850t gallium content",
     "risk": "Political stability in Guinea; Chinese strategic lock-in via SMB-Winning consortium ownership",
     "stats": [
-      ["Bauxite output", "97M t/yr"],
-      ["Gallium content", "~4,850t"],
-      ["Ga concentration", "~50 ppm"],
-      ["Status", "Active"]
+      [
+        "Bauxite output",
+        "97M t/yr"
+      ],
+      [
+        "Gallium content",
+        "~4,850t"
+      ],
+      [
+        "Ga concentration",
+        "~50 ppm"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
     ],
     "role": "Guinea hosts the world's largest bauxite reserves (~7.4 billion tonnes) and is the largest bauxite exporter globally. CBG (51% Halco / 49% Guinea government) operates Sangaredi. SMB-Winning (Chinese-led consortium) operates Boke. Most Guinean bauxite is exported unrefined — primarily to China — because Guinea has minimal domestic alumina capacity.",
     "inv": "Guinea is the world's largest bauxite exporter but refines almost none of its own output. Roughly 80% of Guinean bauxite flows to Chinese refineries, meaning Guinea structurally underwrites Chinese gallium dominance.",
-    "risks": ["Political stability in Guinea; Chinese strategic lock-in via SMB-Winning consortium ownership"]
+    "risks": [
+      "Political stability in Guinea; Chinese strategic lock-in via SMB-Winning consortium ownership"
+    ],
+    "country": "Guinea",
+    "descriptor_pill": "Bauxite-producing region",
+    "quantity_pill": "~97M t/yr bauxite"
   },
   "Australian Bauxite": {
     "type": "Byproduct Source",
@@ -20,14 +37,31 @@
     "stat": "~100M t/yr bauxite · ~5,000t gallium content",
     "risk": "Project-level execution risk at JAGA; FID delays",
     "stats": [
-      ["Bauxite output", "100M t/yr"],
-      ["Gallium content", "~5,000t"],
-      ["Ga concentration", "~50 ppm"],
-      ["Status", "Active"]
+      [
+        "Bauxite output",
+        "100M t/yr"
+      ],
+      [
+        "Gallium content",
+        "~5,000t"
+      ],
+      [
+        "Ga concentration",
+        "~50 ppm"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
     ],
     "role": "Australia is the world's largest bauxite producer at ~100M t/yr. Unlike Guinea, most Australian bauxite is refined domestically through integrated operations. Rio Tinto's Weipa feeds Yarwun and Queensland Alumina. Alcoa's Huntly and Willowdale feed Kwinana, Pinjarra, and Wagerup — the last being the planned JAGA gallium project site.",
     "inv": "Australia is the only major bauxite-producing region with domestic alumina refining at scale AND a western-aligned political posture. The Wagerup refinery operated by Alcoa — the planned JAGA gallium site — processes Australian-origin bauxite.",
-    "risks": ["Project-level execution risk at JAGA; FID delays"]
+    "risks": [
+      "Project-level execution risk at JAGA; FID delays"
+    ],
+    "country": "Australia",
+    "descriptor_pill": "Bauxite-producing region",
+    "quantity_pill": "~100M t/yr bauxite"
   },
   "Chinese Domestic Bauxite": {
     "type": "Byproduct Source",
@@ -35,14 +69,31 @@
     "stat": "~90M t/yr domestic + ~130M t/yr imports · ~11,000t gallium content",
     "risk": "None chain-specific; Chinese integrated control is a feature, not a risk, from Chinese policy perspective",
     "stats": [
-      ["Domestic output", "90M t/yr"],
-      ["Imports", "~130M t/yr"],
-      ["Total Ga content", "~11,000t"],
-      ["Status", "Active"]
+      [
+        "Domestic output",
+        "90M t/yr"
+      ],
+      [
+        "Imports",
+        "~130M t/yr"
+      ],
+      [
+        "Total Ga content",
+        "~11,000t"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
     ],
     "role": "China produces ~90M t/yr of bauxite domestically and imports an additional ~130M t/yr, primarily from Guinea. The combined feedstock pool feeds ~20 Chinese alumina refineries, most of which have installed gallium recovery circuits. This is where ~83% of global primary gallium is produced.",
     "inv": "China's combined domestic bauxite production and imports feed the ~20 Chinese alumina refineries that produce ~83% of global primary gallium.",
-    "risks": ["None chain-specific; Chinese integrated control is a feature from Chinese policy perspective"]
+    "risks": [
+      "None chain-specific; Chinese integrated control is a feature from Chinese policy perspective"
+    ],
+    "country": "China",
+    "descriptor_pill": "Bauxite-producing region",
+    "quantity_pill": "~90M t/yr domestic + imports"
   },
   "Brazilian Bauxite": {
     "type": "Byproduct Source",
@@ -50,14 +101,31 @@
     "stat": "~33M t/yr bauxite · ~1,650t gallium content",
     "risk": "No active project; latent supply may never materialize without specific catalyst",
     "stats": [
-      ["Bauxite output", "33M t/yr"],
-      ["Gallium content", "~1,650t"],
-      ["Key refinery", "Alunorte (no Ga recovery)"],
-      ["Status", "Active"]
+      [
+        "Bauxite output",
+        "33M t/yr"
+      ],
+      [
+        "Gallium content",
+        "~1,650t"
+      ],
+      [
+        "Key refinery",
+        "Alunorte (no Ga recovery)"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
     ],
     "role": "Brazil is the world's fourth-largest bauxite producer. MRN Trombetas (Vale, BHP, Rio Tinto, Alcoa, Norsk Hydro, CBA consortium) produces ~12M t/yr. Alcoa's Juruti adds ~6M t/yr. Combined output primarily feeds Alunorte (Norsk Hydro) — the world's largest alumina refinery — which does not currently produce gallium.",
     "inv": "Brazil's bauxite feeds Alunorte, the world's largest alumina refinery, which currently does not produce gallium. A latent supply source — if any operator decides to retrofit recovery circuits.",
-    "risks": ["No active project; latent supply may never materialize without specific catalyst"]
+    "risks": [
+      "No active project; latent supply may never materialize without specific catalyst"
+    ],
+    "country": "Brazil",
+    "descriptor_pill": "Bauxite-producing region",
+    "quantity_pill": "~33M t/yr bauxite"
   },
   "Indonesian Bauxite": {
     "type": "Byproduct Source",
@@ -65,14 +133,31 @@
     "stat": "~26M t/yr bauxite · ~1,300t gallium content",
     "risk": "Export ban enforcement variability; no direct gallium investment vehicle",
     "stats": [
-      ["Bauxite output", "26M t/yr"],
-      ["Gallium content", "~1,300t"],
-      ["Export ban", "June 2023"],
-      ["Status", "Active"]
+      [
+        "Bauxite output",
+        "26M t/yr"
+      ],
+      [
+        "Gallium content",
+        "~1,300t"
+      ],
+      [
+        "Export ban",
+        "June 2023"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
     ],
     "role": "Indonesia banned unprocessed bauxite exports in June 2023, pushing domestic refining investment. Most output currently still reaches Chinese refineries via various workarounds. Strategic relevance is optionality — large reserves could support future gallium-producing refineries if domestic alumina capacity scales.",
     "inv": "Indonesia's 2023 unrefined-export ban is reshaping bauxite flows globally. Limited current relevance to gallium production — strategic optionality if domestic Indonesian alumina capacity scales.",
-    "risks": ["Export ban enforcement variability; no direct gallium investment vehicle"]
+    "risks": [
+      "Export ban enforcement variability; no direct gallium investment vehicle"
+    ],
+    "country": "Indonesia",
+    "descriptor_pill": "Bauxite-producing region",
+    "quantity_pill": "~26M t/yr bauxite"
   },
   "Chinese Bauxite Refineries": {
     "type": "Primary Producer",
@@ -80,14 +165,31 @@
     "stat": "~1,000 t/yr capacity · ~590 t/yr actual",
     "risk": "Export licensing policy cycles; utilization decisions at Beijing's discretion",
     "stats": [
-      ["Capacity", "~1,000 t/yr"],
-      ["Actual output", "~590 t/yr"],
-      ["Utilization", "~59%"],
-      ["Pricing", "$245/kg domestic"]
+      [
+        "Capacity",
+        "~1,000 t/yr"
+      ],
+      [
+        "Actual output",
+        "~590 t/yr"
+      ],
+      [
+        "Utilization",
+        "~59%"
+      ],
+      [
+        "Pricing",
+        "$245/kg domestic"
+      ]
     ],
     "role": "~20 Chinese alumina refineries produce gallium as a byproduct of the Bayer process. Operators include state-owned Chalco and Shandong Weiqiao plus private Vital Materials and Zhuzhou Keneng. Chinese capacity grew from ~140 t/yr in 2010 to ~1,000 t/yr by 2022.",
     "inv": "The structural core of global gallium supply. ~590 t/yr actual production across ~20 refineries at ~59% utilization represents China's ability to scale output up or down by hundreds of tonnes per year based on policy direction.",
-    "risks": ["Export licensing policy cycles; utilization decisions at Beijing's discretion"]
+    "risks": [
+      "Export licensing policy cycles; utilization decisions at Beijing's discretion"
+    ],
+    "country": "China",
+    "descriptor_pill": "Alumina refineries + Ga recovery",
+    "quantity_pill": "~590 t/yr primary Ga"
   },
   "Alcoa / JAGA (Wagerup)": {
     "type": "Primary Producer",
@@ -95,14 +197,31 @@
     "stat": "100 t/yr target 2028 · 0 t/yr current · FID pending",
     "risk": "FID delay; sovereign backing concentration creates political dependency",
     "stats": [
-      ["Target capacity", "100 t/yr"],
-      ["Current output", "0 t/yr"],
-      ["Status", "Pre-FID"],
-      ["Government backing", "AUD 200M"]
+      [
+        "Target capacity",
+        "100 t/yr"
+      ],
+      [
+        "Current output",
+        "0 t/yr"
+      ],
+      [
+        "Status",
+        "Pre-FID"
+      ],
+      [
+        "Government backing",
+        "AUD 200M"
+      ]
     ],
     "role": "Japan-Australia Gallium (JAGA) project announced October 2025 to extract gallium from Alcoa's existing Wagerup alumina refinery liquor stream. Backed by four sovereign governments (US, Australia, Japan) with AUD 200M concessional Australian equity.",
     "inv": "The single largest non-Chinese primary production facility in development. 100 t/yr at full ramp would be roughly 30% of current global refined supply.",
-    "risks": ["FID delay; sovereign backing concentration creates political dependency"]
+    "risks": [
+      "FID delay; sovereign backing concentration creates political dependency"
+    ],
+    "country": "Australia",
+    "descriptor_pill": "Gallium extraction (planned)",
+    "quantity_pill": "100 t/yr target 2028"
   },
   "Alcoa Corporation": {
     "type": "Primary Producer",
@@ -110,14 +229,31 @@
     "stat": "~$11B market cap · Wagerup gallium project targeting 100 t/yr",
     "risk": "Gallium thesis is small relative to aluminum; aluminum price volatility drives share price more than JAGA milestones",
     "stats": [
-      ["Market cap", "~$10B"],
-      ["Revenue", "~$12B"],
-      ["Gallium target", "100 t/yr via JAGA"],
-      ["Ticker", "AA (NYSE)"]
+      [
+        "Market cap",
+        "~$10B"
+      ],
+      [
+        "Revenue",
+        "~$12B"
+      ],
+      [
+        "Gallium target",
+        "100 t/yr via JAGA"
+      ],
+      [
+        "Ticker",
+        "AA (NYSE)"
+      ]
     ],
     "role": "Alcoa is one of the world's largest integrated aluminum producers, with bauxite mining, alumina refining, and aluminum smelting operations across Australia, North America, Brazil, and Europe. Gallium is a new product line that would leverage existing Wagerup refinery infrastructure.",
     "inv": "The corporate vehicle for gallium exposure via the JAGA project. Given sovereign backing, Alcoa is the most liquid western vehicle for primary production exposure.",
-    "risks": ["Gallium thesis is small relative to aluminum; aluminum price volatility drives share price"]
+    "risks": [
+      "Gallium thesis is small relative to aluminum; aluminum price volatility drives share price"
+    ],
+    "country": "USA",
+    "descriptor_pill": "Integrated aluminum producer",
+    "quantity_pill": "~$11B market cap"
   },
   "Metlen Energy & Metals": {
     "type": "Primary Producer",
@@ -125,14 +261,31 @@
     "stat": "50 t/yr target 2028 · ~5 kg first production Jan 2026",
     "risk": "Scale-up execution; 10,000x ramp from 5 kg to 50 tonnes",
     "stats": [
-      ["Target capacity", "50 t/yr by 2028"],
-      ["Current output", "~5 kg"],
-      ["EIB financing", "\u20ac90M"],
-      ["Ticker", "MYTIL (Athens)"]
+      [
+        "Target capacity",
+        "50 t/yr by 2028"
+      ],
+      [
+        "Current output",
+        "~5 kg"
+      ],
+      [
+        "EIB financing",
+        "€90M"
+      ],
+      [
+        "Ticker",
+        "MYTIL (Athens)"
+      ]
     ],
     "role": "Diversified Greek industrial group with metals, energy, and infrastructure operations. Operates one of Europe's largest alumina refineries at Agios Nikolaos. Announced first 5 kg gallium production January 2026. Designated EU Critical Raw Materials Act Strategic Project.",
     "inv": "Europe's first industrial gallium producer. 50 t/yr by 2028 would fully cover current EU gallium demand. Already in production at demo scale.",
-    "risks": ["Scale-up execution; Greek sovereign risk; European demand capture vs export"]
+    "risks": [
+      "Scale-up execution; Greek sovereign risk; European demand capture vs export"
+    ],
+    "country": "Greece",
+    "descriptor_pill": "Alumina refinery + Ga recovery",
+    "quantity_pill": "50 t/yr target 2028"
   },
   "Rio Tinto / Indium JV": {
     "type": "Primary Producer",
@@ -140,14 +293,31 @@
     "stat": "~3.5 t/yr demo · 40 t/yr commercial target",
     "risk": "Commercial-scale FID not yet made; gallium thesis diluted by mega-cap scale",
     "stats": [
-      ["Demo capacity", "3.5 t/yr"],
-      ["Commercial target", "40 t/yr"],
-      ["Status", "Demo stage"],
-      ["Ticker", "RIO (NYSE/LSE/ASX)"]
+      [
+        "Demo capacity",
+        "3.5 t/yr"
+      ],
+      [
+        "Commercial target",
+        "40 t/yr"
+      ],
+      [
+        "Status",
+        "Demo stage"
+      ],
+      [
+        "Ticker",
+        "RIO (NYSE/LSE/ASX)"
+      ]
     ],
     "role": "World's second-largest mining company with significant bauxite and alumina operations. Vaudreuil gallium project is a partnership with Indium Corporation (which owns the extraction process IP). Demo plant began operating 2024.",
     "inv": "Demonstration-stage North American producer with 40 t/yr commercial target post-2028. Less binary than Alcoa (demo already running) but further from commercial scale.",
-    "risks": ["Commercial-scale FID not yet made; gallium thesis diluted by mega-cap scale"]
+    "risks": [
+      "Commercial-scale FID not yet made; gallium thesis diluted by mega-cap scale"
+    ],
+    "country": "Canada",
+    "descriptor_pill": "Gallium demo plant",
+    "quantity_pill": "~3.5 t/yr demo"
   },
   "Korea Zinc / Crucible JV": {
     "type": "Primary Producer",
@@ -155,14 +325,31 @@
     "stat": "$7.4B JV · DoD 40% equity · 40 t/yr gallium target 2029",
     "risk": "Construction timing (2026-2029); ownership dispute affects execution",
     "stats": [
-      ["Total investment", "$7.4B"],
-      ["DoD equity", "40%"],
-      ["Gallium target", "40 t/yr"],
-      ["Operations", "2029"]
+      [
+        "Total investment",
+        "$7.4B"
+      ],
+      [
+        "DoD equity",
+        "40%"
+      ],
+      [
+        "Gallium target",
+        "40 t/yr"
+      ],
+      [
+        "Operations",
+        "2029"
+      ]
     ],
     "role": "$7.4B joint venture announced December 2025. Korea Zinc (<10% equity, operator role), US DoD (40% equity), JPMorgan (advisor). Largest critical minerals processing investment in US history.",
     "inv": "40 t/yr gallium from a multi-output smelter scheduled 2029. The US DoD 40% equity stake signals strategic-asset treatment of gallium alongside other outputs.",
-    "risks": ["Construction timing (2026-2029); ownership dispute (Korea Zinc vs Young Poong) affects execution"]
+    "risks": [
+      "Construction timing (2026-2029); ownership dispute (Korea Zinc vs Young Poong) affects execution"
+    ],
+    "country": "USA",
+    "descriptor_pill": "Critical minerals JV",
+    "quantity_pill": "40 t/yr Ga target 2029"
   },
   "Nyrstar Tennessee": {
     "type": "Primary Producer",
@@ -170,14 +357,31 @@
     "stat": "126-145 t/yr gallium content in mine feed · facility in demolition",
     "risk": "Demolition execution timing affects Crucible construction schedule",
     "stats": [
-      ["Ga in feed", "126-145 t/yr"],
-      ["Recovery", "Never commercialized"],
-      ["Status", "Demolition"],
-      ["Successor", "Crucible JV"]
+      [
+        "Ga in feed",
+        "126-145 t/yr"
+      ],
+      [
+        "Recovery",
+        "Never commercialized"
+      ],
+      [
+        "Status",
+        "Demolition"
+      ],
+      [
+        "Successor",
+        "Crucible JV"
+      ]
     ],
     "role": "Trafigura-owned zinc smelter operating since the 1970s. Zinc concentrate feed contains significant gallium but recovery was never commercially implemented. Being demolished to make way for Korea Zinc / Crucible JV.",
     "inv": "Historic zinc smelter illustrating the 'lost' western recovery opportunity that the Crucible rebuild is meant to finally capture.",
-    "risks": ["Demolition execution timing affects Crucible construction schedule"]
+    "risks": [
+      "Demolition execution timing affects Crucible construction schedule"
+    ],
+    "country": "USA",
+    "descriptor_pill": "Zinc smelter (demolition)",
+    "quantity_pill": "126-145 t/yr Ga in feed"
   },
   "Dowa Holdings": {
     "type": "Refiner",
@@ -185,14 +389,31 @@
     "stat": "~10-30 t/yr high-purity gallium · 6N+ purity",
     "risk": "Feedstock dependence on Chinese primary supply; diversified portfolio dilutes gallium thesis",
     "stats": [
-      ["Output", "10-30 t/yr"],
-      ["Purity", "99.9999%+"],
-      ["Global position", "Leading non-Chinese"],
-      ["Ticker", "5714.T (Tokyo)"]
+      [
+        "Output",
+        "10-30 t/yr"
+      ],
+      [
+        "Purity",
+        "99.9999%+"
+      ],
+      [
+        "Global position",
+        "Leading non-Chinese"
+      ],
+      [
+        "Ticker",
+        "5714.T (Tokyo)"
+      ]
     ],
     "role": "Diversified Japanese specialty materials group. Japan's primary high-purity refining capacity at 6N+ — the grade compound semiconductor wafer production requires. Dependent on imported feedstock (Chinese primary plus Japanese recycled).",
     "inv": "The de facto western pipeline for GaAs wafer supply. Japan's primary high-purity gallium refiner at the 6N+ purity grade required for compound semiconductor wafer production.",
-    "risks": ["Feedstock dependence on Chinese primary supply; diversified portfolio dilutes gallium thesis"]
+    "risks": [
+      "Feedstock dependence on Chinese primary supply; diversified portfolio dilutes gallium thesis"
+    ],
+    "country": "Japan",
+    "descriptor_pill": "High-purity Ga refiner",
+    "quantity_pill": "~10-30 t/yr refined Ga"
   },
   "5N Plus": {
     "type": "Refiner",
@@ -200,14 +421,31 @@
     "stat": "~2-5 t/yr gallium · multi-metal refiner",
     "risk": "Gallium is a small fraction of 5N Plus revenue; gallium thesis exposure is diluted",
     "stats": [
-      ["Ga output", "2-5 t/yr"],
-      ["Total revenue", "$391M"],
-      ["Net debt/EBITDA", "0.5x"],
-      ["Ticker", "VNP (TSX)"]
+      [
+        "Ga output",
+        "2-5 t/yr"
+      ],
+      [
+        "Total revenue",
+        "$391M"
+      ],
+      [
+        "Net debt/EBITDA",
+        "0.5x"
+      ],
+      [
+        "Ticker",
+        "VNP (TSX)"
+      ]
     ],
     "role": "Canadian specialty semiconductor materials company refining high-purity Ge, Ga, Te, In, Bi. Two main segments: Specialty Semiconductors (73% of revenue) and Performance Materials. FY25 revenue +35%, EBITDA +73%.",
     "inv": "Most direct western investment vehicle for critical minerals refining broadly. Gallium is a smaller exposure than germanium within 5N Plus's portfolio.",
-    "risks": ["Gallium is a small fraction of 5N Plus revenue; gallium thesis exposure is diluted"]
+    "risks": [
+      "Gallium is a small fraction of 5N Plus revenue; gallium thesis exposure is diluted"
+    ],
+    "country": "Canada",
+    "descriptor_pill": "Specialty metals refiner",
+    "quantity_pill": "~2-5 t/yr refined Ga"
   },
   "Indium Corporation": {
     "type": "Refiner",
@@ -215,14 +453,31 @@
     "stat": "Process IP owner · limited direct production",
     "risk": "Private; limited visibility; IP value crystallizes only if Rio Tinto commercial conversion goes ahead",
     "stats": [
-      ["Role", "Process IP licensing"],
-      ["Partner", "Rio Tinto (Vaudreuil)"],
-      ["Recycling", "GaAs scrap, New York"],
-      ["Status", "Private"]
+      [
+        "Role",
+        "Process IP licensing"
+      ],
+      [
+        "Partner",
+        "Rio Tinto (Vaudreuil)"
+      ],
+      [
+        "Recycling",
+        "GaAs scrap, New York"
+      ],
+      [
+        "Status",
+        "Private"
+      ]
     ],
     "role": "Privately-held specialty materials company known for solder, indium, and specialty metals refining. Owns the gallium extraction process IP used in Rio Tinto's Vaudreuil demo plant. Operates GaAs manufacturing scrap recycling in New York.",
     "inv": "Owns the process IP used in Rio Tinto's Vaudreuil demo plant. More of an IP-licensing and recycling play than a volume producer. Private, so no direct investment vehicle.",
-    "risks": ["Private; limited visibility; IP value crystallizes only if Rio Tinto commercial conversion goes ahead"]
+    "risks": [
+      "Private; limited visibility; IP value crystallizes only if Rio Tinto commercial conversion goes ahead"
+    ],
+    "country": "USA",
+    "descriptor_pill": "Process IP + GaAs recycler",
+    "quantity_pill": "Limited direct output"
   },
   "Vital Materials": {
     "type": "Refiner",
@@ -230,14 +485,31 @@
     "stat": "Leading Chinese high-purity refiner · MOCVD precursors",
     "risk": "Private Chinese company; subject to same export licensing regime",
     "stats": [
-      ["Products", "High-purity Ga, MOCVD precursors"],
-      ["Market position", "Leading Chinese refiner"],
-      ["Status", "Active"],
-      ["Ownership", "Private"]
+      [
+        "Products",
+        "High-purity Ga, MOCVD precursors"
+      ],
+      [
+        "Market position",
+        "Leading Chinese refiner"
+      ],
+      [
+        "Status",
+        "Active"
+      ],
+      [
+        "Ownership",
+        "Private"
+      ]
     ],
     "role": "One of China's largest integrated specialty metals producers. Refines Ga, In, Ge, Te, rare earths. Produces MOCVD precursor chemicals (trimethylgallium) used to grow thin GaN layers during chip manufacturing.",
     "inv": "Core Chinese high-purity gallium refiner. Produces MOCVD precursor chemicals — the specific chemical form gallium takes in GaN chip manufacturing.",
-    "risks": ["Private Chinese company; subject to same export licensing regime"]
+    "risks": [
+      "Private Chinese company; subject to same export licensing regime"
+    ],
+    "country": "China",
+    "descriptor_pill": "Chinese high-purity refiner",
+    "quantity_pill": "MOCVD precursors + Ga metal"
   },
   "Zhuzhou Smelter Group": {
     "type": "Refiner",
@@ -245,14 +517,31 @@
     "stat": "Chinese high-purity refining capacity · aggregated figures",
     "risk": "Subject to Chinese export licensing regime",
     "stats": [
-      ["Type", "State-affiliated + Private"],
-      ["Refined output", "Aggregated (~290 t/yr total Chinese)"],
-      ["Status", "Active"],
-      ["Ownership", "State-affiliated / Private"]
+      [
+        "Type",
+        "State-affiliated + Private"
+      ],
+      [
+        "Refined output",
+        "Aggregated (~290 t/yr total Chinese)"
+      ],
+      [
+        "Status",
+        "Active"
+      ],
+      [
+        "Ownership",
+        "State-affiliated / Private"
+      ]
     ],
     "role": "Two Hunan-based Chinese operators of high-purity gallium refining capacity. Zhuzhou Smelter Group is state-affiliated; Zhuzhou Keneng is private. Together with Vital Materials, comprise the core of Chinese downstream high-purity gallium production.",
     "inv": "Together with Vital Materials, comprise core Chinese downstream high-purity gallium production serving the Chinese semiconductor industry.",
-    "risks": ["Subject to Chinese export licensing regime"]
+    "risks": [
+      "Subject to Chinese export licensing regime"
+    ],
+    "country": "China",
+    "descriptor_pill": "Chinese high-purity refiner",
+    "quantity_pill": "Aggregated refining capacity"
   },
   "AXT, Inc.": {
     "type": "Substrate Manufacturer",
@@ -260,14 +549,31 @@
     "stat": "World's largest compound semi wafer facility · GaAs + InP + Ge",
     "risk": "Chinese manufacturing location exposes AXT to export permit variability",
     "stats": [
-      ["Revenue", "~$95M TTM"],
-      ["Key product", "GaAs, InP, Ge wafers"],
-      ["InP growth", "+250% sequential Q3 2025"],
-      ["Ticker", "AXTI (Nasdaq)"]
+      [
+        "Revenue",
+        "~$95M TTM"
+      ],
+      [
+        "Key product",
+        "GaAs, InP, Ge wafers"
+      ],
+      [
+        "InP growth",
+        "+250% sequential Q3 2025"
+      ],
+      [
+        "Ticker",
+        "AXTI (Nasdaq)"
+      ]
     ],
     "role": "Designs and manufactures compound semiconductor wafer substrates — gallium arsenide (GaAs), indium phosphide (InP), germanium (Ge). Tongmei in Beijing is the world's largest facility for compound semiconductor wafer production.",
     "inv": "Downstream chokepoint for converting refined gallium into semiconductor substrates. The closest thing to a gallium chokepoint since western primary production is absent.",
-    "risks": ["Chinese manufacturing location exposes AXT to export permit variability"]
+    "risks": [
+      "Chinese manufacturing location exposes AXT to export permit variability"
+    ],
+    "country": "USA",
+    "descriptor_pill": "Compound semi wafers",
+    "quantity_pill": "~$95M TTM revenue"
   },
   "Navitas Semiconductor": {
     "type": "Device Manufacturer",
@@ -275,14 +581,31 @@
     "stat": "Pure-play GaN power semiconductor · NVIDIA 800V partnership",
     "risk": "Revenue compression during pivot; execution of NVIDIA relationship; competition",
     "stats": [
-      ["Revenue", "$45.9M FY25"],
-      ["GaN units shipped", "250M+"],
-      ["Design wins", "$450M (2024)"],
-      ["Ticker", "NVTS (Nasdaq)"]
+      [
+        "Revenue",
+        "$45.9M FY25"
+      ],
+      [
+        "GaN units shipped",
+        "250M+"
+      ],
+      [
+        "Design wins",
+        "$450M (2024)"
+      ],
+      [
+        "Ticker",
+        "NVTS (Nasdaq)"
+      ]
     ],
     "role": "Pure-play wide-bandgap semiconductor company focused on GaN power ICs and SiC power devices. NVIDIA 800V partnership announced 2024 for AI datacenter power conversion. High-power exceeded 50% of Q4 2025 revenue for the first time.",
     "inv": "Pure-play GaN power semiconductor manufacturer — the clearest downstream demand proxy for AI datacenter 800V power conversion.",
-    "risks": ["Revenue compression during pivot; execution of NVIDIA relationship; competition from Infineon, EPC"]
+    "risks": [
+      "Revenue compression during pivot; execution of NVIDIA relationship; competition from Infineon, EPC"
+    ],
+    "country": "USA",
+    "descriptor_pill": "GaN power device maker",
+    "quantity_pill": "~$45.9M FY25 revenue"
   },
   "Chinese Primary Supply": {
     "type": "Aggregate",
@@ -290,14 +613,31 @@
     "stat": "98-99% of global primary · 91% of global refined",
     "risk": "Binary dependence on Chinese export policy",
     "stats": [
-      ["Primary output", "~590 t/yr"],
-      ["Refined output", "~290 t/yr"],
-      ["Domestic price", "$245/kg"],
-      ["Western price", "$2,269/kg"]
+      [
+        "Primary output",
+        "~590 t/yr"
+      ],
+      [
+        "Refined output",
+        "~290 t/yr"
+      ],
+      [
+        "Domestic price",
+        "$245/kg"
+      ],
+      [
+        "Western price",
+        "$2,269/kg"
+      ]
     ],
     "role": "Aggregate view of China's dominance across primary (~590 t/yr) and refined (~290 t/yr) gallium. Combined output of ~20 alumina refineries plus downstream refiners.",
     "inv": "The investable aggregate view of Chinese gallium dominance. Central stress-test variable — every other investable position derives its thesis from what China does.",
-    "risks": ["Binary dependence on Chinese export policy"]
+    "risks": [
+      "Binary dependence on Chinese export policy"
+    ],
+    "country": "China",
+    "descriptor_pill": "Aggregate supply view",
+    "quantity_pill": "~590 t/yr primary · 98% Chinese"
   },
   "Western Refined Supply": {
     "type": "Aggregate",
@@ -305,14 +645,31 @@
     "stat": "~15-30 t/yr · ~9% of global refined supply",
     "risk": "Scale gap vs Chinese supply; timing of western production ramps",
     "stats": [
-      ["Combined output", "15-30 t/yr"],
-      ["Key producers", "Dowa, 5N Plus, Indium Corp"],
-      ["Market value", "$26-52M/yr"],
-      ["Global share", "~9%"]
+      [
+        "Combined output",
+        "15-30 t/yr"
+      ],
+      [
+        "Key producers",
+        "Dowa, 5N Plus, Indium Corp"
+      ],
+      [
+        "Market value",
+        "$26-52M/yr"
+      ],
+      [
+        "Global share",
+        "~9%"
+      ]
     ],
     "role": "Combined non-Chinese, non-Russian high-purity refined gallium output. Dominated by Dowa Holdings in Japan. The structural gap the four western primary producer projects aim to close.",
     "inv": "Summary view of non-Chinese refined gallium supply. The structural gap the western primary producer projects aim to close over 2026-2029.",
-    "risks": ["Scale gap vs Chinese supply; timing of western production ramps"]
+    "risks": [
+      "Scale gap vs Chinese supply; timing of western production ramps"
+    ],
+    "country": "Multiple",
+    "descriptor_pill": "Aggregate supply view",
+    "quantity_pill": "~15-30 t/yr · 9% of refined"
   },
   "Global Supply": {
     "type": "Aggregate",
@@ -320,13 +677,30 @@
     "stat": "~320 t/yr refined · ~600 t/yr primary",
     "risk": "n/a",
     "stats": [
-      ["Refined output", "320 t/yr"],
-      ["Primary output", "600 t/yr"],
-      ["Market value", "~$560M/yr refined"],
-      ["Status", "Active"]
+      [
+        "Refined output",
+        "320 t/yr"
+      ],
+      [
+        "Primary output",
+        "600 t/yr"
+      ],
+      [
+        "Market value",
+        "~$560M/yr refined"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
     ],
     "role": "Total worldwide gallium production. The ~280t gap between primary (600t) and refined (320t) reflects losses in conversion to semiconductor-grade purity plus some primary metal that never gets refined.",
     "inv": "Top-level summary. Refined is the figure that matters for end markets.",
-    "risks": ["n/a"]
+    "risks": [
+      "n/a"
+    ],
+    "country": "Global",
+    "descriptor_pill": "Aggregate supply view",
+    "quantity_pill": "~320 t/yr refined · 600 t/yr primary"
   }
 }

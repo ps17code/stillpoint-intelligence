@@ -32,6 +32,15 @@ const COUNTRY_COLORS: Record<string, string> = {
   "DRC":          "#5a8c6a",
   "UAE":          "#5a8c6a",
   "Saudi Arabia": "#5a8c6a",
+  "Guinea":       "#5a8c6a",
+  "Australia":    "#5a9c7a",
+  "Brazil":       "#6a9c5a",
+  "Indonesia":    "#6a8c7a",
+  "Greece":       "#7a9abc",
+  "Germany":      "#7a9abc",
+  "South Korea":  "#5a7a9c",
+  "Global":       "#888880",
+  "Multiple":     "#888880",
 };
 
 // Edge style constants
