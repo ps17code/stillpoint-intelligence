@@ -699,14 +699,14 @@ if (ideasArrayMatch) {
       const tickerMatch = briefText.match(/ticker:\s*"((?:[^"\\]|\\.)*)"/);
 
       // Extract metrics
+      const briefName = nameMatch ? decode(nameMatch[1]) : id;
+      lines.push(`#### ${briefName} — Full Brief`);
+      if (tickerMatch) lines.push(`*${decode(tickerMatch[1])}*`);
+      lines.push("");
       const metricsArr = findArray(briefText, /metrics:\s*\[/);
       if (metricsArr) {
         const metrics = extractObjectArray(metricsArr);
         if (metrics.length > 0) {
-          const briefName = nameMatch ? decode(nameMatch[1]) : id;
-          lines.push(`#### ${briefName} — Full Brief`);
-          if (tickerMatch) lines.push(`*${decode(tickerMatch[1])}*`);
-          lines.push("");
           lines.push("**Metrics:**");
           for (const m of metrics) {
             if (m.label && m.value) {
