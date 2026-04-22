@@ -20,14 +20,32 @@
         { "key": "descriptor_pill", "label": "Type" },
         { "key": "quantity_pill", "label": "Output" }
       ]
+    },
+    "supplyaggregates": {
+      "displayFields": [
+        { "key": "country", "label": "Country" },
+        { "key": "descriptor_pill", "label": "Type" },
+        { "key": "quantity_pill", "label": "Value" }
+      ]
+    },
+    "globalsupply": {
+      "displayFields": [
+        { "key": "country", "label": "Country" },
+        { "key": "descriptor_pill", "label": "Type" },
+        { "key": "quantity_pill", "label": "Value" }
+      ]
     }
   },
   "GALLIUM_CHAIN": {
     "byproductSource": ["Guinea Bauxite", "Australian Bauxite", "Chinese Domestic Bauxite", "Brazilian Bauxite", "Indonesian Bauxite"],
     "primaryProducer": ["Chinese Bauxite Refineries", "Alcoa / JAGA (Wagerup)", "Alcoa Corporation", "Metlen Energy & Metals", "Rio Tinto / Indium JV", "Korea Zinc / Crucible JV", "Nyrstar Tennessee"],
     "refiner": ["Dowa Holdings", "5N Plus", "Indium Corporation", "Vital Materials", "Zhuzhou Smelter Group"],
+    "supplyAggregates": ["Western Refined Supply", "Chinese Primary Supply"],
+    "globalSupply": ["Global Supply"],
     "sourceToProducer": [[0, 0], [1, 1], [1, 2], [2, 0], [3, 0], [4, 0]],
     "producerToRefiner": [[0, 3], [0, 4], [0, 0], [0, 1], [1, 0], [2, 2], [3, 0], [4, 2]],
+    "refinerToAggregates": [[0, 0], [1, 0], [2, 0], [3, 1], [4, 1]],
+    "aggregatesToGlobal": [[0, 0], [1, 0]],
     "minor": {
       "byproductSource": [3, 4],
       "primaryProducer": [5, 6],

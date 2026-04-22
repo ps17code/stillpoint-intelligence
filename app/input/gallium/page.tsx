@@ -493,12 +493,8 @@ export default function GalliumInputPage() {
               <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
                 BYPRODUCT SOURCE
               </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Gallium is never mined on its own. It exists as a trace impurity &mdash; about 50 parts per million &mdash; inside bauxite, the ore that aluminum is made from. When aluminum producers process bauxite into alumina using the standard industrial Bayer process, gallium dissolves into the same liquid byproduct stream. Refineries that want gallium install ion-exchange resins that grab the gallium out of that stream and turn it into 99.99%-pure metal. A smaller volume is recovered the same way from zinc smelter waste.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: 0, flex: 1 }}>
-                Only about 10-15% of the gallium sitting inside the bauxite actually gets captured. The rest ends up in waste mud. You cannot increase gallium output without processing more bauxite, which means gallium supply is tied to aluminum production decisions &mdash; not gallium demand signals.
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: 0 }}>
+                Five regions producing bauxite: Guinea, Australia, China, Brazil, Indonesia. Bauxite is the ore that aluminum is made from &mdash; it&apos;s the feedstock for the entire aluminum industry. These five regions together produce ~346M tonnes of bauxite per year globally. Gallium isn&apos;t mined. It sits inside bauxite as a trace impurity at roughly 50 parts per million, uniformly distributed. So every one of those tonnes of bauxite contains a tiny bit of gallium &mdash; but nobody extracts gallium here. The bauxite just gets shipped onward.
               </p>
             </div>
 
@@ -510,12 +506,8 @@ export default function GalliumInputPage() {
               <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
                 PRIMARY PRODUCER
               </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                The 99.99% metal coming out of the Bayer process is pure enough for dopants and alloys but not pure enough for semiconductors. Chipmakers need gallium at 99.9999% purity or better. Getting there requires zone refining, vacuum distillation, and electrolytic refining. Different applications need different purity grades &mdash; LED makers need 6N, defense radar chips need 7N, next-generation chips need 8N.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: 0, flex: 1 }}>
-                Every additional nine of purity is harder than the last. Removing the final parts per billion of iron, copper, and zinc requires proprietary process knowledge that cannot be bought off the shelf. China controls both primary extraction and high-purity refining.
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: 0 }}>
+                This is where gallium is actually pulled out of the bauxite stream. Bauxite arrives at an alumina refinery. The refinery processes bauxite to make alumina (which becomes aluminum). During that process, if the refinery has a specific piece of equipment installed &mdash; an ion-exchange recovery circuit &mdash; it can also grab the gallium that was dissolved in the same liquid. Otherwise the gallium just gets thrown out with the waste (a material called &ldquo;red mud&rdquo;).
               </p>
             </div>
 
@@ -527,12 +519,8 @@ export default function GalliumInputPage() {
               <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
                 REFINER
               </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                High-purity gallium is combined with another element to form a compound semiconductor &mdash; most commonly gallium arsenide (GaAs) or gallium nitride (GaN) &mdash; and grown into large crystals. Those crystals are sliced into thin circular wafers, which are the foundation on which semiconductor chips are built. Separately, specialty chemical companies turn some gallium into MOCVD precursor chemicals used to grow thin GaN layers during chip manufacturing.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: 0, flex: 1 }}>
-                Different end products need different specifications. A GaAs wafer for 5G needs different electrical properties than one for satellite solar. The industry is shifting from 4-inch to 6-inch and 8-inch wafers &mdash; a transition requiring new equipment throughout the chain.
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: 0 }}>
+                These companies take crude gallium metal (99.99% purity) and refine it to semiconductor-grade (99.9999% or higher). This is a separate step from primary production. The metal coming out of the alumina refineries is pure enough to, say, alloy with other metals &mdash; but not pure enough for chip making. Semiconductor customers need six-nines or seven-nines purity, and that requires zone refining, vacuum distillation, and other specialized processes.
               </p>
             </div>
 
@@ -552,16 +540,15 @@ export default function GalliumInputPage() {
             />
           </div>
 
-          {/* How to read this tree */}
+          {/* Key Takeaways */}
           <div style={{ marginTop: 24, marginBottom: 24 }}>
-            <p style={{ fontSize: 11, fontStyle: "italic", color: muted, margin: "0 0 14px 0" }}>How to read this tree:</p>
+            <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: "0 0 14px 0" }}>Key Takeaways</p>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 10 }}>
               {[
-                { n: "1", text: <><strong style={{ color: warmWhite }}>Byproduct Source (top row):</strong> Five regional aggregates &mdash; Guinea, Australia, China, Brazil, Indonesia &mdash; represent the bauxite-producing regions whose alumina refineries could recover gallium. Each regional node rolls up the individual bauxite mines listed in its constituent_entities field.</> },
-                { n: "2", text: <><strong style={{ color: warmWhite }}>Primary Producer (second row):</strong> Seven nodes &mdash; the Chinese aggregate (dominant, active) plus six western projects (Alcoa/JAGA, Alcoa Corp, Metlen, Rio Tinto/Indium, Korea Zinc/Crucible, Nyrstar Tennessee) at various stages from lab demo to planned construction.</> },
-                { n: "3", text: <><strong style={{ color: warmWhite }}>Refiner (third row):</strong> Five entities that purify gallium to semiconductor grade &mdash; Dowa (Japan, leading non-Chinese), 5N Plus (Canada), Indium Corporation (USA, process IP holder), Vital Materials and Zhuzhou Smelter Group (China, export-controlled).</> },
-                { n: "4", text: <><strong style={{ color: warmWhite }}>Edges:</strong> Dashed lines show material flow from upstream to downstream. Not all connections are active &mdash; several western Primary Producer nodes are planned or under construction, and their downstream edges represent target rather than current flows.</> },
-                { n: "5", text: <><strong style={{ color: warmWhite }}>Aggregate summary boxes (below tree):</strong> Three summary aggregates &mdash; Chinese Primary Supply, Western Refined Supply, Global Supply &mdash; provide market-level context without cluttering the tree visualization.</> },
+                { n: "1", text: <><strong style={{ color: warmWhite }}>Raw material (bauxite) is plentiful and globally distributed</strong> &mdash; not a geological constraint.</> },
+                { n: "2", text: <><strong style={{ color: warmWhite }}>Primary gallium production is overwhelmingly Chinese</strong> &mdash; the real bottleneck is recovery infrastructure at alumina refineries.</> },
+                { n: "3", text: <><strong style={{ color: warmWhite }}>Four western projects are trying to rebuild primary capacity</strong> &mdash; but none operating at scale before 2028.</> },
+                { n: "4", text: <><strong style={{ color: warmWhite }}>The refining layer is Japan-led (Dowa) with small Canadian/US contributions</strong> &mdash; structurally dependent on Chinese primary feedstock.</> },
               ].map((item) => (
                 <div key={item.n} style={{ display: "flex", gap: 10, alignItems: "baseline" }}>
                   <span style={{ fontSize: 11, color: accent, fontWeight: 500, flexShrink: 0 }}>{item.n}.</span>
@@ -571,20 +558,7 @@ export default function GalliumInputPage() {
             </div>
           </div>
 
-          {/* Aggregate summary boxes */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginTop: 16 }}>
-            {[
-              { name: "Chinese Primary Supply", stat: "98-99% of global primary \u00b7 91% of global refined", detail: "~590 t/yr primary; ~290 t/yr refined. Chinese domestic $245/kg vs western retail $2,269/kg \u2014 9x spread." },
-              { name: "Western Refined Supply", stat: "~15-30 t/yr \u00b7 ~9% of global refined supply", detail: "Dowa (Japan), 5N Plus (Canada), Indium Corp (US). The structural gap western projects aim to close." },
-              { name: "Global Supply", stat: "~320 t/yr refined \u00b7 ~600 t/yr primary", detail: "~280t gap between primary and refined reflects conversion losses. Refined is the figure that matters." },
-            ].map((agg, i) => (
-              <div key={i} style={{ background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "14px 18px" }}>
-                <p style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>{agg.name}</p>
-                <p style={{ fontSize: 10.5, color: "#a09888", margin: "0 0 6px 0", lineHeight: 1.4 }}>{agg.stat}</p>
-                <p style={{ fontSize: 10, color: muted, margin: 0, lineHeight: 1.4 }}>{agg.detail}</p>
-              </div>
-            ))}
-          </div>
+          {/* Aggregate nodes now render inline on the tree — no separate summary cards needed */}
 
           {/* Node detail modal */}
           {selectedNode && galliumNodes[selectedNode] && (() => {

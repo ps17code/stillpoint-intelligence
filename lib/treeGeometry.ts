@@ -478,6 +478,8 @@ export function computeGalliumSvgWidth(chain: GalliumChain): number {
     chain.byproductSource.length * SLOT,
     chain.primaryProducer.length * SLOT,
     chain.refiner.length * SLOT,
+    chain.supplyAggregates.length * SLOT,
+    chain.globalSupply.length * SLOT,
   ];
   return Math.max(1800, Math.max(...widths) + 400);
 }
@@ -490,10 +492,14 @@ export function buildGalliumGeometry(
   const srcCY = topY;
   const prodCY = topY + gap;
   const refCY = topY + gap * 2;
+  const aggCY = topY + gap * 3;
+  const gloCY = topY + gap * 4;
 
   const srcXs = contentAwareSpread(chain.byproductSource.length, ancX);
   const prodXs = contentAwareSpread(chain.primaryProducer.length, ancX);
   const refXs = contentAwareSpread(chain.refiner.length, ancX);
+  const aggXs = contentAwareSpread(chain.supplyAggregates.length, ancX);
+  const gloXs = contentAwareSpread(chain.globalSupply.length, ancX);
 
   const srcMinor = new Set(chain.minor.byproductSource);
   const prodMinor = new Set(chain.minor.primaryProducer);
@@ -515,16 +521,28 @@ export function buildGalliumGeometry(
       nodes: chain.refiner.map((n, i) => ({ name: n, cx: refXs[i], cy: refCY, opacity: refMinor.has(i) ? 0.4 : 1 })),
       color: PALETTES.galliumRefiner,
     },
+    {
+      key: "supplyAggregates", label: "SUPPLY", cy: aggCY,
+      nodes: chain.supplyAggregates.map((n, i) => ({ name: n, cx: aggXs[i], cy: aggCY, opacity: 1 })),
+      color: PALETTES.galliumRefiner,
+    },
+    {
+      key: "globalSupply", label: "GLOBAL", cy: gloCY,
+      nodes: chain.globalSupply.map((n, i) => ({ name: n, cx: gloXs[i], cy: gloCY, opacity: 1 })),
+      color: PALETTES.galliumRefiner,
+    },
   ];
 
   const edges: EdgeGeometry[] = [
     ...buildEdges(srcXs, srcCY, prodXs, prodCY, PALETTES.galliumSource.stroke, chain.sourceToProducer, 0),
     ...buildEdges(prodXs, prodCY, refXs, refCY, PALETTES.galliumProducer.stroke, chain.producerToRefiner, 1),
+    ...buildEdges(refXs, refCY, aggXs, aggCY, PALETTES.galliumRefiner.stroke, chain.refinerToAggregates, 2),
+    ...buildEdges(aggXs, aggCY, gloXs, gloCY, PALETTES.galliumRefiner.stroke, chain.aggregatesToGlobal, 3),
   ];
 
   return {
     layers,
     edges,
-    outputNode: { name: chain.refiner[chain.refiner.length - 1], cx: refXs[refXs.length - 1], cy: refCY },
+    outputNode: { name: chain.globalSupply[0], cx: gloXs[0], cy: gloCY },
   };
 }

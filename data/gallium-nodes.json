@@ -572,8 +572,8 @@
       "Binary dependence on Chinese export policy"
     ],
     "country": "China",
-    "descriptor_pill": "Aggregate supply view",
-    "quantity_pill": "~590 t/yr primary · 98% Chinese"
+    "descriptor_pill": "~590 t/yr primary",
+    "quantity_pill": "~$145M @ $245/kg"
   },
   "Western Refined Supply": {
     "type": "Aggregate",
@@ -604,8 +604,8 @@
       "Scale gap vs Chinese supply; timing of western production ramps"
     ],
     "country": "Multiple",
-    "descriptor_pill": "Aggregate supply view",
-    "quantity_pill": "~15-30 t/yr · 9% of refined"
+    "descriptor_pill": "~15-30 t/yr refined",
+    "quantity_pill": "~$26-52M @ $1,750/kg"
   },
   "Global Supply": {
     "type": "Aggregate",
@@ -636,7 +636,7 @@
       "n/a"
     ],
     "country": "Global",
-    "descriptor_pill": "Aggregate supply view",
-    "quantity_pill": "~320 t/yr refined · 600 t/yr primary"
+    "descriptor_pill": "~320 t/yr refined",
+    "quantity_pill": "~$200-250M realized"
   }
 }

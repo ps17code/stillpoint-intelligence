@@ -92,12 +92,12 @@ export interface GalliumChain {
   byproductSource: string[];
   primaryProducer: string[];
   refiner: string[];
-  substrateMfg?: string[];
-  deviceMfg?: string[];
+  supplyAggregates: string[];
+  globalSupply: string[];
   sourceToProducer: [number, number][];
   producerToRefiner: [number, number][];
-  refinerToSubstrate?: [number, number][];
-  substrateToDevice?: [number, number][];
+  refinerToAggregates: [number, number][];
+  aggregatesToGlobal: [number, number][];
   minor: { byproductSource: number[]; primaryProducer: number[]; refiner: number[] };
 }
 
