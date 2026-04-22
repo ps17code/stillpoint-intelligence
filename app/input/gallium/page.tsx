@@ -122,7 +122,7 @@ export default function GalliumInputPage() {
     },
     "metlen": {
       name: "Metlen Energy & Metals",
-      ticker: "MYTIL \u00b7 Athens / London",
+      ticker: "MYTIL \u00b7 Athens Stock Exchange",
       category: "Capacity Builder",
       metrics: [
         { label: "Market cap", value: "\u20ac5.03B" },
@@ -281,7 +281,7 @@ export default function GalliumInputPage() {
     },
     "rio-tinto": {
       name: "Rio Tinto",
-      ticker: "RIO \u00b7 NYSE / ASX",
+      ticker: "RIO \u00b7 NYSE / LSE / ASX",
       category: "Feedstock Supplier",
       metrics: [
         { label: "Market cap", value: "~$110B" },
@@ -298,7 +298,8 @@ export default function GalliumInputPage() {
         { label: "How does value flow through this entity?", items: [
           { text: "Rio Tinto\u2019s gallium project works the same way Alcoa\u2019s does: bolt gallium extraction equipment onto an existing alumina refinery, capture the gallium that\u2019s already flowing through the Bayer process, sell it. The cost structure is attractive because the refinery infrastructure is already sunk." },
           { text: "Financially, gallium is immaterial to Rio Tinto. At 3.5 t/yr (demo) and $1,500/kg, the project generates ~$5M annually against Rio Tinto\u2019s $55B revenue base. Even at the 40 t/yr commercial target, gallium contributes ~$60M \u2014 a rounding error." },
-          { text: "The real value is positioning. Rio Tinto is deliberately building a portfolio of critical minerals businesses (gallium, scandium, tellurium, molybdenum, lithium) that differentiate it from single-commodity miners. One structural detail worth noting: the extraction process IP is owned by Indium Corporation (Rio Tinto\u2019s US partner), not by Rio Tinto. This means Rio Tinto cannot independently scale the gallium project without Indium\u2019s continued participation." },
+          { text: "The real value is positioning. Rio Tinto is deliberately building a portfolio of critical minerals businesses (gallium, scandium, tellurium, molybdenum, lithium) that differentiate it from single-commodity miners. As sovereign and institutional capital flows toward critical minerals allocations, Rio Tinto captures that flow through its diversified exposure." },
+          { text: "One structural detail worth noting: the extraction process IP is owned by Indium Corporation (Rio Tinto\u2019s US partner), not by Rio Tinto. This means Rio Tinto cannot independently scale the gallium project without Indium\u2019s continued participation \u2014 creating a technology dependency similar to Umicore\u2019s role in the germanium chain." },
         ] },
         { label: "Key numbers", items: [
           { title: "Demo plant capacity", text: "up to 3.5 t/yr" },
@@ -371,16 +372,19 @@ export default function GalliumInputPage() {
         { label: "How does value flow through this entity?", items: [
           { text: "No direct value flow to western investors. Chinese primary producers are state-owned, state-affiliated, or traded only on Chinese exchanges with limited foreign access." },
           { text: "The indirect flow is what matters: Chinese policy sets both the floor and the ceiling on global gallium pricing. The floor is Chinese domestic pricing at ~$245/kg \u2014 depressed because Chinese capacity of 1,000 t/yr vastly exceeds Chinese domestic demand. The ceiling is the western retail price at ~$2,269/kg \u2014 elevated because export licensing and the December 2024 ban prevent western buyers from arbitraging down to Chinese domestic levels." },
-          { text: "The 9x spread between the two prices is the entire gallium investment opportunity. If China lifts export controls, the spread collapses and every western capacity project faces margin pressure. If China tightens controls, the spread widens and every western project becomes more valuable." },
+          { text: "The 9x spread between the two prices is the entire gallium investment opportunity. If China lifts export controls, the spread collapses and every western capacity project faces margin pressure. If China tightens controls, the spread widens and every western project becomes more valuable. If controls hold steady at the current suspension (in effect until November 2026), the spread persists and western projects ramp into a market that still needs them. The overbuilt capacity is deliberate \u2014 it gives Beijing the optionality to flood or starve the global market. This is the central variable every position in the chain must stress-test against." },
         ] },
         { label: "Key numbers", items: [
           { title: "Aggregate installed capacity", text: "~1,000 t/yr" },
           { title: "Aggregate actual production", text: "~590 t/yr" },
           { title: "Utilization", text: "~59%" },
           { title: "Global share of primary supply", text: "98-99%" },
+          { title: "Global share of refined supply", text: "~91%" },
           { title: "Chinese domestic price (SMM 4N, March 2026)", text: "$245/kg" },
           { title: "Western retail price (SMI, April 2026)", text: "$2,269/kg" },
           { title: "Spread", text: "9x" },
+          { title: "2023 export licensing imposed", text: "August 1, 2023" },
+          { title: "2024 US-targeted ban", text: "December 3, 2024" },
           { title: "Current status", text: "Suspended November 2025 through November 2026" },
         ] },
         { label: "What to watch", items: [
@@ -402,7 +406,7 @@ export default function GalliumInputPage() {
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "Gallium metal is the raw material that feeds every other entity on this page. AXT converts it into compound semiconductor wafers. Navitas builds GaN chips from it. Dowa refines it to semiconductor grade. Alcoa and Metlen are racing to produce it. China controls 98% of global supply." },
-          { text: "The western retail price has moved from approximately $298/kg at the start of 2020 to $2,269/kg as of April 2026 \u2014 an increase of 661%. Most of that move occurred after August 2023, when China implemented export licensing, with a further acceleration after the December 2024 US-targeted ban." },
+          { text: "The western retail price has moved from approximately $298/kg at the start of 2020 to $2,269/kg as of April 2026 \u2014 a 7.6x increase. Most of that move occurred after August 2023, when China implemented export licensing, with a further acceleration after the December 2024 US-targeted ban." },
           { text: "The Chinese domestic 4N spot price, by contrast, sits at ~$245/kg on the SMM benchmark \u2014 creating a 9x spread that persists because export controls prevent arbitrage. Western buyers pay a \u201Csecurity premium\u201D that reflects not material scarcity but access scarcity." },
         ] },
         { label: "How does the market work?", items: [
@@ -528,7 +532,7 @@ export default function GalliumInputPage() {
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
                 "Trace element recovered as a byproduct of alumina refining from bauxite, and to a lesser extent from zinc smelter residues. Cannot be mined directly. Global resources are abundant \u2014 the constraint is refining infrastructure, not geology.",
-                "The largest emerging demand vector is AI datacenters. Every gigawatt of AI compute capacity needs thousands of gallium-nitride (GaN) power chips to convert incoming electricity down to the low voltages the GPUs actually run at \u2014 a job GaN does with roughly 30% less energy lost than silicon. Beyond AI infrastructure, gallium also goes into 5G phone amplifiers, satellite solar cells, LED lighting, EV onboard chargers, and \u2014 critically \u2014 modern military radars (AESA), where no substitute exists.",
+                "The largest emerging demand vector is AI datacenters. Gallium is combined with other elements to form compound semiconductors \u2014 gallium arsenide (GaAs) and gallium nitride (GaN) \u2014 which are grown as crystals or thin films, then cut or deposited onto wafers that chips are built on. For AI datacenters specifically, every gigawatt of compute capacity needs thousands of GaN power chips to convert incoming electricity down to the low voltages the GPUs actually run at \u2014 a job GaN does with roughly 30% less energy lost than silicon. Beyond AI infrastructure, the same compound semiconductors go into 5G phone amplifiers, satellite solar cells, LED lighting, EV onboard chargers, and \u2014 critically \u2014 modern military radars (active-array radars, known as AESA), where no substitute exists.",
                 "Global refined production is ~320t/yr. Roughly 290t is Chinese; ~15-30t is non-Chinese, almost entirely in Japan via Dowa Holdings. China holds ~1,000t/yr of installed primary capacity running at ~59% utilization \u2014 a deliberate overhang Beijing can tighten or release. The United States has not produced primary gallium since 1987.",
                 "Price has risen from $298/kg to $2,269/kg since 2020 on western retail benchmarks, with a 9x spread between Chinese domestic ($245/kg) and western markets. The spread persists because export licensing prevents arbitrage.",
                 "Demand accelerating from GaN power electronics (42% CAGR), defense radar modernization, and AI datacenter 800V power conversion architecture. Every major western demand vector is stable or growing.",
@@ -685,18 +689,18 @@ export default function GalliumInputPage() {
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 10, letterSpacing: "0.12em", color: "#555", margin: "0 0 20px 0" }}>DOWNSTREAM &mdash; WHERE GALLIUM GOES</p>
           <div style={{ display: "flex", padding: "0 0 10px 0", borderBottom: "1px solid #252220" }}>
-            {[{ l: "Product", w: "25%" }, { l: "Usage", w: "10%" }, { l: "Est. value", w: "10%" }, { l: "Share", w: "10%" }, { l: "End uses", w: "34%" }, { l: "Growth", w: "10%", right: true }].map(h => (
+            {[{ l: "Product", w: "25%" }, { l: "Usage", w: "10%" }, { l: "Est. value (gallium @ $1,750/kg)", w: "10%" }, { l: "Share", w: "10%" }, { l: "End uses", w: "34%" }, { l: "Growth", w: "10%", right: true }].map(h => (
               <p key={h.l} style={{ fontSize: 9, letterSpacing: "0.06em", color: "#4a4540", margin: 0, width: h.w, textAlign: (h as { right?: boolean }).right ? "right" as const : undefined }}>{h.l}</p>
             ))}
           </div>
           {[
-            { product: "GaAs substrates & devices", usage: "~140t/yr", value: "~$2.5B", share: "31%", endUses: "5G RF handsets, LEDs, satellite solar cells, laser diodes", growth: "Growing (+8%)" },
-            { product: "GaN devices (power + RF)", usage: "~110t/yr", value: "~$3.5B", share: "24%", endUses: "AI datacenter 800V, EV chargers, 5G base stations, defense radar", growth: "Surging (+42%)" },
-            { product: "NdFeB magnets (dopant)", usage: "~80t/yr", value: "~$1.4B", share: "18%", endUses: "EV traction motors, wind turbines, consumer electronics", growth: "Growing (+15%)" },
-            { product: "LED lighting", usage: "~75t/yr", value: "~$1.3B", share: "17%", endUses: "General lighting, automotive, display backlighting", growth: "Stable (+2%)" },
-            { product: "Defense radar & EW", usage: "~25t/yr", value: "~$450M", share: "5%", endUses: "AN/SPY-6, LTAMDS, Patriot, F-35, G/ATOR", growth: "Surging (+35%)" },
-            { product: "Satellite solar cells", usage: "~12t/yr", value: "~$200M", share: "3%", endUses: "LEO constellations, deep space", growth: "Surging (+57%)" },
-            { product: "Other", usage: "~8t/yr", value: "~$150M", share: "2%", endUses: "Specialty applications", growth: "Stable" },
+            { product: "GaAs substrates & devices", usage: "~140t/yr", value: "~$245M", share: "31%", endUses: "5G RF handsets, LEDs, satellite solar cells, laser diodes", growth: "Growing (+8%)" },
+            { product: "GaN devices (power + RF)", usage: "~110t/yr", value: "~$193M", share: "24%", endUses: "AI datacenter 800V, EV chargers, 5G base stations, defense radar", growth: "Surging (+42%)" },
+            { product: "NdFeB magnets (dopant)", usage: "~80t/yr", value: "~$140M", share: "18%", endUses: "EV traction motors, wind turbines, consumer electronics", growth: "Growing (+15%)" },
+            { product: "LED lighting", usage: "~75t/yr", value: "~$131M", share: "17%", endUses: "General lighting, automotive, display backlighting", growth: "Stable (+2%)" },
+            { product: "Defense radar & EW", usage: "~25t/yr", value: "~$44M", share: "5%", endUses: "AN/SPY-6, LTAMDS, Patriot, F-35, G/ATOR", growth: "Surging (+35%)" },
+            { product: "Satellite solar cells", usage: "~12t/yr", value: "~$21M", share: "3%", endUses: "LEO constellations, deep space", growth: "Surging (+57%)" },
+            { product: "Other", usage: "~8t/yr", value: "~$14M", share: "2%", endUses: "Specialty applications", growth: "Stable" },
           ].map((row, i) => (
             <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
               <div style={{ width: "25%", display: "flex", alignItems: "baseline", gap: 6 }}>
@@ -712,12 +716,13 @@ export default function GalliumInputPage() {
           <div style={{ display: "flex", alignItems: "baseline", padding: "12px 0", borderBottom: "1px solid #252220" }}>
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "25%" }}>Total</p>
             <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~450t/yr</p>
-            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~$9.5B</p>
+            <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>~$788M</p>
             <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%" }}>100%</p>
             <p style={{ margin: 0, width: "34%" }} />
             <p style={{ fontSize: 10, color: "#ece8e1", fontWeight: 500, margin: 0, width: "10%", textAlign: "right" as const }}>~800t (+78%)</p>
           </div>
           <div style={{ paddingTop: 14, marginTop: 4 }}>
+            <p style={{ fontSize: 10.5, color: "#706a60", lineHeight: 1.6, margin: "0 0 14px 0", fontStyle: "italic" }}>Est. value column reflects the value of gallium metal itself consumed in each end use, priced at ~$1,750/kg (western retail blended average, April 2026). This understates the strategic importance of gallium &mdash; the downstream semiconductor products built on it represent billions of dollars of enabled value &mdash; but reflects the actual market for the raw material.</p>
             <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: 0 }}>GaN power and defense applications are the two demand vectors with no substitutes and inelastic pricing. Together they represent ~29% of current demand and effectively all of the demand growth through 2028. The LED and NdFeB segments are large but mature; GaAs is growing incrementally on 5G handset replacement cycles.</p>
           </div>
         </div>
@@ -764,13 +769,13 @@ export default function GalliumInputPage() {
           const analysisBg = "#141210";
           const gold = "#7a8a6a";
           const soWhatBlocks: { id: string; label: string; question: string; teaser: string; analysis: { type: string; text?: string; author?: string; name?: string; desc?: string }[] }[] = [
-            { id: "signals", label: "Market signals", question: "What is the price telling us?", teaser: "Western retail up 661% since 2020. Spread 9x over Chinese domestic. No futures market, no arbitrage, no ceiling.", analysis: [
+            { id: "signals", label: "Market signals", question: "What is the price telling us?", teaser: "Western retail price has risen 7.6x in five years because supply is structurally constrained, not because the market is speculative.", analysis: [
                 { type: "prose", text: "Gallium is one of the most opaque commodity markets in existence. There is no futures contract, no exchange listing, no standardized benchmark. All transactions are OTC, negotiated bilaterally between producers and consumers, with reference prices published by Fastmarkets, Asian Metal, and Shanghai Metal Market (SMM) based on trade reports rather than binding market prices." },
                 { type: "prose", text: "The western retail price for 99.99% gallium has moved from approximately $298/kg at the start of 2020 to $2,269/kg as of April 17, 2026 \u2014 an increase of 661%. Most of that move occurred after August 2023, when China implemented export licensing, with a further acceleration after the December 2024 US-targeted ban. Price gained 83% in 2025 alone and a further 32% year-to-date through April 2026." },
                 { type: "prose", text: "The Chinese domestic 4N spot price sits at ~$245/kg on the SMM benchmark \u2014 below the 2022 peak of $510/kg. This anomaly reveals the structural bifurcation: Chinese domestic capacity (~1,000 t/yr) vastly exceeds Chinese domestic consumption, producing chronic oversupply that suppresses domestic pricing. The 9x spread between Chinese domestic and western retail persists because export controls prevent arbitrage." },
                 { type: "callout", text: "The opacity creates three dynamics: price discovery is asymmetric and slow, no hedging mechanism exists, and the lack of futures trading removes a standard channel for expressing a view on gallium pricing \u2014 exposure must be intermediated through equities." },
               ] },
-            { id: "constraints", label: "Supply constraints", question: "Why can\u2019t supply respond?", teaser: "Byproduct status. Ten percent recovery rate. Zero US primary since 1987. No refineries outside Asia at scale.", analysis: [
+            { id: "constraints", label: "Supply constraints", question: "Why can\u2019t supply respond?", teaser: "New western production sites won\u2019t be online until 2029 and all meaningful refining infrastructure is currently in China.", analysis: [
                 { type: "prose", text: "Gallium production faces four compounding constraints that prevent rapid supply response even under strong price signals." },
                 { type: "subhead", text: "Byproduct dependency" },
                 { type: "prose", text: "Gallium exists at ~50 ppm in bauxite and at trace concentrations in zinc ores. It cannot be mined directly; it must be recovered from the liquor streams of alumina refineries or from zinc smelter residues. This fundamentally ties gallium output to aluminum and zinc production rates." },
@@ -782,7 +787,7 @@ export default function GalliumInputPage() {
                 { type: "prose", text: "The four announced western primary production projects collectively target ~230 t/yr by 2029. Even if all four succeed on schedule, the first meaningful tonnage does not hit the market until 2027-2028." },
                 { type: "callout", text: "None of these constraints resolves before the November 2026 Chinese ban suspension expiry." },
               ] },
-            { id: "competing", label: "Competing demand", question: "Who else needs this?", teaser: "GaN power at 42% CAGR. Defense radar has no substitute. AI datacenters are the new demand vector. Magnets and LEDs steady.", analysis: [
+            { id: "competing", label: "Competing demand", question: "Who else needs this?", teaser: "Every major demand vector is growing or stable, and the largest \u2014 GaN power electronics \u2014 is accelerating at 42% annually.", analysis: [
                 { type: "subhead", text: "AI datacenters" },
                 { type: "prose", text: "GaN power chips do the voltage conversion with roughly 30% less energy lost and in a fraction of the physical space. NVIDIA is standardizing on 800V power architecture across its next generation of AI factories, and GaN chips are the default choice. This demand vector barely existed two years ago." },
                 { type: "subhead", text: "Defense radar and electronic warfare" },
@@ -793,7 +798,7 @@ export default function GalliumInputPage() {
                 { type: "prose", text: "Gallium\u2019s largest consumption channel inside China. Added at 0.1-0.2% to the magnet alloy used in EV motors and wind turbines. Chinese NdFeB output is growing ~15% annually." },
                 { type: "callout", text: "Four of the five major end uses are growing structurally. The fifth (LEDs) is stable. There is no scenario where gallium demand softens materially unless AI infrastructure, defense spending, EV adoption, and wind/EV motor production all reverse simultaneously." },
               ] },
-            { id: "geopolitical", label: "Geopolitical risk", question: "How could it get worse?", teaser: "99% Chinese. 2023 licensing. 2024 US ban. November 2025 suspension. November 2026 expiry.", analysis: [
+            { id: "geopolitical", label: "Geopolitical risk", question: "How could it get worse?", teaser: "China controls 99% of primary supply and has already demonstrated willingness to weaponize it \u2014 the November 2026 export ban expiry is a binary event.", analysis: [
                 { type: "prose", text: "On July 3, 2023, China\u2019s Ministry of Commerce announced export controls on gallium and germanium, effective August 1. Chinese gallium exports dropped 63.5% year-over-year in the remainder of 2023." },
                 { type: "prose", text: "On December 3, 2024, China escalated to a targeted ban on exports of gallium, germanium, antimony, and superhard materials to the United States \u2014 framed as response to the December 2 US BIS addition of 140 entities to the Entity List." },
                 { type: "prose", text: "On November 7-9, 2025, MOFCOM formally suspended the December 2024 licensing/review restrictions on gallium, germanium, antimony, and graphite until November 2026. General licenses are now available for exports to US end users. The military end-use ban remains in force." },
@@ -801,14 +806,14 @@ export default function GalliumInputPage() {
                 { type: "prose", text: "The November 2026 expiry is the single most important dated event in this market. Reimposition of the ban would return the western supply picture to December 2024 conditions. Extension of the suspension or full normalization would compress the spread and pressure western capacity project economics. Every investment position should be stress-tested against both outcomes." },
                 { type: "callout", text: "Even the best-case scenario does not eliminate the structural premium. The military end-use ban remains in force, and Chinese capacity overhang means Beijing retains the optionality to tighten again at any time." },
               ] },
-            { id: "response", label: "Supply response", question: "What\u2019s being done?", teaser: "Four projects. 230t/yr by 2029. 10x increase. All downstream of 2028.", analysis: [
+            { id: "response", label: "Supply response", question: "What\u2019s being done?", teaser: "Four western production projects are underway and collectively target 230t/yr by 2029, but none resolves the gap before 2028.", analysis: [
                 { type: "item", name: "Alcoa / JAGA \u2014 Western Australia (100 t/yr)", desc: "US, Australian, and Japanese governments joining a special purpose vehicle. Australia committed AUD 200M in concessional equity. FID \u201Cexpected by end 2025\u201D but not yet publicly confirmed. Production start targeted late 2026 with ramp to 100 t/yr by 2028-2029. Would be the single largest non-Chinese gallium production facility globally." },
                 { type: "item", name: "Metlen Energy \u2014 Greece (50 t/yr)", desc: "FID taken January 2025 on a \u20ac295.5M project. First production of 5 kg achieved January 2026. Targets 50 t/yr by 2028 \u2014 sufficient to fully cover EU demand. EU Critical Raw Materials Act Strategic Project. \u20ac90M EIB financing approved January 2026." },
                 { type: "item", name: "Rio Tinto / Indium \u2014 Quebec (40 t/yr)", desc: "Successful laboratory-scale extraction May 2025. Demo plant targets up to 3.5 t/yr with Canadian government support. Commercial conversion targets 40 t/yr, post-2028. Process IP owned by Indium Corporation." },
                 { type: "item", name: "Korea Zinc / Crucible JV \u2014 Tennessee (40 t/yr)", desc: "$7.4B investment with DoD holding 40% equity stake. JPMorgan-advised, $4.7B in US government loans plus $210M CHIPS Act subsidies. Replaces existing Nyrstar smelter. Commercial operations 2029. Unprecedented DoD equity stake signals gallium is a strategic defense asset." },
                 { type: "callout", text: "If all four projects execute on schedule, western primary capacity approaches 230 t/yr by 2029 \u2014 meaningful for access independence but still less than one-third of projected 2028 global demand. Chinese capacity remains dominant." },
               ] },
-            { id: "technology", label: "Technology", question: "What could change the game?", teaser: "No substitute for defense GaN. Efficiency upgrades marginal. Recycling limited by scrap generation.", analysis: [
+            { id: "technology", label: "Technology", question: "What could change the game?", teaser: "No commercial substitute exists for GaN in defense or high-performance power electronics, and the closest alternatives are at least a decade away from displacement scale.", analysis: [
                 { type: "prose", text: "Silicon-based CMOS power amplifiers compete with GaAs in low-end cellular handsets but cannot replace GaAs in 5G/6G premium handsets. Indium phosphide (InP) substitutes for GaAs in specific laser diode applications but does not substitute for GaN in RF or power applications. Silicon carbide (SiC) is complementary to GaN \u2014 SiC dominates >1200V, GaN dominates <650V." },
                 { type: "subhead", text: "Defense \u2014 no substitute" },
                 { type: "prose", text: "For defense radar and electronic warfare applications, no substitute exists. GaN\u2019s combination of power density, frequency capability, and thermal performance is structurally superior. The DoD has funded GaN-on-SiC manufacturing through DARPA programs since 2002, and every current US military AESA radar deployment uses GaN modules." },
@@ -873,35 +878,52 @@ export default function GalliumInputPage() {
           </p>
 
           <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
-            {[
-              { id: "axt", name: "AXT, Inc.", ticker: "AXTI \u00b7 Nasdaq", category: "Manufacturing / integration", line1: "World\u2019s largest producer of compound semiconductor wafers \u2014 the downstream chokepoint converting refined gallium into GaAs and InP substrates.", line2: "InP revenue up 250% sequentially in Q3 2025 on AI datacenter silicon photonics demand. GaAs revenue constrained by Chinese export permit delays. Stock up 287% over 12 months; market cap $4.59B." },
-              { id: "alcoa", name: "Alcoa Corporation", ticker: "AA \u00b7 NYSE", category: "Capacity builder", line1: "Operator of the announced 100 t/yr Wagerup gallium project \u2014 the single largest non-Chinese primary production facility in development.", line2: "Four sovereign governments (US, Australia, Japan) backing the SPV. Australian government AUD 200M concessional equity commitment. Production start targeted late 2026 with FID pending." },
-              { id: "metlen", name: "Metlen Energy & Metals", ticker: "MYTIL \u00b7 Athens", category: "Capacity builder", line1: "Europe\u2019s first industrial gallium producer \u2014 50 t/yr by 2028 fully covers EU demand.", line2: "First 5 kg produced January 2026; \u20ac90M EIB financing approved; designated EU CRMA Strategic Project. 12-month return +53% with 2.9% dividend yield." },
-              { id: "5n-plus", name: "5N Plus", ticker: "VNP \u00b7 TSX", category: "Pure-play", line1: "Canadian specialty semiconductor refiner with multi-metal exposure (germanium, gallium, tellurium, indium). Most direct western investment vehicle for critical minerals refining.", line2: "FY25 revenue +35% to $391M; EBITDA +73%; net debt/EBITDA 0.5x. US$18.1M DoE grant for germanium January 2026. AZUR space solar backlog 265 days. Stock up 532%." },
-              { id: "dowa", name: "Dowa Holdings", ticker: "5714.T \u00b7 Tokyo", category: "Chokepoint holder", line1: "Leading non-Chinese high-purity gallium refiner \u2014 the de facto western pipeline for GaAs wafer supply.", line2: "Japanese government designated gallium critical mineral March 2024. US-Japan Critical Minerals Framework signed October 2025. ~$5.5B market cap across diversified specialty metals portfolio." },
-              { id: "navitas", name: "Navitas Semiconductor", ticker: "NVTS \u00b7 Nasdaq", category: "Technology", line1: "Pure-play GaN power semiconductor manufacturer \u2014 the downstream demand proxy for AI datacenter 800V HVDC and EV onboard chargers.", line2: "NVIDIA and GlobalFoundries partnership for US GaN manufacturing. High-power markets >50% of Q4 2025 revenue for the first time. $236M cash post-placement." },
-              { id: "rio-tinto", name: "Rio Tinto", ticker: "RIO \u00b7 NYSE", category: "Feedstock supplier", line1: "Global aluminum producer with a demonstration gallium plant at Vaudreuil, Quebec \u2014 optionality on North American primary supply.", line2: "3.5 t/yr demo plant with Canadian federal and Quebec government support. Commercial conversion targets 40 t/yr at 5-10% of global production." },
-              { id: "korea-zinc", name: "Korea Zinc", ticker: "010130.KS \u00b7 Seoul", category: "Market maker", line1: "Anchor of the $7.4B Crucible JV with the US Department of Defense holding a 40% equity stake.", line2: "Largest critical minerals processing investment in US history. JPMorgan-advised, $4.7B in US government loans, $210M CHIPS Act subsidies. 40 t/yr gallium. Commercial operations 2029." },
-              { id: "chinese-primary", name: "Chinese Primary Supply", ticker: "Aggregate", category: "Market maker", line1: "98% of global primary production; the entity whose MOFCOM export licensing determines whether the western scarcity premium holds.", line2: "~1,000 t/yr installed capacity running at 59% utilization. November 2026 suspension expiry is a binary event. Not directly investable but the central variable." },
-              { id: "gallium-metal", name: "Gallium metal", ticker: "Physical commodity", category: "Direct exposure", line1: "No futures contract, no ETF, no exchange pricing. Western retail price up 661% since 2020 on bifurcated market structure.", line2: "9x spread between Chinese domestic ($245/kg) and western retail ($2,269/kg). OTC trading via Strategic Metals Invest and Rotterdam warehouse." },
-            ].map((idea) => (
-              <div key={idea.id} style={{ display: "flex", background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "10px 20px", transition: "border-color 0.15s", cursor: "pointer" }}
-                onClick={() => setActiveIdea(idea.id)}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = "#333"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
-              >
-                <div style={{ width: 180, flexShrink: 0, paddingRight: 20, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
-                  <p style={{ fontSize: 13.5, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
-                  <p style={{ fontSize: 10.5, color: muted, margin: "0 0 6px 0", letterSpacing: "0.02em" }}>{idea.ticker}</p>
-                  <p style={{ fontSize: 9, color: dimText, letterSpacing: "0.06em", margin: 0, textTransform: "uppercase" as const }}>{idea.category}</p>
-                </div>
-                <div style={{ width: 1, background: "#2a2620", flexShrink: 0, marginRight: 20 }} />
-                <div style={{ flex: 1, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
-                  <p style={{ fontSize: 12, color: "#c4bdb2", lineHeight: 1.6, margin: "0 0 4px 0", fontWeight: 500 }}>{idea.line1}</p>
-                  <p style={{ fontSize: 11, color: "#a09888", lineHeight: 1.6, margin: 0 }}>{idea.line2}</p>
-                </div>
-              </div>
-            ))}
+            {(() => {
+              const layers: { label: string; ideas: { id: string; name: string; ticker: string; category: string; line1: string }[] }[] = [
+                { label: "PRIMARY PRODUCER", ideas: [
+                  { id: "alcoa", name: "Alcoa Corporation", ticker: "AA \u00b7 NYSE", category: "Capacity builder", line1: "Operator of the announced 100 t/yr Wagerup gallium project \u2014 the single largest non-Chinese primary production facility in development." },
+                  { id: "metlen", name: "Metlen Energy & Metals", ticker: "MYTIL \u00b7 Athens Stock Exchange", category: "Capacity builder", line1: "Europe\u2019s first industrial gallium producer \u2014 50 t/yr by 2028 fully covers EU demand." },
+                  { id: "rio-tinto", name: "Rio Tinto", ticker: "RIO \u00b7 NYSE / LSE / ASX", category: "Feedstock supplier", line1: "Global aluminum producer with a demonstration gallium plant at Vaudreuil, Quebec \u2014 optionality on North American primary supply." },
+                  { id: "korea-zinc", name: "Korea Zinc", ticker: "010130.KS \u00b7 Seoul", category: "Market maker", line1: "Anchor of the $7.4B Crucible JV with the US Department of Defense holding a 40% equity stake." },
+                  { id: "chinese-primary", name: "Chinese Primary Supply", ticker: "Aggregate", category: "Market maker", line1: "98% of global primary production; the entity whose MOFCOM export licensing determines whether the western scarcity premium holds." },
+                ] },
+                { label: "REFINER", ideas: [
+                  { id: "dowa", name: "Dowa Holdings", ticker: "5714.T \u00b7 Tokyo", category: "Chokepoint holder", line1: "Leading non-Chinese high-purity gallium refiner \u2014 the de facto western pipeline for GaAs wafer supply." },
+                  { id: "5n-plus", name: "5N Plus", ticker: "VNP \u00b7 TSX", category: "Pure-play", line1: "Canadian specialty semiconductor refiner with multi-metal exposure \u2014 the most direct western investment vehicle for critical minerals refining." },
+                ] },
+                { label: "SUBSTRATE MANUFACTURER", ideas: [
+                  { id: "axt", name: "AXT, Inc.", ticker: "AXTI \u00b7 Nasdaq", category: "Manufacturing / integration", line1: "World\u2019s largest producer of compound semiconductor wafers \u2014 the downstream chokepoint converting refined gallium into GaAs and InP substrates." },
+                ] },
+                { label: "DEVICE MANUFACTURER", ideas: [
+                  { id: "navitas", name: "Navitas Semiconductor", ticker: "NVTS \u00b7 Nasdaq", category: "Technology", line1: "Pure-play GaN power semiconductor manufacturer \u2014 the downstream demand proxy for AI datacenter 800V power conversion and EV onboard chargers." },
+                ] },
+                { label: "DIRECT EXPOSURE", ideas: [
+                  { id: "gallium-metal", name: "Gallium metal", ticker: "Physical commodity", category: "Direct exposure", line1: "No futures contract, no ETF, no exchange pricing. Western retail price up 7.6x since 2020 on bifurcated market structure." },
+                ] },
+              ];
+              return layers.map((layer, li) => (
+                <React.Fragment key={layer.label}>
+                  <p style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, letterSpacing: "0.1em", color: dimText, margin: li === 0 ? "0 0 8px 0" : "24px 0 8px 0" }}>{layer.label}</p>
+                  {layer.ideas.map((idea) => (
+                    <div key={idea.id} style={{ display: "flex", background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "10px 20px", transition: "border-color 0.15s", cursor: "pointer" }}
+                      onClick={() => setActiveIdea(idea.id)}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = "#333"; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
+                    >
+                      <div style={{ width: 180, flexShrink: 0, paddingRight: 20, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
+                        <p style={{ fontSize: 13.5, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
+                        <p style={{ fontSize: 10.5, color: muted, margin: "0 0 6px 0", letterSpacing: "0.02em" }}>{idea.ticker}</p>
+                        <p style={{ fontSize: 9, color: dimText, letterSpacing: "0.06em", margin: 0, textTransform: "uppercase" as const }}>{idea.category}</p>
+                      </div>
+                      <div style={{ width: 1, background: "#2a2620", flexShrink: 0, marginRight: 20 }} />
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
+                        <p style={{ fontSize: 12, color: "#c4bdb2", lineHeight: 1.6, margin: 0, fontWeight: 500 }}>{idea.line1}</p>
+                      </div>
+                    </div>
+                  ))}
+                </React.Fragment>
+              ));
+            })()}
           </div>
 
         </div>
@@ -911,36 +933,38 @@ export default function GalliumInputPage() {
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>CATALYSTS</p>
 
           {/* Near-term */}
-          <div style={{ marginBottom: 32 }}>
-            <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 16px 0", fontWeight: 500 }}>NEAR-TERM (NEXT 6 MONTHS)</p>
-            <div style={{ display: "flex", flexDirection: "column" as const, gap: 16 }}>
+          <div style={{ marginBottom: 28 }}>
+            <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 14px 0", fontWeight: 500 }}>NEAR-TERM (NEXT 6 MONTHS)</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
-                { title: "April 30, 2026: AXT Q1 2026 earnings release.", text: "Expected update on InP revenue trajectory, GaAs export permit status, and margin progression. InP growth continuation would sustain current valuation; slowdown would trigger multiple compression." },
-                { title: "May 6, 2026: 5N Plus Q1 2026 earnings release.", text: "First full quarter under new CEO leadership. Focus on Utah germanium recycling ramp progress, AZUR space solar backlog conversion, and any gallium-specific disclosures." },
-                { title: "May 5, 2026: Navitas Q1 2026 earnings release.", text: "Revenue trajectory, high-power market share, design-win-to-revenue conversion. Pivot execution milestones." },
-                { title: "Q2 2026: Alcoa / JAGA Final Investment Decision confirmation.", text: "FID was \u201Cexpected by end 2025\u201D per October 2025 announcement; any further delay signals heightened execution risk; confirmation catalyzes the gallium-specific share of Alcoa\u2019s valuation." },
-                { title: "Q2-Q3 2026: Metlen production milestones.", text: "Quarterly reporting from Metlen on scale-up from 5 kg January 2026 first production toward 5-10 tonnes 2027 target and 50 t/yr 2028 full ramp." },
+                { date: "April 30, 2026", desc: "AXT Q1 2026 earnings release" },
+                { date: "May 5, 2026", desc: "Navitas Q1 2026 earnings release" },
+                { date: "May 6, 2026", desc: "5N Plus Q1 2026 earnings release" },
+                { date: "Q2 2026", desc: "Alcoa / JAGA Final Investment Decision confirmation" },
+                { date: "Q2-Q3 2026", desc: "Metlen production milestones toward 5-10t target" },
               ].map((item, i) => (
-                <div key={i} style={{ background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "14px 18px" }}>
-                  <p style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{item.title}</p>
-                  <p style={{ fontSize: 11.5, color: muted, lineHeight: 1.6, margin: 0 }}>{item.text}</p>
+                <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                  <span style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, flexShrink: 0 }}>{item.date}</span>
+                  <span style={{ fontSize: 12.5, color: dimmer }}>&mdash;</span>
+                  <span style={{ fontSize: 12.5, color: muted }}>{item.desc}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Medium-term */}
-          <div style={{ marginBottom: 32 }}>
-            <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 16px 0", fontWeight: 500 }}>MEDIUM-TERM (6-12 MONTHS)</p>
-            <div style={{ display: "flex", flexDirection: "column" as const, gap: 16 }}>
+          <div style={{ marginBottom: 28 }}>
+            <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 14px 0", fontWeight: 500 }}>MEDIUM-TERM (6-12 MONTHS)</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
-                { title: "November 27, 2026: Chinese export ban suspension expiry.", text: "Binary catalyst for the entire market. Reimposition of ban would widen the 9x spread and strengthen every western supply position. Extension or normalization would compress the spread and pressure emerging capacity project economics. Every position must be stress-tested against both outcomes." },
-                { title: "H2 2026: Alcoa / JAGA production start target.", text: "If FID confirmed in Q2, construction progresses through Q3-Q4 2026 toward initial production. Any slippage extends the period of Chinese supply dependence." },
-                { title: "H2 2026: GlobalFoundries US GaN manufacturing availability.", text: "First domestic US GaN production from the Navitas / GlobalFoundries partnership. Could catalyze defense and datacenter customer adoption constrained by supply chain security requirements." },
+                { date: "H2 2026", desc: "Alcoa / JAGA construction progress toward initial production" },
+                { date: "H2 2026", desc: "GlobalFoundries US GaN manufacturing availability (Navitas partnership)" },
+                { date: "November 27, 2026", desc: "Chinese export ban suspension expires (binary catalyst)" },
               ].map((item, i) => (
-                <div key={i} style={{ background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "14px 18px" }}>
-                  <p style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{item.title}</p>
-                  <p style={{ fontSize: 11.5, color: muted, lineHeight: 1.6, margin: 0 }}>{item.text}</p>
+                <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                  <span style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, flexShrink: 0 }}>{item.date}</span>
+                  <span style={{ fontSize: 12.5, color: dimmer }}>&mdash;</span>
+                  <span style={{ fontSize: 12.5, color: muted }}>{item.desc}</span>
                 </div>
               ))}
             </div>
@@ -948,18 +972,19 @@ export default function GalliumInputPage() {
 
           {/* Long-term */}
           <div>
-            <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 16px 0", fontWeight: 500 }}>LONG-TERM (12+ MONTHS)</p>
-            <div style={{ display: "flex", flexDirection: "column" as const, gap: 16 }}>
+            <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 14px 0", fontWeight: 500 }}>LONG-TERM (12+ MONTHS)</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
-                { title: "2027-2028: Metlen ramp to 50 t/yr.", text: "Execution trajectory visible through quarterly production reports. If delivered on schedule, Europe moves from 100% Chinese dependency to domestic supply sovereignty." },
-                { title: "2027-2028: Alcoa Wagerup ramp to 100 t/yr.", text: "Combined with Metlen, represents ~15-20% of global demand at full production. Material shift in non-Chinese supply picture." },
-                { title: "2029: Korea Zinc / Crucible JV commercial operations begin.", text: "$7.4B facility delivers first tonnage of zinc, lead, copper, gallium, germanium, and other critical minerals. US DoD strategic reserve accumulation begins." },
-                { title: "2029+: Rio Tinto / Indium commercial-scale conversion.", text: "Demo plant experience informs commercial plant design; 40 t/yr target brings North American gallium supply into structural relevance." },
-                { title: "Ongoing: US-China trade policy cycles.", text: "Critical minerals remain a negotiating lever in US-China economic relations. Every major policy announcement affects the gallium supply-demand-policy triangle." },
+                { date: "2027-2028", desc: "Metlen ramp to 50 t/yr" },
+                { date: "2027-2028", desc: "Alcoa Wagerup ramp to 100 t/yr" },
+                { date: "2029", desc: "Korea Zinc / Crucible JV commercial operations begin" },
+                { date: "2029+", desc: "Rio Tinto / Indium Quebec commercial-scale conversion" },
+                { date: "Ongoing", desc: "US-China trade policy cycles" },
               ].map((item, i) => (
-                <div key={i} style={{ background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "14px 18px" }}>
-                  <p style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{item.title}</p>
-                  <p style={{ fontSize: 11.5, color: muted, lineHeight: 1.6, margin: 0 }}>{item.text}</p>
+                <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                  <span style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, flexShrink: 0 }}>{item.date}</span>
+                  <span style={{ fontSize: 12.5, color: dimmer }}>&mdash;</span>
+                  <span style={{ fontSize: 12.5, color: muted }}>{item.desc}</span>
                 </div>
               ))}
             </div>
