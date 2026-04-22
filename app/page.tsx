@@ -6,6 +6,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as topojson from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
 import AnatomyView from "@/components/AnatomyView";
+import TreeView from "@/components/TreeView";
 import GlobePanel from "@/components/GlobePanel";
 
 const R = 1;
@@ -274,7 +275,7 @@ export default function HomePage() {
   const [hovered,       setHovered]       = useState<string | null>(null);
   const [hoveredNode,   setHoveredNode]   = useState<{ name: string; type: string; location: string } | null>(null);
   const [domainOpen,    setDomainOpen]    = useState(false);
-  const [viewMode,      setViewMode]      = useState<"map" | "anatomy">("map");
+  const [viewMode,      setViewMode]      = useState<"map" | "anatomy" | "tree">("map");
   const [panelLayer,    setPanelLayer]    = useState("Raw materials");
   const [panelItem,     setPanelItem]     = useState<string | null>(null);
   const [panelVertical, setPanelVertical] = useState<string | null>(null);
@@ -633,6 +634,11 @@ export default function HomePage() {
 
         {/* Left panel — only on map view */}
         {viewMode === "map" && <GlobePanel activeLayer={panelLayer} activeItem={panelItem} activeVertical={panelVertical} onLayerChange={setPanelLayer} onItemChange={setPanelItem} onVerticalChange={setPanelVertical} />}
+        {viewMode === "tree" && (
+          <div style={{ width: "100%", height: "100%", overflow: "auto", background: "var(--bg, #0e0d0b)" }}>
+            <TreeView />
+          </div>
+        )}
 
         {/* Main area */}
         <div style={{ flex: 1, position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -643,8 +649,9 @@ export default function HomePage() {
             background: "#1a1816", border: "1px solid #252220", borderRadius: 8, padding: 2,
             display: "flex", gap: 0,
           }}>
-            {(["map", "anatomy"] as const).map(mode => {
+            {(["map", "anatomy", "tree"] as const).map(mode => {
               const active = viewMode === mode;
+              const label = mode === "map" ? "Map" : mode === "anatomy" ? "Anatomy" : "Tree";
               return (
                 <button
                   key={mode}
@@ -655,10 +662,9 @@ export default function HomePage() {
                     color: active ? "#ece8e1" : "#555",
                     border: "none", borderRadius: 6, padding: "5px 14px",
                     cursor: "pointer", transition: "color 0.15s, background 0.15s",
-                    textTransform: "capitalize" as const,
                   }}
                 >
-                  {mode === "map" ? "Map" : "Anatomy"}
+                  {label}
                 </button>
               );
             })}
