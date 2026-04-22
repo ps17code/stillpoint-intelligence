@@ -478,8 +478,6 @@ export function computeGalliumSvgWidth(chain: GalliumChain): number {
     chain.byproductSource.length * SLOT,
     chain.primaryProducer.length * SLOT,
     chain.refiner.length * SLOT,
-    chain.substrateMfg.length * SLOT,
-    chain.deviceMfg.length * SLOT,
   ];
   return Math.max(1800, Math.max(...widths) + 400);
 }
@@ -492,14 +490,10 @@ export function buildGalliumGeometry(
   const srcCY = topY;
   const prodCY = topY + gap;
   const refCY = topY + gap * 2;
-  const subCY = topY + gap * 3;
-  const devCY = topY + gap * 4;
 
   const srcXs = contentAwareSpread(chain.byproductSource.length, ancX);
   const prodXs = contentAwareSpread(chain.primaryProducer.length, ancX);
   const refXs = contentAwareSpread(chain.refiner.length, ancX);
-  const subXs = contentAwareSpread(chain.substrateMfg.length, ancX);
-  const devXs = contentAwareSpread(chain.deviceMfg.length, ancX);
 
   const srcMinor = new Set(chain.minor.byproductSource);
   const prodMinor = new Set(chain.minor.primaryProducer);
@@ -521,28 +515,16 @@ export function buildGalliumGeometry(
       nodes: chain.refiner.map((n, i) => ({ name: n, cx: refXs[i], cy: refCY, opacity: refMinor.has(i) ? 0.4 : 1 })),
       color: PALETTES.galliumRefiner,
     },
-    {
-      key: "substrateMfg", label: "SUBSTRATE MFG", cy: subCY,
-      nodes: chain.substrateMfg.map((n, i) => ({ name: n, cx: subXs[i], cy: subCY, opacity: 1 })),
-      color: PALETTES.galliumSubstrate,
-    },
-    {
-      key: "deviceMfg", label: "DEVICE MFG", cy: devCY,
-      nodes: chain.deviceMfg.map((n, i) => ({ name: n, cx: devXs[i], cy: devCY, opacity: 1 })),
-      color: PALETTES.galliumDevice,
-    },
   ];
 
   const edges: EdgeGeometry[] = [
     ...buildEdges(srcXs, srcCY, prodXs, prodCY, PALETTES.galliumSource.stroke, chain.sourceToProducer, 0),
     ...buildEdges(prodXs, prodCY, refXs, refCY, PALETTES.galliumProducer.stroke, chain.producerToRefiner, 1),
-    ...buildEdges(refXs, refCY, subXs, subCY, PALETTES.galliumRefiner.stroke, chain.refinerToSubstrate, 2),
-    ...buildEdges(subXs, subCY, devXs, devCY, PALETTES.galliumSubstrate.stroke, chain.substrateToDevice, 3),
   ];
 
   return {
     layers,
     edges,
-    outputNode: { name: chain.deviceMfg[0], cx: devXs[0], cy: devCY },
+    outputNode: { name: chain.refiner[chain.refiner.length - 1], cx: refXs[refXs.length - 1], cy: refCY },
   };
 }

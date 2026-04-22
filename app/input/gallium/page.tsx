@@ -21,7 +21,7 @@ export default function GalliumInputPage() {
 
   // Scroll spy
   React.useEffect(() => {
-    const ids = ["thesis", "how-its-made", "supply-tree", "dependencies", "supply-demand", "so-what", "money", "catalysts", "risk"];
+    const ids = ["thesis", "supply-tree", "dependencies", "supply-demand", "so-what", "money", "catalysts", "risk"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -54,45 +54,6 @@ export default function GalliumInputPage() {
   const borderColor = "#252220";
 
   const IDEA_BRIEFS: Record<string, { name: string; ticker: string; category: string; metrics: { label: string; value: string }[]; sections: { label: string; items: { title?: string; text: string }[] }[]; disclaimer: string }> = {
-    "axt": {
-      name: "AXT, Inc.",
-      ticker: "AXTI \u00b7 Nasdaq",
-      category: "Manufacturing / Integration",
-      metrics: [
-        { label: "Market cap", value: "$4.59B" },
-        { label: "Revenue", value: "~$95M" },
-        { label: "EBITDA", value: "-$12.87M" },
-        { label: "Price", value: "$82.41" },
-        { label: "12mo", value: "+287%" },
-      ],
-      sections: [
-        { label: "What is this and why does it matter here?", items: [
-          { text: "AXT makes wafers \u2014 the thin circular discs that semiconductor chips are built on. Specifically, AXT makes the kind of wafers that silicon cannot replace: gallium arsenide for 5G phone power amplifiers, indium phosphide for the laser chips that connect GPUs inside AI datacenters, and germanium for satellite solar cells. Its Beijing facility is, by the company\u2019s account, the world\u2019s largest facility of its kind. When a 5G phone sends a signal, or when an NVIDIA GPU talks to another GPU via fiber, the underlying chip probably started its life as an AXT wafer." },
-          { text: "Gallium matters to AXT because gallium arsenide and gallium-related substrates are its core product. AXT also owns joint ventures in China that purify raw gallium into the feedstock it uses, giving it cost control over its own input." },
-        ] },
-        { label: "How does value flow through this entity?", items: [
-          { text: "AXT is the chokepoint where refined gallium becomes a finished product a chipmaker can actually use. Only a handful of companies globally can make gallium arsenide wafers at scale \u2014 AXT, Japan\u2019s Sumitomo Electric, Germany\u2019s Freiberger, the UK\u2019s IQE. Among these, AXT has the most capacity. It also has vertical integration advantages through its Chinese gallium purification JVs, which give it a cost structure competitors cannot easily match." },
-          { text: "The catch: AXT\u2019s main facility is in Beijing, and every wafer shipped to a non-Chinese customer needs a Chinese export permit. Since the August 2023 export controls, permits have taken much longer to clear. AXT\u2019s 2025 gallium arsenide revenue was held back not by weak demand but by slow permits. The company cannot fix this \u2014 the variable is Chinese policy." },
-          { text: "The indium phosphide business, by contrast, is booming. InP revenue grew 250% sequentially in Q3 2025 as AI datacenter demand for optical interconnect chips accelerated. This is the driver behind the stock\u2019s 287% gain over the past year." },
-        ] },
-        { label: "Key numbers", items: [
-          { title: "Manufacturing footprint", text: "~300,000 sq ft Beijing facility" },
-          { title: "Segment mix", text: "68% substrates, 32% raw materials" },
-          { title: "Q3 2025 InP revenue growth", text: "+250% sequentially" },
-          { title: "FY25 GaAs revenue run-rate", text: "~$28M (constrained by export permits)" },
-          { title: "2027 capex plan", text: "$100-150M for greenfield expansion" },
-        ] },
-        { label: "What to watch", items: [
-          { text: "Q1 2026 earnings (April 30) for InP trajectory and GaAs permit clearance rate." },
-          { text: "November 2026 Chinese export control suspension expiry \u2014 reimposition caps AXT\u2019s GaAs revenue." },
-          { text: "InP wafer capacity doubling plan for 2027." },
-        ] },
-        { label: "Investment angle", items: [
-          { text: "AXT is the cleanest western-listed bet on the gallium substrate chokepoint and the AI optical infrastructure buildout. The stock has already priced in considerable optionality \u2014 market cap is $4.59B on a company with negative EBITDA. The thesis requires InP growth to continue and GaAs permits to normalize. A return to pre-2023 Chinese export conditions would collapse the premium the stock currently trades at; further tightening would shift revenue mix even more toward InP (which is less permit-sensitive because fewer Chinese alternatives exist)." },
-        ] },
-      ],
-      disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Substrate Manufacturer. Sources: AXT SEC filings, Semiconductor Today. Not investment advice.",
-    },
     "alcoa": {
       name: "Alcoa Corporation",
       ticker: "AA \u00b7 NYSE",
@@ -128,7 +89,7 @@ export default function GalliumInputPage() {
           { text: "Construction milestones \u2014 mining projects routinely slip 12-24 months." },
         ] },
         { label: "Investment angle", items: [
-          { text: "Alcoa is aluminum cycle exposure with gallium optionality attached. For investors already comfortable with aluminum, Alcoa adds the clearest near-term path to meaningful western gallium production. For pure gallium exposure, it\u2019s too diluted \u2014 Metlen and AXT are more concentrated. The thesis surfaces in the valuation only when the project delivers tangible revenue, which is 2027-2028 at the earliest." },
+          { text: "Alcoa is aluminum cycle exposure with gallium optionality attached. For investors already comfortable with aluminum, Alcoa adds the clearest near-term path to meaningful western gallium production. For pure gallium exposure, it\u2019s too diluted \u2014 Metlen and 5N Plus are more concentrated. The thesis surfaces in the valuation only when the project delivers tangible revenue, which is 2027-2028 at the earliest." },
         ] },
       ],
       disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Primary Producer (planned). Sources: Alcoa investor communications (October 2025), JOGMEC and Sojitz announcements. Not investment advice.",
@@ -210,7 +171,7 @@ export default function GalliumInputPage() {
           { text: "Any dedicated gallium expansion announcement \u2014 would be a catalyst given 5N Plus\u2019s existing refining capability." },
         ] },
         { label: "Investment angle", items: [
-          { text: "5N Plus is the highest-quality broad critical-minerals name on public markets. The stock has run 532% over 12 months, which reflects a genuine re-rating rather than speculation \u2014 the company is growing into its multiple with real contracted revenue. For portfolios that want critical-minerals exposure with operational discipline, 5N Plus is arguably the best-scaled North American option. The caveat: gallium is a small share of the thesis. If you want concentrated gallium exposure, AXT is more direct." },
+          { text: "5N Plus is the highest-quality broad critical-minerals name on public markets. The stock has run 532% over 12 months, which reflects a genuine re-rating rather than speculation \u2014 the company is growing into its multiple with real contracted revenue. For portfolios that want critical-minerals exposure with operational discipline, 5N Plus is arguably the best-scaled North American option. The caveat: gallium is a small share of the thesis. If you want concentrated gallium exposure, Dowa or Metlen are more direct." },
         ] },
       ],
       disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Refiner. Sources: 5N Plus investor communications, TSX filings. Not investment advice.",
@@ -252,45 +213,6 @@ export default function GalliumInputPage() {
         ] },
       ],
       disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Refiner. Sources: Dowa annual reports, US-Japan Critical Minerals Framework announcements. Not investment advice.",
-    },
-    "navitas": {
-      name: "Navitas Semiconductor",
-      ticker: "NVTS \u00b7 Nasdaq",
-      category: "Technology / Demand Proxy",
-      metrics: [
-        { label: "Market cap", value: "~$1.1B" },
-        { label: "Revenue", value: "$45.9M" },
-        { label: "EBITDA", value: "\u2014" },
-        { label: "Cash", value: "$236.9M" },
-        { label: "12mo", value: "\u2014" },
-      ],
-      sections: [
-        { label: "What is this and why does it matter here?", items: [
-          { text: "Navitas designs and sells power chips \u2014 the tiny components that convert electricity from one voltage to another inside every phone charger, laptop adapter, EV battery charger, and datacenter rack. The company is the only public pure-play manufacturer focused on gallium nitride (GaN) and silicon carbide (SiC), the two next-generation materials displacing traditional silicon in power conversion. Everything Navitas sells is built on gallium-based or silicon-carbide-based chips." },
-          { text: "Navitas matters to the gallium thesis as the demand proxy. When GaN adoption accelerates, Navitas\u2019s volumes rise. When it slows, they fall. The company is a clean-read instrument for GaN demand growth \u2014 especially in AI datacenters, which is the fastest-growing gallium demand vector." },
-        ] },
-        { label: "How does value flow through this entity?", items: [
-          { text: "In 2025, Navitas pivoted hard. Management moved the company away from low-margin consumer chargers (USB-C fast chargers, laptop adapters) and toward high-margin industrial applications (AI datacenter power, EV onboard chargers, grid infrastructure). This shift cut revenue nearly in half in 2025 \u2014 from $83M to $46M \u2014 but raised the quality of the revenue that remained. Q4 2025 was the first quarter where high-power markets contributed the majority of sales." },
-          { text: "The biggest growth lever is AI datacenters. In October 2025, Navitas announced it was designed into NVIDIA\u2019s new 800V DC power architecture \u2014 the standard NVIDIA is rolling out across its AI factories. Every GW of that architecture needs thousands of Navitas chips. Navitas also signed a manufacturing partnership with GlobalFoundries to produce GaN chips inside the US starting late 2026 \u2014 meaningful for defense and datacenter customers who need domestic supply chains." },
-          { text: "Semiconductor revenue takes 18-36 months to convert from design win to volume shipments. Navitas announced $450M of design wins in 2024, which should convert through 2026-2028. The $236.9M cash balance provides runway to execute without further dilution." },
-        ] },
-        { label: "Key numbers", items: [
-          { title: "FY2025 revenue", text: "$45.9M (vs. $83.3M FY2024 \u2014 pivot-driven decline)" },
-          { title: "High-power share of Q4 2025 revenue", text: ">50% for the first time" },
-          { title: "GaN units shipped to date", text: "250M+" },
-          { title: "2024 design wins", text: "$450M (converts 2026-2028)" },
-          { title: "Q1 2026 revenue guidance", text: "$8-8.5M" },
-        ] },
-        { label: "What to watch", items: [
-          { text: "Q1 2026 earnings (May 5) \u2014 revenue trajectory and design-win conversion rate." },
-          { text: "GlobalFoundries US GaN production availability (late 2026)." },
-          { text: "NVIDIA 800V HVDC adoption pace \u2014 determines datacenter revenue ramp." },
-        ] },
-        { label: "Investment angle", items: [
-          { text: "Navitas is the highest-beta public exposure to GaN demand. For investors with conviction on AI datacenter buildout and GaN adoption curves, it\u2019s the most concentrated pure-play on public markets \u2014 no other listed company lives or dies on GaN volumes this completely. The trade-off: the stock has run well ahead of fundamentals (analyst 12-month target implies ~50% downside), the company is still loss-making, and the pivot execution is mid-flight. Exposure to Navitas is exposure to GaN demand growth, not to gallium pricing directly \u2014 higher gallium prices raise Navitas\u2019s input costs rather than benefit the company." },
-        ] },
-      ],
-      disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Device Manufacturer. Sources: Navitas SEC filings, NVIDIA and GlobalFoundries partnership announcements. Not investment advice.",
     },
     "rio-tinto": {
       name: "Rio Tinto",
@@ -380,7 +302,7 @@ export default function GalliumInputPage() {
       sections: [
         { label: "What is this and why does it matter here?", items: [
           { text: "This is not a single company. It is the combined output of roughly 20 Chinese alumina refineries that produce gallium as a byproduct. Some are state-owned (Chalco, Shandong Weiqiao). Some are privately held (Vital Materials, Zhuzhou Keneng). Chinese capacity grew from ~140 t/yr in 2010 to ~1,000 t/yr by 2022 and continues to expand." },
-          { text: "This aggregate is on the page because it is the single most important variable in the entire gallium investment thesis. Every other entity here \u2014 AXT, Alcoa, Metlen, 5N Plus, Dowa, Navitas, Rio Tinto, Korea Zinc \u2014 derives its investability from its position relative to what China does." },
+          { text: "This aggregate is on the page because it is the single most important variable in the entire gallium investment thesis. Every other entity here \u2014 Alcoa, Metlen, 5N Plus, Dowa, Rio Tinto, Korea Zinc \u2014 derives its investability from its position relative to what China does." },
         ] },
         { label: "How does value flow through this entity?", items: [
           { text: "No direct value flow to western investors. Chinese primary producers are state-owned, state-affiliated, or traded only on Chinese exchanges with limited foreign access." },
@@ -418,7 +340,7 @@ export default function GalliumInputPage() {
       metrics: [],
       sections: [
         { label: "What is this and why does it matter here?", items: [
-          { text: "Gallium metal is the raw material that feeds every other entity on this page. AXT converts it into compound semiconductor wafers. Navitas builds GaN chips from it. Dowa refines it to semiconductor grade. Alcoa and Metlen are racing to produce it. China controls 98% of global supply." },
+          { text: "Gallium metal is the raw material that feeds every other entity on this page. Dowa refines it to semiconductor grade. Alcoa and Metlen are racing to produce it. China controls 98% of global supply." },
           { text: "The western retail price has moved from approximately $298/kg at the start of 2020 to $2,269/kg as of April 2026 \u2014 a 7.6x increase. Most of that move occurred after August 2023, when China implemented export licensing, with a further acceleration after the December 2024 US-targeted ban." },
           { text: "The Chinese domestic 4N spot price, by contrast, sits at ~$245/kg on the SMM benchmark \u2014 creating a 9x spread that persists because export controls prevent arbitrage. Western buyers pay a \u201Csecurity premium\u201D that reflects not material scarcity but access scarcity." },
         ] },
@@ -431,7 +353,7 @@ export default function GalliumInputPage() {
           { text: "Every investment position in the gallium chain should be stress-tested against both outcomes." },
         ] },
         { label: "Investment angle", items: [
-          { text: "Not directly investable without physical trading infrastructure. No futures contract, no ETF, no exchange-traded vehicle. The only way to express a view on gallium pricing through liquid securities is via the equities on this page \u2014 primarily AXT (substrate chokepoint), Metlen (European capacity), and 5N Plus (broad critical minerals). Physical gallium can be purchased via Strategic Metals Invest or Rotterdam warehouse channels for qualified investors." },
+          { text: "Not directly investable without physical trading infrastructure. No futures contract, no ETF, no exchange-traded vehicle. The only way to express a view on gallium pricing through liquid securities is via the equities on this page \u2014 primarily Metlen (European capacity), Dowa (refining chokepoint), and 5N Plus (broad critical minerals). Physical gallium can be purchased via Strategic Metals Invest or Rotterdam warehouse channels for qualified investors." },
         ] },
       ],
       disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Raw Material / Commodity. Sources: Fastmarkets, USGS Mineral Commodity Summaries, SMM benchmarks, Strategic Metals Invest. Not investment advice.",
@@ -467,7 +389,6 @@ export default function GalliumInputPage() {
         <style>{`@media (max-width: 1399px) { .toc-nav { display: none !important; } }`}</style>
         {[
           { id: "thesis", label: "Thesis" },
-          { id: "how-its-made", label: "How it\u2019s made" },
           { id: "supply-tree", label: "Supply tree" },
           { id: "dependencies", label: "Dependencies" },
           { id: "supply-demand", label: "Supply \u2192 Demand" },
@@ -501,22 +422,17 @@ export default function GalliumInputPage() {
         {/* Connected inputs */}
         <div style={{ height: 1, background: "#252220", margin: "20px 0 24px 12px", width: 100 }} />
         <p style={{ fontSize: 9, letterSpacing: "0.06em", color: "#555", margin: "0 0 8px 12px" }}>Downstream</p>
+        {/* TODO: link to downstream chain pages when they exist */}
         {[
-          { name: "GaAs substrates & devices", linked: false, href: "" },
-          { name: "GaN devices (power + RF)", linked: false, href: "" },
-          { name: "LED lighting", linked: false, href: "" },
-          { name: "NdFeB magnets", linked: false, href: "" },
-          { name: "Defense radar & EW", linked: false, href: "" },
-          { name: "Satellite solar cells", linked: false, href: "" },
+          { name: "Compound semiconductor wafers (GaAs, InP)", desc: "AXT, Sumitomo Electric, Freiberger, IQE" },
+          { name: "GaN power semiconductors", desc: "Navitas, Infineon/GaN Systems, Innoscience, EPC, Transphorm" },
+          { name: "GaN RF and defense radar", desc: "Wolfspeed, Qorvo, MACOM, NXP" },
+          { name: "LED lighting", desc: "Nichia, Samsung LED, Seoul Semiconductor, OSRAM" },
+          { name: "NdFeB permanent magnets", desc: "Chinese magnet producers" },
+          { name: "Satellite solar cells", desc: "5N Plus AZUR Space, Spectrolab, CESI" },
         ].map((item, i) => (
-          <div key={i} onClick={() => { if (item.linked) window.location.href = item.href; }}
-            style={{ display: "flex", alignItems: "center", padding: "1px 0 1px 12px", cursor: item.linked ? "pointer" : "default" }}>
-            <span style={{ fontSize: 10, color: item.linked ? "#a09888" : "#4a4540", transition: "color 0.15s" }}
-              onMouseEnter={e => { if (item.linked) e.currentTarget.style.color = "#ece8e1"; }}
-              onMouseLeave={e => { if (item.linked) e.currentTarget.style.color = "#a09888"; }}>
-              {item.name}
-            </span>
-            {item.linked && <span style={{ fontSize: 10, color: "#4a4540", marginLeft: 6 }}>&rarr;</span>}
+          <div key={i} style={{ display: "flex", flexDirection: "column" as const, padding: "2px 0 2px 12px" }}>
+            <span style={{ fontSize: 10, color: "#4a4540" }}>{item.name}</span>
           </div>
         ))}
       </nav>
@@ -561,106 +477,67 @@ export default function GalliumInputPage() {
           </div>
         </div>
 
-        {/* HOW IT'S MADE */}
-        <div id="how-its-made" style={{ marginBottom: "56px", paddingTop: 20 }}>
-          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
-            HOW IT&apos;S MADE
-          </p>
-
-          <div style={{ display: "flex", gap: "12px" }}>
-
-            {/* Card 1: Recovery */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                01 &middot; RECOVERED FROM ALUMINA REFINERIES
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Gallium is never mined on its own. It exists as a trace impurity (~50 ppm) inside bauxite. Refineries install ion-exchange resins that grab gallium out of the Bayer process liquid byproduct stream and turn it into 99.99%-pure metal. A smaller volume is recovered from zinc smelter waste.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Only 10-15% of contained gallium is captured. You cannot increase gallium output without processing more bauxite \u2014 supply is tied to aluminum production decisions, not gallium demand signals.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                ~20 alumina refineries globally. Vast majority in China. Japan, South Korea, Russia, and Slovakia have small capacity. Germany, Hungary, and Kazakhstan shut down 2013-2016. US stopped producing in 1987.
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~600t</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>low-purity gallium recovered annually</span>
-              </div>
-            </div>
-
-            {/* Card 2: Purification */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                02 &middot; PURIFIED TO SEMICONDUCTOR GRADE
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                The 99.99% metal is not pure enough for semiconductors. Chipmakers need 99.9999% or better \u2014 five to six more nines. Zone refining, vacuum distillation, and electrolytic refining remove final trace impurities. LED makers need 6N. Defense radar needs 7N. Next-gen chips need 8N.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Every additional &ldquo;nine&rdquo; is harder than the last. Requires proprietary process knowledge that cannot be bought off the shelf. China controls both primary extraction and high-purity refining.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                Chinese refiners (Vital Materials, Zhuzhou) dominate. Outside China: Dowa Holdings (Japan) leads; smaller capacity at 5N Plus (Canada), Indium Corporation (USA), PPM Pure Metals (Germany).
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~320t</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>high-purity refined gallium per year</span>
-              </div>
-            </div>
-
-            {/* Card 3: Wafers & Chips */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                03 &middot; TURNED INTO WAFERS AND CHIPS
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                High-purity gallium is combined with arsenic (GaAs) or nitrogen (GaN) and grown into crystals, then sliced into wafers. Specialty chemicals (trimethylgallium, triethylgallium) are used to grow thin GaN layers during chip manufacturing.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Different end products need different specifications. Industry is shifting from 4-inch to 6-inch and 8-inch wafers \u2014 a transition requiring new equipment throughout the chain. Defense-grade needs ultra-low defect density.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                AXT (Beijing, world&apos;s largest), Sumitomo Electric, Freiberger, IQE. GaN devices: Infineon, Wolfspeed, Navitas, Qorvo, Broadcom, MACOM. LEDs: Nichia dominates.
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~$26B</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>downstream semiconductor products per year</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
         {/* SUPPLY TREE */}
         <div id="supply-tree" style={{ marginBottom: "56px", paddingTop: 20 }}>
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
             SUPPLY TREE
           </p>
-          {/* Key takeaway */}
-          <div style={{ marginBottom: 32 }}>
-            <div style={{ borderLeft: `2px solid ${accent}30`, paddingLeft: 20 }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: accent, margin: "0 0 10px 0" }}>KEY TAKEAWAY</p>
-              <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.3, margin: 0 }}>
-                <span style={{ color: "#ece8e1", fontWeight: 500 }}>The western supply picture is defined not by a single chokepoint like Umicore in the germanium chain, but by the absence of meaningful western primary production.</span> Four concurrent projects \u2014 Alcoa/JAGA (Australia), Metlen (Greece), Rio Tinto/Indium (Quebec), and Korea Zinc/Nyrstar (Tennessee) \u2014 are rebuilding the western supply chain from scratch, collectively targeting <span style={{ color: "#ece8e1", fontWeight: 500 }}>~230t/yr</span> of non-Chinese capacity by 2029 against ~800t of projected 2028 global demand.
+          {/* How it's made cards — merged into Supply Tree */}
+          <div style={{ display: "flex", gap: "12px", marginBottom: 32 }}>
+
+            {/* Card 1: Byproduct Source */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                BYPRODUCT SOURCE
+              </p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Gallium is never mined on its own. It exists as a trace impurity &mdash; about 50 parts per million &mdash; inside bauxite, the ore that aluminum is made from. When aluminum producers process bauxite into alumina using the standard industrial Bayer process, gallium dissolves into the same liquid byproduct stream. Refineries that want gallium install ion-exchange resins that grab the gallium out of that stream and turn it into 99.99%-pure metal. A smaller volume is recovered the same way from zinc smelter waste.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: 0, flex: 1 }}>
+                Only about 10-15% of the gallium sitting inside the bauxite actually gets captured. The rest ends up in waste mud. You cannot increase gallium output without processing more bauxite, which means gallium supply is tied to aluminum production decisions &mdash; not gallium demand signals.
               </p>
             </div>
+
+            {/* Card 2: Primary Producer */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                PRIMARY PRODUCER
+              </p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                The 99.99% metal coming out of the Bayer process is pure enough for dopants and alloys but not pure enough for semiconductors. Chipmakers need gallium at 99.9999% purity or better. Getting there requires zone refining, vacuum distillation, and electrolytic refining. Different applications need different purity grades &mdash; LED makers need 6N, defense radar chips need 7N, next-generation chips need 8N.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: 0, flex: 1 }}>
+                Every additional nine of purity is harder than the last. Removing the final parts per billion of iron, copper, and zinc requires proprietary process knowledge that cannot be bought off the shelf. China controls both primary extraction and high-purity refining.
+              </p>
+            </div>
+
+            {/* Card 3: Refiner */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                REFINER
+              </p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                High-purity gallium is combined with another element to form a compound semiconductor &mdash; most commonly gallium arsenide (GaAs) or gallium nitride (GaN) &mdash; and grown into large crystals. Those crystals are sliced into thin circular wafers, which are the foundation on which semiconductor chips are built. Separately, specialty chemical companies turn some gallium into MOCVD precursor chemicals used to grow thin GaN layers during chip manufacturing.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: 0, flex: 1 }}>
+                Different end products need different specifications. A GaAs wafer for 5G needs different electrical properties than one for satellite solar. The industry is shifting from 4-inch to 6-inch and 8-inch wafers &mdash; a transition requiring new equipment throughout the chain.
+              </p>
+            </div>
+
           </div>
+
           {/* Supply tree visualization */}
           <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210" }}>
             <TreeMap
@@ -673,6 +550,25 @@ export default function GalliumInputPage() {
               onLayerClick={() => {}}
               layerPanels={{}}
             />
+          </div>
+
+          {/* How to read this tree */}
+          <div style={{ marginTop: 24, marginBottom: 24 }}>
+            <p style={{ fontSize: 11, fontStyle: "italic", color: muted, margin: "0 0 14px 0" }}>How to read this tree:</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 10 }}>
+              {[
+                { n: "1", text: <><strong style={{ color: warmWhite }}>Byproduct Source (top row):</strong> Five regional aggregates &mdash; Guinea, Australia, China, Brazil, Indonesia &mdash; represent the bauxite-producing regions whose alumina refineries could recover gallium. Each regional node rolls up the individual bauxite mines listed in its constituent_entities field.</> },
+                { n: "2", text: <><strong style={{ color: warmWhite }}>Primary Producer (second row):</strong> Seven nodes &mdash; the Chinese aggregate (dominant, active) plus six western projects (Alcoa/JAGA, Alcoa Corp, Metlen, Rio Tinto/Indium, Korea Zinc/Crucible, Nyrstar Tennessee) at various stages from lab demo to planned construction.</> },
+                { n: "3", text: <><strong style={{ color: warmWhite }}>Refiner (third row):</strong> Five entities that purify gallium to semiconductor grade &mdash; Dowa (Japan, leading non-Chinese), 5N Plus (Canada), Indium Corporation (USA, process IP holder), Vital Materials and Zhuzhou Smelter Group (China, export-controlled).</> },
+                { n: "4", text: <><strong style={{ color: warmWhite }}>Edges:</strong> Dashed lines show material flow from upstream to downstream. Not all connections are active &mdash; several western Primary Producer nodes are planned or under construction, and their downstream edges represent target rather than current flows.</> },
+                { n: "5", text: <><strong style={{ color: warmWhite }}>Aggregate summary boxes (below tree):</strong> Three summary aggregates &mdash; Chinese Primary Supply, Western Refined Supply, Global Supply &mdash; provide market-level context without cluttering the tree visualization.</> },
+              ].map((item) => (
+                <div key={item.n} style={{ display: "flex", gap: 10, alignItems: "baseline" }}>
+                  <span style={{ fontSize: 11, color: accent, fontWeight: 500, flexShrink: 0 }}>{item.n}.</span>
+                  <p style={{ fontSize: 12, color: "#a09888", lineHeight: 1.55, margin: 0 }}>{item.text}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Aggregate summary boxes */}
@@ -957,12 +853,6 @@ export default function GalliumInputPage() {
                   { id: "dowa", name: "Dowa Holdings", ticker: "5714.T \u00b7 Tokyo", category: "Chokepoint holder", line1: "Leading non-Chinese high-purity gallium refiner \u2014 the de facto western pipeline for GaAs wafer supply." },
                   { id: "5n-plus", name: "5N Plus", ticker: "VNP \u00b7 TSX", category: "Pure-play", line1: "Canadian specialty semiconductor refiner with multi-metal exposure \u2014 the most direct western investment vehicle for critical minerals refining." },
                 ] },
-                { label: "SUBSTRATE MANUFACTURER", ideas: [
-                  { id: "axt", name: "AXT, Inc.", ticker: "AXTI \u00b7 Nasdaq", category: "Manufacturing / integration", line1: "World\u2019s largest producer of compound semiconductor wafers \u2014 the downstream chokepoint converting refined gallium into GaAs and InP substrates." },
-                ] },
-                { label: "DEVICE MANUFACTURER", ideas: [
-                  { id: "navitas", name: "Navitas Semiconductor", ticker: "NVTS \u00b7 Nasdaq", category: "Technology", line1: "Pure-play GaN power semiconductor manufacturer \u2014 the downstream demand proxy for AI datacenter 800V power conversion and EV onboard chargers." },
-                ] },
                 { label: "DIRECT EXPOSURE", ideas: [
                   { id: "gallium-metal", name: "Gallium metal", ticker: "Physical commodity", category: "Direct exposure", line1: "No futures contract, no ETF, no exchange pricing. Western retail price up 7.6x since 2020 on bifurcated market structure." },
                 ] },
@@ -1003,8 +893,6 @@ export default function GalliumInputPage() {
             <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 14px 0", fontWeight: 500 }}>NEAR-TERM (NEXT 6 MONTHS)</p>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
-                { date: "April 30, 2026", desc: "AXT Q1 2026 earnings release" },
-                { date: "May 5, 2026", desc: "Navitas Q1 2026 earnings release" },
                 { date: "May 6, 2026", desc: "5N Plus Q1 2026 earnings release" },
                 { date: "Q2 2026", desc: "Alcoa / JAGA Final Investment Decision confirmation" },
                 { date: "Q2-Q3 2026", desc: "Metlen production milestones toward 5-10t target" },
@@ -1024,7 +912,6 @@ export default function GalliumInputPage() {
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
                 { date: "H2 2026", desc: "Alcoa / JAGA construction progress toward initial production" },
-                { date: "H2 2026", desc: "GlobalFoundries US GaN manufacturing availability (Navitas partnership)" },
                 { date: "November 27, 2026", desc: "Chinese export ban suspension expires (binary catalyst)" },
               ].map((item, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
