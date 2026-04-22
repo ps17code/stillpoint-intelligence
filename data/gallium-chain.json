@@ -1,13 +1,13 @@
 {
   "layerConfig": {
-    "byproductSource": {
+    "byproductsource": {
       "displayFields": [
         { "key": "country", "label": "Country" },
         { "key": "descriptor_pill", "label": "Type" },
         { "key": "quantity_pill", "label": "Output" }
       ]
     },
-    "primaryProducer": {
+    "primaryproducer": {
       "displayFields": [
         { "key": "country", "label": "Country" },
         { "key": "descriptor_pill", "label": "Type" },
@@ -21,14 +21,14 @@
         { "key": "quantity_pill", "label": "Output" }
       ]
     },
-    "substrateMfg": {
+    "substratemfg": {
       "displayFields": [
         { "key": "country", "label": "Country" },
         { "key": "descriptor_pill", "label": "Type" },
         { "key": "quantity_pill", "label": "Revenue" }
       ]
     },
-    "deviceMfg": {
+    "devicemfg": {
       "displayFields": [
         { "key": "country", "label": "Country" },
         { "key": "descriptor_pill", "label": "Type" },
