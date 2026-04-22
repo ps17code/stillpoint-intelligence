@@ -1,10 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
+import TreeMap from "@/components/TreeMap";
+import { buildGalliumGeometry, computeGalliumSvgWidth } from "@/lib/treeGeometry";
+import galliumChainJson from "@/data/gallium-chain.json";
+import galliumNodesJson from "@/data/gallium-nodes.json";
+import type { GalliumChain, NodeData } from "@/types";
 
 export default function GalliumInputPage() {
   const [soWhatOpen, setSoWhatOpen] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState("thesis");
   const [activeIdea, setActiveIdea] = useState<string | null>(null);
+  const [selectedNode, setSelectedNode] = useState<string | null>(null);
+
+  const galliumChain = (galliumChainJson as Record<string, unknown>).GALLIUM_CHAIN as unknown as GalliumChain;
+  const galliumNodes = galliumNodesJson as unknown as Record<string, NodeData>;
+  const lc = (galliumChainJson as Record<string, unknown>).layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
+  const galliumW = useMemo(() => computeGalliumSvgWidth(galliumChain), [galliumChain]);
+  const galliumGeo = useMemo(() => buildGalliumGeometry(galliumChain, galliumW / 2, 80), [galliumChain, galliumW]);
+  const galliumH = galliumGeo.outputNode.cy + 120;
 
   // Scroll spy
   React.useEffect(() => {
@@ -648,36 +661,89 @@ export default function GalliumInputPage() {
               </p>
             </div>
           </div>
-          {/* Supply nodes grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          {/* Supply tree visualization */}
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210" }}>
+            <TreeMap
+              geometry={galliumGeo}
+              nodes={galliumNodes}
+              layerConfig={lc}
+              svgWidth={galliumW}
+              svgHeight={galliumH}
+              onNodeClick={setSelectedNode}
+              onLayerClick={() => {}}
+              layerPanels={{}}
+            />
+          </div>
+
+          {/* Aggregate summary boxes */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginTop: 16 }}>
             {[
-              { name: "Chinese Bauxite Refineries", type: "Aggregate", loc: "China", stat: "~1,000 t/yr capacity \u00b7 ~590 t/yr actual", risk: "Export licensing regime" },
-              { name: "Dowa Holdings", type: "Public (TSE)", loc: "Tokyo, Japan", stat: "Leading non-Chinese high-purity refiner \u00b7 6N+", risk: "Dependent on imported feedstock" },
-              { name: "5N Plus Inc.", type: "Public (TSX)", loc: "Montreal, Canada", stat: "C$3.1B \u00b7 Multi-metal refiner", risk: "Gallium exposure dilute" },
-              { name: "AXT, Inc.", type: "Public (Nasdaq)", loc: "Fremont/Beijing", stat: "$4.59B \u00b7 World\u2019s largest III-V wafer facility", risk: "Chinese manufacturing; export permits" },
-              { name: "Alcoa / JAGA", type: "Public (NYSE)", loc: "Western Australia", stat: "100 t/yr target \u00b7 FID pending", risk: "Pre-production" },
-              { name: "Metlen Energy", type: "Public (Athens)", loc: "Greece", stat: "50 t/yr by 2028 \u00b7 First 5kg Jan 2026", risk: "10,000x scale-up required" },
-              { name: "Rio Tinto / Indium", type: "Public (NYSE)", loc: "Quebec, Canada", stat: "3.5 t/yr demo \u00b7 40 t/yr target", risk: "Early stage" },
-              { name: "Korea Zinc / Crucible", type: "Public (Seoul)", loc: "Tennessee, USA", stat: "$7.4B JV \u00b7 DoD 40% equity \u00b7 2029", risk: "Ground not broken" },
-              { name: "Vital Materials", type: "Private", loc: "Guangdong, China", stat: "Leading Chinese high-purity refiner", risk: "Export-controlled" },
-              { name: "Indium Corporation", type: "Private", loc: "New York, USA", stat: "Process IP owner for non-Chinese extraction", risk: "Private; limited visibility" },
-              { name: "Navitas Semiconductor", type: "Public (Nasdaq)", loc: "USA", stat: "Pure-play GaN \u00b7 NVIDIA 800V partnership", risk: "Pre-profit; pivot mid-flight" },
-              { name: "Nyrstar Tennessee", type: "Private (Trafigura)", loc: "Tennessee, USA", stat: "126-145 t/yr gallium in mine feed", risk: "Facility being demolished for Crucible" },
-            ].map((node, i) => (
-              <div key={i} style={{
-                background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8,
-                padding: "14px 18px",
-              }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
-                  <p style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, margin: 0 }}>{node.name}</p>
-                  <p style={{ fontSize: 9, color: dimText, margin: 0 }}>{node.type}</p>
-                </div>
-                <p style={{ fontSize: 10, color: muted, margin: "0 0 4px 0" }}>{node.loc}</p>
-                <p style={{ fontSize: 10.5, color: "#a09888", margin: "0 0 6px 0", lineHeight: 1.4 }}>{node.stat}</p>
-                <p style={{ fontSize: 10, color: "#8a5a4a", margin: 0 }}>{node.risk}</p>
+              { name: "Chinese Primary Supply", stat: "98-99% of global primary \u00b7 91% of global refined", detail: "~590 t/yr primary; ~290 t/yr refined. Chinese domestic $245/kg vs western retail $2,269/kg \u2014 9x spread." },
+              { name: "Western Refined Supply", stat: "~15-30 t/yr \u00b7 ~9% of global refined supply", detail: "Dowa (Japan), 5N Plus (Canada), Indium Corp (US). The structural gap western projects aim to close." },
+              { name: "Global Supply", stat: "~320 t/yr refined \u00b7 ~600 t/yr primary", detail: "~280t gap between primary and refined reflects conversion losses. Refined is the figure that matters." },
+            ].map((agg, i) => (
+              <div key={i} style={{ background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "14px 18px" }}>
+                <p style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>{agg.name}</p>
+                <p style={{ fontSize: 10.5, color: "#a09888", margin: "0 0 6px 0", lineHeight: 1.4 }}>{agg.stat}</p>
+                <p style={{ fontSize: 10, color: muted, margin: 0, lineHeight: 1.4 }}>{agg.detail}</p>
               </div>
             ))}
           </div>
+
+          {/* Node detail modal */}
+          {selectedNode && galliumNodes[selectedNode] && (() => {
+            const node = galliumNodes[selectedNode];
+            return (
+              <div
+                onClick={() => setSelectedNode(null)}
+                style={{
+                  position: "fixed", inset: 0, zIndex: 200,
+                  background: "rgba(0,0,0,0.6)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}
+              >
+                <div
+                  onClick={e => e.stopPropagation()}
+                  style={{
+                    width: 560, maxHeight: "75vh", background: "rgb(36, 36, 36)",
+                    border: "1px solid #252220", borderRadius: 12,
+                    display: "flex", flexDirection: "column" as const,
+                    overflow: "hidden",
+                  }}
+                >
+                  <div style={{ padding: "24px 28px 20px", flexShrink: 0, borderBottom: "1px solid #252220" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                      <div>
+                        <p style={{ fontSize: 9, letterSpacing: "0.1em", color: accent, margin: "0 0 8px 0", textTransform: "uppercase" as const }}>{node.type}</p>
+                        <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: "#ece8e1", margin: "0 0 4px 0", fontWeight: 400 }}>{selectedNode}</p>
+                        <p style={{ fontSize: 11, color: "#706a60", margin: 0 }}>{node.loc}</p>
+                      </div>
+                      <button
+                        onClick={() => setSelectedNode(null)}
+                        style={{ background: "none", border: "none", cursor: "pointer", color: "#555", fontSize: 18, padding: "0 0 0 12px", lineHeight: 1 }}
+                      >{"\u2715"}</button>
+                    </div>
+                    <div style={{ display: "flex", marginTop: 16, gap: 0, borderTop: "1px solid #252220", paddingTop: 14, flexWrap: "wrap" as const }}>
+                      {node.stats.map((s, si) => (
+                        <div key={si} style={{ flex: "1 1 25%", minWidth: 100, display: "flex", flexDirection: "column" as const, gap: 4, borderLeft: si > 0 ? "1px solid #252220" : "none", paddingLeft: si > 0 ? 14 : 0, paddingBottom: 8 }}>
+                          <span style={{ fontSize: 9, letterSpacing: "0.1em", color: "#555", textTransform: "uppercase" as const }}>{s[0]}</span>
+                          <span style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500 }}>{s[1]}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ flex: 1, overflowY: "auto" as const, padding: "24px 28px" }}>
+                    <p style={{ fontSize: 10, letterSpacing: "0.1em", color: "#555", margin: "0 0 10px 0", textTransform: "uppercase" as const }}>Role in chain</p>
+                    <p style={{ fontSize: 13, color: "#c4bdb2", lineHeight: 1.7, margin: "0 0 20px 0" }}>{node.role}</p>
+                    <p style={{ fontSize: 10, letterSpacing: "0.1em", color: "#555", margin: "0 0 10px 0", textTransform: "uppercase" as const }}>Investment relevance</p>
+                    <p style={{ fontSize: 13, color: "#c4bdb2", lineHeight: 1.7, margin: "0 0 20px 0" }}>{node.inv}</p>
+                    <p style={{ fontSize: 10, letterSpacing: "0.1em", color: "#555", margin: "0 0 10px 0", textTransform: "uppercase" as const }}>Key risk</p>
+                    <p style={{ fontSize: 12, color: "#8a5a4a", margin: 0 }}>{node.risk}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
         </div>
 
         {/* DEPENDENCIES */}

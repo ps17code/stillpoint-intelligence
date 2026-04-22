@@ -131,6 +131,12 @@ export const PALETTES = {
   developers: { stroke: "#b09040", text: "#6a5010", pip: "#b09040" },
   owners:     { stroke: "#c8a85a", text: "#7a6020", pip: "#c8a85a" },
   euOut:      { stroke: "#1a1a2e", text: "#1a1a2e", pip: "#1a1a2e" },
+  // Gallium layer palettes (green family matching accent #7a8a6a)
+  galliumSource:    { stroke: "#8a9a6a", text: "#4a5a2a", pip: "#8a9a6a" },
+  galliumProducer:  { stroke: "#7a8a5a", text: "#3a4a1a", pip: "#7a8a5a" },
+  galliumRefiner:   { stroke: "#5a7a6a", text: "#1a3a2a", pip: "#5a7a6a" },
+  galliumSubstrate: { stroke: "#4a6a7a", text: "#1a2a3a", pip: "#4a6a7a" },
+  galliumDevice:    { stroke: "#3a5a6a", text: "#0a1a2a", pip: "#3a5a6a" },
 } as const;
 
 // ── RAW TREE GEOMETRY ─────────────────────────────────────────────
@@ -461,5 +467,82 @@ export function buildEUGeometry(
   return {
     layers, edges,
     outputNode: { name: chain.output, cx: ancX, cy: outCY },
+  };
+}
+
+// ── GALLIUM TREE GEOMETRY ────────────────────────────────────────
+import type { GalliumChain } from "@/types";
+
+export function computeGalliumSvgWidth(chain: GalliumChain): number {
+  const widths = [
+    chain.byproductSource.length * SLOT,
+    chain.primaryProducer.length * SLOT,
+    chain.refiner.length * SLOT,
+    chain.substrateMfg.length * SLOT,
+    chain.deviceMfg.length * SLOT,
+  ];
+  return Math.max(1800, Math.max(...widths) + 400);
+}
+
+export function buildGalliumGeometry(
+  chain: GalliumChain,
+  ancX: number, topY: number,
+  gap = 170,
+): TreeGeometry {
+  const srcCY = topY;
+  const prodCY = topY + gap;
+  const refCY = topY + gap * 2;
+  const subCY = topY + gap * 3;
+  const devCY = topY + gap * 4;
+
+  const srcXs = contentAwareSpread(chain.byproductSource.length, ancX);
+  const prodXs = contentAwareSpread(chain.primaryProducer.length, ancX);
+  const refXs = contentAwareSpread(chain.refiner.length, ancX);
+  const subXs = contentAwareSpread(chain.substrateMfg.length, ancX);
+  const devXs = contentAwareSpread(chain.deviceMfg.length, ancX);
+
+  const srcMinor = new Set(chain.minor.byproductSource);
+  const prodMinor = new Set(chain.minor.primaryProducer);
+  const refMinor = new Set(chain.minor.refiner);
+
+  const layers: LayerGeometry[] = [
+    {
+      key: "byproductSource", label: "BYPRODUCT SOURCE", cy: srcCY,
+      nodes: chain.byproductSource.map((n, i) => ({ name: n, cx: srcXs[i], cy: srcCY, opacity: srcMinor.has(i) ? 0.4 : 1 })),
+      color: PALETTES.galliumSource,
+    },
+    {
+      key: "primaryProducer", label: "PRIMARY PRODUCERS", cy: prodCY,
+      nodes: chain.primaryProducer.map((n, i) => ({ name: n, cx: prodXs[i], cy: prodCY, opacity: prodMinor.has(i) ? 0.4 : 1 })),
+      color: PALETTES.galliumProducer,
+    },
+    {
+      key: "refiner", label: "REFINERS", cy: refCY,
+      nodes: chain.refiner.map((n, i) => ({ name: n, cx: refXs[i], cy: refCY, opacity: refMinor.has(i) ? 0.4 : 1 })),
+      color: PALETTES.galliumRefiner,
+    },
+    {
+      key: "substrateMfg", label: "SUBSTRATE MFG", cy: subCY,
+      nodes: chain.substrateMfg.map((n, i) => ({ name: n, cx: subXs[i], cy: subCY, opacity: 1 })),
+      color: PALETTES.galliumSubstrate,
+    },
+    {
+      key: "deviceMfg", label: "DEVICE MFG", cy: devCY,
+      nodes: chain.deviceMfg.map((n, i) => ({ name: n, cx: devXs[i], cy: devCY, opacity: 1 })),
+      color: PALETTES.galliumDevice,
+    },
+  ];
+
+  const edges: EdgeGeometry[] = [
+    ...buildEdges(srcXs, srcCY, prodXs, prodCY, PALETTES.galliumSource.stroke, chain.sourceToProducer, 0),
+    ...buildEdges(prodXs, prodCY, refXs, refCY, PALETTES.galliumProducer.stroke, chain.producerToRefiner, 1),
+    ...buildEdges(refXs, refCY, subXs, subCY, PALETTES.galliumRefiner.stroke, chain.refinerToSubstrate, 2),
+    ...buildEdges(subXs, subCY, devXs, devCY, PALETTES.galliumSubstrate.stroke, chain.substrateToDevice, 3),
+  ];
+
+  return {
+    layers,
+    edges,
+    outputNode: { name: chain.deviceMfg[0], cx: devXs[0], cy: devCY },
   };
 }

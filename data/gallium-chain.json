@@ -1,0 +1,50 @@
+{
+  "layerConfig": {
+    "byproductSource": {
+      "displayFields": [
+        { "key": "loc", "label": "Location" },
+        { "key": "stat", "label": "Output" }
+      ]
+    },
+    "primaryProducer": {
+      "displayFields": [
+        { "key": "loc", "label": "Location" },
+        { "key": "stat", "label": "Status" }
+      ]
+    },
+    "refiner": {
+      "displayFields": [
+        { "key": "loc", "label": "Location" },
+        { "key": "stat", "label": "Output" }
+      ]
+    },
+    "substrateMfg": {
+      "displayFields": [
+        { "key": "loc", "label": "Location" },
+        { "key": "stat", "label": "Capacity" }
+      ]
+    },
+    "deviceMfg": {
+      "displayFields": [
+        { "key": "loc", "label": "Location" },
+        { "key": "stat", "label": "Revenue" }
+      ]
+    }
+  },
+  "GALLIUM_CHAIN": {
+    "byproductSource": ["Guinea Bauxite", "Australian Bauxite", "Chinese Domestic Bauxite", "Brazilian Bauxite", "Indonesian Bauxite"],
+    "primaryProducer": ["Chinese Bauxite Refineries", "Alcoa / JAGA (Wagerup)", "Alcoa Corporation", "Metlen Energy & Metals", "Rio Tinto / Indium JV", "Korea Zinc / Crucible JV", "Nyrstar Tennessee"],
+    "refiner": ["Dowa Holdings", "5N Plus", "Indium Corporation", "Vital Materials", "Zhuzhou Smelter Group"],
+    "substrateMfg": ["AXT, Inc."],
+    "deviceMfg": ["Navitas Semiconductor"],
+    "sourceToProducer": [[0, 0], [1, 1], [1, 2], [2, 0], [3, 0], [4, 0]],
+    "producerToRefiner": [[0, 3], [0, 4], [0, 0], [0, 1], [1, 0], [2, 2], [3, 0], [4, 2]],
+    "refinerToSubstrate": [[0, 0], [1, 0], [2, 0]],
+    "substrateToDevice": [[0, 0]],
+    "minor": {
+      "byproductSource": [3, 4],
+      "primaryProducer": [5, 6],
+      "refiner": [3, 4]
+    }
+  }
+}

@@ -88,6 +88,19 @@ export interface EUChain {
   ownerCountries?: string[];
 }
 
+export interface GalliumChain {
+  byproductSource: string[];
+  primaryProducer: string[];
+  refiner: string[];
+  substrateMfg: string[];
+  deviceMfg: string[];
+  sourceToProducer: [number, number][];
+  producerToRefiner: [number, number][];
+  refinerToSubstrate: [number, number][];
+  substrateToDevice: [number, number][];
+  minor: { byproductSource: number[]; primaryProducer: number[]; refiner: number[] };
+}
+
 export interface ChainsData {
   SPINE_TREE: Record<string, Record<string, Record<string, string[]>>>;
   RAW_DATA: Record<string, RawChain>;
