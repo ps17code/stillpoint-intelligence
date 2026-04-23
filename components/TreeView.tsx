@@ -949,14 +949,18 @@ export default function TreeView() {
 
   /* ── two-column layout wrapper ── */
   function TwoColumnLayout({
-    sectionLabel,
+    title,
+    subtitle,
+    titleSize,
     items,
     expandedIndex,
     onExpandItem,
     onNavigateItem,
     illustrationId,
   }: {
-    sectionLabel: string;
+    title: string;
+    subtitle: string;
+    titleSize?: number;
     items: { name: string; description: string; meta: string; comingSoon: boolean; illustrationId?: string }[];
     expandedIndex: number;
     onExpandItem: (i: number) => void;
@@ -971,10 +975,26 @@ export default function TreeView() {
         {/* Left column */}
         <div style={{ flex: "0 0 60%", maxWidth: 660 }}>
           {renderBreadcrumb()}
-          <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "0 0 14px 0", textTransform: "uppercase" as const }}>
-            {sectionLabel}
-          </p>
-          <div key={animKey}>
+          <div key={animKey} style={{ animation: "accordionEnter 350ms ease-out forwards", opacity: 0 }}>
+            <h1 style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: titleSize ?? 32,
+              fontWeight: 400,
+              color: warmWhite,
+              margin: "0 0 8px 0",
+            }}>
+              {title}
+            </h1>
+            <p style={{
+              fontSize: titleSize === 36 ? 14 : 13,
+              color: muted,
+              lineHeight: 1.6,
+              margin: "0 0 28px 0",
+            }}>
+              {subtitle}
+            </p>
+          </div>
+          <div key={`items-${animKey}`}>
             {items.map((item, i) => (
               <AccordionItem
                 key={item.name}
@@ -1022,7 +1042,9 @@ export default function TreeView() {
 
     return (
       <TwoColumnLayout
-        sectionLabel="VERTICALS"
+        title="Explore emerging frontiers."
+        subtitle="Trace value chains from raw material to end use — every node, every bottleneck, every player."
+        titleSize={36}
         items={items}
         expandedIndex={expandedVertical}
         onExpandItem={setExpandedVertical}
@@ -1045,7 +1067,8 @@ export default function TreeView() {
 
     return (
       <TwoColumnLayout
-        sectionLabel={`SUBSYSTEMS \u00b7 ${selectedVertical?.toUpperCase() ?? ""}`}
+        title={selectedVertical ?? ""}
+        subtitle={VERTICALS_DATA.find(v => v.name === selectedVertical)?.description ?? ""}
         items={items}
         expandedIndex={expandedSubsystem}
         onExpandItem={setExpandedSubsystem}
@@ -1071,7 +1094,8 @@ export default function TreeView() {
 
     return (
       <TwoColumnLayout
-        sectionLabel={`COMPONENTS \u00b7 ${selectedSubsystem?.toUpperCase() ?? ""}`}
+        title={selectedSubsystem ?? ""}
+        subtitle={AI_SUBSYSTEMS.find(s => s.name === selectedSubsystem)?.description ?? ""}
         items={items}
         expandedIndex={expandedComponent}
         onExpandItem={setExpandedComponent}
