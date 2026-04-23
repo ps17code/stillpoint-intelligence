@@ -30,7 +30,6 @@ const galliumNodes = galliumNodesJson as unknown as Record<string, NodeData>;
 const galliumLc = (galliumChainJson as Record<string, unknown>).layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
 
 /* ── palette ── */
-const cardBg = "#1a1816";
 const borderColor = "#252220";
 const warmWhite = "#ece8e1";
 const bodyText = "#a09888";
@@ -47,6 +46,7 @@ interface Subsystem {
   name: string;
   description: string;
   componentCount: string;
+  comingSoon: boolean;
   components: ComponentDef[];
 }
 interface ComponentDef {
@@ -55,9 +55,10 @@ interface ComponentDef {
   detail: string;
   keyNumber: string | null;
   hasTree: boolean;
+  comingSoon: boolean;
 }
 
-/* ── illustrations (copied from explore page) ── */
+/* ── illustrations ── */
 
 function AIInfraIllustration() {
   const S = "rgba(155,168,171,";
@@ -168,56 +169,179 @@ function EnergyIllustration() {
   );
 }
 
+function UAVIllustration() {
+  const S = "rgba(155,168,171,";
+  const G = "rgba(196,164,108,";
+  const GR = "rgba(100,200,140,";
+  const cx = 130, cy = 190;
+  const armLen = 55;
+  const angles = [(-135), (-45), (45), (135)].map(a => (a * Math.PI) / 180);
+  const motors = angles.map(a => ({ x: cx + Math.cos(a) * armLen, y: cy + Math.sin(a) * armLen }));
+  return (
+    <svg viewBox="0 0 260 400" style={{ width: "100%", maxWidth: 260, height: "auto" }}>
+      {motors.map((m, i) => (
+        <line key={`arm-${i}`} x1={cx} y1={cy} x2={m.x} y2={m.y} stroke={`${S}0.5)`} strokeWidth="1"/>
+      ))}
+      {motors.map((m, i) => (
+        <circle key={`prop-${i}`} cx={m.x} cy={m.y} r="16" fill="none" stroke={`${S}0.12)`} strokeWidth="0.5" strokeDasharray="3 4"/>
+      ))}
+      {motors.map((m, i) => (
+        <g key={`motor-${i}`}>
+          <circle cx={m.x} cy={m.y} r="5" fill="rgba(255,255,255,0.03)" stroke={`${S}0.4)`} strokeWidth="0.5"/>
+          <circle cx={m.x} cy={m.y} r="1.5" fill={`${S}0.3)`}/>
+        </g>
+      ))}
+      <rect x={cx - 20} y={cy - 10} width="40" height="20" rx="4" fill="rgba(255,255,255,0.04)" stroke={`${S}0.45)`} strokeWidth="0.75"/>
+      <circle cx={cx - 16} cy={cy - 6} r="1.5" fill={`${GR}0.7)`}/>
+      <circle cx={cx + 16} cy={cy - 6} r="1.5" fill={`${GR}0.7)`}/>
+      <circle cx={cx - 16} cy={cy + 6} r="1.5" fill={`${G}0.5)`}/>
+      <circle cx={cx + 16} cy={cy + 6} r="1.5" fill={`${G}0.5)`}/>
+      <line x1={cx} y1={cy - 10} x2={cx} y2={cy - 18} stroke={`${S}0.3)`} strokeWidth="0.5"/>
+      <circle cx={cx} cy={cy - 19} r="2" fill="none" stroke={`${S}0.25)`} strokeWidth="0.5"/>
+      <rect x={cx - 8} y={cy + 12} width="16" height="10" rx="2" fill="rgba(255,255,255,0.03)" stroke={`${S}0.35)`} strokeWidth="0.5"/>
+      <circle cx={cx} cy={cy + 17} r="3" fill="rgba(255,255,255,0.02)" stroke={`${S}0.3)`} strokeWidth="0.5"/>
+      <circle cx={cx} cy={cy + 17} r="1" fill={`${S}0.25)`}/>
+      <line x1={cx} y1={cy + 22} x2={cx - 30} y2={cy + 80} stroke={`${S}0.08)`} strokeWidth="0.5" strokeDasharray="3 5"/>
+      <line x1={cx} y1={cy + 22} x2={cx} y2={cy + 85} stroke={`${S}0.1)`} strokeWidth="0.5" strokeDasharray="3 5"/>
+      <line x1={cx} y1={cy + 22} x2={cx + 30} y2={cy + 80} stroke={`${S}0.08)`} strokeWidth="0.5" strokeDasharray="3 5"/>
+      <line x1={cx - 12} y1={cy + 10} x2={cx - 22} y2={cy + 30} stroke={`${S}0.25)`} strokeWidth="0.5"/>
+      <line x1={cx + 12} y1={cy + 10} x2={cx + 22} y2={cy + 30} stroke={`${S}0.25)`} strokeWidth="0.5"/>
+      <line x1={cx - 28} y1={cy + 30} x2={cx + 28} y2={cy + 30} stroke={`${S}0.2)`} strokeWidth="0.5"/>
+    </svg>
+  );
+}
+
+function RoboticsIllustration() {
+  const S = "rgba(155,168,171,";
+  const GR = "rgba(100,200,140,";
+  return (
+    <svg viewBox="0 0 260 400" style={{ width: "100%", maxWidth: 260, height: "auto" }}>
+      <ellipse cx="130" cy="360" rx="50" ry="12" fill="rgba(255,255,255,0.03)" stroke={`${S}0.35)`} strokeWidth="0.5"/>
+      <rect x="112" y="336" width="36" height="24" rx="3" fill="rgba(255,255,255,0.03)" stroke={`${S}0.4)`} strokeWidth="0.5"/>
+      <ellipse cx="130" cy="336" rx="18" ry="5" fill="rgba(255,255,255,0.02)" stroke={`${S}0.3)`} strokeWidth="0.5"/>
+      {[0, 1, 2].map(i => (
+        <circle key={i} cx={122 + i * 8} cy="352" r="1.5" fill={`${GR}0.6)`}/>
+      ))}
+      <rect x="122" y="260" width="16" height="76" rx="3" fill="rgba(255,255,255,0.025)" stroke={`${S}0.4)`} strokeWidth="0.5"/>
+      <circle cx="130" cy="260" r="10" fill="rgba(255,255,255,0.03)" stroke={`${S}0.45)`} strokeWidth="0.75"/>
+      <circle cx="130" cy="260" r="4" fill="none" stroke={`${S}0.3)`} strokeWidth="0.5"/>
+      <g transform="rotate(-25 130 260)">
+        <rect x="122" y="185" width="16" height="75" rx="3" fill="rgba(255,255,255,0.02)" stroke={`${S}0.35)`} strokeWidth="0.5"/>
+      </g>
+      <circle cx="100" cy="195" r="8" fill="rgba(255,255,255,0.025)" stroke={`${S}0.4)`} strokeWidth="0.5"/>
+      <circle cx="100" cy="195" r="3" fill="none" stroke={`${S}0.25)`} strokeWidth="0.5"/>
+      <g transform="rotate(15 100 195)">
+        <rect x="92" y="135" width="16" height="60" rx="3" fill="rgba(255,255,255,0.02)" stroke={`${S}0.3)`} strokeWidth="0.5"/>
+      </g>
+      <circle cx="108" cy="130" r="6" fill="rgba(255,255,255,0.02)" stroke={`${S}0.35)`} strokeWidth="0.5"/>
+      <circle cx="108" cy="130" r="2" fill={`${S}0.25)`}/>
+      <line x1="108" y1="124" x2="108" y2="110" stroke={`${S}0.4)`} strokeWidth="0.75"/>
+      <line x1="108" y1="110" x2="98" y2="96" stroke={`${S}0.4)`} strokeWidth="0.75"/>
+      <line x1="108" y1="110" x2="118" y2="96" stroke={`${S}0.4)`} strokeWidth="0.75"/>
+      <rect x="94" y="88" width="8" height="8" rx="1" fill="none" stroke={`${S}0.35)`} strokeWidth="0.5"/>
+      <rect x="114" y="88" width="8" height="8" rx="1" fill="none" stroke={`${S}0.35)`} strokeWidth="0.5"/>
+      <circle cx="108" cy="88" r="2.5" fill="rgba(196,164,108,0.3)"/>
+      <line x1="108" y1="88" x2="104" y2="80" stroke="rgba(196,164,108,0.25)" strokeWidth="0.5"/>
+      <line x1="108" y1="88" x2="115" y2="82" stroke="rgba(196,164,108,0.2)" strokeWidth="0.5"/>
+      <line x1="108" y1="88" x2="108" y2="78" stroke="rgba(196,164,108,0.3)" strokeWidth="0.5"/>
+      <path d="M130,340 L130,260 Q120,230 100,195 Q104,165 108,130" fill="none" stroke={`${S}0.12)`} strokeWidth="0.5" strokeDasharray="3 4"/>
+    </svg>
+  );
+}
+
+function SpaceIllustration() {
+  const S = "rgba(155,168,171,";
+  const G = "rgba(196,164,108,";
+  const B = "rgba(100,150,200,";
+  return (
+    <svg viewBox="0 0 260 400" style={{ width: "100%", maxWidth: 260, height: "auto" }}>
+      <path d="M130,20 L140,70 L120,70 Z" fill="rgba(255,255,255,0.03)" stroke={`${S}0.45)`} strokeWidth="0.5"/>
+      <circle cx="130" cy="22" r="1" fill={`${S}0.4)`}/>
+      <rect x="118" y="70" width="24" height="50" rx="2" fill="rgba(255,255,255,0.025)" stroke={`${S}0.4)`} strokeWidth="0.5"/>
+      <line x1="118" y1="82" x2="142" y2="82" stroke={`${S}0.15)`} strokeWidth="0.5"/>
+      <line x1="118" y1="95" x2="142" y2="95" stroke={`${S}0.12)`} strokeWidth="0.5"/>
+      <line x1="118" y1="108" x2="142" y2="108" stroke={`${S}0.1)`} strokeWidth="0.5"/>
+      <rect x="116" y="120" width="28" height="8" rx="1" fill="rgba(255,255,255,0.02)" stroke={`${S}0.3)`} strokeWidth="0.5"/>
+      <rect x="114" y="128" width="32" height="70" rx="2" fill={`${B}0.06)`} stroke={`${S}0.4)`} strokeWidth="0.5"/>
+      <text x="130" y="165" textAnchor="middle" fontFamily="monospace" fontSize="5" fill={`${B}0.2)`}>LOX</text>
+      <line x1="114" y1="198" x2="146" y2="198" stroke={`${S}0.25)`} strokeWidth="0.5"/>
+      <rect x="114" y="198" width="32" height="80" rx="2" fill={`${G}0.04)`} stroke={`${S}0.4)`} strokeWidth="0.5"/>
+      <text x="130" y="240" textAnchor="middle" fontFamily="monospace" fontSize="5" fill={`${G}0.2)`}>RP-1</text>
+      <rect x="121" y="150" width="18" height="8" rx="1" fill="none" stroke={`${S}0.12)`} strokeWidth="0.5"/>
+      <rect x="100" y="265" width="12" height="8" rx="1" fill="none" stroke={`${S}0.3)`} strokeWidth="0.5"/>
+      <line x1="103" y1="265" x2="103" y2="273" stroke={`${S}0.15)`} strokeWidth="0.5"/>
+      <line x1="106" y1="265" x2="106" y2="273" stroke={`${S}0.15)`} strokeWidth="0.5"/>
+      <line x1="109" y1="265" x2="109" y2="273" stroke={`${S}0.15)`} strokeWidth="0.5"/>
+      <rect x="148" y="265" width="12" height="8" rx="1" fill="none" stroke={`${S}0.3)`} strokeWidth="0.5"/>
+      <line x1="151" y1="265" x2="151" y2="273" stroke={`${S}0.15)`} strokeWidth="0.5"/>
+      <line x1="154" y1="265" x2="154" y2="273" stroke={`${S}0.15)`} strokeWidth="0.5"/>
+      <line x1="157" y1="265" x2="157" y2="273" stroke={`${S}0.15)`} strokeWidth="0.5"/>
+      <path d="M114,278 L102,300 L114,300 Z" fill="rgba(255,255,255,0.02)" stroke={`${S}0.35)`} strokeWidth="0.5"/>
+      <path d="M146,278 L158,300 L146,300 Z" fill="rgba(255,255,255,0.02)" stroke={`${S}0.35)`} strokeWidth="0.5"/>
+      <path d="M120,278 Q118,290 112,310" fill="none" stroke={`${S}0.4)`} strokeWidth="0.75"/>
+      <path d="M140,278 Q142,290 148,310" fill="none" stroke={`${S}0.4)`} strokeWidth="0.75"/>
+      <ellipse cx="130" cy="310" rx="18" ry="4" fill="none" stroke={`${S}0.35)`} strokeWidth="0.5"/>
+      <ellipse cx="130" cy="308" rx="12" ry="3" fill="none" stroke={`${S}0.25)`} strokeWidth="0.5"/>
+      <path d="M130,314 Q138,340 130,380 Q122,340 130,314Z" fill={`${G}0.06)`} stroke={`${G}0.15)`} strokeWidth="0.5"/>
+      <path d="M130,316 Q135,338 130,370 Q125,338 130,316Z" fill={`${G}0.1)`} stroke={`${G}0.2)`} strokeWidth="0.5"/>
+      <path d="M130,318 Q133,335 130,360 Q127,335 130,318Z" fill={`${G}0.18)`} stroke={`${G}0.3)`} strokeWidth="0.5"/>
+    </svg>
+  );
+}
+
+/* ── illustration map ── */
+const ILLUSTRATION_MAP: Record<string, () => React.JSX.Element> = {
+  ai: AIInfraIllustration,
+  energy: EnergyIllustration,
+  uavs: UAVIllustration,
+  robotics: RoboticsIllustration,
+  space: SpaceIllustration,
+};
+
 /* ── vertical data ── */
 interface VerticalDef {
   id: string;
   name: string;
   description: string;
   chainCount: string;
-  live: boolean;
-  Illustration: (() => React.JSX.Element) | null;
+  comingSoon: boolean;
 }
 
 const VERTICALS_DATA: VerticalDef[] = [
   {
     id: "ai",
     name: "AI Infrastructure",
-    description: "From the minerals in the ground to the datacenters they power.",
+    description: "The complete supply chain map for AI \u2014 from the minerals in the ground to the datacenters they power.",
     chainCount: "17 chains",
-    live: true,
-    Illustration: AIInfraIllustration,
+    comingSoon: false,
   },
   {
     id: "energy",
     name: "Energy Transition",
-    description: "Batteries, solar, wind \u2014 the materials reshaping the grid.",
+    description: "Batteries, solar, wind, grid, and hydrogen \u2014 the materials and manufacturing bottlenecks shaping the pace of decarbonization.",
     chainCount: "6 chains",
-    live: false,
-    Illustration: EnergyIllustration,
+    comingSoon: true,
   },
   {
     id: "uavs",
     name: "UAVs",
     description: "Sensors, propulsion, and autonomy stacks for unmanned systems.",
     chainCount: "3 chains",
-    live: false,
-    Illustration: null,
+    comingSoon: true,
   },
   {
     id: "robotics",
     name: "Robotics",
-    description: "Motors, sensors, compute, and structure at scale.",
+    description: "Motors, sensors, compute, and structure \u2014 every physical input that determines who can build robots at scale.",
     chainCount: "4 chains",
-    live: false,
-    Illustration: null,
+    comingSoon: true,
   },
   {
     id: "space",
     name: "Space",
-    description: "Launch, power, and communications for orbital and deep space.",
+    description: "Launch, power, and communications for orbital and deep space systems.",
     chainCount: "2 chains",
-    live: false,
-    Illustration: null,
+    comingSoon: true,
   },
 ];
 
@@ -228,10 +352,11 @@ const AI_SUBSYSTEMS: Subsystem[] = [
     name: "Connectivity",
     description: "Fiber, transceivers, and switches that move data between servers, racks, and datacenters.",
     componentCount: "3 components",
+    comingSoon: false,
     components: [
-      { id: "fiber", name: "Fiber optic cable", detail: "Glass strands carrying light signals. Physical backbone of datacenter connectivity.", keyNumber: "720M km/yr \u00b7 18% gap", hasTree: true },
-      { id: "transceivers", name: "Optical transceivers", detail: "Convert electrical signals to light. Every fiber connection needs one on each end.", keyNumber: null, hasTree: false },
-      { id: "switches", name: "Network switches", detail: "Route data between servers and racks at terabit scale.", keyNumber: null, hasTree: false },
+      { id: "fiber", name: "Fiber optic cable", detail: "Glass strands carrying light signals between servers, racks, and datacenters. Supply gap of 18% \u2014 preform lines at full utilization.", keyNumber: "720M km/yr \u00b7 18% gap", hasTree: true, comingSoon: false },
+      { id: "transceivers", name: "Optical transceivers", detail: "Convert electrical signals to light. Every fiber connection needs one on each end.", keyNumber: null, hasTree: false, comingSoon: true },
+      { id: "switches", name: "Network switches", detail: "Route data between servers and racks at terabit scale.", keyNumber: null, hasTree: false, comingSoon: true },
     ],
   },
   {
@@ -239,10 +364,11 @@ const AI_SUBSYSTEMS: Subsystem[] = [
     name: "Compute",
     description: "GPUs, memory, and packaging that run AI training and inference.",
     componentCount: "3 components",
+    comingSoon: false,
     components: [
-      { id: "gpu", name: "GPUs", detail: "Parallel processors that train and run AI models.", keyNumber: null, hasTree: false },
-      { id: "hbm", name: "HBM memory", detail: "High-bandwidth memory stacked on GPU packages.", keyNumber: null, hasTree: false },
-      { id: "servers", name: "Server boards", detail: "PCBs connecting GPU, memory, networking, and power.", keyNumber: null, hasTree: false },
+      { id: "gpu", name: "GPUs", detail: "Parallel processors that train and run AI models.", keyNumber: null, hasTree: false, comingSoon: true },
+      { id: "hbm", name: "HBM memory", detail: "High-bandwidth memory stacked on GPU packages.", keyNumber: null, hasTree: false, comingSoon: true },
+      { id: "servers", name: "Server boards", detail: "PCBs connecting GPU, memory, networking, and power.", keyNumber: null, hasTree: false, comingSoon: true },
     ],
   },
   {
@@ -250,8 +376,9 @@ const AI_SUBSYSTEMS: Subsystem[] = [
     name: "Power",
     description: "Grid-to-rack power delivery. Transformers, switchgear, and distribution.",
     componentCount: "1 component",
+    comingSoon: false,
     components: [
-      { id: "transformers", name: "Power transformers", detail: "Convert grid voltage to datacenter-usable power.", keyNumber: null, hasTree: false },
+      { id: "transformers", name: "Power transformers", detail: "Convert grid voltage to datacenter-usable power.", keyNumber: null, hasTree: false, comingSoon: true },
     ],
   },
   {
@@ -259,6 +386,7 @@ const AI_SUBSYSTEMS: Subsystem[] = [
     name: "Cooling",
     description: "Heat rejection at chip, rack, and facility scale.",
     componentCount: "0 components",
+    comingSoon: true,
     components: [],
   },
 ];
@@ -480,6 +608,17 @@ export default function TreeView() {
   const [treeExpanded, setTreeExpanded] = useState(false);
   const [animKey, setAnimKey] = useState(0);
 
+  /* ── accordion expanded index per level ── */
+  const [expandedVertical, setExpandedVertical] = useState<number>(() => {
+    const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
+    return idx >= 0 ? idx : 0;
+  });
+  const [expandedSubsystem, setExpandedSubsystem] = useState<number>(() => {
+    const idx = AI_SUBSYSTEMS.findIndex(s => !s.comingSoon);
+    return idx >= 0 ? idx : 0;
+  });
+  const [expandedComponent, setExpandedComponent] = useState<number>(0);
+
   /* ── navigation helpers ── */
   function goVerticals() {
     setLevel("verticals");
@@ -489,6 +628,10 @@ export default function TreeView() {
     setBreadcrumb([]);
     setTreeExpanded(false);
     setAnimKey(k => k + 1);
+    setExpandedVertical(() => {
+      const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
+      return idx >= 0 ? idx : 0;
+    });
   }
 
   function goSubsystems(verticalName: string) {
@@ -499,6 +642,10 @@ export default function TreeView() {
     setBreadcrumb([{ label: "All verticals", level: "verticals" }]);
     setTreeExpanded(false);
     setAnimKey(k => k + 1);
+    setExpandedSubsystem(() => {
+      const idx = AI_SUBSYSTEMS.findIndex(s => !s.comingSoon);
+      return idx >= 0 ? idx : 0;
+    });
   }
 
   function goComponents(subsystemName: string) {
@@ -511,6 +658,11 @@ export default function TreeView() {
     ]);
     setTreeExpanded(false);
     setAnimKey(k => k + 1);
+    const sub = AI_SUBSYSTEMS.find(s => s.name === subsystemName);
+    if (sub) {
+      const idx = sub.components.findIndex(c => !c.comingSoon);
+      setExpandedComponent(idx >= 0 ? idx : 0);
+    }
   }
 
   function goTree(target: TreeTarget, _label: string) {
@@ -601,97 +753,192 @@ export default function TreeView() {
     );
   }
 
-  /* ── render: verticals (full-width cards) ── */
-  function renderVerticals() {
+  /* ── generic accordion item ── */
+  function AccordionItem({
+    name,
+    description,
+    meta,
+    comingSoon,
+    isExpanded,
+    onRowClick,
+    onArrowClick,
+    index,
+  }: {
+    name: string;
+    description: string;
+    meta: string;
+    comingSoon: boolean;
+    isExpanded: boolean;
+    onRowClick: () => void;
+    onArrowClick: () => void;
+    index: number;
+  }) {
+    const [hovered, setHovered] = useState(false);
+
     return (
-      <>
-        <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "0 0 14px 0", textTransform: "uppercase" as const }}>VERTICALS</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {VERTICALS_DATA.map((v, i) => {
-            const clickable = v.live;
-            return (
-              <div
-                key={v.id}
-                onClick={clickable ? () => goSubsystems(v.name) : undefined}
-                style={{
-                  position: "relative",
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "18px 20px", background: cardBg, border: `1px solid ${borderColor}`,
-                  borderRadius: 8, cursor: clickable ? "pointer" : "default",
-                  transition: "border-color 0.15s", opacity: clickable ? 1 : 0.5,
-                  overflow: "hidden",
-                  animation: `cardEnter 300ms ease-out forwards`,
-                  animationDelay: `${i * 60}ms`,
-                  // start invisible for animation
-                }}
-                onMouseEnter={e => { if (clickable) e.currentTarget.style.borderColor = "#333"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
-              >
-                {/* Illustration on the right */}
-                {v.Illustration && (
-                  <div
-                    className="tv-card-illus"
-                    style={{
-                      position: "absolute", right: 30, top: "50%", transform: "translateY(-50%)",
-                      width: 100, height: 100, opacity: 0.3, pointerEvents: "none",
-                      transition: "opacity 0.2s",
-                    }}
-                  >
-                    <v.Illustration />
-                  </div>
-                )}
-                <div style={{ position: "relative", zIndex: 1, flex: 1, minWidth: 0 }}>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 500, color: warmWhite, margin: "0 0 4px 0" }}>{v.name}</p>
-                  <p style={{ fontSize: 12, color: muted, margin: "0 0 4px 0", lineHeight: 1.5 }}>{v.description}</p>
-                  <p style={{ fontSize: 10, color: dimmer, margin: 0 }}>{v.chainCount}</p>
-                </div>
-                <span style={{ fontSize: 14, color: dimmer, position: "relative", zIndex: 1, flexShrink: 0, marginLeft: 16 }}>&rarr;</span>
-              </div>
-            );
-          })}
+      <div
+        style={{
+          padding: isExpanded ? "20px 0" : "16px 0",
+          borderBottom: `1px solid ${borderColor}`,
+          cursor: "pointer",
+          animation: `accordionEnter 350ms ease-out forwards`,
+          animationDelay: `${index * 60}ms`,
+          opacity: 0,
+        }}
+        onClick={!isExpanded ? onRowClick : undefined}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <span style={{
+            fontSize: isExpanded ? 18 : 16,
+            color: isExpanded ? warmWhite : (hovered ? "#a09888" : muted),
+            fontWeight: isExpanded ? 500 : 400,
+            transition: "color 0.15s, font-size 0.15s",
+          }}>
+            {name}
+          </span>
+          <span
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!comingSoon) onArrowClick();
+            }}
+            style={{
+              fontSize: 16,
+              color: comingSoon ? "#333" : (hovered || isExpanded ? bodyText : dimmer),
+              cursor: comingSoon ? "default" : "pointer",
+              transition: "color 0.15s",
+              padding: "0 4px",
+              userSelect: "none",
+            }}
+          >
+            &rarr;
+          </span>
         </div>
-        <style>{`
-          .tv-card-illus { opacity: 0.3; }
-          div:hover > .tv-card-illus { opacity: 0.45 !important; }
-        `}</style>
-      </>
+        {isExpanded && (
+          <>
+            <p style={{ fontSize: 13, color: muted, margin: "8px 0 6px 0", lineHeight: 1.5 }}>
+              {description}
+            </p>
+            <p style={{ fontSize: 10, color: dimmer, margin: 0, fontStyle: comingSoon ? "italic" : "normal" }}>
+              {comingSoon ? "Coming soon" : meta}
+            </p>
+          </>
+        )}
+        {!isExpanded && comingSoon && (
+          <p style={{ fontSize: 10, color: dimmer, margin: "4px 0 0 0", fontStyle: "italic" }}>
+            Coming soon
+          </p>
+        )}
+      </div>
+    );
+  }
+
+  /* ── two-column layout wrapper ── */
+  function TwoColumnLayout({
+    sectionLabel,
+    items,
+    expandedIndex,
+    onExpandItem,
+    onNavigateItem,
+    illustrationId,
+  }: {
+    sectionLabel: string;
+    items: { name: string; description: string; meta: string; comingSoon: boolean; illustrationId?: string }[];
+    expandedIndex: number;
+    onExpandItem: (i: number) => void;
+    onNavigateItem: (i: number) => void;
+    illustrationId?: string;
+  }) {
+    const activeIllustrationId = items[expandedIndex]?.illustrationId ?? illustrationId;
+    const IllusComponent = activeIllustrationId ? ILLUSTRATION_MAP[activeIllustrationId] : null;
+
+    return (
+      <div style={{ display: "flex", gap: 0, maxWidth: 1100 }}>
+        {/* Left column */}
+        <div style={{ flex: "0 0 60%", maxWidth: 660 }}>
+          {renderBreadcrumb()}
+          <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "0 0 14px 0", textTransform: "uppercase" as const }}>
+            {sectionLabel}
+          </p>
+          <div key={animKey}>
+            {items.map((item, i) => (
+              <AccordionItem
+                key={item.name}
+                name={item.name}
+                description={item.description}
+                meta={item.meta}
+                comingSoon={item.comingSoon}
+                isExpanded={expandedIndex === i}
+                onRowClick={() => onExpandItem(i)}
+                onArrowClick={() => onNavigateItem(i)}
+                index={i}
+              />
+            ))}
+          </div>
+        </div>
+        {/* Right column — sticky illustration */}
+        <div style={{ flex: "0 0 40%", display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: 60 }}>
+          <div style={{ position: "sticky", top: 100 }}>
+            {IllusComponent && (
+              <div
+                key={activeIllustrationId}
+                style={{
+                  opacity: 0.5,
+                  animation: "illustrationFade 400ms ease-out forwards",
+                }}
+              >
+                <IllusComponent />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* ── render: verticals ── */
+  function renderVerticals() {
+    const items = VERTICALS_DATA.map(v => ({
+      name: v.name,
+      description: v.description,
+      meta: v.chainCount,
+      comingSoon: v.comingSoon,
+      illustrationId: v.id,
+    }));
+
+    return (
+      <TwoColumnLayout
+        sectionLabel="VERTICALS"
+        items={items}
+        expandedIndex={expandedVertical}
+        onExpandItem={setExpandedVertical}
+        onNavigateItem={(i) => {
+          if (!VERTICALS_DATA[i].comingSoon) goSubsystems(VERTICALS_DATA[i].name);
+        }}
+      />
     );
   }
 
   /* ── render: subsystems ── */
   function renderSubsystems() {
+    const items = AI_SUBSYSTEMS.map(s => ({
+      name: s.name,
+      description: s.description,
+      meta: s.componentCount,
+      comingSoon: s.comingSoon,
+    }));
+
     return (
-      <>
-        <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "0 0 14px 0", textTransform: "uppercase" as const }}>SUBSYSTEMS &middot; {selectedVertical?.toUpperCase()}</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {AI_SUBSYSTEMS.map((s, i) => {
-            const clickable = s.components.length > 0;
-            return (
-              <div
-                key={s.id}
-                onClick={clickable ? () => goComponents(s.name) : undefined}
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "16px 20px", background: cardBg, border: `1px solid ${borderColor}`,
-                  borderRadius: 8, cursor: clickable ? "pointer" : "default",
-                  transition: "border-color 0.15s", opacity: clickable ? 1 : 0.5,
-                  animation: `cardEnter 300ms ease-out forwards`,
-                  animationDelay: `${i * 60}ms`,
-                }}
-                onMouseEnter={e => { if (clickable) e.currentTarget.style.borderColor = "#333"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
-              >
-                <div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{s.name}</p>
-                  <p style={{ fontSize: 12, color: muted, margin: "0 0 4px 0", lineHeight: 1.5 }}>{s.description}</p>
-                  <p style={{ fontSize: 10, color: dimmer, margin: 0 }}>{s.componentCount}</p>
-                </div>
-                {clickable && <span style={{ fontSize: 14, color: dimmer }}>&rarr;</span>}
-              </div>
-            );
-          })}
-        </div>
-      </>
+      <TwoColumnLayout
+        sectionLabel={`SUBSYSTEMS \u00b7 ${selectedVertical?.toUpperCase() ?? ""}`}
+        items={items}
+        expandedIndex={expandedSubsystem}
+        onExpandItem={setExpandedSubsystem}
+        onNavigateItem={(i) => {
+          if (!AI_SUBSYSTEMS[i].comingSoon) goComponents(AI_SUBSYSTEMS[i].name);
+        }}
+      />
     );
   }
 
@@ -699,37 +946,25 @@ export default function TreeView() {
   function renderComponents() {
     const sub = AI_SUBSYSTEMS.find(s => s.name === selectedSubsystem);
     if (!sub) return null;
+
+    const items = sub.components.map(c => ({
+      name: c.name,
+      description: c.detail,
+      meta: c.keyNumber ?? "",
+      comingSoon: c.comingSoon,
+    }));
+
     return (
-      <>
-        <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "0 0 14px 0", textTransform: "uppercase" as const }}>COMPONENTS &middot; {selectedSubsystem?.toUpperCase()}</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {sub.components.map((c, i) => (
-            <div
-              key={c.id}
-              onClick={c.hasTree ? () => goTree({ type: "component", id: c.id }, c.name) : undefined}
-              style={{
-                display: "flex", alignItems: "center", justifyContent: "space-between",
-                padding: "16px 20px", background: cardBg, border: `1px solid ${borderColor}`,
-                borderRadius: 8, cursor: c.hasTree ? "pointer" : "default",
-                transition: "border-color 0.15s", opacity: c.hasTree ? 1 : 0.5,
-                animation: `cardEnter 300ms ease-out forwards`,
-                animationDelay: `${i * 60}ms`,
-              }}
-              onMouseEnter={e => { if (c.hasTree) e.currentTarget.style.borderColor = "#333"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
-            >
-              <div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{c.name}</p>
-                <p style={{ fontSize: 12, color: muted, margin: "0 0 4px 0", lineHeight: 1.5 }}>{c.detail}</p>
-                {c.keyNumber && (
-                  <p style={{ fontSize: 10, color: dimmer, margin: 0 }}>{c.keyNumber}</p>
-                )}
-              </div>
-              {c.hasTree && <span style={{ fontSize: 11, color: dimmer }}>View tree &rarr;</span>}
-            </div>
-          ))}
-        </div>
-      </>
+      <TwoColumnLayout
+        sectionLabel={`COMPONENTS \u00b7 ${selectedSubsystem?.toUpperCase() ?? ""}`}
+        items={items}
+        expandedIndex={expandedComponent}
+        onExpandItem={setExpandedComponent}
+        onNavigateItem={(i) => {
+          const c = sub.components[i];
+          if (!c.comingSoon && c.hasTree) goTree({ type: "component", id: c.id }, c.name);
+        }}
+      />
     );
   }
 
@@ -772,7 +1007,8 @@ export default function TreeView() {
       );
 
       return (
-        <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
+        <div key={animKey} style={{ maxWidth: 900, margin: "0 auto", animation: "treeEnter 400ms ease-out forwards" }}>
+          {renderBreadcrumb()}
           <TreeHeader
             title="Fiber optic cable"
             href="/input/fiber-optic-cable"
@@ -816,7 +1052,8 @@ export default function TreeView() {
       );
 
       return (
-        <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
+        <div key={animKey} style={{ maxWidth: 900, margin: "0 auto", animation: "treeEnter 400ms ease-out forwards" }}>
+          {renderBreadcrumb()}
           <TreeHeader
             title="Germanium"
             href="/input/germanium"
@@ -865,7 +1102,8 @@ export default function TreeView() {
       );
 
       return (
-        <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
+        <div key={animKey} style={{ maxWidth: 900, margin: "0 auto", animation: "treeEnter 400ms ease-out forwards" }}>
+          {renderBreadcrumb()}
           <TreeHeader
             title="Gallium"
             href="/input/gallium"
@@ -902,19 +1140,20 @@ export default function TreeView() {
 
   /* ── main render ── */
   return (
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 32px 80px", minHeight: "100vh", background: "#111" }}>
-      {renderBreadcrumb()}
-      <div key={animKey}>
-        {level === "verticals" && renderVerticals()}
-        {level === "subsystems" && renderSubsystems()}
-        {level === "components" && renderComponents()}
-      </div>
+    <div style={{ fontFamily: "'DM Sans', sans-serif", margin: "0 auto", padding: "32px 32px 80px", minHeight: "100vh", background: "#111" }}>
+      {level === "verticals" && renderVerticals()}
+      {level === "subsystems" && renderSubsystems()}
+      {level === "components" && renderComponents()}
       {level === "tree" && renderTree()}
 
       {/* Animation keyframes */}
       <style>{`
-        @keyframes cardEnter {
+        @keyframes accordionEnter {
           from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes illustrationFade {
+          from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes treeEnter {
