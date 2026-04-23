@@ -227,66 +227,41 @@ function TreeHeader({ title, href, description }: { title: string; href: string;
   );
 }
 
-/* ── Raw materials SVG layer for Fiber page ── */
-function RawMaterialsSVGLayer({
-  compW,
-  onGermaniumClick,
+/* ── Upstream/Downstream chip renderer ── */
+function ChipSection({
+  label,
+  items,
+  onNavigate,
+  style: wrapperStyle,
 }: {
-  compW: number;
-  onGermaniumClick: () => void;
+  label: string;
+  items: { name: string; navigateTo: string | null; active: boolean }[];
+  onNavigate?: (id: string) => void;
+  style?: React.CSSProperties;
 }) {
-  const svgH = 100;
-  const nodeY = 40;
-  const bottomY = svgH - 5;
-  const cx1 = compW / 2 - 200; // Germanium
-  const cx2 = compW / 2;       // Helium
-  const cx3 = compW / 2 + 200; // Silica
-
   return (
-    <div style={{ position: "relative", marginBottom: 0 }}>
-      <div style={{
-        position: "absolute", left: 12, top: nodeY - 6,
-        fontFamily: "'Geist Mono', monospace", fontSize: 9, letterSpacing: "0.1em",
-        color: dimmer, textTransform: "uppercase" as const,
-        writingMode: "horizontal-tb",
-      }}>
-        RAW MATERIALS
+    <div style={wrapperStyle}>
+      <p style={{ fontSize: 9, letterSpacing: "0.08em", color: dimmer, textTransform: "uppercase" as const, margin: "0 0 8px 0" }}>{label}</p>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        {items.map(item => (
+          <span
+            key={item.name}
+            onClick={() => { if (item.active && item.navigateTo && onNavigate) onNavigate(item.navigateTo); }}
+            style={{
+              padding: "6px 14px", borderRadius: 6,
+              border: `0.5px solid ${item.active ? "#333" : borderColor}`,
+              fontSize: 11, color: item.active ? bodyText : muted,
+              cursor: item.active ? "pointer" : "default",
+              display: "flex", alignItems: "center", gap: 6,
+              background: "transparent", transition: "color 0.15s, border-color 0.15s",
+            }}
+            onMouseEnter={e => { if (item.active) { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "#444"; } }}
+            onMouseLeave={e => { if (item.active) { e.currentTarget.style.color = bodyText; e.currentTarget.style.borderColor = "#333"; } }}
+          >
+            {item.name}{item.active && " →"}
+          </span>
+        ))}
       </div>
-      <svg
-        viewBox={`0 0 ${compW} ${svgH}`}
-        preserveAspectRatio="xMidYMid meet"
-        style={{ display: "block", width: "100%", height: "auto" }}
-      >
-        {/* Germanium node — navigable */}
-        <g style={{ cursor: "pointer" }} onClick={onGermaniumClick}>
-          <circle cx={cx1} cy={nodeY} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1} />
-          <text x={cx1} y={nodeY + 22} textAnchor="middle" fill={warmWhite} fontSize={13} fontFamily="'EB Garamond', serif">
-            Germanium
-          </text>
-          {/* Line down to GeCl4 layer */}
-          <line x1={cx1} y1={nodeY + 6} x2={cx1} y2={bottomY} stroke="rgba(255,255,255,0.12)" strokeWidth={0.8} strokeDasharray="4,3" />
-        </g>
-
-        {/* Helium node — non-navigable */}
-        <g style={{ opacity: 0.6 }}>
-          <circle cx={cx2} cy={nodeY} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1} />
-          <text x={cx2} y={nodeY + 22} textAnchor="middle" fill={warmWhite} fontSize={13} fontFamily="'EB Garamond', serif">
-            Helium
-          </text>
-          {/* Line down to fiber mfg (skips GeCl4 — goes all the way to bottom) */}
-          <line x1={cx2} y1={nodeY + 6} x2={cx2} y2={bottomY} stroke="rgba(255,255,255,0.12)" strokeWidth={0.8} strokeDasharray="4,3" />
-        </g>
-
-        {/* Silica/SiCl4 node — non-navigable */}
-        <g style={{ opacity: 0.6 }}>
-          <circle cx={cx3} cy={nodeY} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1} />
-          <text x={cx3} y={nodeY + 22} textAnchor="middle" fill={warmWhite} fontSize={13} fontFamily="'EB Garamond', serif">
-            {"Silica / SiCl\u2084"}
-          </text>
-          {/* Line down to fiber mfg (skips GeCl4) */}
-          <line x1={cx3} y1={nodeY + 6} x2={cx3} y2={bottomY} stroke="rgba(255,255,255,0.12)" strokeWidth={0.8} strokeDasharray="4,3" />
-        </g>
-      </svg>
     </div>
   );
 }
@@ -429,24 +404,7 @@ export default function TreeView() {
     }
   }
 
-  /* ── tree config data ── */
-  const GERMANIUM_FEEDS_INTO = [
-    { id: "fiber", name: "Fiber optic cable", status: "Constrained", detail: "Glass strands carrying light signals. Physical backbone of datacenter connectivity.", hasTree: true },
-    { id: "ir-optics", name: "IR optics", status: "Tightening", detail: "Thermal imaging lenses for defense, surveillance, automotive.", hasTree: false },
-    { id: "sat-solar", name: "Satellite solar cells", status: "Tightening", detail: "III-V multi-junction cells on germanium substrates for space power.", hasTree: false },
-    { id: "sige", name: "SiGe semiconductors", status: "Available", detail: "5G RF, radar, electronic warfare chips.", hasTree: false },
-  ];
-
-  const GALLIUM_FEEDS_INTO = [
-    { id: "gan-power", name: "GaN power semiconductors", status: "Constrained", detail: "AI datacenter 800V HVDC, EV onboard chargers.", hasTree: false },
-    { id: "gaas", name: "GaAs substrates & devices", status: "Tightening", detail: "5G RF handsets, LEDs, satellite solar cells, laser diodes.", hasTree: false },
-    { id: "defense", name: "GaN RF and defense radar", status: "Constrained", detail: "AN/SPY-6, LTAMDS, Patriot, F-35 APG-81.", hasTree: false },
-    { id: "led", name: "LED lighting", status: "Available", detail: "General lighting, automotive, display backlighting.", hasTree: false },
-  ];
-
-  // Compute compW for the raw materials SVG layer (fiber page)
-  const fiberCompChain = chainsData.COMP_DATA["GeO\u2082 / GeCl\u2084"];
-  const fiberCompW = useMemo(() => computeCompSvgWidth(fiberCompChain), [fiberCompChain]);
+  /* ── (tree geometry computed inside supply tree sub-components) ── */
 
   /* ── render: breadcrumb ── */
   function renderBreadcrumb() {
@@ -615,42 +573,31 @@ export default function TreeView() {
     );
   }
 
-  /* ── render: "feeds into" cards ── */
-  function renderFeedsInto(items: typeof GERMANIUM_FEEDS_INTO, onNavigate?: (id: string) => void) {
-    return (
-      <>
-        <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "24px 0 12px 0", textTransform: "uppercase" as const }}>FEEDS INTO</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          {items.map(fi => {
-            const navigable = fi.hasTree && onNavigate;
-            return (
-              <div
-                key={fi.id}
-                onClick={navigable ? () => onNavigate!(fi.id) : undefined}
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "12px 20px", background: cardBg, border: `1px solid ${borderColor}`,
-                  borderRadius: 8, cursor: navigable ? "pointer" : "default",
-                  transition: "border-color 0.15s", opacity: fi.hasTree ? 1 : 0.5,
-                }}
-                onMouseEnter={e => { if (navigable) e.currentTarget.style.borderColor = "#333"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
-              >
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 2 }}>
-                    <p style={{ fontSize: 13, color: fi.hasTree ? warmWhite : bodyText, fontWeight: 500, margin: 0 }}>{fi.name}</p>
-                    <StatusBadge status={fi.status} />
-                  </div>
-                  <p style={{ fontSize: 11, color: muted, margin: 0 }}>{fi.detail}</p>
-                </div>
-                {navigable && <span style={{ fontSize: 11, color: dimmer }}>&rarr;</span>}
-              </div>
-            );
-          })}
-        </div>
-      </>
-    );
-  }
+  /* ── chip data for upstream/downstream ── */
+  const FIBER_UPSTREAM = [
+    { name: "Germanium", navigateTo: "germanium", active: true },
+    { name: "Helium", navigateTo: null, active: false },
+    { name: "Silica / SiCl\u2084", navigateTo: null, active: false },
+  ];
+  const FIBER_DOWNSTREAM = [
+    { name: "AI datacenters", navigateTo: null, active: false },
+    { name: "Telecom", navigateTo: null, active: false },
+    { name: "Subsea cables", navigateTo: null, active: false },
+    { name: "Military / UAV", navigateTo: null, active: false },
+    { name: "BEAD broadband", navigateTo: null, active: false },
+  ];
+  const GERMANIUM_DOWNSTREAM_CHIPS = [
+    { name: "Fiber optic cable", navigateTo: "fiber", active: true },
+    { name: "IR optics", navigateTo: null, active: false },
+    { name: "Satellite solar cells", navigateTo: null, active: false },
+    { name: "SiGe semiconductors", navigateTo: null, active: false },
+  ];
+  const GALLIUM_DOWNSTREAM_CHIPS = [
+    { name: "GaN power semiconductors", navigateTo: null, active: false },
+    { name: "GaAs substrates & devices", navigateTo: null, active: false },
+    { name: "GaN RF and defense radar", navigateTo: null, active: false },
+    { name: "LED lighting", navigateTo: null, active: false },
+  ];
 
   /* ── render: tree view (component or raw-material) ── */
   function renderTree() {
@@ -660,7 +607,6 @@ export default function TreeView() {
     if (treeTarget.type === "component" && treeTarget.id === "fiber") {
       const fiberTree = (
         <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
-          <RawMaterialsSVGLayer compW={fiberCompW} onGermaniumClick={() => goRawMaterial("germanium")} />
           <FiberSupplyTree onNodeClick={() => {}} />
         </div>
       );
@@ -673,10 +619,23 @@ export default function TreeView() {
             description="Glass strands carrying light signals between servers, racks, and datacenters. The physical backbone of AI infrastructure connectivity."
           />
 
+          <ChipSection
+            label="Upstream"
+            items={FIBER_UPSTREAM}
+            onNavigate={(id) => goRawMaterial(id)}
+            style={{ marginBottom: 20 }}
+          />
+
           <div style={{ position: "relative" }}>
             <ExpandButton onClick={() => setTreeExpanded(true)} />
             {fiberTree}
           </div>
+
+          <ChipSection
+            label="Downstream"
+            items={FIBER_DOWNSTREAM}
+            style={{ marginTop: 20 }}
+          />
 
           {treeExpanded && (
             <FullscreenOverlay treeName="FIBER OPTIC CABLE" onClose={() => setTreeExpanded(false)}>
@@ -708,17 +667,22 @@ export default function TreeView() {
             {geTree}
           </div>
 
-          {renderFeedsInto(GERMANIUM_FEEDS_INTO, (id) => {
-            if (id === "fiber") {
-              setTreeTarget({ type: "component", id: "fiber" });
-              setTreeExpanded(false);
-              setBreadcrumb([
-                { label: "All verticals", level: "verticals" },
-                { label: selectedVertical ?? "", level: "subsystems", vertical: selectedVertical },
-                ...(selectedSubsystem ? [{ label: selectedSubsystem, level: "components" as NavLevel, vertical: selectedVertical, subsystem: selectedSubsystem }] : []),
-              ]);
-            }
-          })}
+          <ChipSection
+            label="Downstream"
+            items={GERMANIUM_DOWNSTREAM_CHIPS}
+            onNavigate={(id) => {
+              if (id === "fiber") {
+                setTreeTarget({ type: "component", id: "fiber" });
+                setTreeExpanded(false);
+                setBreadcrumb([
+                  { label: "All verticals", level: "verticals" },
+                  { label: selectedVertical ?? "", level: "subsystems", vertical: selectedVertical },
+                  ...(selectedSubsystem ? [{ label: selectedSubsystem, level: "components" as NavLevel, vertical: selectedVertical, subsystem: selectedSubsystem }] : []),
+                ]);
+              }
+            }}
+            style={{ marginTop: 20 }}
+          />
 
           {treeExpanded && (
             <FullscreenOverlay treeName="GERMANIUM" onClose={() => setTreeExpanded(false)}>
@@ -750,7 +714,11 @@ export default function TreeView() {
             {gaTree}
           </div>
 
-          {renderFeedsInto(GALLIUM_FEEDS_INTO)}
+          <ChipSection
+            label="Downstream"
+            items={GALLIUM_DOWNSTREAM_CHIPS}
+            style={{ marginTop: 20 }}
+          />
 
           {treeExpanded && (
             <FullscreenOverlay treeName="GALLIUM" onClose={() => setTreeExpanded(false)}>
