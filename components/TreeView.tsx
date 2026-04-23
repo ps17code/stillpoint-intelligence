@@ -31,10 +31,13 @@ const galliumLc = (galliumChainJson as Record<string, unknown>).layerConfig as R
 
 /* ── palette ── */
 const cardBg = "#1a1816";
+const rawInputBg = "#161412";
 const borderColor = "#252220";
 const warmWhite = "#ece8e1";
+const bodyText = "#a09888";
 const muted = "#706a60";
 const dimText = "#555";
+const dimmer = "#4a4540";
 
 const STATUS_COLORS: Record<string, string> = {
   Constrained: "#a05a4a",
@@ -50,13 +53,13 @@ type TreeTarget = { type: "component" | "raw-material"; id: string };
 interface Subsystem {
   id: string;
   name: string;
-  status: "Constrained" | "Tightening" | "Available" | "Oversupplied";
+  status: string;
   components: ComponentDef[];
 }
 interface ComponentDef {
   id: string;
   name: string;
-  status: "Constrained" | "Tightening" | "Available" | "Oversupplied";
+  status: string;
   detail: string;
   hasTree: boolean;
 }
@@ -86,59 +89,46 @@ const AI_SUBSYSTEMS: Subsystem[] = [
 ];
 
 const VERTICALS = [
-  { id: "ai", name: "AI Infrastructure", hasSubsystems: true },
-  { id: "robotics", name: "Robotics", hasSubsystems: false },
-  { id: "energy", name: "Energy Transition", hasSubsystems: false },
-  { id: "uavs", name: "UAVs", hasSubsystems: false },
-  { id: "space", name: "Space", hasSubsystems: false },
+  { id: "ai", name: "AI Infrastructure", count: "17 chains", hasSubsystems: true },
+  { id: "robotics", name: "Robotics", count: "4 chains", hasSubsystems: false },
+  { id: "energy", name: "Energy Transition", count: "6 chains", hasSubsystems: false },
+  { id: "uavs", name: "UAVs", count: "3 chains", hasSubsystems: false },
+  { id: "space", name: "Space", count: "2 chains", hasSubsystems: false },
 ];
 
 /* ── sub-components ── */
 
 function StatusBadge({ status }: { status: string }) {
+  const c = STATUS_COLORS[status] ?? muted;
   return (
     <span style={{
-      fontSize: 10, letterSpacing: "0.08em", fontFamily: "'DM Sans', sans-serif",
-      color: STATUS_COLORS[status] ?? muted, border: `1px solid ${STATUS_COLORS[status] ?? muted}`,
-      borderRadius: 4, padding: "2px 8px", textTransform: "uppercase" as const,
+      fontSize: 9, letterSpacing: "0.04em", fontWeight: 500,
+      color: c, border: `1px solid ${c}33`,
+      borderRadius: 4, padding: "2px 8px",
+      textTransform: "uppercase" as const,
     }}>
       {status}
     </span>
   );
 }
 
-/* ── Fiber supply tree ── */
+/* ── Fiber supply tree (with full GeCl₄ layer) ── */
 function FiberSupplyTree({ onNodeClick }: { onNodeClick: (name: string) => void }) {
   const compChain = chainsData.COMP_DATA["GeO\u2082 / GeCl\u2084"];
   const subChain = chainsData.SUB_DATA["Fiber Optics"];
   const compW = useMemo(() => computeCompSvgWidth(compChain), [compChain]);
   const subW = useMemo(() => computeSubSvgWidth(subChain), [subChain]);
-  const compGeoCompact = useMemo(() => {
-    const full = buildCompGeometry(compChain, compW / 2, 80);
-    const gap = full.layers[1].cy - full.layers[0].cy;
-    return {
-      layers: full.layers.slice(1).map(l => ({ ...l, cy: l.cy - gap, nodes: l.nodes.map(n => ({ ...n, cy: n.cy - gap })) })),
-      edges: full.edges.filter(e => e.fromLayer >= 1).map(e => ({ ...e, fromLayer: e.fromLayer - 1, y1: e.y1 - gap, y2: e.y2 - gap })),
-      outputNode: { ...full.outputNode, cy: full.outputNode.cy - gap },
-    };
-  }, [compChain, compW]);
+  // Full geometry — includes GeCl₄ suppliers layer
+  const compGeo = useMemo(() => buildCompGeometry(compChain, compW / 2, 80), [compChain, compW]);
   const subGeo = useMemo(() => buildSubGeometry(subChain, subW / 2, 80), [subChain, subW]);
-  const compHCompact = compGeoCompact.outputNode.cy + 120;
+  const compH = compGeo.outputNode.cy + 120;
   const subH = subGeo.outputNode.cy + 120;
-  const fiberMfgXs = compGeoCompact.layers[0].nodes.map(n => n.cx);
   const subFirstXs = subGeo.layers[0].nodes.map(n => n.cx);
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
 
   return (
     <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
-      {/* Fan-out bridge to fiber mfg nodes */}
-      <svg viewBox={`0 0 ${compW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
-        {fiberMfgXs.map((tx, i) => {
-          const fx = compW / 2;
-          return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth={0.8} strokeDasharray="4,3" />;
-        })}
-      </svg>
-      <TreeMap geometry={compGeoCompact} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compHCompact} onNodeClick={onNodeClick} onLayerClick={() => {}} layerPanels={{}} />
+      <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={onNodeClick} onLayerClick={() => {}} layerPanels={{}} />
       {/* Bridge to sub tree */}
       <svg viewBox={`0 0 ${subW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
         {subFirstXs.map((tx, i) => {
@@ -227,10 +217,9 @@ export default function TreeView() {
     ]);
   }
 
-  function goRawMaterial(rawId: string, rawName: string) {
+  function goRawMaterial(rawId: string) {
     const prevBreadcrumb = [...breadcrumb];
     if (treeTarget && treeTarget.type === "component") {
-      // add current component tree to breadcrumb
       const compLabel = treeTarget.id === "fiber" ? "Fiber optic cable" : treeTarget.id;
       prevBreadcrumb.push({ label: compLabel, level: "tree", vertical: selectedVertical, subsystem: selectedSubsystem, target: { ...treeTarget } });
     }
@@ -259,39 +248,24 @@ export default function TreeView() {
 
   /* ── tree config data ── */
   const FIBER_RAW_MATERIALS = [
-    { id: "germanium", name: "Germanium", status: "Constrained", navigateTo: "germanium" as string | null },
-    { id: "helium", name: "Helium", status: "Constrained", navigateTo: null },
-    { id: "silica", name: "Silica / SiCl\u2084", status: "Tightening", navigateTo: null },
+    { name: "Germanium", status: "Constrained", detail: "Core dopant \u00b7 38% of Ge supply \u00b7 83% Chinese", navigateTo: "germanium" as string | null },
+    { name: "Helium", status: "Constrained", detail: "Draw tower coolant \u00b7 Non-renewable \u00b7 Up 135%", navigateTo: null },
+    { name: "Silica / SiCl\u2084", status: "Tightening", detail: "Cladding material \u00b7 Prices up 50%", navigateTo: null },
   ];
 
   const GERMANIUM_FEEDS_INTO = [
-    { id: "fiber", name: "Fiber optic cable", hasTree: true },
-    { id: "ir-optics", name: "IR optics", hasTree: false },
-    { id: "sat-solar", name: "Satellite solar cells", hasTree: false },
-    { id: "sige", name: "SiGe semiconductors", hasTree: false },
+    { id: "fiber", name: "Fiber optic cable", status: "Constrained", detail: "Glass strands carrying light signals. Physical backbone of datacenter connectivity.", hasTree: true },
+    { id: "ir-optics", name: "IR optics", status: "Tightening", detail: "Thermal imaging lenses for defense, surveillance, automotive.", hasTree: false },
+    { id: "sat-solar", name: "Satellite solar cells", status: "Tightening", detail: "III-V multi-junction cells on germanium substrates for space power.", hasTree: false },
+    { id: "sige", name: "SiGe semiconductors", status: "Available", detail: "5G RF, radar, electronic warfare chips.", hasTree: false },
   ];
 
   const GALLIUM_FEEDS_INTO = [
-    { id: "fiber", name: "Fiber optic cable", hasTree: true },
-    { id: "led", name: "LEDs & laser diodes", hasTree: false },
-    { id: "gan", name: "GaN power electronics", hasTree: false },
-    { id: "5g", name: "5G RF chips", hasTree: false },
+    { id: "gan-power", name: "GaN power semiconductors", status: "Constrained", detail: "AI datacenter 800V HVDC, EV onboard chargers.", hasTree: false },
+    { id: "gaas", name: "GaAs substrates & devices", status: "Tightening", detail: "5G RF handsets, LEDs, satellite solar cells, laser diodes.", hasTree: false },
+    { id: "defense", name: "GaN RF and defense radar", status: "Constrained", detail: "AN/SPY-6, LTAMDS, Patriot, F-35 APG-81.", hasTree: false },
+    { id: "led", name: "LED lighting", status: "Available", detail: "General lighting, automotive, display backlighting.", hasTree: false },
   ];
-
-  /* ── card base style ── */
-  const cardStyle: React.CSSProperties = {
-    background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8,
-    padding: "18px 22px", cursor: "pointer", transition: "border-color 0.15s",
-  };
-
-  /* ── section label ── */
-  function SectionLabel({ text }: { text: string }) {
-    return (
-      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.12em", color: muted, textTransform: "uppercase" as const, marginBottom: 12 }}>
-        {text}
-      </div>
-    );
-  }
 
   /* ── render: breadcrumb ── */
   function renderBreadcrumb() {
@@ -305,22 +279,22 @@ export default function TreeView() {
       null;
 
     return (
-      <div style={{ marginBottom: 20, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+      <div style={{ marginBottom: 28, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
         {parts.map((bc, i) => (
           <React.Fragment key={i}>
             <span
               onClick={() => handleBreadcrumbClick(bc)}
-              style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: dimText, cursor: "pointer", transition: "color 0.15s" }}
-              onMouseEnter={e => (e.currentTarget.style.color = warmWhite)}
-              onMouseLeave={e => (e.currentTarget.style.color = dimText)}
+              style={{ fontSize: 11, color: dimmer, cursor: "pointer", transition: "color 0.15s" }}
+              onMouseEnter={e => (e.currentTarget.style.color = bodyText)}
+              onMouseLeave={e => (e.currentTarget.style.color = dimmer)}
             >
               {bc.label}
             </span>
-            <span style={{ color: "#333", fontSize: 12, fontFamily: "'DM Sans', sans-serif" }}>/</span>
+            <span style={{ fontSize: 11, color: dimmer }}>/</span>
           </React.Fragment>
         ))}
         {currentLabel && (
-          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: warmWhite }}>{currentLabel}</span>
+          <span style={{ fontSize: 11, color: bodyText }}>{currentLabel}</span>
         )}
       </div>
     );
@@ -330,24 +304,26 @@ export default function TreeView() {
   function renderVerticals() {
     return (
       <>
-        <SectionLabel text="Verticals" />
+        <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "0 0 12px 0", textTransform: "uppercase" as const }}>VERTICALS</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {VERTICALS.map(v => (
             <div
               key={v.id}
               onClick={v.hasSubsystems ? () => goSubsystems(v.name) : undefined}
               style={{
-                ...cardStyle,
-                opacity: v.hasSubsystems ? 1 : 0.5,
-                cursor: v.hasSubsystems ? "pointer" : "default",
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                padding: "16px 20px", background: cardBg, border: `1px solid ${borderColor}`,
+                borderRadius: 8, cursor: v.hasSubsystems ? "pointer" : "default",
+                transition: "border-color 0.15s", opacity: v.hasSubsystems ? 1 : 0.5,
               }}
               onMouseEnter={e => { if (v.hasSubsystems) e.currentTarget.style.borderColor = "#333"; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
             >
-              <div style={{ fontFamily: "var(--font-garamond, 'EB Garamond', serif)", fontSize: 20, color: warmWhite }}>{v.name}</div>
-              {!v.hasSubsystems && (
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: dimText, marginTop: 4 }}>Coming soon</div>
-              )}
+              <div>
+                <p style={{ fontSize: 15, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0" }}>{v.name}</p>
+                <p style={{ fontSize: 11, color: dimmer, margin: 0 }}>{v.count}</p>
+              </div>
+              {v.hasSubsystems && <span style={{ fontSize: 14, color: dimmer }}>&rarr;</span>}
             </div>
           ))}
         </div>
@@ -359,7 +335,7 @@ export default function TreeView() {
   function renderSubsystems() {
     return (
       <>
-        <SectionLabel text="Subsystems" />
+        <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "0 0 12px 0", textTransform: "uppercase" as const }}>SUBSYSTEMS &middot; {selectedVertical?.toUpperCase()}</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {AI_SUBSYSTEMS.map(s => {
             const clickable = s.components.length > 0;
@@ -368,20 +344,22 @@ export default function TreeView() {
                 key={s.id}
                 onClick={clickable ? () => goComponents(s.name) : undefined}
                 style={{
-                  ...cardStyle,
-                  opacity: clickable ? 1 : 0.6,
-                  cursor: clickable ? "pointer" : "default",
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  padding: "16px 20px", background: cardBg, border: `1px solid ${borderColor}`,
+                  borderRadius: 8, cursor: clickable ? "pointer" : "default",
+                  transition: "border-color 0.15s", opacity: clickable ? 1 : 0.5,
                 }}
                 onMouseEnter={e => { if (clickable) e.currentTarget.style.borderColor = "#333"; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ fontFamily: "var(--font-garamond, 'EB Garamond', serif)", fontSize: 20, color: warmWhite }}>{s.name}</span>
-                  <StatusBadge status={s.status} />
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 2 }}>
+                    <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: 0 }}>{s.name}</p>
+                    <StatusBadge status={s.status} />
+                  </div>
+                  <p style={{ fontSize: 11, color: dimmer, margin: 0 }}>{s.components.length} component{s.components.length !== 1 ? "s" : ""}</p>
                 </div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: dimText, marginTop: 4 }}>
-                  {s.components.length} component{s.components.length !== 1 ? "s" : ""}
-                </div>
+                {clickable && <span style={{ fontSize: 14, color: dimmer }}>&rarr;</span>}
               </div>
             );
           })}
@@ -396,25 +374,29 @@ export default function TreeView() {
     if (!sub) return null;
     return (
       <>
-        <SectionLabel text="Components" />
+        <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "0 0 12px 0", textTransform: "uppercase" as const }}>COMPONENTS &middot; {selectedSubsystem?.toUpperCase()}</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {sub.components.map(c => (
             <div
               key={c.id}
               onClick={c.hasTree ? () => goTree({ type: "component", id: c.id }, c.name) : undefined}
               style={{
-                ...cardStyle,
-                opacity: c.hasTree ? 1 : 0.5,
-                cursor: c.hasTree ? "pointer" : "default",
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                padding: "16px 20px", background: cardBg, border: `1px solid ${borderColor}`,
+                borderRadius: 8, cursor: c.hasTree ? "pointer" : "default",
+                transition: "border-color 0.15s", opacity: c.hasTree ? 1 : 0.5,
               }}
               onMouseEnter={e => { if (c.hasTree) e.currentTarget.style.borderColor = "#333"; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontFamily: "var(--font-garamond, 'EB Garamond', serif)", fontSize: 20, color: warmWhite }}>{c.name}</span>
-                <StatusBadge status={c.status} />
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 2 }}>
+                  <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: 0 }}>{c.name}</p>
+                  <StatusBadge status={c.status} />
+                </div>
+                <p style={{ fontSize: 11, color: muted, margin: 0 }}>{c.detail}</p>
               </div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: dimText, marginTop: 4 }}>{c.detail}</div>
+              {c.hasTree && <span style={{ fontSize: 11, color: dimmer }}>View tree &rarr;</span>}
             </div>
           ))}
         </div>
@@ -426,79 +408,86 @@ export default function TreeView() {
   function renderTree() {
     if (!treeTarget) return null;
 
+    /* ── Fiber optic cable tree ── */
     if (treeTarget.type === "component" && treeTarget.id === "fiber") {
       return (
         <>
-          {/* Header */}
-          <div style={{ marginBottom: 20 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
-              <span style={{ fontFamily: "'Instrument Serif', 'EB Garamond', serif", fontSize: 28, color: warmWhite }}>Fiber optic cable</span>
+          <div style={{ marginBottom: 24 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 4 }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 28, fontWeight: 400, color: warmWhite, margin: 0 }}>Fiber optic cable</h2>
               <StatusBadge status="Constrained" />
             </div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: dimText }}>
-              Glass strands carrying light signals. Physical backbone of datacenter connectivity.
-            </div>
-            <a href="/input/fiber-optic-cable" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#6a9ab8", textDecoration: "none", marginTop: 8, display: "inline-block" }}>
-              Full analysis &rarr;
-            </a>
+            <p style={{ fontSize: 11, color: dimmer, margin: "0 0 4px 0" }}>Output: ~720M strand-km/yr</p>
+            <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: "8px 0 4px 0" }}>
+              Glass strands carrying light signals between servers, racks, and datacenters. The physical backbone of AI infrastructure connectivity.
+            </p>
+            <a href="/input/fiber-optic-cable" style={{ fontSize: 11, color: muted, textDecoration: "none", transition: "color 0.15s" }}
+              onMouseEnter={e => (e.currentTarget.style.color = warmWhite)}
+              onMouseLeave={e => (e.currentTarget.style.color = muted)}
+            >Full analysis &rarr;</a>
           </div>
 
-          {/* Raw material inputs */}
-          <SectionLabel text="Raw material inputs" />
-          <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
+          <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "0 0 12px 0", textTransform: "uppercase" as const }}>RAW MATERIAL INPUTS</p>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 0 }}>
             {FIBER_RAW_MATERIALS.map(rm => (
               <div
-                key={rm.id}
-                onClick={rm.navigateTo ? () => goRawMaterial(rm.navigateTo!, rm.name) : undefined}
+                key={rm.name}
+                onClick={rm.navigateTo ? () => goRawMaterial(rm.navigateTo!) : undefined}
                 style={{
-                  ...cardStyle,
-                  opacity: rm.navigateTo ? 1 : 0.5,
+                  flex: "1 1 200px", maxWidth: 320,
+                  padding: "12px 16px", background: rawInputBg,
+                  border: `1px solid ${borderColor}`, borderRadius: 8,
                   cursor: rm.navigateTo ? "pointer" : "default",
+                  transition: "border-color 0.15s",
+                  opacity: rm.navigateTo ? 1 : 0.5,
                 }}
                 onMouseEnter={e => { if (rm.navigateTo) e.currentTarget.style.borderColor = "#333"; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ fontFamily: "var(--font-garamond, 'EB Garamond', serif)", fontSize: 18, color: warmWhite }}>{rm.name}</span>
-                  <StatusBadge status={rm.status} />
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <p style={{ fontSize: 12, color: rm.navigateTo ? warmWhite : bodyText, fontWeight: 500, margin: 0 }}>{rm.name}</p>
+                    <StatusBadge status={rm.status} />
+                  </div>
+                  {rm.navigateTo && <span style={{ fontSize: 10, color: dimmer }}>&rarr;</span>}
                 </div>
+                <p style={{ fontSize: 10, color: muted, margin: 0, lineHeight: 1.4 }}>{rm.detail}</p>
               </div>
             ))}
           </div>
+          <div style={{ textAlign: "center", color: dimmer, fontSize: 11, padding: "12px 0", letterSpacing: "4px" }}>&darr; &darr; &darr;</div>
 
-          {/* Down arrows */}
-          <div style={{ textAlign: "center", color: "#333", fontSize: 18, letterSpacing: "0.3em", marginBottom: 20 }}>&darr; &darr; &darr;</div>
-
-          {/* Supply tree */}
-          <SectionLabel text="Supply tree" />
+          <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "0 0 12px 0", textTransform: "uppercase" as const }}>SUPPLY TREE</p>
           <FiberSupplyTree onNodeClick={() => {}} />
         </>
       );
     }
 
+    /* ── Germanium tree ── */
     if (treeTarget.type === "raw-material" && treeTarget.id === "germanium") {
       return (
         <>
-          <div style={{ marginBottom: 20 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
-              <span style={{ fontFamily: "'Instrument Serif', 'EB Garamond', serif", fontSize: 28, color: warmWhite }}>Germanium</span>
+          <div style={{ marginBottom: 24 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 4 }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 28, fontWeight: 400, color: warmWhite, margin: 0 }}>Germanium</h2>
               <StatusBadge status="Constrained" />
             </div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: dimText }}>
-              Critical raw material for fiber optic cable manufacturing. China controls 60%+ of global supply.
-            </div>
-            <a href="/input/germanium" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#6a9ab8", textDecoration: "none", marginTop: 8, display: "inline-block" }}>
-              Full analysis &rarr;
-            </a>
+            <p style={{ fontSize: 11, color: dimmer, margin: "0 0 4px 0" }}>Supply: ~230t/yr &middot; 83% Chinese</p>
+            <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: "8px 0 4px 0" }}>
+              Trace element doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in IR defense optics, satellite solar cells, and SiGe semiconductors.
+            </p>
+            <a href="/input/germanium" style={{ fontSize: 11, color: muted, textDecoration: "none", transition: "color 0.15s" }}
+              onMouseEnter={e => (e.currentTarget.style.color = warmWhite)}
+              onMouseLeave={e => (e.currentTarget.style.color = muted)}
+            >Full analysis &rarr;</a>
           </div>
 
-          <SectionLabel text="Feeds into" />
-          <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
+          <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "0 0 12px 0", textTransform: "uppercase" as const }}>FEEDS INTO</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 0 }}>
             {GERMANIUM_FEEDS_INTO.map(fi => (
               <div
                 key={fi.id}
                 onClick={fi.hasTree && fi.id === "fiber" ? () => {
-                  // Navigate back to fiber component tree
                   setTreeTarget({ type: "component", id: "fiber" });
                   setBreadcrumb([
                     { label: "All verticals", level: "verticals" },
@@ -507,65 +496,81 @@ export default function TreeView() {
                   ]);
                 } : undefined}
                 style={{
-                  ...cardStyle,
-                  opacity: fi.hasTree ? 1 : 0.5,
-                  cursor: fi.hasTree ? "pointer" : "default",
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  padding: "12px 20px", background: cardBg, border: `1px solid ${borderColor}`,
+                  borderRadius: 8, cursor: fi.hasTree ? "pointer" : "default",
+                  transition: "border-color 0.15s", opacity: fi.hasTree ? 1 : 0.5,
                 }}
                 onMouseEnter={e => { if (fi.hasTree) e.currentTarget.style.borderColor = "#333"; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
               >
-                <span style={{ fontFamily: "var(--font-garamond, 'EB Garamond', serif)", fontSize: 18, color: warmWhite }}>{fi.name}</span>
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 2 }}>
+                    <p style={{ fontSize: 13, color: fi.hasTree ? warmWhite : bodyText, fontWeight: 500, margin: 0 }}>{fi.name}</p>
+                    <StatusBadge status={fi.status} />
+                  </div>
+                  <p style={{ fontSize: 11, color: muted, margin: 0 }}>{fi.detail}</p>
+                </div>
+                {fi.hasTree && <span style={{ fontSize: 11, color: dimmer }}>&rarr;</span>}
               </div>
             ))}
           </div>
 
-          <SectionLabel text="Supply tree" />
+          <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "24px 0 12px 0", textTransform: "uppercase" as const }}>SUPPLY TREE</p>
           <GermaniumSupplyTree onNodeClick={() => {}} />
         </>
       );
     }
 
+    /* ── Gallium tree ── */
     if (treeTarget.type === "raw-material" && treeTarget.id === "gallium") {
       return (
         <>
-          <div style={{ marginBottom: 20 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
-              <span style={{ fontFamily: "'Instrument Serif', 'EB Garamond', serif", fontSize: 28, color: warmWhite }}>Gallium</span>
+          <div style={{ marginBottom: 24 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 4 }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 28, fontWeight: 400, color: warmWhite, margin: 0 }}>Gallium</h2>
               <StatusBadge status="Constrained" />
             </div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: dimText }}>
-              Critical material for GaN power electronics and compound semiconductors.
-            </div>
-            <a href="/input/gallium" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#6a9ab8", textDecoration: "none", marginTop: 8, display: "inline-block" }}>
-              Full analysis &rarr;
-            </a>
+            <p style={{ fontSize: 11, color: dimmer, margin: "0 0 4px 0" }}>Supply: ~320t/yr refined &middot; 98% Chinese primary</p>
+            <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: "8px 0 4px 0" }}>
+              Byproduct of alumina refining. Forms compound semiconductors (GaAs, GaN) for AI datacenter power conversion, 5G amplifiers, defense radar, and LED lighting.
+            </p>
+            <a href="/input/gallium" style={{ fontSize: 11, color: muted, textDecoration: "none", transition: "color 0.15s" }}
+              onMouseEnter={e => (e.currentTarget.style.color = warmWhite)}
+              onMouseLeave={e => (e.currentTarget.style.color = muted)}
+            >Full analysis &rarr;</a>
           </div>
 
-          <SectionLabel text="Feeds into" />
-          <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
+          <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "0 0 12px 0", textTransform: "uppercase" as const }}>FEEDS INTO</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 0 }}>
             {GALLIUM_FEEDS_INTO.map(fi => (
               <div
                 key={fi.id}
                 style={{
-                  ...cardStyle,
-                  opacity: fi.hasTree ? 1 : 0.5,
-                  cursor: "default",
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  padding: "12px 20px", background: cardBg, border: `1px solid ${borderColor}`,
+                  borderRadius: 8, cursor: "default", opacity: 0.5,
                 }}
               >
-                <span style={{ fontFamily: "var(--font-garamond, 'EB Garamond', serif)", fontSize: 18, color: warmWhite }}>{fi.name}</span>
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 2 }}>
+                    <p style={{ fontSize: 13, color: bodyText, fontWeight: 500, margin: 0 }}>{fi.name}</p>
+                    <StatusBadge status={fi.status} />
+                  </div>
+                  <p style={{ fontSize: 11, color: muted, margin: 0 }}>{fi.detail}</p>
+                </div>
               </div>
             ))}
           </div>
 
-          <SectionLabel text="Supply tree" />
+          <p style={{ fontSize: 9, letterSpacing: "0.1em", color: dimmer, margin: "24px 0 12px 0", textTransform: "uppercase" as const }}>SUPPLY TREE</p>
           <GalliumSupplyTree onNodeClick={() => {}} />
         </>
       );
     }
 
-    // Fallback for unknown targets
     return (
-      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: dimText, padding: "40px 0" }}>
+      <div style={{ fontSize: 14, color: dimText, padding: "40px 0" }}>
         Tree view not yet available for this item.
       </div>
     );
@@ -573,7 +578,7 @@ export default function TreeView() {
 
   /* ── main render ── */
   return (
-    <div style={{ maxWidth: 1000, margin: "0 auto", padding: "40px 28px", minHeight: "100%" }}>
+    <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 32px 80px", minHeight: "100%" }}>
       {renderBreadcrumb()}
       {level === "verticals" && renderVerticals()}
       {level === "subsystems" && renderSubsystems()}
