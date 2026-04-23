@@ -616,7 +616,7 @@ function TreeHeader({ title, href, description, accent }: { title: string; href:
           onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
         >Full analysis &rarr;</a>
       </div>
-      <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: 0, marginBottom: 44 }}>
+      <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: 0, marginBottom: 44, maxWidth: "80%" }}>
         {description}
       </p>
     </div>
@@ -830,9 +830,9 @@ export default function TreeView() {
 
   /* ── render: breadcrumb ── */
   function renderBreadcrumb() {
-    if (breadcrumb.length === 0 && level === "verticals") return null;
     const parts = [...breadcrumb];
     const currentLabel =
+      level === "verticals" ? "All verticals" :
       level === "subsystems" ? selectedVertical :
       level === "components" ? selectedSubsystem :
       level === "tree" && treeTarget?.type === "component" && treeTarget.id === "fiber" ? "Fiber optic cable" :
@@ -840,17 +840,12 @@ export default function TreeView() {
       null;
 
     return (
-      <div style={{ marginBottom: 28, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+      <div style={{ marginBottom: 28, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", minHeight: 16 }}>
         {parts.map((bc, i) => (
           <React.Fragment key={i}>
             <span
               onClick={() => handleBreadcrumbClick(bc)}
-              style={{
-                fontSize: 11, color: dimmer, cursor: "pointer", transition: "color 0.15s",
-                animation: `breadcrumbEnter 300ms ease-out forwards`,
-                animationDelay: `${i * 40}ms`,
-                opacity: 0,
-              }}
+              style={{ fontSize: 11, color: dimmer, cursor: "pointer", transition: "color 0.15s" }}
               onMouseEnter={e => (e.currentTarget.style.color = bodyText)}
               onMouseLeave={e => (e.currentTarget.style.color = dimmer)}
             >
@@ -860,12 +855,7 @@ export default function TreeView() {
           </React.Fragment>
         ))}
         {currentLabel && (
-          <span style={{
-            fontSize: 11, color: bodyText,
-            animation: `breadcrumbEnter 300ms ease-out forwards`,
-            animationDelay: `${parts.length * 40}ms`,
-            opacity: 0,
-          }}>{currentLabel}</span>
+          <span style={{ fontSize: 11, color: parts.length > 0 ? bodyText : dimmer }}>{currentLabel}</span>
         )}
       </div>
     );
@@ -971,48 +961,55 @@ export default function TreeView() {
     const IllusComponent = activeIllustrationId ? ILLUSTRATION_MAP[activeIllustrationId] : null;
 
     return (
-      <div style={{ display: "flex", gap: 0, maxWidth: 900, margin: "0 auto", minHeight: "calc(100vh - 120px)", alignItems: "center" }}>
-        {/* Left column */}
-        <div style={{ flex: "0 0 60%", maxWidth: 660 }}>
-          {renderBreadcrumb()}
-          <div key={animKey} style={{ animation: "accordionEnter 350ms ease-out forwards", opacity: 0 }}>
-            <h1 style={{
-              fontFamily: "'Instrument Serif', serif",
-              fontSize: titleSize ?? 32,
-              fontWeight: 400,
-              color: warmWhite,
-              margin: "0 0 8px 0",
-            }}>
-              {title}
-            </h1>
-            <p style={{
-              fontSize: titleSize === 36 ? 14 : 13,
-              color: muted,
-              lineHeight: 1.6,
-              margin: "0 0 28px 0",
-            }}>
-              {subtitle}
-            </p>
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 32px 80px", minHeight: "100vh", background: "#111" }}>
+        {/* Breadcrumb — fixed position, no animation */}
+        {renderBreadcrumb()}
+
+        {/* Full-width contextual header — fixed position, no animation */}
+        <h1 style={{
+          fontFamily: "'Instrument Serif', serif",
+          fontSize: titleSize ?? 32,
+          fontWeight: 400,
+          color: warmWhite,
+          margin: "0 0 8px 0",
+        }}>
+          {title}
+        </h1>
+        <p style={{
+          fontSize: titleSize === 36 ? 14 : 13,
+          color: muted,
+          lineHeight: 1.6,
+          margin: "0 0 0 0",
+          maxWidth: "80%",
+        }}>
+          {subtitle}
+        </p>
+
+        {/* Divider */}
+        <div style={{ height: 1, background: borderColor, margin: "28px 0 28px 0" }} />
+
+        {/* Two-column grid: accordion left, illustration right */}
+        <div style={{ display: "flex", gap: 0 }}>
+          {/* Left column — accordion */}
+          <div style={{ flex: "0 0 60%", maxWidth: 540 }}>
+            <div key={animKey}>
+              {items.map((item, i) => (
+                <AccordionItem
+                  key={item.name}
+                  name={item.name}
+                  description={item.description}
+                  meta={item.meta}
+                  comingSoon={item.comingSoon}
+                  isExpanded={expandedIndex === i}
+                  onRowClick={() => onExpandItem(i)}
+                  onArrowClick={() => onNavigateItem(i)}
+                  index={i}
+                />
+              ))}
+            </div>
           </div>
-          <div key={`items-${animKey}`}>
-            {items.map((item, i) => (
-              <AccordionItem
-                key={item.name}
-                name={item.name}
-                description={item.description}
-                meta={item.meta}
-                comingSoon={item.comingSoon}
-                isExpanded={expandedIndex === i}
-                onRowClick={() => onExpandItem(i)}
-                onArrowClick={() => onNavigateItem(i)}
-                index={i}
-              />
-            ))}
-          </div>
-        </div>
-        {/* Right column — sticky illustration */}
-        <div style={{ flex: "0 0 40%", display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: 60 }}>
-          <div style={{ position: "sticky", top: 100 }}>
+          {/* Right column — illustration centered vertically */}
+          <div style={{ flex: "0 0 40%", display: "flex", alignItems: "center", justifyContent: "center" }}>
             {IllusComponent && (
               <div
                 key={activeIllustrationId}
@@ -1146,8 +1143,7 @@ export default function TreeView() {
       );
 
       return (
-        <div key={animKey} style={{ maxWidth: 900, margin: "0 auto", animation: "treeEnter 400ms ease-out forwards" }}>
-          {renderBreadcrumb()}
+        <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
           <TreeHeader
             title="Fiber optic cable"
             href="/input/fiber-optic-cable"
@@ -1191,8 +1187,7 @@ export default function TreeView() {
       );
 
       return (
-        <div key={animKey} style={{ maxWidth: 900, margin: "0 auto", animation: "treeEnter 400ms ease-out forwards" }}>
-          {renderBreadcrumb()}
+        <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
           <TreeHeader
             title="Germanium"
             href="/input/germanium"
@@ -1241,8 +1236,7 @@ export default function TreeView() {
       );
 
       return (
-        <div key={animKey} style={{ maxWidth: 900, margin: "0 auto", animation: "treeEnter 400ms ease-out forwards" }}>
-          {renderBreadcrumb()}
+        <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
           <TreeHeader
             title="Gallium"
             href="/input/gallium"
@@ -1279,11 +1273,16 @@ export default function TreeView() {
 
   /* ── main render ── */
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", margin: "0 auto", padding: "32px 32px 80px", minHeight: "100vh", background: "#111" }}>
+    <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#111" }}>
       {level === "verticals" && renderVerticals()}
       {level === "subsystems" && renderSubsystems()}
       {level === "components" && renderComponents()}
-      {level === "tree" && renderTree()}
+      {level === "tree" && (
+        <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 32px 80px" }}>
+          {renderBreadcrumb()}
+          {renderTree()}
+        </div>
+      )}
 
       {/* Animation keyframes */}
       <style>{`
