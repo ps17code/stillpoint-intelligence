@@ -289,6 +289,120 @@ function SpaceIllustration() {
   );
 }
 
+/* ── Connectivity illustration ── */
+function ConnectivityIllustration() {
+  return (
+    <svg width="280" height="320" viewBox="0 0 280 320" fill="none">
+      <rect x="20" y="100" width="40" height="120" rx="3" stroke="#3a3530" strokeWidth="0.75" />
+      {[116,128,140,152,164,176,188,200].map(y => <line key={y} x1="28" y1={y} x2="52" y2={y} stroke="#3a3530" strokeWidth="0.5" />)}
+      <circle cx="54" cy="116" r="1.5" fill="#a05a4a" opacity="0.6" /><circle cx="54" cy="128" r="1.5" fill="#4a8a55" opacity="0.6" />
+      <circle cx="54" cy="140" r="1.5" fill="#4a8a55" opacity="0.6" /><circle cx="54" cy="152" r="1.5" fill="#a05a4a" opacity="0.6" />
+      <circle cx="54" cy="164" r="1.5" fill="#4a8a55" opacity="0.6" /><circle cx="54" cy="176" r="1.5" fill="#9a8540" opacity="0.6" />
+      <circle cx="54" cy="188" r="1.5" fill="#4a8a55" opacity="0.6" /><circle cx="54" cy="200" r="1.5" fill="#4a8a55" opacity="0.6" />
+      <rect x="220" y="100" width="40" height="120" rx="3" stroke="#3a3530" strokeWidth="0.75" />
+      {[116,128,140,152,164,176,188,200].map(y => <line key={y} x1="228" y1={y} x2="252" y2={y} stroke="#3a3530" strokeWidth="0.5" />)}
+      <path d="M60 130 C100 130, 100 125, 140 125 C180 125, 180 130, 220 130" stroke="#4a4540" strokeWidth="0.5" />
+      <path d="M60 142 C95 142, 105 138, 140 138 C175 138, 185 142, 220 142" stroke="#4a4540" strokeWidth="0.5" />
+      <path d="M60 154 C100 154, 100 150, 140 150 C180 150, 180 154, 220 154" stroke="#4a4540" strokeWidth="0.5" />
+      <path d="M60 166 C95 166, 105 162, 140 162 C175 162, 185 166, 220 166" stroke="#4a4540" strokeWidth="0.5" />
+      <path d="M60 178 C100 178, 100 174, 140 174 C180 174, 180 178, 220 178" stroke="#4a4540" strokeWidth="0.5" />
+      <path d="M60 190 C95 190, 105 186, 140 186 C175 186, 185 190, 220 190" stroke="#4a4540" strokeWidth="0.5" />
+      <circle cx="95" cy="129" r="2" fill="#c9a84c" opacity="0.4"><animate attributeName="cx" values="60;220" dur="3s" repeatCount="indefinite" /></circle>
+      <circle cx="160" cy="140" r="2" fill="#c9a84c" opacity="0.3"><animate attributeName="cx" values="220;60" dur="2.5s" repeatCount="indefinite" /></circle>
+      <circle cx="110" cy="152" r="2" fill="#c9a84c" opacity="0.35"><animate attributeName="cx" values="60;220" dur="3.5s" repeatCount="indefinite" /></circle>
+      <circle cx="180" cy="164" r="2" fill="#c9a84c" opacity="0.3"><animate attributeName="cx" values="220;60" dur="2.8s" repeatCount="indefinite" /></circle>
+      <rect x="56" y="124" width="8" height="72" rx="1" stroke="#4a4540" strokeWidth="0.5" fill="#1a1816" />
+      <rect x="216" y="124" width="8" height="72" rx="1" stroke="#4a4540" strokeWidth="0.5" fill="#1a1816" />
+      <ellipse cx="140" cy="156" rx="12" ry="24" stroke="#3a3530" strokeWidth="0.5" strokeDasharray="2 3" fill="none" />
+    </svg>
+  );
+}
+
+/* ── Fiber optic cable illustration ── */
+function FiberIllustration() {
+  return (
+    <svg width="280" height="320" viewBox="0 0 280 320" fill="none">
+      <circle cx="140" cy="140" r="90" stroke="#3a3530" strokeWidth="0.75" fill="none" />
+      <circle cx="140" cy="140" r="75" stroke="#2a2520" strokeWidth="0.5" strokeDasharray="3 6" fill="none" />
+      {[[140,80],[192,110],[192,170],[140,200],[88,170],[88,110]].map(([cx,cy],i) => <circle key={i} cx={cx} cy={cy} r="16" stroke="#4a4540" strokeWidth="0.5" fill="#1a1816" />)}
+      {[[134,76],[140,76],[146,76],[134,82],[140,82],[146,82]].map(([cx,cy],i) => <circle key={`t1-${i}`} cx={cx} cy={cy} r="2" stroke="#555" strokeWidth="0.3" fill="none" />)}
+      <circle cx="140" cy="76" r="0.8" fill="#c9a84c" opacity="0.6" />
+      <circle cx="134" cy="82" r="0.8" fill="#c9a84c" opacity="0.6" />
+      <circle cx="140" cy="140" r="8" stroke="#3a3530" strokeWidth="0.5" fill="#161412" />
+      <line x1="140" y1="235" x2="140" y2="250" stroke="#3a3530" strokeWidth="0.5" strokeDasharray="2 2" />
+      <circle cx="140" cy="278" r="24" stroke="#3a3530" strokeWidth="0.5" fill="none" />
+      <text x="140" y="308" textAnchor="middle" style={{ fontSize: "8px", fill: "#4a4540" }}>Coating (250&#x3BC;m)</text>
+      <circle cx="140" cy="278" r="16" stroke="#4a4540" strokeWidth="0.5" fill="none" />
+      <circle cx="140" cy="278" r="4" fill="#c9a84c" opacity="0.3" stroke="#c9a84c" strokeWidth="0.5" />
+      <text x="176" y="282" style={{ fontSize: "7px", fill: "#c9a84c", opacity: 0.7 }}>Ge-doped core</text>
+    </svg>
+  );
+}
+
+/* ── Germanium illustration ── */
+function GermaniumIllustration() {
+  return (
+    <svg width="280" height="320" viewBox="0 0 280 320" fill="none">
+      <rect x="90" y="30" width="100" height="200" rx="4" stroke="#3a3530" strokeWidth="0.75" fill="none" />
+      <rect x="110" y="45" width="60" height="170" rx="2" stroke="#4a4540" strokeWidth="0.5" fill="#161412" />
+      <rect x="118" y="55" width="44" height="150" rx="1" fill="none" stroke="#555" strokeWidth="0.3" />
+      <rect x="118" y="55" width="44" height="30" rx="1" fill="#3a3530" opacity="0.4" />
+      <rect x="118" y="85" width="44" height="30" fill="#3a3530" opacity="0.3" />
+      <rect x="118" y="115" width="44" height="30" fill="#3a3530" opacity="0.2" />
+      <rect x="118" y="145" width="44" height="30" fill="#c9a84c" opacity="0.08" />
+      <rect x="118" y="175" width="44" height="30" rx="1" fill="#c9a84c" opacity="0.15" />
+      <rect x="95" y="120" width="90" height="20" rx="2" stroke="#a05a4a" strokeWidth="0.5" fill="none" opacity="0.5" />
+      <rect x="118" y="122" width="44" height="16" fill="#a05a4a" opacity="0.15" />
+      <line x1="80" y1="140" x2="80" y2="110" stroke="#4a4540" strokeWidth="0.5" />
+      <path d="M77 114 L80 108 L83 114" stroke="#4a4540" strokeWidth="0.5" fill="none" />
+      <text x="200" y="70" style={{ fontSize: "7px", fill: "#4a4540" }}>Impure</text>
+      <text x="200" y="190" style={{ fontSize: "7px", fill: "#c9a84c", opacity: 0.7 }}>5N+ pure Ge</text>
+      <g transform="translate(115, 248)">
+        <rect x="0" y="0" width="50" height="50" stroke="#3a3530" strokeWidth="0.3" fill="none" />
+        <circle cx="0" cy="0" r="3" fill="#c9a84c" opacity="0.2" stroke="#c9a84c" strokeWidth="0.3" />
+        <circle cx="50" cy="0" r="3" fill="#c9a84c" opacity="0.2" stroke="#c9a84c" strokeWidth="0.3" />
+        <circle cx="0" cy="50" r="3" fill="#c9a84c" opacity="0.2" stroke="#c9a84c" strokeWidth="0.3" />
+        <circle cx="50" cy="50" r="3" fill="#c9a84c" opacity="0.2" stroke="#c9a84c" strokeWidth="0.3" />
+        <circle cx="25" cy="25" r="3.5" fill="#c9a84c" opacity="0.3" stroke="#c9a84c" strokeWidth="0.5" />
+        <line x1="0" y1="0" x2="25" y2="25" stroke="#c9a84c" strokeWidth="0.3" opacity="0.3" />
+        <line x1="50" y1="0" x2="25" y2="25" stroke="#c9a84c" strokeWidth="0.3" opacity="0.3" />
+        <line x1="0" y1="50" x2="25" y2="25" stroke="#c9a84c" strokeWidth="0.3" opacity="0.3" />
+        <line x1="50" y1="50" x2="25" y2="25" stroke="#c9a84c" strokeWidth="0.3" opacity="0.3" />
+      </g>
+      <text x="140" y="315" textAnchor="middle" style={{ fontSize: "7px", fill: "#4a4540" }}>Diamond cubic · Ge</text>
+    </svg>
+  );
+}
+
+/* ── Gallium illustration ── */
+function GalliumIllustration() {
+  return (
+    <svg width="280" height="320" viewBox="0 0 280 320" fill="none">
+      <rect x="60" y="50" width="160" height="140" rx="4" stroke="#3a3530" strokeWidth="0.75" fill="none" />
+      <rect x="62" y="90" width="156" height="98" rx="2" fill="#252220" opacity="0.5" />
+      <rect x="85" y="45" width="8" height="110" rx="1" stroke="#4a4540" strokeWidth="0.5" fill="#1a1816" />
+      <text x="89" y="40" textAnchor="middle" style={{ fontSize: "7px", fill: "#4a4540" }}>+</text>
+      <rect x="187" y="45" width="8" height="110" rx="1" stroke="#4a4540" strokeWidth="0.5" fill="#1a1816" />
+      <text x="191" y="40" textAnchor="middle" style={{ fontSize: "7px", fill: "#4a4540" }}>{"\u2212"}</text>
+      <circle cx="120" cy="110" r="1.5" fill="#7a8aaa" opacity="0.4"><animate attributeName="cx" values="95;185" dur="4s" repeatCount="indefinite" /></circle>
+      <circle cx="140" cy="125" r="1.5" fill="#7a8aaa" opacity="0.3"><animate attributeName="cx" values="95;185" dur="3.2s" repeatCount="indefinite" /></circle>
+      <circle cx="110" cy="140" r="1.5" fill="#7a8aaa" opacity="0.35"><animate attributeName="cx" values="95;185" dur="3.8s" repeatCount="indefinite" /></circle>
+      <path d="M195 110 C198 120, 199 140, 196 155" stroke="#7a8aaa" strokeWidth="1.5" fill="none" opacity="0.4" />
+      <text x="140" y="175" textAnchor="middle" style={{ fontSize: "7px", fill: "#4a4540" }}>{`Bayer liquor (NaAlO\u2082 + Ga\u00B3\u207A)`}</text>
+      <line x1="89" y1="45" x2="89" y2="30" stroke="#4a4540" strokeWidth="0.5" />
+      <line x1="191" y1="45" x2="191" y2="30" stroke="#4a4540" strokeWidth="0.5" />
+      <line x1="89" y1="30" x2="191" y2="30" stroke="#4a4540" strokeWidth="0.5" />
+      <rect x="128" y="22" width="24" height="16" rx="2" stroke="#4a4540" strokeWidth="0.5" fill="#161412" />
+      <text x="140" y="33" textAnchor="middle" style={{ fontSize: "7px", fill: "#4a4540" }}>DC</text>
+      <line x1="140" y1="195" x2="140" y2="215" stroke="#3a3530" strokeWidth="0.5" strokeDasharray="2 2" />
+      <ellipse cx="140" cy="240" rx="50" ry="12" stroke="#4a4540" strokeWidth="0.5" fill="#161412" />
+      <ellipse cx="140" cy="236" rx="50" ry="12" stroke="#4a4540" strokeWidth="0.5" fill="#1a1816" />
+      {[110,120,130,140,150,160,170].map(x => <line key={x} x1={x} y1="233" x2={x} y2="239" stroke="#3a3530" strokeWidth="0.2" />)}
+      <text x="140" y="265" textAnchor="middle" style={{ fontSize: "7px", fill: "#7a8aaa", opacity: 0.7 }}>{`GaAs wafer \u00b7 4\u201D`}</text>
+    </svg>
+  );
+}
+
 /* ── illustration map ── */
 const ILLUSTRATION_MAP: Record<string, () => React.JSX.Element> = {
   ai: AIInfraIllustration,
@@ -296,6 +410,10 @@ const ILLUSTRATION_MAP: Record<string, () => React.JSX.Element> = {
   uavs: UAVIllustration,
   robotics: RoboticsIllustration,
   space: SpaceIllustration,
+  connectivity: ConnectivityIllustration,
+  fiber: FiberIllustration,
+  germanium: GermaniumIllustration,
+  gallium: GalliumIllustration,
 };
 
 /* ── vertical data ── */
@@ -849,7 +967,7 @@ export default function TreeView() {
     const IllusComponent = activeIllustrationId ? ILLUSTRATION_MAP[activeIllustrationId] : null;
 
     return (
-      <div style={{ display: "flex", gap: 0, maxWidth: 1100, margin: "0 auto", minHeight: "calc(100vh - 120px)", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: 0, maxWidth: 900, margin: "0 auto", minHeight: "calc(100vh - 120px)", alignItems: "center" }}>
         {/* Left column */}
         <div style={{ flex: "0 0 60%", maxWidth: 660 }}>
           {renderBreadcrumb()}
@@ -922,6 +1040,7 @@ export default function TreeView() {
       description: s.description,
       meta: s.componentCount,
       comingSoon: s.comingSoon,
+      illustrationId: s.id,
     }));
 
     return (
@@ -947,6 +1066,7 @@ export default function TreeView() {
       description: c.detail,
       meta: c.keyNumber ?? "",
       comingSoon: c.comingSoon,
+      illustrationId: c.id,
     }));
 
     return (
