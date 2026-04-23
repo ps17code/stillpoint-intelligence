@@ -780,44 +780,39 @@ export default function TreeView() {
         style={{
           padding: isExpanded ? "20px 0" : "16px 0",
           borderBottom: `1px solid ${borderColor}`,
-          cursor: "pointer",
+          cursor: comingSoon ? "default" : "pointer",
           animation: `accordionEnter 350ms ease-out forwards`,
           animationDelay: `${index * 60}ms`,
           opacity: 0,
         }}
-        onClick={!isExpanded ? onRowClick : undefined}
-        onMouseEnter={() => setHovered(true)}
+        onMouseEnter={() => { setHovered(true); if (!comingSoon) onRowClick(); }}
         onMouseLeave={() => setHovered(false)}
+        onClick={() => { if (!comingSoon) onArrowClick(); }}
       >
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <span style={{
             fontSize: isExpanded ? 18 : 16,
-            color: isExpanded ? warmWhite : (hovered ? "#a09888" : muted),
+            color: isExpanded ? warmWhite : (hovered ? bodyText : muted),
             fontWeight: isExpanded ? 500 : 400,
             transition: "color 0.15s, font-size 0.15s",
           }}>
             {name}
           </span>
-          <span
-            onClick={(e) => {
-              e.stopPropagation();
-              if (!comingSoon) onArrowClick();
-            }}
-            style={{
+          {!comingSoon && (
+            <span style={{
               fontSize: 16,
-              color: comingSoon ? "#333" : (hovered || isExpanded ? bodyText : dimmer),
-              cursor: comingSoon ? "default" : "pointer",
+              color: hovered || isExpanded ? bodyText : dimmer,
               transition: "color 0.15s",
               padding: "0 4px",
-              userSelect: "none",
-            }}
-          >
-            &rarr;
-          </span>
+              userSelect: "none" as const,
+            }}>
+              &rarr;
+            </span>
+          )}
         </div>
         {isExpanded && (
           <>
-            <p style={{ fontSize: 13, color: muted, margin: "8px 0 6px 0", lineHeight: 1.5 }}>
+            <p style={{ fontSize: 13, color: muted, margin: "8px 0 6px 0", lineHeight: 1.5, maxWidth: 480 }}>
               {description}
             </p>
             <p style={{ fontSize: 10, color: dimmer, margin: 0, fontStyle: comingSoon ? "italic" : "normal" }}>
@@ -854,7 +849,7 @@ export default function TreeView() {
     const IllusComponent = activeIllustrationId ? ILLUSTRATION_MAP[activeIllustrationId] : null;
 
     return (
-      <div style={{ display: "flex", gap: 0, maxWidth: 1100 }}>
+      <div style={{ display: "flex", gap: 0, maxWidth: 1100, margin: "0 auto", minHeight: "calc(100vh - 120px)", alignItems: "center" }}>
         {/* Left column */}
         <div style={{ flex: "0 0 60%", maxWidth: 660 }}>
           {renderBreadcrumb()}
