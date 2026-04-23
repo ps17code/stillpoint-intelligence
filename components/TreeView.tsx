@@ -106,6 +106,7 @@ function StatusBadge({ status }: { status: string }) {
       color: c, border: `1px solid ${c}33`,
       borderRadius: 4, padding: "2px 8px",
       textTransform: "uppercase" as const,
+      background: "transparent",
     }}>
       {status}
     </span>
@@ -578,7 +579,7 @@ export default function TreeView() {
 
   /* ── main render ── */
   return (
-    <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 32px 80px", minHeight: "100%" }}>
+    <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 32px 80px", minHeight: "100vh", background: "#111" }}>
       {renderBreadcrumb()}
       {level === "verticals" && renderVerticals()}
       {level === "subsystems" && renderSubsystems()}

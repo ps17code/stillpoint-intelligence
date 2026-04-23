@@ -635,7 +635,7 @@ export default function HomePage() {
         {/* Left panel — only on map view */}
         {viewMode === "map" && <GlobePanel activeLayer={panelLayer} activeItem={panelItem} activeVertical={panelVertical} onLayerChange={setPanelLayer} onItemChange={setPanelItem} onVerticalChange={setPanelVertical} />}
         {viewMode === "tree" && (
-          <div style={{ width: "100%", height: "100%", overflow: "auto", background: "var(--bg, #0e0d0b)" }}>
+          <div style={{ width: "100%", height: "100%", overflow: "auto", background: "#111" }}>
             <TreeView />
           </div>
         )}
