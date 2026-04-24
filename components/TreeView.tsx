@@ -523,6 +523,55 @@ const INPUT_ACCENT: Record<string, string> = {
   gallium: "#7a8a6a",
 };
 
+/* ── spine nodes (ancestor navigation above tree) ── */
+function SpineNodes({
+  ancestors,
+  current,
+}: {
+  ancestors: { name: string; onClick: () => void }[];
+  current: string;
+}) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 8 }}>
+      {ancestors.map((a, i) => (
+        <React.Fragment key={i}>
+          {/* Ancestor node */}
+          <div
+            onClick={a.onClick}
+            style={{ display: "flex", flexDirection: "column", alignItems: "center", cursor: "pointer" }}
+          >
+            <div style={{
+              width: 12, height: 12, borderRadius: "50%",
+              border: "1px solid #3a3530", background: "transparent",
+              marginBottom: 4,
+            }} />
+            <p style={{
+              fontSize: 10, color: "#4a4540", margin: 0,
+              transition: "color 0.15s",
+            }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#a09888")}
+              onMouseLeave={e => (e.currentTarget.style.color = "#4a4540")}
+            >{a.name}</p>
+          </div>
+          {/* Vertical connector */}
+          <div style={{ width: 1, height: 28, background: "#2a2520" }} />
+        </React.Fragment>
+      ))}
+      {/* Current focus node */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={{
+          width: 16, height: 16, borderRadius: "50%",
+          border: "1.5px solid #555", background: "transparent",
+          marginBottom: 4,
+        }} />
+        <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0 }}>{current}</p>
+      </div>
+      {/* Connector down to content below */}
+      <div style={{ width: 1, height: 28, background: "#2a2520" }} />
+    </div>
+  );
+}
+
 /* ── sub-components ── */
 
 function StatusBadge({ status }: { status: string }) {
@@ -1186,12 +1235,6 @@ export default function TreeView() {
 
     /* ── Fiber optic cable tree ── */
     if (treeTarget.type === "component" && treeTarget.id === "fiber") {
-      const fiberTree = (
-        <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
-          <FiberSupplyTree onNodeClick={() => {}} />
-        </div>
-      );
-
       return (
         <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
           <TreeHeader
@@ -1199,6 +1242,14 @@ export default function TreeView() {
             href="/input/fiber-optic-cable"
             description="Glass strands carrying light signals between servers, racks, and datacenters. The physical backbone of AI infrastructure connectivity."
             accent={INPUT_ACCENT.fiber}
+          />
+
+          <SpineNodes
+            ancestors={[
+              { name: "AI Infrastructure", onClick: () => goSubsystems(selectedVertical ?? "AI Infrastructure") },
+              { name: selectedSubsystem ?? "Connectivity", onClick: () => goComponents(selectedSubsystem ?? "Connectivity") },
+            ]}
+            current="Fiber optic cable"
           />
 
           <NodeRow
@@ -1209,11 +1260,13 @@ export default function TreeView() {
             ]}
             onNodeClick={(id) => { if (id === "germanium") goRawMaterial("germanium"); }}
           />
-          <div style={{ textAlign: "center", color: dimmer, fontSize: 11, padding: "4px 0 12px 0", letterSpacing: "4px" }}>&darr; &darr; &darr;</div>
+          <div style={{ display: "flex", justifyContent: "center", padding: "8px 0" }}>
+            <div style={{ width: 1, height: 32, background: "#2a2520" }} />
+          </div>
 
           <div style={{ position: "relative" }}>
             <ExpandButton onClick={() => setTreeExpanded(true)} />
-            {fiberTree}
+            <FiberSupplyTree onNodeClick={() => {}} />
           </div>
 
           <ChipSection
@@ -1224,7 +1277,9 @@ export default function TreeView() {
 
           {treeExpanded && (
             <FullscreenOverlay treeName="FIBER OPTIC CABLE" onClose={() => setTreeExpanded(false)}>
-              {fiberTree}
+              <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
+                <FiberSupplyTree onNodeClick={() => {}} />
+              </div>
             </FullscreenOverlay>
           )}
         </div>
@@ -1233,12 +1288,6 @@ export default function TreeView() {
 
     /* ── Germanium tree ── */
     if (treeTarget.type === "raw-material" && treeTarget.id === "germanium") {
-      const geTree = (
-        <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
-          <GermaniumSupplyTree onNodeClick={() => {}} />
-        </div>
-      );
-
       return (
         <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
           <TreeHeader
@@ -1248,9 +1297,17 @@ export default function TreeView() {
             accent={INPUT_ACCENT.germanium}
           />
 
+          <SpineNodes
+            ancestors={[
+              { name: "AI Infrastructure", onClick: () => goSubsystems(selectedVertical ?? "AI Infrastructure") },
+              { name: "Raw Materials", onClick: () => goVerticals() },
+            ]}
+            current="Germanium"
+          />
+
           <div style={{ position: "relative" }}>
             <ExpandButton onClick={() => setTreeExpanded(true)} />
-            {geTree}
+            <GermaniumSupplyTree onNodeClick={() => {}} />
           </div>
 
           <ChipSection
@@ -1273,7 +1330,9 @@ export default function TreeView() {
 
           {treeExpanded && (
             <FullscreenOverlay treeName="GERMANIUM" onClose={() => setTreeExpanded(false)}>
-              {geTree}
+              <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
+                <GermaniumSupplyTree onNodeClick={() => {}} />
+              </div>
             </FullscreenOverlay>
           )}
         </div>
@@ -1282,12 +1341,6 @@ export default function TreeView() {
 
     /* ── Gallium tree ── */
     if (treeTarget.type === "raw-material" && treeTarget.id === "gallium") {
-      const gaTree = (
-        <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
-          <GalliumSupplyTree onNodeClick={() => {}} />
-        </div>
-      );
-
       return (
         <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
           <TreeHeader
@@ -1297,9 +1350,17 @@ export default function TreeView() {
             accent={INPUT_ACCENT.gallium}
           />
 
+          <SpineNodes
+            ancestors={[
+              { name: "AI Infrastructure", onClick: () => goSubsystems(selectedVertical ?? "AI Infrastructure") },
+              { name: "Raw Materials", onClick: () => goVerticals() },
+            ]}
+            current="Gallium"
+          />
+
           <div style={{ position: "relative" }}>
             <ExpandButton onClick={() => setTreeExpanded(true)} />
-            {gaTree}
+            <GalliumSupplyTree onNodeClick={() => {}} />
           </div>
 
           <ChipSection
@@ -1310,7 +1371,9 @@ export default function TreeView() {
 
           {treeExpanded && (
             <FullscreenOverlay treeName="GALLIUM" onClose={() => setTreeExpanded(false)}>
-              {gaTree}
+              <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
+                <GalliumSupplyTree onNodeClick={() => {}} />
+              </div>
             </FullscreenOverlay>
           )}
         </div>
