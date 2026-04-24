@@ -1571,7 +1571,7 @@ export default function TreeView() {
             ))}
 
             {/* Container */}
-            <div style={{ width: currentLevel === "tree" ? "90vw" : "auto", maxWidth: currentLevel === "tree" ? 1400 : 900, padding: "0 32px" }}>
+            <div style={{ width: currentLevel === "tree" ? "90vw" : "auto", maxWidth: currentLevel === "tree" ? 1400 : "none", padding: currentLevel === "tree" ? "0 32px" : "0" }}>
               <div
                 key={animKey}
                 style={{
