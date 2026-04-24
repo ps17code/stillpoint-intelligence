@@ -1311,7 +1311,7 @@
     "type": "Global fiber infrastructure",
     "country": "",
     "loc": "Global",
-    "stat": "~3-4M route-km deployed/yr \u00b7 2-3M additional needed for AI by 2026",
+    "stat": "~720M fiber-km/yr",
     "annualNew": "~3-4M route-km/yr",
     "aiDemand": "2-3M more km by 2026",
     "risk": "Supply gap cannot close before late 2027 due to 18-24 month preform expansion lag.",
@@ -1319,12 +1319,12 @@
     "inv": "The cable itself is a commodity. Invest in manufacturers with highest datacenter/subsea mix (Corning, Prysmian) or at the hyperscale operator level.",
     "stats": [
       [
-        "New/yr now",
-        "~3-4M route-km/yr"
+        "Output",
+        "~720M fiber-km/yr"
       ],
       [
-        "AI demand 2026",
-        "+2-3M route-km needed"
+        "Routes",
+        "3-4M route-km/yr"
       ],
       [
         "Conversion",

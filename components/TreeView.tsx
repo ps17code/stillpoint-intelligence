@@ -10,6 +10,8 @@ import {
   computeRawSvgWidth,
   buildGalliumGeometry,
   computeGalliumSvgWidth,
+  contentAwareSpread,
+  PALETTES,
 } from "@/lib/treeGeometry";
 import chainsJson from "@/data/chains.json";
 import nodesJson from "@/data/nodes.json";
@@ -679,30 +681,98 @@ function DashedDividerLabel({ label, marginTop = 20 }: { label: string; marginTo
   );
 }
 
-/* ── Fiber supply tree (with full GeCl4 layer) ── */
+/* ── Fiber supply tree (merged comp + sub into one continuous tree) ── */
 function FiberSupplyTree({ onNodeClick }: { onNodeClick: (name: string) => void }) {
   const compChain = chainsData.COMP_DATA["GeO\u2082 / GeCl\u2084"];
   const subChain = chainsData.SUB_DATA["Fiber Optics"];
-  const compW = useMemo(() => computeCompSvgWidth(compChain), [compChain]);
-  const subW = useMemo(() => computeSubSvgWidth(subChain), [subChain]);
-  const compGeo = useMemo(() => buildCompGeometry(compChain, compW / 2, 80), [compChain, compW]);
-  const subGeo = useMemo(() => buildSubGeometry(subChain, subW / 2, 80), [subChain, subW]);
-  const compH = compGeo.outputNode.cy + 120;
-  const subH = subGeo.outputNode.cy + 120;
-  const subFirstXs = subGeo.layers[0].nodes.map(n => n.cx);
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
 
+  const svgW = useMemo(() => {
+    const widths = [
+      compChain.geCl4.length * 175,
+      compChain.fiberMfg.length * 175,
+      subChain.assembly.length * 175,
+      subChain.cableType.length * 175,
+    ];
+    return Math.max(1800, Math.max(...widths) + 400);
+  }, [compChain, subChain]);
+
+  const geo = useMemo(() => {
+    const ancX = svgW / 2;
+    const topY = 80;
+    const gap = 170;
+
+    const gecl4Xs = contentAwareSpread(compChain.geCl4.length, ancX);
+    const fiberXs = contentAwareSpread(compChain.fiberMfg.length, ancX);
+    const assemblyXs = contentAwareSpread(subChain.assembly.length, ancX);
+    const cableXs = contentAwareSpread(subChain.cableType.length, ancX);
+
+    const gecl4CY = topY;
+    const fiberCY = topY + gap;
+    const assemblyCY = topY + gap * 2;
+    const cableCY = topY + gap * 3;
+    const outputCY = topY + gap * 4;
+
+    const gecl4Minor = new Set(compChain.minor.geCl4);
+
+    const EDGE_Y1 = 79;
+    const EDGE_Y2 = 7;
+
+    const layers = [
+      {
+        key: "geCl4", label: "GeCl\u2084 SUPPLIERS", cy: gecl4CY,
+        nodes: compChain.geCl4.map((n: string, i: number) => ({ name: n, cx: gecl4Xs[i], cy: gecl4CY, opacity: gecl4Minor.has(i) ? 0.4 : 1 })),
+        color: PALETTES.geCl4,
+      },
+      {
+        key: "fiberMfg", label: "FIBER MANUFACTURERS", cy: fiberCY,
+        nodes: compChain.fiberMfg.map((n: string, i: number) => ({ name: n, cx: fiberXs[i], cy: fiberCY, opacity: 1 })),
+        color: PALETTES.fiberMfg,
+      },
+      {
+        key: "assembly", label: "ASSEMBLY", cy: assemblyCY,
+        nodes: subChain.assembly.map((n: string, i: number) => ({ name: n, cx: assemblyXs[i], cy: assemblyCY, opacity: 1 })),
+        color: PALETTES.assembly,
+      },
+      {
+        key: "cableType", label: "CABLE TYPE", cy: cableCY,
+        nodes: subChain.cableType.map((n: string, i: number) => ({ name: n, cx: cableXs[i], cy: cableCY, opacity: 1 })),
+        color: PALETTES.cableType,
+      },
+    ];
+
+    const edges = [
+      // GeCl4 -> Fiber Mfg
+      ...compChain.geCl4ToFiber.map(([fi, ti]: [number, number]) => ({
+        x1: gecl4Xs[fi], y1: gecl4CY + EDGE_Y1,
+        x2: fiberXs[ti], y2: fiberCY - EDGE_Y2,
+        color: PALETTES.geCl4.stroke, fromLayer: 0,
+      })),
+      // Fiber Mfg -> Assembly (direct connections)
+      ...([[0,0],[0,3],[1,1],[1,5],[2,4],[3,2],[4,2],[5,0]] as [number,number][]).map(([fi, ti]) => ({
+        x1: fiberXs[fi], y1: fiberCY + EDGE_Y1,
+        x2: assemblyXs[ti], y2: assemblyCY - EDGE_Y2,
+        color: PALETTES.fiberMfg.stroke, fromLayer: 1,
+      })),
+      // Assembly -> Cable Type
+      ...subChain.assToType.map(([fi, ti]: [number, number]) => ({
+        x1: assemblyXs[fi], y1: assemblyCY + EDGE_Y1,
+        x2: cableXs[ti], y2: cableCY - EDGE_Y2,
+        color: PALETTES.assembly.stroke, fromLayer: 2,
+      })),
+    ];
+
+    return {
+      layers,
+      edges,
+      outputNode: { name: subChain.output, cx: ancX, cy: outputCY },
+    };
+  }, [svgW, compChain, subChain]);
+
+  const svgH = geo.outputNode.cy + 120;
+
   return (
-    <>
-      <TreeMap geometry={compGeo} nodes={allNodes} layerConfig={lc} svgWidth={compW} svgHeight={compH} onNodeClick={onNodeClick} onLayerClick={() => {}} layerPanels={{}} />
-      <svg viewBox={`0 0 ${subW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
-        {subFirstXs.map((tx, i) => {
-          const fx = subW / 2;
-          return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth={0.8} strokeDasharray="4,3" />;
-        })}
-      </svg>
-      <TreeMap geometry={subGeo} nodes={allNodes} layerConfig={lc} svgWidth={subW} svgHeight={subH} onNodeClick={onNodeClick} onLayerClick={() => {}} layerPanels={{}} />
-    </>
+    <TreeMap geometry={geo} nodes={allNodes} layerConfig={lc} svgWidth={svgW} svgHeight={svgH} onNodeClick={onNodeClick} onLayerClick={() => {}} layerPanels={{}} />
   );
 }
 
@@ -753,11 +823,11 @@ function SpineAncestorNode({ name, onClick }: { name: string; onClick: () => voi
         cursor: "pointer",
       }}
     >
-      <svg width="14" height="14" viewBox="0 0 14 14">
-        <circle cx="7" cy="7" r="5.5" fill="none" stroke="rgba(155,168,171,0.3)" strokeWidth="1" />
+      <svg width="12" height="12" viewBox="0 0 12 12">
+        <circle cx="6" cy="6" r="4.5" fill="none" stroke="rgba(155,168,171,0.3)" strokeWidth="1" />
       </svg>
       <p style={{
-        fontSize: 11, fontFamily: "'EB Garamond', Georgia, serif",
+        fontSize: 10, fontFamily: "'EB Garamond', Georgia, serif",
         color: "#706a60", margin: 0, transition: "color 0.15s",
       }}
         onMouseEnter={e => (e.currentTarget.style.color = "#a09888")}
@@ -785,8 +855,6 @@ export default function TreeView() {
   /* ── unified path state ── */
   const [path, setPath] = useState<PathEntry[]>([]);
   const [animKey, setAnimKey] = useState(0);
-  const [treeExpanded, setTreeExpanded] = useState(false);
-
   /* ── accordion expanded index (for verticals level only) ── */
   const [expandedVertical, setExpandedVertical] = useState<number>(() => {
     const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
@@ -797,19 +865,19 @@ export default function TreeView() {
   function pushPath(entry: PathEntry) {
     setPath(prev => [...prev, entry]);
     setAnimKey(k => k + 1);
-    setTreeExpanded(false);
+
   }
 
   function popToIndex(index: number) {
     setPath(prev => prev.slice(0, index + 1));
     setAnimKey(k => k + 1);
-    setTreeExpanded(false);
+
   }
 
   function goHome() {
     setPath([]);
     setAnimKey(k => k + 1);
-    setTreeExpanded(false);
+
     setExpandedVertical(() => {
       const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
       return idx >= 0 ? idx : 0;
@@ -974,13 +1042,13 @@ export default function TreeView() {
     onNodeClick: (id: string) => void;
   }) {
     return (
-      <div key={animKey} style={{ display: "flex", justifyContent: "center", gap: 48, padding: "20px 0" }}>
+      <div key={animKey} style={{ display: "flex", justifyContent: "center", gap: 32, padding: "20px 0" }}>
         {nodes.map((node, i) => (
           <div
             key={node.id}
             onClick={() => { if (node.clickable) onNodeClick(node.id); }}
             style={{
-              display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+              display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
               cursor: node.clickable ? "pointer" : "default",
               opacity: node.dimmed ? 0.4 : 1,
               animation: `accordionEnter 350ms ease-out forwards`,
@@ -991,12 +1059,12 @@ export default function TreeView() {
               <circle cx="7" cy="7" r="5.5" fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth="1.3" />
             </svg>
             <p style={{
-              fontSize: 13, fontFamily: "'EB Garamond', Georgia, serif",
+              fontSize: 11, fontFamily: "'EB Garamond', Georgia, serif",
               fontWeight: 600, color: node.dimmed ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.82)",
               margin: 0, textAlign: "center", whiteSpace: "nowrap",
             }}>{node.name}</p>
             <span style={{
-              fontSize: 8, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em",
+              fontSize: 7, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em",
               color: node.dimmed ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.62)",
               background: "rgba(255,255,255,0.06)", border: "0.5px solid rgba(255,255,255,0.18)",
               borderRadius: 3, padding: "2px 8px",
@@ -1242,8 +1310,6 @@ export default function TreeView() {
       const fiberCompW = computeCompSvgWidth(chainsData.COMP_DATA["GeO\u2082 / GeCl\u2084"]);
       return (
         <>
-          <ExpandButton onClick={() => setTreeExpanded(true)} />
-
           {/* Raw material nodes as SVG matching tree width */}
           <svg viewBox={`0 0 ${fiberCompW} 90`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
             {/* RAW MATERIALS layer label — centered above nodes */}
@@ -1262,7 +1328,7 @@ export default function TreeView() {
                       { type: "raw-material", id: "germanium", name: "Germanium" },
                     ]);
                     setAnimKey(k => k + 1);
-                    setTreeExpanded(false);
+                
                   }
                 }}
               >
@@ -1296,7 +1362,6 @@ export default function TreeView() {
     if (lastEntry.type === "raw-material" && lastEntry.id === "germanium") {
       return (
         <>
-          <ExpandButton onClick={() => setTreeExpanded(true)} />
           <GermaniumSupplyTree onNodeClick={() => {}} />
           <DashedDividerLabel label="DOWNSTREAM DEMAND" />
           <NodeRow nodes={[
@@ -1322,7 +1387,6 @@ export default function TreeView() {
     if (lastEntry.type === "raw-material" && lastEntry.id === "gallium") {
       return (
         <>
-          <ExpandButton onClick={() => setTreeExpanded(true)} />
           <GalliumSupplyTree onNodeClick={() => {}} />
           <DashedDividerLabel label="DOWNSTREAM DEMAND" />
           <NodeRow nodes={[
@@ -1371,7 +1435,7 @@ export default function TreeView() {
                 { type: "component", id: "fiber", name: "Fiber optic cable" },
               ]);
               setAnimKey(k => k + 1);
-              setTreeExpanded(false);
+          
             }
           }}
           style={{ marginTop: 40 }}
@@ -1386,43 +1450,6 @@ export default function TreeView() {
           items={GALLIUM_DOWNSTREAM_CHIPS}
           style={{ marginTop: 40 }}
         />
-      );
-    }
-
-    return null;
-  }
-
-  /* ── fullscreen overlay for tree level ── */
-  function renderFullscreen() {
-    if (!lastEntry) return null;
-
-    if (lastEntry.type === "component" && lastEntry.id === "fiber") {
-      return (
-        <FullscreenOverlay treeName="FIBER OPTIC CABLE" onClose={() => setTreeExpanded(false)}>
-          <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
-            <FiberSupplyTree onNodeClick={() => {}} />
-          </div>
-        </FullscreenOverlay>
-      );
-    }
-
-    if (lastEntry.type === "raw-material" && lastEntry.id === "germanium") {
-      return (
-        <FullscreenOverlay treeName="GERMANIUM" onClose={() => setTreeExpanded(false)}>
-          <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
-            <GermaniumSupplyTree onNodeClick={() => {}} />
-          </div>
-        </FullscreenOverlay>
-      );
-    }
-
-    if (lastEntry.type === "raw-material" && lastEntry.id === "gallium") {
-      return (
-        <FullscreenOverlay treeName="GALLIUM" onClose={() => setTreeExpanded(false)}>
-          <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
-            <GalliumSupplyTree onNodeClick={() => {}} />
-          </div>
-        </FullscreenOverlay>
       );
     }
 
@@ -1483,8 +1510,7 @@ export default function TreeView() {
         </div>
       )}
 
-      {/* Fullscreen overlay */}
-      {treeExpanded && renderFullscreen()}
+      {/* Fullscreen overlay (disabled) */}
 
       {/* Animation keyframes */}
       <style>{`
