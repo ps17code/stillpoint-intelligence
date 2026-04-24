@@ -472,7 +472,7 @@ const AI_SUBSYSTEMS: Subsystem[] = [
     componentCount: "3 components",
     comingSoon: false,
     components: [
-      { id: "fiber", name: "Fiber optic cable", detail: "Glass strands carrying light signals between servers, racks, and datacenters. Supply gap of 18% \u2014 preform lines at full utilization.", keyNumber: "720M km/yr \u00b7 18% gap", hasTree: true, comingSoon: false },
+      { id: "fiber", name: "Fiber optic cable", detail: "Glass strands carrying light signals between servers, racks, and datacenters. Supply gap of 18% \u2014 preform lines at full utilization.", keyNumber: "Live", hasTree: true, comingSoon: false },
       { id: "transceivers", name: "Optical transceivers", detail: "Convert electrical signals to light. Every fiber connection needs one on each end.", keyNumber: null, hasTree: false, comingSoon: true },
       { id: "switches", name: "Network switches", detail: "Route data between servers and racks at terabit scale.", keyNumber: null, hasTree: false, comingSoon: true },
     ],
@@ -658,6 +658,23 @@ function ChipSection({
           </span>
         ))}
       </div>
+    </div>
+  );
+}
+
+/* ── Reusable dashed divider with centered label ── */
+function DashedDividerLabel({ label, marginTop = 20 }: { label: string; marginTop?: number }) {
+  return (
+    <div style={{
+      width: "100%", display: "flex", alignItems: "center", gap: 16,
+      margin: `${marginTop}px 0 0 0`, padding: "0 40px",
+    }}>
+      <div style={{ flex: 1, height: 0, borderTop: "1px dashed #3a3530" }} />
+      <span style={{
+        fontSize: 8, letterSpacing: "0.1em", color: "#4a4540",
+        textTransform: "uppercase" as const, whiteSpace: "nowrap", padding: "0 4px",
+      }}>{label}</span>
+      <div style={{ flex: 1, height: 0, borderTop: "1px dashed #3a3530" }} />
     </div>
   );
 }
@@ -957,7 +974,7 @@ export default function TreeView() {
     onNodeClick: (id: string) => void;
   }) {
     return (
-      <div key={animKey} style={{ display: "flex", justifyContent: "center", gap: 48, flexWrap: "wrap", padding: "20px 0" }}>
+      <div key={animKey} style={{ display: "flex", justifyContent: "center", gap: 48, padding: "20px 0" }}>
         {nodes.map((node, i) => (
           <div
             key={node.id}
@@ -1229,12 +1246,12 @@ export default function TreeView() {
 
           {/* Raw material nodes as SVG matching tree width */}
           <svg viewBox={`0 0 ${fiberCompW} 90`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
-            {/* RAW MATERIALS layer label */}
-            <text x={120} y={35} textAnchor="end" fontFamily="'Geist Mono', monospace" fontSize={9} letterSpacing="0.12em" fill="#4a4540">RAW MATERIALS</text>
+            {/* RAW MATERIALS layer label — centered above nodes */}
+            <text x={fiberCompW / 2} y={10} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={9} letterSpacing="0.12em" fill="#4a4540">RAW MATERIALS</text>
             {[
-              { x: fiberCompW / 2 - 200, name: "Germanium", pill: "~230t/yr", clickable: true, dimmed: false },
-              { x: fiberCompW / 2, name: "Helium", pill: "Non-renewable", clickable: false, dimmed: true },
-              { x: fiberCompW / 2 + 200, name: "Silica / SiCl\u2084", pill: "Up 50%", clickable: false, dimmed: true },
+              { x: fiberCompW / 2 - 200, name: "Germanium", clickable: true, dimmed: false },
+              { x: fiberCompW / 2, name: "Helium", clickable: false, dimmed: true },
+              { x: fiberCompW / 2 + 200, name: "Silica / SiCl\u2084", clickable: false, dimmed: true },
             ].map((rm, i) => (
               <g key={i}
                 style={{ cursor: rm.clickable ? "pointer" : "default", opacity: rm.dimmed ? 0.4 : 1 }}
@@ -1249,31 +1266,28 @@ export default function TreeView() {
                   }
                 }}
               >
-                <circle cx={rm.x} cy={25} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
-                <text x={rm.x} y={47} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{rm.name}</text>
-                <text x={rm.x} y={63} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.5)">{rm.pill}</text>
-                <line x1={rm.x} y1={69} x2={rm.x} y2={90} stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
+                <circle cx={rm.x} cy={30} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
+                <text x={rm.x} y={52} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{rm.name}</text>
+                <line x1={rm.x} y1={58} x2={rm.x} y2={90} stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
               </g>
             ))}
           </svg>
 
           {/* Dashed divider: RAW MATERIALS above / SUPPLY CHAIN below */}
-          <div style={{
-            width: "100%", display: "flex", alignItems: "center", gap: 16,
-            margin: "0 0 0 0", padding: "0 40px",
-          }}>
-            <div style={{ flex: 1, height: 0, borderTop: "1px dashed #3a3530" }} />
-            <span style={{
-              fontSize: 8, letterSpacing: "0.1em", color: "#4a4540",
-              textTransform: "uppercase" as const, whiteSpace: "nowrap", padding: "0 4px",
-            }}>
-              FIBER OPTIC SUPPLY CHAIN
-            </span>
-            <div style={{ flex: 1, height: 0, borderTop: "1px dashed #3a3530" }} />
-          </div>
+          <DashedDividerLabel label="FIBER OPTIC SUPPLY CHAIN" marginTop={20} />
 
           {/* Supply tree */}
           <FiberSupplyTree onNodeClick={() => {}} />
+
+          {/* Downstream demand */}
+          <DashedDividerLabel label="DOWNSTREAM DEMAND" />
+          <NodeRow nodes={[
+            { id: "ai-dc", name: "AI Datacenters", pill: "~210M km", clickable: false, dimmed: false },
+            { id: "telecom", name: "Terrestrial Telecom", pill: "~290M km", clickable: false, dimmed: false },
+            { id: "subsea", name: "Subsea Cables", pill: "~70M km", clickable: false, dimmed: false },
+            { id: "military", name: "Military / UAV", pill: "~55M km", clickable: false, dimmed: false },
+            { id: "bead", name: "BEAD Broadband", pill: "~65M km", clickable: false, dimmed: false },
+          ]} onNodeClick={() => {}} />
         </>
       );
     }
@@ -1284,6 +1298,22 @@ export default function TreeView() {
         <>
           <ExpandButton onClick={() => setTreeExpanded(true)} />
           <GermaniumSupplyTree onNodeClick={() => {}} />
+          <DashedDividerLabel label="DOWNSTREAM DEMAND" />
+          <NodeRow nodes={[
+            { id: "fiber", name: "Fiber Optic Cable", pill: "~87t/yr", clickable: true, dimmed: false },
+            { id: "ir", name: "IR Optics", pill: "~55t/yr", clickable: false, dimmed: false },
+            { id: "solar", name: "Satellite Solar", pill: "~35t/yr", clickable: false, dimmed: false },
+            { id: "sige", name: "SiGe Chips", pill: "~25t/yr", clickable: false, dimmed: false },
+          ]} onNodeClick={(id) => {
+            if (id === "fiber") {
+              setPath([
+                { type: "vertical", id: currentVertical?.id ?? "ai", name: currentVertical?.name ?? "AI Infrastructure" },
+                { type: "subsystem", id: "connectivity", name: "Connectivity" },
+                { type: "component", id: "fiber", name: "Fiber optic cable" },
+              ]);
+              setAnimKey(k => k + 1);
+            }
+          }} />
         </>
       );
     }
@@ -1294,6 +1324,14 @@ export default function TreeView() {
         <>
           <ExpandButton onClick={() => setTreeExpanded(true)} />
           <GalliumSupplyTree onNodeClick={() => {}} />
+          <DashedDividerLabel label="DOWNSTREAM DEMAND" />
+          <NodeRow nodes={[
+            { id: "gan", name: "GaN Power", pill: "~110t/yr", clickable: false, dimmed: false },
+            { id: "gaas", name: "GaAs Devices", pill: "~140t/yr", clickable: false, dimmed: false },
+            { id: "ndfeb", name: "NdFeB Magnets", pill: "~80t/yr", clickable: false, dimmed: false },
+            { id: "led", name: "LEDs", pill: "~75t/yr", clickable: false, dimmed: false },
+            { id: "defense", name: "Defense Radar", pill: "~25t/yr", clickable: false, dimmed: false },
+          ]} onNodeClick={() => {}} />
         </>
       );
     }
@@ -1441,12 +1479,7 @@ export default function TreeView() {
             </div>
           </div>
 
-          {/* Downstream chips — constrained to 900px */}
-          {currentLevel === "tree" && (
-            <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 32px" }}>
-              {renderDownstreamChips()}
-            </div>
-          )}
+          {/* Downstream demand is now inside the container */}
         </div>
       )}
 

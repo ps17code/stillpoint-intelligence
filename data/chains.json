@@ -74,10 +74,6 @@
         {
           "key": "gecl4Output",
           "label": "GeCl\u2084 output"
-        },
-        {
-          "key": "purity",
-          "label": "Purity grade"
         }
       ]
     },
@@ -91,10 +87,6 @@
         {
           "key": "fiberOutput",
           "label": "Fiber capacity"
-        },
-        {
-          "key": "geConsumption",
-          "label": "Ge consumed/yr"
         }
       ]
     },

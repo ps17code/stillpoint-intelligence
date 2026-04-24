@@ -453,7 +453,7 @@
   "Umicore GeCl4": {
     "type": "GeCl\u2084 chemical supplier",
     "country": "Belgium",
-    "gecl4Output": "~86t/yr",
+    "gecl4Output": "~86t GeCl\u2084/yr",
     "purity": "8N",
     "loc": "Olen, Belgium",
     "displayName": "Umicore",
@@ -499,7 +499,7 @@
   "Yunnan Chihong GeCl4": {
     "type": "GeCl\u2084 chemical supplier",
     "country": "China",
-    "gecl4Output": "30t/yr",
+    "gecl4Output": "30t GeCl\u2084/yr",
     "purity": "6N–7N",
     "loc": "Kunming, Yunnan, China",
     "displayName": "Yunnan Chihong",
@@ -541,7 +541,7 @@
   "Chinese State GeCl4 Plants": {
     "type": "GeCl\u2084 chemical suppliers",
     "country": "China",
-    "gecl4Output": "~50–60t/yr",
+    "gecl4Output": "~50\u201360t GeCl\u2084/yr",
     "purity": "6N–8N",
     "loc": "Multiple provinces, China",
     "displayName": "Chinese State GeCl\u2084 Plants",
@@ -582,7 +582,7 @@
   "JSC Germanium GeCl4": {
     "type": "Germanium processor \u2014 military/defense",
     "country": "Russia",
-    "gecl4Output": "~15–20t/yr",
+    "gecl4Output": "~15\u201320t GeCl\u2084/yr",
     "purity": "Military only",
     "loc": "Moscow / Novomoskovsk, Russia",
     "displayName": "JSC Germanium",
@@ -876,20 +876,19 @@
     "displayName": "Optical Fiber Strand",
     "ticker": "",
     "meta": "Output product \u00b7 Component layer",
-    "stat": ">1B fiber-km/yr produced \u00b7 ~700M km/yr deployed \u00b7 China 60% of output",
+    "stat": "~720M fiber-km/yr",
     "risk": "Supply gap cannot close before late 2027 due to 18\u201324 month preform expansion lag.",
     "role": "Continuous strands of germanium-doped silica glass, 125 micrometers in diameter \u2014 thinner than a human hair. Drawn from preforms at 10-20 meters per second. Each strand carries data as pulses of light through the germanium-doped core. The germanium doping raises the refractive index by ~0.35%, creating the waveguide effect that makes fiber optic communication possible.",
     "geclRelevance": "Global production exceeds 1 billion fiber-km per year. China produces ~60% of global output. Annual new deployment is ~700 million fiber-km, with forecasts projecting <b>1.3-1.4 billion fiber-km by 2030</b> driven by AI datacenter buildouts, BEAD broadband, and 5G.\n\nEach kilometer of fiber strand requires <b>~0.09 grams of germanium input</b> \u2014 of which roughly a third ends up embedded in the glass and the rest is recycled. The numbers are small per kilometer. But at 700 million new fiber-km per year and growing, the aggregate is enormous.",
     "inv": "The cable itself is a commodity. Invest in manufacturers with highest datacenter/subsea mix (Corning, Prysmian) or at the hyperscale operator level.",
     "stats": [
-      ["Fiber-km/yr produced", ">1B"],
-      ["Fiber-km/yr deployed", "~700M"],
+      ["Output", "~720M fiber-km/yr"],
       ["2030 forecast", "1.3-1.4B"],
       ["Ge per fiber-km", "0.087g"]
     ],
     "keyMetrics": [
       ["Fiber-km/yr produced", ">1B"],
-      ["Fiber-km/yr deployed", "~700M"],
+      ["Fiber-km/yr deployed", "~720M"],
       ["2030 deployment forecast", "1.3\u20131.4B"],
       ["China\u2019s share of output", "~60%"],
       ["Ge input per fiber-km", "0.087g"]
