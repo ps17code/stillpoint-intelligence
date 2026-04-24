@@ -1063,9 +1063,7 @@ export default function TreeView() {
           padding: isExpanded ? "20px 0" : "16px 0",
           borderBottom: `1px solid ${borderColor}`,
           cursor: comingSoon ? "default" : "pointer",
-          animation: `accordionEnter 350ms ease-out forwards`,
-          animationDelay: `${index * 60}ms`,
-          opacity: 0,
+          transition: "padding 0.2s ease",
         }}
         onMouseEnter={() => { setHovered(true); if (!comingSoon) onRowClick(); }}
         onMouseLeave={() => setHovered(false)}
@@ -1093,14 +1091,14 @@ export default function TreeView() {
           )}
         </div>
         {isExpanded && (
-          <>
+          <div style={{ animation: "accordionEnter 200ms ease-out" }}>
             <p style={{ fontSize: 13, color: muted, margin: "8px 0 6px 0", lineHeight: 1.5, maxWidth: 480 }}>
               {description}
             </p>
             <p style={{ fontSize: 10, color: dimmer, margin: 0, fontStyle: comingSoon ? "italic" : "normal" }}>
               {comingSoon ? "Coming soon" : meta}
             </p>
-          </>
+          </div>
         )}
         {!isExpanded && comingSoon && (
           <p style={{ fontSize: 10, color: dimmer, margin: "4px 0 0 0", fontStyle: "italic" }}>
@@ -1573,7 +1571,7 @@ export default function TreeView() {
         renderVerticals()
       ) : (
         /* Levels 2+: Spine + container */
-        <div style={{ padding: "32px 0 80px" }}>
+        <div style={{ padding: "32px 0 80px", width: "100%" }}>
           {/* Header area — constrained to 900px */}
           <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 32px" }}>
             {renderBreadcrumb()}
@@ -1598,7 +1596,7 @@ export default function TreeView() {
             ))}
 
             {/* Container */}
-            <div style={{ width: currentLevel === "tree" ? "90vw" : "100%", maxWidth: currentLevel === "tree" ? 1400 : "none", padding: currentLevel === "tree" ? "0 32px" : "0" }}>
+            <div style={currentLevel === "tree" ? { width: "90vw", maxWidth: 1400, padding: "0 32px" } : {}}>
               <div
                 key={animKey}
                 style={{
