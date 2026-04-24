@@ -1319,6 +1319,26 @@ export default function TreeView() {
   /* ── container content based on current level ── */
   function renderContainerContent() {
     if (currentLevel === "subsystems") {
+      /* Resources vertical — skip subsystems, show all materials directly */
+      if (currentVertical?.id === "resources") {
+        const allMaterials = getSubsystems().flatMap(s => s.components);
+        const nodes = allMaterials.map(c => ({
+          id: c.id,
+          name: c.name,
+          pill: c.keyNumber ?? "",
+          clickable: !c.comingSoon && c.hasTree,
+          dimmed: c.comingSoon,
+        }));
+        return (
+          <NodeRow nodes={nodes} onNodeClick={(id) => {
+            const mat = allMaterials.find(c => c.id === id);
+            if (mat && mat.hasTree) {
+              pushPath({ type: "raw-material", id: mat.id, name: mat.name });
+            }
+          }} />
+        );
+      }
+
       const nodes = getSubsystems().map(s => ({
         id: s.id,
         name: s.name,
