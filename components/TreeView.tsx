@@ -1313,9 +1313,9 @@ export default function TreeView() {
       return (
         <>
           {/* Raw material nodes as SVG matching tree width */}
-          <svg viewBox={`0 0 ${fiberCompW} 90`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
-            {/* RAW MATERIALS layer label — centered above nodes */}
-            <text x={fiberCompW / 2} y={10} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={9} letterSpacing="0.12em" fill="#4a4540">RAW MATERIALS</text>
+          <svg viewBox={`0 0 ${fiberCompW} 100`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+            {/* RAW MATERIALS layer label — centered above nodes with padding */}
+            <text x={fiberCompW / 2} y={12} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={9} letterSpacing="0.12em" fill="#4a4540">RAW MATERIALS</text>
             {[
               { x: fiberCompW / 2 - 200, name: "Germanium", clickable: true, dimmed: false },
               { x: fiberCompW / 2, name: "Helium", clickable: false, dimmed: true },
@@ -1330,13 +1330,12 @@ export default function TreeView() {
                       { type: "raw-material", id: "germanium", name: "Germanium" },
                     ]);
                     setAnimKey(k => k + 1);
-                
                   }
                 }}
               >
-                <circle cx={rm.x} cy={30} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
-                <text x={rm.x} y={52} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{rm.name}</text>
-                <line x1={rm.x} y1={58} x2={rm.x} y2={90} stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
+                <circle cx={rm.x} cy={42} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
+                <text x={rm.x} y={64} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{rm.name}</text>
+                <line x1={rm.x} y1={70} x2={rm.x} y2={100} stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
               </g>
             ))}
           </svg>
@@ -1364,6 +1363,7 @@ export default function TreeView() {
     if (lastEntry.type === "raw-material" && lastEntry.id === "germanium") {
       return (
         <>
+          <DashedDividerLabel label="GERMANIUM SUPPLY CHAIN" marginTop={0} />
           <GermaniumSupplyTree onNodeClick={() => {}} />
           <DashedDividerLabel label="DOWNSTREAM DEMAND" />
           <NodeRow nodes={[
@@ -1389,6 +1389,7 @@ export default function TreeView() {
     if (lastEntry.type === "raw-material" && lastEntry.id === "gallium") {
       return (
         <>
+          <DashedDividerLabel label="GALLIUM SUPPLY CHAIN" marginTop={0} />
           <GalliumSupplyTree onNodeClick={() => {}} />
           <DashedDividerLabel label="DOWNSTREAM DEMAND" />
           <NodeRow nodes={[

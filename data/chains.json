@@ -65,7 +65,7 @@
       "label": "GLOBAL SUPPLY"
     },
     "gecl4": {
-      "label": "GeCl\u2084 SUPPLIERS",
+      "label": "GeCl₄ SUPPLIERS",
       "displayFields": [
         {
           "key": "country",
@@ -73,7 +73,7 @@
         },
         {
           "key": "gecl4Output",
-          "label": "GeCl\u2084 output"
+          "label": "GeCl₄ output"
         }
       ]
     },
@@ -121,19 +121,14 @@
       ]
     },
     "cableType": {
-      "label": "CABLE TYPE",
       "displayFields": [
         {
-          "key": "country",
-          "label": ""
+          "key": "loc",
+          "label": "Location"
         },
         {
-          "key": "fiberCount",
-          "label": "Fiber count"
-        },
-        {
-          "key": "avgDeployment",
-          "label": "Avg deployment"
+          "key": "stat",
+          "label": "Output"
         }
       ]
     },
@@ -243,11 +238,23 @@
           "label": "Market"
         }
       ]
+    },
+    "cabletype": {
+      "displayFields": [
+        {
+          "key": "loc",
+          "label": "Location"
+        },
+        {
+          "key": "stat",
+          "label": "Output"
+        }
+      ]
     }
   },
   "SPINE_TREE": {
     "Germanium": {
-      "GeO\u2082 / GeCl\u2084": {
+      "GeO₂ / GeCl₄": {
         "Fiber Optics": [
           "AI Datacenter"
         ]
@@ -596,7 +603,7 @@
         "Various State Ops",
         "Yunnan Chihong",
         "JSC Germanium",
-        "STL / G\u00e9camines",
+        "STL / Gécamines",
         "Teck Resources"
       ],
       "refiners": [
@@ -855,7 +862,7 @@
     }
   },
   "COMP_DATA": {
-    "GeO\u2082 / GeCl\u2084": {
+    "GeO₂ / GeCl₄": {
       "geCl4": [
         "Umicore GeCl4",
         "Yunnan Chihong GeCl4",
