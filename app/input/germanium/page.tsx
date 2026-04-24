@@ -456,8 +456,6 @@ export default function GermaniumInputPage() {
         ))}
         {/* Connected inputs */}
         <div style={{ height: 1, background: "#252220", margin: "20px 0 24px 12px", width: 100 }} />
-        <p style={{ fontSize: 9, letterSpacing: "0.06em", color: "#555", margin: "0 0 8px 12px" }}>Upstream</p>
-        <p style={{ fontSize: 10, color: "#4a4540", margin: "0 0 16px 12px", lineHeight: 1.5 }}>Germanium is a raw material — its upstream is the zinc ores and coal on the tree itself.</p>
         <p style={{ fontSize: 9, letterSpacing: "0.06em", color: "#555", margin: "0 0 8px 12px" }}>Downstream</p>
         {[
           { name: "Fiber optic cable", linked: true, href: "/input/fiber-optic-cable" },
