@@ -461,12 +461,12 @@ export default function GalliumInputPage() {
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
                 "Trace element recovered as a byproduct of alumina refining from bauxite, and to a lesser extent from zinc smelter residues. Cannot be mined directly. Global resources are abundant \u2014 the constraint is refining infrastructure, not geology.",
-                "The largest emerging demand vector is AI datacenters. Gallium is combined with other elements to form compound semiconductors \u2014 gallium arsenide (GaAs) and gallium nitride (GaN) \u2014 which are grown as crystals or thin films, then cut or deposited onto wafers that chips are built on. For AI datacenters specifically, every gigawatt of compute capacity needs thousands of GaN power chips to convert incoming electricity down to the low voltages the GPUs actually run at \u2014 a job GaN does with roughly 30% less energy lost than silicon. Beyond AI infrastructure, the same compound semiconductors go into 5G phone amplifiers, satellite solar cells, LED lighting, EV onboard chargers, and \u2014 critically \u2014 modern military radars (active-array radars, known as AESA), where no substitute exists.",
-                "Global refined production is ~320t/yr. Roughly 290t is Chinese; ~15-30t is non-Chinese, almost entirely in Japan via Dowa Holdings. China holds ~1,000t/yr of installed primary capacity running at ~59% utilization \u2014 a deliberate overhang Beijing can tighten or release. The United States has not produced primary gallium since 1987.",
+                "Forms compound semiconductors (GaAs and GaN) that are grown onto wafers and used as the foundation for chips. Found in AI datacenter power conversion, 5G amplifiers, LEDs, EV chargers, satellite solar cells, and AESA defense radar.",
+                "Global refined production is ~320 t/yr. Roughly 290 t is Chinese; ~15-30 t is non-Chinese, almost entirely Japan via Dowa Holdings. China holds ~1,000 t/yr of installed capacity running at ~59% utilization \u2014 a deliberate overhang Beijing can tighten or release.",
                 "Price has risen from $298/kg to $2,269/kg since 2020 on western retail benchmarks, with a 9x spread between Chinese domestic ($245/kg) and western markets. The spread persists because export licensing prevents arbitrage.",
                 "Demand accelerating from GaN power electronics (42% CAGR), defense radar modernization, and AI datacenter 800V power conversion architecture. Every major western demand vector is stable or growing.",
-                "Four concurrent western primary production projects \u2014 Alcoa/JAGA Australia (100t/yr target 2028), Metlen Greece (50t/yr 2028), Rio Tinto/Indium Quebec (40t/yr post-2028), Korea Zinc/Nyrstar Tennessee (40t/yr 2029) \u2014 collectively represent a 10x increase from current non-Chinese supply. None resolves the structural dependency before 2028.",
-                "The investable surface of the gallium supply chain is the rebuild itself \u2014 substrate converters with pricing power, emerging primary producers backed by sovereign capital, and GaN device makers capturing demand downstream.",
+                "Four concurrent western primary production projects collectively target ~230 t/yr by 2029, a ~10x increase from current non-Chinese supply. None resolves the structural dependency before 2028.",
+                "The investable surface of the gallium supply chain is the rebuild itself \u2014 emerging primary producers backed by sovereign capital, and refiners with pricing power in the non-Chinese supply gap.",
               ].map((point, i, arr) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
                   {i < arr.length - 1 && <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 7 }} />}
@@ -484,15 +484,15 @@ export default function GalliumInputPage() {
           </p>
           {/* Key Takeaways card — above the tree */}
           <div style={{ background: cardBg, border: `1px solid ${borderColor}`, borderRadius: "10px", padding: "24px 28px", marginBottom: 32 }}>
-            <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: dimText, margin: "0 0 16px 0" }}>KEY TAKEAWAYS</p>
-            <div style={{ display: "flex", flexDirection: "column" as const, gap: 10 }}>
+            <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: dimText, margin: "0 0 10px 0" }}>KEY TAKEAWAYS</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 0 }}>
               {[
                 "1 \u2014 Raw material (bauxite) is plentiful and globally distributed \u2014 not a geological constraint.",
-                "2 \u2014 Primary gallium production is overwhelmingly Chinese \u2014 the real bottleneck is recovery infrastructure at alumina refineries.",
-                "3 \u2014 Four western projects are trying to rebuild primary capacity \u2014 but none operating at scale before 2028.",
-                "4 \u2014 The refining layer is Japan-led (Dowa) with small Canadian/US contributions \u2014 structurally dependent on Chinese primary feedstock.",
+                "2 \u2014 Primary gallium production is overwhelmingly Chinese \u2014 the bottleneck is recovery infrastructure at alumina refineries.",
+                "3 \u2014 Four western projects are rebuilding primary capacity \u2014 but none operating at scale before 2028.",
+                "4 \u2014 The refining layer is Japan-led (Dowa) with small Canadian/US contributions \u2014 dependent on Chinese feedstock.",
               ].map((text, i) => (
-                <p key={i} style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.55, margin: 0 }}>{text}</p>
+                <p key={i} style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.8, margin: 0 }}>{text}</p>
               ))}
             </div>
           </div>
@@ -522,10 +522,6 @@ export default function GalliumInputPage() {
               <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
                 BYPRODUCT SOURCE
               </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Bauxite-producing regions whose alumina refineries could recover gallium as a byproduct.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHAT HAPPENS HERE</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
                 Bauxite ore is mined and shipped to alumina refineries. Gallium sits inside at ~50 ppm, uniformly distributed. Nobody extracts gallium at the mine &mdash; the bauxite just gets shipped onward.
               </p>
@@ -547,16 +543,12 @@ export default function GalliumInputPage() {
               <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
                 PRIMARY PRODUCER
               </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Alumina refineries with ion-exchange recovery circuits that extract gallium from the Bayer process liquor.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHAT HAPPENS HERE</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
                 Bauxite arrives at an alumina refinery. During the Bayer process, if the refinery has an ion-exchange recovery circuit installed, it can grab gallium dissolved in the liquor. Otherwise the gallium goes out with red mud waste.
               </p>
               <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                ~20 refineries globally have installed recovery equipment. The vast majority are in China. Western producers shut down between 2013-2016 because they couldn&apos;t compete with Chinese pricing. The US stopped producing in 1987.
+                ~20 refineries globally have installed recovery equipment. The vast majority are in China. Western producers shut down 2013-2016. The US stopped producing in 1987.
               </p>
               <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
                 <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~600t/yr</span>
@@ -572,10 +564,6 @@ export default function GalliumInputPage() {
               <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
                 REFINER
               </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Specialists that take crude 4N gallium and refine it to 6N+ semiconductor grade through zone refining and vacuum distillation.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHAT HAPPENS HERE</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
                 The 99.99% metal from primary producers is purified to 99.9999%+ through zone refining, vacuum distillation, and electrolytic refining. Different end products need different purity grades &mdash; LEDs need 6N, defense radar needs 7N, next-gen chips need 8N.
               </p>
