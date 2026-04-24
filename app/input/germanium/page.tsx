@@ -27,7 +27,7 @@ export default function GermaniumInputPage() {
 
   // Scroll spy
   React.useEffect(() => {
-    const ids = ["thesis", "how-its-made", "supply-tree", "dependencies", "supply-demand", "so-what", "money", "risk"];
+    const ids = ["thesis", "supply-tree", "dependencies", "supply-demand", "so-what", "money", "catalysts", "risk"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -424,12 +424,12 @@ export default function GermaniumInputPage() {
         <style>{`@media (max-width: 1399px) { .toc-nav { display: none !important; } }`}</style>
         {[
           { id: "thesis", label: "Thesis" },
-          { id: "how-its-made", label: "How it\u2019s made" },
           { id: "supply-tree", label: "Supply tree" },
           { id: "dependencies", label: "Dependencies" },
           { id: "supply-demand", label: "Supply \u2192 Demand" },
           { id: "so-what", label: "So what" },
           { id: "money", label: "Where the money is" },
+          { id: "catalysts", label: "Catalysts" },
           { id: "risk", label: "Risk" },
         ].map((s) => (
           <div
@@ -456,12 +456,15 @@ export default function GermaniumInputPage() {
         ))}
         {/* Connected inputs */}
         <div style={{ height: 1, background: "#252220", margin: "20px 0 24px 12px", width: 100 }} />
+        <p style={{ fontSize: 9, letterSpacing: "0.06em", color: "#555", margin: "0 0 8px 12px" }}>Upstream</p>
+        <p style={{ fontSize: 10, color: "#4a4540", margin: "0 0 16px 12px", lineHeight: 1.5 }}>Germanium is a raw material — its upstream is the zinc ores and coal on the tree itself.</p>
         <p style={{ fontSize: 9, letterSpacing: "0.06em", color: "#555", margin: "0 0 8px 12px" }}>Downstream</p>
         {[
-          { name: "Fiber optic cable", linked: true, href: "/" },
-          { name: "IR optics", linked: false, href: "" },
+          { name: "Fiber optic cable", linked: true, href: "/input/fiber-optic-cable" },
+          { name: "IR defense optics", linked: false, href: "" },
           { name: "Satellite solar cells", linked: false, href: "" },
           { name: "SiGe semiconductors", linked: false, href: "" },
+          { name: "PET polymer catalysts", linked: false, href: "" },
         ].map((item, i) => (
           <div key={i} onClick={() => { if (item.linked) window.location.href = item.href; }}
             style={{ display: "flex", alignItems: "center", padding: "1px 0 1px 12px", cursor: item.linked ? "pointer" : "default" }}>
@@ -470,7 +473,7 @@ export default function GermaniumInputPage() {
               onMouseLeave={e => { if (item.linked) e.currentTarget.style.color = "#a09888"; }}>
               {item.name}
             </span>
-            {item.linked && <span style={{ fontSize: 10, color: "#4a4540", marginLeft: 6 }}>→</span>}
+            {item.linked && <span style={{ fontSize: 10, color: "#4a4540", marginLeft: 6 }}>&rarr;</span>}
           </div>
         ))}
       </nav>
@@ -528,100 +531,16 @@ export default function GermaniumInputPage() {
                 "Price has risen from $1,500/kg to over $8,500/kg in two years. 3.5x premium between western and Chinese markets persists because export controls prevent arbitrage.",
                 "Demand accelerating from AI datacenter fiber buildout, defense IR optics spending, and satellite constellation expansion. Every end market stable or growing.",
                 "No near-term supply relief. Hollow-core fiber, new mine capacity, and DRC feedstock ramp all target 2027-2028 at earliest.",
-                "Eight entities control the western germanium value chain. Several are positioned to capture outsized value from a supply gap driven by an AI boom.",
-              ].map((point, i, arr) => (
+              ].map((point, i) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
-                  {i < arr.length - 1 && <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 7 }} />}
-                  <p style={{ fontSize: 13.5, color: i === arr.length - 1 ? "#dad9d8" : "#a09888", lineHeight: 1.4, margin: 0, fontWeight: 300 }}>{point}</p>
+                  <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 7 }} />
+                  <p style={{ fontSize: 13.5, color: "#a09888", lineHeight: 1.4, margin: 0, fontWeight: 300 }}>{point}</p>
                 </div>
               ))}
+              <p style={{ fontSize: 13.5, color: "#dad9d8", lineHeight: 1.4, margin: 0, fontWeight: 300 }}>
+                Eight entities control the western germanium value chain. Several are positioned to capture outsized value from a supply gap driven by an AI boom.
+              </p>
             </div>
-          </div>
-        </div>
-
-        {/* HOW IT'S MADE */}
-        <div id="how-its-made" style={{ marginBottom: "56px", paddingTop: 20 }}>
-          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
-            HOW IT&apos;S MADE
-          </p>
-
-          <div style={{ display: "flex", gap: "12px" }}>
-
-            {/* Card 1: Extraction */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                01 &middot; EXTRACTION FROM HOST ORE
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Germanium is recovered as a byproduct of zinc smelting and coal combustion. Zinc concentrate is roasted and leached; germanium-rich residues are collected from flue dust and leach solutions.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Germanium exists at 50-800 ppm in host ores. Recovery requires specialized hydrometallurgical circuits that most zinc smelters don&apos;t install. Production cannot scale independently of zinc economics.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                ~10 zinc smelters worldwide recover germanium. China dominates with ~83% of primary production. DRC tailings represent a new non-smelter source via Umicore offtake.
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~140t</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>primary germanium extracted annually</span>
-              </div>
-            </div>
-
-            {/* Card 2: Refining */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                02 &middot; REFINING TO HIGH PURITY
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Crude germanium dioxide is reduced to metal, then purified through zone refining to 5N+ (99.999%) purity. For fiber optics, it is converted to GeCl&#8324; and further purified to 8N (99.999999%).
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Fiber-grade GeCl&#8324; requires removing arsenic and other trace contaminants to parts-per-billion levels. Proprietary techniques that cannot be purchased off the shelf. Zone refining is energy-intensive and slow.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                Only 6 facilities produce fiber-grade GeCl&#8324;. 4 in China, 1 in Russia, 1 in the west: Umicore in Olen, Belgium. 5N Plus could become the second western refiner.
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~230t</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>refined germanium produced annually (primary + recycled)</span>
-              </div>
-            </div>
-
-            {/* Card 3: Conversion to end products */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                03 &middot; CONVERSION TO END PRODUCTS
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Refined germanium is converted into application-specific forms: GeCl&#8324; for fiber optic preforms, GeO&#8322; blanks for IR optics, single-crystal wafers for satellite solar cells, and SiGe substrates for semiconductors.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Each end product requires different purity levels and crystal structures. Fiber-grade GeCl&#8324; needs 8N purity. IR blanks need specific optical homogeneity. Solar wafers need precise crystal orientation. No single facility serves all markets.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                Specialized converters for each application. Umicore (GeCl&#8324;), Umicore + Chinese firms (IR blanks), AXT and others (solar wafers), IQE and GlobalFoundries (SiGe substrates).
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>5 markets</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>competing for the same ~230t supply</span>
-              </div>
-            </div>
-
           </div>
         </div>
 
@@ -630,15 +549,22 @@ export default function GermaniumInputPage() {
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
             SUPPLY TREE
           </p>
-          {/* Key takeaway */}
-          <div style={{ marginBottom: 32 }}>
-            <div style={{ borderLeft: `2px solid ${accent}30`, paddingLeft: 20 }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: accent, margin: "0 0 10px 0" }}>KEY TAKEAWAY</p>
-              <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.3, margin: 0 }}>
-                <span style={{ color: "#ece8e1", fontWeight: 500 }}>~230t</span> of germanium enters the global supply chain annually. ~120t from Chinese zinc smelters and coal operations (export controlled since Aug 2023). ~90t from recycling (near maximum recovery). ~11t from Russia (sanctioned). Deposits in Yunnan, Inner Mongolia, DRC tailings, and Alaska feed into ~10 smelter-refiners. Umicore in Belgium is the sole western refiner at scale. All material converges to <span style={{ color: "#ece8e1", fontWeight: 500 }}>5 competing end markets</span> with no demand declining.
-              </p>
+          {/* Key Takeaways card — above the tree */}
+          <div style={{ background: cardBg, border: `1px solid ${borderColor}`, borderRadius: "10px", padding: "24px 28px", marginBottom: 32 }}>
+            <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: dimText, margin: "0 0 10px 0" }}>KEY TAKEAWAYS</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 0 }}>
+              {[
+                "1 \u2014 Germanium cannot be mined directly \u2014 it comes from zinc smelters and coal operations that install specialized recovery circuits, which most smelters don\u2019t.",
+                "2 \u2014 ~83% of primary supply is Chinese and under export licensing since August 2023 \u2014 the real bottleneck is whether Chinese output reaches western buyers, not geological supply.",
+                "3 \u2014 Umicore (Belgium) is the sole western refiner at scale for fiber-grade GeCl\u2084 \u2014 a single-facility chokepoint that processes almost all non-Chinese western supply.",
+                "4 \u2014 Supply response is 2027-2028 at earliest \u2014 DRC tailings via Umicore offtake, Teck\u2019s Red Dog, and Blue Moon\u2019s Idaho restart collectively add ~30-50t/yr of non-Chinese primary capacity.",
+              ].map((text, i) => (
+                <p key={i} style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.8, margin: 0 }}>{text}</p>
+              ))}
             </div>
           </div>
+
+          {/* Supply tree visualization */}
           <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210", position: "relative" as const }}>
             <button
               onClick={() => setTreeExpanded(true)}
@@ -656,6 +582,79 @@ export default function GermaniumInputPage() {
             </button>
             <TreeMap geometry={rawGeo} nodes={allNodes} layerConfig={lc} svgWidth={rawW} svgHeight={rawH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
           </div>
+
+          {/* How it's made cards — below the tree */}
+          <div style={{ display: "flex", gap: "12px", marginTop: 32 }}>
+
+            {/* Card 1: Host Ore Extraction */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                HOST ORE EXTRACTION
+              </p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Zinc concentrate is roasted and leached to produce zinc metal. Germanium-rich residues collect in flue dust and leach solutions. Operations with specialized hydrometallurgical circuits extract the germanium; most don&apos;t. A smaller volume comes from coal operations in Yunnan and Inner Mongolia.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                Germanium exists at 50-800 ppm in host ores. Recovery requires hydrometallurgical circuits that most zinc smelters never install. Production cannot scale independently of zinc economics. Around 10 zinc smelters worldwide recover germanium; China operates ~83% of primary capacity.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~140t/yr</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>primary germanium extracted globally</span>
+              </div>
+            </div>
+
+            {/* Card 2: Refining to High Purity */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                REFINING TO HIGH PURITY
+              </p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Crude germanium dioxide is reduced to metal, then purified through zone refining to 5N+ purity. For fiber optic preforms, the refined metal is converted to GeCl&#8324; and purified further to 8N. For IR optics, it&apos;s cast as GeO&#8322; blanks. For satellite solar cells, it&apos;s grown into single-crystal wafers.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                Fiber-grade GeCl&#8324; requires removing arsenic and trace contaminants to parts-per-billion levels using proprietary techniques. Zone refining is energy-intensive and slow. Only 6 facilities globally produce fiber-grade GeCl&#8324;: four in China, one in Russia, and one in the west &mdash; Umicore in Olen, Belgium.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~230t/yr</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>refined germanium produced globally</span>
+              </div>
+            </div>
+
+            {/* Card 3: Conversion to End Products */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                CONVERSION TO END PRODUCTS
+              </p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Each end product requires a different conversion process and purity specification. Fiber manufacturers consume GeCl&#8324; at 8N purity. IR optics makers need GeO&#8322; blanks with optical homogeneity. Satellite solar cell manufacturers need single-crystal wafers. SiGe substrate makers need Ge epitaxial layers.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                No single facility serves all end markets &mdash; each conversion path is bespoke. Umicore handles GeCl&#8324; and IR optics. AXT and Chinese firms handle solar wafers. IQE and GlobalFoundries handle SiGe. Five distinct end markets all pull on the same ~230t/yr supply.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>5 markets</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>competing for the same ~230t/yr supply</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Nodes pointer */}
+          <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.6, margin: "20px 0 0 0" }}>
+            Click any node on the tree to see its full intelligence profile &mdash; location, key metrics, risk factors, and supply chain role.
+          </p>
         </div>
 
         {/* FULLSCREEN SUPPLY TREE OVERLAY */}
@@ -785,13 +784,13 @@ export default function GermaniumInputPage() {
           const analysisBg = "#141210";
           const gold = "#81713c";
           const soWhatBlocks: { id: string; label: string; question: string; teaser: string; analysis: { type: string; text?: string; author?: string; name?: string; desc?: string }[] }[] = [
-            { id: "signals", label: "Market signals", question: "What is the price telling us?", teaser: "$1,500 \u2192 $8,500+/kg in two years. 4x spread between Chinese and western markets. No futures market. Physical commodity with no hedging mechanism.", analysis: [
+            { id: "signals", label: "Market signals", question: "What is the price telling us?", teaser: "The 5.7x price rise and persistent 3.5-4x China/west spread are telling us that export licensing has broken the physical market into two disconnected pools where arbitrage is illegal.", analysis: [
                 { type: "prose", text: "Germanium prices have risen from approximately $1,500/kg in early 2024 to over $8,500/kg in international markets \u2014 a 5.7x increase in two years. This is not a speculative bubble: germanium has no futures market, no ETF, no derivatives. The price is set by physical transactions between a small number of producers and consumers." },
                 { type: "prose", text: "The spread between Chinese domestic and western international prices has reached 3.5-4x. Chinese producers sell domestically at ~$2,000-2,500/kg while western buyers pay $7,000-8,500/kg. This arbitrage exists because MOFCOM export licensing prevents free flow of material. The spread is a direct measure of the geopolitical premium." },
                 { type: "prose", text: "The November 2026 ban expiry is the single most important near-term catalyst. If the US export ban is reimposed or expanded to cover Belgian re-exports, the western price could spike further. If it lapses, prices may moderate \u2014 but the dual-use licensing regime remains in force regardless, maintaining structural friction." },
                 { type: "callout", text: "There is no way to short germanium. No futures, no options, no ETF. The only way to express a view is through equities (Umicore, 5N Plus, Yunnan Chihong) or physical accumulation. This illiquidity amplifies price moves in both directions." },
               ] },
-            { id: "constraints", label: "Supply constraints", question: "Why can\u2019t supply respond?", teaser: "Zinc byproduct. Can\u2019t mine it directly. Global production tied to zinc smelting economics. Recycling at ~90t/yr already near maximum recovery rates.", analysis: [
+            { id: "constraints", label: "Supply constraints", question: "Why can\u2019t supply respond?", teaser: "Supply cannot respond because germanium is never a mine\u2019s primary product \u2014 output is set by zinc smelter economics, and even at $8,500/kg the germanium revenue is a rounding error in zinc P&Ls.", analysis: [
                 { type: "prose", text: "Germanium is never the primary product of any mine. It exists at 50-800 parts per million inside zinc ores and coal fly ash. Global production is a function of zinc smelting volume, not germanium demand. When germanium prices rise, zinc miners cannot simply \u201Cproduce more germanium\u201D \u2014 they would need to smelt more zinc, which requires zinc prices to justify the economics." },
                 { type: "prose", text: "Primary production is approximately 120 tonnes per year from Chinese zinc smelters and coal operations. Recycling contributes approximately 90 tonnes, primarily from fiber optic scrap, IR lens rework, and electronic waste. Russian production (~11t) is effectively unavailable to western buyers due to sanctions." },
                 { type: "prose", text: "The recycling channel is already operating near theoretical maximum recovery rates. Umicore recovers >50% of its germanium input from recycled sources. Incremental gains are possible but the recycling pool is fundamentally limited by the volume of germanium-containing products reaching end-of-life." },
@@ -799,7 +798,7 @@ export default function GermaniumInputPage() {
                 { type: "prose", text: "This is the core structural issue: germanium supply is inelastic to germanium price. Even at $8,500/kg, no zinc smelter will increase throughput for the germanium alone \u2014 the economics don\u2019t work. A zinc smelter processing 200,000 tonnes of concentrate might recover 5-10 tonnes of germanium. At $8,500/kg that\u2019s $42-85M of revenue against a zinc operation generating $500M+. The germanium is a rounding error in the zinc P&L." },
                 { type: "callout", text: "The only way to meaningfully increase germanium supply is to find new primary sources (like the DRC tailings) or to reduce demand through substitution. Neither happens quickly. The DRC ramp to Umicore is the most significant new source in decades, and it routes through a single western refiner." },
               ] },
-            { id: "competing", label: "Competing demand", question: "Who else needs germanium?", teaser: "Fiber optics takes 38% but IR defense, satellite solar, SiGe chips all need it. Every end market stable or growing. No demand destruction in sight.", analysis: [
+            { id: "competing", label: "Competing demand", question: "Who else needs germanium?", teaser: "Five distinct end markets (fiber, IR defense, satellite solar, SiGe semiconductors, PET catalyst) all pull on the same fixed ~230t/yr pool with no meaningful demand destruction visible in any of them.", analysis: [
                 { type: "subhead", text: "Fiber optics (~87t, 38%)" },
                 { type: "prose", text: "The largest single consumer. Germanium-doped glass creates the refractive index gradient that allows fiber to carry light. The AI datacenter buildout is driving unprecedented fiber demand \u2014 CRU projects a 138M fiber-km shortfall in 2026. Every strand-km of fiber requires germanium." },
                 { type: "subhead", text: "IR optics (~55t, 24%)" },
@@ -810,7 +809,7 @@ export default function GermaniumInputPage() {
                 { type: "prose", text: "Silicon-germanium alloys are used in high-frequency RF chips for 5G, radar, and electronic warfare applications. IBM\u2019s SiGe technology powers high-performance analog and mixed-signal devices. Demand is stable with growth tied to 5G infrastructure rollout." },
                 { type: "callout", text: "The critical insight: there is no declining end market. Fiber is surging, IR defense is growing, satellite solar is growing, SiGe is stable. Total demand can only increase from current levels. Supply cannot respond proportionally. The deficit is structural." },
               ] },
-            { id: "geopolitical", label: "Geopolitical risk", question: "How could it get worse?", teaser: "China controls 83%. MOFCOM licensing since Aug 2023. US ban suspended until Nov 2026. Western buyers paying 3.5x premium. Reimposition = supply shock.", analysis: [
+            { id: "geopolitical", label: "Geopolitical risk", question: "How could it get worse?", teaser: "It gets worse if the November 2026 US-targeted ban suspension lapses and China reimposes full controls \u2014 western buyers would lose access to the ~120t/yr of Chinese primary supply that reaches them via third-country re-exports today.", analysis: [
                 { type: "prose", text: "In August 2023, China\u2019s Ministry of Commerce placed export licensing requirements on six germanium products. Chinese germanium exports dropped approximately 55% within months. In December 2024, China banned all germanium exports to the United States \u2014 suspended until November 2026, but the global dual-use license requirement remains in full force." },
                 { type: "prose", text: "The licensing regime has created a two-tier market. Chinese domestic germanium trades at ~$2,000-2,500/kg. Western international prices exceed $7,000-8,500/kg. The spread reflects the cost of routing material through approved channels \u2014 primarily Belgian processing via Umicore." },
                 { type: "prose", text: "Stimson Center analysis shows US germanium imports from China dropped by ~5,900 kg while Belgian imports rose by ~6,150 kg in the same period. The material is being re-routed, not eliminated. Umicore captures the arbitrage spread on every kilogram." },
@@ -818,14 +817,14 @@ export default function GermaniumInputPage() {
                 { type: "prose", text: "The suspended US export ban expires in November 2026. Three scenarios: (1) Ban lapses \u2014 some price relief but dual-use licensing remains. (2) Ban reimposed \u2014 western prices spike further. (3) Ban expanded to cover Belgian re-exports \u2014 severe supply shock to the entire western fiber and defense supply chain." },
                 { type: "callout", text: "Even the best-case scenario (ban lapsing) does not eliminate the structural premium. The dual-use licensing regime remains in force. Every western buyer must apply for and receive Chinese government approval for each germanium shipment. This is a permanent friction cost, not a temporary disruption." },
               ] },
-            { id: "response", label: "Supply response", question: "What\u2019s being done?", teaser: "DRC ramping to Umicore. 5N Plus decision Nov 2026. All projects add feedstock but western conversion remains single-source.", analysis: [
+            { id: "response", label: "Supply response", question: "What\u2019s being done?", teaser: "Three western supply responses are underway \u2014 DRC tailings feeding Umicore, Teck\u2019s Red Dog zinc expansion, and Blue Moon Metals\u2019 Idaho mine restart \u2014 but they collectively add ~30-50 t/yr of primary feedstock and none of them resolves Umicore\u2019s single-facility refining chokepoint.", analysis: [
                 { type: "item", name: "DRC / G\u00e9camines \u2014 Big Hill tailings (exclusive to Umicore)", desc: "STL operates the Big Hill site in Lubumbashi \u2014 14 million tonnes of century-old slag containing 700+ tonnes of germanium. First concentrate exports October 2024 under exclusive Umicore offtake. Target: 30% of global germanium demand at full scale. The most important new primary source of non-Chinese germanium in decades." },
                 { type: "item", name: "5N Plus (TSX: VNP) \u2014 St. George, Utah", desc: "Received $14.4 million from US DoD under the Defense Production Act. Evaluating a broader germanium refining facility with decision expected November 2026. If approved, adds ~15-20 tonnes/yr \u2014 meaningful against current western supply of ~26 tonnes. The single most binary catalyst for western germanium supply independence." },
                 { type: "item", name: "Blue Moon Metals \u2014 Apex mine, Utah", desc: "Acquired from Teck Resources in March 2026. Historic germanium producer. Would be the first dedicated US germanium mine if it reaches production, targeted for ~2028. Early stage but strategically significant." },
                 { type: "item", name: "Kazakhstan \u2014 Pavlodar restart", desc: "Targeting ~15 tonnes/yr germanium production restart. Adds raw feedstock to global supply, not western conversion capacity." },
                 { type: "callout", text: "Every expansion project adds raw germanium feedstock. The DRC is the most significant. But all western material routes through Umicore for refining. 5N Plus is the only project that would add independent western refining capacity. Its November 2026 decision is the single most important catalyst for breaking the Umicore single-source dependency." },
               ] },
-            { id: "technology", label: "Technology", question: "What could replace germanium?", teaser: "BlackDiamond glass replacing Ge in IR optics. Hollow-core fiber eliminates Ge in telecom. But substitution is partial and slow.", analysis: [
+            { id: "technology", label: "Technology", question: "What could replace germanium?", teaser: "Replacement technologies exist in every end market (BlackDiamond glass for IR, hollow-core fiber for telecom, InGaP for solar, SiC for RF) but each one is partial, slow, and commercially unproven at the scale that would displace germanium demand before 2030.", analysis: [
                 { type: "subhead", text: "IR optics substitution \u2014 LightPath Technologies" },
                 { type: "prose", text: "LightPath\u2019s BlackDiamond chalcogenide glass is a direct germanium replacement for infrared optics applications. FQ2 2026 revenue reached $16.4M, up 120% year-over-year, driven by defense contracts. The NDAA mandates eliminating foreign-sourced optical glass from US defense systems by January 2030, creating a regulatory tailwind." },
                 { type: "prose", text: "BlackDiamond is lighter, moldable (vs. germanium which must be diamond-turned), and does not rely on Chinese supply chains. For defense IR applications, substitution is actively underway. However, IR optics represent only 24% of germanium demand. Even full substitution in this segment would reduce total demand by ~55 tonnes \u2014 meaningful but not sufficient to close the deficit." },
@@ -918,6 +917,72 @@ export default function GermaniumInputPage() {
             ))}
           </div>
 
+        </div>
+
+        {/* CATALYSTS */}
+        <div id="catalysts" style={{ marginBottom: 56, paddingTop: 20 }}>
+          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>CATALYSTS</p>
+
+          {/* Near-term */}
+          <div style={{ marginBottom: 28 }}>
+            <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 14px 0", fontWeight: 500 }}>NEAR-TERM (NEXT 6 MONTHS)</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
+              {[
+                { date: "May-June 2026", desc: "Umicore Q1 2026 earnings" },
+                { date: "June 2026", desc: "5N Plus fiber-grade GeCl\u2084 commercial qualification update" },
+                { date: "July 2026", desc: "Teck Resources Q2 2026 earnings" },
+                { date: "August 2026", desc: "Three-year anniversary of MOFCOM germanium export licensing" },
+                { date: "October 2026", desc: "Yunnan Chihong H2 2026 production guidance" },
+                { date: "October 2026", desc: "LightPath Technologies Q1 FY27 earnings" },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                  <span style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, flexShrink: 0 }}>{item.date}</span>
+                  <span style={{ fontSize: 12.5, color: dimmer }}>&mdash;</span>
+                  <span style={{ fontSize: 12.5, color: muted }}>{item.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Medium-term */}
+          <div style={{ marginBottom: 28 }}>
+            <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 14px 0", fontWeight: 500 }}>MEDIUM-TERM (6-12 MONTHS)</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
+              {[
+                { date: "November 27, 2026", desc: "US-targeted Chinese export ban suspension expiry (binary catalyst)" },
+                { date: "Q1 2027", desc: "Blue Moon Metals Idaho restart FID" },
+                { date: "Q1 2027", desc: "STL/G\u00e9camines DRC tailings full-rate production" },
+                { date: "Q2 2027", desc: "Corning hollow-core fiber commercial volumes" },
+                { date: "Q3 2027", desc: "Teck Red Dog 2026 annual germanium production disclosure" },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                  <span style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, flexShrink: 0 }}>{item.date}</span>
+                  <span style={{ fontSize: 12.5, color: dimmer }}>&mdash;</span>
+                  <span style={{ fontSize: 12.5, color: muted }}>{item.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Long-term */}
+          <div>
+            <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 14px 0", fontWeight: 500 }}>LONG-TERM (12+ MONTHS)</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
+              {[
+                { date: "2028", desc: "Blue Moon Idaho first germanium concentrate" },
+                { date: "2028", desc: "Hollow-core fiber share reaches 5-10%" },
+                { date: "2028-2029", desc: "US DPA Title III investments in domestic germanium capacity" },
+                { date: "2030", desc: "Chinese primary germanium capacity expected to expand" },
+                { date: "2030+", desc: "BlackDiamond-2 IR optics reach commercial scale" },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                  <span style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, flexShrink: 0 }}>{item.date}</span>
+                  <span style={{ fontSize: 12.5, color: dimmer }}>&mdash;</span>
+                  <span style={{ fontSize: 12.5, color: muted }}>{item.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* RISK */}
