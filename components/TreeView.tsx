@@ -1228,7 +1228,9 @@ export default function TreeView() {
           <ExpandButton onClick={() => setTreeExpanded(true)} />
 
           {/* Raw material nodes as SVG matching tree width */}
-          <svg viewBox={`0 0 ${fiberCompW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+          <svg viewBox={`0 0 ${fiberCompW} 90`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+            {/* RAW MATERIALS layer label */}
+            <text x={120} y={35} textAnchor="end" fontFamily="'Geist Mono', monospace" fontSize={9} letterSpacing="0.12em" fill="#4a4540">RAW MATERIALS</text>
             {[
               { x: fiberCompW / 2 - 200, name: "Germanium", pill: "~230t/yr", clickable: true, dimmed: false },
               { x: fiberCompW / 2, name: "Helium", pill: "Non-renewable", clickable: false, dimmed: true },
@@ -1238,7 +1240,6 @@ export default function TreeView() {
                 style={{ cursor: rm.clickable ? "pointer" : "default", opacity: rm.dimmed ? 0.4 : 1 }}
                 onClick={() => {
                   if (rm.clickable) {
-                    // Navigate to germanium: reset path to vertical > raw materials branch
                     setPath([
                       { type: "vertical", id: currentVertical?.id ?? "ai", name: currentVertical?.name ?? "AI Infrastructure" },
                       { type: "raw-material", id: "germanium", name: "Germanium" },
@@ -1248,13 +1249,28 @@ export default function TreeView() {
                   }
                 }}
               >
-                <circle cx={rm.x} cy={20} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
-                <text x={rm.x} y={42} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{rm.name}</text>
-                <text x={rm.x} y={58} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.5)">{rm.pill}</text>
-                <line x1={rm.x} y1={64} x2={rm.x} y2={80} stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
+                <circle cx={rm.x} cy={25} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
+                <text x={rm.x} y={47} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{rm.name}</text>
+                <text x={rm.x} y={63} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.5)">{rm.pill}</text>
+                <line x1={rm.x} y1={69} x2={rm.x} y2={90} stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
               </g>
             ))}
           </svg>
+
+          {/* Dashed divider: RAW MATERIALS above / SUPPLY CHAIN below */}
+          <div style={{
+            width: "100%", display: "flex", alignItems: "center", gap: 16,
+            margin: "0 0 0 0", padding: "0 40px",
+          }}>
+            <div style={{ flex: 1, height: 0, borderTop: "1px dashed #3a3530" }} />
+            <span style={{
+              fontSize: 8, letterSpacing: "0.1em", color: "#4a4540",
+              textTransform: "uppercase" as const, whiteSpace: "nowrap", padding: "0 4px",
+            }}>
+              FIBER OPTIC SUPPLY CHAIN
+            </span>
+            <div style={{ flex: 1, height: 0, borderTop: "1px dashed #3a3530" }} />
+          </div>
 
           {/* Supply tree */}
           <FiberSupplyTree onNodeClick={() => {}} />
