@@ -440,21 +440,45 @@ export default function GalliumInputPage() {
       {/* Page content — single column */}
       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "48px 32px 80px" }}>
 
+        {/* ═══ BREADCRUMB + HEADER ═══ */}
+        {(() => {
+          const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+          const from = params?.get("from");
+          const crumbs = from === "resources"
+            ? [{ label: "All verticals", href: "/" }, { label: "Global Resources", href: "/" }]
+            : [{ label: "All verticals", href: "/" }, { label: "AI Infrastructure", href: "/" }, { label: "Raw Materials", href: "/" }];
+          return (
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 28, flexWrap: "wrap" as const }}>
+              {crumbs.map((bc, i) => (
+                <span key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  {i > 0 && <span style={{ fontSize: 11, color: "#4a4540" }}>/</span>}
+                  <span onClick={() => { window.location.href = bc.href; }} style={{ fontSize: 11, color: "#4a4540", cursor: "pointer", transition: "color 0.15s" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "#a09888")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "#4a4540")}
+                  >{bc.label}</span>
+                </span>
+              ))}
+              <span style={{ fontSize: 11, color: "#4a4540" }}>/</span>
+              <span style={{ fontSize: 11, color: "#a09888" }}>Gallium</span>
+            </div>
+          );
+        })()}
+
         {/* SECTION 1: HOOK */}
         <div id="thesis" style={{ marginBottom: "56px" }}>
-          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-            RAW MATERIAL &middot; AI INFRASTRUCTURE
-          </p>
           <h1 style={{
             fontFamily: "'Instrument Serif', serif",
-            fontSize: "36px",
+            fontSize: "28px",
             fontWeight: 400,
             color: warmWhite,
-            margin: "0 0 46px 0",
+            margin: "0 0 8px 0",
             lineHeight: 1.2,
           }}>
             Gallium
           </h1>
+          <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.6, margin: "0 0 24px 0" }}>
+            Byproduct of alumina refining. Forms compound semiconductors (GaAs, GaN) for AI datacenter power conversion, 5G amplifiers, defense radar, and LED lighting.
+          </p>
           {/* Executive summary */}
           <div style={{ background: "#1a1816", border: "1px solid #252220", borderRadius: 10, padding: "24px 28px", marginBottom: 56 }}>
             <p style={{ fontSize: 20, letterSpacing: "0.1em", color: "#555", margin: "0 0 16px 0" }}>EXECUTIVE SUMMARY</p>

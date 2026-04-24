@@ -479,24 +479,28 @@ export default function GermaniumInputPage() {
       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "48px 32px 80px" }}>
 
         {/* ═══ BREADCRUMB + HEADER ═══ */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 28, flexWrap: "wrap" as const }}>
-          {[
-            { label: "All verticals", href: "/" },
-            { label: "AI Infrastructure", href: "/" },
-            { label: "Connectivity", href: "/" },
-            { label: "Fiber optic cable", href: "/input/fiber-optic-cable" },
-          ].map((bc, i) => (
-            <span key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              {i > 0 && <span style={{ fontSize: 11, color: "#4a4540" }}>/</span>}
-              <span onClick={() => { window.location.href = bc.href; }} style={{ fontSize: 11, color: "#4a4540", cursor: "pointer", transition: "color 0.15s" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#a09888")}
-                onMouseLeave={e => (e.currentTarget.style.color = "#4a4540")}
-              >{bc.label}</span>
-            </span>
-          ))}
-          <span style={{ fontSize: 11, color: "#4a4540" }}>/</span>
-          <span style={{ fontSize: 11, color: "#a09888" }}>Germanium</span>
-        </div>
+        {(() => {
+          const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+          const from = params?.get("from");
+          const crumbs = from === "resources"
+            ? [{ label: "All verticals", href: "/" }, { label: "Global Resources", href: "/" }]
+            : [{ label: "All verticals", href: "/" }, { label: "AI Infrastructure", href: "/" }, { label: "Connectivity", href: "/" }, { label: "Fiber optic cable", href: "/input/fiber-optic-cable" }];
+          return (
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 28, flexWrap: "wrap" as const }}>
+              {crumbs.map((bc, i) => (
+                <span key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  {i > 0 && <span style={{ fontSize: 11, color: "#4a4540" }}>/</span>}
+                  <span onClick={() => { window.location.href = bc.href; }} style={{ fontSize: 11, color: "#4a4540", cursor: "pointer", transition: "color 0.15s" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "#a09888")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "#4a4540")}
+                  >{bc.label}</span>
+                </span>
+              ))}
+              <span style={{ fontSize: 11, color: "#4a4540" }}>/</span>
+              <span style={{ fontSize: 11, color: "#a09888" }}>Germanium</span>
+            </div>
+          );
+        })()}
 
         {/* SECTION 1: HOOK */}
         <div id="thesis" style={{ marginBottom: "56px" }}>

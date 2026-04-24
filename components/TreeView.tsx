@@ -1284,6 +1284,7 @@ export default function TreeView() {
     let showAnalysisButton = false;
     let analysisHref = "";
     let accent: string | undefined;
+    const fromParam = currentVertical?.id === "resources" ? "?from=resources" : "";
 
     if (lastEntry.type === "vertical") {
       const vertData = VERTICALS_DATA.find(v => v.id === lastEntry.id);
@@ -1299,7 +1300,7 @@ export default function TreeView() {
       title = lastEntry.name;
       subtitle = comp?.detail ?? "";
       showAnalysisButton = true;
-      analysisHref = `/input/${lastEntry.id === "fiber" ? "fiber-optic-cable" : lastEntry.id}`;
+      analysisHref = `/input/${lastEntry.id === "fiber" ? "fiber-optic-cable" : lastEntry.id}${fromParam}`;
       accent = INPUT_ACCENT[lastEntry.id];
     } else if (lastEntry.type === "raw-material") {
       title = lastEntry.name;
@@ -1311,7 +1312,7 @@ export default function TreeView() {
         accent = INPUT_ACCENT.gallium;
       }
       showAnalysisButton = true;
-      analysisHref = `/input/${lastEntry.id}`;
+      analysisHref = `/input/${lastEntry.id}${fromParam}`;
     }
 
     if (showAnalysisButton) {
