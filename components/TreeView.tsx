@@ -407,6 +407,7 @@ function GalliumIllustration() {
 
 /* ── illustration map ── */
 const ILLUSTRATION_MAP: Record<string, () => React.JSX.Element> = {
+  resources: GermaniumIllustration,
   ai: AIInfraIllustration,
   energy: EnergyIllustration,
   uavs: UAVIllustration,
@@ -428,6 +429,13 @@ interface VerticalDef {
 }
 
 const VERTICALS_DATA: VerticalDef[] = [
+  {
+    id: "resources",
+    name: "Global Resources",
+    description: "The critical minerals and materials that underpin the most important frontier technologies for the next 50 years. Where they come from, who controls them, and what constrains supply.",
+    chainCount: "3 chains",
+    comingSoon: false,
+  },
   {
     id: "ai",
     name: "AI Infrastructure",
@@ -506,6 +514,37 @@ const AI_SUBSYSTEMS: Subsystem[] = [
     name: "Cooling",
     description: "Heat rejection at chip, rack, and facility scale.",
     componentCount: "0 components",
+    comingSoon: true,
+    components: [],
+  },
+];
+
+const RESOURCES_SUBSYSTEMS: Subsystem[] = [
+  {
+    id: "critical-minerals",
+    name: "Critical Minerals",
+    description: "Elements where supply is geographically concentrated, geopolitically contested, or structurally constrained by byproduct economics.",
+    componentCount: "3 materials",
+    comingSoon: false,
+    components: [
+      { id: "germanium", name: "Germanium", detail: "Fiber optic dopant, IR optics, satellite solar cells. 83% Chinese, export-controlled.", keyNumber: "Live", hasTree: true, comingSoon: false },
+      { id: "gallium", name: "Gallium", detail: "GaN power electronics, defense radar, LEDs. 98% Chinese primary supply.", keyNumber: "Live", hasTree: true, comingSoon: false },
+      { id: "cobalt", name: "Cobalt", detail: "Battery cathodes, superalloys, magnets. DRC dominance, artisanal mining risk.", keyNumber: null, hasTree: false, comingSoon: true },
+    ],
+  },
+  {
+    id: "structural-materials",
+    name: "Structural Materials",
+    description: "Bulk materials whose supply chains face emerging bottlenecks from energy transition and defense demand.",
+    componentCount: "2 materials",
+    comingSoon: true,
+    components: [],
+  },
+  {
+    id: "rare-earths",
+    name: "Rare Earths",
+    description: "Permanent magnets for motors, wind turbines, and defense systems. Chinese processing dominance across the full chain.",
+    componentCount: "0 materials",
     comingSoon: true,
     components: [],
   },
@@ -909,6 +948,12 @@ export default function TreeView() {
   const currentVertical = path.find(p => p.type === "vertical");
   const currentSubsystem = path.find(p => p.type === "subsystem");
   const currentComponent = path.find(p => p.type === "component");
+
+  /* ── get subsystem data for current vertical ── */
+  const getSubsystems = () => {
+    if (currentVertical?.id === "resources") return RESOURCES_SUBSYSTEMS;
+    return AI_SUBSYSTEMS;
+  };
   const currentRawMaterial = path.find(p => p.type === "raw-material");
   const lastEntry = path.length > 0 ? path[path.length - 1] : null;
 
@@ -1220,11 +1265,11 @@ export default function TreeView() {
       title = lastEntry.name;
       subtitle = vertData?.description ?? "";
     } else if (lastEntry.type === "subsystem") {
-      const subData = AI_SUBSYSTEMS.find(s => s.id === lastEntry.id);
+      const subData = getSubsystems().find(s => s.id === lastEntry.id);
       title = lastEntry.name;
       subtitle = subData?.description ?? "";
     } else if (lastEntry.type === "component") {
-      const sub = currentSubsystem ? AI_SUBSYSTEMS.find(s => s.id === currentSubsystem.id) : null;
+      const sub = currentSubsystem ? getSubsystems().find(s => s.id === currentSubsystem.id) : null;
       const comp = sub?.components.find(c => c.id === lastEntry.id);
       title = lastEntry.name;
       subtitle = comp?.detail ?? "";
@@ -1274,7 +1319,7 @@ export default function TreeView() {
   /* ── container content based on current level ── */
   function renderContainerContent() {
     if (currentLevel === "subsystems") {
-      const nodes = AI_SUBSYSTEMS.map(s => ({
+      const nodes = getSubsystems().map(s => ({
         id: s.id,
         name: s.name,
         pill: s.componentCount,
@@ -1283,14 +1328,14 @@ export default function TreeView() {
       }));
       return (
         <NodeRow nodes={nodes} onNodeClick={(id) => {
-          const sub = AI_SUBSYSTEMS.find(s => s.id === id);
+          const sub = getSubsystems().find(s => s.id === id);
           if (sub) pushPath({ type: "subsystem", id: sub.id, name: sub.name });
         }} />
       );
     }
 
     if (currentLevel === "components") {
-      const sub = currentSubsystem ? AI_SUBSYSTEMS.find(s => s.id === currentSubsystem.id) : null;
+      const sub = currentSubsystem ? getSubsystems().find(s => s.id === currentSubsystem.id) : null;
       if (!sub) return null;
       const nodes = sub.components.map(c => ({
         id: c.id,
@@ -1302,7 +1347,10 @@ export default function TreeView() {
       return (
         <NodeRow nodes={nodes} onNodeClick={(id) => {
           const comp = sub.components.find(c => c.id === id);
-          if (comp && comp.hasTree) pushPath({ type: "component", id: comp.id, name: comp.name });
+          if (comp && comp.hasTree) {
+            const isRawMaterial = id === "germanium" || id === "gallium" || id === "cobalt";
+            pushPath({ type: isRawMaterial ? "raw-material" : "component", id: comp.id, name: comp.name });
+          }
         }} />
       );
     }
