@@ -1383,13 +1383,17 @@ export default function TreeView() {
         renderVerticals()
       ) : (
         /* Levels 2+: Spine + container */
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 32px 80px" }}>
-          {renderBreadcrumb()}
-          {renderContextualHeader()}
-          <div style={{ height: 1, background: borderColor, margin: "28px 0" }} />
+        <div style={{ padding: "32px 0 80px" }}>
+          {/* Header area — constrained to 900px */}
+          <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 32px" }}>
+            {renderBreadcrumb()}
+            {renderContextualHeader()}
+            <div style={{ height: 1, background: borderColor, margin: "28px 0" }} />
+          </div>
 
-          {/* Spine — always centered at 900px */}
+          {/* Spine + container — centered on full page width */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            {/* Spine nodes */}
             {path.map((entry, i) => (
               <React.Fragment key={`spine-${i}`}>
                 <SpineAncestorNode
@@ -1402,30 +1406,31 @@ export default function TreeView() {
                 <SpineDashedLine />
               </React.Fragment>
             ))}
-          </div>
 
-          {/* Container — widens to 90vw only for tree level */}
-          <div style={currentLevel === "tree"
-            ? { width: "90vw", maxWidth: 1400, marginLeft: "calc(50% - 45vw)" }
-            : {}
-          }>
-            <div
-              key={animKey}
-              style={{
-                background: "#1a1816",
-                borderRadius: 10,
-                padding: "32px 20px 40px",
-                animation: "containerOpen 350ms ease-out forwards",
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              {renderContainerContent()}
+            {/* Container */}
+            <div style={{ width: currentLevel === "tree" ? "90vw" : "auto", maxWidth: currentLevel === "tree" ? 1400 : 900, padding: "0 32px" }}>
+              <div
+                key={animKey}
+                style={{
+                  background: "#1a1816",
+                  borderRadius: 10,
+                  padding: "32px 20px 40px",
+                  animation: "containerOpen 350ms ease-out forwards",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                {renderContainerContent()}
+              </div>
             </div>
           </div>
 
-          {/* Downstream chips (if at tree level) */}
-          {currentLevel === "tree" && renderDownstreamChips()}
+          {/* Downstream chips — constrained to 900px */}
+          {currentLevel === "tree" && (
+            <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 32px" }}>
+              {renderDownstreamChips()}
+            </div>
+          )}
         </div>
       )}
 
