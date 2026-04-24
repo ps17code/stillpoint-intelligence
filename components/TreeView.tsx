@@ -574,7 +574,7 @@ function DashedConnector({ height = 32 }: { height?: number }) {
   );
 }
 
-/* ── Spine column (ancestor nodes + focus node) ── */
+/* ── Spine column (ancestor nodes + focus node) — HTML version for subsystem/component levels ── */
 function SpineColumn({
   ancestors,
   current,
@@ -597,6 +597,79 @@ function SpineColumn({
         </>
       )}
     </div>
+  );
+}
+
+/* ── Spine SVG — renders spine nodes inside an SVG matching the tree viewBox width ── */
+function SpineSVG({
+  svgWidth,
+  ancestors,
+  current,
+  onAncestorClick,
+}: {
+  svgWidth: number;
+  ancestors: { name: string }[];
+  current: string;
+  onAncestorClick: (index: number) => void;
+}) {
+  const cx = svgWidth / 2;
+  const nodeGap = 70;
+  const startY = 30;
+  const totalNodes = ancestors.length + 1; // ancestors + current
+  const svgH = startY + totalNodes * nodeGap + 20;
+
+  return (
+    <svg
+      viewBox={`0 0 ${svgWidth} ${svgH}`}
+      preserveAspectRatio="xMidYMid meet"
+      style={{ display: "block", width: "100%", height: "auto" }}
+    >
+      {ancestors.map((a, i) => {
+        const y = startY + i * nodeGap;
+        const nextY = startY + (i + 1) * nodeGap;
+        return (
+          <g key={i} style={{ cursor: "pointer" }} onClick={() => onAncestorClick(i)}>
+            {/* Ring */}
+            <circle cx={cx} cy={y} r={5} fill="none" stroke="rgba(155,168,171,0.3)" strokeWidth={1} />
+            {/* Name */}
+            <text
+              x={cx} y={y + 22}
+              textAnchor="middle"
+              fontFamily="'EB Garamond', Georgia, serif"
+              fontSize={11}
+              fill="#706a60"
+            >
+              {a.name}
+            </text>
+            {/* Dashed line down */}
+            <line x1={cx} y1={y + 30} x2={cx} y2={nextY - 8}
+              stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
+          </g>
+        );
+      })}
+      {/* Current focus node */}
+      {(() => {
+        const y = startY + ancestors.length * nodeGap;
+        return (
+          <g>
+            <circle cx={cx} cy={y} r={5.5} fill="none" stroke="rgba(155,168,171,0.6)" strokeWidth={1.3} />
+            <text
+              x={cx} y={y + 22}
+              textAnchor="middle"
+              fontFamily="'EB Garamond', Georgia, serif"
+              fontSize={13}
+              fontWeight={600}
+              fill="rgba(255,255,255,0.82)"
+            >
+              {current}
+            </text>
+            {/* Dashed line down to tree content */}
+            <line x1={cx} y1={y + 30} x2={cx} y2={svgH}
+              stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
+          </g>
+        );
+      })()}
+    </svg>
   );
 }
 
@@ -1273,6 +1346,7 @@ export default function TreeView() {
 
     /* ── Fiber optic cable tree ── */
     if (treeTarget.type === "component" && treeTarget.id === "fiber") {
+      const fiberCompW = computeCompSvgWidth(chainsData.COMP_DATA["GeO\u2082 / GeCl\u2084"]);
       return (
         <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
           <TreeHeader
@@ -1282,26 +1356,44 @@ export default function TreeView() {
             accent={INPUT_ACCENT.fiber}
           />
 
-          <SpineColumn
-            ancestors={[
-              { name: "AI Infrastructure", onClick: () => goSubsystems(selectedVertical ?? "AI Infrastructure") },
-              { name: selectedSubsystem ?? "Connectivity", onClick: () => goComponents(selectedSubsystem ?? "Connectivity") },
-            ]}
-            current="Fiber optic cable"
-          />
-
-          <NodeRow
-            nodes={[
-              { id: "germanium", name: "Germanium", pill: "~230t/yr \u00b7 83% CN", clickable: true, dimmed: false },
-              { id: "helium", name: "Helium", pill: "Non-renewable", clickable: false, dimmed: true },
-              { id: "silica", name: "Silica / SiCl\u2084", pill: "Prices up 50%", clickable: false, dimmed: true },
-            ]}
-            onNodeClick={(id) => { if (id === "germanium") goRawMaterial("germanium"); }}
-          />
-          <DashedConnector height={32} />
-
-          <div style={{ position: "relative" }}>
+          {/* Wide tree container — breaks out of 900px to 90vw */}
+          <div style={{ width: "90vw", maxWidth: 1600, marginLeft: "calc(50% - 45vw)", position: "relative" }}>
             <ExpandButton onClick={() => setTreeExpanded(true)} />
+
+            {/* Spine SVG — same viewBox width as tree */}
+            <SpineSVG
+              svgWidth={fiberCompW}
+              ancestors={[
+                { name: "AI Infrastructure" },
+                { name: selectedSubsystem ?? "Connectivity" },
+              ]}
+              current="Fiber optic cable"
+              onAncestorClick={(i) => {
+                if (i === 0) goSubsystems(selectedVertical ?? "AI Infrastructure");
+                if (i === 1) goComponents(selectedSubsystem ?? "Connectivity");
+              }}
+            />
+
+            {/* Raw material nodes as SVG matching tree width */}
+            <svg viewBox={`0 0 ${fiberCompW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+              {[
+                { x: fiberCompW / 2 - 200, name: "Germanium", pill: "~230t/yr", clickable: true, dimmed: false },
+                { x: fiberCompW / 2, name: "Helium", pill: "Non-renewable", clickable: false, dimmed: true },
+                { x: fiberCompW / 2 + 200, name: "Silica / SiCl\u2084", pill: "Up 50%", clickable: false, dimmed: true },
+              ].map((rm, i) => (
+                <g key={i}
+                  style={{ cursor: rm.clickable ? "pointer" : "default", opacity: rm.dimmed ? 0.4 : 1 }}
+                  onClick={() => { if (rm.clickable) goRawMaterial("germanium"); }}
+                >
+                  <circle cx={rm.x} cy={20} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
+                  <text x={rm.x} y={42} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{rm.name}</text>
+                  <text x={rm.x} y={58} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.5)">{rm.pill}</text>
+                  <line x1={rm.x} y1={64} x2={rm.x} y2={80} stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
+                </g>
+              ))}
+            </svg>
+
+            {/* Supply tree — flows seamlessly below */}
             <FiberSupplyTree onNodeClick={() => {}} />
           </div>
 
@@ -1324,6 +1416,7 @@ export default function TreeView() {
 
     /* ── Germanium tree ── */
     if (treeTarget.type === "raw-material" && treeTarget.id === "germanium") {
+      const geRawW = computeRawSvgWidth(chainsData.RAW_DATA["Germanium"]);
       return (
         <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
           <TreeHeader
@@ -1333,16 +1426,23 @@ export default function TreeView() {
             accent={INPUT_ACCENT.germanium}
           />
 
-          <SpineColumn
-            ancestors={[
-              { name: "AI Infrastructure", onClick: () => goSubsystems(selectedVertical ?? "AI Infrastructure") },
-              { name: "Raw Materials", onClick: () => goVerticals() },
-            ]}
-            current="Germanium"
-          />
-
-          <div style={{ position: "relative" }}>
+          {/* Wide tree container */}
+          <div style={{ width: "90vw", maxWidth: 1600, marginLeft: "calc(50% - 45vw)", position: "relative" }}>
             <ExpandButton onClick={() => setTreeExpanded(true)} />
+
+            <SpineSVG
+              svgWidth={geRawW}
+              ancestors={[
+                { name: "AI Infrastructure" },
+                { name: "Raw Materials" },
+              ]}
+              current="Germanium"
+              onAncestorClick={(i) => {
+                if (i === 0) goSubsystems(selectedVertical ?? "AI Infrastructure");
+                if (i === 1) goVerticals();
+              }}
+            />
+
             <GermaniumSupplyTree onNodeClick={() => {}} />
           </div>
 
@@ -1377,6 +1477,7 @@ export default function TreeView() {
 
     /* ── Gallium tree ── */
     if (treeTarget.type === "raw-material" && treeTarget.id === "gallium") {
+      const gaW = computeGalliumSvgWidth(galliumChain);
       return (
         <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
           <TreeHeader
@@ -1386,16 +1487,23 @@ export default function TreeView() {
             accent={INPUT_ACCENT.gallium}
           />
 
-          <SpineColumn
-            ancestors={[
-              { name: "AI Infrastructure", onClick: () => goSubsystems(selectedVertical ?? "AI Infrastructure") },
-              { name: "Raw Materials", onClick: () => goVerticals() },
-            ]}
-            current="Gallium"
-          />
-
-          <div style={{ position: "relative" }}>
+          {/* Wide tree container */}
+          <div style={{ width: "90vw", maxWidth: 1600, marginLeft: "calc(50% - 45vw)", position: "relative" }}>
             <ExpandButton onClick={() => setTreeExpanded(true)} />
+
+            <SpineSVG
+              svgWidth={gaW}
+              ancestors={[
+                { name: "AI Infrastructure" },
+                { name: "Raw Materials" },
+              ]}
+              current="Gallium"
+              onAncestorClick={(i) => {
+                if (i === 0) goSubsystems(selectedVertical ?? "AI Infrastructure");
+                if (i === 1) goVerticals();
+              }}
+            />
+
             <GalliumSupplyTree onNodeClick={() => {}} />
           </div>
 
