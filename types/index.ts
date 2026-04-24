@@ -88,6 +88,19 @@ export interface EUChain {
   ownerCountries?: string[];
 }
 
+export interface GermaniumChain {
+  deposits: string[];
+  hostOperations: string[];
+  refiners: string[];
+  supplyAggregates: string[];
+  globalSupply: string[];
+  depositToHostOp: [number, number][];
+  hostOpToRefiner: [number, number][];
+  refinerToAggregates: [number, number][];
+  aggregatesToGlobal: [number, number][];
+  minor: { deposits: number[]; hostOperations: number[]; refiners: number[] };
+}
+
 export interface GalliumChain {
   byproductSource: string[];
   primaryProducer: string[];

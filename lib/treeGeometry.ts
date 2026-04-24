@@ -131,6 +131,12 @@ export const PALETTES = {
   developers: { stroke: "#b09040", text: "#6a5010", pip: "#b09040" },
   owners:     { stroke: "#c8a85a", text: "#7a6020", pip: "#c8a85a" },
   euOut:      { stroke: "#1a1a2e", text: "#1a1a2e", pip: "#1a1a2e" },
+  // Germanium supply layer palettes (warm gold family)
+  geDeposit:        { stroke: "#c8a85a", text: "#8a6820", pip: "#c8a85a" },
+  geHostOp:         { stroke: "#a87e3a", text: "#6a4e18", pip: "#a87e3a" },
+  geRefiner:        { stroke: "#7a5a28", text: "#4a3610", pip: "#7a5a28" },
+  geAggregate:      { stroke: "#6a7a5a", text: "#3a4a2a", pip: "#6a7a5a" },
+  geGlobal:         { stroke: "#3e2c0e", text: "#3e2c0e", pip: "#3e2c0e" },
   // Gallium layer palettes (green family matching accent #7a8a6a)
   galliumSource:    { stroke: "#8a9a6a", text: "#4a5a2a", pip: "#8a9a6a" },
   galliumProducer:  { stroke: "#7a8a5a", text: "#3a4a1a", pip: "#7a8a5a" },
@@ -538,6 +544,83 @@ export function buildGalliumGeometry(
     ...buildEdges(prodXs, prodCY, refXs, refCY, PALETTES.galliumProducer.stroke, chain.producerToRefiner, 1),
     ...buildEdges(refXs, refCY, aggXs, aggCY, PALETTES.galliumRefiner.stroke, chain.refinerToAggregates, 2),
     ...buildEdges(aggXs, aggCY, gloXs, gloCY, PALETTES.galliumRefiner.stroke, chain.aggregatesToGlobal, 3),
+  ];
+
+  return {
+    layers,
+    edges,
+    outputNode: { name: chain.globalSupply[0], cx: gloXs[0], cy: gloCY },
+  };
+}
+
+// ── GERMANIUM TREE GEOMETRY ────────────────────────────────────
+import type { GermaniumChain } from "@/types";
+
+export function computeGermaniumSvgWidth(chain: GermaniumChain): number {
+  const widths = [
+    chain.deposits.length * SLOT,
+    chain.hostOperations.length * SLOT,
+    chain.refiners.length * SLOT,
+    chain.supplyAggregates.length * SLOT,
+    chain.globalSupply.length * SLOT,
+  ];
+  return Math.max(1800, Math.max(...widths) + 400);
+}
+
+export function buildGermaniumGeometry(
+  chain: GermaniumChain,
+  ancX: number, topY: number,
+  gap = 170,
+): TreeGeometry {
+  const depCY  = topY;
+  const hostCY = topY + gap;
+  const refCY  = topY + gap * 2;
+  const aggCY  = topY + gap * 3;
+  const gloCY  = topY + gap * 4;
+
+  const depXs  = contentAwareSpread(chain.deposits.length, ancX);
+  const hostXs = contentAwareSpread(chain.hostOperations.length, ancX);
+  const refXs  = contentAwareSpread(chain.refiners.length, ancX);
+  const aggXs  = contentAwareSpread(chain.supplyAggregates.length, ancX);
+  const gloXs  = contentAwareSpread(chain.globalSupply.length, ancX);
+
+  const depMinor  = new Set(chain.minor.deposits);
+  const hostMinor = new Set(chain.minor.hostOperations);
+  const refMinor  = new Set(chain.minor.refiners);
+
+  const layers: LayerGeometry[] = [
+    {
+      key: "deposit", label: "DEPOSITS", cy: depCY,
+      nodes: chain.deposits.map((n, i) => ({ name: n, cx: depXs[i], cy: depCY, opacity: depMinor.has(i) ? 0.4 : 1 })),
+      color: PALETTES.geDeposit,
+    },
+    {
+      key: "hostoperation", label: "HOST OPERATIONS", cy: hostCY,
+      nodes: chain.hostOperations.map((n, i) => ({ name: n, cx: hostXs[i], cy: hostCY, opacity: hostMinor.has(i) ? 0.4 : 1 })),
+      color: PALETTES.geHostOp,
+    },
+    {
+      key: "refiner", label: "REFINERS", cy: refCY,
+      nodes: chain.refiners.map((n, i) => ({ name: n, cx: refXs[i], cy: refCY, opacity: refMinor.has(i) ? 0.4 : 1 })),
+      color: PALETTES.geRefiner,
+    },
+    {
+      key: "supplyaggregates", label: "SUPPLY", cy: aggCY,
+      nodes: chain.supplyAggregates.map((n, i) => ({ name: n, cx: aggXs[i], cy: aggCY, opacity: 1 })),
+      color: PALETTES.geAggregate,
+    },
+    {
+      key: "globalsupply", label: "GLOBAL", cy: gloCY,
+      nodes: chain.globalSupply.map((n, i) => ({ name: n, cx: gloXs[i], cy: gloCY, opacity: 1 })),
+      color: PALETTES.geGlobal,
+    },
+  ];
+
+  const edges: EdgeGeometry[] = [
+    ...buildEdges(depXs, depCY, hostXs, hostCY, PALETTES.geDeposit.stroke, chain.depositToHostOp, 0),
+    ...buildEdges(hostXs, hostCY, refXs, refCY, PALETTES.geHostOp.stroke, chain.hostOpToRefiner, 1),
+    ...buildEdges(refXs, refCY, aggXs, aggCY, PALETTES.geRefiner.stroke, chain.refinerToAggregates, 2),
+    ...buildEdges(aggXs, aggCY, gloXs, gloCY, PALETTES.geAggregate.stroke, chain.aggregatesToGlobal, 3),
   ];
 
   return {

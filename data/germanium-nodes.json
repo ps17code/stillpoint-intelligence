@@ -1,0 +1,596 @@
+{
+  "Lincang": {
+    "type": "Deposit",
+    "loc": "Lincang Prefecture, Yunnan Province, China",
+    "stat": "~1,000 t Ge reserves · 850 ppm grade",
+    "risk": "State-affiliated operator under export licensing regime; zero direct western access.",
+    "stats": [
+      ["Type", "Coal-hosted lignite"],
+      ["Grade", "~850 ppm avg"],
+      ["Reserves", "~1,000 t Ge"],
+      ["Status", "Active"]
+    ],
+    "role": "One of the world's highest-grade germanium deposits. Germanium was concentrated by hydrothermal fluids from the Lincang granite batholith into ancient swamp coal seams. Operated by Lincang Xinyuan (Shenzhen listed).",
+    "inv": "Highest-grade germanium deposit in the world. Sets the upstream cost floor for Chinese primary production — anyone producing outside China must contend with Lincang's grade advantage when competing on price.",
+    "risks": [
+      "State-affiliated operator under export licensing regime; zero direct western access.",
+      "Chinese export controls limit westward flow",
+      "Single operator concentration risk"
+    ],
+    "country": "China",
+    "descriptor_pill": "Coal deposit",
+    "quantity_pill": ">1,000 t Ge reserves"
+  },
+  "Wulantuga": {
+    "type": "Deposit",
+    "loc": "Xilingol League, Inner Mongolia, China",
+    "stat": "~1,600 t Ge reserves · 137 ppm grade",
+    "risk": "State ownership means output is policy-driven rather than price-responsive.",
+    "stats": [
+      ["Type", "Coal-hosted lignite"],
+      ["Grade", "137 ppm (#6 seam)"],
+      ["Reserves", "~1,600 t Ge"],
+      ["Recovery", "~20-35 t/yr actual"]
+    ],
+    "role": "Largest coal-hosted germanium deposit by reserve size. Only ~15-25% of theoretical germanium content is commercially recovered due to specialist extraction requirements. Operated by Shengli Coal Group (state-owned).",
+    "inv": "Largest known germanium deposit by reserve size but only ~15-25% of theoretical content is commercially recovered. Theoretical supply headroom exists but isn't being realized by current operators.",
+    "risks": [
+      "State ownership means output is policy-driven rather than price-responsive.",
+      "Low recovery rate limits supply upside",
+      "No western investment access"
+    ],
+    "country": "China",
+    "descriptor_pill": "Coal deposit",
+    "quantity_pill": "~1,600 t Ge reserves"
+  },
+  "Yimin": {
+    "type": "Deposit",
+    "loc": "Inner Mongolia, China",
+    "stat": "~4,000 t Ge resources",
+    "risk": "Fragmented operator base, opaque production data.",
+    "stats": [
+      ["Type", "Coal-hosted lignite"],
+      ["Grade", "28-135 ppm"],
+      ["Reserves", "~4,000 t Ge"],
+      ["Status", "Partial / low activity"]
+    ],
+    "role": "Germanium-bearing lignite basin in Inner Mongolia. Worked by various state-affiliated operators. Recovery rates are low and output is more geographically dispersed than Wulantuga.",
+    "inv": "Additional Chinese coal-hosted germanium resource. Worked by various smaller state-affiliated operators; low recovery rates, limited price responsiveness.",
+    "risks": [
+      "Fragmented operator base, opaque production data.",
+      "Grade too low at current prices",
+      "State control limits western access"
+    ],
+    "country": "China",
+    "descriptor_pill": "Coal deposit",
+    "quantity_pill": "~4,000 t Ge resources"
+  },
+  "Huize": {
+    "type": "Deposit",
+    "loc": "Yunnan Province, China",
+    "stat": "443 t Ge resources (Chihong) · zinc-lead ore host",
+    "risk": "Output tied to zinc pricing, not germanium demand signals.",
+    "stats": [
+      ["Type", "Zinc-lead sulfide ore"],
+      ["Zn grade", "World-class"],
+      ["Ge content", "443 t Ge resources"],
+      ["Operator", "Yunnan Chihong (600497.SH)"]
+    ],
+    "role": "Zinc-lead deposit with significant germanium content. Primary source of germanium recovered through the Chihong zinc smelter operations — a separate extraction pathway from coal-hosted germanium.",
+    "inv": "Primary source of germanium recovered through Yunnan Chihong's zinc smelter operations. The zinc-ore pathway complements the coal-hosted pathway as Chinese germanium's second extraction route.",
+    "risks": [
+      "Output tied to zinc pricing, not germanium demand signals.",
+      "Ge output tied to zinc production decisions",
+      "Chinese listed - limited western access"
+    ],
+    "country": "China",
+    "descriptor_pill": "Zinc ore deposit",
+    "quantity_pill": "443 t Ge resources"
+  },
+  "Yiliang + SYGT": {
+    "type": "Deposit",
+    "loc": "Yunnan Province, China",
+    "stat": "186 t Ge proven reserves",
+    "risk": "Limited public disclosure on reserves and production.",
+    "stats": [
+      ["Type", "Zn-Pb-Ge sulfide belt"],
+      ["Belt", "Sichuan-Yunnan-Guizhou"],
+      ["Zn reserves", ">32M t combined"],
+      ["Deposits", "450+ Ge-bearing"]
+    ],
+    "role": "Additional Yunnan zinc-lead deposits with germanium content. Feeds into Chinese primary germanium supply via associated smelter operations.",
+    "inv": "Additional Yunnan zinc-lead resources with germanium content. Feeds into Chinese primary germanium supply via associated smelter operations.",
+    "risks": [
+      "Limited public disclosure on reserves and production.",
+      "Regional concentration risk",
+      "Ownership fragmentation"
+    ],
+    "country": "China",
+    "descriptor_pill": "Zinc ore deposit",
+    "quantity_pill": "186 t Ge reserves"
+  },
+  "Spetsugli": {
+    "type": "Deposit",
+    "loc": "Primorsky Krai, Russia",
+    "stat": "~1,015 t Ge reserves · coal-hosted",
+    "risk": "Sanctions-exposed; no western route to market.",
+    "stats": [
+      ["Reserves", "~1,015 t Ge"],
+      ["Grade", "450–514 ppm avg"],
+      ["Operator", "JSC Germanium (Rostec)"],
+      ["Status", "Active but sanctioned"]
+    ],
+    "role": "Russia's primary germanium deposit. Worked by JSC Germanium. Output is effectively unavailable to western buyers due to sanctions imposed after Russia's invasion of Ukraine.",
+    "inv": "Russia's primary germanium deposit. Effectively unavailable to western buyers due to sanctions. Output likely flows to Chinese and non-western buyers, reinforcing Chinese supply dominance over western markets.",
+    "risks": [
+      "Sanctions-exposed; no western route to market.",
+      "JSC Germanium is part of Rostec, a sanctioned state defense conglomerate",
+      "Sanctions could be reversed but political timeline is entirely unpredictable"
+    ],
+    "country": "Russia",
+    "descriptor_pill": "Coal deposit",
+    "quantity_pill": "~1,015 t Ge reserves"
+  },
+  "Big Hill": {
+    "type": "Deposit",
+    "loc": "Lubumbashi, Haut-Katanga, DRC",
+    "stat": "~700 t Ge potential · copper-cobalt tailings",
+    "risk": "DRC operating risk; reprocessing ramp-up delays possible.",
+    "stats": [
+      ["Slag volume", "14 million tonnes"],
+      ["Ge potential", "700+ t est."],
+      ["Operator", "STL / Gécamines"],
+      ["First export", "October 2024"]
+    ],
+    "role": "Historic copper-cobalt mining tailings near Lubumbashi with significant germanium content. Being reprocessed by STL/Gécamines joint venture under an offtake agreement with Umicore.",
+    "inv": "The single most important western supply development. ~700 t of germanium-bearing tailings being reprocessed by STL/Gécamines under Umicore offtake. Critical feedstock for Umicore as recycled-only supply saturates.",
+    "risks": [
+      "DRC operating risk; reprocessing ramp-up delays possible.",
+      "Hydrometallurgical plant is new — ramp-up timeline uncertain",
+      "Exclusive Umicore offtake means no price competition"
+    ],
+    "country": "DRC",
+    "descriptor_pill": "Tailings deposit",
+    "quantity_pill": "700+ t Ge potential"
+  },
+  "Red Dog": {
+    "type": "Deposit",
+    "loc": "Northwest Arctic Borough, Alaska, USA",
+    "stat": "World-class zinc-lead deposit with Ge · declining",
+    "risk": "Declining toward planned end-of-mine in 2031 (Aktigiruq extension possible but not yet permitted).",
+    "stats": [
+      ["Operator", "Teck Resources (TECK)"],
+      ["Zinc output", "~555,600 t Zn (2024)"],
+      ["Mine life", "To 2031 (current pits)"],
+      ["Ge processing", "Trail smelter, BC"]
+    ],
+    "role": "World-class zinc-lead deposit in northwest Alaska, operated by Teck Resources. Declining toward planned end-of-mine in 2031, though Teck is exploring Aktigiruq extension. Germanium content recovered but volumes not separately disclosed.",
+    "inv": "North America's only significant western germanium-bearing zinc operation. Teck Resources operates and refines through Trail smelter; exposure to US Defense Production Act Title III investments possible.",
+    "risks": [
+      "Declining toward planned end-of-mine in 2031 (Aktigiruq extension possible but not yet permitted).",
+      "Germanium output volumes not publicly disclosed",
+      "Teck-Anglo American merger may change operational priorities"
+    ],
+    "country": "USA",
+    "descriptor_pill": "Zinc ore deposit",
+    "quantity_pill": "Declining — to 2031"
+  },
+  "Lincang Xinyuan": {
+    "type": "Host Operation",
+    "loc": "Lincang, Yunnan Province, China",
+    "stat": "~40 t Ge/yr extracted from Lincang coal",
+    "risk": "Chinese export controls limit westward flow of output.",
+    "stats": [
+      ["Ticker", "002428.SZ"],
+      ["Lignite mined", "~40,000 t/yr"],
+      ["Ge output", "~40 t/yr extracted"],
+      ["Integration", "Mine to refinery to wafers"]
+    ],
+    "role": "Shenzhen-listed operator of Lincang germanium-bearing coal. One of few Chinese germanium operators with a public listing, giving indirect investor exposure to Chinese germanium supply.",
+    "inv": "Shenzhen-listed operator of the highest-grade Chinese germanium deposit. Provides indirect public investor exposure to Chinese germanium supply, though A-share access is limited for non-Chinese investors.",
+    "risks": [
+      "Chinese export controls limit westward flow of output.",
+      "A-share listing limits western investors",
+      "Single-site concentration risk"
+    ],
+    "country": "China",
+    "descriptor_pill": "Coal-hosted Ge operator",
+    "quantity_pill": "~40 t Ge/yr extracted"
+  },
+  "Shengli Coal Group": {
+    "type": "Host Operation",
+    "loc": "Inner Mongolia, China",
+    "stat": "~20-35 t Ge/yr extracted (est.)",
+    "risk": "Opaque production data and no western investment vehicle.",
+    "stats": [
+      ["Ownership", "State-owned enterprise"],
+      ["Coal mined", "~1M t/yr"],
+      ["Ge content", "~137 ppm in #6 seam"],
+      ["Ge recovered", "~20-35 t/yr"]
+    ],
+    "role": "State-owned Chinese coal mining group operating the Wulantuga deposit in Inner Mongolia. Primary recovered germanium flows into Chinese refining chain; details of specific offtake arrangements not publicly disclosed.",
+    "inv": "State-owned operator of the largest reserve-size germanium deposit. Output is policy-driven rather than price-responsive; limits upside even during supply constraints.",
+    "risks": [
+      "Opaque production data and no western investment vehicle.",
+      "Power generation is primary — Ge always secondary",
+      "Policy shifts directly impact output"
+    ],
+    "country": "China",
+    "descriptor_pill": "Coal-hosted Ge operator",
+    "quantity_pill": "~20-35 t/yr extracted"
+  },
+  "Various State Operators": {
+    "type": "Host Operation",
+    "loc": "Multiple sites, China",
+    "stat": "~5-10 t Ge/yr (estimated aggregate)",
+    "risk": "Fragmented, opaque operator base.",
+    "stats": [
+      ["Type", "Multiple state operators"],
+      ["Region", "Inner Mongolia"],
+      ["Activity", "Low — partial extraction"],
+      ["Data", "Limited disclosure"]
+    ],
+    "role": "Aggregate representing various smaller Chinese state-affiliated coal operators working the Yimin basin and other smaller germanium-bearing coal deposits.",
+    "inv": "Aggregate of smaller Chinese state-affiliated coal operators. Represents fragmented supply with limited responsiveness to price signals.",
+    "risks": [
+      "Fragmented, opaque operator base.",
+      "Opaque operations with no public reporting",
+      "Output highly variable"
+    ],
+    "country": "China",
+    "descriptor_pill": "Coal operators aggregate",
+    "quantity_pill": "~5-10 t/yr est."
+  },
+  "Yunnan Chihong": {
+    "type": "Host Operation",
+    "loc": "Yunnan Province, China",
+    "stat": "~66 t Ge/yr refined (largest single Chinese source)",
+    "risk": "Chinese export controls limit direct western access to the output.",
+    "stats": [
+      ["Ticker", "600497.SH"],
+      ["Zn concentrate", "290,000 t/yr"],
+      ["Ge output", "~66 t/yr refined"],
+      ["Role", "China's largest Ge producer"]
+    ],
+    "role": "Shanghai-listed zinc-lead mining and smelting company. Operates the largest single source of primary germanium globally via the Huize zinc smelter. Integrated from zinc concentrate through refined germanium output.",
+    "inv": "Largest single source of primary germanium globally. Shanghai-listed — primary A-share vehicle for Chinese germanium exposure. Integrated zinc-ore-to-refined-germanium pathway through the Huize smelter.",
+    "risks": [
+      "Chinese export controls limit direct western access to the output.",
+      "Ge output tied to zinc production",
+      "Zinc price weakness reduces Ge output"
+    ],
+    "country": "China",
+    "descriptor_pill": "Zinc smelter + Ge recovery",
+    "quantity_pill": "~66 t/yr refined"
+  },
+  "JSC Germanium": {
+    "type": "Host Operation",
+    "loc": "Krasnoyarsk, Russia",
+    "stat": "~20 t Ge/yr capacity · sanctioned",
+    "risk": "Sanctions-exposed; no western route to market.",
+    "stats": [
+      ["Capacity", "~20 t/yr"],
+      ["Refinery", "Krasnoyarsk, Siberia"],
+      ["Ownership", "Rostec (state defense)"],
+      ["Export", "Blocked post-2022"]
+    ],
+    "role": "Russia's integrated germanium operator, working the Spetsugli deposit and operating downstream refining. Output is effectively unavailable to western buyers due to post-2022 sanctions; may flow to Chinese and other non-western buyers.",
+    "inv": "Russia's integrated germanium operator. Effectively unavailable to western buyers due to sanctions. Tracked for geopolitical signaling but not investable.",
+    "risks": [
+      "Sanctions-exposed; no western route to market.",
+      "Part of Rostec defense conglomerate",
+      "Production continues but serves only Russia and potentially China"
+    ],
+    "country": "Russia",
+    "descriptor_pill": "Ge mine + refinery",
+    "quantity_pill": "~20 t/yr capacity"
+  },
+  "STL / Gécamines": {
+    "type": "Host Operation",
+    "loc": "Lubumbashi, Haut-Katanga, DRC",
+    "stat": "~30 t Ge/yr target · reprocessing Big Hill tailings",
+    "risk": "DRC operating risk; JV structure and political sensitivity around Gécamines.",
+    "stats": [
+      ["Operator", "STL / Gécamines"],
+      ["Offtake", "100% to Umicore"],
+      ["Plant", "Commissioned Oct 2023"],
+      ["Target", "Up to 30% world demand"]
+    ],
+    "role": "Joint venture between La Société de Traitement du Terril de Lubumbashi (STL) and Congolese state mining company Gécamines. Reprocessing Big Hill copper-cobalt tailings for germanium and other byproducts. Umicore has offtake rights on germanium output.",
+    "inv": "Most important western supply development in the chain. Feeds directly into Umicore under offtake — the tailings flow is what enables Umicore's continued non-Chinese output at scale.",
+    "risks": [
+      "DRC operating risk; JV structure and political sensitivity around Gécamines.",
+      "Hydrometallurgical plant is new — ramp-up timeline uncertain",
+      "Exclusive Umicore offtake means no market price competition"
+    ],
+    "country": "DRC",
+    "descriptor_pill": "Tailings reprocessor",
+    "quantity_pill": "~30 t/yr target"
+  },
+  "Teck Resources": {
+    "type": "Host Operation",
+    "loc": "Vancouver HQ, Canada; Red Dog mine, Alaska USA; Trail smelter, British Columbia, Canada",
+    "stat": "Undisclosed Ge from Red Dog zinc · North America's only western Ge source",
+    "risk": "Red Dog declines toward 2031 end-of-mine; Ge output volumes not separately disclosed.",
+    "stats": [
+      ["Ticker", "TECK (NYSE/TSX)"],
+      ["Zinc output", "~555,600 t/yr (2024)"],
+      ["Ge output", "Not disclosed"],
+      ["Mine life", "Red Dog to 2031"]
+    ],
+    "role": "Diversified Canadian mining company. Operates Red Dog zinc mine in Alaska — the only significant germanium-bearing zinc operation in North America. Trail smelter in British Columbia processes concentrate but germanium output volumes not separately disclosed in filings.",
+    "inv": "North America's only significant western germanium operator via Red Dog. Germanium is a small line in Teck's overall business but carries strategic weight for US supply chain diversification.",
+    "risks": [
+      "Red Dog declines toward 2031 end-of-mine; Ge output volumes not separately disclosed.",
+      "Teck-Anglo American merger may change operational priorities at Red Dog",
+      "Germanium revenue is unquantified"
+    ],
+    "country": "Canada",
+    "descriptor_pill": "Diversified zinc miner",
+    "quantity_pill": "Undisclosed Ge volumes"
+  },
+  "Umicore": {
+    "type": "Refiner",
+    "loc": "Olen, Belgium (Ge facility); Brussels HQ, Belgium",
+    "stat": "~40-50 t/yr recycled Ge · fiber-grade GeCl₄, IR optics, wafers",
+    "risk": "Single-facility risk at Olen; business distractions from other Umicore segments.",
+    "stats": [
+      ["Ticker", "UMI (Euronext)"],
+      ["Ge output", "~40-50 t/yr est."],
+      ["Feed source", ">50% recycled scrap"],
+      ["GeCl₄ output/yr", "~86t"]
+    ],
+    "role": "Diversified Belgian materials technology group. Operates the only commercial-scale fiber-grade GeCl₄ facility outside China and Russia, in Olen, Belgium. Processes essentially all non-Chinese, non-Russian germanium supply including the DRC tailings feedstock from Umicore-STL/Gécamines offtake. Structural western chokepoint.",
+    "inv": "The western chokepoint for fiber-grade germanium tetrachloride. Operates the only commercial-scale GeCl₄ facility outside China and Russia. The December 2024 Chinese export ban made Umicore's position structural rather than discretionary.",
+    "risks": [
+      "Single-facility risk at Olen; business distractions from other Umicore segments.",
+      "DRC Big Hill ramp timeline uncertain",
+      "Recycled scrap feed shrinks if Chinese fiber output declines"
+    ],
+    "country": "Belgium",
+    "descriptor_pill": "Sole western Ge refiner",
+    "quantity_pill": "~40-50 t/yr recycled"
+  },
+  "Yunnan Chihong Refinery": {
+    "type": "Refiner",
+    "loc": "Yunnan Province, China",
+    "stat": "~66 t/yr refined Ge · GeO₂, Ge metal, GeCl₄",
+    "risk": "Output primarily stays within Chinese domestic ecosystem.",
+    "stats": [
+      ["Output", "~66 t/yr refined Ge"],
+      ["Products", "GeO₂, Ge metal, GeCl₄"],
+      ["Scale", "Largest single Ge refinery globally"],
+      ["Ticker", "600497.SH"]
+    ],
+    "role": "Refining and chemical conversion arm of Yunnan Chihong. Produces fiber-grade GeCl₄ in addition to GeO₂ and metal forms. One of four fiber-grade GeCl₄ facilities in China and a major feeder of Chinese domestic fiber preform production.",
+    "inv": "One of four fiber-grade GeCl₄ facilities in China. Integrated with upstream Chihong zinc-ore germanium extraction. Major feeder of Chinese domestic fiber preform production at YOFC, Hengtong, and ZTT.",
+    "risks": [
+      "Output primarily stays within Chinese domestic ecosystem.",
+      "Single-facility concentration",
+      "Dependent on zinc smelter economics"
+    ],
+    "country": "China",
+    "descriptor_pill": "Integrated Ge refiner",
+    "quantity_pill": "~66 t/yr refined"
+  },
+  "Chinese State Refiners": {
+    "type": "Refiner",
+    "loc": "Multiple sites, China",
+    "stat": "~14 t/yr combined (est.) · GeO₂, Ge metal",
+    "risk": "Opaque individual facility data; output subject to Chinese export controls.",
+    "stats": [
+      ["Combined output", "~14 t/yr est."],
+      ["Feedstock", "Wulantuga + Yimin fly ash"],
+      ["Products", "GeO₂ and Ge metal"],
+      ["Visibility", "Limited public data"]
+    ],
+    "role": "Aggregate representing smaller Chinese germanium refiners with limited public disclosure. Focus on GeO₂ and crude metal output; limited high-purity GeCl₄ capacity at individual facilities.",
+    "inv": "Aggregate of smaller Chinese refiners. Focus on GeO₂ and crude metal; limited fiber-grade GeCl₄ capacity at individual facilities.",
+    "risks": [
+      "Opaque individual facility data; output subject to Chinese export controls.",
+      "High exit risk when prices fall",
+      "Opaque output reporting"
+    ],
+    "country": "China",
+    "descriptor_pill": "Chinese refiners aggregate",
+    "quantity_pill": "~14 t/yr est. combined"
+  },
+  "JSC Germanium Refinery": {
+    "type": "Refiner",
+    "loc": "Krasnoyarsk, Russia",
+    "stat": "~20 t/yr refined · Ge metal, GeO₂, GeCl₄, IR optics, wafers",
+    "risk": "Sanctions-exposed; not investable.",
+    "stats": [
+      ["Capacity", "~20 t/yr"],
+      ["Products", "Ge metal, GeO₂, GeCl₄"],
+      ["Status", "Active · export-blocked"],
+      ["Parent", "Rostec / Shvabe"]
+    ],
+    "role": "Integrated Russian germanium refiner producing a full range of germanium products from metal to wafers. Sanctioned; output is unavailable to western buyers and likely flows to Chinese and non-western customers.",
+    "inv": "Integrated Russian germanium refiner with full product range. Sanctioned; output unavailable to western buyers.",
+    "risks": [
+      "Sanctions-exposed; not investable.",
+      "Serves Russian domestic and potentially Chinese markets only",
+      "Represents structural supply removal from western accessible market"
+    ],
+    "country": "Russia",
+    "descriptor_pill": "Sanctioned integrated refiner",
+    "quantity_pill": "~20 t/yr refined"
+  },
+  "5N Plus": {
+    "type": "Refiner",
+    "loc": "Montreal, Quebec (HQ); St. Louis, Missouri, USA (operations)",
+    "stat": "~15-20 t/yr est. · Ge wafers, GeO₂, high-purity metal",
+    "risk": "Pre-commercial on fiber-grade GeCl₄; qualification timeline and customer adoption unclear.",
+    "stats": [
+      ["Ticker", "VNP (TSX)"],
+      ["Ge output", "~15-20 t/yr est."],
+      ["Key customer", "US Department of Defense"],
+      ["Facility", "Utah, USA (DoD-backed)"]
+    ],
+    "role": "Montreal-listed specialty metals company. Refines germanium, gallium, tellurium, indium, and bismuth. Pre-commercial on fiber-grade GeCl₄ but pursuing qualification; would become the second western high-purity germanium refiner if qualified.",
+    "inv": "Western specialty refiner pursuing fiber-grade GeCl₄ qualification. Would become the second western high-purity germanium refiner if qualified — materially reducing single-point-of-failure risk in western supply.",
+    "risks": [
+      "Pre-commercial on fiber-grade GeCl₄; qualification timeline and customer adoption unclear.",
+      "Small scale — cannot meaningfully replace Chinese primary supply",
+      "Dependent on imported germanium feed"
+    ],
+    "country": "Canada",
+    "descriptor_pill": "Multi-metal specialty refiner",
+    "quantity_pill": "~15-20 t/yr est."
+  },
+  "PPM Pure Metals": {
+    "type": "Refiner",
+    "loc": "Langelsheim, Lower Saxony, Germany",
+    "stat": "~10-15 t/yr est. · zone-refined Ge, GeO₂, GeCl₄",
+    "risk": "Private — not directly investable. Scale limited.",
+    "stats": [
+      ["Status", "Private company"],
+      ["Ge output", "~10-15 t/yr est."],
+      ["Process", "Zone refining to 7N+ purity"],
+      ["Location", "Langelsheim, Germany"]
+    ],
+    "role": "Privately-held German specialty materials refiner. Produces zone-refined germanium for IR optics and SiGe semiconductor markets. Smaller scale than Umicore; part of western refining diversification but not at fiber-grade GeCl₄ volumes.",
+    "inv": "Privately-held German specialty refiner. Zone-refined germanium for IR optics and SiGe markets; not at fiber-grade GeCl₄ volumes. Part of western refining diversification but smaller scale than Umicore.",
+    "risks": [
+      "Private — not directly investable. Scale limited.",
+      "Small scale, niche market focus",
+      "Dependent on scrap feed from European fiber and IR optics manufacturers"
+    ],
+    "country": "Germany",
+    "descriptor_pill": "German specialty refiner",
+    "quantity_pill": "~10-15 t/yr est."
+  },
+  "Blue Moon Metals": {
+    "type": "Refiner",
+    "loc": "Washington County, Utah, USA",
+    "stat": "~5-10 t/yr Ge target · only past-producing US Ge-Ga mine",
+    "risk": "Pre-production junior; permitting, financing, and ramp-up risk typical of early-stage mining projects.",
+    "stats": [
+      ["Ticker", "MOON (TSXV/NASDAQ)"],
+      ["Resource", "1Mt at 0.087% Ge"],
+      ["Ge target", "5-10 t/yr by 2028"],
+      ["Backers", "Oaktree, Hartree, Teck (8%)"]
+    ],
+    "role": "Toronto-listed junior acquired the Apex mine in Utah — the only past-producing primary germanium and gallium mine in the United States. Ge grades 10-100x higher than typical deposits; 1Mt resource. Backed by Oaktree Capital, Hartree Partners, Teck Resources (8% equity), Wheaton Precious Metals, and Altius Minerals. Production target 2028 pending permitting and financing.",
+    "inv": "Most important US-domiciled germanium supply development. First new primary Ge mine on US soil in decades. Success would materially reduce US dependency on Chinese primary supply.",
+    "risks": [
+      "Pre-production junior; permitting, financing, and ramp-up risk typical of early-stage mining projects.",
+      "No modern NI 43-101 resource estimate yet",
+      "2028 production target is aspirational"
+    ],
+    "country": "USA",
+    "descriptor_pill": "US Ge-Ga mine (planned)",
+    "quantity_pill": "5-10 t/yr target 2028"
+  },
+  "Chinese Primary Supply": {
+    "type": "Aggregate",
+    "loc": "China (aggregate)",
+    "stat": "~120 t/yr primary refined · ~$350M est.",
+    "risk": "Export licensing can be tightened or released unilaterally.",
+    "stats": [
+      ["Volume", "~120 t/yr primary"],
+      ["Global share", "~83%"],
+      ["Export control", "Active since Aug 2023"],
+      ["Price impact", "+88% in 2024"]
+    ],
+    "role": "Aggregate of Chinese primary germanium supply — Lincang Xinyuan Refinery, Yunnan Chihong Refinery, and smaller Chinese refiners combined. Represents ~83% of global primary supply. Output subject to MOFCOM export licensing since August 2023.",
+    "inv": "~83% of global primary supply. Output subject to MOFCOM licensing since August 2023. The core structural fact of the germanium chain.",
+    "risks": [
+      "Export licensing can be tightened or released unilaterally.",
+      "Chinese domestic demand consuming growing share of output",
+      "No western alternative at equivalent scale"
+    ],
+    "country": "China",
+    "descriptor_pill": "~120 t/yr primary",
+    "quantity_pill": "~$350M @ ~$2,900/kg"
+  },
+  "Western Recycled Supply": {
+    "type": "Aggregate",
+    "loc": "Belgium, Canada, Germany",
+    "stat": "~90-110 t/yr recycled · ~$270M est.",
+    "risk": "Feedstock-limited; cannot scale independently of recycled pool or DRC tailings depletion.",
+    "stats": [
+      ["Volume", "~90-110 t/yr recycled"],
+      ["Global share", "~43%"],
+      ["Primary recycler", "Umicore (Belgium)"],
+      ["Growth driver", "China export control response"]
+    ],
+    "role": "Aggregate of western refining capacity — Umicore (Belgium), 5N Plus (Canada), PPM Pure Metals (Germany) combined. Predominantly processes recycled fiber optic scrap and IR optics rework plus the DRC tailings feedstock. ~9% of global refined supply reaches western buyers at significantly higher unit prices than Chinese domestic.",
+    "inv": "Non-Chinese supply reaching western buyers. Predominantly recycled, with the DRC tailings feedstock ramping to feed Umicore. ~9% of global refined supply.",
+    "risks": [
+      "Feedstock-limited; cannot scale independently of recycled pool or DRC tailings depletion.",
+      "Still partially dependent on Chinese primary Ge for high-purity applications",
+      "Western recycling capacity remains well below Chinese primary output"
+    ],
+    "country": "Multiple",
+    "descriptor_pill": "~90-110 t/yr recycled",
+    "quantity_pill": "~$270M @ $8,500/kg"
+  },
+  "Global Supply": {
+    "type": "Aggregate",
+    "loc": "Global",
+    "stat": "~230 t/yr refined · ~$320M (2024)",
+    "risk": "Bifurcated market persists structurally.",
+    "stats": [
+      ["Total supply", "~230 t/yr"],
+      ["Market value", "~$320M (2024)"],
+      ["China share", "~83% primary"],
+      ["Price 2024 peak", "~$8,500/kg western"]
+    ],
+    "role": "Aggregate of all global refined germanium supply — ~120 t primary (83% Chinese) + ~90-110 t recycled (western + some Chinese) + ~20 t Russian (sanctioned, not reaching west). Blended realized value reflects the bifurcated pricing between Chinese domestic and western markets.",
+    "inv": "Blended total of ~230 t/yr refined germanium from all sources. Price realization varies dramatically by region due to MOFCOM licensing regime.",
+    "risks": [
+      "Bifurcated market persists structurally.",
+      "Supply permanently capped by byproduct dependency",
+      "Chinese export controls create ongoing western supply risk"
+    ],
+    "country": "Global",
+    "descriptor_pill": "~230 t/yr refined",
+    "quantity_pill": "~$320M realized (blended)"
+  },
+  "LightPath Technologies": {
+    "type": "Device Manufacturer",
+    "loc": "Orlando, Florida, USA (HQ); manufacturing in New Hampshire, Florida, Latvia, China",
+    "stat": "BlackDiamond IR glass substitute · $40M camera supply deal through 2027",
+    "risk": "Substitution penetration is slow; BlackDiamond requires design-in cycles that take years per customer platform.",
+    "stats": [
+      ["Ticker", "LPTH (NASDAQ)"],
+      ["Revenue", "$37.2M TTM"],
+      ["Backlog", "~$90M"],
+      ["Status", "Active · F-35 validated"]
+    ],
+    "role": "Orlando-listed IR optics and imaging systems company. Holds exclusive license to BlackDiamond chalcogenide glass that substitutes for germanium in infrared optics applications — a direct hedge against germanium scarcity. $40M camera supply contract through 2027; F-35 combat aircraft program validation.",
+    "inv": "The substitution hedge on germanium scarcity. If germanium prices remain elevated or supply tightens further, BlackDiamond glass captures displaced IR optics demand. Downstream of the germanium chain but structurally important to the investment thesis.",
+    "risks": [
+      "Substitution penetration is slow; BlackDiamond requires design-in cycles that take years per customer platform.",
+      "Pre-profit company competing against Umicore's GASIR®",
+      "Germanium price decline would reduce urgency for substitution"
+    ],
+    "country": "USA",
+    "descriptor_pill": "IR optics substitution play",
+    "quantity_pill": "$40M backlog · F-35 validated"
+  },
+  "Germanium Metal": {
+    "type": "Commodity",
+    "loc": "Global (OTC physical markets)",
+    "stat": "~230 t/yr global · $1,500 → $8,500+/kg in two years",
+    "risk": "Illiquidity amplifies price moves in both directions; no exchange pricing transparency.",
+    "stats": [
+      ["Global supply", "~230 t/yr"],
+      ["Western price", "$8,500+/kg"],
+      ["Chinese price", "~$2,500/kg"],
+      ["Price spread", "~3.5x west vs China"]
+    ],
+    "role": "Physical germanium metal traded OTC. No futures market, no ETF, no exchange pricing. Market characterized by bilateral transactions between producers and consumers. Price has risen from ~$1,500/kg to over $8,500/kg in the western market in two years.",
+    "inv": "Direct commodity exposure for investors wanting to express a view on germanium without equity-specific business risk. Physical accumulation is the only route — no liquid derivatives exist.",
+    "risks": [
+      "Illiquidity amplifies price moves in both directions; no exchange pricing transparency.",
+      "Storage and handling requirements non-trivial",
+      "No futures market for hedging"
+    ],
+    "country": "Global",
+    "descriptor_pill": "Physical commodity",
+    "quantity_pill": "$8,500+/kg (west) · $2,500/kg (China)"
+  }
+}

@@ -2,28 +2,28 @@
 import React, { useMemo, useState } from "react";
 import TreeMap from "@/components/TreeMap";
 import NodeModal from "@/components/NodeModal";
-import { buildRawGeometry, computeRawSvgWidth } from "@/lib/treeGeometry";
-import chainsJson from "@/data/chains.json";
-import nodesJson from "@/data/nodes.json";
-import type { RawChain, NodeData } from "@/types";
+import { buildGermaniumGeometry, computeGermaniumSvgWidth } from "@/lib/treeGeometry";
+import germaniumChainJson from "@/data/germanium-chain.json";
+import germaniumNodesJson from "@/data/germanium-nodes.json";
+import type { GermaniumChain, NodeData } from "@/types";
 
-const chainsData = chainsJson as unknown as {
-  layerConfig: Record<string, { label?: string; displayFields: { key: string; label: string }[] }>;
-  RAW_DATA: Record<string, RawChain>;
+const chainData = germaniumChainJson as unknown as {
+  layerConfig: Record<string, { displayFields: { key: string; label: string }[] }>;
+  GERMANIUM_CHAIN: GermaniumChain;
 };
-const allNodes = nodesJson as unknown as Record<string, NodeData>;
+const allNodes = germaniumNodesJson as unknown as Record<string, NodeData>;
 
 export default function GermaniumInputPage() {
-  const rawChain = chainsData.RAW_DATA["Germanium"];
-  const rawW = useMemo(() => computeRawSvgWidth(rawChain), []);
-  const rawGeo = useMemo(() => buildRawGeometry(rawChain, rawW / 2, 80), []);
+  const geChain = chainData.GERMANIUM_CHAIN;
+  const rawW = useMemo(() => computeGermaniumSvgWidth(geChain), []);
+  const rawGeo = useMemo(() => buildGermaniumGeometry(geChain, rawW / 2, 80), []);
   const rawH = rawGeo.outputNode.cy + 120;
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [treeExpanded, setTreeExpanded] = useState(false);
   const [soWhatOpen, setSoWhatOpen] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState("thesis");
   const [activeIdea, setActiveIdea] = useState<string | null>(null);
-  const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
+  const lc = chainData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
 
   // Scroll spy
   React.useEffect(() => {

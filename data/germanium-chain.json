@@ -1,0 +1,113 @@
+{
+  "layerConfig": {
+    "deposit": {
+      "displayFields": [
+        { "key": "country", "label": "Country" },
+        { "key": "descriptor_pill", "label": "Type" },
+        { "key": "quantity_pill", "label": "Reserves" }
+      ]
+    },
+    "hostoperation": {
+      "displayFields": [
+        { "key": "country", "label": "Country" },
+        { "key": "descriptor_pill", "label": "Type" },
+        { "key": "quantity_pill", "label": "Output" }
+      ]
+    },
+    "refiner": {
+      "displayFields": [
+        { "key": "country", "label": "Country" },
+        { "key": "descriptor_pill", "label": "Type" },
+        { "key": "quantity_pill", "label": "Output" }
+      ]
+    },
+    "supplyaggregates": {
+      "displayFields": [
+        { "key": "country", "label": "Country" },
+        { "key": "descriptor_pill", "label": "Type" },
+        { "key": "quantity_pill", "label": "Value" }
+      ]
+    },
+    "globalsupply": {
+      "displayFields": [
+        { "key": "country", "label": "Country" },
+        { "key": "descriptor_pill", "label": "Type" },
+        { "key": "quantity_pill", "label": "Value" }
+      ]
+    }
+  },
+  "GERMANIUM_CHAIN": {
+    "deposits": [
+      "Lincang",
+      "Wulantuga",
+      "Yimin",
+      "Huize",
+      "Yiliang + SYGT",
+      "Spetsugli",
+      "Big Hill",
+      "Red Dog"
+    ],
+    "hostOperations": [
+      "Lincang Xinyuan",
+      "Shengli Coal Group",
+      "Various State Operators",
+      "Yunnan Chihong",
+      "JSC Germanium",
+      "STL / Gécamines",
+      "Teck Resources"
+    ],
+    "refiners": [
+      "Umicore",
+      "Yunnan Chihong Refinery",
+      "Chinese State Refiners",
+      "JSC Germanium Refinery",
+      "5N Plus",
+      "PPM Pure Metals",
+      "Blue Moon Metals"
+    ],
+    "supplyAggregates": [
+      "Chinese Primary Supply",
+      "Western Recycled Supply"
+    ],
+    "globalSupply": [
+      "Global Supply"
+    ],
+    "depositToHostOp": [
+      [0, 0],
+      [1, 1],
+      [2, 2],
+      [3, 3],
+      [4, 3],
+      [5, 4],
+      [6, 5],
+      [7, 6]
+    ],
+    "hostOpToRefiner": [
+      [0, 2],
+      [1, 2],
+      [2, 2],
+      [3, 1],
+      [4, 3],
+      [5, 0],
+      [6, 0],
+      [6, 4]
+    ],
+    "refinerToAggregates": [
+      [0, 1],
+      [1, 0],
+      [2, 0],
+      [4, 1],
+      [5, 1],
+      [6, 1]
+    ],
+    "aggregatesToGlobal": [
+      [0, 0],
+      [1, 0]
+    ],
+    "minor": {
+      "deposits": [2, 4],
+      "hostOperations": [2],
+      "refiners": [2, 3, 5, 6]
+    }
+  }
+}
