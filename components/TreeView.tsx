@@ -1063,12 +1063,14 @@ export default function TreeView() {
               fontWeight: 600, color: node.dimmed ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.82)",
               margin: 0, textAlign: "center", whiteSpace: "nowrap",
             }}>{node.name}</p>
-            <span style={{
-              fontSize: 7, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em",
-              color: node.dimmed ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.62)",
-              background: "rgba(255,255,255,0.06)", border: "0.5px solid rgba(255,255,255,0.18)",
-              borderRadius: 3, padding: "2px 8px",
-            }}>{node.pill}</span>
+            {node.pill && node.pill !== "Live" && node.pill !== "Coming soon" && (
+              <span style={{
+                fontSize: 7, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em",
+                color: node.dimmed ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.62)",
+                background: "rgba(255,255,255,0.06)", border: "0.5px solid rgba(255,255,255,0.18)",
+                borderRadius: 3, padding: "2px 8px",
+              }}>{node.pill}</span>
+            )}
           </div>
         ))}
       </div>
@@ -1495,7 +1497,7 @@ export default function TreeView() {
                 style={{
                   background: "#1a1816",
                   borderRadius: 10,
-                  padding: "32px 20px 40px",
+                  padding: currentLevel === "tree" ? "32px 20px 40px" : "0 20px",
                   animation: "containerOpen 350ms ease-out forwards",
                   position: "relative",
                   overflow: "hidden",
