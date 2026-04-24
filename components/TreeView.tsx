@@ -407,7 +407,36 @@ function GalliumIllustration() {
 
 /* ── illustration map ── */
 const ILLUSTRATION_MAP: Record<string, () => React.JSX.Element> = {
-  resources: GermaniumIllustration,
+  resources: () => (
+    <svg width="280" height="320" viewBox="0 0 280 320" fill="none">
+      {/* Periodic table fragment — critical elements */}
+      {[
+        { x: 60, y: 60, sym: "Ge", num: "32" },
+        { x: 130, y: 60, sym: "Ga", num: "31" },
+        { x: 200, y: 60, sym: "Co", num: "27" },
+        { x: 60, y: 130, sym: "Li", num: "3" },
+        { x: 130, y: 130, sym: "Cu", num: "29" },
+        { x: 200, y: 130, sym: "Ni", num: "28" },
+        { x: 60, y: 200, sym: "He", num: "2" },
+        { x: 130, y: 200, sym: "Sb", num: "51" },
+        { x: 200, y: 200, sym: "W", num: "74" },
+        { x: 130, y: 270, sym: "Nd", num: "60" },
+      ].map((el, i) => (
+        <g key={i}>
+          <rect x={el.x - 22} y={el.y - 22} width="44" height="44" rx="3" stroke="#3a3530" strokeWidth="0.5" fill="none" />
+          <text x={el.x - 16} y={el.y - 10} style={{ fontSize: "6px", fill: "#4a4540" }}>{el.num}</text>
+          <text x={el.x} y={el.y + 6} textAnchor="middle" style={{ fontSize: "16px", fill: "#706a60", fontWeight: 300 }}>{el.sym}</text>
+        </g>
+      ))}
+      {/* Connecting lines between elements */}
+      <line x1="82" y1="60" x2="108" y2="60" stroke="#2a2520" strokeWidth="0.5" strokeDasharray="2 3" />
+      <line x1="152" y1="60" x2="178" y2="60" stroke="#2a2520" strokeWidth="0.5" strokeDasharray="2 3" />
+      <line x1="60" y1="82" x2="60" y2="108" stroke="#2a2520" strokeWidth="0.5" strokeDasharray="2 3" />
+      <line x1="130" y1="82" x2="130" y2="108" stroke="#2a2520" strokeWidth="0.5" strokeDasharray="2 3" />
+      <line x1="200" y1="82" x2="200" y2="108" stroke="#2a2520" strokeWidth="0.5" strokeDasharray="2 3" />
+      <line x1="130" y1="222" x2="130" y2="248" stroke="#2a2520" strokeWidth="0.5" strokeDasharray="2 3" />
+    </svg>
+  ),
   ai: AIInfraIllustration,
   energy: EnergyIllustration,
   uavs: UAVIllustration,
@@ -432,8 +461,8 @@ const VERTICALS_DATA: VerticalDef[] = [
   {
     id: "resources",
     name: "Global Resources",
-    description: "The critical minerals and materials that underpin the most important frontier technologies for the next 50 years. Where they come from, who controls them, and what constrains supply.",
-    chainCount: "3 chains",
+    description: "The critical minerals and materials that underpin frontier technology. Where they come from, who controls them, and what constrains supply.",
+    chainCount: "10 materials",
     comingSoon: false,
   },
   {
@@ -519,34 +548,27 @@ const AI_SUBSYSTEMS: Subsystem[] = [
   },
 ];
 
+const RESOURCES_MATERIALS: ComponentDef[] = [
+  { id: "germanium", name: "Germanium", detail: "Fiber optic dopant, IR optics, satellite solar cells. 83% Chinese, export-controlled.", keyNumber: "Live", hasTree: true, comingSoon: false },
+  { id: "gallium", name: "Gallium", detail: "GaN power electronics, defense radar, LEDs. 98% Chinese primary supply.", keyNumber: "Live", hasTree: true, comingSoon: false },
+  { id: "cobalt", name: "Cobalt", detail: "Battery cathodes, superalloys. 70% from DRC, artisanal mining risk.", keyNumber: null, hasTree: false, comingSoon: true },
+  { id: "lithium", name: "Lithium", detail: "EV batteries, grid storage. Chile/Australia/China triangle.", keyNumber: null, hasTree: false, comingSoon: true },
+  { id: "rare-earths", name: "Rare Earths", detail: "Permanent magnets for EVs, wind turbines, defense. 90% Chinese processing.", keyNumber: null, hasTree: false, comingSoon: true },
+  { id: "copper", name: "Copper", detail: "Power delivery, wiring, heat exchange. Every electrification pathway needs more.", keyNumber: null, hasTree: false, comingSoon: true },
+  { id: "nickel", name: "Nickel", detail: "Battery cathodes, stainless steel, superalloys. Indonesia reshaping supply.", keyNumber: null, hasTree: false, comingSoon: true },
+  { id: "helium", name: "Helium", detail: "Fiber draw coolant, MRI, semiconductors. Non-renewable, no substitute.", keyNumber: null, hasTree: false, comingSoon: true },
+  { id: "antimony", name: "Antimony", detail: "Flame retardants, ammunition, semiconductors. 48% Chinese, export-controlled.", keyNumber: null, hasTree: false, comingSoon: true },
+  { id: "tungsten", name: "Tungsten", detail: "Cutting tools, defense munitions, electrical contacts. 80% Chinese.", keyNumber: null, hasTree: false, comingSoon: true },
+];
+
 const RESOURCES_SUBSYSTEMS: Subsystem[] = [
   {
-    id: "critical-minerals",
-    name: "Critical Minerals",
-    description: "Elements where supply is geographically concentrated, geopolitically contested, or structurally constrained by byproduct economics.",
-    componentCount: "3 materials",
+    id: "all-materials",
+    name: "All Materials",
+    description: "",
+    componentCount: "10 materials",
     comingSoon: false,
-    components: [
-      { id: "germanium", name: "Germanium", detail: "Fiber optic dopant, IR optics, satellite solar cells. 83% Chinese, export-controlled.", keyNumber: "Live", hasTree: true, comingSoon: false },
-      { id: "gallium", name: "Gallium", detail: "GaN power electronics, defense radar, LEDs. 98% Chinese primary supply.", keyNumber: "Live", hasTree: true, comingSoon: false },
-      { id: "cobalt", name: "Cobalt", detail: "Battery cathodes, superalloys, magnets. DRC dominance, artisanal mining risk.", keyNumber: null, hasTree: false, comingSoon: true },
-    ],
-  },
-  {
-    id: "structural-materials",
-    name: "Structural Materials",
-    description: "Bulk materials whose supply chains face emerging bottlenecks from energy transition and defense demand.",
-    componentCount: "2 materials",
-    comingSoon: true,
-    components: [],
-  },
-  {
-    id: "rare-earths",
-    name: "Rare Earths",
-    description: "Permanent magnets for motors, wind turbines, and defense systems. Chinese processing dominance across the full chain.",
-    componentCount: "0 materials",
-    comingSoon: true,
-    components: [],
+    components: RESOURCES_MATERIALS,
   },
 ];
 
@@ -1098,37 +1120,42 @@ export default function TreeView() {
     onNodeClick: (id: string) => void;
   }) {
     return (
-      <div key={animKey} style={{ display: "flex", justifyContent: "center", gap: 32, padding: "20px 0" }}>
-        {nodes.map((node, i) => (
-          <div
-            key={node.id}
-            onClick={() => { if (node.clickable) onNodeClick(node.id); }}
-            style={{
-              display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
-              cursor: node.clickable ? "pointer" : "default",
-              opacity: node.dimmed ? 0.4 : 1,
-              animation: `accordionEnter 350ms ease-out forwards`,
-              animationDelay: `${i * 80}ms`,
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14">
-              <circle cx="7" cy="7" r="5.5" fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth="1.3" />
-            </svg>
-            <p style={{
-              fontSize: 11, fontFamily: "'EB Garamond', Georgia, serif",
-              fontWeight: 600, color: node.dimmed ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.82)",
-              margin: 0, textAlign: "center", whiteSpace: "nowrap",
-            }}>{node.name}</p>
-            {node.pill && node.pill !== "Live" && node.pill !== "Coming soon" && (
-              <span style={{
-                fontSize: 7, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em",
-                color: node.dimmed ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.62)",
-                background: "rgba(255,255,255,0.06)", border: "0.5px solid rgba(255,255,255,0.18)",
-                borderRadius: 3, padding: "2px 8px",
-              }}>{node.pill}</span>
-            )}
-          </div>
-        ))}
+      <div key={animKey} style={{ display: "flex", justifyContent: "center", gap: 32, padding: "20px 0", flexWrap: "wrap" }}>
+        {nodes.map((node, i) => {
+          const [hov, setHov] = useState(false);
+          return (
+            <div
+              key={node.id}
+              onClick={() => { if (node.clickable) onNodeClick(node.id); }}
+              onMouseEnter={() => setHov(true)}
+              onMouseLeave={() => setHov(false)}
+              style={{
+                display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
+                cursor: node.clickable ? "pointer" : "default",
+                opacity: node.dimmed ? 0.4 : 1,
+                animation: `accordionEnter 350ms ease-out forwards`,
+                animationDelay: `${i * 80}ms`,
+              }}
+            >
+              <svg width="12" height="12" viewBox="0 0 12 12">
+                <circle cx="6" cy="6" r="4.5" fill={hov && node.clickable ? "rgba(155,168,171,0.2)" : "none"} stroke="rgba(155,168,171,0.5)" strokeWidth="1" style={{ transition: "fill 0.15s" }} />
+              </svg>
+              <p style={{
+                fontSize: 10, fontFamily: "'EB Garamond', Georgia, serif",
+                color: node.dimmed ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.82)",
+                margin: 0, textAlign: "center", whiteSpace: "nowrap",
+              }}>{node.name}</p>
+              {node.pill && node.pill !== "Live" && node.pill !== "Coming soon" && (
+                <span style={{
+                  fontSize: 7, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em",
+                  color: node.dimmed ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.62)",
+                  background: "rgba(255,255,255,0.06)", border: "0.5px solid rgba(255,255,255,0.18)",
+                  borderRadius: 3, padding: "2px 8px",
+                }}>{node.pill}</span>
+              )}
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -1571,7 +1598,7 @@ export default function TreeView() {
             ))}
 
             {/* Container */}
-            <div style={{ width: currentLevel === "tree" ? "90vw" : "auto", maxWidth: currentLevel === "tree" ? 1400 : "none", padding: currentLevel === "tree" ? "0 32px" : "0" }}>
+            <div style={{ width: currentLevel === "tree" ? "90vw" : "100%", maxWidth: currentLevel === "tree" ? 1400 : "none", padding: currentLevel === "tree" ? "0 32px" : "0" }}>
               <div
                 key={animKey}
                 style={{
