@@ -524,50 +524,78 @@ const INPUT_ACCENT: Record<string, string> = {
 };
 
 /* ── spine nodes (ancestor navigation above tree) ── */
-function SpineNodes({
+/* ── Spine node (supply-tree style) ── */
+function SpineNode({
+  name,
+  isFocus,
+  onClick,
+}: {
+  name: string;
+  isFocus?: boolean;
+  onClick?: () => void;
+}) {
+  const clickable = !isFocus && onClick;
+  return (
+    <div
+      onClick={clickable ? onClick : undefined}
+      style={{
+        display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
+        cursor: clickable ? "pointer" : "default",
+      }}
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14">
+        <circle cx="7" cy="7" r="5.5" fill="none"
+          stroke={isFocus ? "rgba(155,168,171,0.6)" : "rgba(155,168,171,0.3)"}
+          strokeWidth={isFocus ? 1.3 : 1} />
+      </svg>
+      <p style={{
+        fontSize: isFocus ? 13 : 11,
+        fontFamily: "'EB Garamond', Georgia, serif",
+        fontWeight: isFocus ? 600 : 400,
+        color: isFocus ? "rgba(255,255,255,0.82)" : "#706a60",
+        margin: 0, textAlign: "center", whiteSpace: "nowrap",
+        transition: "color 0.15s",
+      }}
+        onMouseEnter={e => { if (clickable) e.currentTarget.style.color = "#a09888"; }}
+        onMouseLeave={e => { if (clickable) e.currentTarget.style.color = "#706a60"; }}
+      >{name}</p>
+    </div>
+  );
+}
+
+/* ── Dashed vertical connector ── */
+function DashedConnector({ height = 32 }: { height?: number }) {
+  return (
+    <div style={{ display: "flex", justifyContent: "center", padding: "2px 0" }}>
+      <svg width="2" height={height} viewBox={`0 0 2 ${height}`}>
+        <line x1="1" y1="0" x2="1" y2={height} stroke="rgba(255,255,255,0.18)" strokeWidth="0.8" strokeDasharray="4,3" />
+      </svg>
+    </div>
+  );
+}
+
+/* ── Spine column (ancestor nodes + focus node) ── */
+function SpineColumn({
   ancestors,
   current,
 }: {
   ancestors: { name: string; onClick: () => void }[];
-  current: string;
+  current?: string;
 }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 8 }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 4 }}>
       {ancestors.map((a, i) => (
         <React.Fragment key={i}>
-          {/* Ancestor node */}
-          <div
-            onClick={a.onClick}
-            style={{ display: "flex", flexDirection: "column", alignItems: "center", cursor: "pointer" }}
-          >
-            <div style={{
-              width: 12, height: 12, borderRadius: "50%",
-              border: "1px solid #3a3530", background: "transparent",
-              marginBottom: 4,
-            }} />
-            <p style={{
-              fontSize: 10, color: "#4a4540", margin: 0,
-              transition: "color 0.15s",
-            }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#a09888")}
-              onMouseLeave={e => (e.currentTarget.style.color = "#4a4540")}
-            >{a.name}</p>
-          </div>
-          {/* Vertical connector */}
-          <div style={{ width: 1, height: 28, background: "#2a2520" }} />
+          <SpineNode name={a.name} onClick={a.onClick} />
+          <DashedConnector height={28} />
         </React.Fragment>
       ))}
-      {/* Current focus node */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <div style={{
-          width: 16, height: 16, borderRadius: "50%",
-          border: "1.5px solid #555", background: "transparent",
-          marginBottom: 4,
-        }} />
-        <p style={{ fontSize: 12, color: "#ece8e1", fontWeight: 500, margin: 0 }}>{current}</p>
-      </div>
-      {/* Connector down to content below */}
-      <div style={{ width: 1, height: 28, background: "#2a2520" }} />
+      {current && (
+        <>
+          <SpineNode name={current} isFocus />
+          <DashedConnector height={28} />
+        </>
+      )}
     </div>
   );
 }
@@ -1164,6 +1192,10 @@ export default function TreeView() {
           {vertData?.description ?? ""}
         </p>
         <div style={{ height: 1, background: borderColor, margin: "28px 0 28px 0" }} />
+        <SpineColumn
+          ancestors={[]}
+          current={selectedVertical ?? "AI Infrastructure"}
+        />
         <NodeRow nodes={nodes} onNodeClick={(id) => {
           const sub = AI_SUBSYSTEMS.find(s => s.id === id);
           if (sub) goComponents(sub.name);
@@ -1195,6 +1227,12 @@ export default function TreeView() {
           {sub.description}
         </p>
         <div style={{ height: 1, background: borderColor, margin: "28px 0 28px 0" }} />
+        <SpineColumn
+          ancestors={[
+            { name: selectedVertical ?? "AI Infrastructure", onClick: () => goSubsystems(selectedVertical ?? "AI Infrastructure") },
+          ]}
+          current={selectedSubsystem ?? ""}
+        />
         <NodeRow nodes={nodes} onNodeClick={(id) => {
           const comp = sub.components.find(c => c.id === id);
           if (comp && comp.hasTree) goTree({ type: "component", id: comp.id }, comp.name);
@@ -1244,7 +1282,7 @@ export default function TreeView() {
             accent={INPUT_ACCENT.fiber}
           />
 
-          <SpineNodes
+          <SpineColumn
             ancestors={[
               { name: "AI Infrastructure", onClick: () => goSubsystems(selectedVertical ?? "AI Infrastructure") },
               { name: selectedSubsystem ?? "Connectivity", onClick: () => goComponents(selectedSubsystem ?? "Connectivity") },
@@ -1260,9 +1298,7 @@ export default function TreeView() {
             ]}
             onNodeClick={(id) => { if (id === "germanium") goRawMaterial("germanium"); }}
           />
-          <div style={{ display: "flex", justifyContent: "center", padding: "8px 0" }}>
-            <div style={{ width: 1, height: 32, background: "#2a2520" }} />
-          </div>
+          <DashedConnector height={32} />
 
           <div style={{ position: "relative" }}>
             <ExpandButton onClick={() => setTreeExpanded(true)} />
@@ -1297,7 +1333,7 @@ export default function TreeView() {
             accent={INPUT_ACCENT.germanium}
           />
 
-          <SpineNodes
+          <SpineColumn
             ancestors={[
               { name: "AI Infrastructure", onClick: () => goSubsystems(selectedVertical ?? "AI Infrastructure") },
               { name: "Raw Materials", onClick: () => goVerticals() },
@@ -1350,7 +1386,7 @@ export default function TreeView() {
             accent={INPUT_ACCENT.gallium}
           />
 
-          <SpineNodes
+          <SpineColumn
             ancestors={[
               { name: "AI Infrastructure", onClick: () => goSubsystems(selectedVertical ?? "AI Infrastructure") },
               { name: "Raw Materials", onClick: () => goVerticals() },
