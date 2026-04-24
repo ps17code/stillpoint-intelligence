@@ -937,6 +937,48 @@ export default function TreeView() {
     );
   }
 
+  /* ── node row (supply-tree-style horizontal nodes) ── */
+  function NodeRow({
+    nodes,
+    onNodeClick,
+  }: {
+    nodes: { id: string; name: string; pill: string; clickable: boolean; dimmed?: boolean }[];
+    onNodeClick: (id: string) => void;
+  }) {
+    return (
+      <div key={animKey} style={{ display: "flex", justifyContent: "center", gap: 48, flexWrap: "wrap", padding: "20px 0" }}>
+        {nodes.map((node, i) => (
+          <div
+            key={node.id}
+            onClick={() => { if (node.clickable) onNodeClick(node.id); }}
+            style={{
+              display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+              cursor: node.clickable ? "pointer" : "default",
+              opacity: node.dimmed ? 0.4 : 1,
+              animation: `accordionEnter 350ms ease-out forwards`,
+              animationDelay: `${i * 80}ms`,
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14">
+              <circle cx="7" cy="7" r="5.5" fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth="1.3" />
+            </svg>
+            <p style={{
+              fontSize: 13, fontFamily: "'EB Garamond', Georgia, serif",
+              fontWeight: 600, color: node.dimmed ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.82)",
+              margin: 0, textAlign: "center", whiteSpace: "nowrap",
+            }}>{node.name}</p>
+            <span style={{
+              fontSize: 8, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em",
+              color: node.dimmed ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.62)",
+              background: "rgba(255,255,255,0.06)", border: "0.5px solid rgba(255,255,255,0.18)",
+              borderRadius: 3, padding: "2px 8px",
+            }}>{node.pill}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   /* ── two-column layout wrapper ── */
   function TwoColumnLayout({
     title,
@@ -1054,25 +1096,30 @@ export default function TreeView() {
 
   /* ── render: subsystems ── */
   function renderSubsystems() {
-    const items = AI_SUBSYSTEMS.map(s => ({
+    const vertData = VERTICALS_DATA.find(v => v.name === selectedVertical);
+    const nodes = AI_SUBSYSTEMS.map(s => ({
+      id: s.id,
       name: s.name,
-      description: s.description,
-      meta: s.componentCount,
-      comingSoon: s.comingSoon,
-      illustrationId: s.id,
+      pill: s.componentCount,
+      clickable: !s.comingSoon,
+      dimmed: s.comingSoon,
     }));
 
     return (
-      <TwoColumnLayout
-        title={selectedVertical ?? ""}
-        subtitle={VERTICALS_DATA.find(v => v.name === selectedVertical)?.description ?? ""}
-        items={items}
-        expandedIndex={expandedSubsystem}
-        onExpandItem={setExpandedSubsystem}
-        onNavigateItem={(i) => {
-          if (!AI_SUBSYSTEMS[i].comingSoon) goComponents(AI_SUBSYSTEMS[i].name);
-        }}
-      />
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 32px 80px", minHeight: "100vh", background: "#111" }}>
+        {renderBreadcrumb()}
+        <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 32, fontWeight: 400, color: warmWhite, margin: "0 0 8px 0" }}>
+          {selectedVertical}
+        </h1>
+        <p style={{ fontSize: 13, color: muted, lineHeight: 1.6, margin: 0, maxWidth: "80%" }}>
+          {vertData?.description ?? ""}
+        </p>
+        <div style={{ height: 1, background: borderColor, margin: "28px 0 28px 0" }} />
+        <NodeRow nodes={nodes} onNodeClick={(id) => {
+          const sub = AI_SUBSYSTEMS.find(s => s.id === id);
+          if (sub) goComponents(sub.name);
+        }} />
+      </div>
     );
   }
 
@@ -1081,26 +1128,29 @@ export default function TreeView() {
     const sub = AI_SUBSYSTEMS.find(s => s.name === selectedSubsystem);
     if (!sub) return null;
 
-    const items = sub.components.map(c => ({
+    const nodes = sub.components.map(c => ({
+      id: c.id,
       name: c.name,
-      description: c.detail,
-      meta: c.keyNumber ?? "",
-      comingSoon: c.comingSoon,
-      illustrationId: c.id,
+      pill: c.keyNumber ?? "Coming soon",
+      clickable: !c.comingSoon && c.hasTree,
+      dimmed: c.comingSoon,
     }));
 
     return (
-      <TwoColumnLayout
-        title={selectedSubsystem ?? ""}
-        subtitle={AI_SUBSYSTEMS.find(s => s.name === selectedSubsystem)?.description ?? ""}
-        items={items}
-        expandedIndex={expandedComponent}
-        onExpandItem={setExpandedComponent}
-        onNavigateItem={(i) => {
-          const c = sub.components[i];
-          if (!c.comingSoon && c.hasTree) goTree({ type: "component", id: c.id }, c.name);
-        }}
-      />
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 32px 80px", minHeight: "100vh", background: "#111" }}>
+        {renderBreadcrumb()}
+        <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 32, fontWeight: 400, color: warmWhite, margin: "0 0 8px 0" }}>
+          {selectedSubsystem}
+        </h1>
+        <p style={{ fontSize: 13, color: muted, lineHeight: 1.6, margin: 0, maxWidth: "80%" }}>
+          {sub.description}
+        </p>
+        <div style={{ height: 1, background: borderColor, margin: "28px 0 28px 0" }} />
+        <NodeRow nodes={nodes} onNodeClick={(id) => {
+          const comp = sub.components.find(c => c.id === id);
+          if (comp && comp.hasTree) goTree({ type: "component", id: comp.id }, comp.name);
+        }} />
+      </div>
     );
   }
 
@@ -1151,12 +1201,15 @@ export default function TreeView() {
             accent={INPUT_ACCENT.fiber}
           />
 
-          <ChipSection
-            label="Upstream"
-            items={FIBER_UPSTREAM}
-            onNavigate={(id) => goRawMaterial(id)}
-            style={{ marginBottom: 20 }}
+          <NodeRow
+            nodes={[
+              { id: "germanium", name: "Germanium", pill: "~230t/yr \u00b7 83% CN", clickable: true, dimmed: false },
+              { id: "helium", name: "Helium", pill: "Non-renewable", clickable: false, dimmed: true },
+              { id: "silica", name: "Silica / SiCl\u2084", pill: "Prices up 50%", clickable: false, dimmed: true },
+            ]}
+            onNodeClick={(id) => { if (id === "germanium") goRawMaterial("germanium"); }}
           />
+          <div style={{ textAlign: "center", color: dimmer, fontSize: 11, padding: "4px 0 12px 0", letterSpacing: "4px" }}>&darr; &darr; &darr;</div>
 
           <div style={{ position: "relative" }}>
             <ExpandButton onClick={() => setTreeExpanded(true)} />
