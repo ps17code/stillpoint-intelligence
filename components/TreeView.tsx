@@ -1388,25 +1388,27 @@ export default function TreeView() {
           {renderContextualHeader()}
           <div style={{ height: 1, background: borderColor, margin: "28px 0" }} />
 
-          {/* Wide spine + container area */}
-          <div style={{ width: "90vw", maxWidth: 1400, marginLeft: "calc(50% - 45vw)" }}>
-            {/* Spine */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              {path.map((entry, i) => (
-                <React.Fragment key={`spine-${i}`}>
-                  <SpineAncestorNode
-                    name={entry.name}
-                    onClick={() => {
-                      if (i === 0) goHome();
-                      else popToIndex(i - 1);
-                    }}
-                  />
-                  <SpineDashedLine />
-                </React.Fragment>
-              ))}
-            </div>
+          {/* Spine — always centered at 900px */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            {path.map((entry, i) => (
+              <React.Fragment key={`spine-${i}`}>
+                <SpineAncestorNode
+                  name={entry.name}
+                  onClick={() => {
+                    if (i === 0) goHome();
+                    else popToIndex(i - 1);
+                  }}
+                />
+                <SpineDashedLine />
+              </React.Fragment>
+            ))}
+          </div>
 
-            {/* Container */}
+          {/* Container — widens to 90vw only for tree level */}
+          <div style={currentLevel === "tree"
+            ? { width: "90vw", maxWidth: 1400, marginLeft: "calc(50% - 45vw)" }
+            : {}
+          }>
             <div
               key={animKey}
               style={{
@@ -1420,10 +1422,10 @@ export default function TreeView() {
             >
               {renderContainerContent()}
             </div>
-
-            {/* Downstream chips (if at tree level) */}
-            {currentLevel === "tree" && renderDownstreamChips()}
           </div>
+
+          {/* Downstream chips (if at tree level) */}
+          {currentLevel === "tree" && renderDownstreamChips()}
         </div>
       )}
 
