@@ -511,10 +511,10 @@ export default function GalliumInputPage() {
             <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: dimText, margin: "0 0 10px 0" }}>KEY TAKEAWAYS</p>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 0 }}>
               {[
-                "1 \u2014 Raw material (bauxite) is plentiful and globally distributed \u2014 not a geological constraint.",
-                "2 \u2014 Primary gallium production is overwhelmingly Chinese \u2014 the bottleneck is recovery infrastructure at alumina refineries.",
-                "3 \u2014 Four western projects are rebuilding primary capacity \u2014 but none operating at scale before 2028.",
-                "4 \u2014 The refining layer is Japan-led (Dowa) with small Canadian/US contributions \u2014 dependent on Chinese feedstock.",
+                "1 \u2014 Bauxite is mined globally across five regions \u2014 Guinea, Australia, China, Brazil, and Indonesia \u2014 with ~346M tonnes produced per year.",
+                "2 \u2014 Gallium isn\u2019t extracted at the mine \u2014 it\u2019s recovered downstream at alumina refineries that have ion-exchange recovery circuits installed, and ~98% of those refineries are in China.",
+                "3 \u2014 Four western projects are trying to rebuild primary capacity \u2014 Alcoa/JAGA in Australia, Metlen in Greece, Rio Tinto in Quebec, Korea Zinc/Crucible in Tennessee \u2014 but none operate at scale before 2028.",
+                "4 \u2014 Outside China, Dowa in Japan does the bulk of high-purity refining, with smaller capacity at 5N Plus in Canada and Indium Corporation in the US \u2014 but all of them depend on Chinese primary feedstock to operate.",
               ].map((text, i) => (
                 <p key={i} style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.8, margin: 0 }}>{text}</p>
               ))}

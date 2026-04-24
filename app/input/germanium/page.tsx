@@ -554,10 +554,10 @@ export default function GermaniumInputPage() {
             <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: dimText, margin: "0 0 10px 0" }}>KEY TAKEAWAYS</p>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 0 }}>
               {[
-                "1 \u2014 Germanium cannot be mined directly \u2014 it comes from zinc smelters and coal operations that install specialized recovery circuits, which most smelters don\u2019t.",
-                "2 \u2014 ~83% of primary supply is Chinese and under export licensing since August 2023 \u2014 the real bottleneck is whether Chinese output reaches western buyers, not geological supply.",
-                "3 \u2014 Umicore (Belgium) is the sole western refiner at scale for fiber-grade GeCl\u2084 \u2014 a single-facility chokepoint that processes almost all non-Chinese western supply.",
-                "4 \u2014 Supply response is 2027-2028 at earliest \u2014 DRC tailings via Umicore offtake, Teck\u2019s Red Dog, and Blue Moon\u2019s Idaho restart collectively add ~30-50t/yr of non-Chinese primary capacity.",
+                "1 \u2014 Only 8 coal and zinc deposits in the world host germanium at high enough concentration to be commercially extracted.",
+                "2 \u2014 83% of that supply is in China.",
+                "3 \u2014 Two western sources exist \u2014 Big Hill is new DRC tailings refined exclusively by Umicore, and Red Dog is a declining Alaskan zinc mine expected to expire in 2031.",
+                "4 \u2014 Outside China, Umicore and 5N Plus are the sole western supply for germanium-reliant products.",
               ].map((text, i) => (
                 <p key={i} style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.8, margin: 0 }}>{text}</p>
               ))}
