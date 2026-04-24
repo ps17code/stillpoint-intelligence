@@ -523,156 +523,6 @@ const INPUT_ACCENT: Record<string, string> = {
   gallium: "#7a8a6a",
 };
 
-/* ── spine nodes (ancestor navigation above tree) ── */
-/* ── Spine node (supply-tree style) ── */
-function SpineNode({
-  name,
-  isFocus,
-  onClick,
-}: {
-  name: string;
-  isFocus?: boolean;
-  onClick?: () => void;
-}) {
-  const clickable = !isFocus && onClick;
-  return (
-    <div
-      onClick={clickable ? onClick : undefined}
-      style={{
-        display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
-        cursor: clickable ? "pointer" : "default",
-      }}
-    >
-      <svg width="14" height="14" viewBox="0 0 14 14">
-        <circle cx="7" cy="7" r="5.5" fill="none"
-          stroke={isFocus ? "rgba(155,168,171,0.6)" : "rgba(155,168,171,0.3)"}
-          strokeWidth={isFocus ? 1.3 : 1} />
-      </svg>
-      <p style={{
-        fontSize: isFocus ? 13 : 11,
-        fontFamily: "'EB Garamond', Georgia, serif",
-        fontWeight: isFocus ? 600 : 400,
-        color: isFocus ? "rgba(255,255,255,0.82)" : "#706a60",
-        margin: 0, textAlign: "center", whiteSpace: "nowrap",
-        transition: "color 0.15s",
-      }}
-        onMouseEnter={e => { if (clickable) e.currentTarget.style.color = "#a09888"; }}
-        onMouseLeave={e => { if (clickable) e.currentTarget.style.color = "#706a60"; }}
-      >{name}</p>
-    </div>
-  );
-}
-
-/* ── Dashed vertical connector ── */
-function DashedConnector({ height = 32 }: { height?: number }) {
-  return (
-    <div style={{ display: "flex", justifyContent: "center", padding: "2px 0" }}>
-      <svg width="2" height={height} viewBox={`0 0 2 ${height}`}>
-        <line x1="1" y1="0" x2="1" y2={height} stroke="rgba(255,255,255,0.18)" strokeWidth="0.8" strokeDasharray="4,3" />
-      </svg>
-    </div>
-  );
-}
-
-/* ── Spine column (ancestor nodes + focus node) — HTML version for subsystem/component levels ── */
-function SpineColumn({
-  ancestors,
-  current,
-}: {
-  ancestors: { name: string; onClick: () => void }[];
-  current?: string;
-}) {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 4 }}>
-      {ancestors.map((a, i) => (
-        <React.Fragment key={i}>
-          <SpineNode name={a.name} onClick={a.onClick} />
-          <DashedConnector height={28} />
-        </React.Fragment>
-      ))}
-      {current && (
-        <>
-          <SpineNode name={current} isFocus />
-          <DashedConnector height={28} />
-        </>
-      )}
-    </div>
-  );
-}
-
-/* ── Spine SVG — renders spine nodes inside an SVG matching the tree viewBox width ── */
-function SpineSVG({
-  svgWidth,
-  ancestors,
-  current,
-  onAncestorClick,
-}: {
-  svgWidth: number;
-  ancestors: { name: string }[];
-  current: string;
-  onAncestorClick: (index: number) => void;
-}) {
-  const cx = svgWidth / 2;
-  const nodeGap = 70;
-  const startY = 30;
-  const totalNodes = ancestors.length + 1; // ancestors + current
-  const svgH = startY + totalNodes * nodeGap + 20;
-
-  return (
-    <svg
-      viewBox={`0 0 ${svgWidth} ${svgH}`}
-      preserveAspectRatio="xMidYMid meet"
-      style={{ display: "block", width: "100%", height: "auto" }}
-    >
-      {ancestors.map((a, i) => {
-        const y = startY + i * nodeGap;
-        const nextY = startY + (i + 1) * nodeGap;
-        return (
-          <g key={i} style={{ cursor: "pointer" }} onClick={() => onAncestorClick(i)}>
-            {/* Ring */}
-            <circle cx={cx} cy={y} r={5} fill="none" stroke="rgba(155,168,171,0.3)" strokeWidth={1} />
-            {/* Name */}
-            <text
-              x={cx} y={y + 22}
-              textAnchor="middle"
-              fontFamily="'EB Garamond', Georgia, serif"
-              fontSize={11}
-              fill="#706a60"
-            >
-              {a.name}
-            </text>
-            {/* Dashed line down */}
-            <line x1={cx} y1={y + 30} x2={cx} y2={nextY - 8}
-              stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
-          </g>
-        );
-      })}
-      {/* Current focus node */}
-      {(() => {
-        const y = startY + ancestors.length * nodeGap;
-        return (
-          <g>
-            <circle cx={cx} cy={y} r={5.5} fill="none" stroke="rgba(155,168,171,0.6)" strokeWidth={1.3} />
-            <text
-              x={cx} y={y + 22}
-              textAnchor="middle"
-              fontFamily="'EB Garamond', Georgia, serif"
-              fontSize={13}
-              fontWeight={600}
-              fill="rgba(255,255,255,0.82)"
-            >
-              {current}
-            </text>
-            {/* Dashed line down to tree content */}
-            <line x1={cx} y1={y + 30} x2={cx} y2={svgH}
-              stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
-          </g>
-        );
-      })()}
-    </svg>
-  );
-}
-
 /* ── sub-components ── */
 
 function StatusBadge({ status }: { status: string }) {
@@ -864,149 +714,160 @@ function GalliumSupplyTree({ onNodeClick }: { onNodeClick: (name: string) => voi
 }
 
 /* ═══════════════════════════════════════════ */
+/*  Path-based navigation types                */
+/* ═══════════════════════════════════════════ */
+
+type PathEntry = {
+  type: "vertical" | "subsystem" | "component" | "raw-material";
+  id: string;
+  name: string;
+};
+
+/* ═══════════════════════════════════════════ */
+/*  Spine sub-components                       */
+/* ═══════════════════════════════════════════ */
+
+function SpineAncestorNode({ name, onClick }: { name: string; onClick: () => void }) {
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
+        cursor: "pointer",
+      }}
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14">
+        <circle cx="7" cy="7" r="5.5" fill="none" stroke="rgba(155,168,171,0.3)" strokeWidth="1" />
+      </svg>
+      <p style={{
+        fontSize: 11, fontFamily: "'EB Garamond', Georgia, serif",
+        color: "#706a60", margin: 0, transition: "color 0.15s",
+      }}
+        onMouseEnter={e => (e.currentTarget.style.color = "#a09888")}
+        onMouseLeave={e => (e.currentTarget.style.color = "#706a60")}
+      >{name}</p>
+    </div>
+  );
+}
+
+function SpineDashedLine() {
+  return (
+    <div style={{ display: "flex", justifyContent: "center", padding: "2px 0" }}>
+      <svg width="2" height="28" viewBox="0 0 2 28">
+        <line x1="1" y1="0" x2="1" y2="28" stroke="rgba(255,255,255,0.18)" strokeWidth="0.8" strokeDasharray="4,3" />
+      </svg>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════ */
 /*  TreeView -- main exported component        */
 /* ═══════════════════════════════════════════ */
 
 export default function TreeView() {
-  const [level, setLevel] = useState<NavLevel>("verticals");
-  const [selectedVertical, setSelectedVertical] = useState<string | null>(null);
-  const [selectedSubsystem, setSelectedSubsystem] = useState<string | null>(null);
-  const [treeTarget, setTreeTarget] = useState<TreeTarget | null>(null);
-  const [breadcrumb, setBreadcrumb] = useState<{ label: string; level: NavLevel; vertical?: string | null; subsystem?: string | null; target?: TreeTarget | null }[]>([]);
-  const [treeExpanded, setTreeExpanded] = useState(false);
+  /* ── unified path state ── */
+  const [path, setPath] = useState<PathEntry[]>([]);
   const [animKey, setAnimKey] = useState(0);
+  const [treeExpanded, setTreeExpanded] = useState(false);
 
-  /* ── accordion expanded index per level ── */
+  /* ── accordion expanded index (for verticals level only) ── */
   const [expandedVertical, setExpandedVertical] = useState<number>(() => {
     const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
     return idx >= 0 ? idx : 0;
   });
-  const [expandedSubsystem, setExpandedSubsystem] = useState<number>(() => {
-    const idx = AI_SUBSYSTEMS.findIndex(s => !s.comingSoon);
-    return idx >= 0 ? idx : 0;
-  });
-  const [expandedComponent, setExpandedComponent] = useState<number>(0);
 
   /* ── navigation helpers ── */
-  function goVerticals() {
-    setLevel("verticals");
-    setSelectedVertical(null);
-    setSelectedSubsystem(null);
-    setTreeTarget(null);
-    setBreadcrumb([]);
-    setTreeExpanded(false);
+  function pushPath(entry: PathEntry) {
+    setPath(prev => [...prev, entry]);
     setAnimKey(k => k + 1);
+    setTreeExpanded(false);
+  }
+
+  function popToIndex(index: number) {
+    setPath(prev => prev.slice(0, index + 1));
+    setAnimKey(k => k + 1);
+    setTreeExpanded(false);
+  }
+
+  function goHome() {
+    setPath([]);
+    setAnimKey(k => k + 1);
+    setTreeExpanded(false);
     setExpandedVertical(() => {
       const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
       return idx >= 0 ? idx : 0;
     });
   }
 
-  function goSubsystems(verticalName: string) {
-    setLevel("subsystems");
-    setSelectedVertical(verticalName);
-    setSelectedSubsystem(null);
-    setTreeTarget(null);
-    setBreadcrumb([{ label: "All verticals", level: "verticals" }]);
-    setTreeExpanded(false);
-    setAnimKey(k => k + 1);
-    setExpandedSubsystem(() => {
-      const idx = AI_SUBSYSTEMS.findIndex(s => !s.comingSoon);
-      return idx >= 0 ? idx : 0;
-    });
-  }
+  /* ── derive current level from path ── */
+  const currentLevel: "verticals" | "subsystems" | "components" | "tree" =
+    path.length === 0
+      ? "verticals"
+      : path[path.length - 1].type === "vertical"
+        ? "subsystems"
+        : path[path.length - 1].type === "subsystem"
+          ? "components"
+          : "tree";
 
-  function goComponents(subsystemName: string) {
-    setLevel("components");
-    setSelectedSubsystem(subsystemName);
-    setTreeTarget(null);
-    setBreadcrumb([
-      { label: "All verticals", level: "verticals" },
-      { label: selectedVertical ?? "", level: "subsystems", vertical: selectedVertical },
-    ]);
-    setTreeExpanded(false);
-    setAnimKey(k => k + 1);
-    const sub = AI_SUBSYSTEMS.find(s => s.name === subsystemName);
-    if (sub) {
-      const idx = sub.components.findIndex(c => !c.comingSoon);
-      setExpandedComponent(idx >= 0 ? idx : 0);
-    }
-  }
+  /* ── lookups from path ── */
+  const currentVertical = path.find(p => p.type === "vertical");
+  const currentSubsystem = path.find(p => p.type === "subsystem");
+  const currentComponent = path.find(p => p.type === "component");
+  const currentRawMaterial = path.find(p => p.type === "raw-material");
+  const lastEntry = path.length > 0 ? path[path.length - 1] : null;
 
-  function goTree(target: TreeTarget, _label: string) {
-    setLevel("tree");
-    setTreeTarget(target);
-    setTreeExpanded(false);
-    setBreadcrumb([
-      { label: "All verticals", level: "verticals" },
-      { label: selectedVertical ?? "", level: "subsystems", vertical: selectedVertical },
-      ...(selectedSubsystem ? [{ label: selectedSubsystem, level: "components" as NavLevel, vertical: selectedVertical, subsystem: selectedSubsystem }] : []),
-    ]);
-    setAnimKey(k => k + 1);
-  }
-
-  function goRawMaterial(rawId: string) {
-    const prevBreadcrumb = [...breadcrumb];
-    if (treeTarget && treeTarget.type === "component") {
-      const compLabel = treeTarget.id === "fiber" ? "Fiber optic cable" : treeTarget.id;
-      prevBreadcrumb.push({ label: compLabel, level: "tree", vertical: selectedVertical, subsystem: selectedSubsystem, target: { ...treeTarget } });
-    }
-    setTreeTarget({ type: "raw-material", id: rawId });
-    setLevel("tree");
-    setTreeExpanded(false);
-    setBreadcrumb(prevBreadcrumb);
-    setAnimKey(k => k + 1);
-  }
-
-  function handleBreadcrumbClick(bc: typeof breadcrumb[0]) {
-    if (bc.level === "verticals") { goVerticals(); return; }
-    if (bc.level === "subsystems" && bc.vertical) { goSubsystems(bc.vertical); return; }
-    if (bc.level === "components" && bc.subsystem) {
-      setSelectedVertical(bc.vertical ?? null);
-      goComponents(bc.subsystem);
-      return;
-    }
-    if (bc.level === "tree" && bc.target) {
-      setSelectedVertical(bc.vertical ?? null);
-      setSelectedSubsystem(bc.subsystem ?? null);
-      setTreeTarget(bc.target);
-      setLevel("tree");
-      setTreeExpanded(false);
-      setBreadcrumb(breadcrumb.slice(0, breadcrumb.indexOf(bc)));
-      setAnimKey(k => k + 1);
-      return;
-    }
-  }
+  /* ── chip data for upstream/downstream ── */
+  const FIBER_DOWNSTREAM = [
+    { name: "AI datacenters", navigateTo: null, active: false },
+    { name: "Telecom", navigateTo: null, active: false },
+    { name: "Subsea cables", navigateTo: null, active: false },
+    { name: "Military / UAV", navigateTo: null, active: false },
+    { name: "BEAD broadband", navigateTo: null, active: false },
+  ];
+  const GERMANIUM_DOWNSTREAM_CHIPS = [
+    { name: "Fiber optic cable", navigateTo: "fiber", active: true },
+    { name: "IR optics", navigateTo: null, active: false },
+    { name: "Satellite solar cells", navigateTo: null, active: false },
+    { name: "SiGe semiconductors", navigateTo: null, active: false },
+  ];
+  const GALLIUM_DOWNSTREAM_CHIPS = [
+    { name: "GaN power semiconductors", navigateTo: null, active: false },
+    { name: "GaAs substrates & devices", navigateTo: null, active: false },
+    { name: "GaN RF and defense radar", navigateTo: null, active: false },
+    { name: "LED lighting", navigateTo: null, active: false },
+  ];
 
   /* ── render: breadcrumb ── */
   function renderBreadcrumb() {
-    const parts = [...breadcrumb];
-    const currentLabel =
-      level === "verticals" ? "All verticals" :
-      level === "subsystems" ? selectedVertical :
-      level === "components" ? selectedSubsystem :
-      level === "tree" && treeTarget?.type === "component" && treeTarget.id === "fiber" ? "Fiber optic cable" :
-      level === "tree" && treeTarget?.type === "raw-material" ? (treeTarget.id.charAt(0).toUpperCase() + treeTarget.id.slice(1)) :
-      null;
+    const labels = ["All verticals", ...path.map(p => p.name)];
 
     return (
       <div style={{ marginBottom: 28, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", minHeight: 16 }}>
-        {parts.map((bc, i) => (
-          <React.Fragment key={i}>
-            <span
-              onClick={() => handleBreadcrumbClick(bc)}
-              style={{ fontSize: 11, color: dimmer, cursor: "pointer", transition: "color 0.15s" }}
-              onMouseEnter={e => (e.currentTarget.style.color = bodyText)}
-              onMouseLeave={e => (e.currentTarget.style.color = dimmer)}
-            >
-              {bc.label}
-            </span>
-            <span style={{ fontSize: 11, color: dimmer }}>/</span>
-          </React.Fragment>
-        ))}
-        {currentLabel && (
-          <span style={{ fontSize: 11, color: parts.length > 0 ? bodyText : dimmer }}>{currentLabel}</span>
-        )}
+        {labels.map((label, i) => {
+          const isLast = i === labels.length - 1;
+          const clickHandler = () => {
+            if (i === 0) goHome();
+            else popToIndex(i - 1);
+          };
+          return (
+            <React.Fragment key={i}>
+              {i > 0 && <span style={{ fontSize: 11, color: dimmer }}>/</span>}
+              <span
+                onClick={isLast ? undefined : clickHandler}
+                style={{
+                  fontSize: 11,
+                  color: isLast ? bodyText : dimmer,
+                  cursor: isLast ? "default" : "pointer",
+                  transition: "color 0.15s",
+                }}
+                onMouseEnter={e => { if (!isLast) e.currentTarget.style.color = bodyText; }}
+                onMouseLeave={e => { if (!isLast) e.currentTarget.style.color = dimmer; }}
+              >
+                {label}
+              </span>
+            </React.Fragment>
+          );
+        })}
       </div>
     );
   }
@@ -1129,7 +990,7 @@ export default function TreeView() {
     );
   }
 
-  /* ── two-column layout wrapper ── */
+  /* ── two-column layout wrapper (verticals level only) ── */
   function TwoColumnLayout({
     title,
     subtitle,
@@ -1154,10 +1015,10 @@ export default function TreeView() {
 
     return (
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 32px 80px", minHeight: "100vh", background: "#111" }}>
-        {/* Breadcrumb — fixed position, no animation */}
+        {/* Breadcrumb */}
         {renderBreadcrumb()}
 
-        {/* Full-width contextual header — fixed position, no animation */}
+        {/* Full-width contextual header */}
         <h1 style={{
           fontFamily: "'Instrument Serif', serif",
           fontSize: titleSize ?? 32,
@@ -1182,7 +1043,7 @@ export default function TreeView() {
 
         {/* Two-column grid: accordion left, illustration right */}
         <div style={{ display: "flex", gap: 0 }}>
-          {/* Left column — accordion */}
+          {/* Left column -- accordion */}
           <div style={{ flex: "0 0 60%", maxWidth: 540 }}>
             <div key={animKey}>
               {items.map((item, i) => (
@@ -1200,7 +1061,7 @@ export default function TreeView() {
               ))}
             </div>
           </div>
-          {/* Right column — illustration centered vertically */}
+          {/* Right column -- illustration centered vertically */}
           <div style={{ flex: "0 0 40%", display: "flex", alignItems: "center", justifyContent: "center" }}>
             {IllusComponent && (
               <div
@@ -1219,7 +1080,7 @@ export default function TreeView() {
     );
   }
 
-  /* ── render: verticals ── */
+  /* ── render: verticals (level 1 — accordion + illustration) ── */
   function renderVerticals() {
     const items = VERTICALS_DATA.map(v => ({
       name: v.name,
@@ -1238,311 +1099,336 @@ export default function TreeView() {
         expandedIndex={expandedVertical}
         onExpandItem={setExpandedVertical}
         onNavigateItem={(i) => {
-          if (!VERTICALS_DATA[i].comingSoon) goSubsystems(VERTICALS_DATA[i].name);
+          if (!VERTICALS_DATA[i].comingSoon) {
+            pushPath({ type: "vertical", id: VERTICALS_DATA[i].id, name: VERTICALS_DATA[i].name });
+          }
         }}
       />
     );
   }
 
-  /* ── render: subsystems ── */
-  function renderSubsystems() {
-    const vertData = VERTICALS_DATA.find(v => v.name === selectedVertical);
-    const nodes = AI_SUBSYSTEMS.map(s => ({
-      id: s.id,
-      name: s.name,
-      pill: s.componentCount,
-      clickable: !s.comingSoon,
-      dimmed: s.comingSoon,
-    }));
+  /* ── contextual header derived from path ── */
+  function renderContextualHeader() {
+    if (!lastEntry) return null;
+
+    let title = "";
+    let subtitle = "";
+    let showAnalysisButton = false;
+    let analysisHref = "";
+    let accent: string | undefined;
+
+    if (lastEntry.type === "vertical") {
+      const vertData = VERTICALS_DATA.find(v => v.id === lastEntry.id);
+      title = lastEntry.name;
+      subtitle = vertData?.description ?? "";
+    } else if (lastEntry.type === "subsystem") {
+      const subData = AI_SUBSYSTEMS.find(s => s.id === lastEntry.id);
+      title = lastEntry.name;
+      subtitle = subData?.description ?? "";
+    } else if (lastEntry.type === "component") {
+      const sub = currentSubsystem ? AI_SUBSYSTEMS.find(s => s.id === currentSubsystem.id) : null;
+      const comp = sub?.components.find(c => c.id === lastEntry.id);
+      title = lastEntry.name;
+      subtitle = comp?.detail ?? "";
+      showAnalysisButton = true;
+      analysisHref = `/input/${lastEntry.id === "fiber" ? "fiber-optic-cable" : lastEntry.id}`;
+      accent = INPUT_ACCENT[lastEntry.id];
+    } else if (lastEntry.type === "raw-material") {
+      title = lastEntry.name;
+      if (lastEntry.id === "germanium") {
+        subtitle = "Trace element doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in IR defense optics, satellite solar cells, and SiGe semiconductors.";
+        accent = INPUT_ACCENT.germanium;
+      } else if (lastEntry.id === "gallium") {
+        subtitle = "Byproduct of alumina refining. Forms compound semiconductors (GaAs, GaN) for AI datacenter power conversion, 5G amplifiers, defense radar, and LED lighting.";
+        accent = INPUT_ACCENT.gallium;
+      }
+      showAnalysisButton = true;
+      analysisHref = `/input/${lastEntry.id}`;
+    }
+
+    if (showAnalysisButton) {
+      return (
+        <TreeHeader
+          title={title}
+          href={analysisHref}
+          description={subtitle}
+          accent={accent}
+        />
+      );
+    }
 
     return (
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 32px 80px", minHeight: "100vh", background: "#111" }}>
-        {renderBreadcrumb()}
-        <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 32, fontWeight: 400, color: warmWhite, margin: "0 0 8px 0" }}>
-          {selectedVertical}
+      <>
+        <h1 style={{
+          fontFamily: "'Instrument Serif', serif",
+          fontSize: 32, fontWeight: 400, color: warmWhite,
+          margin: "0 0 8px 0",
+        }}>
+          {title}
         </h1>
         <p style={{ fontSize: 13, color: muted, lineHeight: 1.6, margin: 0, maxWidth: "80%" }}>
-          {vertData?.description ?? ""}
+          {subtitle}
         </p>
-        <div style={{ height: 1, background: borderColor, margin: "28px 0 28px 0" }} />
-        <SpineColumn
-          ancestors={[]}
-          current={selectedVertical ?? "AI Infrastructure"}
-        />
+      </>
+    );
+  }
+
+  /* ── container content based on current level ── */
+  function renderContainerContent() {
+    if (currentLevel === "subsystems") {
+      const nodes = AI_SUBSYSTEMS.map(s => ({
+        id: s.id,
+        name: s.name,
+        pill: s.componentCount,
+        clickable: !s.comingSoon,
+        dimmed: s.comingSoon,
+      }));
+      return (
         <NodeRow nodes={nodes} onNodeClick={(id) => {
           const sub = AI_SUBSYSTEMS.find(s => s.id === id);
-          if (sub) goComponents(sub.name);
+          if (sub) pushPath({ type: "subsystem", id: sub.id, name: sub.name });
         }} />
-      </div>
-    );
-  }
+      );
+    }
 
-  /* ── render: components ── */
-  function renderComponents() {
-    const sub = AI_SUBSYSTEMS.find(s => s.name === selectedSubsystem);
-    if (!sub) return null;
-
-    const nodes = sub.components.map(c => ({
-      id: c.id,
-      name: c.name,
-      pill: c.keyNumber ?? "Coming soon",
-      clickable: !c.comingSoon && c.hasTree,
-      dimmed: c.comingSoon,
-    }));
-
-    return (
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 32px 80px", minHeight: "100vh", background: "#111" }}>
-        {renderBreadcrumb()}
-        <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 32, fontWeight: 400, color: warmWhite, margin: "0 0 8px 0" }}>
-          {selectedSubsystem}
-        </h1>
-        <p style={{ fontSize: 13, color: muted, lineHeight: 1.6, margin: 0, maxWidth: "80%" }}>
-          {sub.description}
-        </p>
-        <div style={{ height: 1, background: borderColor, margin: "28px 0 28px 0" }} />
-        <SpineColumn
-          ancestors={[
-            { name: selectedVertical ?? "AI Infrastructure", onClick: () => goSubsystems(selectedVertical ?? "AI Infrastructure") },
-          ]}
-          current={selectedSubsystem ?? ""}
-        />
+    if (currentLevel === "components") {
+      const sub = currentSubsystem ? AI_SUBSYSTEMS.find(s => s.id === currentSubsystem.id) : null;
+      if (!sub) return null;
+      const nodes = sub.components.map(c => ({
+        id: c.id,
+        name: c.name,
+        pill: c.keyNumber ?? "Coming soon",
+        clickable: !c.comingSoon && c.hasTree,
+        dimmed: c.comingSoon,
+      }));
+      return (
         <NodeRow nodes={nodes} onNodeClick={(id) => {
           const comp = sub.components.find(c => c.id === id);
-          if (comp && comp.hasTree) goTree({ type: "component", id: comp.id }, comp.name);
+          if (comp && comp.hasTree) pushPath({ type: "component", id: comp.id, name: comp.name });
         }} />
-      </div>
-    );
+      );
+    }
+
+    if (currentLevel === "tree") {
+      return renderTreeContent();
+    }
+
+    return null;
   }
 
-  /* ── chip data for upstream/downstream ── */
-  const FIBER_UPSTREAM = [
-    { name: "Germanium", navigateTo: "germanium", active: true },
-    { name: "Helium", navigateTo: null, active: false },
-    { name: "Silica / SiCl\u2084", navigateTo: null, active: false },
-  ];
-  const FIBER_DOWNSTREAM = [
-    { name: "AI datacenters", navigateTo: null, active: false },
-    { name: "Telecom", navigateTo: null, active: false },
-    { name: "Subsea cables", navigateTo: null, active: false },
-    { name: "Military / UAV", navigateTo: null, active: false },
-    { name: "BEAD broadband", navigateTo: null, active: false },
-  ];
-  const GERMANIUM_DOWNSTREAM_CHIPS = [
-    { name: "Fiber optic cable", navigateTo: "fiber", active: true },
-    { name: "IR optics", navigateTo: null, active: false },
-    { name: "Satellite solar cells", navigateTo: null, active: false },
-    { name: "SiGe semiconductors", navigateTo: null, active: false },
-  ];
-  const GALLIUM_DOWNSTREAM_CHIPS = [
-    { name: "GaN power semiconductors", navigateTo: null, active: false },
-    { name: "GaAs substrates & devices", navigateTo: null, active: false },
-    { name: "GaN RF and defense radar", navigateTo: null, active: false },
-    { name: "LED lighting", navigateTo: null, active: false },
-  ];
-
-  /* ── render: tree view (component or raw-material) ── */
-  function renderTree() {
-    if (!treeTarget) return null;
+  /* ── tree content inside the container ── */
+  function renderTreeContent() {
+    if (!lastEntry) return null;
 
     /* ── Fiber optic cable tree ── */
-    if (treeTarget.type === "component" && treeTarget.id === "fiber") {
+    if (lastEntry.type === "component" && lastEntry.id === "fiber") {
       const fiberCompW = computeCompSvgWidth(chainsData.COMP_DATA["GeO\u2082 / GeCl\u2084"]);
       return (
-        <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
-          <TreeHeader
-            title="Fiber optic cable"
-            href="/input/fiber-optic-cable"
-            description="Glass strands carrying light signals between servers, racks, and datacenters. The physical backbone of AI infrastructure connectivity."
-            accent={INPUT_ACCENT.fiber}
-          />
+        <>
+          <ExpandButton onClick={() => setTreeExpanded(true)} />
 
-          {/* Wide tree container — breaks out of 900px to 90vw */}
-          <div style={{ width: "90vw", maxWidth: 1600, marginLeft: "calc(50% - 45vw)", position: "relative" }}>
-            <ExpandButton onClick={() => setTreeExpanded(true)} />
+          {/* Raw material nodes as SVG matching tree width */}
+          <svg viewBox={`0 0 ${fiberCompW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+            {[
+              { x: fiberCompW / 2 - 200, name: "Germanium", pill: "~230t/yr", clickable: true, dimmed: false },
+              { x: fiberCompW / 2, name: "Helium", pill: "Non-renewable", clickable: false, dimmed: true },
+              { x: fiberCompW / 2 + 200, name: "Silica / SiCl\u2084", pill: "Up 50%", clickable: false, dimmed: true },
+            ].map((rm, i) => (
+              <g key={i}
+                style={{ cursor: rm.clickable ? "pointer" : "default", opacity: rm.dimmed ? 0.4 : 1 }}
+                onClick={() => {
+                  if (rm.clickable) {
+                    // Navigate to germanium: reset path to vertical > raw materials branch
+                    setPath([
+                      { type: "vertical", id: currentVertical?.id ?? "ai", name: currentVertical?.name ?? "AI Infrastructure" },
+                      { type: "raw-material", id: "germanium", name: "Germanium" },
+                    ]);
+                    setAnimKey(k => k + 1);
+                    setTreeExpanded(false);
+                  }
+                }}
+              >
+                <circle cx={rm.x} cy={20} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
+                <text x={rm.x} y={42} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{rm.name}</text>
+                <text x={rm.x} y={58} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.5)">{rm.pill}</text>
+                <line x1={rm.x} y1={64} x2={rm.x} y2={80} stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
+              </g>
+            ))}
+          </svg>
 
-            {/* Spine SVG — same viewBox width as tree */}
-            <SpineSVG
-              svgWidth={fiberCompW}
-              ancestors={[
-                { name: "AI Infrastructure" },
-                { name: selectedSubsystem ?? "Connectivity" },
-              ]}
-              current="Fiber optic cable"
-              onAncestorClick={(i) => {
-                if (i === 0) goSubsystems(selectedVertical ?? "AI Infrastructure");
-                if (i === 1) goComponents(selectedSubsystem ?? "Connectivity");
-              }}
-            />
-
-            {/* Raw material nodes as SVG matching tree width */}
-            <svg viewBox={`0 0 ${fiberCompW} 80`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
-              {[
-                { x: fiberCompW / 2 - 200, name: "Germanium", pill: "~230t/yr", clickable: true, dimmed: false },
-                { x: fiberCompW / 2, name: "Helium", pill: "Non-renewable", clickable: false, dimmed: true },
-                { x: fiberCompW / 2 + 200, name: "Silica / SiCl\u2084", pill: "Up 50%", clickable: false, dimmed: true },
-              ].map((rm, i) => (
-                <g key={i}
-                  style={{ cursor: rm.clickable ? "pointer" : "default", opacity: rm.dimmed ? 0.4 : 1 }}
-                  onClick={() => { if (rm.clickable) goRawMaterial("germanium"); }}
-                >
-                  <circle cx={rm.x} cy={20} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
-                  <text x={rm.x} y={42} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{rm.name}</text>
-                  <text x={rm.x} y={58} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={8} fill="rgba(255,255,255,0.5)">{rm.pill}</text>
-                  <line x1={rm.x} y1={64} x2={rm.x} y2={80} stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
-                </g>
-              ))}
-            </svg>
-
-            {/* Supply tree — flows seamlessly below */}
-            <FiberSupplyTree onNodeClick={() => {}} />
-          </div>
-
-          <ChipSection
-            label="Downstream"
-            items={FIBER_DOWNSTREAM}
-            style={{ marginTop: 40 }}
-          />
-
-          {treeExpanded && (
-            <FullscreenOverlay treeName="FIBER OPTIC CABLE" onClose={() => setTreeExpanded(false)}>
-              <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
-                <FiberSupplyTree onNodeClick={() => {}} />
-              </div>
-            </FullscreenOverlay>
-          )}
-        </div>
+          {/* Supply tree */}
+          <FiberSupplyTree onNodeClick={() => {}} />
+        </>
       );
     }
 
     /* ── Germanium tree ── */
-    if (treeTarget.type === "raw-material" && treeTarget.id === "germanium") {
-      const geRawW = computeRawSvgWidth(chainsData.RAW_DATA["Germanium"]);
+    if (lastEntry.type === "raw-material" && lastEntry.id === "germanium") {
       return (
-        <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
-          <TreeHeader
-            title="Germanium"
-            href="/input/germanium"
-            description="Trace element doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in IR defense optics, satellite solar cells, and SiGe semiconductors."
-            accent={INPUT_ACCENT.germanium}
-          />
-
-          {/* Wide tree container */}
-          <div style={{ width: "90vw", maxWidth: 1600, marginLeft: "calc(50% - 45vw)", position: "relative" }}>
-            <ExpandButton onClick={() => setTreeExpanded(true)} />
-
-            <SpineSVG
-              svgWidth={geRawW}
-              ancestors={[
-                { name: "AI Infrastructure" },
-                { name: "Raw Materials" },
-              ]}
-              current="Germanium"
-              onAncestorClick={(i) => {
-                if (i === 0) goSubsystems(selectedVertical ?? "AI Infrastructure");
-                if (i === 1) goVerticals();
-              }}
-            />
-
-            <GermaniumSupplyTree onNodeClick={() => {}} />
-          </div>
-
-          <ChipSection
-            label="Downstream"
-            items={GERMANIUM_DOWNSTREAM_CHIPS}
-            onNavigate={(id) => {
-              if (id === "fiber") {
-                setTreeTarget({ type: "component", id: "fiber" });
-                setTreeExpanded(false);
-                setBreadcrumb([
-                  { label: "All verticals", level: "verticals" },
-                  { label: selectedVertical ?? "", level: "subsystems", vertical: selectedVertical },
-                  ...(selectedSubsystem ? [{ label: selectedSubsystem, level: "components" as NavLevel, vertical: selectedVertical, subsystem: selectedSubsystem }] : []),
-                ]);
-                setAnimKey(k => k + 1);
-              }
-            }}
-            style={{ marginTop: 40 }}
-          />
-
-          {treeExpanded && (
-            <FullscreenOverlay treeName="GERMANIUM" onClose={() => setTreeExpanded(false)}>
-              <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
-                <GermaniumSupplyTree onNodeClick={() => {}} />
-              </div>
-            </FullscreenOverlay>
-          )}
-        </div>
+        <>
+          <ExpandButton onClick={() => setTreeExpanded(true)} />
+          <GermaniumSupplyTree onNodeClick={() => {}} />
+        </>
       );
     }
 
     /* ── Gallium tree ── */
-    if (treeTarget.type === "raw-material" && treeTarget.id === "gallium") {
-      const gaW = computeGalliumSvgWidth(galliumChain);
+    if (lastEntry.type === "raw-material" && lastEntry.id === "gallium") {
       return (
-        <div key={animKey} style={{ animation: "treeEnter 400ms ease-out forwards" }}>
-          <TreeHeader
-            title="Gallium"
-            href="/input/gallium"
-            description="Byproduct of alumina refining. Forms compound semiconductors (GaAs, GaN) for AI datacenter power conversion, 5G amplifiers, defense radar, and LED lighting."
-            accent={INPUT_ACCENT.gallium}
-          />
-
-          {/* Wide tree container */}
-          <div style={{ width: "90vw", maxWidth: 1600, marginLeft: "calc(50% - 45vw)", position: "relative" }}>
-            <ExpandButton onClick={() => setTreeExpanded(true)} />
-
-            <SpineSVG
-              svgWidth={gaW}
-              ancestors={[
-                { name: "AI Infrastructure" },
-                { name: "Raw Materials" },
-              ]}
-              current="Gallium"
-              onAncestorClick={(i) => {
-                if (i === 0) goSubsystems(selectedVertical ?? "AI Infrastructure");
-                if (i === 1) goVerticals();
-              }}
-            />
-
-            <GalliumSupplyTree onNodeClick={() => {}} />
-          </div>
-
-          <ChipSection
-            label="Downstream"
-            items={GALLIUM_DOWNSTREAM_CHIPS}
-            style={{ marginTop: 40 }}
-          />
-
-          {treeExpanded && (
-            <FullscreenOverlay treeName="GALLIUM" onClose={() => setTreeExpanded(false)}>
-              <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
-                <GalliumSupplyTree onNodeClick={() => {}} />
-              </div>
-            </FullscreenOverlay>
-          )}
-        </div>
+        <>
+          <ExpandButton onClick={() => setTreeExpanded(true)} />
+          <GalliumSupplyTree onNodeClick={() => {}} />
+        </>
       );
     }
 
     return (
-      <div style={{ fontSize: 14, color: dimText, padding: "40px 0" }}>
+      <div style={{ fontSize: 14, color: dimText, padding: "40px 0", textAlign: "center" }}>
         Tree view not yet available for this item.
       </div>
     );
   }
 
+  /* ── downstream chips for tree level ── */
+  function renderDownstreamChips() {
+    if (!lastEntry) return null;
+
+    if (lastEntry.type === "component" && lastEntry.id === "fiber") {
+      return (
+        <ChipSection
+          label="Downstream"
+          items={FIBER_DOWNSTREAM}
+          style={{ marginTop: 40 }}
+        />
+      );
+    }
+
+    if (lastEntry.type === "raw-material" && lastEntry.id === "germanium") {
+      return (
+        <ChipSection
+          label="Downstream"
+          items={GERMANIUM_DOWNSTREAM_CHIPS}
+          onNavigate={(id) => {
+            if (id === "fiber") {
+              // Navigate back to fiber: reset path to vertical > subsystem > component
+              setPath([
+                { type: "vertical", id: currentVertical?.id ?? "ai", name: currentVertical?.name ?? "AI Infrastructure" },
+                { type: "subsystem", id: "connectivity", name: "Connectivity" },
+                { type: "component", id: "fiber", name: "Fiber optic cable" },
+              ]);
+              setAnimKey(k => k + 1);
+              setTreeExpanded(false);
+            }
+          }}
+          style={{ marginTop: 40 }}
+        />
+      );
+    }
+
+    if (lastEntry.type === "raw-material" && lastEntry.id === "gallium") {
+      return (
+        <ChipSection
+          label="Downstream"
+          items={GALLIUM_DOWNSTREAM_CHIPS}
+          style={{ marginTop: 40 }}
+        />
+      );
+    }
+
+    return null;
+  }
+
+  /* ── fullscreen overlay for tree level ── */
+  function renderFullscreen() {
+    if (!lastEntry) return null;
+
+    if (lastEntry.type === "component" && lastEntry.id === "fiber") {
+      return (
+        <FullscreenOverlay treeName="FIBER OPTIC CABLE" onClose={() => setTreeExpanded(false)}>
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
+            <FiberSupplyTree onNodeClick={() => {}} />
+          </div>
+        </FullscreenOverlay>
+      );
+    }
+
+    if (lastEntry.type === "raw-material" && lastEntry.id === "germanium") {
+      return (
+        <FullscreenOverlay treeName="GERMANIUM" onClose={() => setTreeExpanded(false)}>
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
+            <GermaniumSupplyTree onNodeClick={() => {}} />
+          </div>
+        </FullscreenOverlay>
+      );
+    }
+
+    if (lastEntry.type === "raw-material" && lastEntry.id === "gallium") {
+      return (
+        <FullscreenOverlay treeName="GALLIUM" onClose={() => setTreeExpanded(false)}>
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: 10, overflow: "hidden", background: "#131210" }}>
+            <GalliumSupplyTree onNodeClick={() => {}} />
+          </div>
+        </FullscreenOverlay>
+      );
+    }
+
+    return null;
+  }
+
   /* ── main render ── */
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#111" }}>
-      {level === "verticals" && renderVerticals()}
-      {level === "subsystems" && renderSubsystems()}
-      {level === "components" && renderComponents()}
-      {level === "tree" && (
+      {path.length === 0 ? (
+        /* Level 1: Vertical selector (accordion + illustration) */
+        renderVerticals()
+      ) : (
+        /* Levels 2+: Spine + container */
         <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 32px 80px" }}>
           {renderBreadcrumb()}
-          {renderTree()}
+          {renderContextualHeader()}
+          <div style={{ height: 1, background: borderColor, margin: "28px 0" }} />
+
+          {/* Wide spine + container area */}
+          <div style={{ width: "90vw", maxWidth: 1400, marginLeft: "calc(50% - 45vw)" }}>
+            {/* Spine */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              {path.map((entry, i) => (
+                <React.Fragment key={`spine-${i}`}>
+                  <SpineAncestorNode
+                    name={entry.name}
+                    onClick={() => {
+                      if (i === 0) goHome();
+                      else popToIndex(i - 1);
+                    }}
+                  />
+                  <SpineDashedLine />
+                </React.Fragment>
+              ))}
+            </div>
+
+            {/* Container */}
+            <div
+              key={animKey}
+              style={{
+                background: "#1a1816",
+                borderRadius: 10,
+                padding: "32px 20px 40px",
+                animation: "containerOpen 350ms ease-out forwards",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {renderContainerContent()}
+            </div>
+
+            {/* Downstream chips (if at tree level) */}
+            {currentLevel === "tree" && renderDownstreamChips()}
+          </div>
         </div>
       )}
+
+      {/* Fullscreen overlay */}
+      {treeExpanded && renderFullscreen()}
 
       {/* Animation keyframes */}
       <style>{`
@@ -1561,6 +1447,10 @@ export default function TreeView() {
         @keyframes breadcrumbEnter {
           from { opacity: 0; transform: translateX(-8px); }
           to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes containerOpen {
+          from { opacity: 0; transform: translateY(-8px); }
+          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </div>
