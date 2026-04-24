@@ -482,48 +482,19 @@ export default function GalliumInputPage() {
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
             SUPPLY TREE
           </p>
-          {/* How it's made cards — merged into Supply Tree */}
-          <div style={{ display: "flex", gap: "12px", marginBottom: 32 }}>
-
-            {/* Card 1: Byproduct Source */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                BYPRODUCT SOURCE
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: 0 }}>
-                Five regions producing bauxite: Guinea, Australia, China, Brazil, Indonesia. Bauxite is the ore that aluminum is made from &mdash; it&apos;s the feedstock for the entire aluminum industry. These five regions together produce ~346M tonnes of bauxite per year globally. Gallium isn&apos;t mined. It sits inside bauxite as a trace impurity at roughly 50 parts per million, uniformly distributed. So every one of those tonnes of bauxite contains a tiny bit of gallium &mdash; but nobody extracts gallium here. The bauxite just gets shipped onward.
-              </p>
+          {/* Key Takeaways card — above the tree */}
+          <div style={{ background: cardBg, border: `1px solid ${borderColor}`, borderRadius: "10px", padding: "24px 28px", marginBottom: 32 }}>
+            <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: dimText, margin: "0 0 16px 0" }}>KEY TAKEAWAYS</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 10 }}>
+              {[
+                "1 \u2014 Raw material (bauxite) is plentiful and globally distributed \u2014 not a geological constraint.",
+                "2 \u2014 Primary gallium production is overwhelmingly Chinese \u2014 the real bottleneck is recovery infrastructure at alumina refineries.",
+                "3 \u2014 Four western projects are trying to rebuild primary capacity \u2014 but none operating at scale before 2028.",
+                "4 \u2014 The refining layer is Japan-led (Dowa) with small Canadian/US contributions \u2014 structurally dependent on Chinese primary feedstock.",
+              ].map((text, i) => (
+                <p key={i} style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.55, margin: 0 }}>{text}</p>
+              ))}
             </div>
-
-            {/* Card 2: Primary Producer */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                PRIMARY PRODUCER
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: 0 }}>
-                This is where gallium is actually pulled out of the bauxite stream. Bauxite arrives at an alumina refinery. The refinery processes bauxite to make alumina (which becomes aluminum). During that process, if the refinery has a specific piece of equipment installed &mdash; an ion-exchange recovery circuit &mdash; it can also grab the gallium that was dissolved in the same liquid. Otherwise the gallium just gets thrown out with the waste (a material called &ldquo;red mud&rdquo;).
-              </p>
-            </div>
-
-            {/* Card 3: Refiner */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                REFINER
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: 0 }}>
-                These companies take crude gallium metal (99.99% purity) and refine it to semiconductor-grade (99.9999% or higher). This is a separate step from primary production. The metal coming out of the alumina refineries is pure enough to, say, alloy with other metals &mdash; but not pure enough for chip making. Semiconductor customers need six-nines or seven-nines purity, and that requires zone refining, vacuum distillation, and other specialized processes.
-              </p>
-            </div>
-
           </div>
 
           {/* Supply tree visualization */}
@@ -540,22 +511,84 @@ export default function GalliumInputPage() {
             />
           </div>
 
-          {/* Key Takeaways */}
-          <div style={{ marginTop: 24, marginBottom: 24 }}>
-            <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: "0 0 14px 0" }}>Key Takeaways</p>
-            <div style={{ display: "flex", flexDirection: "column" as const, gap: 10 }}>
-              {[
-                { n: "1", text: <><strong style={{ color: warmWhite }}>Raw material (bauxite) is plentiful and globally distributed</strong> &mdash; not a geological constraint.</> },
-                { n: "2", text: <><strong style={{ color: warmWhite }}>Primary gallium production is overwhelmingly Chinese</strong> &mdash; the real bottleneck is recovery infrastructure at alumina refineries.</> },
-                { n: "3", text: <><strong style={{ color: warmWhite }}>Four western projects are trying to rebuild primary capacity</strong> &mdash; but none operating at scale before 2028.</> },
-                { n: "4", text: <><strong style={{ color: warmWhite }}>The refining layer is Japan-led (Dowa) with small Canadian/US contributions</strong> &mdash; structurally dependent on Chinese primary feedstock.</> },
-              ].map((item) => (
-                <div key={item.n} style={{ display: "flex", gap: 10, alignItems: "baseline" }}>
-                  <span style={{ fontSize: 11, color: accent, fontWeight: 500, flexShrink: 0 }}>{item.n}.</span>
-                  <p style={{ fontSize: 12, color: "#a09888", lineHeight: 1.55, margin: 0 }}>{item.text}</p>
-                </div>
-              ))}
+          {/* How it's made cards — below the tree */}
+          <div style={{ display: "flex", gap: "12px", marginTop: 32 }}>
+
+            {/* Card 1: Byproduct Source */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                BYPRODUCT SOURCE
+              </p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Bauxite-producing regions whose alumina refineries could recover gallium as a byproduct.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHAT HAPPENS HERE</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Bauxite ore is mined and shipped to alumina refineries. Gallium sits inside at ~50 ppm, uniformly distributed. Nobody extracts gallium at the mine &mdash; the bauxite just gets shipped onward.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                Only 10-15% of the gallium in bauxite gets captured. You cannot increase gallium output without processing more bauxite, tying supply to aluminum production decisions.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~346M t/yr</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>bauxite mined globally</span>
+              </div>
             </div>
+
+            {/* Card 2: Primary Producer */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                PRIMARY PRODUCER
+              </p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Alumina refineries with ion-exchange recovery circuits that extract gallium from the Bayer process liquor.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHAT HAPPENS HERE</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Bauxite arrives at an alumina refinery. During the Bayer process, if the refinery has an ion-exchange recovery circuit installed, it can grab gallium dissolved in the liquor. Otherwise the gallium goes out with red mud waste.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                ~20 refineries globally have installed recovery equipment. The vast majority are in China. Western producers shut down between 2013-2016 because they couldn&apos;t compete with Chinese pricing. The US stopped producing in 1987.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~600t/yr</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>low-purity gallium metal produced</span>
+              </div>
+            </div>
+
+            {/* Card 3: Refiner */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                REFINER
+              </p>
+              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Specialists that take crude 4N gallium and refine it to 6N+ semiconductor grade through zone refining and vacuum distillation.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHAT HAPPENS HERE</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                The 99.99% metal from primary producers is purified to 99.9999%+ through zone refining, vacuum distillation, and electrolytic refining. Different end products need different purity grades &mdash; LEDs need 6N, defense radar needs 7N, next-gen chips need 8N.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                Every additional &ldquo;nine&rdquo; of purity is harder than the last. Removing parts per billion of iron, copper, and zinc requires proprietary process knowledge. China controls both primary extraction and high-purity refining.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~320t/yr</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>high-purity refined gallium</span>
+              </div>
+            </div>
+
           </div>
 
           {/* Aggregate nodes now render inline on the tree — no separate summary cards needed */}
