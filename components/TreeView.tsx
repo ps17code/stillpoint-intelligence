@@ -739,6 +739,11 @@ function FiberSupplyTree({ onNodeClick }: { onNodeClick: (name: string) => void 
         nodes: subChain.cableType.map((n: string, i: number) => ({ name: n, cx: cableXs[i], cy: cableCY, opacity: 1 })),
         color: PALETTES.cableType,
       },
+      {
+        key: "output", label: "OUTPUT", cy: outputCY,
+        nodes: [{ name: subChain.output, cx: ancX, cy: outputCY, opacity: 1 }],
+        color: PALETTES.cableType,
+      },
     ];
 
     const edges = [
@@ -759,6 +764,12 @@ function FiberSupplyTree({ onNodeClick }: { onNodeClick: (name: string) => void 
         x1: assemblyXs[fi], y1: assemblyCY + EDGE_Y1,
         x2: cableXs[ti], y2: cableCY - EDGE_Y2,
         color: PALETTES.assembly.stroke, fromLayer: 2,
+      })),
+      // Cable Type -> Output
+      ...subChain.cableType.map((_: string, i: number) => ({
+        x1: cableXs[i], y1: cableCY + EDGE_Y1,
+        x2: ancX, y2: outputCY - EDGE_Y2,
+        color: PALETTES.cableType.stroke, fromLayer: 3,
       })),
     ];
 
