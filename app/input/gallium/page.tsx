@@ -547,11 +547,11 @@ export default function GalliumInputPage() {
                 BYPRODUCT SOURCE
               </p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Bauxite ore is mined and shipped to alumina refineries. Gallium sits inside at ~50 ppm, uniformly distributed. Nobody extracts gallium at the mine &mdash; the bauxite just gets shipped onward.
+                Bauxite is mined and shipped to alumina refineries worldwide. Gallium is not extracted at this layer &mdash; it rides along inside the bauxite at ~50 ppm as the ore moves downstream.
               </p>
               <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                Only 10-15% of the gallium in bauxite gets captured. You cannot increase gallium output without processing more bauxite, tying supply to aluminum production decisions.
+                Gallium content is uniform across essentially all bauxite globally. You cannot &ldquo;find better bauxite&rdquo; for gallium. Output is determined by aluminum industry decisions, not gallium demand &mdash; which is why gallium supply cannot scale independently of aluminum.
               </p>
               <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
                 <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~346M t/yr</span>
@@ -568,15 +568,15 @@ export default function GalliumInputPage() {
                 PRIMARY PRODUCER
               </p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Bauxite arrives at an alumina refinery. During the Bayer process, if the refinery has an ion-exchange recovery circuit installed, it can grab gallium dissolved in the liquor. Otherwise the gallium goes out with red mud waste.
+                Bauxite is processed into alumina for aluminum production. Refineries with ion-exchange circuits installed capture the dissolved gallium as a byproduct. Refineries without that equipment discard it as waste.
               </p>
               <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                ~20 refineries globally have installed recovery equipment. The vast majority are in China. Western producers shut down 2013-2016. The US stopped producing in 1987.
+                Only ~20 alumina refineries globally have gallium recovery installed, almost all in China. Recovery captures only 10-15% of gallium in the bauxite stream. Western projects must solve the economics that shut down Germany, Hungary, and Kazakhstan between 2013 and 2016.
               </p>
               <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~600t/yr</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>low-purity gallium metal produced</span>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~600 t/yr</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>primary gallium extracted globally</span>
               </div>
             </div>
 
@@ -589,15 +589,15 @@ export default function GalliumInputPage() {
                 REFINER
               </p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                The 99.99% metal from primary producers is purified to 99.9999%+ through zone refining, vacuum distillation, and electrolytic refining. Different end products need different purity grades &mdash; LEDs need 6N, defense radar needs 7N, next-gen chips need 8N.
+                Crude 99.99% gallium is purified to 99.9999%+ via zone refining, vacuum distillation, and electrolytic processes. Different end uses need different grades &mdash; LEDs need 6N, defense radar needs 7N, next-generation chips need 8N.
               </p>
               <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                Every additional &ldquo;nine&rdquo; of purity is harder than the last. Removing parts per billion of iron, copper, and zinc requires proprietary process knowledge. China controls both primary extraction and high-purity refining.
+                Each additional &ldquo;nine&rdquo; of purity is exponentially harder than the last. Removing the final parts per billion of iron, copper, and zinc requires proprietary process knowledge. Western refiners (Dowa, 5N Plus) depend on Chinese primary feedstock to operate.
               </p>
               <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~320t/yr</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>high-purity refined gallium</span>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~320 t/yr</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>high-purity refined gallium produced globally</span>
               </div>
             </div>
 

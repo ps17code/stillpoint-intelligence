@@ -593,7 +593,7 @@ export default function GermaniumInputPage() {
                 HOST ORE EXTRACTION
               </p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Zinc concentrate is roasted and leached to produce zinc metal. Germanium-rich residues collect in flue dust and leach solutions. Operations with specialized hydrometallurgical circuits extract the germanium; most don&apos;t. A smaller volume comes from coal operations in Yunnan and Inner Mongolia.
+                Germanium-rich residues collect in flue dust and leach solutions during zinc smelting. Operations with specialized hydrometallurgical circuits extract it; most don&apos;t. A smaller volume comes from germanium-hosted coal operations in Yunnan and Inner Mongolia.
               </p>
               <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
@@ -614,11 +614,11 @@ export default function GermaniumInputPage() {
                 REFINING TO HIGH PURITY
               </p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Crude germanium dioxide is reduced to metal, then purified through zone refining to 5N+ purity. For fiber optic preforms, the refined metal is converted to GeCl&#8324; and purified further to 8N. For IR optics, it&apos;s cast as GeO&#8322; blanks. For satellite solar cells, it&apos;s grown into single-crystal wafers.
+                Crude oxide is reduced to metal, then zone-refined to 5N+ purity. For fiber optics, it&apos;s converted to GeCl&#8324; and purified to 8N. For IR optics, it&apos;s cast as GeO&#8322; blanks. For satellite solar, it&apos;s grown into single-crystal wafers.
               </p>
               <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                Fiber-grade GeCl&#8324; requires removing arsenic and trace contaminants to parts-per-billion levels using proprietary techniques. Zone refining is energy-intensive and slow. Only 6 facilities globally produce fiber-grade GeCl&#8324;: four in China, one in Russia, and one in the west &mdash; Umicore in Olen, Belgium.
+                Fiber-grade GeCl&#8324; requires removing arsenic and trace contaminants to parts-per-billion levels using proprietary techniques. Zone refining is slow and energy-intensive. Only 6 facilities globally produce fiber-grade GeCl&#8324;: four in China, one in Russia, one in the west &mdash; Umicore in Olen, Belgium.
               </p>
               <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
                 <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~230t/yr</span>
@@ -635,11 +635,11 @@ export default function GermaniumInputPage() {
                 CONVERSION TO END PRODUCTS
               </p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Each end product requires a different conversion process and purity specification. Fiber manufacturers consume GeCl&#8324; at 8N purity. IR optics makers need GeO&#8322; blanks with optical homogeneity. Satellite solar cell manufacturers need single-crystal wafers. SiGe substrate makers need Ge epitaxial layers.
+                Each end product needs a different form: GeCl&#8324; for fiber, GeO&#8322; blanks for IR optics, single-crystal wafers for satellite solar, SiGe substrates for semiconductors.
               </p>
               <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
               <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                No single facility serves all end markets &mdash; each conversion path is bespoke. Umicore handles GeCl&#8324; and IR optics. AXT and Chinese firms handle solar wafers. IQE and GlobalFoundries handle SiGe. Five distinct end markets all pull on the same ~230t/yr supply.
+                No single facility serves all end markets &mdash; each conversion path is bespoke. Umicore handles GeCl&#8324; and IR optics. AXT and Chinese firms handle solar wafers. IQE and GlobalFoundries handle SiGe. Five distinct end markets pull on the same ~230t/yr supply.
               </p>
               <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
                 <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>5 markets</span>
