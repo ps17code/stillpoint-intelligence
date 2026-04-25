@@ -250,6 +250,9 @@
           "label": "Output"
         }
       ]
+    },
+    "rawmaterials": {
+      "displayFields": []
     }
   },
   "SPINE_TREE": {

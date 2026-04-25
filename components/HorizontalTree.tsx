@@ -14,10 +14,10 @@ const COUNTRY_COLORS: Record<string, string> = {
   "South Korea": "#5a7a9c", "Global": "#888880", "Multiple": "#888880",
 };
 
-/* ── Layout constants (scaled 80%) ── */
-const CARD_WIDTH = 128;
-const CARD_GAP = 8;
-const COLUMN_GAP = 48;
+/* ── Layout constants (scaled 90%) ── */
+const CARD_WIDTH = 115;
+const CARD_GAP = 7;
+const COLUMN_GAP = 42;
 
 /* ── Types ── */
 interface HorizontalTreeProps {
@@ -35,14 +35,22 @@ function NodeCard({
   nodeData,
   displayFields,
   opacity,
+  highlighted,
+  dimmedByHover,
   onClick,
+  onHover,
+  onLeave,
   cardRef,
 }: {
   name: string;
   nodeData: NodeData | undefined;
   displayFields: { key: string; label: string }[];
   opacity: number;
+  highlighted?: boolean;
+  dimmedByHover?: boolean;
   onClick?: () => void;
+  onHover?: () => void;
+  onLeave?: () => void;
   cardRef?: React.Ref<HTMLDivElement>;
 }) {
   const raw = nodeData as unknown as Record<string, unknown>;
@@ -64,29 +72,25 @@ function NodeCard({
     <div
       ref={cardRef}
       onClick={onClick}
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
       style={{
-        padding: "8px 11px",
-        background: "#1a1816",
-        border: "1px solid #252220",
+        padding: "7px 10px",
+        background: highlighted ? "rgb(42, 38, 35)" : "rgb(36, 32, 29)",
+        border: highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
         borderRadius: 5,
-        minWidth: 112,
+        minWidth: 100,
         maxWidth: CARD_WIDTH,
         width: CARD_WIDTH,
         cursor: onClick ? "pointer" : "default",
-        transition: "border-color 0.15s",
-        opacity,
+        transition: "border-color 0.15s, opacity 0.15s, background 0.15s",
+        opacity: dimmedByHover ? 0.25 : opacity,
         boxSizing: "border-box",
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = "#3a3835";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = "#252220";
       }}
     >
       {/* Name */}
       <p style={{
-        fontSize: 10, fontWeight: 600, color: "#ece8e1",
+        fontSize: 9, fontWeight: 600, color: "#ece8e1",
         margin: 0, lineHeight: 1.2, marginBottom: hasCountry ? 2 : 3,
         fontFamily: "'EB Garamond', Georgia, serif",
       }}>{name}</p>
@@ -94,12 +98,12 @@ function NodeCard({
       {hasCountry && (
         <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 3 }}>
           <div style={{ width: 4, height: 4, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
-          <p style={{ fontSize: 7, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em" }}>{country}</p>
+          <p style={{ fontSize: 6, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em" }}>{country}</p>
         </div>
       )}
       {/* Pills — same data as vertical tree */}
       {pills.map((pill, i) => (
-        <p key={i} style={{ fontSize: 7, color: "rgba(255,255,255,0.62)", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}>{pill}</p>
+        <p key={i} style={{ fontSize: 6, color: "rgba(255,255,255,0.62)", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}>{pill}</p>
       ))}
     </div>
   );
@@ -294,7 +298,7 @@ export default function HorizontalTree({
         position: "relative",
         display: "flex",
         gap: COLUMN_GAP,
-        padding: "32px 16px",
+        padding: "28px 0",
         overflowX: "auto",
         overflowY: "visible",
         maxWidth: "100%",
@@ -316,11 +320,11 @@ export default function HorizontalTree({
           {/* Layer label */}
           <p
             style={{
-              fontSize: 7,
+              fontSize: 6,
               letterSpacing: "0.1em",
               color: "#4a4540",
               textTransform: "uppercase",
-              margin: "0 0 6px 0",
+              margin: "0 0 5px 0",
               fontFamily: "'Geist Mono', monospace",
               whiteSpace: "nowrap",
             }}
@@ -339,11 +343,11 @@ export default function HorizontalTree({
                     if (el) cardRefs.current.set(node.refKey, el);
                   }}
                   style={{
-                    padding: "8px 11px",
-                    background: "#1a1816",
-                    border: "1px solid #252220",
+                    padding: "7px 10px",
+                    background: "rgb(36, 32, 29)",
+                    border: "1px solid rgb(45, 41, 39)",
                     borderRadius: 5,
-                    minWidth: 112,
+                    minWidth: 100,
                     maxWidth: CARD_WIDTH,
                     width: CARD_WIDTH,
                     boxSizing: "border-box",
@@ -351,7 +355,7 @@ export default function HorizontalTree({
                 >
                   <p
                     style={{
-                      fontSize: 10,
+                      fontSize: 9,
                       fontWeight: 600,
                       color: "#ece8e1",
                       margin: 0,
@@ -364,7 +368,7 @@ export default function HorizontalTree({
                   {dsItem?.pill && (
                     <p
                       style={{
-                        fontSize: 7,
+                        fontSize: 6,
                         color: "#555",
                         margin: "3px 0 0 0",
                         fontFamily: "'Geist Mono', monospace",
@@ -379,6 +383,8 @@ export default function HorizontalTree({
 
             const configKey = toConfigKey(col.key);
             const fields = layerConfig?.[configKey]?.displayFields ?? [];
+            const isHighlighted = hoveredNode === node.name || (hoveredNode != null && connectedNodes.get(hoveredNode)?.has(node.name));
+            const isDimmed = hoveredNode != null && !isHighlighted;
             return (
               <NodeCard
                 key={node.name}
@@ -386,7 +392,11 @@ export default function HorizontalTree({
                 nodeData={nodes[node.name]}
                 displayFields={fields}
                 opacity={node.opacity}
+                highlighted={!!isHighlighted}
+                dimmedByHover={isDimmed}
                 onClick={onNodeClick ? () => onNodeClick(node.name) : undefined}
+                onHover={() => setHoveredNode(node.name)}
+                onLeave={() => setHoveredNode(null)}
                 cardRef={(el: HTMLDivElement | null) => {
                   if (el) cardRefs.current.set(node.refKey, el);
                 }}
@@ -408,16 +418,21 @@ export default function HorizontalTree({
           overflow: "visible",
         }}
       >
-        {lines.map((line, i) => (
-          <path
-            key={i}
-            d={line.d}
-            fill="none"
-            stroke="rgba(255,255,255,0.18)"
-            strokeWidth="0.8"
-            strokeDasharray="4,3"
-          />
-        ))}
+        {lines.map((line, i) => {
+          const lineHighlighted = hoveredNode != null && (line.fromName === hoveredNode || line.toName === hoveredNode);
+          const lineDimmed = hoveredNode != null && !lineHighlighted;
+          return (
+            <path
+              key={i}
+              d={line.d}
+              fill="none"
+              stroke={lineHighlighted ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.18)"}
+              strokeWidth={lineHighlighted ? "1.2" : "0.8"}
+              strokeDasharray="4,3"
+              style={{ opacity: lineDimmed ? 0.15 : 1, transition: "opacity 0.15s, stroke 0.15s, stroke-width 0.15s" }}
+            />
+          );
+        })}
       </svg>
     </div>
   );

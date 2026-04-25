@@ -740,7 +740,7 @@ function DashedDividerLabel({ label, marginTop = 20 }: { label: string; marginTo
 }
 
 /* ── Fiber supply tree (merged comp + sub into one continuous tree) ── */
-function FiberSupplyTree({ onNodeClick, downstream }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[] }) {
+function FiberSupplyTree({ onNodeClick, upstream, downstream }: { onNodeClick: (name: string) => void; upstream?: { id: string; name: string; pill: string }[]; downstream?: { id: string; name: string; pill: string }[] }) {
   const compChain = chainsData.COMP_DATA["GeO\u2082 / GeCl\u2084"];
   const subChain = chainsData.SUB_DATA["Fiber Optics"];
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
@@ -759,17 +759,21 @@ function FiberSupplyTree({ onNodeClick, downstream }: { onNodeClick: (name: stri
     const ancX = svgW / 2;
     const topY = 80;
     const gap = 170;
+    const hasUpstream = upstream && upstream.length > 0;
+    const layerOffset = hasUpstream ? 1 : 0;
 
+    const upstreamXs = hasUpstream ? contentAwareSpread(upstream.length, ancX) : [];
     const gecl4Xs = contentAwareSpread(compChain.geCl4.length, ancX);
     const fiberXs = contentAwareSpread(compChain.fiberMfg.length, ancX);
     const assemblyXs = contentAwareSpread(subChain.assembly.length, ancX);
     const cableXs = contentAwareSpread(subChain.cableType.length, ancX);
 
-    const gecl4CY = topY;
-    const fiberCY = topY + gap;
-    const assemblyCY = topY + gap * 2;
-    const cableCY = topY + gap * 3;
-    const outputCY = topY + gap * 4;
+    const upstreamCY = topY;
+    const gecl4CY = topY + (hasUpstream ? gap : 0);
+    const fiberCY = gecl4CY + gap;
+    const assemblyCY = fiberCY + gap;
+    const cableCY = assemblyCY + gap;
+    const outputCY = cableCY + gap;
 
     const gecl4Minor = new Set(compChain.minor.geCl4);
 
@@ -777,6 +781,12 @@ function FiberSupplyTree({ onNodeClick, downstream }: { onNodeClick: (name: stri
     const EDGE_Y2 = 7;
 
     const layers = [
+      // Raw materials layer (if upstream provided)
+      ...(hasUpstream ? [{
+        key: "rawMaterials", label: "RAW MATERIALS", cy: upstreamCY,
+        nodes: upstream.map((u, i) => ({ name: u.name, cx: upstreamXs[i], cy: upstreamCY, opacity: 1 })),
+        color: { stroke: "#c8a85a", text: "#8a6820", pip: "#c8a85a" },
+      }] : []),
       {
         key: "geCl4", label: "GeCl\u2084 SUPPLIERS", cy: gecl4CY,
         nodes: compChain.geCl4.map((n: string, i: number) => ({ name: n, cx: gecl4Xs[i], cy: gecl4CY, opacity: gecl4Minor.has(i) ? 0.4 : 1 })),
@@ -805,29 +815,38 @@ function FiberSupplyTree({ onNodeClick, downstream }: { onNodeClick: (name: stri
     ];
 
     const edges = [
+      // Raw Materials -> GeCl4 (Germanium feeds all GeCl4 suppliers, Helium/Silica feed fiber mfg)
+      ...(hasUpstream ? [
+        // Germanium (index 0) → all GeCl4 suppliers
+        ...compChain.geCl4.map((_: string, ti: number) => ({
+          x1: upstreamXs[0], y1: upstreamCY + EDGE_Y1,
+          x2: gecl4Xs[ti], y2: gecl4CY - EDGE_Y2,
+          color: "#c8a85a", fromLayer: 0,
+        })),
+      ] : []),
       // GeCl4 -> Fiber Mfg
       ...compChain.geCl4ToFiber.map(([fi, ti]: [number, number]) => ({
         x1: gecl4Xs[fi], y1: gecl4CY + EDGE_Y1,
         x2: fiberXs[ti], y2: fiberCY - EDGE_Y2,
-        color: PALETTES.geCl4.stroke, fromLayer: 0,
+        color: PALETTES.geCl4.stroke, fromLayer: 0 + layerOffset,
       })),
-      // Fiber Mfg -> Assembly (direct connections)
+      // Fiber Mfg -> Assembly
       ...([[0,0],[0,3],[1,1],[1,5],[2,4],[3,2],[4,2],[5,0]] as [number,number][]).map(([fi, ti]) => ({
         x1: fiberXs[fi], y1: fiberCY + EDGE_Y1,
         x2: assemblyXs[ti], y2: assemblyCY - EDGE_Y2,
-        color: PALETTES.fiberMfg.stroke, fromLayer: 1,
+        color: PALETTES.fiberMfg.stroke, fromLayer: 1 + layerOffset,
       })),
       // Assembly -> Cable Type
       ...subChain.assToType.map(([fi, ti]: [number, number]) => ({
         x1: assemblyXs[fi], y1: assemblyCY + EDGE_Y1,
         x2: cableXs[ti], y2: cableCY - EDGE_Y2,
-        color: PALETTES.assembly.stroke, fromLayer: 2,
+        color: PALETTES.assembly.stroke, fromLayer: 2 + layerOffset,
       })),
       // Cable Type -> Output
       ...subChain.cableType.map((_: string, i: number) => ({
         x1: cableXs[i], y1: cableCY + EDGE_Y1,
         x2: ancX, y2: outputCY - EDGE_Y2,
-        color: PALETTES.cableType.stroke, fromLayer: 3,
+        color: PALETTES.cableType.stroke, fromLayer: 3 + layerOffset,
       })),
     ];
 
@@ -1637,49 +1656,30 @@ export default function TreeView() {
 
     /* ── Fiber optic cable tree ── */
     if (lastEntry.type === "component" && lastEntry.id === "fiber") {
-      const fiberCompW = computeCompSvgWidth(chainsData.COMP_DATA["GeO\u2082 / GeCl\u2084"]);
       return (
-        <>
-          {/* Raw material nodes as SVG matching tree width */}
-          <svg viewBox={`0 0 ${fiberCompW} 100`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
-            {/* RAW MATERIALS layer label — centered above nodes with padding */}
-            <text x={fiberCompW / 2} y={12} textAnchor="middle" fontFamily="'Geist Mono', monospace" fontSize={9} letterSpacing="0.12em" fill="#4a4540">RAW MATERIALS</text>
-            {[
-              { x: fiberCompW / 2 - 200, name: "Germanium", clickable: true, dimmed: false },
-              { x: fiberCompW / 2, name: "Helium", clickable: false, dimmed: true },
-              { x: fiberCompW / 2 + 200, name: "Silica / SiCl\u2084", clickable: false, dimmed: true },
-            ].map((rm, i) => (
-              <g key={i}
-                style={{ cursor: rm.clickable ? "pointer" : "default", opacity: rm.dimmed ? 0.4 : 1 }}
-                onClick={() => {
-                  if (rm.clickable) {
-                    setPath([
-                      { type: "vertical", id: currentVertical?.id ?? "ai", name: currentVertical?.name ?? "AI Infrastructure" },
-                      { type: "raw-material", id: "germanium", name: "Germanium" },
-                    ]);
-                    setAnimKey(k => k + 1);
-                  }
-                }}
-              >
-                <circle cx={rm.x} cy={42} r={5.5} fill="none" stroke="rgba(155,168,171,0.5)" strokeWidth={1.3} />
-                <text x={rm.x} y={64} textAnchor="middle" fontFamily="'EB Garamond', Georgia, serif" fontSize={13} fontWeight={600} fill="rgba(255,255,255,0.82)">{rm.name}</text>
-                <line x1={rm.x} y1={70} x2={rm.x} y2={100} stroke="rgba(255,255,255,0.18)" strokeWidth={0.8} strokeDasharray="4,3" />
-              </g>
-            ))}
-          </svg>
-
-          {/* Dashed divider: RAW MATERIALS above / SUPPLY CHAIN below */}
-          <DashedDividerLabel label="FIBER OPTIC SUPPLY CHAIN" marginTop={20} />
-
-          {/* Supply tree with downstream as final column */}
-          <FiberSupplyTree onNodeClick={() => {}} downstream={[
+        <FiberSupplyTree
+          onNodeClick={(name) => {
+            if (name === "Germanium") {
+              setPath([
+                { type: "vertical", id: currentVertical?.id ?? "ai", name: currentVertical?.name ?? "AI Infrastructure" },
+                { type: "raw-material", id: "germanium", name: "Germanium" },
+              ]);
+              setAnimKey(k => k + 1);
+            }
+          }}
+          upstream={[
+            { id: "germanium", name: "Germanium", pill: "~230t/yr" },
+            { id: "helium", name: "Helium", pill: "Non-renewable" },
+            { id: "silica", name: "Silica / SiCl\u2084", pill: "Up 50%" },
+          ]}
+          downstream={[
             { id: "ai-dc", name: "AI Datacenters", pill: "~210M km" },
             { id: "telecom", name: "Terrestrial Telecom", pill: "~290M km" },
             { id: "subsea", name: "Subsea Cables", pill: "~70M km" },
             { id: "military", name: "Military / UAV", pill: "~55M km" },
             { id: "bead", name: "BEAD Broadband", pill: "~65M km" },
-          ]} />
-        </>
+          ]}
+        />
       );
     }
 
@@ -1687,7 +1687,6 @@ export default function TreeView() {
     if (lastEntry.type === "raw-material" && lastEntry.id === "germanium") {
       return (
         <>
-          <DashedDividerLabel label="GERMANIUM SUPPLY CHAIN" marginTop={0} />
           <GermaniumSupplyTree onNodeClick={() => {}} downstream={[
             { id: "fiber", name: "Fiber Optic Cable", pill: "~87t/yr" },
             { id: "ir", name: "IR Optics", pill: "~55t/yr" },
@@ -1702,7 +1701,6 @@ export default function TreeView() {
     if (lastEntry.type === "raw-material" && lastEntry.id === "gallium") {
       return (
         <>
-          <DashedDividerLabel label="GALLIUM SUPPLY CHAIN" marginTop={0} />
           <GalliumSupplyTree onNodeClick={() => {}} downstream={[
             { id: "gan", name: "GaN Power", pill: "~110t/yr" },
             { id: "gaas", name: "GaAs Devices", pill: "~140t/yr" },
