@@ -288,7 +288,6 @@ export default function HorizontalTree({
             gap: CARD_GAP,
             minWidth: CARD_WIDTH,
             flexShrink: 0,
-            justifyContent: "center",
           }}
         >
           {/* Layer label */}
