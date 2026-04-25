@@ -662,7 +662,7 @@ function FullscreenOverlay({
 }
 
 /* ── Tree header ── */
-function TreeHeader({ title, href, description, accent }: { title: string; href: string; description: string; accent?: string }) {
+function TreeHeader({ title, href, description, accent, keyTakeaways }: { title: string; href: string; description: string; accent?: string; keyTakeaways?: string[] }) {
   const accentColor = accent ?? "#706a60";
   return (
     <div style={{ marginBottom: 24 }}>
@@ -679,9 +679,22 @@ function TreeHeader({ title, href, description, accent }: { title: string; href:
           onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
         >Full analysis &rarr;</a>
       </div>
-      <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: 0, marginBottom: 44, maxWidth: "80%" }}>
+      <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: 0, marginBottom: keyTakeaways ? 20 : 44, maxWidth: "80%" }}>
         {description}
       </p>
+      {keyTakeaways && keyTakeaways.length > 0 && (
+        <div style={{ background: "#1a1816", border: `1px solid ${borderColor}`, borderRadius: 10, padding: "24px 28px", marginBottom: 20 }}>
+          <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: dimText, margin: "0 0 10px 0" }}>KEY TAKEAWAYS</p>
+          <div style={{ display: "flex", flexDirection: "column" as const, gap: 0 }}>
+            {keyTakeaways.map((text, i) => (
+              <div key={i} style={{ display: "flex", gap: 8, marginBottom: 4 }}>
+                <span style={{ fontSize: 12.5, color: "#706a60", flexShrink: 0, minWidth: 16 }}>{i + 1}.</span>
+                <p style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.6, margin: 0 }}>{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -1284,6 +1297,7 @@ export default function TreeView() {
     let showAnalysisButton = false;
     let analysisHref = "";
     let accent: string | undefined;
+    let keyTakeaways: string[] | undefined;
     const fromParam = currentVertical?.id === "resources" ? "?from=resources" : "";
 
     if (lastEntry.type === "vertical") {
@@ -1307,9 +1321,21 @@ export default function TreeView() {
       if (lastEntry.id === "germanium") {
         subtitle = "Trace element doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in IR defense optics, satellite solar cells, and SiGe semiconductors.";
         accent = INPUT_ACCENT.germanium;
+        keyTakeaways = [
+          "Only 8 coal and zinc deposits in the world host germanium at high enough concentration to be commercially extracted.",
+          "83% of that supply is in China.",
+          "Two western sources exist \u2014 Big Hill is new DRC tailings refined exclusively by Umicore, and Red Dog is a declining Alaskan zinc mine expected to expire in 2031.",
+          "Outside China, Umicore and 5N Plus are the sole western supply for germanium-reliant products.",
+        ];
       } else if (lastEntry.id === "gallium") {
         subtitle = "Byproduct of alumina refining. Forms compound semiconductors (GaAs, GaN) for AI datacenter power conversion, 5G amplifiers, defense radar, and LED lighting.";
         accent = INPUT_ACCENT.gallium;
+        keyTakeaways = [
+          "Bauxite is mined globally across five regions \u2014 Guinea, Australia, China, Brazil, and Indonesia \u2014 with ~346M tonnes produced per year.",
+          "Gallium isn\u2019t extracted at the mine \u2014 it\u2019s recovered downstream at alumina refineries that have ion-exchange recovery circuits installed, and ~98% of those refineries are in China.",
+          "Four western projects are trying to rebuild primary capacity \u2014 Alcoa/JAGA in Australia, Metlen in Greece, Rio Tinto in Quebec, Korea Zinc/Crucible in Tennessee \u2014 but none operate at scale before 2028.",
+          "Outside China, Dowa in Japan does the bulk of high-purity refining, with smaller capacity at 5N Plus in Canada and Indium Corporation in the US \u2014 but all of them depend on Chinese primary feedstock to operate.",
+        ];
       }
       showAnalysisButton = true;
       analysisHref = `/input/${lastEntry.id}${fromParam}`;
@@ -1322,6 +1348,7 @@ export default function TreeView() {
           href={analysisHref}
           description={subtitle}
           accent={accent}
+          keyTakeaways={keyTakeaways}
         />
       );
     }

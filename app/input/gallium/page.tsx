@@ -471,16 +471,13 @@ export default function GalliumInputPage() {
             fontSize: "28px",
             fontWeight: 400,
             color: warmWhite,
-            margin: "0 0 8px 0",
+            margin: "0 0 24px 0",
             lineHeight: 1.2,
           }}>
             Gallium
           </h1>
-          <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.6, margin: "0 0 24px 0" }}>
-            Byproduct of alumina refining. Forms compound semiconductors (GaAs, GaN) for AI datacenter power conversion, 5G amplifiers, defense radar, and LED lighting.
-          </p>
           {/* Executive summary */}
-          <div style={{ background: "#1a1816", border: "1px solid #252220", borderRadius: 10, padding: "24px 28px", marginBottom: 56 }}>
+          <div style={{ marginBottom: 56 }}>
             <p style={{ fontSize: 20, letterSpacing: "0.1em", color: "#555", margin: "0 0 16px 0" }}>EXECUTIVE SUMMARY</p>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
@@ -491,10 +488,10 @@ export default function GalliumInputPage() {
                 "Demand accelerating from GaN power electronics (42% CAGR), defense radar modernization, and AI datacenter 800V power conversion architecture. Every major western demand vector is stable or growing.",
                 "Four concurrent western primary production projects collectively target ~230 t/yr by 2029, a ~10x increase from current non-Chinese supply. None resolves the structural dependency before 2028.",
                 "The investable surface of the gallium supply chain is the rebuild itself \u2014 emerging primary producers backed by sovereign capital, and refiners with pricing power in the non-Chinese supply gap.",
-              ].map((point, i, arr) => (
+              ].map((point, i) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
-                  {i < arr.length - 1 && <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 7 }} />}
-                  <p style={{ fontSize: 13.5, color: i === arr.length - 1 ? "#dad9d8" : "#a09888", lineHeight: 1.4, margin: 0, fontWeight: 300 }}>{point}</p>
+                  <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 7 }} />
+                  <p style={{ fontSize: 13.5, color: "#a09888", lineHeight: 1.4, margin: 0, fontWeight: 300 }}>{point}</p>
                 </div>
               ))}
             </div>
@@ -511,12 +508,15 @@ export default function GalliumInputPage() {
             <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: dimText, margin: "0 0 10px 0" }}>KEY TAKEAWAYS</p>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 0 }}>
               {[
-                "1 \u2014 Bauxite is mined globally across five regions \u2014 Guinea, Australia, China, Brazil, and Indonesia \u2014 with ~346M tonnes produced per year.",
-                "2 \u2014 Gallium isn\u2019t extracted at the mine \u2014 it\u2019s recovered downstream at alumina refineries that have ion-exchange recovery circuits installed, and ~98% of those refineries are in China.",
-                "3 \u2014 Four western projects are trying to rebuild primary capacity \u2014 Alcoa/JAGA in Australia, Metlen in Greece, Rio Tinto in Quebec, Korea Zinc/Crucible in Tennessee \u2014 but none operate at scale before 2028.",
-                "4 \u2014 Outside China, Dowa in Japan does the bulk of high-purity refining, with smaller capacity at 5N Plus in Canada and Indium Corporation in the US \u2014 but all of them depend on Chinese primary feedstock to operate.",
+                "Bauxite is mined globally across five regions \u2014 Guinea, Australia, China, Brazil, and Indonesia \u2014 with ~346M tonnes produced per year.",
+                "Gallium isn\u2019t extracted at the mine \u2014 it\u2019s recovered downstream at alumina refineries that have ion-exchange recovery circuits installed, and ~98% of those refineries are in China.",
+                "Four western projects are trying to rebuild primary capacity \u2014 Alcoa/JAGA in Australia, Metlen in Greece, Rio Tinto in Quebec, Korea Zinc/Crucible in Tennessee \u2014 but none operate at scale before 2028.",
+                "Outside China, Dowa in Japan does the bulk of high-purity refining, with smaller capacity at 5N Plus in Canada and Indium Corporation in the US \u2014 but all of them depend on Chinese primary feedstock to operate.",
               ].map((text, i) => (
-                <p key={i} style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.8, margin: 0 }}>{text}</p>
+                <div key={i} style={{ display: "flex", gap: 8, marginBottom: 4 }}>
+                  <span style={{ fontSize: 12.5, color: "#706a60", flexShrink: 0, minWidth: 16 }}>{i + 1}.</span>
+                  <p style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.6, margin: 0 }}>{text}</p>
+                </div>
               ))}
             </div>
           </div>

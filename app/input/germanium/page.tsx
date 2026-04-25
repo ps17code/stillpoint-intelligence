@@ -510,16 +510,13 @@ export default function GermaniumInputPage() {
             fontSize: "28px",
             fontWeight: 400,
             color: warmWhite,
-            margin: "0 0 8px 0",
+            margin: "0 0 24px 0",
             lineHeight: 1.2,
           }}>
             Germanium
           </h1>
-          <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.6, margin: "0 0 24px 0" }}>
-            Trace element doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in IR defense optics, satellite solar cells, and SiGe semiconductors.
-          </p>
           {/* Executive summary */}
-          <div style={{ background: "#1a1816", border: "1px solid #252220", borderRadius: 10, padding: "24px 28px", marginBottom: 56 }}>
+          <div style={{ marginBottom: 56 }}>
             <p style={{ fontSize: 20, letterSpacing: "0.1em", color: "#555", margin: "0 0 16px 0" }}>EXECUTIVE SUMMARY</p>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
@@ -529,15 +526,13 @@ export default function GermaniumInputPage() {
                 "Price has risen from $1,500/kg to over $8,500/kg in two years. 3.5x premium between western and Chinese markets persists because export controls prevent arbitrage.",
                 "Demand accelerating from AI datacenter fiber buildout, defense IR optics spending, and satellite constellation expansion. Every end market stable or growing.",
                 "No near-term supply relief. Hollow-core fiber, new mine capacity, and DRC feedstock ramp all target 2027-2028 at earliest.",
+                "Eight entities control the western germanium value chain. Several are positioned to capture outsized value from a supply gap driven by an AI boom.",
               ].map((point, i) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
                   <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 7 }} />
                   <p style={{ fontSize: 13.5, color: "#a09888", lineHeight: 1.4, margin: 0, fontWeight: 300 }}>{point}</p>
                 </div>
               ))}
-              <p style={{ fontSize: 13.5, color: "#dad9d8", lineHeight: 1.4, margin: 0, fontWeight: 300 }}>
-                Eight entities control the western germanium value chain. Several are positioned to capture outsized value from a supply gap driven by an AI boom.
-              </p>
             </div>
           </div>
         </div>
@@ -552,12 +547,15 @@ export default function GermaniumInputPage() {
             <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: dimText, margin: "0 0 10px 0" }}>KEY TAKEAWAYS</p>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 0 }}>
               {[
-                "1 \u2014 Only 8 coal and zinc deposits in the world host germanium at high enough concentration to be commercially extracted.",
-                "2 \u2014 83% of that supply is in China.",
-                "3 \u2014 Two western sources exist \u2014 Big Hill is new DRC tailings refined exclusively by Umicore, and Red Dog is a declining Alaskan zinc mine expected to expire in 2031.",
-                "4 \u2014 Outside China, Umicore and 5N Plus are the sole western supply for germanium-reliant products.",
+                "Only 8 coal and zinc deposits in the world host germanium at high enough concentration to be commercially extracted.",
+                "83% of that supply is in China.",
+                "Two western sources exist \u2014 Big Hill is new DRC tailings refined exclusively by Umicore, and Red Dog is a declining Alaskan zinc mine expected to expire in 2031.",
+                "Outside China, Umicore and 5N Plus are the sole western supply for germanium-reliant products.",
               ].map((text, i) => (
-                <p key={i} style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.8, margin: 0 }}>{text}</p>
+                <div key={i} style={{ display: "flex", gap: 8, marginBottom: 4 }}>
+                  <span style={{ fontSize: 12.5, color: "#706a60", flexShrink: 0, minWidth: 16 }}>{i + 1}.</span>
+                  <p style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.6, margin: 0 }}>{text}</p>
+                </div>
               ))}
             </div>
           </div>

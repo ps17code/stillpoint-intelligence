@@ -484,16 +484,13 @@ export default function FiberOpticInputPage() {
             fontSize: "28px",
             fontWeight: 400,
             color: warmWhite,
-            margin: "0 0 8px 0",
+            margin: "0 0 24px 0",
             lineHeight: 1.2,
           }}>
             Fiber optic cable
           </h1>
-          <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.6, margin: "0 0 24px 0" }}>
-            Glass strands carrying light signals between servers, racks, and datacenters. The physical backbone of AI infrastructure connectivity.
-          </p>
           {/* Executive summary */}
-          <div style={{ background: "#1a1816", border: "1px solid #252220", borderRadius: 10, padding: "24px 28px", marginBottom: 56 }}>
+          <div style={{ marginBottom: 56 }}>
             <p style={{ fontSize: 20, letterSpacing: "0.1em", color: "#555", margin: "0 0 16px 0" }}>EXECUTIVE SUMMARY</p>
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
@@ -503,10 +500,10 @@ export default function FiberOpticInputPage() {
                 "Driven by AI. ~20 GW of AI datacenter capacity is entering construction annually. Each GW requires ~6.5M fiber strand-km. A 130M km supply gap cannot close before 2027.",
                 "New preform capacity, DRC germanium ramp, and hollow-core fiber all target 2027-2028. Supply constraints persist through at least 2027.",
                 "The suppliers of germanium tetrachloride, fiber preform manufacturers, and proprietary equipment suppliers positioned at chokepoints will capture most of the value at this layer.",
-              ].map((point, i, arr) => (
+              ].map((point, i) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
-                  {i < arr.length - 1 && <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 7 }} />}
-                  <p style={{ fontSize: 13.5, color: i === arr.length - 1 ? "#dad9d8" : "#a09888", lineHeight: 1.4, margin: 0, fontWeight: 300 }}>{point}</p>
+                  <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 7 }} />
+                  <p style={{ fontSize: 13.5, color: "#a09888", lineHeight: 1.4, margin: 0, fontWeight: 300 }}>{point}</p>
                 </div>
               ))}
             </div>
