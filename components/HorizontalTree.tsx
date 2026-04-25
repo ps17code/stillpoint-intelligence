@@ -14,10 +14,10 @@ const COUNTRY_COLORS: Record<string, string> = {
   "South Korea": "#5a7a9c", "Global": "#888880", "Multiple": "#888880",
 };
 
-/* ── Layout constants ── */
-const CARD_WIDTH = 160;
-const CARD_GAP = 10;
-const COLUMN_GAP = 60;
+/* ── Layout constants (scaled 80%) ── */
+const CARD_WIDTH = 128;
+const CARD_GAP = 8;
+const COLUMN_GAP = 48;
 
 /* ── Types ── */
 interface HorizontalTreeProps {
@@ -65,11 +65,11 @@ function NodeCard({
       ref={cardRef}
       onClick={onClick}
       style={{
-        padding: "10px 14px",
+        padding: "8px 11px",
         background: "#1a1816",
         border: "1px solid #252220",
-        borderRadius: 6,
-        minWidth: 140,
+        borderRadius: 5,
+        minWidth: 112,
         maxWidth: CARD_WIDTH,
         width: CARD_WIDTH,
         cursor: onClick ? "pointer" : "default",
@@ -86,20 +86,20 @@ function NodeCard({
     >
       {/* Name */}
       <p style={{
-        fontSize: 12, fontWeight: 600, color: "#ece8e1",
-        margin: 0, lineHeight: 1.2, marginBottom: hasCountry ? 2 : 4,
+        fontSize: 10, fontWeight: 600, color: "#ece8e1",
+        margin: 0, lineHeight: 1.2, marginBottom: hasCountry ? 2 : 3,
         fontFamily: "'EB Garamond', Georgia, serif",
       }}>{name}</p>
       {/* Country dot + label */}
       {hasCountry && (
-        <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 4 }}>
-          <div style={{ width: 5, height: 5, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
-          <p style={{ fontSize: 8, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em" }}>{country}</p>
+        <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 3 }}>
+          <div style={{ width: 4, height: 4, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
+          <p style={{ fontSize: 7, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em" }}>{country}</p>
         </div>
       )}
       {/* Pills — same data as vertical tree */}
       {pills.map((pill, i) => (
-        <p key={i} style={{ fontSize: 8, color: "rgba(255,255,255,0.62)", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}>{pill}</p>
+        <p key={i} style={{ fontSize: 7, color: "rgba(255,255,255,0.62)", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}>{pill}</p>
       ))}
     </div>
   );
@@ -271,9 +271,11 @@ export default function HorizontalTree({
         position: "relative",
         display: "flex",
         gap: COLUMN_GAP,
-        padding: "40px 20px",
+        padding: "32px 16px",
         overflowX: "auto",
         overflowY: "visible",
+        maxWidth: "80%",
+        margin: "0 auto",
       }}
     >
       {/* Columns */}
@@ -286,16 +288,17 @@ export default function HorizontalTree({
             gap: CARD_GAP,
             minWidth: CARD_WIDTH,
             flexShrink: 0,
+            justifyContent: "center",
           }}
         >
           {/* Layer label */}
           <p
             style={{
-              fontSize: 9,
+              fontSize: 7,
               letterSpacing: "0.1em",
               color: "#4a4540",
               textTransform: "uppercase",
-              margin: "0 0 8px 0",
+              margin: "0 0 6px 0",
               fontFamily: "'Geist Mono', monospace",
               whiteSpace: "nowrap",
             }}
@@ -314,11 +317,11 @@ export default function HorizontalTree({
                     if (el) cardRefs.current.set(node.refKey, el);
                   }}
                   style={{
-                    padding: "10px 14px",
+                    padding: "8px 11px",
                     background: "#1a1816",
                     border: "1px solid #252220",
-                    borderRadius: 6,
-                    minWidth: 140,
+                    borderRadius: 5,
+                    minWidth: 112,
                     maxWidth: CARD_WIDTH,
                     width: CARD_WIDTH,
                     boxSizing: "border-box",
@@ -326,7 +329,7 @@ export default function HorizontalTree({
                 >
                   <p
                     style={{
-                      fontSize: 12,
+                      fontSize: 10,
                       fontWeight: 600,
                       color: "#ece8e1",
                       margin: 0,
@@ -339,9 +342,9 @@ export default function HorizontalTree({
                   {dsItem?.pill && (
                     <p
                       style={{
-                        fontSize: 9,
+                        fontSize: 7,
                         color: "#555",
-                        margin: "4px 0 0 0",
+                        margin: "3px 0 0 0",
                         fontFamily: "'Geist Mono', monospace",
                       }}
                     >
