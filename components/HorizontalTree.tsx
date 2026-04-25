@@ -33,20 +33,32 @@ interface HorizontalTreeProps {
 function NodeCard({
   name,
   nodeData,
+  displayFields,
   opacity,
   onClick,
   cardRef,
 }: {
   name: string;
   nodeData: NodeData | undefined;
+  displayFields: { key: string; label: string }[];
   opacity: number;
   onClick?: () => void;
   cardRef?: React.Ref<HTMLDivElement>;
 }) {
-  const country = nodeData?.loc?.split(",").pop()?.trim() ?? "";
+  const raw = nodeData as unknown as Record<string, unknown>;
+  const field0 = displayFields[0];
+  const val0 = field0 ? raw?.[field0.key] : undefined;
+  const hasCountry = field0?.key === "country" && val0 != null && String(val0) !== "";
+  const country = hasCountry ? String(val0) : "";
   const dotColor = COUNTRY_COLORS[country] || "#888";
-  const stat1 = nodeData?.stat ?? "";
-  const stat2 = nodeData?.stats?.[0]?.[1] ?? "";
+
+  // Pill fields (same as vertical TreeMap)
+  const pills: string[] = [];
+  const pillFields = hasCountry ? displayFields.slice(1, 3) : displayFields.slice(0, 2);
+  for (const f of pillFields) {
+    const v = raw?.[f.key];
+    if (v != null && String(v) !== "") pills.push(String(v));
+  }
 
   return (
     <div
@@ -72,45 +84,36 @@ function NodeCard({
         (e.currentTarget as HTMLDivElement).style.borderColor = "#252220";
       }}
     >
-      {/* Country dot + name */}
-      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-        <div
-          style={{
-            width: 6, height: 6, borderRadius: "50%",
-            background: dotColor, flexShrink: 0,
-          }}
-        />
-        <p
-          style={{
-            fontSize: 12, fontWeight: 600, color: "#ece8e1",
-            margin: 0, lineHeight: 1.2,
-            fontFamily: "'EB Garamond', Georgia, serif",
-          }}
-        >
-          {name}
-        </p>
-      </div>
-      {/* Country label */}
-      <p style={{ fontSize: 9, color: "#706a60", margin: "0 0 4px 0" }}>
-        {country}
-      </p>
-      {/* Stat lines */}
-      <p style={{ fontSize: 9, color: "#555", margin: 0, fontFamily: "'Geist Mono', monospace" }}>
-        {stat1}
-      </p>
-      {stat2 && (
-        <p style={{ fontSize: 9, color: "#555", margin: 0, fontFamily: "'Geist Mono', monospace" }}>
-          {stat2}
-        </p>
+      {/* Name */}
+      <p style={{
+        fontSize: 12, fontWeight: 600, color: "#ece8e1",
+        margin: 0, lineHeight: 1.2, marginBottom: hasCountry ? 2 : 4,
+        fontFamily: "'EB Garamond', Georgia, serif",
+      }}>{name}</p>
+      {/* Country dot + label */}
+      {hasCountry && (
+        <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 4 }}>
+          <div style={{ width: 5, height: 5, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
+          <p style={{ fontSize: 8, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em" }}>{country}</p>
+        </div>
       )}
+      {/* Pills — same data as vertical tree */}
+      {pills.map((pill, i) => (
+        <p key={i} style={{ fontSize: 8, color: "rgba(255,255,255,0.62)", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}>{pill}</p>
+      ))}
     </div>
   );
+}
+
+function toConfigKey(layerKey: string): string {
+  return layerKey.toLowerCase().replace(/\s+(\w)/g, (_: string, c: string) => c.toUpperCase());
 }
 
 /* ── Main component ── */
 export default function HorizontalTree({
   geometry,
   nodes,
+  layerConfig,
   onNodeClick,
   downstream,
 }: HorizontalTreeProps) {
@@ -349,11 +352,14 @@ export default function HorizontalTree({
               );
             }
 
+            const configKey = toConfigKey(col.key);
+            const fields = layerConfig?.[configKey]?.displayFields ?? [];
             return (
               <NodeCard
                 key={node.name}
                 name={node.name}
                 nodeData={nodes[node.name]}
+                displayFields={fields}
                 opacity={node.opacity}
                 onClick={onNodeClick ? () => onNodeClick(node.name) : undefined}
                 cardRef={(el: HTMLDivElement | null) => {
