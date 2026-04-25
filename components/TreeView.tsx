@@ -1835,7 +1835,7 @@ export default function TreeView() {
   /* ── main render — unified page template ── */
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#111" }}>
-      <div style={{ display: "flex", gap: 0, padding: "32px 20px", justifyContent: "center" }}>
+      <div style={{ display: "flex", gap: 0, padding: "32px 20px" }}>
 
         {/* Left panel */}
         <div style={{ width: 200, maxWidth: 200, flexShrink: 0, padding: "0 12px 0 0" }}>
