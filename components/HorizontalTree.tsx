@@ -14,10 +14,10 @@ const COUNTRY_COLORS: Record<string, string> = {
   "South Korea": "#5a7a9c", "Global": "#888880", "Multiple": "#888880",
 };
 
-/* ── Layout constants (scaled 90%) ── */
-const CARD_WIDTH = 115;
-const CARD_GAP = 7;
-const COLUMN_GAP = 42;
+/* ── Layout constants (scaled to fit container) ── */
+const CARD_WIDTH = 104;
+const CARD_GAP = 6;
+const COLUMN_GAP = 38;
 
 /* ── Types ── */
 interface HorizontalTreeProps {
@@ -75,11 +75,11 @@ function NodeCard({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       style={{
-        padding: "7px 10px",
+        padding: "6px 9px",
         background: highlighted ? "rgb(42, 38, 35)" : "rgb(36, 32, 29)",
         border: highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
-        borderRadius: 5,
-        minWidth: 100,
+        borderRadius: 4,
+        minWidth: 90,
         maxWidth: CARD_WIDTH,
         width: CARD_WIDTH,
         cursor: onClick ? "pointer" : "default",
@@ -342,11 +342,11 @@ export default function HorizontalTree({
                     if (el) cardRefs.current.set(node.refKey, el);
                   }}
                   style={{
-                    padding: "7px 10px",
+                    padding: "6px 9px",
                     background: "rgb(36, 32, 29)",
                     border: "1px solid rgb(45, 41, 39)",
-                    borderRadius: 5,
-                    minWidth: 100,
+                    borderRadius: 4,
+                    minWidth: 90,
                     maxWidth: CARD_WIDTH,
                     width: CARD_WIDTH,
                     boxSizing: "border-box",
