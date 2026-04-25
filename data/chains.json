@@ -121,16 +121,7 @@
       ]
     },
     "cableType": {
-      "displayFields": [
-        {
-          "key": "loc",
-          "label": "Location"
-        },
-        {
-          "key": "stat",
-          "label": "Output"
-        }
-      ]
+      "displayFields": []
     },
     "integration": {
       "displayFields": [
@@ -240,16 +231,7 @@
       ]
     },
     "cabletype": {
-      "displayFields": [
-        {
-          "key": "loc",
-          "label": "Location"
-        },
-        {
-          "key": "stat",
-          "label": "Output"
-        }
-      ]
+      "displayFields": []
     },
     "rawmaterials": {
       "displayFields": []
