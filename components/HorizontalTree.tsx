@@ -79,9 +79,7 @@ function NodeCard({
         background: highlighted ? "rgb(42, 38, 35)" : "rgb(36, 32, 29)",
         border: highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
         borderRadius: 4,
-        minWidth: 90,
-        maxWidth: CARD_WIDTH,
-        width: CARD_WIDTH,
+        width: "100%",
         cursor: onClick ? "pointer" : "default",
         transition: "border-color 0.15s, opacity 0.15s, background 0.15s",
         opacity: dimmedByHover ? 0.25 : opacity,
@@ -93,17 +91,18 @@ function NodeCard({
         fontSize: 11, fontWeight: 600, color: "#ece8e1",
         margin: 0, lineHeight: 1.2, marginBottom: hasCountry ? 2 : 3,
         fontFamily: "'EB Garamond', Georgia, serif",
+        whiteSpace: "nowrap",
       }}>{name}</p>
       {/* Country dot + label */}
       {hasCountry && (
         <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 3 }}>
           <div style={{ width: 4, height: 4, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
-          <p style={{ fontSize: 7, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em" }}>{country}</p>
+          <p style={{ fontSize: 7, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em", whiteSpace: "nowrap" }}>{country}</p>
         </div>
       )}
       {/* Pills — same data as vertical tree */}
-      {pills.map((pill, i) => (
-        <p key={i} style={{ fontSize: 7, color: "rgba(255,255,255,0.62)", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}>{pill}</p>
+      {pills.slice(0, 2).map((pill, i) => (
+        <p key={i} style={{ fontSize: 7, color: "rgba(255,255,255,0.62)", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>{pill}</p>
       ))}
     </div>
   );
@@ -312,7 +311,6 @@ export default function HorizontalTree({
             display: "flex",
             flexDirection: "column",
             gap: CARD_GAP,
-            minWidth: CARD_WIDTH,
             flexShrink: 0,
           }}
         >
@@ -346,9 +344,7 @@ export default function HorizontalTree({
                     background: "rgb(36, 32, 29)",
                     border: "1px solid rgb(45, 41, 39)",
                     borderRadius: 4,
-                    minWidth: 90,
-                    maxWidth: CARD_WIDTH,
-                    width: CARD_WIDTH,
+                    width: "100%",
                     boxSizing: "border-box",
                   }}
                 >
@@ -360,6 +356,7 @@ export default function HorizontalTree({
                       margin: 0,
                       lineHeight: 1.2,
                       fontFamily: "'EB Garamond', Georgia, serif",
+                      whiteSpace: "nowrap",
                     }}
                   >
                     {node.name}
