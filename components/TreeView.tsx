@@ -1835,55 +1835,67 @@ export default function TreeView() {
   /* ── main render — unified page template ── */
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#111" }}>
-      <div style={{ width: "100%", minHeight: "100vh" }}>
-        {/* Header area */}
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 32px 0", background: "#1a1816" }}>
-          {renderBreadcrumb()}
-          {/* Title row */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-            <h1 style={{
-              fontFamily: "'Instrument Serif', serif",
-              fontSize: path.length === 0 ? 36 : 32,
-              fontWeight: 400, color: warmWhite, margin: 0,
-            }}>
-              {templateTitle}
-            </h1>
-            {templateAnalysisHref && (
-              <a href={templateAnalysisHref} style={{
-                fontSize: 11, color: "#fff", padding: "7px 16px",
-                background: templateAccent ?? "#706a60", border: "none", borderRadius: 6,
-                textDecoration: "none", transition: "opacity 0.15s", flexShrink: 0,
-              }}
-                onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
-                onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
-              >Full analysis &rarr;</a>
-            )}
-          </div>
-          <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: "0 0 20px 0", maxWidth: "80%" }}>
-            {templateSubtitle}
-          </p>
-          <div style={{ height: 1, background: borderColor }} />
+      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "32px 20px", display: "flex", gap: 0 }}>
+
+        {/* Left panel */}
+        <div style={{ width: 260, maxWidth: 260, flexShrink: 0, padding: "10px 12px 10px 0" }}>
+          {/* Left panel content placeholder */}
         </div>
 
-        {/* Content area — flush with header */}
-        <div style={{ width: "100vw", maxWidth: 1200, margin: "0 auto" }}>
+        {/* Center — header + supply tree in one container */}
+        <div style={{
+          flex: 1,
+          background: "#1a1816",
+          borderRadius: 10,
+          padding: 10,
+          overflow: "hidden",
+        }}>
+          {/* Header area */}
+          <div style={{ padding: "22px 22px 0" }}>
+            {renderBreadcrumb()}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+              <h1 style={{
+                fontFamily: "'Instrument Serif', serif",
+                fontSize: path.length === 0 ? 36 : 32,
+                fontWeight: 400, color: warmWhite, margin: 0,
+              }}>
+                {templateTitle}
+              </h1>
+              {templateAnalysisHref && (
+                <a href={templateAnalysisHref} style={{
+                  fontSize: 11, color: "#fff", padding: "7px 16px",
+                  background: templateAccent ?? "#706a60", border: "none", borderRadius: 6,
+                  textDecoration: "none", transition: "opacity 0.15s", flexShrink: 0,
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
+                  onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                >Full analysis &rarr;</a>
+              )}
+            </div>
+            <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: "0 0 20px 0", maxWidth: "80%" }}>
+              {templateSubtitle}
+            </p>
+            <div style={{ height: 1, background: borderColor }} />
+          </div>
+
+          {/* Content area — flush with header */}
           <div
             key={animKey}
             style={{
-              background: "#1a1816",
-              padding: "0 32px 40px",
+              padding: "0 22px 30px",
               animation: "containerOpen 350ms ease-out forwards",
               position: "relative",
             }}
           >
-            {path.length === 0 ? (
-              /* Level 1: Vertical selector (accordion + illustration) */
-              renderVerticalsContent()
-            ) : (
-              renderContainerContent()
-            )}
+            {path.length === 0 ? renderVerticalsContent() : renderContainerContent()}
           </div>
         </div>
+
+        {/* Right panel */}
+        <div style={{ width: 260, maxWidth: 260, flexShrink: 0, padding: "10px 0 10px 12px" }}>
+          {/* Right panel content placeholder */}
+        </div>
+
       </div>
 
       {/* Animation keyframes */}
