@@ -1472,8 +1472,8 @@ export default function TreeView() {
     );
   }
 
-  /* ── render: verticals (level 1 — accordion + illustration) ── */
-  function renderVerticals() {
+  /* ── render: verticals content (accordion + illustration only, no header) ── */
+  function renderVerticalsContent() {
     const items = VERTICALS_DATA.map(v => ({
       name: v.name,
       description: v.description,
@@ -1481,21 +1481,40 @@ export default function TreeView() {
       comingSoon: v.comingSoon,
       illustrationId: v.id,
     }));
+    const activeIllustrationId = items[expandedVertical]?.illustrationId;
+    const IllusComponent = activeIllustrationId ? ILLUSTRATION_MAP[activeIllustrationId] : null;
 
     return (
-      <TwoColumnLayout
-        title="Explore emerging frontiers."
-        subtitle="Trace value chains from raw material to end use — every node, every bottleneck, every player."
-        titleSize={36}
-        items={items}
-        expandedIndex={expandedVertical}
-        onExpandItem={setExpandedVertical}
-        onNavigateItem={(i) => {
-          if (!VERTICALS_DATA[i].comingSoon) {
-            pushPath({ type: "vertical", id: VERTICALS_DATA[i].id, name: VERTICALS_DATA[i].name });
-          }
-        }}
-      />
+      <div style={{ display: "flex", gap: 0, paddingTop: 20 }}>
+        <div style={{ flex: "0 0 60%", maxWidth: 540 }}>
+          <div key={animKey}>
+            {items.map((item, i) => (
+              <AccordionItem
+                key={item.name}
+                name={item.name}
+                description={item.description}
+                meta={item.meta}
+                comingSoon={item.comingSoon}
+                isExpanded={expandedVertical === i}
+                onRowClick={() => setExpandedVertical(i)}
+                onArrowClick={() => {
+                  if (!VERTICALS_DATA[i].comingSoon) {
+                    pushPath({ type: "vertical", id: VERTICALS_DATA[i].id, name: VERTICALS_DATA[i].name });
+                  }
+                }}
+                index={i}
+              />
+            ))}
+          </div>
+        </div>
+        <div style={{ flex: "0 0 40%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {IllusComponent && (
+            <div key={activeIllustrationId} style={{ opacity: 0.5, animation: "illustrationFade 400ms ease-out forwards" }}>
+              <IllusComponent />
+            </div>
+          )}
+        </div>
+      </div>
     );
   }
 
@@ -1768,41 +1787,104 @@ export default function TreeView() {
     return null;
   }
 
-  /* ── main render ── */
+  /* ── derive title/subtitle/analysisHref for unified template ── */
+  const templateTitle = (() => {
+    if (path.length === 0) return "Explore emerging frontiers.";
+    if (!lastEntry) return "";
+    if (lastEntry.type === "vertical") {
+      return lastEntry.name;
+    }
+    if (lastEntry.type === "subsystem") return lastEntry.name;
+    if (lastEntry.type === "component") return lastEntry.name;
+    if (lastEntry.type === "raw-material") return lastEntry.name;
+    return "";
+  })();
+
+  const templateSubtitle = (() => {
+    if (path.length === 0) return "Trace value chains from raw material to end use \u2014 every node, every bottleneck, every player.";
+    if (!lastEntry) return "";
+    if (lastEntry.type === "vertical") return VERTICALS_DATA.find(v => v.id === lastEntry.id)?.description ?? "";
+    if (lastEntry.type === "subsystem") return getSubsystems().find(s => s.id === lastEntry.id)?.description ?? "";
+    if (lastEntry.type === "component") {
+      const sub = currentSubsystem ? getSubsystems().find(s => s.id === currentSubsystem.id) : null;
+      return sub?.components.find(c => c.id === lastEntry.id)?.detail ?? "";
+    }
+    if (lastEntry.type === "raw-material") {
+      if (lastEntry.id === "germanium") return "Trace element doped into glass to create the refractive index that allows fiber optic cable to carry light.";
+      if (lastEntry.id === "gallium") return "Byproduct of alumina refining. Forms compound semiconductors for AI datacenter power, 5G, defense radar, and LEDs.";
+      return "";
+    }
+    return "";
+  })();
+
+  const templateAnalysisHref = (() => {
+    if (!lastEntry) return null;
+    const fromParam = currentVertical?.id === "resources" ? "?from=resources" : "";
+    if (lastEntry.type === "component") return `/input/${lastEntry.id === "fiber" ? "fiber-optic-cable" : lastEntry.id}${fromParam}`;
+    if (lastEntry.type === "raw-material") return `/input/${lastEntry.id}${fromParam}`;
+    return null;
+  })();
+
+  const templateAccent = (() => {
+    if (!lastEntry) return undefined;
+    if (lastEntry.type === "component") return INPUT_ACCENT[lastEntry.id];
+    if (lastEntry.type === "raw-material") return INPUT_ACCENT[lastEntry.id];
+    return undefined;
+  })();
+
+  /* ── main render — unified page template ── */
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#111" }}>
-      {path.length === 0 ? (
-        /* Level 1: Vertical selector (accordion + illustration) */
-        renderVerticals()
-      ) : (
-        /* Levels 2+: Header + container */
-        <div style={{ width: "100%", minHeight: "100vh" }}>
-          {/* Header area */}
-          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 32px 0", background: "#1a1816" }}>
-            {renderBreadcrumb()}
-            {renderContextualHeader()}
-            <div style={{ height: 1, background: borderColor, margin: "0" }} />
-          </div>
-
-          {/* Container — flush with header */}
-          <div style={{ width: "100vw", maxWidth: 1200, margin: "0 auto" }}>
-            <div
-              key={animKey}
-              style={{
-                background: "#1a1816",
-                padding: (currentLevel === "tree" || (currentLevel === "subsystems" && currentVertical?.id === "ai")) ? "0 32px 40px" : "20px 32px",
-                animation: "containerOpen 350ms ease-out forwards",
-                position: "relative",
-                overflow: "hidden",
+      <div style={{ width: "100%", minHeight: "100vh" }}>
+        {/* Header area */}
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 32px 0", background: "#1a1816" }}>
+          {renderBreadcrumb()}
+          {/* Title row */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+            <h1 style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: path.length === 0 ? 36 : 32,
+              fontWeight: 400, color: warmWhite, margin: 0,
+            }}>
+              {templateTitle}
+            </h1>
+            {templateAnalysisHref && (
+              <a href={templateAnalysisHref} style={{
+                fontSize: 11, color: "#fff", padding: "7px 16px",
+                background: templateAccent ?? "#706a60", border: "none", borderRadius: 6,
+                textDecoration: "none", transition: "opacity 0.15s", flexShrink: 0,
               }}
-            >
-              {renderContainerContent()}
-            </div>
+                onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
+                onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+              >Full analysis &rarr;</a>
+            )}
+          </div>
+          <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: "0 0 20px 0", maxWidth: "80%" }}>
+            {templateSubtitle}
+          </p>
+          <div style={{ height: 1, background: borderColor }} />
+        </div>
+
+        {/* Content area — flush with header */}
+        <div style={{ width: "100vw", maxWidth: 1200, margin: "0 auto" }}>
+          <div
+            key={animKey}
+            style={{
+              background: "#1a1816",
+              padding: "0 32px 40px",
+              animation: "containerOpen 350ms ease-out forwards",
+              position: "relative",
+            }}
+          >
+            {path.length === 0 ? (
+              /* Level 1: Vertical selector (accordion + illustration) */
+              renderVerticalsContent()
+            ) : (
+              renderContainerContent()
+            )}
           </div>
         </div>
-      )}
-
-      {/* Fullscreen overlay (disabled) */}
+      </div>
 
       {/* Animation keyframes */}
       <style>{`
@@ -1813,14 +1895,6 @@ export default function TreeView() {
         @keyframes illustrationFade {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes treeEnter {
-          from { opacity: 0; transform: scale(0.99); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes breadcrumbEnter {
-          from { opacity: 0; transform: translateX(-8px); }
-          to { opacity: 1; transform: translateX(0); }
         }
         @keyframes containerOpen {
           from { opacity: 0; transform: translateY(-8px); }

@@ -299,8 +299,7 @@ export default function HorizontalTree({
         display: "flex",
         gap: COLUMN_GAP,
         padding: "28px 0",
-        overflowX: "auto",
-        overflowY: "visible",
+        overflow: "visible",
         maxWidth: "100%",
         margin: "0 auto",
       }}
