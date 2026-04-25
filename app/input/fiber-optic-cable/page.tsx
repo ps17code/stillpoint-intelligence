@@ -1016,34 +1016,53 @@ export default function FiberOpticInputPage() {
             WHERE THE MONEY IS
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
-            {[
-              { id: "corning", name: "Corning", ticker: "GLW \u00b7 NYSE", category: "Chokepoint holder", line1: "~40% of global fiber manufacturing capacity. Inventor of Contour cable for AI datacenter workloads.", line2: "Sold out through 2026. Stopped selling bare glass to competitors. $6B Meta anchor deal. Building world\u2019s largest cable plant in Hickory, NC. Pricing power from structural shortage." },
-              { id: "prysmian", name: "Prysmian", ticker: "PRY \u00b7 Borsa Italiana", category: "Capacity builder", line1: "Largest cable manufacturer globally. Vertically integrated from preform to installed cable.", line2: "Acquired North American preform capacity. Renewed Umicore GeCl\u2084 supply at premium. Lead investor in Relativity Networks (HCF startup). Positioned across conventional tightness and next-gen optionality." },
-              { id: "fujikura", name: "Fujikura", ticker: "5803 \u00b7 TSE", category: "Pure-play", line1: "Closest thing to a pure-play on AI-driven fiber demand. Over 50% of revenue from the US.", line2: "Tripling optical fiber output for US market. Entirely dependent on Umicore for GeCl\u2084. Debt-free. Stock +155% in 2025. AFL subsidiary provides BABA-compliant US cable for defense and BEAD." },
-              { id: "rosendahl-nextrom", name: "Rosendahl Nextrom", ticker: "Private \u00b7 Knill Gruppe (Austria)", category: "Chokepoint holder", line1: "Near-monopoly on preform deposition equipment \u2014 MCVD, PCVD, OVD, VAD systems.", line2: "Defines the capacity ceiling for the entire fiber industry. 18-24 month delivery backlogs. Hundreds of systems delivered since 1990. Not directly investable but determines the timeline for everyone else." },
-              { id: "yofc", name: "YOFC", ticker: "6869 \u00b7 HKEX", category: "Technology", line1: "China\u2019s largest fiber manufacturer. World-record 0.040 dB/km hollow-core fiber in lab.", line2: "3,500t/yr preform capacity. Dual exposure: benefits from conventional supply tightness today while building HCF optionality. 91.2 km drawn from a single preform. Also developing multicore fiber." },
-              { id: "hollow-core-fiber", name: "Hollow-core fiber ecosystem", ticker: "Thematic", category: "Technology", line1: "Eliminates germanium from fiber entirely. Light through air, not doped glass. 30% lower latency.", line2: "Microsoft deploying on Azure (1,280 km, zero failures). Relativity Networks ($10.7M raised, Prysmian-backed). Lumenisity (Microsoft acquisition). ~1,000x current fiber price. Pre-commercial but rapidly advancing." },
-              { id: "helium", name: "Helium", ticker: "Physical input", category: "Constrained input", line1: "Third independent bottleneck in fiber production. No substitute. Cannot be manufactured or recycled.", line2: "Price +135% over two years. US Federal Helium Reserve nearing depletion. Fiber manufacturers competing with semiconductor fabs, MRI systems, and space launch for supply." },
-            ].map((idea, i) => (
-              <div key={idea.id} style={{ display: "flex", background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "18px 22px", transition: "border-color 0.15s", cursor: IDEA_BRIEFS[idea.id] ? "pointer" : "default" }}
-                onClick={() => { if (IDEA_BRIEFS[idea.id]) setActiveIdea(idea.id); }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = "#333"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
-              >
-                <div style={{ width: 180, flexShrink: 0, paddingRight: 20, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
-                  <p style={{ fontSize: 13.5, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
-                  <p style={{ fontSize: 10.5, color: muted, margin: "0 0 6px 0", letterSpacing: "0.02em" }}>{idea.ticker}</p>
-                  <p style={{ fontSize: 9, color: dimText, letterSpacing: "0.06em", margin: 0, textTransform: "uppercase" as const }}>{idea.category}</p>
-                </div>
-                <div style={{ width: 1, background: "#2a2620", flexShrink: 0, marginRight: 20 }} />
-                <div style={{ flex: 1, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
-                  <p style={{ fontSize: 12.5, color: "#c4bdb2", lineHeight: 1.6, margin: "0 0 4px 0", fontWeight: 500 }}>{idea.line1}</p>
-                  <p style={{ fontSize: 12, color: "#a09888", lineHeight: 1.6, margin: 0 }}>{idea.line2}</p>
-                </div>
+          {(() => {
+            const layers: { label: string; ideas: { id: string; name: string; ticker: string; category: string; line1: string }[] }[] = [
+              { label: "PREFORM / CABLE MANUFACTURER", ideas: [
+                { id: "corning", name: "Corning", ticker: "GLW \u00b7 NYSE", category: "Chokepoint holder", line1: "~40% of global fiber manufacturing capacity. Inventor of Contour cable for AI datacenter workloads." },
+                { id: "prysmian", name: "Prysmian", ticker: "PRY \u00b7 Borsa Italiana", category: "Capacity builder", line1: "Largest cable manufacturer globally. Vertically integrated from preform to installed cable." },
+                { id: "fujikura", name: "Fujikura", ticker: "5803 \u00b7 TSE", category: "Pure-play", line1: "Closest thing to a pure-play on AI-driven fiber demand. Over 50% of revenue from the US." },
+                { id: "yofc", name: "YOFC", ticker: "6869 \u00b7 HKEX", category: "Technology", line1: "China\u2019s largest fiber manufacturer. World-record 0.040 dB/km hollow-core fiber in lab." },
+              ]},
+              { label: "EQUIPMENT (NON-TREE)", ideas: [
+                { id: "rosendahl-nextrom", name: "Rosendahl Nextrom", ticker: "Private \u00b7 Knill Gruppe (Austria)", category: "Chokepoint holder", line1: "Near-monopoly on preform deposition equipment \u2014 MCVD, PCVD, OVD, VAD systems." },
+              ]},
+              { label: "SUBSTITUTION / TECHNOLOGY (NON-TREE)", ideas: [
+                { id: "hollow-core-fiber", name: "Hollow-core fiber ecosystem", ticker: "Thematic", category: "Technology", line1: "Eliminates germanium from fiber entirely. Light through air, not doped glass. 30% lower latency." },
+              ]},
+              { label: "PARALLEL CONSTRAINED INPUT (NON-TREE)", ideas: [
+                { id: "helium", name: "Helium", ticker: "Physical input", category: "Constrained input", line1: "Third independent bottleneck in fiber production. No substitute. Cannot be manufactured or recycled." },
+              ]},
+            ];
+            return (
+              <div style={{ display: "flex", flexDirection: "column" as const }}>
+                {layers.map((layer, li) => (
+                  <React.Fragment key={layer.label}>
+                    <p style={{ fontFamily: "'Geist Mono', monospace", fontSize: 9, letterSpacing: "0.1em", color: dimText, margin: li === 0 ? "0 0 8px 0" : "24px 0 8px 0" }}>{layer.label}</p>
+                    <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
+                      {layer.ideas.map(idea => (
+                        <div key={idea.id} style={{ display: "flex", background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "10px 20px", transition: "border-color 0.15s", cursor: IDEA_BRIEFS[idea.id] ? "pointer" : "default" }}
+                          onClick={() => { if (IDEA_BRIEFS[idea.id]) setActiveIdea(idea.id); }}
+                          onMouseEnter={e => { e.currentTarget.style.borderColor = "#333"; }}
+                          onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
+                        >
+                          <div style={{ width: 180, flexShrink: 0, paddingRight: 20, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
+                            <p style={{ fontSize: 13.5, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
+                            <p style={{ fontSize: 10.5, color: muted, margin: "0 0 6px 0", letterSpacing: "0.02em" }}>{idea.ticker}</p>
+                            <p style={{ fontSize: 9, color: dimText, letterSpacing: "0.06em", margin: 0, textTransform: "uppercase" as const }}>{idea.category}</p>
+                          </div>
+                          <div style={{ width: 1, background: "#2a2620", flexShrink: 0, marginRight: 20 }} />
+                          <div style={{ flex: 1, display: "flex", alignItems: "center" }}>
+                            <p style={{ fontSize: 12, color: "#c4bdb2", lineHeight: 1.6, margin: 0, fontWeight: 500 }}>{idea.line1}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </React.Fragment>
+                ))}
               </div>
-            ))}
-          </div>
+            );
+          })()}
 
         </div>
         {/* ═══ CATALYSTS ═══ */}

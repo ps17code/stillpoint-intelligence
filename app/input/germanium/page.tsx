@@ -883,35 +883,52 @@ export default function GermaniumInputPage() {
             WHERE THE MONEY IS
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
-            {[
-              { id: "umicore", name: "Umicore", ticker: "UMI \u00b7 Euronext", category: "Chokepoint holder", line1: "Sole western GeCl\u2084 supplier for commercial fiber optics.", line2: "Exclusive DRC feedstock offtake ramping. Closed-loop recycling from fiber manufacturers creates circular barrier to entry. Major revenue upside from AI-driven fiber demand." },
-              { id: "5n-plus", name: "5N Plus", ticker: "VNP \u00b7 TSX", category: "Capacity builder", line1: "Only vertically integrated western supplier from refined germanium to finished space solar cells.", line2: "Capacity expanding 25-35% annually with $395M backlog maxed out. $32.5M in DoD funding for wafer and refining expansion. FY25: revenue +35%, EBITDA +73%." },
-              { id: "lightpath", name: "LightPath Technologies", ticker: "LPTH \u00b7 NASDAQ", category: "Technology", line1: "Holds exclusive license to BlackDiamond glass that replaces germanium in IR optics.", line2: "$40M camera supply deal through 2027. F-35 combat aircraft program validated. Revenue +40% last quarter. Wins when germanium gets too scarce or too expensive." },
-              { id: "blue-moon", name: "Blue Moon Metals", ticker: "MOON \u00b7 TSXV / NASDAQ", category: "Capacity builder", line1: "Acquired Apex \u2014 the only past-producing primary germanium and gallium mine in the United States.", line2: "Backed by Oaktree, Hartree ($12B stockpile partner), Teck (8%), Wheaton PM, Altius. Ge grades 10-100x higher than most deposits. 1Mt resource. Production target 2028." },
-              { id: "teck", name: "Teck Resources", ticker: "TECK \u00b7 TSX / NYSE", category: "Feedstock supplier", line1: "Only North American primary feedstock source of germanium, recovered as zinc by-product at Trail smelter in BC.", line2: "Feeds 5N Plus, defense contractors, and GeCl\u2084 production. 8-10t/yr output with 4t expansion by 2027. 8% stake in Blue Moon. Anglo Teck merger commits C$850M to Trail critical minerals." },
-              { id: "yunnan-chihong", name: "Yunnan Chihong", ticker: "600497 \u00b7 Shanghai", category: "Market maker", line1: "China\u2019s largest germanium producer at 56t/yr output with 600+ tonnes in proven reserves.", line2: "Produces ingots, GeCl\u2084, GeO\u2082, tetrahydride, and wafers \u2014 covers every downstream use. State-controlled Chinalco subsidiary. The entity whose MOFCOM export licenses determine whether the western scarcity premium holds or collapses." },
-              { id: "stl-gecamines", name: "STL / G\u00e9camines", ticker: "Private \u00b7 DRC", category: "Feedstock supplier", line1: "Largest new non-Chinese germanium source in development \u2014 14M tonnes of slag, 700+ tonnes Ge potential.", line2: "First germanium concentrates exported October 2024. Targeting 30% of global supply. Exclusive Umicore offtake \u2014 all value accrues to Umicore, not the mine." },
-              { id: "germanium-metal", name: "Germanium metal", ticker: "Physical commodity", category: "Direct exposure", line1: "$1,500 \u2192 $8,500+/kg in two years on relatively fixed global supply of ~230t/yr.", line2: "Nov 2026 ban review is a binary event for the entire chain. No futures market, no exchange pricing \u2014 all OTC. 3.5x spread between Chinese domestic and western market price." },
-            ].map((idea, i) => (
-              <div key={idea.id} style={{ display: "flex", background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "10px 20px", transition: "border-color 0.15s", cursor: "pointer" }}
-                onClick={() => setActiveIdea(idea.id)}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = "#333"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
-              >
-                <div style={{ width: 180, flexShrink: 0, paddingRight: 20, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
-                  <p style={{ fontSize: 13.5, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
-                  <p style={{ fontSize: 10.5, color: muted, margin: "0 0 6px 0", letterSpacing: "0.02em" }}>{idea.ticker}</p>
-                  <p style={{ fontSize: 9, color: dimText, letterSpacing: "0.06em", margin: 0, textTransform: "uppercase" as const }}>{idea.category}</p>
-                </div>
-                <div style={{ width: 1, background: "#2a2620", flexShrink: 0, marginRight: 20 }} />
-                <div style={{ flex: 1, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
-                  <p style={{ fontSize: 12, color: "#c4bdb2", lineHeight: 1.6, margin: "0 0 4px 0", fontWeight: 500 }}>{idea.line1}</p>
-                  <p style={{ fontSize: 11, color: "#a09888", lineHeight: 1.6, margin: 0 }}>{idea.line2}</p>
-                </div>
+          {(() => {
+            const layers: { label: string; ideas: { id: string; name: string; ticker: string; category: string; line1: string }[] }[] = [
+              { label: "HOST OPERATION + PRIMARY PRODUCER", ideas: [
+                { id: "yunnan-chihong", name: "Yunnan Chihong", ticker: "600497 \u00b7 Shanghai", category: "Market maker", line1: "China\u2019s largest germanium producer at 56t/yr output with 600+ tonnes in proven reserves." },
+                { id: "teck", name: "Teck Resources", ticker: "TECK \u00b7 TSX / NYSE", category: "Feedstock supplier", line1: "Only North American primary feedstock source of germanium, recovered as zinc by-product at Trail smelter in BC." },
+                { id: "stl-gecamines", name: "STL / G\u00e9camines", ticker: "Private \u00b7 DRC", category: "Feedstock supplier", line1: "Largest new non-Chinese germanium source in development \u2014 14M tonnes of slag, 700+ tonnes Ge potential." },
+                { id: "blue-moon", name: "Blue Moon Metals", ticker: "MOON \u00b7 TSXV / NASDAQ", category: "Capacity builder", line1: "Acquired Apex \u2014 the only past-producing primary germanium and gallium mine in the United States." },
+              ]},
+              { label: "REFINER", ideas: [
+                { id: "umicore", name: "Umicore", ticker: "UMI \u00b7 Euronext", category: "Chokepoint holder", line1: "Sole western GeCl\u2084 supplier for commercial fiber optics." },
+                { id: "5n-plus", name: "5N Plus", ticker: "VNP \u00b7 TSX", category: "Capacity builder", line1: "Only vertically integrated western supplier from refined germanium to finished space solar cells." },
+              ]},
+              { label: "NON-TREE", ideas: [
+                { id: "lightpath", name: "LightPath Technologies", ticker: "LPTH \u00b7 NASDAQ", category: "Technology", line1: "Holds exclusive license to BlackDiamond glass that replaces germanium in IR optics." },
+                { id: "germanium-metal", name: "Germanium metal", ticker: "Physical commodity", category: "Direct exposure", line1: "$1,500 \u2192 $8,500+/kg in two years on relatively fixed global supply of ~230t/yr." },
+              ]},
+            ];
+            return (
+              <div style={{ display: "flex", flexDirection: "column" as const }}>
+                {layers.map((layer, li) => (
+                  <React.Fragment key={layer.label}>
+                    <p style={{ fontFamily: "'Geist Mono', monospace", fontSize: 9, letterSpacing: "0.1em", color: dimText, margin: li === 0 ? "0 0 8px 0" : "24px 0 8px 0" }}>{layer.label}</p>
+                    <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
+                      {layer.ideas.map(idea => (
+                        <div key={idea.id} style={{ display: "flex", background: cardBg, border: `1px solid ${borderColor}`, borderRadius: 8, padding: "10px 20px", transition: "border-color 0.15s", cursor: "pointer" }}
+                          onClick={() => setActiveIdea(idea.id)}
+                          onMouseEnter={e => { e.currentTarget.style.borderColor = "#333"; }}
+                          onMouseLeave={e => { e.currentTarget.style.borderColor = borderColor; }}
+                        >
+                          <div style={{ width: 180, flexShrink: 0, paddingRight: 20, display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
+                            <p style={{ fontSize: 13.5, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{idea.name}</p>
+                            <p style={{ fontSize: 10.5, color: muted, margin: "0 0 6px 0", letterSpacing: "0.02em" }}>{idea.ticker}</p>
+                            <p style={{ fontSize: 9, color: dimText, letterSpacing: "0.06em", margin: 0, textTransform: "uppercase" as const }}>{idea.category}</p>
+                          </div>
+                          <div style={{ width: 1, background: "#2a2620", flexShrink: 0, marginRight: 20 }} />
+                          <div style={{ flex: 1, display: "flex", alignItems: "center" }}>
+                            <p style={{ fontSize: 12, color: "#c4bdb2", lineHeight: 1.6, margin: 0, fontWeight: 500 }}>{idea.line1}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </React.Fragment>
+                ))}
               </div>
-            ))}
-          </div>
+            );
+          })()}
 
         </div>
 
