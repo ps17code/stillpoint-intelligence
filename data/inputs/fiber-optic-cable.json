@@ -1,0 +1,1529 @@
+{
+  "slug": "fiber-optic-cable",
+  "title": "Fiber optic cable",
+  "accent": "#6a9ab8",
+  "calloutAccent": "#6a9ab8",
+  "type": "component",
+  "treeComponentId": "fiber",
+  "breadcrumbs": {
+    "default": [
+      {
+        "label": "All verticals",
+        "href": "/?view=tree"
+      },
+      {
+        "label": "AI Infrastructure",
+        "href": "/?view=tree&path=ai"
+      },
+      {
+        "label": "Connectivity",
+        "href": "/?view=tree&path=ai,connectivity"
+      }
+    ]
+  },
+  "execSummary": {
+    "bullets": [
+      "Fiber optics are glass strands that transmit data as pulses of light. They serve as the physical layer connecting everything inside and between AI datacenters, telecom networks, and cross-ocean subsea systems.",
+      "The core inputs are high-purity silica, germanium, and helium. Silica forms the fiber body, germanium is doped into the core to create the refractive index gradient that guides light, and helium cools the glass during fiber drawing.",
+      "Global production sits at ~720M fiber strand-km/yr. Preform lines are at full utilization. One equipment supplier — Rosendahl Nextrom — carries 18-24 month backlogs.",
+      "Fiber prices are at 7-year highs. Standard G.652D prices are up 150% since January 2025. Datacenter-grade G.657A is up over 210%. The price moves reflect simultaneous constraints in germanium, SiCl₄, and helium — combined with AI demand pulling forward years of order flow.",
+      "AI datacenter buildout is the dominant growth vector. ~20 GW of AI datacenter capacity is entering construction annually. Each GW requires ~6.5M fiber strand-km. A 130M km supply gap cannot close before 2027.",
+      "Supply response is 2027-2028 at earliest. New preform capacity, the DRC germanium ramp via Umicore offtake, and hollow-core fiber commercialization all target the same window. None of them close the gap before then.",
+      "The investable surface of the fiber chain is the rebuild itself — chokepoint refiners and fiber manufacturers with locked-in supply, capacity-builders bringing new preform online, and the equipment monopoly that defines the industry’s capacity ceiling."
+    ]
+  },
+  "supplyTree": {
+    "keyTakeaways": [
+      "Three constrained inputs feed fiber production — germanium tetrachloride from a single western chokepoint, silicon tetrachloride for the glass body, and helium for cooling during fiber drawing.",
+      "Only about 20 preform manufacturers globally produce the doped silica rods that get drawn into fiber, and the lines are running at full utilization.",
+      "Rosendahl Nextrom in Austria is the global monopoly on preform deposition equipment — 18-24 month order backlogs define the capacity ceiling for the entire industry.",
+      "Corning controls ~40% of global fiber manufacturing capacity and stopped selling bare glass fiber to other cable makers in late 2025, structurally tightening supply for everyone downstream."
+    ],
+    "howItsMade": [
+      {
+        "label": "CHEMICAL CONVERSION",
+        "content": "Refined germanium is converted to GeCl&#8324; at 8N purity to dope the fiber core. High-purity silica is converted to SiCl&#8324; for the glass body. Helium is purified for fiber-drawing cooling.",
+        "whyItsHard": "Fiber-grade GeCl&#8324; requires removing arsenic to parts-per-billion levels. Only 6 facilities globally produce it: four in China, one in Russia (sanctioned), one in the west &mdash; Umicore in Belgium. Helium has no substitute and trades on physical scarcity.",
+        "statValue": "~220t/yr",
+        "statLabel": "fiber-grade GeCl&#8324; produced globally"
+      },
+      {
+        "label": "PREFORM MANUFACTURING",
+        "content": "GeCl&#8324; is vaporized and deposited layer by layer inside a silica tube, building up a glass preform rod with a germanium-doped core. The optical properties of the final fiber are set at this step.",
+        "whyItsHard": "Only one equipment supplier &mdash; Rosendahl Nextrom in Austria &mdash; produces the deposition systems. Adding a new preform line takes 18-24 months. About 20 preform manufacturers globally; lines run at full utilization.",
+        "statValue": "~24,000t/yr",
+        "statLabel": "preform produced globally"
+      },
+      {
+        "label": "FIBER DRAW &amp; CABLE ASSEMBLY",
+        "content": "Preforms are heated in a draw tower and pulled into hair-thin strands at 10-20 m/s, coated, then bundled with strength members and sheathed into finished cable. Helium cools the fiber during drawing.",
+        "whyItsHard": "Drawing isn't the binding constraint &mdash; preform supply is. You can only draw as much fiber as preform output supports. Helium supply is tight, with a third of global production disrupted.",
+        "statValue": "~720M fiber-km/yr",
+        "statLabel": "fiber strand produced globally"
+      }
+    ]
+  },
+  "dependencies": {
+    "upstream": {
+      "label": "UPSTREAM — WHAT GOES INTO FIBER",
+      "headers": [
+        {
+          "label": "Input",
+          "width": "25%"
+        },
+        {
+          "label": "Per km",
+          "width": "14%"
+        },
+        {
+          "label": "% of cost (base)",
+          "width": "18%"
+        },
+        {
+          "label": "Price trend",
+          "width": "14%"
+        },
+        {
+          "label": "Form",
+          "width": "40%"
+        },
+        {
+          "label": "Status",
+          "width": "14%",
+          "right": true
+        }
+      ],
+      "rows": [
+        {
+          "Input": "Germanium",
+          "Per km": "0.12g",
+          "% of cost (base)": "~10%",
+          "Price trend": "↑ 4.5x",
+          "Form": "Converted to GeCl₄ to guide light through core",
+          "Status": "Constrained",
+          "linked": true,
+          "href": "/input/germanium"
+        },
+        {
+          "Input": "Silicon tetrachloride",
+          "Per km": "~8g",
+          "% of cost (base)": "~15%",
+          "Price trend": "↑ 2x",
+          "Form": "Deposited as the glass fiber itself",
+          "Status": "Tightening",
+          "linked": false
+        },
+        {
+          "Input": "Helium",
+          "Per km": "~0.5L",
+          "% of cost (base)": "~5%",
+          "Price trend": "↑ 4x",
+          "Form": "Cools fiber during drawing, no substitute",
+          "Status": "Constrained",
+          "linked": false
+        },
+        {
+          "Input": "Silica substrate",
+          "Per km": "—",
+          "% of cost (base)": "~25%",
+          "Price trend": "Stable",
+          "Form": "Base glass tube the fiber is built on",
+          "Status": "Available",
+          "linked": false
+        },
+        {
+          "Input": "UV coating",
+          "Per km": "~0.3g",
+          "% of cost (base)": "~3%",
+          "Price trend": "Stable",
+          "Form": "Protective coating applied after draw",
+          "Status": "Available",
+          "linked": false
+        },
+        {
+          "Input": "Energy",
+          "Per km": "~0.5 kWh",
+          "% of cost (base)": "~7%",
+          "Price trend": "Stable",
+          "Form": "Powers the draw tower furnace",
+          "Status": "Available",
+          "linked": false
+        },
+        {
+          "Input": "Labor + overhead",
+          "Per km": "—",
+          "% of cost (base)": "~35%",
+          "Price trend": "—",
+          "Form": "—",
+          "Status": "—",
+          "linked": false
+        }
+      ],
+      "summaryRows": [
+        {
+          "label": "Production cost / km",
+          "values": [
+            "",
+            "~$5.50",
+            "~$8.50",
+            "",
+            ""
+          ]
+        },
+        {
+          "label": "Market price / km (G.657A)",
+          "values": [
+            "",
+            "~$7–8",
+            "~$22–28",
+            "",
+            ""
+          ]
+        }
+      ],
+      "takeaway": "Three inputs are constrained simultaneously — germanium, SiCl₄, and helium — representing ~30% of baseline production cost. Their combined price surges have pushed estimated production cost up ~55%. But G.657A datacenter-grade fiber prices have surged over 210%, as AI datacenter and military drone demand compete for the same production lines."
+    },
+    "downstream": {
+      "label": "DOWNSTREAM — WHERE FIBER GOES",
+      "headers": [
+        {
+          "label": "End use",
+          "width": "20%"
+        },
+        {
+          "label": "Fiber type",
+          "width": "10%"
+        },
+        {
+          "label": "Demand",
+          "width": "10%"
+        },
+        {
+          "label": "Price/km",
+          "width": "10%"
+        },
+        {
+          "label": "Est. value",
+          "width": "10%"
+        },
+        {
+          "label": "Share",
+          "width": "10%"
+        },
+        {
+          "label": "Driver",
+          "width": "20%"
+        },
+        {
+          "label": "Status",
+          "width": "10%",
+          "right": true
+        }
+      ],
+      "rows": [
+        {
+          "End use": "AI datacenters",
+          "Fiber type": "G.657A",
+          "Demand": "~210M km",
+          "Price/km": "~$25",
+          "Est. value": "~$5.3B",
+          "Share": "30%",
+          "Driver": "GPU cluster interconnect, DCI",
+          "Status": "Surging (+62%)"
+        },
+        {
+          "End use": "Terrestrial telecom",
+          "Fiber type": "G.652D",
+          "Demand": "~290M km",
+          "Price/km": "~$15",
+          "Est. value": "~$4.4B",
+          "Share": "25%",
+          "Driver": "FTTH, 5G backhaul, metro",
+          "Status": "Stable"
+        },
+        {
+          "End use": "Subsea cables",
+          "Fiber type": "G.654E",
+          "Demand": "~70M km",
+          "Price/km": "~$75",
+          "Est. value": "~$5.3B",
+          "Share": "30%",
+          "Driver": "Intercontinental capacity",
+          "Status": "Growing"
+        },
+        {
+          "End use": "Military / UAV",
+          "Fiber type": "G.657A",
+          "Demand": "~55M km",
+          "Price/km": "~$25",
+          "Est. value": "~$1.4B",
+          "Share": "8%",
+          "Driver": "Drone communication systems",
+          "Status": "Surging"
+        },
+        {
+          "End use": "BEAD broadband",
+          "Fiber type": "G.652D",
+          "Demand": "~65M km",
+          "Price/km": "~$15",
+          "Est. value": "~$1.0B",
+          "Share": "5%",
+          "Driver": "Federal rural program, $42B",
+          "Status": "Ramping"
+        },
+        {
+          "End use": "Other",
+          "Fiber type": "Mixed",
+          "Demand": "~30M km",
+          "Price/km": "~$18",
+          "Est. value": "~$0.5B",
+          "Share": "2%",
+          "Driver": "Enterprise, industrial, sensing",
+          "Status": "Stable"
+        }
+      ],
+      "totalRow": {
+        "End use": "Total",
+        "Fiber type": "",
+        "Demand": "~720M km",
+        "Price/km": "",
+        "Est. value": "~$17.9B",
+        "Share": "100%",
+        "Driver": "",
+        "Status": "850M+ km (+18%)"
+      },
+      "takeaway": "Measured by volume, terrestrial telecom still dominates at 40%. Measured by value, AI datacenters and subsea cables each account for ~30% — the premium fiber segments now capture most of the revenue. AI datacenters and military drones both consume G.657A fiber, competing for the same production lines. Manufacturers are cannibalizing G.652D telecom output for higher-margin G.657A, squeezing telecom operators and the BEAD program simultaneously."
+    }
+  },
+  "supplyDemand": {
+    "supply": {
+      "value": "720M km",
+      "analysis": "Global annual fiber strand production. 87t germanium → 220t GeCl₄ → 24Kt preform → 720M strand-km. Preform lines at full utilization. One equipment supplier. Expansion cycle: 18-24 months."
+    },
+    "demand": {
+      "value": "~850M km",
+      "analysis": "Projected by 2027. Datacenter share of fiber demand rising from 5% to 30% (CRU). ~20 GW of AI capacity entering construction annually, each GW consuming ~6.5M strand-km. Compounded by $42B BEAD program and 50-60M km/yr drone demand."
+    },
+    "gap": {
+      "value": "130M km",
+      "analysis": "18% shortfall. Requires ~16t additional germanium from a supply fixed at ~230t and already fully allocated. New preform capacity won't arrive until end of 2027. CRU estimates the deficit widens before it narrows."
+    }
+  },
+  "soWhat": [
+    {
+      "id": "signals",
+      "label": "Market signals",
+      "question": "What is the price telling us?",
+      "teaser": "Fiber prices reaching 7-year highs alongside a 4.5x germanium price rise and 60+ week lead times are telling us that AI datacenter demand has pulled forward years of fiber industry orders into a supply chain that cannot expand fast enough to meet them.",
+      "analysis": [
+        {
+          "type": "prose",
+          "text": "The fiber optic supply chain is exhibiting classic shortage pricing across every major input simultaneously — a pattern not seen since the telecom buildout of 2000. Standard telecom fiber (G.652D) has surged from approximately 20 RMB per core-km to 35-50+ RMB, a 70-120% increase representing a 7-year high. This is not a localized or transient spike. CRU data shows Chinese G.652D bare-fibre prices advanced more than 80% between November 2025 and January 2026 alone, with actual transactions occurring in the 40-50 yuan range."
+        },
+        {
+          "type": "prose",
+          "text": "Datacenter-grade fiber (G.657A), the bend-insensitive variant deployed in AI GPU clusters and military drone communication systems, has seen even steeper gains — surging from over 30 yuan per fiber-km to more than 50 yuan per fiber-km in a single month. G.654.E ultra-low-loss long-haul fiber and OM5 high-bandwidth multimode fiber command 20-30% premiums on top of already elevated prices. Hollow-core fiber trades at approximately 1,000x the price of standard G.652D, reflecting both its scarcity and its premium performance characteristics."
+        },
+        {
+          "type": "prose",
+          "text": "Upstream, the raw material picture is equally strained. Germanium metal prices have risen from $1,500/kg in January 2024 to over $7,000/kg in international markets — a 4.5x increase driven by the convergence of rising industrial demand and Chinese export controls. Helium, essential as a coolant in fiber draw towers, has increased 135% over two years following plant outages in Russia and the United States. Silicon tetrachloride, the bulk material in preform manufacturing, is up approximately 50% according to CRU."
+        },
+        {
+          "type": "prose",
+          "text": "Lead times tell the operational story. Ribbon fiber, the primary format for datacenter cabling, has stretched past 60 weeks from order to delivery. Loose tube fiber, used in outdoor infrastructure and FTTH deployments, is booked into Q3 2026. Normal lead times for the industry are 8-12 weeks — even during periods of moderate tightness they rarely exceed 15-20 weeks. The current levels are comparable only to the dot-com fiber buildout of 2000. At least one major fiber manufacturer has sold all of its inventory through the entirety of 2026."
+        },
+        {
+          "type": "quote",
+          "text": "In my professional career I’ve never seen anything like this inflationary crunch.",
+          "author": "Wendell Weeks, CEO of Corning — the world’s largest fiber producer — to the Financial Times"
+        },
+        {
+          "type": "prose",
+          "text": "Corning’s actions confirm the severity: by October 2025, the company reportedly stopped selling bare glass fiber to other cable manufacturers in order to preserve supply for its own anchor customers. CEO Wendell Weeks declined to comment directly but acknowledged that “demand for our products relative to our supply puts us in a situation where we are quite tight.” Globally, fiber optic cable prices have climbed from a 2021 low of $3.70 per fibre-km to $6.30 — a 70% increase — with the steepest rises in Europe, India, and China."
+        }
+      ]
+    },
+    {
+      "id": "constraints",
+      "label": "Supply constraints",
+      "question": "Why can’t supply respond?",
+      "teaser": "Supply cannot respond because three independent bottlenecks — preform deposition equipment from a single Austrian supplier, fiber-grade GeCl₄ from a single Belgian facility, and a constrained global helium market — must all expand simultaneously and none of them does before late 2027.",
+      "analysis": [
+        {
+          "type": "subhead",
+          "text": "Preform manufacturing equipment"
+        },
+        {
+          "type": "prose",
+          "text": "The global preform manufacturing base is operating at full utilization. Expanding capacity is not a matter of capital — it is a matter of equipment availability. Nearly all preform deposition systems worldwide are manufactured by a single company: Rosendahl Nextrom, a private Austrian firm headquartered in Vantaa, Finland, operating as part of the Knill Gruppe industrial group (established 1712). Nextrom produces the MCVD, PCVD, OVD, and VAD systems that every major fiber manufacturer depends on."
+        },
+        {
+          "type": "prose",
+          "text": "Every major fiber manufacturer is now attempting to expand simultaneously. The result is delivery backlogs of 18-24 months for new deposition equipment. Capacity ordered today will not produce fiber until 2028 at the earliest. This is not a problem that can be solved by spending more — there is a single supplier, and their production throughput is the physical ceiling on how fast the industry can grow."
+        },
+        {
+          "type": "prose",
+          "text": "Corning, the market leader with approximately 40% of global fiber manufacturing capacity, has responded by breaking ground on the Hickory project in North Carolina — what will be the world’s largest optical cable manufacturing plant. The project is anchored by a $6 billion multi-year supply agreement with Meta. This represents a structural shift: hyperscalers are now co-investing in manufacturing infrastructure alongside producers, effectively reserving capacity years in advance."
+        },
+        {
+          "type": "subhead",
+          "text": "GeCl₄ conversion capacity"
+        },
+        {
+          "type": "prose",
+          "text": "Even if preform equipment constraints were resolved, the supply chain faces a deeper structural limitation: the conversion of raw germanium into fiber-grade GeCl₄. Only six facilities in the world perform this conversion at 8N purity. Four are in China, one is in Russia (JSC Germanium, allocated to military use), and one is in the west: Umicore’s facility in Olen, Belgium."
+        },
+        {
+          "type": "prose",
+          "text": "Umicore’s maximum facility capacity is estimated at 40-50 tonnes of germanium throughput per year. Current throughput is lower — approximately 16-18 tonnes — constrained by feedstock availability. As new germanium sources come online, Umicore’s conversion capacity becomes the new ceiling."
+        },
+        {
+          "type": "prose",
+          "text": "This creates a paradox: the more successful western germanium supply diversification becomes, the more concentrated the downstream conversion bottleneck gets. Every new feedstock source that routes through Umicore strengthens Umicore’s position as the single point of failure in the western fiber supply chain."
+        },
+        {
+          "type": "subhead",
+          "text": "Helium supply"
+        },
+        {
+          "type": "prose",
+          "text": "The third independent constraint operates at the fiber draw stage. Drawing fiber from a preform requires ultra-pure helium as a coolant — the glass strand must be rapidly cooled as it exits the 2,000°C furnace at speeds of 10-20 meters per second. There is no commercially viable substitute."
+        },
+        {
+          "type": "prose",
+          "text": "Global helium supply has been disrupted by plant outages in Russia and the United States. Helium spot prices soared to $15 per cubic meter in 2025, and the US Federal Helium Reserve is nearing depletion. Rosendahl Nextrom now actively markets helium recovery systems to fiber producers — a product that only exists because the shortage has become severe enough to justify the capital cost."
+        },
+        {
+          "type": "callout",
+          "text": "CRU estimates the global fiber shortfall will reach approximately 138 million fiber-km in 2026 — a shortfall rate of 16.7%. This gap is expected to widen in 2027. New preform capacity initiated in 2025 will not reach commercialization until end of 2027 at the earliest. Industry consensus: the price uptrend will persist through at least 2026-2027, with the full bull cycle spanning 2 to 3 years."
+        }
+      ]
+    },
+    {
+      "id": "competing",
+      "label": "Competing demand",
+      "question": "Who else needs this?",
+      "teaser": "AI datacenter buildout, the $42B federal BEAD broadband program, military drone fiber, and continued telecom expansion are all competing for the same fixed pool of fiber output, with manufacturers actively cannibalizing telecom production for higher-margin datacenter products.",
+      "analysis": [
+        {
+          "type": "subhead",
+          "text": "Federal broadband (BEAD)"
+        },
+        {
+          "type": "prose",
+          "text": "The US Broadband Equity, Access and Deployment program represents a $42 billion federal initiative to extend high-speed internet to rural and underserved communities. After years of delays, BEAD is finally entering its deployment phase in 2026. States are projecting to deploy just under 500,000 miles of fiber."
+        },
+        {
+          "type": "prose",
+          "text": "The timing could not be worse for fiber availability. Because BEAD was delayed so long, the AI datacenter buildout leapfrogged it in the manufacturing queue. Only three US vendors manufacture BABA-compliant glass: Corning, OFS, and Prysmian — the same factories serving Meta, Microsoft, and Amazon. The fiber shortage directly threatens a flagship federal broadband program."
+        },
+        {
+          "type": "subhead",
+          "text": "Military drone systems"
+        },
+        {
+          "type": "prose",
+          "text": "An often-overlooked source of fiber demand: UAV and drone communication systems require G.657A bend-insensitive fiber — the exact same fiber type AI datacenters need. Annual drone fiber demand reached 50-60 million fiber-km in 2025, approximately 10% of total global production. This is defense-grade procurement with national security priority, competing directly with commercial hyperscaler orders."
+        },
+        {
+          "type": "subhead",
+          "text": "Capacity cannibalization"
+        },
+        {
+          "type": "prose",
+          "text": "Perhaps the most underappreciated dynamic: fiber manufacturers are actively shifting production from standard G.652D telecom fiber to higher-margin G.657A datacenter and drone fiber. This does not increase total output — it redirects it."
+        },
+        {
+          "type": "prose",
+          "text": "Traditional telecom operators are getting squeezed from both sides: paying higher prices and waiting longer. Hyperscalers spent $416 billion on infrastructure in 2025, while global telecom capex is expected to decline 2% in 2026 (Dell’Oro Group). In a supply-constrained market, whoever pays more gets served first."
+        }
+      ]
+    },
+    {
+      "id": "geopolitical",
+      "label": "Geopolitical risk",
+      "question": "How could it get worse?",
+      "teaser": "It gets worse if the November 2026 US-targeted Chinese germanium export ban suspension expires and is reimposed — western fiber manufacturers would lose access to ~120 t/yr of Chinese primary germanium that reaches them via third-country re-exports today.",
+      "analysis": [
+        {
+          "type": "prose",
+          "text": "In August 2023, MOFCOM placed export licensing requirements on six germanium products. Chinese exports dropped approximately 55%. In December 2024, China banned all germanium exports to the United States. Suspended until November 2026, but the global dual-use license requirement remains in full force."
+        },
+        {
+          "type": "prose",
+          "text": "Western germanium now trades at approximately $7,000/kg versus Chinese domestic ~$2,000/kg — a 3.5x premium. The export licensing regime has severed the arbitrage mechanism: you cannot freely move germanium out of China, so the price divergence persists indefinitely."
+        },
+        {
+          "type": "prose",
+          "text": "Stimson Center analysis reveals: US germanium imports from China dropped by ~5,900 kg while Belgian imports rose by ~6,150 kg. Germanium is being routed through Belgium — processed by Umicore, then sold onward at international prices. Umicore captures the arbitrage spread."
+        },
+        {
+          "type": "prose",
+          "text": "Prysmian renewed its Umicore supply agreement in 2025, accepting a significant premium for supply security — a rational response to the new reality."
+        },
+        {
+          "type": "callout",
+          "text": "The November 2026 deadline represents a binary risk event. A reimposition of the US export ban — or further tightening to restrict flows to Belgium — would send an immediate supply shock through an already constrained market. Even without a ban, the persistent uncertainty functions as a de facto tax on western buyers."
+        }
+      ]
+    },
+    {
+      "id": "response",
+      "label": "Supply response",
+      "question": "What’s being done?",
+      "teaser": "Three western supply responses are underway — STL/Gécamines DRC tailings feeding Umicore, 5N Plus pursuing fiber-grade GeCl₄ qualification, and Corning building the world’s largest cable plant — but none of them adds GeCl₄ conversion capacity outside Umicore, so the bottleneck concentrates further as feedstock expands.",
+      "analysis": [
+        {
+          "type": "item",
+          "name": "Umicore — EU Critical Raw Materials Act",
+          "desc": "Two EU-backed strategic projects: one focused on increasing germanium recovery yields, the other on new recycling technologies for complex waste. Meaningful process improvements — but optimization of an existing facility, not greenfield expansion. They improve Umicore’s position without breaking the single-source dependency."
+        },
+        {
+          "type": "item",
+          "name": "5N Plus (TSX: VNP) — St. George, Utah",
+          "desc": "Received $14.4 million from US DoD under the Defense Production Act. Separately evaluating a broader germanium refining facility, decision expected November 2026. If approved, adds ~15-20 tonnes/yr — meaningful against current western supply of ~26 tonnes. The single most binary catalyst for western germanium supply independence."
+        },
+        {
+          "type": "item",
+          "name": "DRC / Gécamines — Big Hill tailings (exclusive to Umicore)",
+          "desc": "STL operates the Big Hill site in Lubumbashi — 14 million tonnes of century-old slag. First germanium concentrate exports October 2024 under exclusive Umicore offtake. Target: 30% of global germanium demand at full scale (~66 tonnes/yr). The most important new primary source of non-Chinese germanium in decades — but critically, all material flows to Umicore for GeCl₄ conversion."
+        },
+        {
+          "type": "item",
+          "name": "Kazakhstan — Pavlodar",
+          "desc": "Targeting ~15 tonnes/yr germanium restart. Adds raw feedstock, not conversion capacity."
+        },
+        {
+          "type": "item",
+          "name": "PPM Pure Metals — Langelsheim, Germany",
+          "desc": "Acquired by China’s Vital Materials in December 2020. Now operates as Vital Pure Metal Solutions GmbH. Not independent western capacity — Chinese-owned and Chinese-controlled."
+        },
+        {
+          "type": "callout",
+          "text": "Every expansion project adds raw germanium feedstock. None add GeCl₄ conversion capacity outside of Umicore’s single facility in Belgium. The feedstock constraint eases gradually. The conversion bottleneck concentrates further. Umicore’s position strengthens with every tonne of new feedstock that has nowhere else to go."
+        }
+      ]
+    },
+    {
+      "id": "technology",
+      "label": "Technology",
+      "question": "What could change the game?",
+      "teaser": "Hollow-core fiber eliminates germanium entirely by guiding light through air rather than doped glass — Microsoft is already deploying it on Azure — but the technology arrives at scale around 2028-2030, well after the current supply crisis peaks, and even then displaces only a fraction of installed fiber.",
+      "analysis": [
+        {
+          "type": "subhead",
+          "text": "Hollow-core fiber (HCF)"
+        },
+        {
+          "type": "prose",
+          "text": "Hollow-core fiber represents the most fundamental potential disruption: it eliminates germanium from the manufacturing process entirely. Light travels through air enclosed within a microstructured cladding, approximately 30% faster than through glass. For latency-sensitive applications like HFT, AI training synchronization, and real-time inference, this performance advantage is significant."
+        },
+        {
+          "type": "prose",
+          "text": "Microsoft has deployed 1,280 km across Azure with zero field failures and 0.091 dB/km attenuation. Target: 15,000 km by late 2026. YOFC achieved world-record 0.040 dB/km in lab conditions and 91.2 km from a single preform draw."
+        },
+        {
+          "type": "prose",
+          "text": "However, total global HCF deployment by end of 2026 will be approximately 20,000 km — against billions of km installed and ~720 million fiber strand-km of annual production. HCF trades at ~1,000x the price of standard G.652D. It is a structural bear case for germanium demand on a 5-10 year horizon, not a near-term solution."
+        },
+        {
+          "type": "subhead",
+          "text": "PCVD deposition technology"
+        },
+        {
+          "type": "prose",
+          "text": "PCVD achieves over 95% GeCl₄ collection efficiency versus MCVD’s 40-60%, approximately doubling effective germanium utilization per fiber-km. Also manufactured by Rosendahl Nextrom (OFC 11 system) — the same company that controls the MCVD bottleneck."
+        },
+        {
+          "type": "prose",
+          "text": "However, MCVD remains the dominant installed base with hundreds of systems and 25+ year lifespans. Equipment replacement cycles are measured in decades. Widespread PCVD adoption would slow germanium demand growth — it would not eliminate the dependency or reverse the current supply deficit."
+        }
+      ]
+    }
+  ],
+  "risk": {
+    "easeSupply": [
+      {
+        "risk": "Preform capacity expansion arrives",
+        "assessment": "New lines ordered now won’t produce until 2028. Rosendahl Nextrom backlogs at 18-24 months. But when capacity does arrive, supply pressure eases."
+      },
+      {
+        "risk": "Germanium supply increases",
+        "assessment": "DRC ramp, 5N Plus facility, improved recovery — all add feedstock. But GeCl₄ conversion remains bottlenecked at Umicore."
+      },
+      {
+        "risk": "China lifts germanium export controls",
+        "assessment": "Would reduce input costs for western fiber manufacturers. But preform equipment and helium constraints remain independent bottlenecks."
+      },
+      {
+        "risk": "Helium supply stabilizes",
+        "assessment": "Qatar North Field and Namibia projects expected 2027-2028. Would remove one of three compounding constraints on draw tower throughput."
+      }
+    ],
+    "softenDemand": [
+      {
+        "risk": "BEAD program delayed further",
+        "assessment": "Reduces near-term demand for BABA-compliant fiber. But frees capacity for datacenter builds — net neutral for total fiber demand."
+      }
+    ],
+    "bottomLine": "<span style=\"color: #ece8e1; font-weight: 500\">Bottom line:</span> Three independent bottlenecks — preform equipment, GeCl₄ conversion, and helium — must all ease simultaneously for supply to normalize. None resolve before 2027."
+  },
+  "wtmi": {
+    "layers": [
+      {
+        "label": "PREFORM / CABLE MANUFACTURER",
+        "ideas": [
+          {
+            "id": "corning",
+            "name": "Corning",
+            "ticker": "GLW · NYSE",
+            "category": "Chokepoint holder",
+            "line1": "~40% of global fiber manufacturing capacity. Inventor of Contour cable for AI datacenter workloads."
+          },
+          {
+            "id": "prysmian",
+            "name": "Prysmian",
+            "ticker": "PRY · Borsa Italiana",
+            "category": "Capacity builder",
+            "line1": "Largest cable manufacturer globally. Vertically integrated from preform to installed cable."
+          },
+          {
+            "id": "fujikura",
+            "name": "Fujikura",
+            "ticker": "5803 · TSE",
+            "category": "Pure-play",
+            "line1": "Closest thing to a pure-play on AI-driven fiber demand. Over 50% of revenue from the US."
+          },
+          {
+            "id": "yofc",
+            "name": "YOFC",
+            "ticker": "6869 · HKEX",
+            "category": "Technology",
+            "line1": "China’s largest fiber manufacturer. World-record 0.040 dB/km hollow-core fiber in lab."
+          }
+        ]
+      },
+      {
+        "label": "EQUIPMENT (NON-TREE)",
+        "ideas": [
+          {
+            "id": "rosendahl-nextrom",
+            "name": "Rosendahl Nextrom",
+            "ticker": "Private · Knill Gruppe (Austria)",
+            "category": "Chokepoint holder",
+            "line1": "Near-monopoly on preform deposition equipment — MCVD, PCVD, OVD, VAD systems."
+          }
+        ]
+      },
+      {
+        "label": "SUBSTITUTION / TECHNOLOGY (NON-TREE)",
+        "ideas": [
+          {
+            "id": "hollow-core-fiber",
+            "name": "Hollow-core fiber ecosystem",
+            "ticker": "Thematic",
+            "category": "Technology",
+            "line1": "Eliminates germanium from fiber entirely. Light through air, not doped glass. 30% lower latency."
+          }
+        ]
+      },
+      {
+        "label": "PARALLEL CONSTRAINED INPUT (NON-TREE)",
+        "ideas": [
+          {
+            "id": "helium",
+            "name": "Helium",
+            "ticker": "Physical input",
+            "category": "Constrained input",
+            "line1": "Third independent bottleneck in fiber production. No substitute. Cannot be manufactured or recycled."
+          }
+        ]
+      }
+    ],
+    "briefs": {
+      "corning": {
+        "name": "Corning",
+        "ticker": "GLW · NYSE",
+        "category": "Manufacturing / Integration",
+        "metrics": [
+          {
+            "label": "Market cap",
+            "value": "$141B"
+          },
+          {
+            "label": "Revenue",
+            "value": "$16.4B"
+          },
+          {
+            "label": "EBITDA",
+            "value": "$3.7B"
+          },
+          {
+            "label": "Price",
+            "value": "$164"
+          },
+          {
+            "label": "12mo",
+            "value": "+311%"
+          }
+        ],
+        "sections": [
+          {
+            "label": "What is this and why does it matter here?",
+            "items": [
+              {
+                "text": "Corning invented low-loss optical fiber in 1970 and today controls approximately 40% of global fiber manufacturing capacity — the single largest share of any company. It is the dominant western producer of optical fiber, cable, and connectivity hardware, and the largest non-Chinese consumer of fiber-grade germanium tetrachloride. When Umicore ships GeCl₄ from Olen, a disproportionate share goes to Corning."
+              },
+              {
+                "text": "Corning is both the demand anchor and a chokepoint in the fiber supply chain. As a demand anchor, its purchasing decisions define the volume of GeCl₄ consumed in western fiber production. As a chokepoint, its decision in late 2025 to stop selling bare glass fiber to other cable manufacturers — reserving supply for its own anchor customers — directly constrained supply to the rest of the industry. When Corning rations output, the entire western fiber market tightens."
+              },
+              {
+                "text": "The company operates across five segments — Optical Communications, Display, Specialty Materials, Automotive, and Life Sciences — but Optical Communications is the growth engine and the reason the stock has quadrupled from its 2026 lows. The segment generated $6.3B in FY25 revenue, up 35% year-over-year, with net income surging 71% to $1B. Enterprise sales (datacenter connectivity) grew 61%. This is a company being reshaped by AI infrastructure demand in real time."
+              }
+            ]
+          },
+          {
+            "label": "How does value flow through this entity?",
+            "items": [
+              {
+                "text": "Corning’s fiber business is vertically integrated from preform to finished cable, but the value creation has shifted decisively toward high-density datacenter products. Three dynamics drive the economics:"
+              },
+              {
+                "title": "Product mix shift",
+                "text": "Corning is cannibalizing standard G.652D telecom fiber production to prioritize higher-margin G.657A datacenter fiber and its proprietary Contour cable — a high-density design that delivers better optical performance in roughly half the space with significantly reduced installation costs. AI datacenter racks require 36x more fiber than traditional CPU racks. Corning’s new products are designed specifically for this density, which gives them pricing power and market share gains against competitors using older designs."
+              },
+              {
+                "title": "Customer lockup",
+                "text": "The $6B multi-year supply agreement with Meta, announced in 2024, represents a structural shift in how fiber capacity gets allocated. Hyperscalers are now co-investing in manufacturing infrastructure, effectively reserving capacity years in advance. Corning is building the world’s largest optical cable manufacturing plant in Hickory, North Carolina, anchored by this deal. The company has stated it is “seeking to appropriately share the cost and risk of such expansions with customers“ — meaning customer prepayments and long-term commitments are funding the capex. This de-risks the expansion and locks in revenue."
+              },
+              {
+                "title": "Pricing power from structural shortage",
+                "text": "Fiber prices have climbed from a 2021 low of $3.70 per fiber-km to $6.30 — a 70% increase. Datacenter-grade fiber has surged even more, with G.657A jumping from 30 to 50+ yuan per fiber-km in China. Corning’s CEO has acknowledged being “quite tight“ on supply relative to demand. When the industry leader is sold out, everyone downstream pays more."
+              },
+              {
+                "text": "Corning’s Springboard plan — originally targeting $4B in incremental annualized sales and 20% operating margins by 2026 — was achieved a full year ahead of schedule. The company has now upgraded to an $11B incremental sales target by 2028, driven primarily by Optical Communications expansion."
+              }
+            ]
+          },
+          {
+            "label": "Key numbers",
+            "items": [
+              {
+                "title": "FY25 group",
+                "text": "$16.4B revenue (+13%), $2.52 core EPS (+29%), 20.2% operating margin (target achieved one year early), $1.72B free cash flow (nearly doubled from $880M in 2023). GAAP net income $1.59B vs $506M in 2024."
+              },
+              {
+                "title": "Optical Communications FY25",
+                "text": "$6.3B revenue (+35%), $1B net income (+71%), 18% net income margin. Q4 alone: $1.7B revenue (+24%), $305M net income (+57%). Enterprise sales (datacenter) grew 61% for the full year."
+              },
+              {
+                "title": "FY26 outlook",
+                "text": "Q1 guided at $4.2-4.3B revenue (~+15% YoY), EPS $0.66-0.70 (+26%). Capex increasing to ~$1.7B (from $1.3B in FY25), focused on optical capacity expansion. Springboard upgraded to $11B incremental annualized sales by 2028."
+              },
+              {
+                "title": "Valuation",
+                "text": "~$141B market cap, ~90x TTM P/E, ~53x forward P/E. Stock up ~310% over the past year. All-time high of $176.75 reached April 10, 2026. 11 analysts with Buy consensus, mean target ~$160."
+              },
+              {
+                "title": "Balance sheet",
+                "text": "$1.52B cash, $7.63B long-term debt (up from $6.88B due to solar expansion finance leases). $2.69B operating cash flow in FY25. Dividend $1.12/share (~0.7% yield). Share buybacks resumed after a decade."
+              }
+            ]
+          },
+          {
+            "label": "What to watch",
+            "items": [
+              {
+                "title": "Hickory mega-plant execution",
+                "text": "The North Carolina facility anchored by the Meta deal will be the world’s largest optical cable manufacturing plant. Construction timeline and ramp-up pace directly determine how much additional capacity enters the market. Delays extend the supply shortage; successful ramp eases it."
+              },
+              {
+                "title": "GeCl₄ supply as the binding constraint",
+                "text": "Corning can build cable plants, but it can only produce fiber if it has GeCl₄. Its dependency on Umicore for fiber-grade germanium tetrachloride is the single most important supply chain vulnerability. If Umicore’s Olen facility has a disruption, or if DRC feedstock ramp underperforms, Corning’s expansion plans hit a ceiling that no amount of capital can override. Watch for any announcements about alternative GeCl₄ sourcing or germanium supply agreements."
+              },
+              {
+                "title": "Valuation",
+                "text": "At ~90x TTM earnings and ~53x forward, Corning is priced for the AI infrastructure thesis to sustain. The stock has quadrupled in a year. JPMorgan recently downgraded to Neutral citing valuation. If datacenter capex cycles down — even temporarily — the multiple compresses fast. The Q1 2026 earnings report (April 28) will be closely watched for optical revenue trajectory."
+              },
+              {
+                "title": "Hollow-core fiber as a long-term disruption",
+                "text": "Corning’s entire fiber business depends on germanium-doped glass. Hollow-core fiber eliminates germanium entirely. Microsoft is deploying it on Azure. If HCF reaches commercial viability at scale within 5-10 years, Corning faces a technology transition that could render its core manufacturing base obsolete — or force it to acquire/develop HCF capability."
+              },
+              {
+                "title": "China revenue exposure",
+                "text": "Corning generates $1B+ annually from China. Escalating US-China tensions, export controls, or retaliatory measures could impact this revenue stream. Corning also has JV structures in China (with YOFC) that create IP transfer concerns."
+              }
+            ]
+          },
+          {
+            "label": "Investment angle",
+            "items": [
+              {
+                "text": "The thesis is largely priced in. At ~$141B market cap and ~90x TTM earnings, the stock has quadrupled in a year and reflects strong conviction in the AI fiber buildout. The question for new capital is not whether the demand story is real -- it demonstrably is -- but whether there is incremental demand the market has not yet modeled."
+              },
+              {
+                "text": "Three areas where the market may be underpricing: First, the BEAD program ($42B federal broadband) is entering deployment phase in 2026 and competes for the same BABA-compliant fiber that Corning, OFS, and Prysmian produce for datacenters. If BEAD demand layers on top of datacenter demand rather than substituting for it, total fiber pull-through could exceed current consensus. Second, military drone fiber demand (~50-60M km/yr of G.657A) is growing rapidly and is not well-modeled by sell-side analysts who focus on telecom and datacenter. Third, the Springboard upgrade to $11B incremental sales by 2028 implies a growth trajectory steeper than the stock’s current multiple suggests -- if management hits it."
+              },
+              {
+                "text": "The variant perception that would make Corning a sell: if datacenter capex cycles down even temporarily -- as it did in 2022-2023 -- the stock would compress violently from these levels. JPMorgan’s recent downgrade to Neutral on valuation grounds reflects this concern. Corning is a strong business at a full price. The entry point matters more than the thesis."
+              },
+              {
+                "text": "For investors already positioned, the key monitoring question is whether Corning’s GeCl4 supply from Umicore is sufficient to support the capacity expansion. If Corning announces an alternative GeCl4 source or a germanium supply agreement outside Umicore, that would be a significant de-risking event."
+              }
+            ]
+          }
+        ],
+        "disclaimer": "Stillpoint Intelligence · Fiber Optic Cable Chain · Layer: Manufacturing / Integration Sources: Corning FY25 earnings release (Jan 2026), SEC filings, CRU fiber market data, analyst coverage. Not investment advice."
+      },
+      "prysmian": {
+        "name": "Prysmian",
+        "ticker": "PRY · Borsa Italiana",
+        "category": "Manufacturing / Cable Systems",
+        "metrics": [
+          {
+            "label": "Market cap",
+            "value": "€28B"
+          },
+          {
+            "label": "Revenue",
+            "value": "€19.7B"
+          },
+          {
+            "label": "EBITDA",
+            "value": "€2.4B"
+          },
+          {
+            "label": "Price",
+            "value": "~€100"
+          },
+          {
+            "label": "12mo",
+            "value": "+57%"
+          }
+        ],
+        "sections": [
+          {
+            "label": "What is this and why does it matter here?",
+            "items": [
+              {
+                "text": "Prysmian is the world’s largest cable company — not just fiber, but energy cables, subsea power systems, and industrial wiring across 109 production sites worldwide. In the fiber optic supply chain, Prysmian holds approximately 15% of global fiber market share and is vertically integrated from preform manufacturing through finished cable installation. Where Corning dominates in the US and in fiber manufacturing, Prysmian dominates in cable systems — particularly subsea and high-voltage transmission."
+              },
+              {
+                "text": "For the fiber optic layer specifically, Prysmian matters for three reasons. First, it is the largest cable customer alongside Corning for GeCl₄ supply — Prysmian renewed its Umicore supply agreement in 2025, reportedly at a significant premium, accepting higher costs for supply security. Second, its Digital Solutions segment (optical cable and connectivity) is growing rapidly, with adjusted EBITDA nearly doubling in Q4 2025. Third, Prysmian is the lead investor in Relativity Networks, a hollow-core fiber startup — positioning it across both the conventional supply tightness and the next-generation substitution thesis simultaneously."
+              },
+              {
+                "text": "The company completed the acquisition of Encore Wire (US low-voltage building wire) and Channell (fiber connectivity accessories) in 2024-2025, accelerating its transformation from cable manufacturer to energy and digital solutions provider. It also sold its stake in YOFC (China’s largest fiber manufacturer) for a €346M gain — a notable portfolio decision that reduces Chinese exposure while generating cash."
+              }
+            ]
+          },
+          {
+            "label": "How does value flow through this entity?",
+            "items": [
+              {
+                "text": "Prysmian’s revenue is dominated by energy cables (Transmission, Power Grid, Electrification), not telecoms. Digital Solutions (which includes optical cable and connectivity) contributed approximately €1.6B in FY25 revenue and €244M in adjusted EBITDA — roughly 10% of group EBITDA. The fiber business is important but not dominant in Prysmian’s financial profile."
+              },
+              {
+                "text": "However, the fiber business is where the margin inflection is happening. Digital Solutions adjusted EBITDA nearly doubled in Q4 2025 to €75M (from €40M in Q4 2024), with the margin jumping to 18.3% from 13.2%. This reflects both pricing power from fiber supply tightness and the contribution from the Channell acquisition (fiber connectivity accessories — the higher-margin part of the cable value chain)."
+              },
+              {
+                "text": "The Transmission segment is Prysmian’s star performer and the reason the stock trades at a premium: €3.26B revenue (+28.7% organic), with the Q4 margin hitting 20.9%. The €17B transmission backlog provides multi-year visibility. Subsea cable demand is being driven by offshore wind interconnections and — increasingly — private subsea cable systems funded by AI hyperscalers (Google, Meta, Microsoft, Amazon) who are bypassing traditional telecom carriers to build their own intercontinental fiber routes."
+              },
+              {
+                "text": "Prysmian’s structural advantage is that it operates across both the copper and fiber supply chains for both energy and data transmission. As AI datacenters drive demand for both power cables (to feed the racks) and fiber cables (to connect them), Prysmian captures revenue on both sides. The Encore Wire acquisition extends this into US building wire, adding an estimated €10-12B addressable market."
+              }
+            ]
+          },
+          {
+            "label": "Key numbers",
+            "items": [
+              {
+                "title": "FY25",
+                "text": "€19.65B revenue (+5.4% organic), €2.40B adjusted EBITDA (+24%), 14.2% margin (up from 12.9%). Net income €1.27B (+74%, boosted by YOFC stake sale). Free cash flow €1.17B at 50% EBITDA conversion."
+              },
+              {
+                "title": "Digital Solutions FY25",
+                "text": "~€1.6B revenue, €244M EBITDA. Q4 margin reached 18.3% — nearly doubling profitability year-over-year. Organic growth +8.4% in Q4."
+              },
+              {
+                "title": "Transmission FY25",
+                "text": "€3.26B revenue (+28.7% organic), EBITDA margin reached 20.9% in Q4 — hitting 2028 targets three years early. Backlog at €17B."
+              },
+              {
+                "title": "FY26 guidance",
+                "text": "Adjusted EBITDA €2,625-2,775M (midpoint €2,700M, +13% YoY). Free cash flow €1,300-1,400M. Sustainability-linked revenues 47-49% of total."
+              },
+              {
+                "title": "2028 targets",
+                "text": "Adjusted EBITDA €2.95-3.15B, free cash flow €1.5-1.7B, EPS CAGR 15-19%."
+              },
+              {
+                "title": "Valuation",
+                "text": "~€28B market cap (~$31B), ~22x trailing earnings. Dividend €0.90 (+13%). Exploring potential US stock listing in 2026. EBITDA grew at 22.6% CAGR from 2021-2025."
+              }
+            ]
+          },
+          {
+            "label": "What to watch",
+            "items": [
+              {
+                "title": "US listing",
+                "text": "Prysmian has signaled interest in a US stock listing, potentially in 2026. A dual listing would improve liquidity, broaden the investor base, and likely trigger a re-rating as US institutions gain easier access. The Italian listing currently limits US institutional participation."
+              },
+              {
+                "title": "Digital Solutions margin trajectory",
+                "text": "The Q4 margin jump to 18.3% signals that fiber supply tightness and the Channell acquisition are flowing through to profitability. Whether this margin level sustains through 2026 — or was a one-quarter spike — determines how much the fiber business contributes to group earnings growth."
+              },
+              {
+                "title": "Relativity Networks and HCF positioning",
+                "text": "Prysmian is the lead investor in Relativity Networks, a hollow-core fiber startup that raised $10.7M. This gives Prysmian early access to HCF technology while its conventional fiber business benefits from current supply constraints. It’s a hedge — if HCF displaces germanium-doped fiber over the next decade, Prysmian wants to be on both sides of the transition."
+              },
+              {
+                "title": "Subsea cable demand from hyperscalers",
+                "text": "Private subsea cable systems funded by AI companies represent a structural shift in who pays for intercontinental fiber. Prysmian competes with SubCom and Alcatel Submarine Networks for these contracts. ~40 new submarine systems entering service in 2026 — the most active year in history."
+              },
+              {
+                "title": "GeCl₄ supply dependency",
+                "text": "Like Corning, Prysmian depends on Umicore for fiber-grade GeCl₄. The premium renewal of its Umicore supply agreement in 2025 confirms that Prysmian views germanium supply security as a strategic priority. Any disruption at Umicore’s Olen facility would constrain Prysmian’s fiber output alongside every other western manufacturer."
+              }
+            ]
+          },
+          {
+            "label": "Investment angle",
+            "items": [
+              {
+                "text": "Prysmian is the more diversified, less expensive way to play the same fiber thesis as Corning, with the added optionality of subsea cable demand and energy transmission. At ~28B market cap and ~22x trailing earnings, it trades at a meaningful discount to Corning’s ~90x -- reflecting its Italian listing, its energy cable exposure, and the market’s tendency to value it as a cable manufacturer rather than an infrastructure platform."
+              },
+              {
+                "text": "The most interesting angle is the potential US listing in 2026. If Prysmian dual-lists on NYSE, it gains access to US institutional capital that currently finds the Italian listing operationally difficult. This alone could trigger a re-rating as the investor base broadens. Watch for management commentary on listing timeline -- they have signaled interest but have not committed."
+              },
+              {
+                "text": "The Digital Solutions margin inflection (18.3% in Q4 vs 13.2% a year prior) is the fiber-specific catalyst. If this margin level sustains, the fiber business transitions from a steady contributor to a meaningful earnings driver. Combined with the Channell acquisition (connectivity accessories -- the high-margin end of fiber), Prysmian’s fiber profit pool is expanding faster than revenue."
+              },
+              {
+                "text": "The subsea exposure is the differentiated angle Corning does not offer. Private submarine cable systems funded by AI hyperscalers represent a structural demand shift. ~40 new systems entering service in 2026 alone. Prysmian competes for these contracts alongside SubCom and Alcatel SN. Each system is a multi-hundred-million-dollar project with years of revenue visibility."
+              },
+              {
+                "text": "The Relativity Networks investment (HCF startup, Prysmian as lead investor) provides technology optionality at minimal capital risk. If HCF takes off, Prysmian has a seat at the table. If it does not, the investment is immaterial. This is smart hedging -- profiting from conventional fiber tightness today while positioning for the substitution wave."
+              },
+              {
+                "text": "Risk: the energy cable segments (Transmission, Power Grid) dominate earnings and are driven by different fundamentals (offshore wind, grid expansion) than fiber. A downturn in European infrastructure spending could weigh on the stock even if the fiber business performs well. The fiber story is real but it is embedded in a larger industrial conglomerate."
+              }
+            ]
+          }
+        ],
+        "disclaimer": "Stillpoint Intelligence · Fiber Optic Cable Chain · Layer: Manufacturing / Cable Systems Sources: Prysmian FY25 results (Feb 2026), quarterly earnings calls, PitchBook, analyst coverage. Not investment advice."
+      },
+      "fujikura": {
+        "name": "Fujikura",
+        "ticker": "5803 · TSE",
+        "category": "Manufacturing / Pure-Play",
+        "metrics": [
+          {
+            "label": "Market cap",
+            "value": "¥9.3T"
+          },
+          {
+            "label": "Revenue",
+            "value": "¥979B"
+          },
+          {
+            "label": "EBITDA",
+            "value": "¥206B"
+          },
+          {
+            "label": "Price",
+            "value": "¥27,630"
+          },
+          {
+            "label": "12mo",
+            "value": "+155%"
+          }
+        ],
+        "sections": [
+          {
+            "label": "What is this and why does it matter here?",
+            "items": [
+              {
+                "text": "Fujikura is the closest thing to a pure-play on AI-driven fiber demand among listed equities. The Japanese industrial company — which developed the world’s first optical fiber in 1959 — generates over 50% of its revenue from the United States and exports approximately 75% of its optical fiber output. Its Information Technology segment (fiber, cables, optical components, network equipment) is the primary growth driver, with datacenter application sales projected to grow 1.6x year-over-year in FY26."
+              },
+              {
+                "text": "Fujikura matters in the fiber supply chain for a specific structural reason: it is entirely dependent on Umicore for its GeCl₄ supply. Japan has no domestic fiber-grade germanium tetrachloride production. When China’s export controls constricted germanium flow, Japanese fiber manufacturers like Fujikura had no fallback — their supply runs through Belgium. This makes Fujikura a direct expression of the Umicore chokepoint thesis. If Umicore allocates more GeCl₄ to Corning or Prysmian, Fujikura feels it first."
+              },
+              {
+                "text": "The company also owns AFL, a major US cable assembler based in Duncan, South Carolina, providing fully domestic BABA-compliant fiber cable for government-funded broadband and defense programs. This US subsidiary is increasingly important as the BEAD program enters deployment and defense fiber demand grows."
+              }
+            ]
+          },
+          {
+            "label": "How does value flow through this entity?",
+            "items": [
+              {
+                "text": "Fujikura operates across Information Technology (fiber optics), Electronics (PCBs, connectors), Automotive (wiring harnesses), and Energy (power cables). The AI fiber thesis lives in Information Technology, which has been the dominant growth driver behind the stock’s 155% surge in 2025."
+              },
+              {
+                "text": "The value chain runs from preform manufacturing through fiber draw and cable assembly — Fujikura is vertically integrated, though at smaller scale than Corning. Its competitive position comes from advanced connector and optical component technology (fusion splicers, high-density ferrules) that command premium pricing in datacenter builds. The company’s fusion splicers are considered industry standard for fiber installation."
+              },
+              {
+                "text": "Fujikura announced in March 2026 that it will triple optical fiber output for the US market to meet AI infrastructure demand. This capacity expansion, combined with AFL’s domestic manufacturing, positions Fujikura to capture a growing share of US datacenter and defense fiber spending — segments where BABA compliance and supply chain security matter as much as price."
+              },
+              {
+                "text": "The balance sheet is clean — Fujikura is debt-free with growing cash reserves. The dividend was raised 82% to ¥100 per share with a 30% payout ratio, leaving significant room for reinvestment in capacity expansion. A 6-for-1 stock split was announced in February 2026 to improve share accessibility."
+              }
+            ]
+          },
+          {
+            "label": "Key numbers",
+            "items": [
+              {
+                "title": "FY25 (ended March 2025)",
+                "text": "¥979B revenue (+22.5%). Over 50% of sales in the US. Market value reached ~$32B during 2025, among Japan’s largest tech-industrial firms."
+              },
+              {
+                "title": "FY26 forecast",
+                "text": "EPS expected to climb 40% to ¥469. Telecom systems sales for datacenter applications projected at 1.6x YoY. Infrastructure applications 1.1x. Dividend raised to ¥190/share."
+              },
+              {
+                "title": "Market cap",
+                "text": "~¥9.3T (~$62B at current rates). P/E ~38x. All-time high ¥5,644 reached April 10, 2026."
+              },
+              {
+                "title": "AFL subsidiary",
+                "text": "Major US cable assembler, fully domestic manufacturing, BABA-compliant. Serves utility, datacenter, and defense markets. Indirect exposure via Fujikura equity."
+              }
+            ]
+          },
+          {
+            "label": "What to watch",
+            "items": [
+              {
+                "title": "US capacity tripling",
+                "text": "The March 2026 announcement to triple optical fiber output for the US is the key execution milestone. This requires preform expansion, draw tower investment, and — critically — secured GeCl₄ supply from Umicore. If the supply isn’t available, the tripling doesn’t happen."
+              },
+              {
+                "title": "Umicore dependency",
+                "text": "Fujikura has no alternative GeCl₄ source. Any disruption at Olen, any reallocation of Umicore’s output toward larger customers (Corning), or any tightening of germanium supply affects Fujikura disproportionately. This is both the thesis and the risk — Fujikura benefits from AI fiber demand but is more exposed to supply constraints than vertically integrated competitors."
+              },
+              {
+                "title": "Yen exposure",
+                "text": "Over 50% of revenue is US-denominated but the stock trades in yen. Currency movements can amplify or dampen returns for international investors. The FY26 forecast assumes ¥145 to the dollar."
+              },
+              {
+                "title": "Valuation post-surge",
+                "text": "The stock has gone parabolic — up 155% in 2025 alone, reaching all-time highs. At 38x earnings, Fujikura is priced for continued hypergrowth in datacenter fiber. Any deceleration in US datacenter capex or a supply constraint that limits output would compress the multiple."
+              }
+            ]
+          },
+          {
+            "label": "Investment angle",
+            "items": [
+              {
+                "text": "Fujikura is the purest listed proxy for the AI fiber demand thesis. Over 50% of revenue from the US, 75% of optical fiber exported, debt-free, stock up 155% in 2025. If you believe the AI datacenter fiber buildout accelerates and want single-stock exposure, Fujikura is the most direct vehicle."
+              },
+              {
+                "text": "The variant perception: the market is pricing Fujikura’s growth but may be underpricing the GeCl4 supply risk. Fujikura is entirely dependent on Umicore -- Japan has no domestic fiber-grade GeCl4 production. If Umicore prioritizes larger customers (Corning) or faces a supply disruption, Fujikura’s output ceiling drops before anyone else’s. This dependency is both the thesis (Fujikura benefits from being plugged into the AI fiber demand chain) and the risk (it is the most exposed link in that chain). An investor who is long Fujikura should also be monitoring Umicore’s germanium throughput closely."
+              },
+              {
+                "text": "The March 2026 announcement to triple US optical fiber output is the execution catalyst. This requires secured GeCl4 supply, draw tower investment, and preform expansion. Watch quarterly production data and any commentary on raw material sourcing -- if Fujikura signals concern about germanium availability, it is a leading indicator for the broader fiber supply chain."
+              },
+              {
+                "text": "The AFL subsidiary provides a back-door US defense and BEAD exposure. AFL is fully domestic, BABA-compliant, and serves utility, datacenter, and defense markets from South Carolina. As the BEAD program deploys and defense drone fiber demand grows, AFL becomes a meaningful contributor that is currently underappreciated in Fujikura’s valuation."
+              },
+              {
+                "text": "Accessibility: TSE-listed in yen. A 6-for-1 stock split was announced in February 2026 to improve accessibility. Western investors can access via major brokerages that support Japanese equities, or via ADR equivalents if available. Currency risk is real -- over 50% of revenue is USD-denominated but the stock trades in yen."
+              }
+            ]
+          }
+        ],
+        "disclaimer": "Stillpoint Intelligence · Fiber Optic Cable Chain · Layer: Manufacturing / Pure-Play Sources: Fujikura FY25 results, TipRanks, DividendJapan, analyst coverage. Not investment advice."
+      },
+      "rosendahl-nextrom": {
+        "name": "Rosendahl Nextrom",
+        "ticker": "Private · Knill Gruppe, Austria",
+        "category": "Equipment / Chokepoint",
+        "metrics": [],
+        "sections": [
+          {
+            "label": "What is this and why does it matter here?",
+            "items": [
+              {
+                "text": "Rosendahl Nextrom manufactures virtually all of the preform deposition equipment used by every major fiber optic manufacturer in the world. Their MCVD, PCVD, OVD, and VAD systems are the machines that build fiber preforms — the glass rods from which optical fiber is drawn. Without Nextrom equipment, you cannot make preforms. Without preforms, you cannot make fiber."
+              },
+              {
+                "text": "This makes Rosendahl Nextrom the hidden chokepoint in the fiber supply chain. It is not the most valuable company, not the most visible, and certainly not investable — it is a private Austrian firm operating within the Knill Gruppe, an industrial group established in 1712. But it defines the capacity ceiling for the entire global fiber industry."
+              },
+              {
+                "text": "Every major fiber manufacturer — Corning, Prysmian, Fujikura, Sumitomo, YOFC, Shin-Etsu — uses Nextrom systems. When all of them attempt to expand simultaneously (as is happening now), they compete for delivery slots from the same single supplier. The result: 18-24 month backlogs for new deposition equipment. Capacity ordered today will not produce fiber until 2028 at the earliest."
+              }
+            ]
+          },
+          {
+            "label": "How does value flow through this entity?",
+            "items": [
+              {
+                "text": "Rosendahl Nextrom’s business model is equipment sales plus lifecycle services. They sell deposition systems (multi-million dollar capital equipment), draw tower systems, and associated tooling, then provide installation, calibration, maintenance, and spare parts over the 25+ year lifespan of each system. Hundreds of systems have been delivered since 1990."
+              },
+              {
+                "text": "The company also manufactures the OFC 11 PCVD system, which achieves over 95% GeCl₄ collection efficiency versus MCVD’s 40-60% — effectively doubling germanium utilization per fiber-km. This is significant for the germanium thesis: widespread PCVD adoption would slow germanium demand growth by making each tonne of germanium produce roughly twice as much fiber. However, MCVD remains the dominant installed base with hundreds of systems and 25+ year lifespans. Equipment replacement cycles are measured in decades, not years."
+              },
+              {
+                "text": "Rosendahl Nextrom also actively markets helium recovery systems to fiber producers — a product that exists specifically because the helium shortage has become severe enough to justify the capital cost of recapture equipment. This positions Nextrom as the supplier addressing two of the three independent bottlenecks in the fiber supply chain (preform equipment and helium recovery), while the third (GeCl₄ conversion) remains Umicore’s domain."
+              }
+            ]
+          },
+          {
+            "label": "Key numbers",
+            "items": [
+              {
+                "text": "The company does not disclose financials. What is known from industry sources:"
+              },
+              {
+                "text": "Delivery backlog: 18-24 months for new deposition systems. This is the single most important number for forecasting when global fiber supply can expand. Equipment installed base: hundreds of systems delivered since 1990 across all major fiber manufacturers worldwide. System lifespan: 25+ years, creating decades-long customer relationships. PCVD efficiency: 95%+ GeCl₄ collection vs 40-60% for MCVD — a 2x improvement in germanium utilization."
+              }
+            ]
+          },
+          {
+            "label": "What to watch",
+            "items": [
+              {
+                "title": "Backlog duration",
+                "text": "If Nextrom’s backlogs extend beyond 24 months, the fiber supply shortage persists longer. If they shorten, it signals that expansion capacity is arriving sooner. This is the best leading indicator for when the fiber supply-demand gap closes."
+              },
+              {
+                "title": "PCVD adoption rate",
+                "text": "If new preform lines are increasingly specified as PCVD rather than MCVD, it signals that the industry is prioritizing germanium efficiency — which would slow GeCl₄ demand growth and potentially ease the Umicore bottleneck. Watch for announcements from major manufacturers about which deposition technology they’re installing in new capacity."
+              },
+              {
+                "title": "Potential strategic transactions",
+                "text": "A private monopoly supplier to a booming industry with multi-year demand visibility is a natural acquisition target. If a fiber manufacturer (Corning, Prysmian) or a private equity firm acquires Nextrom, it could change the competitive dynamics of preform equipment supply."
+              },
+              {
+                "title": "Alternative equipment suppliers",
+                "text": "Any emergence of a credible second source for preform deposition equipment would be structurally significant — it would break the single-supplier bottleneck that currently constrains the entire industry. No credible alternative has emerged to date, but the extended backlogs create commercial incentive for one."
+              }
+            ]
+          },
+          {
+            "label": "Investment angle",
+            "items": [
+              {
+                "text": "Not directly investable. Rosendahl Nextrom is wholly owned by Knill Gruppe, a private Austrian industrial group established in 1712. Knill Gruppe is family-owned, headquartered in Pischelsdorf am Kulm, with ~800 employees across its portfolio (Rosendahl for cable equipment, Nextrom for fiber equipment, BM for battery equipment). There is no public equity, no bond offering, and no indication of IPO plans."
+              },
+              {
+                "text": "The indirect investment angle runs through the entities that benefit most from Nextrom’s bottleneck. Every fiber manufacturer whose expansion is constrained by Nextrom’s 18-24 month delivery backlog -- Corning, Prysmian, Fujikura, YOFC -- is experiencing pricing power and margin expansion precisely because supply cannot expand fast enough. Rosendahl Nextrom’s backlog duration is effectively a guarantee of fiber scarcity persistence. If you are long Corning or Prysmian, you are implicitly long the Nextrom bottleneck."
+              },
+              {
+                "text": "No credible competitor for preform deposition equipment exists. The company has delivered hundreds of MCVD and PCVD systems since 1990 -- the installed base itself creates switching costs and decades of service revenue. A new entrant would need to develop, qualify, and install equipment that meets the extreme precision requirements of fiber preform manufacturing -- a process that would take years even if the engineering were solved. The monopoly appears durable."
+              },
+              {
+                "text": "The acquisition question: a private monopoly supplier to a booming industry with multi-year visibility is a natural target. If Corning, Prysmian, or a private equity firm were to acquire Rosendahl Nextrom, it would change the competitive dynamics of the fiber industry fundamentally -- the acquirer would control the capacity expansion timeline for every competitor. This is speculative, but worth monitoring. Knill Gruppe recently acquired WINDAK Group (cable packaging equipment) in February 2026, suggesting the family is in expansion mode rather than exit mode -- but every family business has a price."
+              }
+            ]
+          }
+        ],
+        "disclaimer": "Stillpoint Intelligence · Fiber Optic Cable Chain · Layer: Equipment / Chokepoint Sources: CRU fiber market analysis, industry conference presentations, Rosendahl Nextrom product specifications. Not investment advice."
+      },
+      "yofc": {
+        "name": "YOFC",
+        "ticker": "6869 · HKEX",
+        "category": "Manufacturing (China)",
+        "metrics": [
+          {
+            "label": "Market cap",
+            "value": "HK$18B"
+          },
+          {
+            "label": "Revenue",
+            "value": "HK$17.7B"
+          },
+          {
+            "label": "EBITDA",
+            "value": "—"
+          },
+          {
+            "label": "Price",
+            "value": "~HK$23"
+          },
+          {
+            "label": "12mo",
+            "value": "+85%"
+          }
+        ],
+        "sections": [
+          {
+            "label": "What is this and why does it matter here?",
+            "items": [
+              {
+                "text": "Yangtze Optical Fibre and Cable (YOFC) is China’s largest and the world’s most prolific fiber optic manufacturer by preform capacity. With 3,500 tonnes/year of preform production, YOFC dwarfs any individual western manufacturer. The company supplies approximately 30% of China Mobile’s fiber needs and exports to over 100 countries, with international manufacturing plants in Mexico, Indonesia, South Africa, Brazil, and Poland."
+              },
+              {
+                "text": "YOFC matters in the fiber supply chain for the same reason Yunnan Chihong matters in the germanium chain — it’s the Chinese structural counterparty. The vast majority of global fiber is manufactured in China, with Chinese producers collectively controlling roughly 60% of output. YOFC is the largest of these producers. Its capacity decisions, pricing behavior, and technology development set the terms for global fiber supply."
+              },
+              {
+                "text": "What makes YOFC uniquely interesting beyond its scale is its technology positioning. YOFC achieved the world-record 0.040 dB/km attenuation for hollow-core fiber in laboratory conditions and drew 91.2 km from a single HCF preform — both representing the frontier of a technology that could eventually eliminate germanium from fiber manufacturing entirely. YOFC is simultaneously the world’s largest consumer of germanium-doped preform technology and the most advanced developer of the technology that replaces it."
+              },
+              {
+                "text": "The company also maintains JV structures with Corning and Shin-Etsu — creating direct links between Chinese manufacturing capacity and western fiber IP. Prysmian recently sold its YOFC stake for €346M, a notable de-risking of Chinese exposure."
+              }
+            ]
+          },
+          {
+            "label": "How does value flow through this entity?",
+            "items": [
+              {
+                "text": "YOFC benefits from China’s domestic germanium access — Chinese fiber manufacturers source GeCl₄ from Yunnan Chihong and other domestic producers at Chinese domestic pricing (~$2,000/kg equivalent), not the western premium ($7,000-8,500/kg). This cost advantage is structural as long as export controls persist. YOFC’s preform cost base is fundamentally lower than any western competitor."
+              },
+              {
+                "text": "The company is vertically integrated from preform through cable, serving China’s domestic telecom buildout (5G backhaul, FTTH) and exporting finished cable globally. Its international plants allow it to serve markets where Chinese-origin cable might face trade restrictions, though geopolitical risk is growing."
+              },
+              {
+                "text": "YOFC’s hollow-core fiber development is the most strategically significant technology program in the fiber optic industry. If HCF reaches commercial production scale at YOFC, it would give China’s largest fiber manufacturer a product that eliminates germanium dependency entirely — potentially leapfrogging the western supply chain constraint that benefits Umicore, Corning, and every other entity on this page. The 0.040 dB/km result is still laboratory-scale, and current HCF trades at approximately 1,000x the price of standard G.652D, but the trajectory is clear."
+              }
+            ]
+          },
+          {
+            "label": "Key numbers",
+            "items": [
+              {
+                "text": "Preform capacity: 3,500 tonnes/yr — world’s largest. Export to 100+ countries. International plants in 5 countries. China Mobile supply: ~30% of their fiber needs. HCF records: 0.040 dB/km attenuation (world record), 91.2 km from a single preform draw. Market cap: ~HK$18B."
+              }
+            ]
+          },
+          {
+            "label": "What to watch",
+            "items": [
+              {
+                "title": "HCF commercialization timeline",
+                "text": "YOFC’s hollow-core fiber development is the single most important technology watch for the entire fiber supply chain. If YOFC moves from lab-record results to commercial-scale production, it fundamentally changes the germanium demand outlook. Current price of ~1,000x standard fiber means commercial viability requires orders-of-magnitude cost reduction — but YOFC has the scale and the motivation (germanium cost advantage notwithstanding, eliminating a constrained input is strategically valuable)."
+              },
+              {
+                "title": "Geopolitical risk",
+                "text": "YOFC’s JVs with Corning and Shin-Etsu create IP transfer concerns that are increasingly scrutinized. If US-China tensions escalate further, these JV structures could be unwound or restricted, affecting both YOFC’s access to western technology and western manufacturers’ access to Chinese preform capacity."
+              },
+              {
+                "title": "Chinese export controls cutting both ways",
+                "text": "China’s germanium export controls hurt western manufacturers but benefit YOFC by keeping domestic GeCl₄ cheap. However, if China’s own fiber demand absorbs more domestic germanium production, even YOFC could face supply tightness — the controls might eventually constrain Chinese producers too."
+              },
+              {
+                "title": "Not investable for most western institutional buyers",
+                "text": "in the same way Yunnan Chihong isn’t — HKEX listing provides more accessibility than Shanghai A-shares, but Chinese state influence, regulatory risk, and geopolitical concerns limit institutional appetite. The value of tracking YOFC is understanding what the largest player in the market is doing, not building a position in it."
+              }
+            ]
+          },
+          {
+            "label": "Investment angle",
+            "items": [
+              {
+                "text": "YOFC trades on the Hong Kong Exchange (6869.HK), which provides more accessibility than mainland A-shares but still carries significant governance and geopolitical risk. Chinese state influence on YOFC’s operations, pricing, and technology transfer is a real concern for western institutional investors. The Corning and Shin-Etsu JV structures create IP exposure that is increasingly scrutinized by US and European regulators."
+              },
+              {
+                "text": "The monitoring value of YOFC exceeds its investment value for most western capital. Tracking YOFC’s capacity decisions, pricing behavior, preform technology, and -- most importantly -- its hollow-core fiber development provides essential intelligence for understanding the fiber supply chain. YOFC’s actions affect Corning’s competitive position, Umicore’s demand outlook, and the entire germanium thesis."
+              },
+              {
+                "text": "If an investor were to hold YOFC despite the geopolitical risk, the thesis would be: domestic Chinese germanium at $2,000/kg gives YOFC a structural cost advantage over every western competitor paying $7,000-8,500/kg. As long as export controls persist, YOFC benefits on the cost side while western competitors struggle with supply. The HCF world-record achievement (0.040 dB/km) adds technology optionality -- YOFC could leapfrog the germanium constraint entirely if it commercializes HCF first."
+              },
+              {
+                "text": "The bear case: Chinese fiber overcapacity has historically depressed global pricing. If China’s domestic fiber demand plateaus and YOFC seeks export growth, it could dump fiber into international markets (via its plants in Mexico, Indonesia, South Africa, Brazil, Poland) at prices western manufacturers cannot match. Trade defense measures (tariffs, anti-dumping duties) would be the western response, but the pricing pressure would be real."
+              },
+              {
+                "text": "Prysmian’s recent sale of its YOFC stake (346M gain) -- a de-risking decision by one of the world’s largest cable companies -- should inform any western investor’s assessment of YOFC’s risk-reward."
+              }
+            ]
+          }
+        ],
+        "disclaimer": "Stillpoint Intelligence · Fiber Optic Cable Chain · Layer: Manufacturing (China) Sources: YOFC corporate disclosures, CRU fiber market data, Prysmian YOFC stake sale disclosures, OFC conference presentations. Not investment advice."
+      },
+      "hollow-core-fiber": {
+        "name": "Hollow-Core Fiber Ecosystem",
+        "ticker": "Thematic",
+        "category": "Technology / Substitution",
+        "metrics": [],
+        "sections": [
+          {
+            "label": "What is this and why does it matter here?",
+            "items": [
+              {
+                "text": "Hollow-core fiber is the structural bear case for germanium demand in fiber optics. Instead of guiding light through a germanium-doped glass core, HCF transmits light through air enclosed within a microstructured glass cladding. This eliminates germanium from the manufacturing process entirely. Light travels approximately 30% faster through air than through glass, delivering a latency advantage that matters for AI training synchronization, high-frequency trading, and real-time inference."
+              },
+              {
+                "text": "Microsoft deployed HCF first at scale through its acquisition of Lumenisity (a University of Southampton spinout). Azure has deployed 1,280 km with zero field failures and 0.091 dB/km attenuation. Microsoft targets 15,000 km by late 2026. Relativity Networks, backed by Prysmian as lead investor, raised $10.7M and is developing HCF for commercial datacenter applications. YOFC achieved the world-record 0.040 dB/km in laboratory conditions and drew 91.2 km from a single preform — the longest single-preform draw for any HCF."
+              },
+              {
+                "text": "However, total global HCF deployment by end of 2026 will be approximately 20,000 km — against billions of kilometers of installed germanium-doped fiber and ~720 million fiber strand-km of annual conventional production. HCF currently trades at approximately 1,000x the price of standard G.652D fiber. It is a technology that arrives after the current supply crisis peaks, not one that resolves it."
+              }
+            ]
+          },
+          {
+            "label": "How does this affect the rest of the chain?",
+            "items": [
+              {
+                "text": "HCF’s impact on the germanium thesis depends entirely on timeline. On a 2-3 year horizon, HCF is irrelevant to the supply-demand balance — 20,000 km of deployment doesn’t move the needle against 720M km/yr of conventional production. The current fiber shortage, the germanium scarcity premium, and the Umicore chokepoint all persist regardless of HCF development."
+              },
+              {
+                "text": "On a 5-10 year horizon, HCF is the most important technology development in the fiber industry. If HCF reaches cost parity with conventional fiber and achieves commercial-scale production, it would eliminate 38% of global germanium demand (the fiber optics share). That is a bear case for Umicore’s GeCl₄ business, for germanium pricing, and for every entity whose value depends on germanium scarcity in fiber."
+              },
+              {
+                "text": "The transition dynamics matter. Even at cost parity, replacing billions of kilometers of installed germanium-doped fiber takes decades — the installed base has a 25+ year lifespan. New builds would shift to HCF first, while brownfield networks continue using conventional fiber. This creates a slow-then-fast adoption curve: negligible impact for 3-5 years, then accelerating displacement as new datacenter builds and subsea systems adopt HCF by default."
+              },
+              {
+                "text": "The entities positioned for this transition: Microsoft (deploying and validating), Prysmian (investing via Relativity Networks while profiting from conventional tightness), YOFC (developing the technology at world-record performance), and potentially Corning (which would need to acquire or develop HCF capability to avoid being disrupted by it)."
+              }
+            ]
+          },
+          {
+            "label": "What to watch",
+            "items": [
+              {
+                "title": "Microsoft Azure deployment milestones",
+                "text": "The 15,000 km target by late 2026 is the most important near-term validation. If Microsoft hits it with zero failures, it proves HCF is field-deployable at meaningful scale — not just a lab curiosity."
+              },
+              {
+                "title": "Cost trajectory",
+                "text": "HCF at 1,000x the price of conventional fiber is a specialty product. At 10x, it’s viable for premium applications (datacenter interconnects, HFT). At 2-3x, it starts displacing conventional fiber in new builds. At cost parity, it triggers industry-wide transition. Track the price-per-km announcements from Relativity Networks and YOFC."
+              },
+              {
+                "title": "Preform technology breakthroughs",
+                "text": "YOFC’s 91.2 km from a single preform draw is a manufacturing milestone — longer draws mean lower cost per km. Watch for further improvements in draw length and yield, which directly determine when HCF becomes cost-competitive."
+              },
+              {
+                "title": "Corning’s response",
+                "text": "Corning has not publicly announced an HCF program. If the world’s largest fiber manufacturer begins acquiring HCF technology or developing it internally, it signals that the timeline for disruption is shorter than the market assumes. Silence from Corning on HCF is either strategic patience or strategic denial."
+              }
+            ]
+          },
+          {
+            "label": "Investment angle",
+            "items": [
+              {
+                "text": "The investable vehicles for the HCF thesis are limited but identifiable:"
+              },
+              {
+                "title": "Prysmian (PRY)",
+                "text": "is the most accessible. As lead investor in Relativity Networks and the manufacturing partner (HCF production lines in Prysmian’s Netherlands plant), Prysmian captures HCF upside while profiting from conventional fiber scarcity today. This is the hedge-both-sides position."
+              },
+              {
+                "title": "Microsoft (MSFT)",
+                "text": "owns Lumenisity and is deploying HCF on Azure at scale. HCF is a rounding error in Microsoft’s $3T market cap, but it signals where the largest cloud platform sees fiber technology heading. Microsoft’s willingness to acquire a HCF manufacturer and deploy 15,000+ km validates the technology’s readiness."
+              },
+              {
+                "title": "Relativity Networks",
+                "text": "is private -- $10.7M raised across two rounds (pre-seed + seed), Prysmian as lead investor, GOVO Ventures participating. An unnamed hyperscaler (likely AWS based on reporting) “wants pretty much everything they can make.“ If Relativity Networks raises a Series A or announces a larger manufacturing partnership, it would signal HCF approaching commercial scale. Not investable directly unless you are in the venture ecosystem."
+              },
+              {
+                "title": "YOFC (6869.HK)",
+                "text": "holds the lab performance record (0.040 dB/km) and has the manufacturing scale to commercialize HCF if it reaches the right cost point. Chinese-listed with all the associated risks."
+              },
+              {
+                "title": "Lightera (formerly OFS, Furukawa Electric subsidiary)",
+                "text": "and **Hengtong Optic-Electric** are additional HCF developers but with less visibility into their programs."
+              },
+              {
+                "text": "The key question for the HCF thesis is not whether the technology works -- it does, Microsoft has proved that. The question is when it gets cheap enough to displace germanium-doped fiber at scale. At 1,000x the price of standard fiber, HCF is a specialty product for latency-sensitive datacenter interconnects and HFT. At 10x, it starts displacing new builds. At 2x, it triggers an industry transition. Track the price-per-km from Relativity Networks’ production partnership with Prysmian -- that number tells you the timeline."
+              }
+            ]
+          }
+        ],
+        "disclaimer": "Stillpoint Intelligence · Fiber Optic Cable Chain · Layer: Technology / Substitution Sources: Microsoft Azure deployment data, Relativity Networks, YOFC OFC conference presentations, Lumenisity acquisition disclosures. Not investment advice."
+      },
+      "helium": {
+        "name": "Helium",
+        "ticker": "Physical Input",
+        "category": "Raw Material / Constrained Input",
+        "metrics": [],
+        "sections": [
+          {
+            "label": "What is this and why does it matter here?",
+            "items": [
+              {
+                "text": "Helium is the third independent bottleneck in the fiber optic supply chain — alongside preform equipment (Rosendahl Nextrom) and GeCl₄ conversion (Umicore). Drawing fiber from a preform requires ultra-pure helium as a coolant: the glass strand exits the 2,000°C furnace at 10-20 meters per second and must be rapidly cooled to solidify. There is no commercially viable substitute for helium in this application. No other gas has the necessary combination of thermal conductivity, inertness, and low molecular weight."
+              },
+              {
+                "text": "Global helium supply has been disrupted by plant outages in Russia and the United States. The US Federal Helium Reserve — historically a strategic buffer — is nearing depletion. Spot prices soared to approximately $15 per cubic meter in 2025, and helium has experienced a roughly 135% price increase over two years. Fiber manufacturers are now competing with semiconductor fabs, medical MRI systems, space launch operations, and scientific research for the same constrained helium supply."
+              },
+              {
+                "text": "Helium supply is structurally unusual: it is recovered as a byproduct of natural gas extraction, primarily from fields with unusually high helium concentrations (0.1-7% by volume). It cannot be manufactured. It cannot be recycled in most applications (though fiber draw is an exception — see below). Once vented to the atmosphere, it is lost permanently — helium is light enough to escape Earth’s gravity over time."
+              }
+            ]
+          },
+          {
+            "label": "How does this affect the rest of the chain?",
+            "items": [
+              {
+                "text": "Helium’s impact on fiber production is real but less binding than the other two bottlenecks. A fiber manufacturer can run a draw tower with reduced helium flow (at the cost of slower draw speed and potentially lower fiber quality), but it cannot run without GeCl₄ or without a preform to draw. Helium is a rate-limiting input, not an absolute constraint — it slows production rather than stopping it."
+              },
+              {
+                "text": "However, helium supply disruption compounds the other bottlenecks. If a manufacturer has preforms and GeCl₄ but limited helium, draw speeds drop, throughput declines, and the effective capacity of the existing equipment base shrinks. In a market where every fiber manufacturer is already running at full utilization, even a 5-10% throughput reduction translates to millions of fiber-km of lost output."
+              },
+              {
+                "text": "Rosendahl Nextrom now actively markets helium recovery systems to fiber producers — equipment that recaptures helium from the draw tower exhaust and recirculates it. This is a capital investment ($500K-2M per system) that only makes economic sense when helium prices are high enough to justify the payback. The fact that Nextrom now sells this as a standard product — rather than a specialty option — indicates that the shortage is severe enough to change the economics of fiber production permanently."
+              }
+            ]
+          },
+          {
+            "label": "What to watch",
+            "items": [
+              {
+                "title": "Qatar North Field expansion",
+                "text": "Qatar is the world’s largest helium exporter. The North Field expansion project is expected to add significant helium supply by 2027-2028. If it delivers on schedule, helium supply eases and this bottleneck loosens."
+              },
+              {
+                "title": "Namibia helium projects",
+                "text": "Several exploration-stage helium projects in Namibia could add meaningful new supply. These are greenfield developments with uncertain timelines but represent the most significant new non-Qatar, non-US helium sources."
+              },
+              {
+                "title": "US Federal Helium Reserve depletion",
+                "text": "The reserve’s progressive drawdown removes a buffer that historically stabilized helium markets during supply disruptions. Once depleted, the market becomes more volatile — supply disruptions at any major production facility will have larger price impacts."
+              },
+              {
+                "title": "Helium recovery adoption rate",
+                "text": "If most fiber manufacturers install helium recovery systems, it reduces net helium consumption per fiber-km — easing the constraint without requiring new helium supply. This is a technology response to a supply problem, similar to how PCVD preform technology reduces germanium consumption."
+              },
+              {
+                "title": "Not directly investable",
+                "text": "in a meaningful way for most investors. Helium doesn’t have a futures market. The major producers — ExxonMobil, Qatar Energy, Linde, Air Liquide, Air Products — are massive diversified companies where helium is a minor revenue line. The value of tracking helium is understanding whether this bottleneck is loosening or tightening, because it directly affects the throughput of every fiber manufacturer on this page."
+              }
+            ]
+          },
+          {
+            "label": "Investment angle",
+            "items": [
+              {
+                "text": "Not directly investable as a commodity -- no futures market, no ETF, no exchange. The major producers are ExxonMobil, Qatar Energy, Linde (LIN), Air Liquide (AI.PA), and Air Products (APD). For all of these, helium is a minor revenue line embedded in massive diversified gas and energy businesses. Buying Linde to get helium exposure is like buying Teck to get germanium exposure -- the thesis exists but it is diluted beyond recognition."
+              },
+              {
+                "text": "The more interesting investment angle is indirect: helium scarcity improves the competitive position of fiber manufacturers who have secured helium supply or installed recovery systems. If helium constrains draw tower throughput across the industry, manufacturers with recovery capability run at higher utilization -- producing more fiber from the same preform input. This is a subtle but real competitive advantage."
+              },
+              {
+                "text": "Rosendahl Nextrom’s helium recovery systems are the technology response. Fiber manufacturers who invested in recovery equipment ($500K-2M per system) are better positioned than those who did not. This is worth tracking in manufacturer capex disclosures, though the level of detail is rarely public."
+              },
+              {
+                "text": "The supply resolution timeline centers on Qatar’s North Field expansion (2027-2028) and Namibia greenfield projects. If Qatar delivers, helium supply eases meaningfully -- Qatar is already the world’s largest exporter. If the projects are delayed, helium remains a compounding bottleneck on fiber production through the end of the decade."
+              },
+              {
+                "text": "For the fiber supply chain thesis, helium is the least investable but most underappreciated of the three bottlenecks. Most fiber analysts focus on preform equipment and germanium. Helium rarely appears in sell-side models. That analytical gap creates potential informational advantage for investors tracking the full supply chain -- which is precisely the value Stillpoint Intelligence provides."
+              }
+            ]
+          }
+        ],
+        "disclaimer": "Stillpoint Intelligence · Fiber Optic Cable Chain · Layer: Raw Material / Constrained Input Sources: CRU helium market data, USGS Mineral Commodity Summaries, Rosendahl Nextrom product specifications, industry conference presentations. Not investment advice."
+      }
+    }
+  },
+  "catalysts": {
+    "nearTerm": [
+      {
+        "date": "April 28, 2026",
+        "desc": "Corning Q1 2026 earnings (Optical Communications segment trajectory; Hickory plant ramp commentary)"
+      },
+      {
+        "date": "April-May 2026",
+        "desc": "Prysmian Q1 2026 earnings (preform supply contracts, BEAD pipeline visibility)"
+      },
+      {
+        "date": "May 2026",
+        "desc": "Fujikura Q4 FY26 earnings (US manufacturing capacity expansion update, AFL subsidiary defense backlog)"
+      },
+      {
+        "date": "June 2026",
+        "desc": "5N Plus fiber-grade GeCl₄ commercial qualification update (status of pursuit of second western GeCl₄ supplier role)"
+      },
+      {
+        "date": "July-August 2026",
+        "desc": "YOFC interim results (Chinese fiber capacity utilization, hollow-core fiber commercial milestones)"
+      },
+      {
+        "date": "August 2026",
+        "desc": "Three-year anniversary of MOFCOM germanium export licensing (Aug 2023); possible policy review affecting GeCl₄ supply"
+      }
+    ],
+    "mediumTerm": [
+      {
+        "date": "November 27, 2026",
+        "desc": "US-targeted Chinese export ban suspension expiry (binary catalyst — reimposition would tighten western GeCl₄ supply for fiber manufacturers)"
+      },
+      {
+        "date": "Q1 2027",
+        "desc": "Hickory mega-plant first production (Corning’s Meta-anchored facility — North Carolina)"
+      },
+      {
+        "date": "Q1 2027",
+        "desc": "STL/Gécamines DRC tailings full-rate germanium production under Umicore offtake (relieves Umicore feedstock constraint, indirectly relieves fiber chain)"
+      },
+      {
+        "date": "Q2 2027",
+        "desc": "Microsoft Azure hollow-core fiber commercial deployment expansion (validation of HCF for production AI workloads)"
+      },
+      {
+        "date": "Q3 2027",
+        "desc": "BEAD broadband deployment ramp (state-level fiber procurement begins at scale)"
+      }
+    ],
+    "longTerm": [
+      {
+        "date": "2028",
+        "desc": "Hollow-core fiber share of new fiber deployments expected to reach 5-10% per IOWN Forum roadmap"
+      },
+      {
+        "date": "2028-2029",
+        "desc": "US Defense Production Act Title III investments in domestic fiber and germanium capacity expected to deploy"
+      },
+      {
+        "date": "2028",
+        "desc": "Corning Springboard plan target: $11B incremental annualized sales (testable trajectory for AI fiber thesis)"
+      },
+      {
+        "date": "2029-2030",
+        "desc": "Multicore fiber commercial transition (potential further reduction in per-strand fiber-km demand if multicore takes share)"
+      },
+      {
+        "date": "2030+",
+        "desc": "Hollow-core fiber commercialization at scale could begin meaningfully displacing germanium-doped fiber in datacenter applications"
+      }
+    ]
+  },
+  "connectedInputs": {
+    "upstream": [
+      {
+        "name": "Germanium",
+        "linked": true,
+        "href": "/input/germanium"
+      },
+      {
+        "name": "Silicon tetrachloride",
+        "linked": false,
+        "href": ""
+      },
+      {
+        "name": "Helium",
+        "linked": false,
+        "href": ""
+      }
+    ],
+    "downstream": [
+      {
+        "name": "AI datacenters",
+        "linked": false,
+        "href": ""
+      },
+      {
+        "name": "Telecom",
+        "linked": false,
+        "href": ""
+      },
+      {
+        "name": "Subsea cables",
+        "linked": false,
+        "href": ""
+      },
+      {
+        "name": "Military / UAV",
+        "linked": false,
+        "href": ""
+      },
+      {
+        "name": "BEAD broadband",
+        "linked": false,
+        "href": ""
+      }
+    ]
+  }
+}

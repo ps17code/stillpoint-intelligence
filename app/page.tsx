@@ -278,9 +278,10 @@ export default function HomePage() {
   const [viewMode,      setViewMode]      = useState<"map" | "anatomy" | "tree">(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
-      if (params.get("view") === "tree") return "tree";
+      if (params.get("view") === "map") return "map";
+      if (params.get("view") === "anatomy") return "anatomy";
     }
-    return "map";
+    return "tree";
   });
   const [panelLayer,    setPanelLayer]    = useState("Raw materials");
   const [panelItem,     setPanelItem]     = useState<string | null>(null);
