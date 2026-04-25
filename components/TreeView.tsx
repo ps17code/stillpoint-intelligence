@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import HorizontalTree from "@/components/HorizontalTree";
 import {
   computeCompSvgWidth,
@@ -929,6 +929,201 @@ function SpineDashedLine() {
 /*  TreeView -- main exported component        */
 /* ═══════════════════════════════════════════ */
 
+/* ── AI Infrastructure Overview Tree ── */
+function AIOverviewTree({ onNodeClick }: { onNodeClick: (id: string, type: "raw-material" | "component" | "subsystem" | "end-use") => void }) {
+  // Build a simple TreeGeometry for the overview
+  const geo = useMemo(() => {
+    const rawMaterials = [
+      "Germanium", "Gallium", "Cobalt", "Lithium", "Copper",
+      "Silicon", "Rare Earths", "Helium", "Nickel", "Tin",
+    ];
+    const components = [
+      "Fiber optic cable", "Optical transceivers", "Network switches",
+      "GPUs", "HBM memory", "Server boards",
+      "Power transformers",
+    ];
+    const subsystems = ["Connectivity", "Compute", "Power", "Cooling"];
+    const endUse = ["AI Datacenter"];
+
+    const ancX = 500;
+    const gap = 170;
+    const SLOT = 128;
+
+    const spread = (count: number) => {
+      if (count === 1) return [ancX];
+      const total = count * SLOT;
+      const start = ancX - total / 2 + SLOT / 2;
+      return Array.from({ length: count }, (_, i) => start + i * SLOT);
+    };
+
+    const rmXs = spread(rawMaterials.length);
+    const compXs = spread(components.length);
+    const subXs = spread(subsystems.length);
+    const euXs = spread(endUse.length);
+
+    const rmCY = 80;
+    const compCY = rmCY + gap;
+    const subCY = compCY + gap;
+    const euCY = subCY + gap;
+
+    // Edge mappings: raw materials → components
+    const rmToComp: [number, number][] = [
+      [0, 0], // Germanium → Fiber
+      [1, 1], // Gallium → Optical transceivers
+      [4, 3], // Copper → GPUs
+      [4, 4], // Copper → HBM
+      [4, 5], // Copper → Server boards
+      [4, 6], // Copper → Power transformers
+      [5, 3], // Silicon → GPUs
+      [5, 4], // Silicon → HBM
+      [7, 0], // Helium → Fiber
+      [8, 5], // Nickel → Server boards
+      [9, 5], // Tin → Server boards
+      [6, 3], // Rare Earths → GPUs
+      [3, 4], // Lithium → HBM (batteries/backup)
+    ];
+
+    // Components → Subsystems
+    const compToSub: [number, number][] = [
+      [0, 0], // Fiber → Connectivity
+      [1, 0], // Transceivers → Connectivity
+      [2, 0], // Switches → Connectivity
+      [3, 1], // GPUs → Compute
+      [4, 1], // HBM → Compute
+      [5, 1], // Server boards → Compute
+      [6, 2], // Transformers → Power
+    ];
+
+    // Subsystems → End Use
+    const subToEU: [number, number][] = [
+      [0, 0], // Connectivity → AI Datacenter
+      [1, 0], // Compute → AI Datacenter
+      [2, 0], // Power → AI Datacenter
+      [3, 0], // Cooling → AI Datacenter
+    ];
+
+    const EDGE_Y1 = 79;
+    const EDGE_Y2 = 7;
+    const edgeColor = "rgba(255,255,255,0.18)";
+
+    const layers = [
+      {
+        key: "rawMaterials", label: "RAW MATERIALS", cy: rmCY,
+        nodes: rawMaterials.map((n, i) => ({ name: n, cx: rmXs[i], cy: rmCY, opacity: 1 })),
+        color: { stroke: "#c8a85a", text: "#8a6820", pip: "#c8a85a" },
+      },
+      {
+        key: "components", label: "COMPONENTS", cy: compCY,
+        nodes: components.map((n, i) => ({ name: n, cx: compXs[i], cy: compCY, opacity: 1 })),
+        color: { stroke: "#4d9ab8", text: "#1e3d52", pip: "#4d9ab8" },
+      },
+      {
+        key: "subsystems", label: "SUBSYSTEMS", cy: subCY,
+        nodes: subsystems.map((n, i) => ({ name: n, cx: subXs[i], cy: subCY, opacity: 1 })),
+        color: { stroke: "#5a4a6a", text: "#2e1e40", pip: "#5a4a6a" },
+      },
+      {
+        key: "enduse", label: "END USE", cy: euCY,
+        nodes: endUse.map((n, i) => ({ name: n, cx: euXs[i], cy: euCY, opacity: 1 })),
+        color: { stroke: "#c8a85a", text: "#7a6020", pip: "#c8a85a" },
+      },
+    ];
+
+    const edges = [
+      ...rmToComp.map(([fi, ti]) => ({
+        x1: rmXs[fi], y1: rmCY + EDGE_Y1, x2: compXs[ti], y2: compCY - EDGE_Y2,
+        color: edgeColor, fromLayer: 0,
+      })),
+      ...compToSub.map(([fi, ti]) => ({
+        x1: compXs[fi], y1: compCY + EDGE_Y1, x2: subXs[ti], y2: subCY - EDGE_Y2,
+        color: edgeColor, fromLayer: 1,
+      })),
+      ...subToEU.map(([fi, ti]) => ({
+        x1: subXs[fi], y1: subCY + EDGE_Y1, x2: euXs[ti], y2: euCY - EDGE_Y2,
+        color: edgeColor, fromLayer: 2,
+      })),
+    ];
+
+    return { layers, edges, outputNode: { name: endUse[0], cx: euXs[0], cy: euCY } };
+  }, []);
+
+  // Build a simple node data map for display
+  const overviewNodes = useMemo<Record<string, NodeData>>(() => {
+    const nodeMap: Record<string, NodeData> = {};
+    const items: [string, string, string][] = [
+      // [name, status/pill, type]
+      ["Germanium", "Constrained", "Raw Material"],
+      ["Gallium", "Constrained", "Raw Material"],
+      ["Cobalt", "Tightening", "Raw Material"],
+      ["Lithium", "Oversupplied", "Raw Material"],
+      ["Copper", "Tightening", "Raw Material"],
+      ["Silicon", "Available", "Raw Material"],
+      ["Rare Earths", "Constrained", "Raw Material"],
+      ["Helium", "Constrained", "Raw Material"],
+      ["Nickel", "Tightening", "Raw Material"],
+      ["Tin", "Available", "Raw Material"],
+      ["Fiber optic cable", "Constrained", "Component"],
+      ["Optical transceivers", "Constrained", "Component"],
+      ["Network switches", "Available", "Component"],
+      ["GPUs", "Constrained", "Component"],
+      ["HBM memory", "Constrained", "Component"],
+      ["Server boards", "Tightening", "Component"],
+      ["Power transformers", "Constrained", "Component"],
+      ["Connectivity", "Constrained", "Subsystem"],
+      ["Compute", "Constrained", "Subsystem"],
+      ["Power", "Constrained", "Subsystem"],
+      ["Cooling", "Tightening", "Subsystem"],
+      ["AI Datacenter", "", "End Use"],
+    ];
+    for (const [name, status, type] of items) {
+      nodeMap[name] = {
+        type, loc: "", stat: status, risk: "", stats: [], role: "", inv: "", risks: [],
+        country: "", descriptor_pill: status, quantity_pill: "",
+      } as unknown as NodeData;
+    }
+    return nodeMap;
+  }, []);
+
+  // Simple layer config showing status as the pill
+  const overviewLc = useMemo(() => ({
+    rawmaterials: { displayFields: [{ key: "descriptor_pill", label: "Status" }] },
+    components: { displayFields: [{ key: "descriptor_pill", label: "Status" }] },
+    subsystems: { displayFields: [{ key: "descriptor_pill", label: "Status" }] },
+    enduse: { displayFields: [] },
+  }), []);
+
+  // Map node names to click types
+  const handleClick = useCallback((name: string) => {
+    const rmIds: Record<string, string> = {
+      "Germanium": "germanium", "Gallium": "gallium", "Cobalt": "cobalt",
+      "Lithium": "lithium", "Copper": "copper", "Silicon": "silicon",
+      "Rare Earths": "rare-earths", "Helium": "helium", "Nickel": "nickel", "Tin": "tin",
+    };
+    const compIds: Record<string, string> = {
+      "Fiber optic cable": "fiber", "Optical transceivers": "transceivers",
+      "Network switches": "switches", "GPUs": "gpu", "HBM memory": "hbm",
+      "Server boards": "servers", "Power transformers": "transformers",
+    };
+    const subIds: Record<string, string> = {
+      "Connectivity": "connectivity", "Compute": "compute", "Power": "power", "Cooling": "cooling",
+    };
+
+    if (rmIds[name]) onNodeClick(rmIds[name], "raw-material");
+    else if (compIds[name]) onNodeClick(compIds[name], "component");
+    else if (subIds[name]) onNodeClick(subIds[name], "subsystem");
+    else onNodeClick(name.toLowerCase(), "end-use");
+  }, [onNodeClick]);
+
+  return (
+    <HorizontalTree
+      geometry={geo}
+      nodes={overviewNodes}
+      layerConfig={overviewLc}
+      onNodeClick={handleClick}
+    />
+  );
+}
+
 export default function TreeView() {
   /* ── unified path state ── */
   const [path, setPath] = useState<PathEntry[]>(() => {
@@ -1402,6 +1597,24 @@ export default function TreeView() {
         );
       }
 
+      /* AI Infrastructure — render full horizontal overview tree */
+      if (currentVertical?.id === "ai") {
+        return <AIOverviewTree onNodeClick={(id, type) => {
+          if (type === "raw-material") {
+            pushPath({ type: "raw-material", id, name: id.charAt(0).toUpperCase() + id.slice(1) });
+          } else if (type === "component") {
+            const sub = AI_SUBSYSTEMS.flatMap(s => s.components).find(c => c.id === id);
+            if (sub) {
+              const parent = AI_SUBSYSTEMS.find(s => s.components.some(c => c.id === id));
+              if (parent) pushPath({ type: "subsystem", id: parent.id, name: parent.name });
+              pushPath({ type: "component", id, name: sub.name });
+            }
+          } else if (type === "subsystem") {
+            pushPath({ type: "subsystem", id, name: AI_SUBSYSTEMS.find(s => s.id === id)?.name ?? id });
+          }
+        }} />;
+      }
+
       const nodes = getSubsystems().map(s => ({
         id: s.id,
         name: s.name,
@@ -1617,13 +1830,13 @@ export default function TreeView() {
             ))}
 
             {/* Container */}
-            <div style={currentLevel === "tree" ? { width: "90vw", maxWidth: 1400, padding: "0 32px" } : {}}>
+            <div style={(currentLevel === "tree" || (currentLevel === "subsystems" && currentVertical?.id === "ai")) ? { width: "90vw", maxWidth: 1600, padding: "0 32px" } : {}}>
               <div
                 key={animKey}
                 style={{
                   background: "#1a1816",
                   borderRadius: 10,
-                  padding: currentLevel === "tree" ? "32px 20px 40px" : "0 20px",
+                  padding: (currentLevel === "tree" || (currentLevel === "subsystems" && currentVertical?.id === "ai")) ? "32px 20px 40px" : "0 20px",
                   animation: "containerOpen 350ms ease-out forwards",
                   position: "relative",
                   overflow: "hidden",

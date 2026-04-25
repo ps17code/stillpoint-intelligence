@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import type { TreeGeometry } from "@/lib/treeGeometry";
 import type { NodeData } from "@/types";
 
@@ -119,8 +119,27 @@ export default function HorizontalTree({
 }: HorizontalTreeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
-  const [lines, setLines] = useState<{ d: string; color: string }[]>([]);
+  const [lines, setLines] = useState<{ d: string; color: string; fromName: string; toName: string }[]>([]);
   const [svgSize, setSvgSize] = useState({ w: 0, h: 0 });
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+
+  /* Build adjacency set for hover highlighting */
+  const connectedNodes = useMemo(() => {
+    const map = new Map<string, Set<string>>();
+    for (const edge of geometry.edges) {
+      const fromLayer = geometry.layers[edge.fromLayer];
+      const toLayer = geometry.layers[edge.fromLayer + 1];
+      if (!fromLayer || !toLayer) continue;
+      const fromNode = fromLayer.nodes.find(n => Math.abs(n.cx - edge.x1) < 1);
+      const toNode = toLayer.nodes.find(n => Math.abs(n.cx - edge.x2) < 1);
+      if (!fromNode || !toNode) continue;
+      if (!map.has(fromNode.name)) map.set(fromNode.name, new Set());
+      if (!map.has(toNode.name)) map.set(toNode.name, new Set());
+      map.get(fromNode.name)!.add(toNode.name);
+      map.get(toNode.name)!.add(fromNode.name);
+    }
+    return map;
+  }, [geometry]);
 
   /* Build a lookup: for each edge, we need source node name -> target node name.
      Edges reference layer indices and node indices via x-coords.
@@ -140,7 +159,7 @@ export default function HorizontalTree({
     // Small delay to let the DOM settle after render
     const raf = requestAnimationFrame(() => {
       const containerRect = container.getBoundingClientRect();
-      const newLines: { d: string; color: string }[] = [];
+      const newLines: { d: string; color: string; fromName: string; toName: string }[] = [];
 
       // Build a reverse lookup: for each layer, map cx -> node index
       for (const edge of geometry.edges) {
@@ -174,6 +193,8 @@ export default function HorizontalTree({
         newLines.push({
           d: `M ${fromX},${fromY} C ${midX},${fromY} ${midX},${toY} ${toX},${toY}`,
           color: edge.color,
+          fromName: fromNode.name,
+          toName: toNode.name,
         });
       }
 
@@ -204,6 +225,8 @@ export default function HorizontalTree({
             newLines.push({
               d: `M ${fromX},${fromY} C ${midX},${fromY} ${midX},${toY} ${toX},${toY}`,
               color: lastLayer.color.stroke,
+              fromName: node.name,
+              toName: geometry.outputNode.name,
             });
           }
         }
