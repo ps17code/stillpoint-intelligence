@@ -659,7 +659,7 @@ function FullscreenOverlay({
 }
 
 /* ── Tree header ── */
-function TreeHeader({ title, href, description, accent, keyTakeaways }: { title: string; href: string; description: string; accent?: string; keyTakeaways?: string[] }) {
+function TreeHeader({ title, href, description, accent }: { title: string; href: string; description: string; accent?: string }) {
   const accentColor = accent ?? "#706a60";
   return (
     <div style={{ marginBottom: 24 }}>
@@ -676,22 +676,9 @@ function TreeHeader({ title, href, description, accent, keyTakeaways }: { title:
           onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
         >Full analysis &rarr;</a>
       </div>
-      <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: 0, marginBottom: keyTakeaways ? 20 : 44, maxWidth: "80%" }}>
+      <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: 0, marginBottom: 20, maxWidth: "80%" }}>
         {description}
       </p>
-      {keyTakeaways && keyTakeaways.length > 0 && (
-        <div style={{ background: "#1a1816", border: `1px solid ${borderColor}`, borderRadius: 10, padding: "24px 28px", marginBottom: 20 }}>
-          <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: dimText, margin: "0 0 10px 0" }}>KEY TAKEAWAYS</p>
-          <div style={{ display: "flex", flexDirection: "column" as const, gap: 0 }}>
-            {keyTakeaways.map((text, i) => (
-              <div key={i} style={{ display: "flex", gap: 8, marginBottom: 4 }}>
-                <span style={{ fontSize: 12.5, color: "#706a60", flexShrink: 0, minWidth: 16 }}>{i + 1}.</span>
-                <p style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.6, margin: 0 }}>{text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -1502,7 +1489,6 @@ export default function TreeView() {
     let showAnalysisButton = false;
     let analysisHref = "";
     let accent: string | undefined;
-    let keyTakeaways: string[] | undefined;
     const fromParam = currentVertical?.id === "resources" ? "?from=resources" : "";
 
     if (lastEntry.type === "vertical") {
@@ -1526,21 +1512,9 @@ export default function TreeView() {
       if (lastEntry.id === "germanium") {
         subtitle = "Trace element doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in IR defense optics, satellite solar cells, and SiGe semiconductors.";
         accent = INPUT_ACCENT.germanium;
-        keyTakeaways = [
-          "Only 8 coal and zinc deposits in the world host germanium at high enough concentration to be commercially extracted.",
-          "83% of that supply is in China.",
-          "Two western sources exist \u2014 Big Hill is new DRC tailings refined exclusively by Umicore, and Red Dog is a declining Alaskan zinc mine expected to expire in 2031.",
-          "Outside China, Umicore and 5N Plus are the sole western supply for germanium-reliant products.",
-        ];
       } else if (lastEntry.id === "gallium") {
         subtitle = "Byproduct of alumina refining. Forms compound semiconductors (GaAs, GaN) for AI datacenter power conversion, 5G amplifiers, defense radar, and LED lighting.";
         accent = INPUT_ACCENT.gallium;
-        keyTakeaways = [
-          "Bauxite is mined globally across five regions \u2014 Guinea, Australia, China, Brazil, and Indonesia \u2014 with ~346M tonnes produced per year.",
-          "Gallium isn\u2019t extracted at the mine \u2014 it\u2019s recovered downstream at alumina refineries that have ion-exchange recovery circuits installed, and ~98% of those refineries are in China.",
-          "Four western projects are trying to rebuild primary capacity \u2014 Alcoa/JAGA in Australia, Metlen in Greece, Rio Tinto in Quebec, Korea Zinc/Crucible in Tennessee \u2014 but none operate at scale before 2028.",
-          "Outside China, Dowa in Japan does the bulk of high-purity refining, with smaller capacity at 5N Plus in Canada and Indium Corporation in the US \u2014 but all of them depend on Chinese primary feedstock to operate.",
-        ];
       }
       showAnalysisButton = true;
       analysisHref = `/input/${lastEntry.id}${fromParam}`;
@@ -1553,7 +1527,6 @@ export default function TreeView() {
           href={analysisHref}
           description={subtitle}
           accent={accent}
-          keyTakeaways={keyTakeaways}
         />
       );
     }
@@ -1804,50 +1777,30 @@ export default function TreeView() {
         /* Level 1: Vertical selector (accordion + illustration) */
         renderVerticals()
       ) : (
-        /* Levels 2+: Spine + container */
-        <div style={{ padding: "32px 0 80px", width: "100%" }}>
-          {/* Header area — constrained to 900px */}
-          <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 32px" }}>
+        /* Levels 2+: Header + container */
+        <div style={{ width: "100%", minHeight: "100vh" }}>
+          {/* Header area */}
+          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 32px 0", background: "#1a1816" }}>
             {renderBreadcrumb()}
             {renderContextualHeader()}
-            <div style={{ height: 1, background: borderColor, margin: "28px 0" }} />
+            <div style={{ height: 1, background: borderColor, margin: "0" }} />
           </div>
 
-          {/* Spine + container — centered on full page width */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            {/* Spine nodes */}
-            {path.map((entry, i) => (
-              <React.Fragment key={`spine-${i}`}>
-                <SpineAncestorNode
-                  name={entry.name}
-                  onClick={() => {
-                    if (i === 0) goHome();
-                    else popToIndex(i - 1);
-                  }}
-                />
-                <SpineDashedLine />
-              </React.Fragment>
-            ))}
-
-            {/* Container */}
-            <div style={(currentLevel === "tree" || (currentLevel === "subsystems" && currentVertical?.id === "ai")) ? { width: "90vw", maxWidth: 1600, padding: "0 32px" } : {}}>
-              <div
-                key={animKey}
-                style={{
-                  background: "#1a1816",
-                  borderRadius: 10,
-                  padding: (currentLevel === "tree" || (currentLevel === "subsystems" && currentVertical?.id === "ai")) ? "32px 20px 40px" : "0 20px",
-                  animation: "containerOpen 350ms ease-out forwards",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
-              >
-                {renderContainerContent()}
-              </div>
+          {/* Container — flush with header */}
+          <div style={{ width: "100vw", maxWidth: 1200, margin: "0 auto" }}>
+            <div
+              key={animKey}
+              style={{
+                background: "#1a1816",
+                padding: (currentLevel === "tree" || (currentLevel === "subsystems" && currentVertical?.id === "ai")) ? "0 32px 40px" : "20px 32px",
+                animation: "containerOpen 350ms ease-out forwards",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {renderContainerContent()}
             </div>
           </div>
-
-          {/* Downstream demand is now inside the container */}
         </div>
       )}
 

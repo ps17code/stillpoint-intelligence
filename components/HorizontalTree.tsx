@@ -297,7 +297,7 @@ export default function HorizontalTree({
         padding: "32px 16px",
         overflowX: "auto",
         overflowY: "visible",
-        maxWidth: "80%",
+        maxWidth: "100%",
         margin: "0 auto",
       }}
     >
