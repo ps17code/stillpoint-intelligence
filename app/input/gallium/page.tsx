@@ -66,33 +66,22 @@ export default function GalliumInputPage() {
         { label: "12mo", value: "+15%" },
       ],
       sections: [
-        { label: "What is this and why does it matter here?", items: [
-          { text: "Alcoa is one of the world\u2019s largest aluminum producers. It mines bauxite ore, refines it into alumina, and smelts alumina into aluminum \u2014 the full vertical stack. Most of its revenue comes from selling aluminum to automakers, construction firms, and packaging companies. Gallium is not currently part of that business." },
-          { text: "What puts Alcoa on this page is a project announced in October 2025: at one of its Western Australian alumina refineries, Alcoa plans to bolt on equipment to extract gallium as a byproduct of aluminum production. The target is 100 tonnes per year \u2014 roughly 10% of current global gallium demand and a 10x increase in non-Chinese supply. Four sovereign governments (US, Australia, Japan, and Alcoa\u2019s home country via the JV structure) are collectively funding the project." },
-        ] },
-        { label: "How does value flow through this entity?", items: [
-          { text: "If the project gets built, Alcoa becomes the single largest non-Chinese source of primary gallium \u2014 by a wide margin. The facility would extract gallium from the liquid waste stream the refinery already produces, so the incremental cost is relatively low: some ion-exchange equipment and electrolysis cells, plus a small share of ongoing energy and reagents. The economics look good because the infrastructure is already there." },
-          { text: "The joint venture is called JAGA (Japan Australia Gallium Associates), formed by Japanese government-backed entities (Sojitz + JOGMEC) together with Alcoa. Australia has committed AUD 200M in concessional equity. The US government signed on in October 2025. Each government gets gallium offtake in proportion to its investment \u2014 meaning they take delivery of a share of the gallium, likely into strategic reserves or to domestic refiners." },
-          { text: "For Alcoa specifically, gallium is a rounding error financially. At 100 t/yr and $1,500/kg realized pricing, gross gallium revenue would be ~$150M annually against Alcoa\u2019s ~$12B revenue base. The stock is still fundamentally an aluminum cycle bet. The gallium project is strategic positioning \u2014 Alcoa becomes the default allocation for sovereign and institutional mandates seeking western critical minerals exposure with operational backing." },
-        ] },
-        { label: "Key numbers", items: [
-          { title: "Target gallium capacity", text: "100 t/yr (10% of global demand)" },
-          { title: "Australian government commitment", text: "AUD 200M concessional equity" },
-          { title: "Project location", text: "Wagerup or Pinjarra refinery, Western Australia" },
-          { title: "Liquor stream used", text: "~10% of refinery flow" },
-          { title: "FID status", text: "\u201CExpected by end 2025\u201D \u2014 not confirmed as of April 2026" },
-          { title: "Production start target", text: "late 2026, full ramp 2028-2029" },
-        ] },
-        { label: "What to watch", items: [
-          { text: "Final Investment Decision announcement \u2014 delay signals execution risk." },
-          { text: "SPV terms (pricing mechanics, offtake ratios) once finalized." },
-          { text: "Construction milestones \u2014 mining projects routinely slip 12-24 months." },
-        ] },
-        { label: "Investment angle", items: [
-          { text: "Alcoa is aluminum cycle exposure with gallium optionality attached. For investors already comfortable with aluminum, Alcoa adds the clearest near-term path to meaningful western gallium production. For pure gallium exposure, it\u2019s too diluted \u2014 Metlen and 5N Plus are more concentrated. The thesis surfaces in the valuation only when the project delivers tangible revenue, which is 2027-2028 at the earliest." },
-        ] },
-      ],
-      disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Primary Producer (planned). Sources: Alcoa investor communications (October 2025), JOGMEC and Sojitz announcements. Not investment advice.",
+      { label: "What is this and why does it matter here?", items: [
+        { text: "Alcoa is one of the world\'s largest aluminum producers, vertically integrated across the full upstream stack \u2014 bauxite mining, alumina refining, and aluminum smelting. The company operates major bauxite mines in Australia, Brazil, and Guinea; alumina refineries across multiple continents; and aluminum smelters in North America, Europe, and Australia. The bulk of revenue comes from primary aluminum sales to automakers, construction firms, packaging companies, and industrial buyers. Gallium has historically not been part of the business." },
+        { text: "What puts Alcoa on this page is a project announced in October 2025 that materially repositions the company in the western critical minerals supply story: Alcoa committed to building a gallium recovery facility at one of its Western Australian alumina refineries, targeting 100 tonnes per year of primary gallium output. That single facility, if executed, would produce approximately 10% of current global gallium demand and represent a roughly 10x increase in total non-Chinese primary gallium supply. The project is structured as a four-government joint venture \u2014 Japanese government-backed entities, the Australian government, the US government, and Alcoa as the operator \u2014 with each government party receiving gallium offtake in proportion to its investment." },
+        { text: "The strategic significance is twofold. First, it inserts Alcoa into the gallium chain as the largest single non-Chinese capacity-builder before any of the other three western projects (Metlen, Rio Tinto/Indium Corp, Korea Zinc/Crucible) reach FID. Second, it establishes a model \u2014 sovereign-backed offtake of byproduct critical minerals from existing alumina refineries \u2014 that other Alcoa refineries could replicate if the first facility succeeds." },
+      ] },
+      { label: "How does value flow through this entity?", items: [
+        { text: "Alcoa\'s gallium business, if the project gets built, captures value through several mechanisms beyond simple commodity production:" },
+      ] },
+      { label: "Investment angle", items: [
+        { text: "The thesis on Alcoa is aluminum-cycle exposure with gallium optionality attached, where the gallium optionality is currently undervalued because the project is pre-FID. For investors already comfortable with the aluminum cycle, Alcoa offers the clearest near-term path to meaningful western gallium production at the lowest incremental cost basis. The 100 t/yr target alone represents the largest single non-Chinese gallium capacity addition planned, and the sovereign-backed structure de-risks demand." },
+        { text: "The variant perception that would make Alcoa undervalued: the market is treating the JAGA project as a small line item in an aluminum cyclical, but the strategic optionality across Alcoa\'s broader refinery network \u2014 and the precedent JAGA sets for future sovereign critical minerals partnerships \u2014 could compound over multiple projects. If Alcoa announces a second refinery facility within 18 months of first production at Wagerup/Pinjarra, the market re-rates the company from \"aluminum cyclical\" to \"western critical minerals platform.\"" },
+        { text: "The bear case is execution risk plus aluminum exposure. Mining projects slip; the JAGA timeline is already tight. If first production slips to 2028, the gallium contribution won\'t materialize before the 2026-2027 western supply tightness window \u2014 by which time other projects (Metlen, Rio Tinto, Korea Zinc) may have caught up. And in the near term, an aluminum cycle downturn would compress Alcoa\'s valuation regardless of gallium progress." },
+        { text: "For investors already positioned, the monitoring question is whether the JAGA FID happens in 2026 and whether the joint venture announces a second-facility intent within 18 months of that. If both happen, the gallium thesis on Alcoa transitions from optionality to material contributor." },
+      ] },
+    ],
+      disclaimer: "Disclaimer: Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Primary Producer (planned). Sources: Alcoa investor communications (October 2025), JOGMEC and Sojitz announcements, Australian government project commitments (2024). Not investment advice.",
     },
     "metlen": {
       name: "Metlen Energy & Metals",
@@ -106,34 +95,22 @@ export default function GalliumInputPage() {
         { label: "12mo", value: "+53%" },
       ],
       sections: [
-        { label: "What is this and why does it matter here?", items: [
-          { text: "Metlen is a large Greek industrial company that makes aluminum, generates electricity, and builds infrastructure. It was called Mytilineos until 2024. Most of its revenue comes from energy and aluminum. Gallium is a new business line." },
-          { text: "What puts Metlen on this page is its project at Agios Nikolaos, Greece \u2014 the same site where it has been refining bauxite into alumina for decades. In January 2025 the company committed \u20ac295.5M to add gallium extraction to the existing operation, with a target of 50 tonnes per year by 2028. In January 2026, the European Investment Bank approved \u20ac90M in financing, and the first 5 kilograms were produced \u2014 proving the company\u2019s proprietary extraction process works at industrial scale. The project is designated a Strategic Project under the EU Critical Raw Materials Act." },
-          { text: "If Metlen hits its target, Europe covers its entire gallium demand domestically for the first time since 2016." },
-        ] },
-        { label: "How does value flow through this entity?", items: [
-          { text: "The project works because Metlen already owns the hard parts. Gallium is extracted from the same liquid byproduct stream that already flows through the existing alumina refinery \u2014 no new mine, no new refinery, just a bolt-on extraction circuit. That gives Metlen a structural cost advantage: its gallium can compete with Chinese pricing at scale." },
-          { text: "Metlen also holds the demand side. European semiconductor and defense buyers need gallium that isn\u2019t export-controlled by China. They will pay premium pricing \u2014 potentially double or triple the Chinese domestic price \u2014 for supply sovereignty. Metlen\u2019s quoted \u20ac1B export market value for the full bauxite-alumina-gallium project bakes this premium in." },
-          { text: "At 50 t/yr and realized pricing around \u20ac1,800-2,000/kg, gallium would contribute \u20ac80-100M annually. That\u2019s ~1-2% of total revenue \u2014 small, but high-margin and strategic. The real long-term value is that Metlen is also expanding into scandium and germanium at the same site. If that works, Metlen becomes Europe\u2019s default critical minerals platform, and the valuation multiple expands beyond what a mature aluminum producer would command." },
-        ] },
-        { label: "Key numbers", items: [
-          { title: "Target gallium production", text: "50 t/yr by 2028" },
-          { title: "First production", text: "5 kg (January 2026)" },
-          { title: "EIB financing", text: "\u20ac90M (approved January 2026)" },
-          { title: "Total project investment", text: "\u20ac295.5M" },
-          { title: "Current EU gallium coverage at full ramp", text: "100%" },
-          { title: "Dividend yield", text: "~2.9%" },
-        ] },
-        { label: "What to watch", items: [
-          { text: "Scale-up from 5 kg to 5-10t (2027 target) to 50t (2028) \u2014 quarterly reports will show trajectory." },
-          { text: "Offtake agreements with European semiconductor manufacturers or defense primes." },
-          { text: "Scandium and germanium expansion announcements \u2014 these multiply the thesis." },
-        ] },
-        { label: "Investment angle", items: [
-          { text: "Metlen is the cleanest European exposure to the gallium chain. For investors who can access Athens or London listings, it offers a mature, dividend-paying industrial with genuine critical minerals optionality backed by EU sovereign financing. The gallium segment alone is too small to re-rate the stock, but the full platform thesis (gallium + scandium + germanium) could. Main execution risk: scaling from 5 kg to 50 t/yr is a 10,000x increase." },
-        ] },
-      ],
-      disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Primary Producer (under construction). Sources: Metlen press releases, European Commission CRMA strategic projects list. Not investment advice.",
+      { label: "What is this and why does it matter here?", items: [
+        { text: "Metlen Energy & Metals is a large Greek industrial conglomerate operating across three primary segments: power generation and electricity trading (the largest by EBITDA), metals (aluminum and bauxite-alumina production), and infrastructure construction. The company was renamed from Mytilineos in 2024 to reflect its expanded European footprint and a planned dual listing in London. It runs Greece\'s largest power plant fleet, operates an integrated bauxite-alumina-aluminum complex at Agios Nikolaos, and increasingly positions itself as a European industrial platform with critical minerals optionality." },
+        { text: "What puts Metlen on this page is the gallium recovery project at Agios Nikolaos \u2014 the same site where the company has been refining bauxite into alumina for decades. In January 2025, Metlen committed \u20AC295.5M to add gallium extraction to the existing operation, targeting 50 tonnes per year of primary gallium output by 2028. In January 2026, the project crossed two important thresholds: the European Investment Bank approved \u20AC90M in financing, and the facility produced its first 5 kilograms of gallium \u2014 proving Metlen\'s proprietary extraction process works at industrial scale. The project is designated a Strategic Project under the EU Critical Raw Materials Act, which provides regulatory fast-tracking and access to EU strategic financing." },
+        { text: "The strategic significance is that if Metlen reaches its 50 t/yr target, Europe covers its entire current gallium demand domestically for the first time since 2016, when the last European primary gallium producer (Hungary) closed. That makes Metlen the European version of what JAGA represents for the Pacific \u2014 sovereign-backed primary production rebuilding domestic critical minerals capacity." },
+      ] },
+      { label: "How does value flow through this entity?", items: [
+        { text: "Metlen captures value through several distinct channels:" },
+      ] },
+      { label: "Investment angle", items: [
+        { text: "Metlen is the cleanest European listed exposure to the gallium chain rebuild, and structurally the most concentrated of the four western primary production projects. For investors who can access Athens or London listings, Metlen offers a mature dividend-paying industrial business with genuine critical minerals optionality backed by EU sovereign financing \u2014 at a valuation that reflects energy and aluminum cyclicality more than the strategic optionality." },
+        { text: "The variant perception that would make Metlen undervalued: the market is pricing Metlen as a Greek industrial conglomerate, but the platform value of being the only EU primary gallium producer with EU strategic financing \u2014 and the optionality on scandium and germanium expansion \u2014 could compound into a multi-metal critical minerals re-rating. If by 2028 Metlen has 50 t/yr gallium operating plus scandium FID plus EU strategic offtake contracts in place, the equity transitions to a different category of business than today." },
+        { text: "The bear case is execution risk plus aluminum-cycle exposure plus liquidity. Scaling from 5 kg to 50 t/yr is genuinely difficult \u2014 proprietary processes that work at lab and pilot scale routinely struggle at full commercial output. If Metlen slips to 2029 or beyond, the gallium contribution misses the 2026-2028 western tightness window, weakening the strategic premium thesis. The Athens listing has limited US institutional liquidity; the London dual listing helps but Metlen is not yet a default name in critical-minerals-themed mandates." },
+        { text: "For investors already positioned, the monitoring questions are: does the 2027 production target hit ~5-10 t/yr; do offtake agreements emerge with named European or US buyers; and does Metlen announce scandium or germanium FID within 24 months of gallium ramp? Two of three would re-rate the equity meaningfully." },
+      ] },
+    ],
+      disclaimer: "Disclaimer: Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Primary Producer (under construction). Sources: Metlen press releases, European Commission CRMA strategic projects list, EIB project disclosures (January 2026). Not investment advice.",
     },
     "5n-plus": {
       name: "5N Plus",
@@ -147,34 +124,22 @@ export default function GalliumInputPage() {
         { label: "12mo", value: "+532%" },
       ],
       sections: [
-        { label: "What is this and why does it matter here?", items: [
-          { text: "5N Plus is a Canadian specialty metals refiner. It takes in raw materials like gallium, germanium, indium, tellurium, and bismuth and purifies them to the levels needed by semiconductor makers, solar panel manufacturers, pharmaceutical companies, and defense suppliers. The company name comes from \u201C5N\u201D \u2014 99.999% pure \u2014 the minimum purity grade it targets." },
-          { text: "Its most valuable asset is AZUR SPACE, a German subsidiary that builds the germanium-based solar cells used on satellites. AZUR is the largest non-Chinese producer of space solar cells globally and has a 265-day backlog driven by LEO constellation buildouts (Starlink, OneWeb, military satellites)." },
-          { text: "Gallium matters to 5N Plus, but it\u2019s smaller than germanium and AZUR. The company produces maybe 2-5 tonnes of high-purity gallium per year from Montreal \u2014 strategically relevant to North American supply, but not the main earnings driver. 5N Plus is on this page because it\u2019s the highest-quality western vehicle for broad critical-minerals exposure, of which gallium is one piece." },
-        ] },
-        { label: "How does value flow through this entity?", items: [
-          { text: "Revenue comes from two segments. Specialty Semiconductors (~$285M, 73% of total) includes AZUR space solar cells, compound semiconductor wafers (CdTe for First Solar), and refined specialty metals including gallium. Performance Materials covers pharmaceutical-grade bismuth and specialty chemicals at steadier but lower-margin pricing." },
-          { text: "The business runs on multi-year take-or-pay contracts. The thin-film solar customer (widely understood to be First Solar) has committed to 33% volume growth in 2025-2026 and another 25% through 2028. AZUR\u2019s 265-day backlog, combined with multiple capacity expansions (35% in 2024, 30% in 2025, another 25% planned for 2026), creates years of visible revenue. In January 2026, the US DoE granted 5N Plus $18.1M to expand germanium recycling at a Utah facility \u2014 direct US government backing." },
-          { text: "Financial quality is the standout. FY25 revenue grew 35%, EBITDA grew 73%, net debt/EBITDA sits at 0.5x. This is a rare combination of growth and balance sheet discipline among critical-minerals names." },
-        ] },
-        { label: "Key numbers", items: [
-          { title: "Specialty Semiconductors segment", text: "~$285M (73% of total revenue)" },
-          { title: "Net debt / EBITDA", text: "0.5x" },
-          { title: "AZUR space solar backlog", text: "265 days" },
-          { title: "US DoE germanium grant", text: "$18.1M (January 2026)" },
-          { title: "Estimated gallium production", text: "2-5 t/yr" },
-          { title: "Dividend", text: "None (reinvestment policy)" },
-        ] },
-        { label: "What to watch", items: [
-          { text: "Q1 2026 earnings (May 2026) \u2014 first full quarter under new CEO." },
-          { text: "AZUR space solar 25% capacity lift for 2026 \u2014 execution milestone." },
-          { text: "Any dedicated gallium expansion announcement \u2014 would be a catalyst given 5N Plus\u2019s existing refining capability." },
-        ] },
-        { label: "Investment angle", items: [
-          { text: "5N Plus is the highest-quality broad critical-minerals name on public markets. The stock has run 532% over 12 months, which reflects a genuine re-rating rather than speculation \u2014 the company is growing into its multiple with real contracted revenue. For portfolios that want critical-minerals exposure with operational discipline, 5N Plus is arguably the best-scaled North American option. The caveat: gallium is a small share of the thesis. If you want concentrated gallium exposure, Dowa or Metlen are more direct." },
-        ] },
-      ],
-      disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Refiner. Sources: 5N Plus investor communications, TSX filings. Not investment advice.",
+      { label: "What is this and why does it matter here?", items: [
+        { text: "5N Plus is a Canadian specialty metals refiner headquartered in Montreal, with operations spanning North America and Europe. The business model is to take in raw materials \u2014 gallium, germanium, indium, tellurium, bismuth, antimony \u2014 and purify them to the high-purity grades semiconductor manufacturers, photovoltaic producers, pharmaceutical companies, and defense suppliers require. The company name comes from \"5N\" \u2014 99.999% pure \u2014 the minimum purity grade it targets, with several products reaching 7N or higher. The business operates across two segments: Specialty Semiconductors (the larger and higher-margin segment) and Performance Materials (steadier industrial and pharmaceutical specialty chemicals)." },
+        { text: "The company\'s most valuable asset is AZUR SPACE, a German subsidiary that produces germanium-based multi-junction solar cells for satellites. AZUR is the largest non-Chinese producer of space-grade photovoltaics globally, with a 265-day order backlog driven by LEO constellation buildouts (Starlink, Kuiper, OneWeb, military satellite programs). The space solar business is structurally separate from terrestrial photovoltaics and commands premium pricing because the qualification cycle for satellite components takes years and there are few qualified suppliers globally." },
+        { text: "What puts 5N Plus on the gallium chain page is its position as one of three meaningful western high-purity gallium refiners \u2014 alongside Dowa in Japan and Indium Corporation in the US. 5N Plus produces an estimated 2-5 tonnes per year of high-purity gallium from its Montreal facility, which is small relative to global non-Chinese gallium output (~15-30 t/yr) but strategically important as the only Canadian source of refined gallium and a qualified supplier to North American defense and semiconductor customers. More importantly, 5N Plus is positioned as the highest-quality western critical minerals platform \u2014 gallium is one piece of a portfolio that includes germanium, tellurium, and indium, all of which face their own bifurcated supply pictures with western shortage premiums." },
+      ] },
+      { label: "How does value flow through this entity?", items: [
+        { text: "5N Plus captures value through several distinct channels:" },
+      ] },
+      { label: "Investment angle", items: [
+        { text: "5N Plus is the highest-quality western critical minerals name on public markets, and gallium is a small but strategic piece of the thesis. For portfolios that want broad critical minerals exposure with operational discipline, multi-year contracted revenue, sovereign backing, and a credible balance sheet, 5N Plus is arguably the best-scaled North American option in the category. The +532% trailing 12-month run reflects a genuine re-rating from specialty refiner to platform, not speculative excess." },
+        { text: "The variant perception that would make 5N Plus undervalued: the market is pricing it primarily on AZUR space solar and the First Solar CdTe relationship \u2014 both of which are genuine value drivers \u2014 but the optionality on gallium-specific refining capacity expansion (driven by JAGA or other primary production coming online) and the broader cross-chain critical minerals platform value are likely underpriced. If 5N Plus announces dedicated gallium capacity expansion with sovereign backing or signs additional multi-year contracts, the platform multiple expands further." },
+        { text: "The bear case is valuation and execution. The +532% run has compressed forward multiples; any miss on AZUR ramp, First Solar volume, or government-backed project execution would compress the equity sharply. Gallium itself is too small to support the multiple if AZUR space solar disappoints. New CEO transition adds execution risk through 2026. And the Tokyo-listed Dowa is structurally a more concentrated chokepoint play in gallium specifically \u2014 for pure gallium exposure, 5N Plus is too diversified." },
+        { text: "For investors already positioned, the monitoring questions are: does AZUR hit the 25% capacity lift on schedule; does 5N Plus announce gallium-specific capacity expansion within 12 months; and does the Utah germanium recycling project ramp successfully? Two of three would sustain the platform thesis through 2026-2027." },
+      ] },
+    ],
+      disclaimer: "Disclaimer: Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Refiner. Sources: 5N Plus investor communications, TSX filings, US Department of Energy critical minerals announcements. Not investment advice.",
     },
     "dowa": {
       name: "Dowa Holdings",
@@ -188,31 +153,22 @@ export default function GalliumInputPage() {
         { label: "12mo", value: "\u2014" },
       ],
       sections: [
-        { label: "What is this and why does it matter here?", items: [
-          { text: "Dowa is a large Japanese specialty metals company, founded in 1884 as a mining operation. Today it runs four businesses: zinc and lead smelting, electronic materials, metal recycling, and metal processing. Zinc and lead make up most of the revenue. Gallium sits inside the electronic materials segment." },
-          { text: "Dowa matters to the gallium chain because it is the western world\u2019s most important non-Chinese high-purity gallium refiner. When a Japanese or Korean semiconductor maker \u2014 or a US customer who wants to avoid Chinese supply risk \u2014 needs high-purity gallium, Dowa is the default supplier. After China\u2019s December 2024 US-targeted export ban, Dowa\u2019s role as a pass-through refiner for non-Chinese buyers became structurally more important." },
-        ] },
-        { label: "How does value flow through this entity?", items: [
-          { text: "Dowa\u2019s gallium business works by buying low-purity gallium metal (historically from Chinese producers, secondarily from other regional sources) and refining it up to 99.9999%-plus purity \u2014 the grade needed for gallium arsenide wafers and LED production. That refining is a specialized skill that only a handful of companies globally can do at scale. Dowa holds the leading position outside China." },
-          { text: "The pricing power comes from two places. First, technical capability: Dowa\u2019s purity grades meet the strictest semiconductor specifications, and few competitors can replicate this. Second, geopolitical premium: western buyers pay up for gallium that isn\u2019t routed through Chinese export controls. When the Chinese bans are active, Dowa\u2019s prices effectively float upward with the access premium." },
-          { text: "The catch for investors: Dowa doesn\u2019t break out gallium revenue separately. Industry estimates put Dowa\u2019s gallium output at 10-30 t/yr \u2014 meaningful relative to global non-Chinese production (~15 t/yr total), but small relative to the company\u2019s multi-segment business. The gallium thesis is real, but it\u2019s diluted inside a zinc-lead conglomerate." },
-        ] },
-        { label: "Key numbers", items: [
-          { title: "Estimated gallium output", text: "10-30 t/yr high-purity" },
-          { title: "Global non-Chinese refining share", text: "Leading position" },
-          { title: "Business segments", text: "4 (zinc-lead dominates revenue)" },
-          { title: "Dividend yield", text: "~2-3%" },
-        ] },
-        { label: "What to watch", items: [
-          { text: "Japanese government critical minerals policy \u2014 direct support would strengthen Dowa\u2019s position." },
-          { text: "Sojitz/JOGMEC/JAGA Australia alignment \u2014 if Alcoa\u2019s gallium project ships to Dowa for refining, Dowa\u2019s input feedstock expands materially." },
-          { text: "Metlen\u2019s European production ramp \u2014 modestly reduces Dowa\u2019s strategic pricing power once operational." },
-        ] },
-        { label: "Investment angle", items: [
-          { text: "Dowa is a lower-volatility, higher-quality way to play the gallium chain \u2014 but it\u2019s diluted. For investors who want Japanese specialty metals exposure with real gallium optionality, Dowa fits. For pure gallium exposure, it\u2019s too diversified \u2014 gallium is a small share of a zinc-lead-dominated portfolio. The Tokyo listing also limits direct US investor access." },
-        ] },
-      ],
-      disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Refiner. Sources: Dowa annual reports, US-Japan Critical Minerals Framework announcements. Not investment advice.",
+      { label: "What is this and why does it matter here?", items: [
+        { text: "Dowa Holdings is a large Japanese specialty metals company, founded in 1884 as a mining operation and today operating across four primary business segments: zinc and lead smelting (the legacy and largest revenue contributor), electronic materials (where gallium and other specialty refined metals reside), metal recycling, and metal processing. The company runs major zinc smelters in Japan, electronic materials operations in multiple Japanese sites and Southeast Asia, and a network of metal recycling facilities that have positioned Dowa as one of the world\'s leading recyclers of specialty metals from electronic waste. Group revenue runs ~¥850B (~$5.8B USD) against a ~$5.5B market cap, with margins driven by zinc treatment charges, electronic materials pricing premiums, and recycling spreads." },
+        { text: "What puts Dowa on this page \u2014 and at the top of the gallium WTMI ordering \u2014 is its role as the structural western chokepoint in high-purity gallium refining. Outside China, only a handful of companies can produce 6N (99.9999%) and higher purity gallium at the volumes and quality grades that semiconductor and defense customers require. Dowa is the leading supplier in this category. When a Japanese, Korean, Taiwanese, or US semiconductor maker needs gallium that isn\'t routed through Chinese export licensing, Dowa is the default supplier. After China\'s December 2024 US-targeted export ban specifically, Dowa\'s role as a pass-through refiner for non-Chinese buyers became structurally more important \u2014 and remains so as long as Chinese export controls are in place." },
+        { text: "The strategic significance is that Dowa is the western refining chokepoint that the four primary-production projects (Alcoa, Metlen, Rio Tinto/Indium, Korea Zinc/Crucible) ultimately depend on for downstream purification. Even as new western primary capacity comes online, the high-purity refining step remains concentrated in Dowa and a small number of secondary refiners (5N Plus in Canada, Indium Corporation in the US, PPM Pure Metals in Germany). The chain rebuild thesis assumes Dowa continues to operate at scale; if it does, Dowa captures a structural premium throughout the rebuild." },
+      ] },
+      { label: "How does value flow through this entity?", items: [
+        { text: "Dowa\'s gallium economics flow through several distinct mechanisms:" },
+      ] },
+      { label: "Investment angle", items: [
+        { text: "Dowa is the structural western chokepoint in high-purity gallium refining and the lowest-volatility, highest-quality way to play the gallium chain rebuild. For investors who want Japanese specialty metals exposure with genuine gallium optionality embedded inside an investment-grade balance sheet, Dowa is the cleanest equity vehicle outside the four capacity builders. The dividend yield (~2-3%) provides income while the chain rebuild plays out over 2026-2029." },
+        { text: "The variant perception that would make Dowa undervalued: the market is pricing it as a Japanese zinc-lead conglomerate with electronic materials optionality, but Dowa\'s position as the only at-scale non-Chinese gallium refiner \u2014 combined with its recycling scale and Japanese government strategic alignment \u2014 could re-rate Dowa as the structural western critical minerals refiner of choice. If JAGA gallium ships to Dowa for downstream refining and Japanese government procurement formalizes Dowa\'s strategic role, the equity transitions from cyclical zinc producer to platform refiner." },
+        { text: "The bear case is that Dowa\'s gallium contribution is too small inside a zinc-dominated business to drive equity re-rating, even in tight markets. Gallium revenue at full premium pricing is less than 1% of group revenue. Zinc cycle dominates near-term earnings; Tokyo listing limits institutional flow; and competing western refiners (5N Plus, Indium Corporation, PPM Pure Metals) plus new primary producers entering refining could compress Dowa\'s pricing power over 2028-2030. The structural premium is real but bounded." },
+        { text: "For investors already positioned, the monitoring questions are: does JAGA gallium ship to Dowa rather than alternative refiners; does Japanese government policy formalize Dowa\'s strategic role; and does Dowa expand high-purity refining capacity in the next 24 months? Two of three would meaningfully change the equity story." },
+      ] },
+    ],
+      disclaimer: "Disclaimer: Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Refiner. Sources: Dowa annual reports, US-Japan Critical Minerals Framework announcements, METI and JOGMEC disclosures. Not investment advice.",
     },
     "rio-tinto": {
       name: "Rio Tinto",
@@ -226,33 +182,22 @@ export default function GalliumInputPage() {
         { label: "12mo", value: "+8%" },
       ],
       sections: [
-        { label: "What is this and why does it matter here?", items: [
-          { text: "Rio Tinto is one of the world\u2019s largest diversified miners. It mines iron ore, copper, aluminum (via bauxite and alumina), lithium, and other metals across more than 30 countries. Iron ore is by far the largest revenue driver. Aluminum is the second-largest segment." },
-          { text: "What puts Rio Tinto on this page is a small project at its Vaudreuil alumina refinery in Saguenay, Quebec. In May 2025, Rio Tinto and Indium Corporation announced the first successful laboratory-scale extraction of gallium from the Vaudreuil refinery\u2019s byproduct stream. In March 2026, Rio Tinto committed to advance the project to a demonstration plant with Canadian federal and Quebec provincial government support. The demo plant targets up to 3.5 tonnes per year. A later commercial facility could reach 40 t/yr \u2014 5-10% of current global production." },
-        ] },
-        { label: "How does value flow through this entity?", items: [
-          { text: "Rio Tinto\u2019s gallium project works the same way Alcoa\u2019s does: bolt gallium extraction equipment onto an existing alumina refinery, capture the gallium that\u2019s already flowing through the Bayer process, sell it. The cost structure is attractive because the refinery infrastructure is already sunk." },
-          { text: "Financially, gallium is immaterial to Rio Tinto. At 3.5 t/yr (demo) and $1,500/kg, the project generates ~$5M annually against Rio Tinto\u2019s $55B revenue base. Even at the 40 t/yr commercial target, gallium contributes ~$60M \u2014 a rounding error." },
-          { text: "The real value is positioning. Rio Tinto is deliberately building a portfolio of critical minerals businesses (gallium, scandium, tellurium, molybdenum, lithium) that differentiate it from single-commodity miners. As sovereign and institutional capital flows toward critical minerals allocations, Rio Tinto captures that flow through its diversified exposure." },
-          { text: "One structural detail worth noting: the extraction process IP is owned by Indium Corporation (Rio Tinto\u2019s US partner), not by Rio Tinto. This means Rio Tinto cannot independently scale the gallium project without Indium\u2019s continued participation \u2014 creating a technology dependency similar to Umicore\u2019s role in the germanium chain." },
-        ] },
-        { label: "Key numbers", items: [
-          { title: "Demo plant capacity", text: "up to 3.5 t/yr" },
-          { title: "Commercial-scale target", text: "40 t/yr" },
-          { title: "Location", text: "Saguenay-Lac-Saint-Jean, Quebec" },
-          { title: "Government backing", text: "Canadian federal + Quebec provincial" },
-          { title: "First extraction", text: "May 2025; demo plant timeline: unspecified" },
-        ] },
-        { label: "What to watch", items: [
-          { text: "Demo plant construction commissioning milestones." },
-          { text: "Quebec provincial financial commitments and offtake structure." },
-          { text: "Rio Tinto\u2019s broader critical minerals announcements (scandium, tellurium) \u2014 these multiply the thesis." },
-        ] },
-        { label: "Investment angle", items: [
-          { text: "Rio Tinto is aluminum + iron ore exposure with gallium optionality on top. For investors comfortable with diversified mining exposure, it adds near-riskless gallium optionality to a balance-sheet-rich, dividend-paying (~5% yield) mega-cap. For concentrated gallium exposure, it\u2019s far too diversified \u2014 Metlen or Alcoa are better. The gallium segment will not move the stock in any meaningful way until commercial production is confirmed \u2014 a multi-year path." },
-        ] },
-      ],
-      disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Primary Producer (demo stage). Sources: Rio Tinto press releases (May 2025, March 2026), Indium Corporation communications, Government of Canada and Quebec announcements. Not investment advice.",
+      { label: "What is this and why does it matter here?", items: [
+        { text: "Rio Tinto is one of the world\'s largest diversified mining companies, with operations spanning iron ore, copper, aluminum (via bauxite mining and alumina refining), lithium, titanium, borates, diamonds, and increasingly a portfolio of critical minerals byproduct projects. The company operates major mines and refineries across more than 30 countries, with revenue dominated by iron ore (Pilbara operations in Western Australia, Iron Ore Company of Canada) and aluminum (the legacy Alcan business acquired in 2007, including operations in Quebec, BC, Iceland, and Australia). Rio Tinto is one of the world\'s most balance-sheet-rich miners, with a longstanding dividend policy (~5% yield) and consistent free cash flow generation across the iron ore cycle." },
+        { text: "What puts Rio Tinto on this page is a small but strategically positioned project at its Vaudreuil alumina refinery in Saguenay, Quebec. In May 2025, Rio Tinto and Indium Corporation announced the first successful laboratory-scale extraction of gallium from the Vaudreuil refinery\'s Bayer process byproduct stream \u2014 a proof-of-concept that the gallium recovery economics work in a Canadian operating context. In March 2026, Rio Tinto formally committed to advance the project to a demonstration plant phase with Canadian federal and Quebec provincial government support. The demo plant targets up to 3.5 tonnes per year of primary gallium output. A subsequent commercial-scale facility, if approved, could reach 40 t/yr \u2014 representing approximately 5-10% of current global gallium production from a single Canadian site." },
+        { text: "The strategic significance is twofold. First, the project would be the only North American primary gallium producer of meaningful scale, addressing US Defense Production Act objectives around domestic critical minerals capacity. Second, Rio Tinto is using the Vaudreuil project as part of a broader portfolio play, building exposure to multiple byproduct critical minerals (gallium, scandium, tellurium, molybdenum) from existing operations to differentiate its equity story from pure iron ore exposure." },
+      ] },
+      { label: "How does value flow through this entity?", items: [
+        { text: "Rio Tinto\'s gallium economics follow the same template as Alcoa and Metlen \u2014 bolt gallium recovery onto an existing alumina refinery, capture the gallium that already flows through the Bayer process, sell it at premium western pricing. But the value flow specifics for Rio Tinto differ in important ways:" },
+      ] },
+      { label: "Investment angle", items: [
+        { text: "Rio Tinto offers iron ore and aluminum cycle exposure with gallium optionality attached as a small piece of a broader critical minerals portfolio re-rating thesis. For investors who want diversified mining exposure with sovereign-backed critical minerals optionality at the lowest single-project risk, Rio Tinto is the most balance-sheet-secure of the four western primary production projects." },
+        { text: "The variant perception that would make Rio Tinto undervalued: the market is pricing it as \"iron ore mega-cap with mining diversification,\" but the cumulative critical minerals portfolio (gallium at Vaudreuil + scandium evaluation + tellurium + lithium at Jadar/Rincon) could re-rate Rio Tinto as a diversified critical minerals platform if multiple projects reach commercial scale in 2028-2030. That re-rating wouldn\'t show in any single project\'s economics; it would show in the multiple investors apply to the company." },
+        { text: "The bear case is that gallium is too small to matter and the broader critical minerals portfolio takes too long. At 40 t/yr × $1,500/kg, gallium is 0.1-0.2% of revenue. Even with scandium, tellurium, and lithium added, critical minerals as a portfolio category may not exceed 5% of group revenue before 2030. Iron ore remains the dominant driver, and an iron ore demand correction would compress the equity regardless of critical minerals progress. The Indium IP dependency also caps Rio Tinto\'s ability to scale gallium independently \u2014 partnership risk is real." },
+        { text: "For investors already positioned, the monitoring questions are: does the Vaudreuil demo plant complete commissioning on time; does a commercial-scale FID get announced; and how does the broader critical minerals portfolio (scandium, tellurium, lithium) progress in parallel? Rio Tinto\'s gallium contribution becomes material only if the portfolio thesis aggregates across multiple projects." },
+      ] },
+    ],
+      disclaimer: "Disclaimer: Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Primary Producer (demo stage). Sources: Rio Tinto press releases (May 2025, March 2026), Indium Corporation communications, Government of Canada and Quebec announcements, Rio Tinto annual reports. Not investment advice.",
     },
     "korea-zinc": {
       name: "Korea Zinc",
@@ -266,33 +211,22 @@ export default function GalliumInputPage() {
         { label: "12mo", value: "\u2014" },
       ],
       sections: [
-        { label: "What is this and why does it matter here?", items: [
-          { text: "Korea Zinc is the world\u2019s largest non-Chinese zinc smelter, based in Seoul. Most of its revenue comes from zinc and lead refining at operations in South Korea and Australia. It also produces a range of byproduct specialty metals \u2014 indium, bismuth, tellurium, silver \u2014 at smaller volumes." },
-          { text: "Korea Zinc matters to the gallium chain because of a deal announced in December 2025 called the Crucible JV. This is a $7.4B joint venture to build a new critical minerals smelter in Clarksville, Tennessee, on the site of the existing Nyrstar facility. The structure is unprecedented: the US Department of Defense takes a 40% equity stake, JPMorgan advises, and $4.7B comes from US government loans plus $210M in CHIPS Act subsidies. When completed in 2029, the facility will produce 540,000 tonnes per year of critical minerals \u2014 including zinc, lead, copper, antimony, germanium, and approximately 40 t/yr of gallium." },
-          { text: "This is the single largest critical minerals processing investment in US history." },
-        ] },
-        { label: "How does value flow through this entity?", items: [
-          { text: "Korea Zinc\u2019s direct economic share in the JV is modest \u2014 less than 10% of the equity. The real value is operational: Korea Zinc brings zinc smelting expertise, technology, and execution capacity. The DoD and JPMorgan bring the capital. Korea Zinc gets paid as operator and earns its share of gallium and other byproduct output." },
-          { text: "At 40 t/yr of gallium and realized pricing around $1,500-2,000/kg, the gallium share alone is worth $60-80M annually \u2014 meaningful for a single byproduct, but small against Korea Zinc\u2019s $9B top line. The larger thesis is positioning: Korea Zinc becomes the US government\u2019s preferred operational partner for critical minerals processing, which creates multi-decade revenue visibility beyond any one facility. The unprecedented DoD equity stake signals that gallium and the other Crucible outputs are being treated as strategic defense assets rather than commodities." },
-        ] },
-        { label: "Key numbers", items: [
-          { title: "Crucible JV total investment", text: "$7.4B" },
-          { title: "DoD equity stake", text: "40%" },
-          { title: "Korea Zinc equity stake", text: "<10%" },
-          { title: "Total finished product output", text: "540,000 t/yr" },
-          { title: "Gallium output", text: "~40 t/yr" },
-          { title: "Site preparation: 2026; Commercial operations", text: "2029" },
-        ] },
-        { label: "What to watch", items: [
-          { text: "Construction milestones 2026-2029 \u2014 processing projects routinely slip 12-24 months." },
-          { text: "Korea Zinc ownership dispute with Young Poong Corp./MBK Partners \u2014 could affect execution capacity." },
-          { text: "Whether any interim gallium recovery from Nyrstar tailings proceeds before the new smelter is ready." },
-        ] },
-        { label: "Investment angle", items: [
-          { text: "Korea Zinc is exposure to US government-backed critical minerals infrastructure. For investors with Seoul market access and patience for a 2029 commercial start, it\u2019s a credible critical minerals allocation with rare sovereign backing. Gallium is diluted inside a broad 13-product output \u2014 for pure gallium exposure, Alcoa or Metlen are more concentrated. The main near-term risks are execution timing and Korean governance." },
-        ] },
-      ],
-      disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Primary Producer + Refiner (planned). Sources: Korea Zinc December 2025 announcements, Crucible JV press releases, Bloomberg, Mining.com. Not investment advice.",
+      { label: "What is this and why does it matter here?", items: [
+        { text: "Korea Zinc is the world\'s largest non-Chinese zinc smelter, headquartered in Seoul with operations in South Korea and Australia. The company\'s core business is the refining of zinc and lead from imported concentrates, but its capability extends across a broad range of byproduct specialty metals \u2014 indium, bismuth, tellurium, silver, antimony \u2014 produced at smaller volumes through integrated metallurgical processing. Group revenue runs ~$9B against a $15B market cap, with margins driven by zinc treatment charges, byproduct credits, and metals-trading exposure. The company is in the middle of a high-profile ownership dispute with Young Poong Corporation and MBK Partners that has been the dominant share-price driver throughout 2024-2025." },
+        { text: "What puts Korea Zinc on this page is the Crucible JV announced in December 2025: a $7.4B joint venture to build a new integrated critical minerals smelter in Clarksville, Tennessee, on the site of the existing Nyrstar facility. The structure is unprecedented in scale and form. The US Department of Defense takes a 40% equity stake \u2014 the largest direct DoD equity investment in critical minerals processing in modern history. JPMorgan acts as financial adviser and lead arranger. Approximately $4.7B comes from US government loans (DoD-anchored), and $210M in CHIPS Act subsidies cover specific equipment categories. Korea Zinc holds an operating role with a less-than-10% equity stake. When completed in 2029, the facility will produce 540,000 tonnes per year of critical minerals output \u2014 including zinc, lead, copper, antimony, germanium, indium, tellurium, and approximately 40 t/yr of primary gallium recovered from the zinc concentrate stream." },
+        { text: "The strategic significance is that Crucible represents a categorical shift in how the US treats critical minerals processing: DoD equity rather than offtake contracts, integrated multi-metal output rather than single-commodity capacity, and an existing US site (Nyrstar Clarksville) rather than greenfield development. For the gallium chain specifically, Crucible would be one of two North American primary gallium sources alongside Rio Tinto\'s Vaudreuil project \u2014 and at 40 t/yr, the largest single source." },
+      ] },
+      { label: "How does value flow through this entity?", items: [
+        { text: "Korea Zinc\'s value capture from Crucible is structurally different from a typical operator role:" },
+      ] },
+      { label: "Investment angle", items: [
+        { text: "Korea Zinc offers exposure to US government-backed critical minerals infrastructure through a unique JV structure with limited direct equity capture but significant strategic positioning value. For investors with Seoul market access and patience for a 2029 commercial start, Korea Zinc is one of the most credible critical minerals allocations available \u2014 backed by the largest direct DoD equity stake in critical minerals processing in modern history." },
+        { text: "The variant perception that would make Korea Zinc undervalued: the market is pricing it as a Korean zinc smelter with governance overhang, but the platform value of being the DoD\'s preferred operational partner for US critical minerals processing \u2014 combined with multi-product Crucible output across germanium, antimony, gallium, indium, and tellurium \u2014 could re-rate Korea Zinc as a strategic infrastructure operator rather than a cyclical metals refiner. If Crucible commissions on time and a second US DoD-backed facility is announced before 2030, the equity transitions from cyclical to platform." },
+        { text: "The bear case is execution timing plus governance plus diluted gallium exposure. Crucible doesn\'t commission until 2029, by which time the western tightness window for gallium (2026-2028) will largely have passed. The Korea Zinc ownership dispute remains unresolved and could materially impair execution. And gallium itself is a small line in a 13-product facility \u2014 for pure gallium exposure, Alcoa or Metlen are more concentrated. The structural risks that warrant the strategic premium also create real downside if any single one materializes." },
+        { text: "For investors already positioned, the monitoring questions are: does the Korea Zinc ownership dispute resolve cleanly; do Crucible construction milestones hit on time; and does Korea Zinc announce a second US DoD-backed JV within 24 months of first Crucible production? Any combination of two of three would re-rate the equity meaningfully." },
+      ] },
+    ],
+      disclaimer: "Disclaimer: Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Primary Producer + Refiner (planned). Sources: Korea Zinc December 2025 announcements, Crucible JV press releases, US Department of Defense critical minerals disclosures, JPMorgan project finance materials, Bloomberg, Mining.com. Not investment advice.",
     },
     "chinese-primary": {
       name: "Chinese Primary Supply",
@@ -300,38 +234,51 @@ export default function GalliumInputPage() {
       category: "Market Maker",
       metrics: [],
       sections: [
-        { label: "What is this and why does it matter here?", items: [
-          { text: "This is not a single company. It is the combined output of roughly 20 Chinese alumina refineries that produce gallium as a byproduct. Some are state-owned (Chalco, Shandong Weiqiao). Some are privately held (Vital Materials, Zhuzhou Keneng). Chinese capacity grew from ~140 t/yr in 2010 to ~1,000 t/yr by 2022 and continues to expand." },
-          { text: "This aggregate is on the page because it is the single most important variable in the entire gallium investment thesis. Every other entity here \u2014 Alcoa, Metlen, 5N Plus, Dowa, Rio Tinto, Korea Zinc \u2014 derives its investability from its position relative to what China does." },
-        ] },
-        { label: "How does value flow through this entity?", items: [
-          { text: "No direct value flow to western investors. Chinese primary producers are state-owned, state-affiliated, or traded only on Chinese exchanges with limited foreign access." },
-          { text: "The indirect flow is what matters: Chinese policy sets both the floor and the ceiling on global gallium pricing. The floor is Chinese domestic pricing at ~$245/kg \u2014 depressed because Chinese capacity of 1,000 t/yr vastly exceeds Chinese domestic demand. The ceiling is the western retail price at ~$2,269/kg \u2014 elevated because export licensing and the December 2024 ban prevent western buyers from arbitraging down to Chinese domestic levels." },
-          { text: "The 9x spread between the two prices is the entire gallium investment opportunity. If China lifts export controls, the spread collapses and every western capacity project faces margin pressure. If China tightens controls, the spread widens and every western project becomes more valuable. If controls hold steady at the current suspension (in effect until November 2026), the spread persists and western projects ramp into a market that still needs them. The overbuilt capacity is deliberate \u2014 it gives Beijing the optionality to flood or starve the global market. This is the central variable every position in the chain must stress-test against." },
-        ] },
-        { label: "Key numbers", items: [
-          { title: "Aggregate installed capacity", text: "~1,000 t/yr" },
-          { title: "Aggregate actual production", text: "~590 t/yr" },
-          { title: "Utilization", text: "~59%" },
-          { title: "Global share of primary supply", text: "98-99%" },
-          { title: "Global share of refined supply", text: "~91%" },
-          { title: "Chinese domestic price (SMM 4N, March 2026)", text: "$245/kg" },
-          { title: "Western retail price (SMI, April 2026)", text: "$2,269/kg" },
-          { title: "Spread", text: "9x" },
-          { title: "2023 export licensing imposed", text: "August 1, 2023" },
-          { title: "2024 US-targeted ban", text: "December 3, 2024" },
-          { title: "Current status", text: "Suspended November 2025 through November 2026" },
-        ] },
-        { label: "What to watch", items: [
-          { text: "November 2026 suspension expiry \u2014 binary event." },
-          { text: "MOFCOM licensing behavior \u2014 whether \u201Cgeneral licenses\u201D actually clear in reasonable timeframes." },
-          { text: "Chinese domestic consumption growth (NdFeB magnets, LEDs) \u2014 affects tonnage available for export." },
-        ] },
-        { label: "Investment angle", items: [
-          { text: "Not directly investable, but unavoidable. Every portfolio with western gallium exposure is implicitly a bet on what China does in November 2026 and beyond. The relevant portfolio question isn\u2019t \u201Cdo I own Chinese gallium?\u201D but \u201Cwhich scenario \u2014 ban reimposition, ban renewal, or normalization \u2014 am I positioned for, and does my exposure survive the other two?\u201D" },
-        ] },
-      ],
-      disclaimer: "Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Aggregate: Primary Producer. Sources: USGS Mineral Commodity Summaries, MOFCOM notices, SMM benchmarks, Fastmarkets. Not investment advice.",
+      { label: "What is this and why does it matter here?", items: [
+        { text: "Chinese Primary Supply is not a single company. It is the aggregate output of approximately 20 Chinese alumina refineries that recover gallium as a byproduct of aluminum production from bauxite, plus a small number of secondary recovery operations. The mix includes state-owned operators (Chinalco / Aluminum Corporation of China, Shandong Weiqiao Pioneering Group, China Hongqiao Group, China Power Investment), privately held specialty processors (Vital Materials, Zhuzhou Keneng Materials, Beijing Jiya Semiconductor Material), and integrated zinc-aluminum smelting operations that have added gallium recovery circuits over the past two decades. The aggregate is geographically concentrated in Shandong, Henan, Yunnan, and Inner Mongolia provinces, where alumina refining infrastructure clusters around bauxite supply chains." },
+        { text: "Chinese capacity grew from approximately 140 t/yr in 2010 to roughly 1,000 t/yr installed capacity by 2022, and continues to expand. Actual production runs at approximately 590 t/yr \u2014 meaning utilization is around 59%, with substantial idle capacity that can be brought online or held back as policy dictates. The deliberate overhang is the structural fact: China holds enough capacity to flood the global market or to constrain it, and Beijing\'s policy choices determine which scenario plays out at any given moment." },
+        { text: "This aggregate sits on the gallium chain page despite not being directly investable because it is the single most important variable in the entire gallium investment thesis. Every other entity covered on this page \u2014 Alcoa, Metlen, Rio Tinto, Korea Zinc, Dowa, 5N Plus \u2014 derives its investability from its position relative to what China does with the 1,000 t/yr capacity it controls. A portfolio manager forming a view on western gallium projects without modeling Chinese supply scenarios is missing the central variable. The aggregate is here as a tracking artifact, not as an investment vehicle." },
+      ] },
+      { label: "How does value flow through this entity?", items: [
+        { text: "There is no direct value flow to western investors. Chinese primary gallium producers are state-owned, state-affiliated, or traded only on Chinese A-share or Hong Kong exchanges with limited foreign institutional access. Chalco trades in Hong Kong and Shanghai with limited US access; Hongqiao trades in Hong Kong; Weiqiao operates partially through Hong Kong listings but gallium is buried inside aluminum-dominated revenue. None of the named entities offer a clean Chinese gallium pure-play available to non-Chinese institutional investors." },
+        { text: "The indirect value flow \u2014 and the entire reason the aggregate matters \u2014 is that Chinese policy sets both the floor and the ceiling on global gallium pricing, and every western position must be modeled against a Chinese supply scenario:" },
+      ] },
+      { label: "Investment angle", items: [
+        { text: "Chinese Primary Supply is not directly investable for western institutional capital, but it is unavoidable. Every portfolio with western gallium exposure is implicitly a bet on what China does in November 2026 and beyond. The relevant portfolio question isn\'t \"do I own Chinese gallium?\" \u2014 that\'s not really available \u2014 but \"which scenario am I positioned for, and does my exposure survive the other two?\"" },
+        { text: "The variant perception worth holding: most investor framing treats Chinese supply as a binary \"ban yes/ban no\" question, but the more accurate framing is structural. The Chinese capacity overhang of ~400 t/yr idle production is permanent strategic optionality for Beijing regardless of any specific policy decision. Even if controls relax in November 2026, Beijing retains the ability to reimpose them at any time, which means the western premium has a structural floor below the Chinese domestic price but above what a fully liberalized global market would clear at. Investors who treat the November 2026 expiry as the single binary event miss the longer-running structural asymmetry." },
+        { text: "The \"bear case\" for western positions in the chain is that China relaxes controls more aggressively than expected, possibly as part of a broader US-China trade deal or as a strategic concession. In this scenario, western retail pricing compresses, Western capacity projects face margin pressure, and several may delay FID or scale back. Dowa retains technical capability but loses the geopolitical premium. 5N Plus retains its diversified platform but the gallium contribution shrinks. The chain rebuild thesis weakens but doesn\'t disappear." },
+        { text: "For investors already positioned across the western gallium chain, the monitoring question is: how does my portfolio perform in each of the three Chinese supply scenarios? Reimposition is bullish for everyone; renewal is bullish for capacity builders and refiners; relaxation is bearish for capacity builders but neutral-to-modestly-bearish for refiners. A portfolio that survives all three scenarios is properly hedged; a portfolio that requires reimposition to work is implicitly a directional China-policy trade." },
+      ] },
+      { label: "What is this and why does it matter here?", items: [
+        { text: "Dowa Holdings is a large Japanese specialty metals company, founded in 1884 as a mining operation and today operating across four primary business segments: zinc and lead smelting (the legacy and largest revenue contributor), electronic materials (where gallium and other specialty refined metals reside), metal recycling, and metal processing. The company runs major zinc smelters in Japan, electronic materials operations in multiple Japanese sites and Southeast Asia, and a network of metal recycling facilities that have positioned Dowa as one of the world\'s leading recyclers of specialty metals from electronic waste. Group revenue runs ~¥850B (~$5.8B USD) against a ~$5.5B market cap, with margins driven by zinc treatment charges, electronic materials pricing premiums, and recycling spreads." },
+        { text: "What puts Dowa on this page \u2014 and at the top of the gallium WTMI ordering \u2014 is its role as the structural western chokepoint in high-purity gallium refining. Outside China, only a handful of companies can produce 6N (99.9999%) and higher purity gallium at the volumes and quality grades that semiconductor and defense customers require. Dowa is the leading supplier in this category. When a Japanese, Korean, Taiwanese, or US semiconductor maker needs gallium that isn\'t routed through Chinese export licensing, Dowa is the default supplier. After China\'s December 2024 US-targeted export ban specifically, Dowa\'s role as a pass-through refiner for non-Chinese buyers became structurally more important \u2014 and remains so as long as Chinese export controls are in place." },
+        { text: "The strategic significance is that Dowa is the western refining chokepoint that the four primary-production projects (Alcoa, Metlen, Rio Tinto/Indium, Korea Zinc/Crucible) ultimately depend on for downstream purification. Even as new western primary capacity comes online, the high-purity refining step remains concentrated in Dowa and a small number of secondary refiners (5N Plus in Canada, Indium Corporation in the US, PPM Pure Metals in Germany). The chain rebuild thesis assumes Dowa continues to operate at scale; if it does, Dowa captures a structural premium throughout the rebuild." },
+      ] },
+      { label: "How does value flow through this entity?", items: [
+        { text: "Dowa\'s gallium economics flow through several distinct mechanisms:" },
+      ] },
+      { label: "Investment angle", items: [
+        { text: "Dowa is the structural western chokepoint in high-purity gallium refining and the lowest-volatility, highest-quality way to play the gallium chain rebuild. For investors who want Japanese specialty metals exposure with genuine gallium optionality embedded inside an investment-grade balance sheet, Dowa is the cleanest equity vehicle outside the four capacity builders. The dividend yield (~2-3%) provides income while the chain rebuild plays out over 2026-2029." },
+        { text: "The variant perception that would make Dowa undervalued: the market is pricing it as a Japanese zinc-lead conglomerate with electronic materials optionality, but Dowa\'s position as the only at-scale non-Chinese gallium refiner \u2014 combined with its recycling scale and Japanese government strategic alignment \u2014 could re-rate Dowa as the structural western critical minerals refiner of choice. If JAGA gallium ships to Dowa for downstream refining and Japanese government procurement formalizes Dowa\'s strategic role, the equity transitions from cyclical zinc producer to platform refiner." },
+        { text: "The bear case is that Dowa\'s gallium contribution is too small inside a zinc-dominated business to drive equity re-rating, even in tight markets. Gallium revenue at full premium pricing is less than 1% of group revenue. Zinc cycle dominates near-term earnings; Tokyo listing limits institutional flow; and competing western refiners (5N Plus, Indium Corporation, PPM Pure Metals) plus new primary producers entering refining could compress Dowa\'s pricing power over 2028-2030. The structural premium is real but bounded." },
+        { text: "For investors already positioned, the monitoring questions are: does JAGA gallium ship to Dowa rather than alternative refiners; does Japanese government policy formalize Dowa\'s strategic role; and does Dowa expand high-purity refining capacity in the next 24 months? Two of three would meaningfully change the equity story." },
+      ] },
+      { label: "What is this and why does it matter here?", items: [
+        { text: "5N Plus is a Canadian specialty metals refiner headquartered in Montreal, with operations spanning North America and Europe. The business model is to take in raw materials \u2014 gallium, germanium, indium, tellurium, bismuth, antimony \u2014 and purify them to the high-purity grades semiconductor manufacturers, photovoltaic producers, pharmaceutical companies, and defense suppliers require. The company name comes from \"5N\" \u2014 99.999% pure \u2014 the minimum purity grade it targets, with several products reaching 7N or higher. The business operates across two segments: Specialty Semiconductors (the larger and higher-margin segment) and Performance Materials (steadier industrial and pharmaceutical specialty chemicals)." },
+        { text: "The company\'s most valuable asset is AZUR SPACE, a German subsidiary that produces germanium-based multi-junction solar cells for satellites. AZUR is the largest non-Chinese producer of space-grade photovoltaics globally, with a 265-day order backlog driven by LEO constellation buildouts (Starlink, Kuiper, OneWeb, military satellite programs). The space solar business is structurally separate from terrestrial photovoltaics and commands premium pricing because the qualification cycle for satellite components takes years and there are few qualified suppliers globally." },
+        { text: "What puts 5N Plus on the gallium chain page is its position as one of three meaningful western high-purity gallium refiners \u2014 alongside Dowa in Japan and Indium Corporation in the US. 5N Plus produces an estimated 2-5 tonnes per year of high-purity gallium from its Montreal facility, which is small relative to global non-Chinese gallium output (~15-30 t/yr) but strategically important as the only Canadian source of refined gallium and a qualified supplier to North American defense and semiconductor customers. More importantly, 5N Plus is positioned as the highest-quality western critical minerals platform \u2014 gallium is one piece of a portfolio that includes germanium, tellurium, and indium, all of which face their own bifurcated supply pictures with western shortage premiums." },
+      ] },
+      { label: "How does value flow through this entity?", items: [
+        { text: "5N Plus captures value through several distinct channels:" },
+      ] },
+      { label: "Investment angle", items: [
+        { text: "5N Plus is the highest-quality western critical minerals name on public markets, and gallium is a small but strategic piece of the thesis. For portfolios that want broad critical minerals exposure with operational discipline, multi-year contracted revenue, sovereign backing, and a credible balance sheet, 5N Plus is arguably the best-scaled North American option in the category. The +532% trailing 12-month run reflects a genuine re-rating from specialty refiner to platform, not speculative excess." },
+        { text: "The variant perception that would make 5N Plus undervalued: the market is pricing it primarily on AZUR space solar and the First Solar CdTe relationship \u2014 both of which are genuine value drivers \u2014 but the optionality on gallium-specific refining capacity expansion (driven by JAGA or other primary production coming online) and the broader cross-chain critical minerals platform value are likely underpriced. If 5N Plus announces dedicated gallium capacity expansion with sovereign backing or signs additional multi-year contracts, the platform multiple expands further." },
+        { text: "The bear case is valuation and execution. The +532% run has compressed forward multiples; any miss on AZUR ramp, First Solar volume, or government-backed project execution would compress the equity sharply. Gallium itself is too small to support the multiple if AZUR space solar disappoints. New CEO transition adds execution risk through 2026. And the Tokyo-listed Dowa is structurally a more concentrated chokepoint play in gallium specifically \u2014 for pure gallium exposure, 5N Plus is too diversified." },
+        { text: "For investors already positioned, the monitoring questions are: does AZUR hit the 25% capacity lift on schedule; does 5N Plus announce gallium-specific capacity expansion within 12 months; and does the Utah germanium recycling project ramp successfully? Two of three would sustain the platform thesis through 2026-2027." },
+      ] },
+    ],
+      disclaimer: "Disclaimer: Stillpoint Intelligence \u00b7 Gallium Chain \u00b7 Layer: Aggregate: Primary Producer. Sources: USGS Mineral Commodity Summaries, MOFCOM notices and trade enforcement announcements, SMM benchmarks, SMI benchmarks, Fastmarkets, Chinese provincial industrial planning disclosures. Not investment advice.",
     },
     "gallium-metal": {
       name: "Gallium metal",
