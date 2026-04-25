@@ -53,7 +53,7 @@ export default function FiberOpticInputPage() {
 
   // Scroll spy
   React.useEffect(() => {
-    const ids = ["thesis", "how-its-made", "supply-tree", "dependencies", "supply-demand", "so-what", "money", "risk"];
+    const ids = ["thesis", "supply-tree", "dependencies", "supply-demand", "so-what", "money", "catalysts", "risk"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -395,12 +395,12 @@ export default function FiberOpticInputPage() {
         <style>{`@media (max-width: 1399px) { .toc-nav { display: none !important; } }`}</style>
         {[
           { id: "thesis", label: "Thesis" },
-          { id: "how-its-made", label: "How it\u2019s made" },
           { id: "supply-tree", label: "Supply tree" },
           { id: "dependencies", label: "Dependencies" },
           { id: "supply-demand", label: "Supply \u2192 Demand" },
           { id: "so-what", label: "So what" },
           { id: "money", label: "Where the money is" },
+          { id: "catalysts", label: "Catalysts" },
           { id: "risk", label: "Risk" },
         ].map((s) => (
           <div
@@ -429,7 +429,7 @@ export default function FiberOpticInputPage() {
         <div style={{ height: 1, background: "#252220", margin: "20px 0 24px 12px", width: 100 }} />
         <p style={{ fontSize: 9, letterSpacing: "0.06em", color: "#555", margin: "0 0 8px 12px" }}>Upstream</p>
         {[
-          { name: "Germanium", linked: true, href: "/" },
+          { name: "Germanium", linked: true, href: "/input/germanium" },
           { name: "Silicon tetrachloride", linked: false, href: "" },
           { name: "Helium", linked: false, href: "" },
         ].map((item, i) => (
@@ -440,14 +440,16 @@ export default function FiberOpticInputPage() {
               onMouseLeave={e => { if (item.linked) e.currentTarget.style.color = "#a09888"; }}>
               {item.name}
             </span>
-            {item.linked && <span style={{ fontSize: 10, color: "#4a4540", marginLeft: 6 }}>→</span>}
+            {item.linked && <span style={{ fontSize: 10, color: "#4a4540", marginLeft: 6 }}>&rarr;</span>}
           </div>
         ))}
         <p style={{ fontSize: 9, letterSpacing: "0.06em", color: "#555", margin: "16px 0 8px 12px" }}>Downstream</p>
         {[
           { name: "AI datacenters" },
+          { name: "Telecom" },
           { name: "Subsea cables" },
           { name: "Military / UAV" },
+          { name: "BEAD broadband" },
         ].map((item, i) => (
           <div key={`d${i}`} style={{ display: "flex", alignItems: "center", padding: "1px 0 1px 12px" }}>
             <span style={{ fontSize: 10, color: "#4a4540" }}>{item.name}</span>
@@ -495,11 +497,12 @@ export default function FiberOpticInputPage() {
             <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {[
                 "Fiber optics are glass strands that transmit data as pulses of light. They serve as the physical layer connecting everything inside and between AI datacenters, telecom networks, and cross-ocean subsea systems.",
-                "The core inputs are high-purity silica, germanium, and helium. Silica glass forms the fiber body. Germanium is used as a dopant to create the refractive index gradient that guides light through the core. Helium \u2014 for which there is no substitute \u2014 cools the glass during the fiber drawing process. Without these three materials, there is no fiber.",
-                "Supply is constrained. Global production sits at ~720M fiber strand-km/yr. Preform lines are at full utilization. One equipment supplier \u2014 Rosendahl Nextrom \u2014 carries 18-24 month backlogs. Prices are at 7-year highs.",
-                "Driven by AI. ~20 GW of AI datacenter capacity is entering construction annually. Each GW requires ~6.5M fiber strand-km. A 130M km supply gap cannot close before 2027.",
-                "New preform capacity, DRC germanium ramp, and hollow-core fiber all target 2027-2028. Supply constraints persist through at least 2027.",
-                "The suppliers of germanium tetrachloride, fiber preform manufacturers, and proprietary equipment suppliers positioned at chokepoints will capture most of the value at this layer.",
+                "The core inputs are high-purity silica, germanium, and helium. Silica forms the fiber body, germanium is doped into the core to create the refractive index gradient that guides light, and helium cools the glass during fiber drawing.",
+                "Global production sits at ~720M fiber strand-km/yr. Preform lines are at full utilization. One equipment supplier \u2014 Rosendahl Nextrom \u2014 carries 18-24 month backlogs.",
+                "Fiber prices are at 7-year highs. Standard G.652D prices are up 150% since January 2025. Datacenter-grade G.657A is up over 210%. The price moves reflect simultaneous constraints in germanium, SiCl\u2084, and helium \u2014 combined with AI demand pulling forward years of order flow.",
+                "AI datacenter buildout is the dominant growth vector. ~20 GW of AI datacenter capacity is entering construction annually. Each GW requires ~6.5M fiber strand-km. A 130M km supply gap cannot close before 2027.",
+                "Supply response is 2027-2028 at earliest. New preform capacity, the DRC germanium ramp via Umicore offtake, and hollow-core fiber commercialization all target the same window. None of them close the gap before then.",
+                "The investable surface of the fiber chain is the rebuild itself \u2014 chokepoint refiners and fiber manufacturers with locked-in supply, capacity-builders bringing new preform online, and the equipment monopoly that defines the industry\u2019s capacity ceiling.",
               ].map((point, i) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
                   <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 7 }} />
@@ -510,104 +513,26 @@ export default function FiberOpticInputPage() {
           </div>
         </div>
 
-        {/* ═══ SECTION 2: HOW IT'S MADE ═══ */}
-        <div id="how-its-made" style={{ marginBottom: "56px", paddingTop: 20 }}>
-          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
-            HOW IT&apos;S MADE
-          </p>
-
-          <div style={{ display: "flex", gap: "12px" }}>
-
-            {/* Card 1: Raw Material Inputs */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                01 · RAW MATERIAL INPUTS
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Refined germanium is chemically converted into germanium tetrachloride (GeCl₄) — the dopant that creates the refractive index gradient in the fiber core. High-purity silica (SiCl₄) forms the glass body itself. Both require extreme purity levels measured in parts per billion.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Fiber-grade GeCl₄ requires ultra-high purity — specifically removing arsenic contamination. This demands proprietary techniques and specialized equipment that can&apos;t be purchased off the shelf.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                Only 6 facilities worldwide produce fiber-grade GeCl₄. 4 are in China, 1 in Russia, and 1 in the west — a single site in Belgium.
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~220t</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>GeCl₄ produced annually</span>
-              </div>
-            </div>
-
-            {/* Card 2: Preform Manufacturing */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                02 · PREFORM MANUFACTURING
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                GeCl₄ is vaporized and deposited layer by layer inside a silica tube, building up a glass preform rod with a germanium-doped core. This step determines the optical properties of the final fiber.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                The process itself is well understood — nearly 20 manufacturers produce preforms globally. The constraint is equipment. Only one company makes the deposition systems. Adding a new line takes 18–24 months.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                ~20 preform manufacturers globally. Most are vertically integrated — they also draw fiber and assemble cable. Lines running at full utilization.
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~24,000t</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>preform produced annually</span>
-              </div>
-            </div>
-
-            {/* Card 3: Fiber Draw & Cable Assembly */}
-            <div style={{
-              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
-              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
-            }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
-                03 · FIBER DRAW & CABLE ASSEMBLY
-              </p>
-              <p style={{ fontSize: "11.5px", color: "#a09888", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                The preform is heated in a draw tower and pulled into hair-thin fiber strands, coated for protection, then bundled with strength members and sheathed into finished cable. Helium gas is used to cool the fiber during drawing — there is no substitute.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
-                Drawing and assembly are the least constrained steps. The bottleneck is upstream — you can only draw as much fiber as you have preforms. Helium supply is tight, with a third of global production disrupted by conflict in the Middle East.
-              </p>
-              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHO CAN DO IT</p>
-              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
-                Most of the ~20 preform manufacturers plus ~10 dedicated cable assemblers who buy fiber strand and bundle it into finished products.
-              </p>
-              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
-                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~720M</span>
-                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>fiber strand-km produced annually</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
         {/* ═══ SUPPLY TREE ═══ */}
         <div id="supply-tree" style={{ marginBottom: "56px", paddingTop: 20 }}>
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>
             SUPPLY TREE
           </p>
-          {/* Key takeaway */}
-          <div style={{ marginBottom: 32 }}>
-            <div style={{ borderLeft: "2px solid #3a6a8030", paddingLeft: 20 }}>
-              <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: "#6a9ab8", margin: "0 0 10px 0" }}>KEY TAKEAWAY</p>
-              <p style={{ fontSize: 13, color: "#a09888", lineHeight: 1.3, margin: 0 }}>
-                Three critical inputs feed fiber production: germanium tetrachloride as the core dopant, silicon tetrachloride as the glass substrate, and helium for cooling during fiber draw. GeCl₄ is the most constrained — <span style={{ color: "#ece8e1", fontWeight: 500 }}>~87t</span> of refined germanium enters the fiber supply chain annually, converted by just 6 facilities worldwide. Corning holds ~40% of fiber manufacturing. Total output: <span style={{ color: "#ece8e1", fontWeight: 500 }}>~720M fiber strand-km/yr</span> serving datacenter, telecom, and subsea markets.
-              </p>
+          {/* Key Takeaways card */}
+          <div style={{ background: cardBg, border: `1px solid ${borderColor}`, borderRadius: "10px", padding: "24px 28px", marginBottom: 32 }}>
+            <p style={{ fontSize: "9px", letterSpacing: "0.1em", color: dimText, margin: "0 0 10px 0" }}>KEY TAKEAWAYS</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 0 }}>
+              {[
+                "Three constrained inputs feed fiber production \u2014 germanium tetrachloride from a single western chokepoint, silicon tetrachloride for the glass body, and helium for cooling during fiber drawing.",
+                "Only about 20 preform manufacturers globally produce the doped silica rods that get drawn into fiber, and the lines are running at full utilization.",
+                "Rosendahl Nextrom in Austria is the global monopoly on preform deposition equipment \u2014 18-24 month order backlogs define the capacity ceiling for the entire industry.",
+                "Corning controls ~40% of global fiber manufacturing capacity and stopped selling bare glass fiber to other cable makers in late 2025, structurally tightening supply for everyone downstream.",
+              ].map((text, i) => (
+                <div key={i} style={{ display: "flex", gap: 8, marginBottom: 4 }}>
+                  <span style={{ fontSize: 12.5, color: "#706a60", flexShrink: 0, minWidth: 16 }}>{i + 1}.</span>
+                  <p style={{ fontSize: 12.5, color: "#a09888", lineHeight: 1.6, margin: 0 }}>{text}</p>
+                </div>
+              ))}
             </div>
           </div>
           <div style={{ border: `1px solid ${borderColor}`, borderRadius: "10px", overflow: "hidden", background: "#131210", position: "relative" as const }}>
@@ -688,6 +613,74 @@ export default function FiberOpticInputPage() {
               {subFirstXs.map((tx, i) => { const fx = subW / 2; return <path key={i} d={`M ${fx},0 C ${fx},40 ${tx},40 ${tx},80`} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" strokeDasharray="4,3" />; })}
             </svg>
             <TreeMap geometry={subGeo} nodes={allNodes} layerConfig={lc} svgWidth={subW} svgHeight={subH} onNodeClick={setSelectedNode} onLayerClick={() => {}} layerPanels={{}} />
+          </div>
+
+          {/* How It's Made cards — below the tree */}
+          <div style={{ display: "flex", gap: "12px", marginTop: 32 }}>
+
+            {/* Card 1: Chemical Conversion */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                CHEMICAL CONVERSION
+              </p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Refined germanium is converted to GeCl&#8324; at 8N purity to dope the fiber core. High-purity silica is converted to SiCl&#8324; for the glass body. Helium is purified for fiber-drawing cooling.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                Fiber-grade GeCl&#8324; requires removing arsenic to parts-per-billion levels. Only 6 facilities globally produce it: four in China, one in Russia (sanctioned), one in the west &mdash; Umicore in Belgium. Helium has no substitute and trades on physical scarcity.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~220t/yr</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>fiber-grade GeCl&#8324; produced globally</span>
+              </div>
+            </div>
+
+            {/* Card 2: Preform Manufacturing */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                PREFORM MANUFACTURING
+              </p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                GeCl&#8324; is vaporized and deposited layer by layer inside a silica tube, building up a glass preform rod with a germanium-doped core. The optical properties of the final fiber are set at this step.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                Only one equipment supplier &mdash; Rosendahl Nextrom in Austria &mdash; produces the deposition systems. Adding a new preform line takes 18-24 months. About 20 preform manufacturers globally; lines run at full utilization.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~24,000t/yr</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>preform produced globally</span>
+              </div>
+            </div>
+
+            {/* Card 3: Fiber Draw & Cable Assembly */}
+            <div style={{
+              flex: 1, background: cardBg, border: `1px solid ${borderColor}`,
+              borderRadius: "10px", padding: "18px 20px", display: "flex", flexDirection: "column" as const,
+            }}>
+              <p style={{ fontSize: "9px", letterSpacing: "0.08em", color: accent, margin: "0 0 12px 0", fontWeight: 500 }}>
+                FIBER DRAW &amp; CABLE ASSEMBLY
+              </p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 14px 0" }}>
+                Preforms are heated in a draw tower and pulled into hair-thin strands at 10-20 m/s, coated, then bundled with strength members and sheathed into finished cable. Helium cools the fiber during drawing.
+              </p>
+              <p style={{ fontSize: "9px", letterSpacing: "0.06em", color: dimText, margin: "0 0 4px 0" }}>WHY IT&apos;S HARD</p>
+              <p style={{ fontSize: "10.5px", color: "#807870", lineHeight: 1.55, margin: "0 0 0 0", flex: 1 }}>
+                Drawing isn&apos;t the binding constraint &mdash; preform supply is. You can only draw as much fiber as preform output supports. Helium supply is tight, with a third of global production disrupted.
+              </p>
+              <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid #222018" }}>
+                <span style={{ fontSize: "12px", color: warmWhite, fontWeight: 500 }}>~720M fiber-km/yr</span>
+                <span style={{ fontSize: "9px", color: dimText, marginLeft: "6px" }}>fiber strand produced globally</span>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -913,7 +906,7 @@ export default function FiberOpticInputPage() {
           const analysisBg = "#141210";
           const blue = "#6a9ab8";
           const soWhatBlocks: { id: string; label: string; question: string; teaser: string; analysis: { type: string; text?: string; author?: string; name?: string; desc?: string }[] }[] = [
-            { id: "signals", label: "Market signals", question: "What is the price telling us?", teaser: "Fiber prices at 7-year high. Germanium up 4.5x since Jan 2024. Lead times past 60 weeks. At least one major manufacturer sold out through 2026.", analysis: [
+            { id: "signals", label: "Market signals", question: "What is the price telling us?", teaser: "Fiber prices reaching 7-year highs alongside a 4.5x germanium price rise and 60+ week lead times are telling us that AI datacenter demand has pulled forward years of fiber industry orders into a supply chain that cannot expand fast enough to meet them.", analysis: [
                 { type: "prose", text: "The fiber optic supply chain is exhibiting classic shortage pricing across every major input simultaneously \u2014 a pattern not seen since the telecom buildout of 2000. Standard telecom fiber (G.652D) has surged from approximately 20 RMB per core-km to 35-50+ RMB, a 70-120% increase representing a 7-year high. This is not a localized or transient spike. CRU data shows Chinese G.652D bare-fibre prices advanced more than 80% between November 2025 and January 2026 alone, with actual transactions occurring in the 40-50 yuan range." },
                 { type: "prose", text: "Datacenter-grade fiber (G.657A), the bend-insensitive variant deployed in AI GPU clusters and military drone communication systems, has seen even steeper gains \u2014 surging from over 30 yuan per fiber-km to more than 50 yuan per fiber-km in a single month. G.654.E ultra-low-loss long-haul fiber and OM5 high-bandwidth multimode fiber command 20-30% premiums on top of already elevated prices. Hollow-core fiber trades at approximately 1,000x the price of standard G.652D, reflecting both its scarcity and its premium performance characteristics." },
                 { type: "prose", text: "Upstream, the raw material picture is equally strained. Germanium metal prices have risen from $1,500/kg in January 2024 to over $7,000/kg in international markets \u2014 a 4.5x increase driven by the convergence of rising industrial demand and Chinese export controls. Helium, essential as a coolant in fiber draw towers, has increased 135% over two years following plant outages in Russia and the United States. Silicon tetrachloride, the bulk material in preform manufacturing, is up approximately 50% according to CRU." },
@@ -921,7 +914,7 @@ export default function FiberOpticInputPage() {
                 { type: "quote", text: "In my professional career I\u2019ve never seen anything like this inflationary crunch.", author: "Wendell Weeks, CEO of Corning \u2014 the world\u2019s largest fiber producer \u2014 to the Financial Times" },
                 { type: "prose", text: "Corning\u2019s actions confirm the severity: by October 2025, the company reportedly stopped selling bare glass fiber to other cable manufacturers in order to preserve supply for its own anchor customers. CEO Wendell Weeks declined to comment directly but acknowledged that \u201Cdemand for our products relative to our supply puts us in a situation where we are quite tight.\u201D Globally, fiber optic cable prices have climbed from a 2021 low of $3.70 per fibre-km to $6.30 \u2014 a 70% increase \u2014 with the steepest rises in Europe, India, and China." },
               ] },
-            { id: "constraints", label: "Supply constraints", question: "Why can\u2019t supply respond?", teaser: "Three independent bottlenecks \u2014 preform equipment, GeCl\u2084 conversion, helium. CRU estimates 138M fiber-km shortfall in 2026. New capacity won\u2019t arrive until end of 2027.", analysis: [
+            { id: "constraints", label: "Supply constraints", question: "Why can\u2019t supply respond?", teaser: "Supply cannot respond because three independent bottlenecks \u2014 preform deposition equipment from a single Austrian supplier, fiber-grade GeCl\u2084 from a single Belgian facility, and a constrained global helium market \u2014 must all expand simultaneously and none of them does before late 2027.", analysis: [
                 { type: "subhead", text: "Preform manufacturing equipment" },
                 { type: "prose", text: "The global preform manufacturing base is operating at full utilization. Expanding capacity is not a matter of capital \u2014 it is a matter of equipment availability. Nearly all preform deposition systems worldwide are manufactured by a single company: Rosendahl Nextrom, a private Austrian firm headquartered in Vantaa, Finland, operating as part of the Knill Gruppe industrial group (established 1712). Nextrom produces the MCVD, PCVD, OVD, and VAD systems that every major fiber manufacturer depends on." },
                 { type: "prose", text: "Every major fiber manufacturer is now attempting to expand simultaneously. The result is delivery backlogs of 18-24 months for new deposition equipment. Capacity ordered today will not produce fiber until 2028 at the earliest. This is not a problem that can be solved by spending more \u2014 there is a single supplier, and their production throughput is the physical ceiling on how fast the industry can grow." },
@@ -935,7 +928,7 @@ export default function FiberOpticInputPage() {
                 { type: "prose", text: "Global helium supply has been disrupted by plant outages in Russia and the United States. Helium spot prices soared to $15 per cubic meter in 2025, and the US Federal Helium Reserve is nearing depletion. Rosendahl Nextrom now actively markets helium recovery systems to fiber producers \u2014 a product that only exists because the shortage has become severe enough to justify the capital cost." },
                 { type: "callout", text: "CRU estimates the global fiber shortfall will reach approximately 138 million fiber-km in 2026 \u2014 a shortfall rate of 16.7%. This gap is expected to widen in 2027. New preform capacity initiated in 2025 will not reach commercialization until end of 2027 at the earliest. Industry consensus: the price uptrend will persist through at least 2026-2027, with the full bull cycle spanning 2 to 3 years." },
               ] },
-            { id: "competing", label: "Competing demand", question: "Who else needs this?", teaser: "AI datacenters, $42B federal broadband, military drones \u2014 all competing for the same fiber. Manufacturers cannibalizing telecom production for higher-margin datacenter fiber.", analysis: [
+            { id: "competing", label: "Competing demand", question: "Who else needs this?", teaser: "AI datacenter buildout, the $42B federal BEAD broadband program, military drone fiber, and continued telecom expansion are all competing for the same fixed pool of fiber output, with manufacturers actively cannibalizing telecom production for higher-margin datacenter products.", analysis: [
                 { type: "subhead", text: "Federal broadband (BEAD)" },
                 { type: "prose", text: "The US Broadband Equity, Access and Deployment program represents a $42 billion federal initiative to extend high-speed internet to rural and underserved communities. After years of delays, BEAD is finally entering its deployment phase in 2026. States are projecting to deploy just under 500,000 miles of fiber." },
                 { type: "prose", text: "The timing could not be worse for fiber availability. Because BEAD was delayed so long, the AI datacenter buildout leapfrogged it in the manufacturing queue. Only three US vendors manufacture BABA-compliant glass: Corning, OFS, and Prysmian \u2014 the same factories serving Meta, Microsoft, and Amazon. The fiber shortage directly threatens a flagship federal broadband program." },
@@ -945,14 +938,14 @@ export default function FiberOpticInputPage() {
                 { type: "prose", text: "Perhaps the most underappreciated dynamic: fiber manufacturers are actively shifting production from standard G.652D telecom fiber to higher-margin G.657A datacenter and drone fiber. This does not increase total output \u2014 it redirects it." },
                 { type: "prose", text: "Traditional telecom operators are getting squeezed from both sides: paying higher prices and waiting longer. Hyperscalers spent $416 billion on infrastructure in 2025, while global telecom capex is expected to decline 2% in 2026 (Dell\u2019Oro Group). In a supply-constrained market, whoever pays more gets served first." },
               ] },
-            { id: "geopolitical", label: "Geopolitical risk", question: "How could it get worse?", teaser: "China controls 83% of germanium under export licensing. US ban suspended until Nov 2026. Western buyers paying 3.5x premium. Reimposition = supply shock.", analysis: [
+            { id: "geopolitical", label: "Geopolitical risk", question: "How could it get worse?", teaser: "It gets worse if the November 2026 US-targeted Chinese germanium export ban suspension expires and is reimposed \u2014 western fiber manufacturers would lose access to ~120 t/yr of Chinese primary germanium that reaches them via third-country re-exports today.", analysis: [
                 { type: "prose", text: "In August 2023, MOFCOM placed export licensing requirements on six germanium products. Chinese exports dropped approximately 55%. In December 2024, China banned all germanium exports to the United States. Suspended until November 2026, but the global dual-use license requirement remains in full force." },
                 { type: "prose", text: "Western germanium now trades at approximately $7,000/kg versus Chinese domestic ~$2,000/kg \u2014 a 3.5x premium. The export licensing regime has severed the arbitrage mechanism: you cannot freely move germanium out of China, so the price divergence persists indefinitely." },
                 { type: "prose", text: "Stimson Center analysis reveals: US germanium imports from China dropped by ~5,900 kg while Belgian imports rose by ~6,150 kg. Germanium is being routed through Belgium \u2014 processed by Umicore, then sold onward at international prices. Umicore captures the arbitrage spread." },
                 { type: "prose", text: "Prysmian renewed its Umicore supply agreement in 2025, accepting a significant premium for supply security \u2014 a rational response to the new reality." },
                 { type: "callout", text: "The November 2026 deadline represents a binary risk event. A reimposition of the US export ban \u2014 or further tightening to restrict flows to Belgium \u2014 would send an immediate supply shock through an already constrained market. Even without a ban, the persistent uncertainty functions as a de facto tax on western buyers." },
               ] },
-            { id: "response", label: "Supply response", question: "What\u2019s being done?", teaser: "DRC ramping to Umicore. 5N Plus facility decision Nov 2026. All projects add feedstock \u2014 none add GeCl\u2084 conversion outside Umicore. Bottleneck concentrates further.", analysis: [
+            { id: "response", label: "Supply response", question: "What\u2019s being done?", teaser: "Three western supply responses are underway \u2014 STL/G\u00e9camines DRC tailings feeding Umicore, 5N Plus pursuing fiber-grade GeCl\u2084 qualification, and Corning building the world\u2019s largest cable plant \u2014 but none of them adds GeCl\u2084 conversion capacity outside Umicore, so the bottleneck concentrates further as feedstock expands.", analysis: [
                 { type: "item", name: "Umicore \u2014 EU Critical Raw Materials Act", desc: "Two EU-backed strategic projects: one focused on increasing germanium recovery yields, the other on new recycling technologies for complex waste. Meaningful process improvements \u2014 but optimization of an existing facility, not greenfield expansion. They improve Umicore\u2019s position without breaking the single-source dependency." },
                 { type: "item", name: "5N Plus (TSX: VNP) \u2014 St. George, Utah", desc: "Received $14.4 million from US DoD under the Defense Production Act. Separately evaluating a broader germanium refining facility, decision expected November 2026. If approved, adds ~15-20 tonnes/yr \u2014 meaningful against current western supply of ~26 tonnes. The single most binary catalyst for western germanium supply independence." },
                 { type: "item", name: "DRC / G\u00e9camines \u2014 Big Hill tailings (exclusive to Umicore)", desc: "STL operates the Big Hill site in Lubumbashi \u2014 14 million tonnes of century-old slag. First germanium concentrate exports October 2024 under exclusive Umicore offtake. Target: 30% of global germanium demand at full scale (~66 tonnes/yr). The most important new primary source of non-Chinese germanium in decades \u2014 but critically, all material flows to Umicore for GeCl\u2084 conversion." },
@@ -960,7 +953,7 @@ export default function FiberOpticInputPage() {
                 { type: "item", name: "PPM Pure Metals \u2014 Langelsheim, Germany", desc: "Acquired by China\u2019s Vital Materials in December 2020. Now operates as Vital Pure Metal Solutions GmbH. Not independent western capacity \u2014 Chinese-owned and Chinese-controlled." },
                 { type: "callout", text: "Every expansion project adds raw germanium feedstock. None add GeCl\u2084 conversion capacity outside of Umicore\u2019s single facility in Belgium. The feedstock constraint eases gradually. The conversion bottleneck concentrates further. Umicore\u2019s position strengthens with every tonne of new feedstock that has nowhere else to go." },
               ] },
-            { id: "technology", label: "Technology", question: "What could change the game?", teaser: "Hollow-core fiber eliminates germanium entirely. Microsoft deploying. ~20,000 km by end 2026 vs billions installed. Arrives after the crisis peaks.", analysis: [
+            { id: "technology", label: "Technology", question: "What could change the game?", teaser: "Hollow-core fiber eliminates germanium entirely by guiding light through air rather than doped glass \u2014 Microsoft is already deploying it on Azure \u2014 but the technology arrives at scale around 2028-2030, well after the current supply crisis peaks, and even then displaces only a fraction of installed fiber.", analysis: [
                 { type: "subhead", text: "Hollow-core fiber (HCF)" },
                 { type: "prose", text: "Hollow-core fiber represents the most fundamental potential disruption: it eliminates germanium from the manufacturing process entirely. Light travels through air enclosed within a microstructured cladding, approximately 30% faster than through glass. For latency-sensitive applications like HFT, AI training synchronization, and real-time inference, this performance advantage is significant." },
                 { type: "prose", text: "Microsoft has deployed 1,280 km across Azure with zero field failures and 0.091 dB/km attenuation. Target: 15,000 km by late 2026. YOFC achieved world-record 0.040 dB/km in lab conditions and 91.2 km from a single preform draw." },
@@ -1053,6 +1046,72 @@ export default function FiberOpticInputPage() {
           </div>
 
         </div>
+        {/* ═══ CATALYSTS ═══ */}
+        <div id="catalysts" style={{ marginBottom: 56, paddingTop: 20 }}>
+          <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>CATALYSTS</p>
+
+          {/* Near-term */}
+          <div style={{ marginBottom: 28 }}>
+            <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 14px 0", fontWeight: 500 }}>NEAR-TERM (NEXT 6 MONTHS)</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
+              {[
+                { date: "April 28, 2026", desc: "Corning Q1 2026 earnings (Optical Communications segment trajectory; Hickory plant ramp commentary)" },
+                { date: "April-May 2026", desc: "Prysmian Q1 2026 earnings (preform supply contracts, BEAD pipeline visibility)" },
+                { date: "May 2026", desc: "Fujikura Q4 FY26 earnings (US manufacturing capacity expansion update, AFL subsidiary defense backlog)" },
+                { date: "June 2026", desc: "5N Plus fiber-grade GeCl\u2084 commercial qualification update (status of pursuit of second western GeCl\u2084 supplier role)" },
+                { date: "July-August 2026", desc: "YOFC interim results (Chinese fiber capacity utilization, hollow-core fiber commercial milestones)" },
+                { date: "August 2026", desc: "Three-year anniversary of MOFCOM germanium export licensing (Aug 2023); possible policy review affecting GeCl\u2084 supply" },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                  <span style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, flexShrink: 0 }}>{item.date}</span>
+                  <span style={{ fontSize: 12.5, color: dimmer }}>&mdash;</span>
+                  <span style={{ fontSize: 12.5, color: muted }}>{item.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Medium-term */}
+          <div style={{ marginBottom: 28 }}>
+            <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 14px 0", fontWeight: 500 }}>MEDIUM-TERM (6-12 MONTHS)</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
+              {[
+                { date: "November 27, 2026", desc: "US-targeted Chinese export ban suspension expiry (binary catalyst \u2014 reimposition would tighten western GeCl\u2084 supply for fiber manufacturers)" },
+                { date: "Q1 2027", desc: "Hickory mega-plant first production (Corning\u2019s Meta-anchored facility \u2014 North Carolina)" },
+                { date: "Q1 2027", desc: "STL/G\u00e9camines DRC tailings full-rate germanium production under Umicore offtake (relieves Umicore feedstock constraint, indirectly relieves fiber chain)" },
+                { date: "Q2 2027", desc: "Microsoft Azure hollow-core fiber commercial deployment expansion (validation of HCF for production AI workloads)" },
+                { date: "Q3 2027", desc: "BEAD broadband deployment ramp (state-level fiber procurement begins at scale)" },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                  <span style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, flexShrink: 0 }}>{item.date}</span>
+                  <span style={{ fontSize: 12.5, color: dimmer }}>&mdash;</span>
+                  <span style={{ fontSize: 12.5, color: muted }}>{item.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Long-term */}
+          <div>
+            <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 14px 0", fontWeight: 500 }}>LONG-TERM (12+ MONTHS)</p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
+              {[
+                { date: "2028", desc: "Hollow-core fiber share of new fiber deployments expected to reach 5-10% per IOWN Forum roadmap" },
+                { date: "2028-2029", desc: "US Defense Production Act Title III investments in domestic fiber and germanium capacity expected to deploy" },
+                { date: "2028", desc: "Corning Springboard plan target: $11B incremental annualized sales (testable trajectory for AI fiber thesis)" },
+                { date: "2029-2030", desc: "Multicore fiber commercial transition (potential further reduction in per-strand fiber-km demand if multicore takes share)" },
+                { date: "2030+", desc: "Hollow-core fiber commercialization at scale could begin meaningfully displacing germanium-doped fiber in datacenter applications" },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                  <span style={{ fontSize: 12.5, color: warmWhite, fontWeight: 500, flexShrink: 0 }}>{item.date}</span>
+                  <span style={{ fontSize: 12.5, color: dimmer }}>&mdash;</span>
+                  <span style={{ fontSize: 12.5, color: muted }}>{item.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* ═══ RISK ═══ */}
         <div id="risk" style={{ marginBottom: 56, paddingTop: 20 }}>
           <p style={{ fontSize: 20, letterSpacing: "0.06em", color: dimText, margin: 0, marginBottom: 24, paddingBottom: 10, borderBottom: "0.5px solid #555" }}>RISK</p>
@@ -1078,9 +1137,6 @@ export default function FiberOpticInputPage() {
               <p style={{ fontSize: 10, letterSpacing: "0.08em", color: "#4a4540", margin: "0 0 14px 0" }}>WHAT COULD SOFTEN DEMAND</p>
               <div style={{ display: "flex", flexDirection: "column" as const, gap: 14 }}>
                 {[
-                  { risk: "AI infrastructure spending slows", assessment: "Datacenter share of fiber demand rising from 5% to 30%. A correction reduces the growth rate but telecom, BEAD, and defense demand persist independently." },
-                  { risk: "Hollow-core fiber reaches scale", assessment: "Eliminates germanium dependency entirely. Microsoft deploying. But ~20,000 km vs billions installed, ~1,000x standard fiber price. 2030+ risk." },
-                  { risk: "Capacity cannibalization reverses", assessment: "If datacenter demand softens, manufacturers shift back to G.652D telecom fiber. Eases telecom shortage but signals broader demand weakness." },
                   { risk: "BEAD program delayed further", assessment: "Reduces near-term demand for BABA-compliant fiber. But frees capacity for datacenter builds \u2014 net neutral for total fiber demand." },
                 ].map((item, i) => (
                   <div key={i}>
@@ -1092,7 +1148,7 @@ export default function FiberOpticInputPage() {
             </div>
           </div>
           <div style={{ borderTop: `1px solid ${borderColor}`, paddingTop: 16, marginTop: 20 }}>
-            <p style={{ fontSize: 12, color: muted, lineHeight: 1.6, margin: 0 }}>Three independent bottlenecks \u2014 preform equipment, GeCl\u2084 conversion, and helium \u2014 must all ease simultaneously for supply to normalize. None resolve before 2027.</p>
+            <p style={{ fontSize: 12, color: muted, lineHeight: 1.6, margin: 0 }}><span style={{ color: warmWhite, fontWeight: 500 }}>Bottom line:</span> Three independent bottlenecks \u2014 preform equipment, GeCl\u2084 conversion, and helium \u2014 must all ease simultaneously for supply to normalize. None resolve before 2027.</p>
           </div>
         </div>
 
