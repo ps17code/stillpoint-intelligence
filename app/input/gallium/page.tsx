@@ -392,8 +392,8 @@ export default function GalliumInputPage() {
           const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
           const from = params?.get("from");
           const crumbs = from === "resources"
-            ? [{ label: "All verticals", href: "/" }, { label: "Global Resources", href: "/" }]
-            : [{ label: "All verticals", href: "/" }, { label: "AI Infrastructure", href: "/" }, { label: "Raw Materials", href: "/" }];
+            ? [{ label: "All verticals", href: "/?view=tree" }, { label: "Global Resources", href: "/?view=tree&path=resources" }]
+            : [{ label: "All verticals", href: "/?view=tree" }, { label: "AI Infrastructure", href: "/?view=tree&path=ai" }, { label: "Raw Materials", href: "/?view=tree&path=ai" }];
           return (
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 28, flexWrap: "wrap" as const }}>
               {crumbs.map((bc, i) => (

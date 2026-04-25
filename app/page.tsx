@@ -275,7 +275,13 @@ export default function HomePage() {
   const [hovered,       setHovered]       = useState<string | null>(null);
   const [hoveredNode,   setHoveredNode]   = useState<{ name: string; type: string; location: string } | null>(null);
   const [domainOpen,    setDomainOpen]    = useState(false);
-  const [viewMode,      setViewMode]      = useState<"map" | "anatomy" | "tree">("map");
+  const [viewMode,      setViewMode]      = useState<"map" | "anatomy" | "tree">(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("view") === "tree") return "tree";
+    }
+    return "map";
+  });
   const [panelLayer,    setPanelLayer]    = useState("Raw materials");
   const [panelItem,     setPanelItem]     = useState<string | null>(null);
   const [panelVertical, setPanelVertical] = useState<string | null>(null);

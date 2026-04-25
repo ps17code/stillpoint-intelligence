@@ -484,8 +484,8 @@ export default function GermaniumInputPage() {
           const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
           const from = params?.get("from");
           const crumbs = from === "resources"
-            ? [{ label: "All verticals", href: "/" }, { label: "Global Resources", href: "/" }]
-            : [{ label: "All verticals", href: "/" }, { label: "AI Infrastructure", href: "/" }, { label: "Connectivity", href: "/" }, { label: "Fiber optic cable", href: "/input/fiber-optic-cable" }];
+            ? [{ label: "All verticals", href: "/?view=tree" }, { label: "Global Resources", href: "/?view=tree&path=resources" }]
+            : [{ label: "All verticals", href: "/?view=tree" }, { label: "AI Infrastructure", href: "/?view=tree&path=ai" }, { label: "Connectivity", href: "/?view=tree&path=ai,connectivity" }, { label: "Fiber optic cable", href: "/?view=tree&path=ai,connectivity,fiber" }];
           return (
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 28, flexWrap: "wrap" as const }}>
               {crumbs.map((bc, i) => (

@@ -938,7 +938,24 @@ function SpineDashedLine() {
 
 export default function TreeView() {
   /* ── unified path state ── */
-  const [path, setPath] = useState<PathEntry[]>([]);
+  const [path, setPath] = useState<PathEntry[]>(() => {
+    if (typeof window === "undefined") return [];
+    const params = new URLSearchParams(window.location.search);
+    const treePath = params.get("path");
+    if (!treePath) return [];
+    // Parse path segments: "resources,germanium" or "ai,connectivity,fiber"
+    const segments = treePath.split(",");
+    const result: PathEntry[] = [];
+    for (const seg of segments) {
+      if (seg === "resources") result.push({ type: "vertical", id: "resources", name: "Global Resources" });
+      else if (seg === "ai") result.push({ type: "vertical", id: "ai", name: "AI Infrastructure" });
+      else if (seg === "connectivity") result.push({ type: "subsystem", id: "connectivity", name: "Connectivity" });
+      else if (seg === "fiber") result.push({ type: "component", id: "fiber", name: "Fiber optic cable" });
+      else if (seg === "germanium") result.push({ type: "raw-material", id: "germanium", name: "Germanium" });
+      else if (seg === "gallium") result.push({ type: "raw-material", id: "gallium", name: "Gallium" });
+    }
+    return result;
+  });
   const [animKey, setAnimKey] = useState(0);
   /* ── accordion expanded index (for verticals level only) ── */
   const [expandedVertical, setExpandedVertical] = useState<number>(() => {

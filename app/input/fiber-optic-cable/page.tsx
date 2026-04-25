@@ -463,9 +463,9 @@ export default function FiberOpticInputPage() {
         {/* ═══ BREADCRUMB + HEADER ═══ */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 28, flexWrap: "wrap" as const }}>
           {[
-            { label: "All verticals", href: "/" },
-            { label: "AI Infrastructure", href: "/" },
-            { label: "Connectivity", href: "/" },
+            { label: "All verticals", href: "/?view=tree" },
+            { label: "AI Infrastructure", href: "/?view=tree&path=ai" },
+            { label: "Connectivity", href: "/?view=tree&path=ai,connectivity" },
           ].map((bc, i) => (
             <span key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {i > 0 && <span style={{ fontSize: 11, color: "#4a4540" }}>/</span>}
