@@ -1,11 +1,8 @@
 "use client";
 import React, { useState, useMemo } from "react";
-import TreeMap from "@/components/TreeMap";
+import HorizontalTree from "@/components/HorizontalTree";
 import {
-  buildCompGeometry,
-  buildSubGeometry,
   computeCompSvgWidth,
-  computeSubSvgWidth,
   buildRawGeometry,
   computeRawSvgWidth,
   buildGalliumGeometry,
@@ -756,7 +753,7 @@ function DashedDividerLabel({ label, marginTop = 20 }: { label: string; marginTo
 }
 
 /* ── Fiber supply tree (merged comp + sub into one continuous tree) ── */
-function FiberSupplyTree({ onNodeClick }: { onNodeClick: (name: string) => void }) {
+function FiberSupplyTree({ onNodeClick, downstream }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[] }) {
   const compChain = chainsData.COMP_DATA["GeO\u2082 / GeCl\u2084"];
   const subChain = chainsData.SUB_DATA["Fiber Optics"];
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
@@ -854,34 +851,30 @@ function FiberSupplyTree({ onNodeClick }: { onNodeClick: (name: string) => void 
     };
   }, [svgW, compChain, subChain]);
 
-  const svgH = geo.outputNode.cy + 120;
-
   return (
-    <TreeMap geometry={geo} nodes={allNodes} layerConfig={lc} svgWidth={svgW} svgHeight={svgH} onNodeClick={onNodeClick} onLayerClick={() => {}} layerPanels={{}} />
+    <HorizontalTree geometry={geo} nodes={allNodes} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} />
   );
 }
 
 /* ── Germanium supply tree ── */
-function GermaniumSupplyTree({ onNodeClick }: { onNodeClick: (name: string) => void }) {
+function GermaniumSupplyTree({ onNodeClick, downstream }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[] }) {
   const rawChain = chainsData.RAW_DATA["Germanium"];
   const rawW = useMemo(() => computeRawSvgWidth(rawChain), [rawChain]);
   const rawGeo = useMemo(() => buildRawGeometry(rawChain, rawW / 2, 80), [rawChain, rawW]);
-  const rawH = rawGeo.outputNode.cy + 120;
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
 
   return (
-    <TreeMap geometry={rawGeo} nodes={allNodes} layerConfig={lc} svgWidth={rawW} svgHeight={rawH} onNodeClick={onNodeClick} onLayerClick={() => {}} layerPanels={{}} />
+    <HorizontalTree geometry={rawGeo} nodes={allNodes} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} />
   );
 }
 
 /* ── Gallium supply tree ── */
-function GalliumSupplyTree({ onNodeClick }: { onNodeClick: (name: string) => void }) {
+function GalliumSupplyTree({ onNodeClick, downstream }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[] }) {
   const gW = useMemo(() => computeGalliumSvgWidth(galliumChain), []);
   const gGeo = useMemo(() => buildGalliumGeometry(galliumChain, gW / 2, 80), [gW]);
-  const gH = gGeo.outputNode.cy + 120;
 
   return (
-    <TreeMap geometry={gGeo} nodes={galliumNodes} layerConfig={galliumLc} svgWidth={gW} svgHeight={gH} onNodeClick={onNodeClick} onLayerClick={() => {}} layerPanels={{}} />
+    <HorizontalTree geometry={gGeo} nodes={galliumNodes} layerConfig={galliumLc} onNodeClick={onNodeClick} downstream={downstream} />
   );
 }
 
@@ -1492,18 +1485,14 @@ export default function TreeView() {
           {/* Dashed divider: RAW MATERIALS above / SUPPLY CHAIN below */}
           <DashedDividerLabel label="FIBER OPTIC SUPPLY CHAIN" marginTop={20} />
 
-          {/* Supply tree */}
-          <FiberSupplyTree onNodeClick={() => {}} />
-
-          {/* Downstream demand */}
-          <DashedDividerLabel label="DOWNSTREAM DEMAND" />
-          <NodeRow nodes={[
-            { id: "ai-dc", name: "AI Datacenters", pill: "~210M km", clickable: false, dimmed: false },
-            { id: "telecom", name: "Terrestrial Telecom", pill: "~290M km", clickable: false, dimmed: false },
-            { id: "subsea", name: "Subsea Cables", pill: "~70M km", clickable: false, dimmed: false },
-            { id: "military", name: "Military / UAV", pill: "~55M km", clickable: false, dimmed: false },
-            { id: "bead", name: "BEAD Broadband", pill: "~65M km", clickable: false, dimmed: false },
-          ]} onNodeClick={() => {}} />
+          {/* Supply tree with downstream as final column */}
+          <FiberSupplyTree onNodeClick={() => {}} downstream={[
+            { id: "ai-dc", name: "AI Datacenters", pill: "~210M km" },
+            { id: "telecom", name: "Terrestrial Telecom", pill: "~290M km" },
+            { id: "subsea", name: "Subsea Cables", pill: "~70M km" },
+            { id: "military", name: "Military / UAV", pill: "~55M km" },
+            { id: "bead", name: "BEAD Broadband", pill: "~65M km" },
+          ]} />
         </>
       );
     }
@@ -1513,23 +1502,12 @@ export default function TreeView() {
       return (
         <>
           <DashedDividerLabel label="GERMANIUM SUPPLY CHAIN" marginTop={0} />
-          <GermaniumSupplyTree onNodeClick={() => {}} />
-          <DashedDividerLabel label="DOWNSTREAM DEMAND" />
-          <NodeRow nodes={[
-            { id: "fiber", name: "Fiber Optic Cable", pill: "~87t/yr", clickable: true, dimmed: false },
-            { id: "ir", name: "IR Optics", pill: "~55t/yr", clickable: false, dimmed: false },
-            { id: "solar", name: "Satellite Solar", pill: "~35t/yr", clickable: false, dimmed: false },
-            { id: "sige", name: "SiGe Chips", pill: "~25t/yr", clickable: false, dimmed: false },
-          ]} onNodeClick={(id) => {
-            if (id === "fiber") {
-              setPath([
-                { type: "vertical", id: currentVertical?.id ?? "ai", name: currentVertical?.name ?? "AI Infrastructure" },
-                { type: "subsystem", id: "connectivity", name: "Connectivity" },
-                { type: "component", id: "fiber", name: "Fiber optic cable" },
-              ]);
-              setAnimKey(k => k + 1);
-            }
-          }} />
+          <GermaniumSupplyTree onNodeClick={() => {}} downstream={[
+            { id: "fiber", name: "Fiber Optic Cable", pill: "~87t/yr" },
+            { id: "ir", name: "IR Optics", pill: "~55t/yr" },
+            { id: "solar", name: "Satellite Solar", pill: "~35t/yr" },
+            { id: "sige", name: "SiGe Chips", pill: "~25t/yr" },
+          ]} />
         </>
       );
     }
@@ -1539,15 +1517,13 @@ export default function TreeView() {
       return (
         <>
           <DashedDividerLabel label="GALLIUM SUPPLY CHAIN" marginTop={0} />
-          <GalliumSupplyTree onNodeClick={() => {}} />
-          <DashedDividerLabel label="DOWNSTREAM DEMAND" />
-          <NodeRow nodes={[
-            { id: "gan", name: "GaN Power", pill: "~110t/yr", clickable: false, dimmed: false },
-            { id: "gaas", name: "GaAs Devices", pill: "~140t/yr", clickable: false, dimmed: false },
-            { id: "ndfeb", name: "NdFeB Magnets", pill: "~80t/yr", clickable: false, dimmed: false },
-            { id: "led", name: "LEDs", pill: "~75t/yr", clickable: false, dimmed: false },
-            { id: "defense", name: "Defense Radar", pill: "~25t/yr", clickable: false, dimmed: false },
-          ]} onNodeClick={() => {}} />
+          <GalliumSupplyTree onNodeClick={() => {}} downstream={[
+            { id: "gan", name: "GaN Power", pill: "~110t/yr" },
+            { id: "gaas", name: "GaAs Devices", pill: "~140t/yr" },
+            { id: "ndfeb", name: "NdFeB Magnets", pill: "~80t/yr" },
+            { id: "led", name: "LEDs", pill: "~75t/yr" },
+            { id: "defense", name: "Defense Radar", pill: "~25t/yr" },
+          ]} />
         </>
       );
     }
