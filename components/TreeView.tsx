@@ -1835,20 +1835,22 @@ export default function TreeView() {
   /* ── main render — unified page template ── */
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#111" }}>
-      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "32px 20px", display: "flex", gap: 0 }}>
+      <div style={{ display: "flex", gap: 0, padding: "32px 20px", justifyContent: "center" }}>
 
         {/* Left panel */}
-        <div style={{ width: 260, maxWidth: 260, flexShrink: 0, padding: "10px 12px 10px 0" }}>
+        <div style={{ width: 260, maxWidth: 260, flexShrink: 0, padding: "0 12px 0 0" }}>
           {/* Left panel content placeholder */}
         </div>
 
         {/* Center — header + supply tree in one container */}
         <div style={{
+          maxWidth: 1120,
           flex: 1,
           background: "#1a1816",
           borderRadius: 10,
-          padding: 10,
           overflow: "hidden",
+          transform: "scale(0.9)",
+          transformOrigin: "top center",
         }}>
           {/* Header area */}
           <div style={{ padding: "22px 22px 0" }}>
@@ -1889,11 +1891,6 @@ export default function TreeView() {
           >
             {path.length === 0 ? renderVerticalsContent() : renderContainerContent()}
           </div>
-        </div>
-
-        {/* Right panel */}
-        <div style={{ width: 260, maxWidth: 260, flexShrink: 0, padding: "10px 0 10px 12px" }}>
-          {/* Right panel content placeholder */}
         </div>
 
       </div>

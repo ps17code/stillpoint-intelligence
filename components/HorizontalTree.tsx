@@ -90,7 +90,7 @@ function NodeCard({
     >
       {/* Name */}
       <p style={{
-        fontSize: 9, fontWeight: 600, color: "#ece8e1",
+        fontSize: 11, fontWeight: 600, color: "#ece8e1",
         margin: 0, lineHeight: 1.2, marginBottom: hasCountry ? 2 : 3,
         fontFamily: "'EB Garamond', Georgia, serif",
       }}>{name}</p>
@@ -98,12 +98,12 @@ function NodeCard({
       {hasCountry && (
         <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 3 }}>
           <div style={{ width: 4, height: 4, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
-          <p style={{ fontSize: 6, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em" }}>{country}</p>
+          <p style={{ fontSize: 7, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em" }}>{country}</p>
         </div>
       )}
       {/* Pills — same data as vertical tree */}
       {pills.map((pill, i) => (
-        <p key={i} style={{ fontSize: 6, color: "rgba(255,255,255,0.62)", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}>{pill}</p>
+        <p key={i} style={{ fontSize: 7, color: "rgba(255,255,255,0.62)", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}>{pill}</p>
       ))}
     </div>
   );
@@ -354,7 +354,7 @@ export default function HorizontalTree({
                 >
                   <p
                     style={{
-                      fontSize: 9,
+                      fontSize: 11,
                       fontWeight: 600,
                       color: "#ece8e1",
                       margin: 0,
@@ -367,7 +367,7 @@ export default function HorizontalTree({
                   {dsItem?.pill && (
                     <p
                       style={{
-                        fontSize: 6,
+                        fontSize: 7,
                         color: "#555",
                         margin: "3px 0 0 0",
                         fontFamily: "'Geist Mono', monospace",
