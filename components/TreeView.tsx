@@ -609,6 +609,32 @@ const GLOBE_CARD_INFO: Record<string, { title: string; description: string }> = 
   "AI Datacenters": { title: "AI Datacenters", description: "Hyperscale facilities housing GPU clusters. Each GW of AI capacity consumes ~6.5M strand-km of fiber." },
 };
 
+/* ── Geographic concentration summaries ── */
+const GEO_SUMMARY: Record<string, string> = {
+  germanium: "Hosted across 8 deposits — 6 in China, 1 in Russia, 1 in DRC. Mined as a byproduct of zinc and coal, then sent to refiners. Only 2 western refiners: Umicore (Belgium) and Teck Trail (Canada). 83% of primary supply is Chinese.",
+  gallium: "Extracted as a byproduct at alumina refineries. ~98% of refining capacity is in China across ~20 facilities. One major non-Chinese refiner: Dowa in Japan. Four western projects announced but none at scale before 2028.",
+  fiber: "Preform manufactured in 6 countries — US, China, Japan, India, Italy. Cable drawn at ~25 plants globally. Corning (US) controls ~40% of capacity. YOFC (China) is the largest by volume. Equipment monopoly: Rosendahl Nextrom (Austria).",
+};
+
+/* ── Node lists grouped by layer for right panel ── */
+const INPUT_NODE_LAYERS: Record<string, { layer: string; nodes: string[] }[]> = {
+  germanium: [
+    { layer: "Deposits", nodes: ["Lincang", "Wulantuga", "Yimin", "Huize", "Yiliang", "Red Dog", "Spetsugli", "Big Hill DRC"] },
+    { layer: "Host Operations", nodes: ["Lincang Xinyuan", "Shengli Coal", "Yunnan Chihong Zinc", "Huize Zinc", "Teck Trail", "STL Mining DRC", "Various Chinese Ops"] },
+    { layer: "Refiners", nodes: ["Umicore", "5N Plus", "Teck Trail Refinery", "PPM Pure Metals", "JSC Germanium", "Lincang Xinyuan Refinery", "Yunnan Chihong Refinery"] },
+  ],
+  gallium: [
+    { layer: "Bauxite Sources", nodes: ["Guinea Bauxite", "Australia Bauxite", "China Bauxite", "Brazil Bauxite", "Indonesia Bauxite"] },
+    { layer: "Alumina Refineries", nodes: ["Chalco", "China Hongqiao", "Shandong Nanshan", "Hindalco", "South32"] },
+    { layer: "Gallium Refiners", nodes: ["Dowa Electronics", "CMK", "AXT Inc", "Neo Performance", "Vital Materials"] },
+  ],
+  fiber: [
+    { layer: "Chemical Conversion", nodes: ["Umicore GeCl₄", "Yunnan Chihong GeCl₄", "Nanjing Germanium"] },
+    { layer: "Preform Manufacturers", nodes: ["Corning Preform", "YOFC", "Shin-Etsu", "Prysmian", "Sumitomo Electric", "Sterlite"] },
+    { layer: "Cable Assemblers", nodes: ["Corning Hickory", "Corning Concord", "Prysmian Milan", "YOFC Wuhan", "Sumitomo Cable", "LightPath Orlando"] },
+  ],
+};
+
 /* ── 12-month price history per input (monthly close, Apr 2025 → Apr 2026) ── */
 const INPUT_PRICE_HISTORY: Record<string, { points: number[]; unit: string; currentPrice: string; change12m: string }> = {
   germanium: {
@@ -2712,6 +2738,17 @@ export default function TreeView() {
               <PriceChart inputId={lastEntry.id} accent={templateAccent ?? "#706a60"} name={templateTitle} />
             )}
             {!lastEntry || !INPUT_PRICE_HISTORY[lastEntry.id] ? <div style={{ height: 130 }} /> : null}
+            {/* Geographic concentration summary */}
+            {(() => {
+              const rpId = (centerView === "globe" && globeNavTarget) ? globeNavTarget.toLowerCase() : lastEntry?.id;
+              const geo = rpId ? GEO_SUMMARY[rpId === "fiber optic cable" ? "fiber" : rpId] : null;
+              if (!geo) return null;
+              return (
+                <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "8px 10px", marginBottom: 10 }}>
+                  <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: 0 }}>{geo}</p>
+                </div>
+              );
+            })()}
             <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 10 }}>
               {["Summary", "Layers", "Nodes"].map((tab, ti) => {
                 const tabId = tab.toLowerCase();
@@ -2789,51 +2826,74 @@ export default function TreeView() {
             })()}
 
             {rightTab === "summary" && (() => {
-              let bullets: string[] = [];
-              // Use globeNavTarget in globe view, otherwise lastEntry
               const summaryId = (centerView === "globe" && globeNavTarget) ? globeNavTarget.toLowerCase() : lastEntry?.id;
-              if (summaryId === "germanium") {
-                bullets = [
-                  "Trace element recovered as a byproduct of zinc smelting and coal combustion. Cannot be mined directly.",
-                  "Doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in IR defense optics, satellite solar cells, and SiGe semiconductors.",
-                  "Global supply fixed at ~230t/yr. 83% Chinese under export licensing. One western refiner \u2014 Umicore, Belgium.",
-                  "Price has risen from $1,500/kg to over $8,500/kg in two years. 3.5x premium between western and Chinese markets.",
-                  "Demand accelerating from AI datacenter fiber buildout, defense IR optics, and satellite constellation expansion.",
-                  "No near-term supply relief. Hollow-core fiber, new mine capacity, and DRC feedstock ramp all target 2027-2028.",
-                ];
-              } else if (summaryId === "gallium") {
-                bullets = [
-                  "Trace element recovered as a byproduct of alumina refining from bauxite. Cannot be mined directly.",
-                  "Forms compound semiconductors (GaAs and GaN) for AI datacenter power, 5G amplifiers, LEDs, EV chargers, and defense radar.",
-                  "Global refined production is ~320 t/yr. ~290 t Chinese; ~15-30 t non-Chinese, almost entirely Japan via Dowa.",
-                  "Price has risen from $298/kg to $2,269/kg since 2020. 9x spread between Chinese domestic and western markets.",
-                  "Demand accelerating from GaN power electronics (42% CAGR), defense radar, and AI datacenter 800V architecture.",
-                  "Four western production projects target ~230 t/yr by 2029. None resolves structural dependency before 2028.",
-                ];
-              } else if (summaryId === "fiber" || summaryId === "fiber optic cable") {
-                bullets = [
-                  "Glass strands that transmit data as pulses of light. Physical layer connecting AI datacenters, telecom, and subsea systems.",
-                  "Core inputs: high-purity silica, germanium, and helium. All three are constrained simultaneously.",
-                  "Global production at ~720M fiber strand-km/yr. Preform lines at full utilization. One equipment supplier with 18-24 month backlogs.",
-                  "Fiber prices at 7-year highs. G.652D up 150%, G.657A up over 210%.",
-                  "AI datacenter buildout is the dominant growth vector. ~20 GW entering construction annually.",
-                  "Supply response is 2027-2028 at earliest. New preform capacity, DRC germanium ramp, hollow-core fiber all target same window.",
-                ];
-              }
+              const resolvedId = summaryId === "fiber optic cable" ? "fiber" : summaryId;
+              const nodeLayers = resolvedId ? INPUT_NODE_LAYERS[resolvedId] : null;
 
-              if (bullets.length === 0) return <p style={{ fontSize: 10, color: "#555", padding: "20px 0" }}>Select an input to view its executive summary.</p>;
+              if (!nodeLayers) return <p style={{ fontSize: 10, color: "#555", padding: "20px 0" }}>Select an input to view its nodes.</p>;
+
+              // Look up node data for country info
+              const getNodeData = (name: string) => allNodes[name] ?? galliumNodes[name] ?? germaniumNodes[name];
 
               return (
-                <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
-                  <p style={{ fontSize: 10, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>EXECUTIVE SUMMARY</p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    {bullets.map((bullet, i) => (
-                      <div key={i} style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
-                        <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 5 }} />
-                        <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  {nodeLayers.map(group => (
+                    <div key={group.layer}>
+                      <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>{group.layer}</p>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                        {group.nodes.map(nodeName => {
+                          const nd = getNodeData(nodeName);
+                          const country = (nd as unknown as Record<string, unknown>)?.country as string | undefined;
+                          const isSelected = selectedTreeNode === nodeName;
+                          return (
+                            <div
+                              key={nodeName}
+                              onClick={() => setSelectedTreeNode(isSelected ? null : nodeName)}
+                              style={{
+                                display: "flex", alignItems: "center", gap: 8,
+                                padding: "5px 8px", borderRadius: 4, cursor: "pointer",
+                                background: isSelected ? "rgba(255,255,255,0.04)" : "transparent",
+                                transition: "background 0.15s",
+                              }}
+                              onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
+                              onMouseLeave={e => { if (!isSelected) e.currentTarget.style.background = "transparent"; }}
+                            >
+                              {country && (
+                                <img
+                                  src={`https://flagcdn.com/16x12/${country === "China" ? "cn" : country === "USA" ? "us" : country === "Belgium" ? "be" : country === "Canada" ? "ca" : country === "Russia" ? "ru" : country === "DRC" ? "cd" : country === "Japan" ? "jp" : country === "Germany" ? "de" : country === "France" ? "fr" : country === "Italy" ? "it" : country === "Australia" ? "au" : country === "Brazil" ? "br" : country === "Indonesia" ? "id" : country === "India" ? "in" : country === "Guinea" ? "gn" : country === "South Korea" ? "kr" : country === "Austria" ? "at" : country === "Netherlands" ? "nl" : country === "UAE" ? "ae" : country === "Saudi Arabia" ? "sa" : country === "Global" ? "un" : "xx"}.png`}
+                                  alt={country}
+                                  style={{ width: 14, height: 10, objectFit: "cover", borderRadius: 1, opacity: 0.7 }}
+                                />
+                              )}
+                              <span style={{ fontSize: 10, color: isSelected ? warmWhite : "#807870", flex: 1 }}>{nodeName}</span>
+                              {country && <span style={{ fontSize: 7, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{country}</span>}
+                            </div>
+                          );
+                        })}
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
+
+            {/* Node detail view — shown when a node is selected from summary list */}
+            {rightTab === "summary" && selectedTreeNode && (() => {
+              const nodeData = allNodes[selectedTreeNode] ?? galliumNodes[selectedTreeNode] ?? germaniumNodes[selectedTreeNode];
+              if (!nodeData) return null;
+              const raw = nodeData as unknown as Record<string, unknown>;
+              return (
+                <div style={{ marginTop: 12, background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                  <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0" }}>{selectedTreeNode}</p>
+                  <p style={{ fontSize: 8, color: "#555", margin: "0 0 8px 0", fontFamily: "'Geist Mono', monospace" }}>{String(raw.type ?? "")} · {String(raw.loc ?? "")}</p>
+                  {raw.stat ? <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 6px 0" }}>{String(raw.stat)}</p> : null}
+                  {raw.role ? <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: "0 0 8px 0" }}>{String(raw.role)}</p> : null}
+                  {raw.risk ? (
+                    <div style={{ paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
+                      <p style={{ fontSize: 7, letterSpacing: "0.06em", color: "#555", margin: "0 0 3px 0", textTransform: "uppercase" as const }}>KEY RISK</p>
+                      <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: 0 }}>{String(raw.risk)}</p>
+                    </div>
+                  ) : null}
                 </div>
               );
             })()}
