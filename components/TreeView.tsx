@@ -713,6 +713,35 @@ const MAP_NODES: Record<string, { name: string; lat: number; lon: number; type: 
   ],
 };
 
+/* ── Map connections per input (supply chain flow direction) ── */
+const MAP_CONNECTIONS: Record<string, { from: string; to: string }[]> = {
+  germanium: [
+    { from: "Lincang", to: "Lincang Xinyuan" }, { from: "Wulantuga", to: "Shengli Coal Group" },
+    { from: "Yimin", to: "Various State Operators" }, { from: "Huize", to: "Yunnan Chihong" },
+    { from: "Yiliang + SYGT", to: "Yunnan Chihong" }, { from: "Spetsugli", to: "JSC Germanium" },
+    { from: "Big Hill", to: "STL / Gécamines" }, { from: "Red Dog", to: "Teck Resources" },
+    { from: "Lincang Xinyuan", to: "Yunnan Chihong Refinery" }, { from: "Shengli Coal Group", to: "Chinese State Refiners" },
+    { from: "Yunnan Chihong", to: "Yunnan Chihong Refinery" }, { from: "JSC Germanium", to: "JSC Germanium Refinery" },
+    { from: "STL / Gécamines", to: "Umicore" }, { from: "Teck Resources", to: "5N Plus" },
+    { from: "Various State Operators", to: "Chinese State Refiners" },
+  ],
+  gallium: [
+    { from: "Guinea Bauxite", to: "Chinese Bauxite Refineries" }, { from: "Australian Bauxite", to: "Alcoa / JAGA (Wagerup)" },
+    { from: "Chinese Domestic Bauxite", to: "Chinese Bauxite Refineries" }, { from: "Brazilian Bauxite", to: "Chinese Bauxite Refineries" },
+    { from: "Indonesian Bauxite", to: "Chinese Bauxite Refineries" },
+    { from: "Chinese Bauxite Refineries", to: "Vital Materials" }, { from: "Chinese Bauxite Refineries", to: "Zhuzhou Smelter Group" },
+    { from: "Alcoa / JAGA (Wagerup)", to: "Dowa Holdings" },
+    { from: "Metlen Energy & Metals", to: "5N Plus" }, { from: "Rio Tinto / Indium JV", to: "Indium Corporation" },
+  ],
+  fiber: [
+    { from: "Umicore GeCl4", to: "Corning" }, { from: "Umicore GeCl4", to: "Prysmian" },
+    { from: "Yunnan Chihong GeCl4", to: "YOFC" }, { from: "Chinese State GeCl4 Plants", to: "YOFC" },
+    { from: "Corning", to: "Microsoft" }, { from: "Corning", to: "Amazon" }, { from: "Corning", to: "Meta" },
+    { from: "YOFC", to: "Equinix" }, { from: "Prysmian", to: "CoreWeave" },
+    { from: "Shin-Etsu", to: "Google" }, { from: "Sumitomo Electric", to: "Equinix" },
+  ],
+};
+
 /* ── 12-month price history per input (monthly close, Apr 2025 → Apr 2026) ── */
 const INPUT_PRICE_HISTORY: Record<string, { points: number[]; unit: string; currentPrice: string; change12m: string }> = {
   germanium: {
@@ -912,12 +941,7 @@ function DependenciesTable({ inputId }: { inputId: string }) {
         </div>
       )}
 
-      {/* Takeaway */}
-      {table.takeaway && (
-        <div style={{ marginTop: 16, background: "rgba(36, 32, 29, 0.28)", borderRadius: 8, padding: "12px 16px" }}>
-          <p style={{ fontSize: 10, color: "#706a60", lineHeight: 1.6, margin: 0 }}>{table.takeaway}</p>
-        </div>
-      )}
+      {/* Takeaway moved to bottom section of center panel */}
     </div>
   );
 }
@@ -2743,6 +2767,7 @@ export default function TreeView() {
                   <div style={{ width: "100%", height: 400 }}>
                     <NodeMap
                       nodes={mapNodes}
+                      connections={mapId ? MAP_CONNECTIONS[mapId] : undefined}
                       selectedNode={selectedTreeNode}
                       onClickNode={(name) => setSelectedTreeNode(prev => prev === name ? null : name)}
                     />
@@ -2757,7 +2782,7 @@ export default function TreeView() {
             </div>
           </div>
 
-          {/* Bottom section — key takeaways */}
+          {/* Bottom section — key takeaways (changes per tab) */}
           <div style={{
             height: 160, flexShrink: 0,
             borderTop: `1px solid ${borderColor}`,
@@ -2766,22 +2791,51 @@ export default function TreeView() {
             display: "flex", alignItems: "center",
           }}>
             {(() => {
+              const inputId = lastEntry?.id;
+
+              // Map tab: show geo summary
+              if (activeTab === "map") {
+                const geoKey = inputId === "fiber" ? "fiber" : inputId;
+                const geo = geoKey ? GEO_SUMMARY[geoKey] : null;
+                if (!geo) return null;
+                return (
+                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 8, padding: "14px 18px", width: "100%" }}>
+                    <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>GEOGRAPHIC CONCENTRATION</p>
+                    <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{geo}</p>
+                  </div>
+                );
+              }
+
+              // Dependencies tab: show takeaway from deps data
+              if (activeTab === "dependencies" && inputId) {
+                const deps = INPUT_DEPS[inputId];
+                const takeaway = deps?.downstream?.takeaway ?? deps?.upstream?.takeaway;
+                if (!takeaway) return null;
+                return (
+                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 8, padding: "14px 18px", width: "100%" }}>
+                    <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>KEY TAKEAWAY</p>
+                    <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{takeaway}</p>
+                  </div>
+                );
+              }
+
+              // Supply tree tab (default): numbered takeaways
               let takeaways: string[] = [];
-              if (lastEntry?.id === "germanium" || (lastEntry?.type === "raw-material" && lastEntry.id === "germanium")) {
+              if (inputId === "germanium") {
                 takeaways = [
                   "Only 8 coal and zinc deposits in the world host germanium at high enough concentration to be commercially extracted.",
                   "83% of that supply is in China.",
                   "Two western sources exist \u2014 Big Hill is new DRC tailings refined exclusively by Umicore, and Red Dog is a declining Alaskan zinc mine expected to expire in 2031.",
                   "Outside China, Umicore and 5N Plus are the sole western supply for germanium-reliant products.",
                 ];
-              } else if (lastEntry?.id === "gallium" || (lastEntry?.type === "raw-material" && lastEntry.id === "gallium")) {
+              } else if (inputId === "gallium") {
                 takeaways = [
                   "Bauxite is mined globally across five regions \u2014 Guinea, Australia, China, Brazil, and Indonesia \u2014 with ~346M tonnes produced per year.",
                   "Gallium isn\u2019t extracted at the mine \u2014 it\u2019s recovered downstream at alumina refineries, and ~98% of those refineries are in China.",
                   "Four western projects are trying to rebuild primary capacity \u2014 but none operate at scale before 2028.",
                   "Outside China, Dowa in Japan does the bulk of high-purity refining \u2014 but all depend on Chinese primary feedstock.",
                 ];
-              } else if (lastEntry?.id === "fiber" || (lastEntry?.type === "component" && lastEntry.id === "fiber")) {
+              } else if (inputId === "fiber") {
                 takeaways = [
                   "Three constrained inputs feed fiber production \u2014 germanium tetrachloride, silicon tetrachloride, and helium for cooling.",
                   "Only about 20 preform manufacturers globally produce doped silica rods, and lines are at full utilization.",

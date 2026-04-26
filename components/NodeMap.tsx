@@ -11,8 +11,14 @@ interface MapNode {
   country?: string;
 }
 
+interface Connection {
+  from: string;
+  to: string;
+}
+
 interface NodeMapProps {
   nodes: MapNode[];
+  connections?: Connection[];
   onClickNode?: (name: string) => void;
   selectedNode?: string | null;
 }
@@ -46,7 +52,7 @@ const DARK = {
 
 const WORLD_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
-export default function NodeMap({ nodes, onClickNode, selectedNode }: NodeMapProps) {
+export default function NodeMap({ nodes, connections, onClickNode, selectedNode }: NodeMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<d3.Selection<SVGSVGElement, unknown, null, undefined> | null>(null);
 
@@ -69,8 +75,8 @@ export default function NodeMap({ nodes, onClickNode, selectedNode }: NodeMapPro
     svgRef.current = svg;
 
     const projection = d3.geoNaturalEarth1()
-      .scale(160)
-      .translate([w / 2, h / 2]);
+      .scale(170)
+      .translate([w / 2, h / 2 + 40]);
 
     const pathGen = d3.geoPath().projection(projection);
 
@@ -109,6 +115,86 @@ export default function NodeMap({ nodes, onClickNode, selectedNode }: NodeMapPro
         .attr("fill", "none")
         .attr("stroke", DARK.border)
         .attr("stroke-width", 0.2);
+
+      // Connection lines with animated dots
+      if (connections && connections.length > 0) {
+        const connGroup = svg.append("g");
+        const nodeMap = new Map(nodes.map(n => [n.name, n]));
+
+        connections.forEach((conn, idx) => {
+          const fromNode = nodeMap.get(conn.from);
+          const toNode = nodeMap.get(conn.to);
+          if (!fromNode || !toNode) return;
+
+          const [x1, y1] = pt(fromNode.lon, fromNode.lat);
+          const [x2, y2] = pt(toNode.lon, toNode.lat);
+
+          // Arc path
+          const mx = (x1 + x2) / 2;
+          const my = (y1 + y2) / 2;
+          const dx = x2 - x1;
+          const dy = y2 - y1;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const bulge = Math.min(dist * 0.25, 30);
+          const nx = -dy / dist;
+          const ny = dx / dist;
+          const cx2 = mx + nx * bulge;
+          const cy2 = my + ny * bulge;
+          const arcD = `M${x1},${y1} Q${cx2},${cy2} ${x2},${y2}`;
+
+          const fromColor = LAYER_COLORS[fromNode.type] ?? "#888";
+
+          // Line
+          connGroup.append("path")
+            .attr("d", arcD)
+            .attr("fill", "none")
+            .attr("stroke", fromColor)
+            .attr("stroke-width", 0.6)
+            .attr("stroke-opacity", 0.15)
+            .attr("stroke-dasharray", "3,3");
+
+          // Animated dot traveling along the path
+          const dot = connGroup.append("circle")
+            .attr("r", 1.5)
+            .attr("fill", fromColor)
+            .attr("fill-opacity", 0.6);
+
+          // Create a hidden path for getPointAtLength
+          const pathEl = connGroup.append("path")
+            .attr("d", arcD)
+            .attr("fill", "none")
+            .attr("stroke", "none")
+            .node();
+
+          if (pathEl) {
+            const totalLen = pathEl.getTotalLength();
+            const duration = 3000 + (idx % 5) * 500;
+            const delay = (idx * 400) % duration;
+
+            const animateDot = () => {
+              dot
+                .attr("fill-opacity", 0)
+                .transition()
+                .delay(delay)
+                .duration(0)
+                .attr("fill-opacity", 0.6)
+                .transition()
+                .duration(duration)
+                .ease(d3.easeLinear)
+                .attrTween("cx", () => (t: number) => {
+                  const p = pathEl!.getPointAtLength(t * totalLen);
+                  return String(p.x);
+                })
+                .attrTween("cy", () => (t: number) => {
+                  const p = pathEl!.getPointAtLength(t * totalLen);
+                  return String(p.y);
+                })
+                .on("end", animateDot);
+            };
+            animateDot();
+          }
+        });
+      }
 
       // Node dots
       const nodeGroup = svg.append("g");
@@ -222,7 +308,7 @@ export default function NodeMap({ nodes, onClickNode, selectedNode }: NodeMapPro
     return () => {
       if (containerRef.current) d3.select(containerRef.current).selectAll("*").remove();
     };
-  }, [nodes, selectedNode, onClickNode]);
+  }, [nodes, connections, selectedNode, onClickNode]);
 
   return <div ref={containerRef} style={{ width: "100%", height: "100%" }} />;
 }
