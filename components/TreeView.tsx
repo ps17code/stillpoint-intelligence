@@ -2486,19 +2486,11 @@ export default function TreeView() {
                 <Globe
                   ref={globeRef}
                   onHoverNode={setHoveredGlobeNode}
+                  onClickNode={(name) => {
+                    setSelectedTreeNode(prev => prev === name ? null : name);
+                    globeRef.current?.highlightNode(selectedTreeNode === name ? null : name);
+                  }}
                 />
-                {/* Hover tooltip */}
-                {hoveredGlobeNode && (
-                  <div style={{
-                    position: "absolute", top: 12, left: 30, zIndex: 20,
-                    background: "rgba(20,20,18,0.92)", border: "0.5px solid rgba(255,255,255,0.08)",
-                    padding: "6px 10px", borderRadius: 4, pointerEvents: "none",
-                  }}>
-                    <div style={{ fontSize: 10, fontWeight: 500, color: "rgba(255,255,255,0.7)", marginBottom: 2 }}>{hoveredGlobeNode.name}</div>
-                    <div style={{ fontSize: 7, color: "#9BA8AB", fontFamily: "'Geist Mono', monospace", marginBottom: 1 }}>{hoveredGlobeNode.type}</div>
-                    <div style={{ fontSize: 7, color: "rgba(255,255,255,0.25)", fontFamily: "'Geist Mono', monospace" }}>{hoveredGlobeNode.location}</div>
-                  </div>
-                )}
                 {/* Navigate button — shown when a vertical or item is selected */}
                 {globeNavTarget && (
                   <div style={{ position: "absolute", bottom: 16, right: 20, zIndex: 20 }}>
@@ -2900,7 +2892,11 @@ export default function TreeView() {
                             return (
                               <div
                                 key={nodeName}
-                                onClick={() => setSelectedTreeNode(isSelected ? null : nodeName)}
+                                onClick={() => {
+                                  const next = isSelected ? null : nodeName;
+                                  setSelectedTreeNode(next);
+                                  globeRef.current?.highlightNode(next);
+                                }}
                                 style={{
                                   display: "flex", alignItems: "center", gap: 8,
                                   padding: "5px 8px", borderRadius: 4, cursor: "pointer",

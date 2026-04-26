@@ -136,22 +136,30 @@ export interface GlobeFilter {
 
 export interface GlobeHandle {
   updateFilter: (filter: GlobeFilter) => void;
+  highlightNode: (name: string | null) => void;
 }
 
 interface GlobeProps {
   style?: React.CSSProperties;
   onHoverNode?: (node: { name: string; type: string; location: string } | null) => void;
+  onClickNode?: (name: string) => void;
 }
 
-const Globe = forwardRef<GlobeHandle, GlobeProps>(function Globe({ style, onHoverNode }, ref) {
+const Globe = forwardRef<GlobeHandle, GlobeProps>(function Globe({ style, onHoverNode, onClickNode }, ref) {
   const mountRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const filterRef = useRef<GlobeFilter>({ selectedLayers: new Set(), activeSubType: null, activeSubParent: null });
+  const highlightRef = useRef<string | null>(null);
+  const onClickNodeRef = useRef(onClickNode);
+  onClickNodeRef.current = onClickNode;
   const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useImperativeHandle(ref, () => ({
     updateFilter: (filter: GlobeFilter) => {
       filterRef.current = filter;
+    },
+    highlightNode: (name: string | null) => {
+      highlightRef.current = name;
     },
   }));
 
@@ -210,7 +218,7 @@ const Globe = forwardRef<GlobeHandle, GlobeProps>(function Globe({ style, onHove
     };
     const ringGeo = new THREE.RingGeometry(DOT_SIZE * 1.3, DOT_SIZE * 2.2, 32);
 
-    type NodeObj = { dot: THREE.Mesh; ring: THREE.Mesh; ringMat: THREE.MeshBasicMaterial; normal: THREE.Vector3; pulseOffset: number; layer: string; nodeType: string; isKey: boolean; currentMult: number; currentScale: number; currentColor: THREE.Color; shape: string };
+    type NodeObj = { name: string; dot: THREE.Mesh; ring: THREE.Mesh; ringMat: THREE.MeshBasicMaterial; normal: THREE.Vector3; pulseOffset: number; layer: string; nodeType: string; isKey: boolean; currentMult: number; currentScale: number; currentColor: THREE.Color; shape: string };
     const nodeObjs: NodeObj[] = [];
     let pOffset = 0;
 
@@ -238,7 +246,7 @@ const Globe = forwardRef<GlobeHandle, GlobeProps>(function Globe({ style, onHove
       globeGroup.add(ring);
 
       pOffset += 0.8;
-      nodeObjs.push({ dot, ring, ringMat, normal, pulseOffset: pOffset, layer, nodeType: n.type, isKey: n.key, currentMult: 1, currentScale: 1, currentColor, shape });
+      nodeObjs.push({ name: n.name, dot, ring, ringMat, normal, pulseOffset: pOffset, layer, nodeType: n.type, isKey: n.key, currentMult: 1, currentScale: 1, currentColor, shape });
     });
 
     const nodeByName = Object.fromEntries(NODES.map(n => [n.name, n]));
@@ -286,7 +294,13 @@ const Globe = forwardRef<GlobeHandle, GlobeProps>(function Globe({ style, onHove
     const onClick = (e: MouseEvent) => {
       const dx = e.clientX - clickDownPos.x, dy = e.clientY - clickDownPos.y;
       if (Math.sqrt(dx * dx + dy * dy) < 5) {
-        if (controls.autoRotate) {
+        // If hovering a node, fire click callback
+        if (currentHoveredName) {
+          onClickNodeRef.current?.(currentHoveredName);
+          controls.autoRotate = false;
+          if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+          pauseTimerRef.current = setTimeout(() => { controls.autoRotate = true; pauseTimerRef.current = null; }, 15000);
+        } else if (controls.autoRotate) {
           controls.autoRotate = false;
           if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
           pauseTimerRef.current = setTimeout(() => { controls.autoRotate = true; pauseTimerRef.current = null; }, 15000);
@@ -314,18 +328,23 @@ const Globe = forwardRef<GlobeHandle, GlobeProps>(function Globe({ style, onHove
       const lerpK = Math.min(1, delta * 4.5);
       const { selectedLayers, activeSubType, activeSubParent } = filterRef.current;
       const hasSelection = selectedLayers.size > 0;
+      const highlightedName = highlightRef.current;
 
       nodeObjs.forEach((no) => {
         let targetMult: number, targetScale: number, targetHex: number, ringEnabled: boolean;
 
-        if (!hasSelection) {
-          targetMult = 1; targetScale = 1; targetHex = NEUTRAL_HEX; ringEnabled = false;
+        // Highlighted node always bright + pulsing
+        if (highlightedName && no.name === highlightedName) {
+          const lc = LAYER_COLOR_HEX[no.layer] ?? 0xffffff;
+          targetMult = 1; targetScale = 1.8; targetHex = lc; ringEnabled = true;
+        } else if (!hasSelection) {
+          targetMult = highlightedName ? 0.3 : 1; targetScale = 1; targetHex = NEUTRAL_HEX; ringEnabled = false;
         } else if (selectedLayers.has(no.layer)) {
           const lc = LAYER_COLOR_HEX[no.layer];
           if (activeSubParent === no.layer && activeSubType) {
-            if (no.nodeType === activeSubType) { targetMult = 1; targetScale = 1; targetHex = lc; ringEnabled = true; }
-            else                               { targetMult = 0.3; targetScale = 1; targetHex = lc; ringEnabled = false; }
-          } else { targetMult = 1; targetScale = 1; targetHex = lc; ringEnabled = no.isKey; }
+            if (no.nodeType === activeSubType) { targetMult = highlightedName ? 0.4 : 1; targetScale = 1; targetHex = lc; ringEnabled = !highlightedName; }
+            else                               { targetMult = highlightedName ? 0.15 : 0.3; targetScale = 1; targetHex = lc; ringEnabled = false; }
+          } else { targetMult = highlightedName ? 0.4 : 1; targetScale = 1; targetHex = lc; ringEnabled = !highlightedName && no.isKey; }
         } else { targetMult = 0.08; targetScale = 1; targetHex = NEUTRAL_HEX; ringEnabled = false; }
 
         no.currentMult  += (targetMult  - no.currentMult)  * lerpK;
@@ -377,8 +396,9 @@ const Globe = forwardRef<GlobeHandle, GlobeProps>(function Globe({ style, onHove
           tooltipProj.copy(tooltipPos).project(camera);
           const cw = mount?.clientWidth ?? window.innerWidth;
           const ch = mount?.clientHeight ?? window.innerHeight;
-          const sx = (tooltipProj.x * 0.5 + 0.5) * cw + (mount?.getBoundingClientRect().left ?? 0);
-          const sy = (-tooltipProj.y * 0.5 + 0.5) * ch;
+          const mountRect = mount?.getBoundingClientRect();
+          const sx = (tooltipProj.x * 0.5 + 0.5) * cw + (mountRect?.left ?? 0);
+          const sy = (-tooltipProj.y * 0.5 + 0.5) * ch + (mountRect?.top ?? 0);
           const d  = Math.sqrt((sx - mouseScreen.x) ** 2 + (sy - mouseScreen.y) ** 2);
           if (d < closestDist) { closestDist = d; closest = idx; cSX = sx; cSY = sy; }
         });
@@ -387,8 +407,20 @@ const Globe = forwardRef<GlobeHandle, GlobeProps>(function Globe({ style, onHove
           currentHoveredName = newName;
           if (closest >= 0) { const n = NODES[closest]; onHoverNode?.({ name: n.name, type: n.type, location: n.location }); }
           else onHoverNode?.(null);
+          // Update tooltip inner
+          const inner = document.getElementById("globe-tooltip-inner");
+          if (inner) {
+            if (closest >= 0) {
+              const n = NODES[closest];
+              const td = TYPE_DISPLAY[n.type];
+              inner.style.display = "block";
+              inner.innerHTML = `<div style="font-size:10px;font-weight:500;color:rgba(255,255,255,0.7);margin-bottom:2px">${n.name}</div><div style="font-size:7px;color:${td?.color ?? '#888'};font-family:'Geist Mono',monospace;margin-bottom:1px">${td?.label ?? n.type}</div><div style="font-size:7px;color:rgba(255,255,255,0.25);font-family:'Geist Mono',monospace">${n.location}</div>`;
+            } else {
+              inner.style.display = "none";
+            }
+          }
         }
-        if (closest >= 0 && tooltipRef.current) { tooltipRef.current.style.left = cSX + "px"; tooltipRef.current.style.top = (cSY - 8) + "px"; }
+        if (closest >= 0 && tooltipRef.current) { tooltipRef.current.style.left = cSX + "px"; tooltipRef.current.style.top = cSY + "px"; }
       }
 
       renderer.render(scene, camera);
@@ -412,8 +444,10 @@ const Globe = forwardRef<GlobeHandle, GlobeProps>(function Globe({ style, onHove
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", ...style }}>
       <div ref={mountRef} style={{ position: "absolute", inset: 0, cursor: "grab" }} />
-      {/* Tooltip */}
-      <div ref={tooltipRef} style={{ position: "fixed", pointerEvents: "none", zIndex: 30, transform: "translate(-50%, -100%)" }} />
+      {/* Tooltip — positioned by the render loop */}
+      <div ref={tooltipRef} style={{ position: "fixed", pointerEvents: "none", zIndex: 30, transform: "translate(-50%, -100%)", padding: "0 0 8px 0" }}>
+        <div id="globe-tooltip-inner" style={{ display: "none", background: "rgba(20,20,18,0.92)", border: "0.5px solid rgba(255,255,255,0.08)", padding: "6px 10px", borderRadius: 4 }} />
+      </div>
     </div>
   );
 });
