@@ -1302,6 +1302,7 @@ export default function TreeView() {
   });
   const [animKey, setAnimKey] = useState(0);
   const [selectedLayer, setSelectedLayer] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("supply-tree");
   /* ── accordion expanded index (for verticals level only) ── */
   const [expandedVertical, setExpandedVertical] = useState<number>(() => {
     const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
@@ -1380,7 +1381,7 @@ export default function TreeView() {
     const labels = ["All verticals", ...path.map(p => p.name)];
 
     return (
-      <div style={{ marginBottom: 28, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", minHeight: 16 }}>
+      <div style={{ marginBottom: 16, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", minHeight: 14 }}>
         {labels.map((label, i) => {
           const isLast = i === labels.length - 1;
           const clickHandler = () => {
@@ -1389,11 +1390,11 @@ export default function TreeView() {
           };
           return (
             <React.Fragment key={i}>
-              {i > 0 && <span style={{ fontSize: 11, color: dimmer }}>/</span>}
+              {i > 0 && <span style={{ fontSize: 10, color: dimmer }}>/</span>}
               <span
                 onClick={isLast ? undefined : clickHandler}
                 style={{
-                  fontSize: 11,
+                  fontSize: 10,
                   color: isLast ? bodyText : dimmer,
                   cursor: isLast ? "default" : "pointer",
                   transition: "color 0.15s",
@@ -2090,28 +2091,29 @@ export default function TreeView() {
           );
         })()}
 
-        {/* Center — header + supply tree in one container */}
+        {/* Center — header + tabs + content */}
         <div style={{
           width: 1020, maxWidth: 1020, flexShrink: 0,
           background: "#111111",
           borderRadius: 10,
-          overflowY: "auto", overflowX: "hidden",
+          overflow: "hidden",
           border: "0.2px solid rgb(42, 42, 42)",
+          display: "flex", flexDirection: "column",
         }}>
-          {/* Header area */}
-          <div style={{ padding: "18px 30px 0" }}>
+          {/* Header area — fixed, doesn't scroll */}
+          <div style={{ padding: "16px 30px 0", flexShrink: 0 }}>
             {renderBreadcrumb()}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
               <h1 style={{
                 fontFamily: "'Instrument Serif', serif",
-                fontSize: path.length === 0 ? 36 : 32,
+                fontSize: 20,
                 fontWeight: 400, color: warmWhite, margin: 0,
               }}>
                 {templateTitle}
               </h1>
               {templateAnalysisHref && (
                 <a href={templateAnalysisHref} style={{
-                  fontSize: 11, color: "#fff", padding: "7px 16px",
+                  fontSize: 10, color: "#fff", padding: "6px 14px",
                   background: templateAccent ?? "#706a60", border: "none", borderRadius: 6,
                   textDecoration: "none", transition: "opacity 0.15s", flexShrink: 0,
                 }}
@@ -2120,22 +2122,70 @@ export default function TreeView() {
                 >Full analysis &rarr;</a>
               )}
             </div>
-            <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.6, margin: "0 0 20px 0", maxWidth: "80%" }}>
+            <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.5, margin: "0 0 14px 0", maxWidth: "50%" }}>
               {templateSubtitle}
             </p>
-            <div style={{ height: 1, background: borderColor }} />
+            {/* Tabs */}
+            <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}` }}>
+              {["Supply Tree", "Map", "Dependencies", "Analysis", "Investment Ideas"].map(tab => {
+                const tabId = tab.toLowerCase().replace(/\s+/g, "-");
+                const isActive = activeTab === tabId;
+                return (
+                  <div
+                    key={tabId}
+                    onClick={() => setActiveTab(tabId)}
+                    style={{
+                      padding: "8px 14px",
+                      fontSize: 10,
+                      color: isActive ? warmWhite : "#706a60",
+                      cursor: "pointer",
+                      borderBottom: isActive ? "1.5px solid #888" : "1.5px solid transparent",
+                      transition: "color 0.15s, border-color 0.15s",
+                      marginBottom: -1,
+                    }}
+                    onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = bodyText; }}
+                    onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "#706a60"; }}
+                  >
+                    {tab}
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Content area — flush with header */}
-          <div
-            key={animKey}
-            style={{
-              padding: "0 30px 24px",
-              animation: "containerOpen 350ms ease-out forwards",
-              position: "relative",
-            }}
-          >
-            {path.length === 0 ? renderVerticalsContent() : renderContainerContent()}
+          {/* Supply tree area — scrollable, takes remaining space minus bottom section */}
+          <div style={{
+            flex: 1,
+            overflowY: "auto", overflowX: "hidden",
+            padding: "0 30px",
+            minHeight: 0,
+          }}>
+            <div
+              key={animKey}
+              style={{
+                animation: "containerOpen 350ms ease-out forwards",
+                position: "relative",
+                paddingBottom: 16,
+              }}
+            >
+              {activeTab === "supply-tree" && (
+                path.length === 0 ? renderVerticalsContent() : renderContainerContent()
+              )}
+              {activeTab !== "supply-tree" && (
+                <div style={{ padding: "40px 0", color: "#4a4540", fontSize: 12 }}>
+                  {activeTab.charAt(0).toUpperCase() + activeTab.slice(1).replace(/-/g, " ")} — coming soon
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Bottom section — 10% height */}
+          <div style={{
+            height: "10%", flexShrink: 0,
+            borderTop: `1px solid ${borderColor}`,
+            padding: "12px 30px",
+          }}>
+            {/* Bottom section placeholder */}
           </div>
         </div>
 
