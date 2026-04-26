@@ -609,11 +609,11 @@ const INPUT_PRICE_HISTORY: Record<string, { points: number[]; unit: string; curr
 };
 
 /* ── Price sparkline chart ── */
-function PriceChart({ inputId, accent }: { inputId: string; accent: string }) {
+function PriceChart({ inputId, accent, name }: { inputId: string; accent: string; name: string }) {
   const data = INPUT_PRICE_HISTORY[inputId];
   if (!data) return null;
 
-  const W = 200, H = 60;
+  const W = 200, H = 40;
   const padX = 0, padY = 6;
   const min = Math.min(...data.points);
   const max = Math.max(...data.points);
@@ -631,7 +631,8 @@ function PriceChart({ inputId, accent }: { inputId: string; accent: string }) {
   const months = ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
 
   return (
-    <div style={{ padding: "16px 14px 10px" }}>
+    <div style={{ padding: "0 0 10px 0" }}>
+      <p style={{ fontSize: 10, fontWeight: 400, color: "rgb(97, 97, 97)", margin: "0 0 4px 0" }}>{name} Market Price</p>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 8 }}>
         <div>
           <span style={{ fontSize: 16, fontWeight: 600, color: "#ece8e1", fontFamily: "'Geist Mono', monospace" }}>{data.currentPrice}</span>
@@ -2339,7 +2340,7 @@ export default function TreeView() {
           {/* Top section — price chart + tabs */}
           <div style={{ flexShrink: 0, padding: "12px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
             {lastEntry && INPUT_PRICE_HISTORY[lastEntry.id] && (
-              <PriceChart inputId={lastEntry.id} accent={templateAccent ?? "#706a60"} />
+              <PriceChart inputId={lastEntry.id} accent={templateAccent ?? "#706a60"} name={templateTitle} />
             )}
             {!lastEntry || !INPUT_PRICE_HISTORY[lastEntry.id] ? <div style={{ height: 130 }} /> : null}
             <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 10 }}>
