@@ -1,6 +1,8 @@
 "use client";
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useRef } from "react";
 import HorizontalTree from "@/components/HorizontalTree";
+import Globe from "@/components/Globe";
+import type { GlobeHandle } from "@/components/Globe";
 import {
   computeCompSvgWidth,
   buildRawGeometry,
@@ -1526,6 +1528,9 @@ export default function TreeView() {
   const [activeTab, setActiveTab] = useState("supply-tree");
   const [rightTab, setRightTab] = useState("summary");
   const [selectedTreeNode, setSelectedTreeNode] = useState<string | null>(null);
+  const [globeFilterLayer, setGlobeFilterLayer] = useState<string | null>(null);
+  const [hoveredGlobeNode, setHoveredGlobeNode] = useState<{ name: string; type: string; location: string } | null>(null);
+  const globeRef = useRef<GlobeHandle>(null);
   /* ── accordion expanded index (for verticals level only) ── */
   const [expandedVertical, setExpandedVertical] = useState<number>(() => {
     const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
@@ -2205,7 +2210,7 @@ export default function TreeView() {
         {/* Left panel — vertical selector + layers + items */}
         {(() => {
           // Define layers and items based on current vertical
-          const layerData: { layer: string; items: string[] }[] = (() => {
+          const layerData: { layer: string; items: string[]; globeLayer?: string }[] = (() => {
             if (currentVertical?.id === "ai" || (!currentVertical && path.length > 0)) {
               return [
                 { layer: "Raw Materials", items: ["Germanium", "Gallium", "Helium", "Silica", "Copper", "Silicon"] },
@@ -2219,6 +2224,14 @@ export default function TreeView() {
                 { layer: "Raw Materials", items: ["Germanium", "Gallium", "Cobalt", "Lithium", "Copper", "Silicon", "Rare Earths", "Helium", "Nickel", "Tin"] },
                 { layer: "Products", items: ["Fiber optic cable", "GaN power chips", "Li-ion batteries", "Permanent magnets", "Wiring & PCBs", "Semiconductor wafers", "IR optics", "Solar cells"] },
                 { layer: "End Applications", items: ["AI Datacenters", "Electric Vehicles", "Defense & Radar", "Telecom Networks", "Space Systems", "Grid & Energy"] },
+              ];
+            }
+            if (path.length === 0) {
+              return [
+                { layer: "Raw Materials", items: ["Deposits", "Miners", "Refiners"], globeLayer: "raw-material" },
+                { layer: "Components", items: ["Converters", "Manufacturers"], globeLayer: "component" },
+                { layer: "Subsystems", items: ["Assemblers", "Recyclers"], globeLayer: "subsystem" },
+                { layer: "End Use", items: ["Datacenters", "Telecom"], globeLayer: "end-use" },
               ];
             }
             return [];
@@ -2276,7 +2289,18 @@ export default function TreeView() {
                     return (
                       <div
                         key={l.layer}
-                        onClick={() => setSelectedLayer(isActive ? null : l.layer)}
+                        onClick={() => {
+                          const nextLayer = isActive ? null : l.layer;
+                          setSelectedLayer(nextLayer);
+                          // Update globe filter when on globe view
+                          if (path.length === 0 && l.globeLayer) {
+                            const nextGlobe = isActive ? null : l.globeLayer;
+                            setGlobeFilterLayer(nextGlobe);
+                            const sel = new Set<string>();
+                            if (nextGlobe) sel.add(nextGlobe);
+                            globeRef.current?.updateFilter({ selectedLayers: sel, activeSubType: null, activeSubParent: null });
+                          }
+                        }}
                         style={{
                           padding: "5px 12px",
                           cursor: "pointer",
@@ -2310,7 +2334,7 @@ export default function TreeView() {
           );
         })()}
 
-        {/* Center — header + tabs + content */}
+        {/* Center — header + tabs + content OR globe */}
         <div style={{
           width: 1020, maxWidth: 1020, flexShrink: 0,
           background: "#111111",
@@ -2318,7 +2342,80 @@ export default function TreeView() {
           overflow: "hidden",
           border: "0.2px solid rgb(42, 42, 42)",
           display: "flex", flexDirection: "column",
+          position: "relative",
         }}>
+          {path.length === 0 ? (
+            <>
+              {/* Globe view — default landing */}
+              <div style={{ padding: "16px 30px 0", flexShrink: 0 }}>
+                <h1 style={{
+                  fontFamily: "'Instrument Serif', serif",
+                  fontSize: 20,
+                  fontWeight: 400, color: warmWhite, margin: "0 0 6px 0",
+                }}>
+                  {templateTitle}
+                </h1>
+                <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
+                  {templateSubtitle}
+                </p>
+              </div>
+              <div style={{ flex: 1, position: "relative", minHeight: 0 }}>
+                <Globe
+                  ref={globeRef}
+                  onHoverNode={setHoveredGlobeNode}
+                />
+                {/* Hover tooltip */}
+                {hoveredGlobeNode && (
+                  <div style={{
+                    position: "absolute", top: 12, left: 30, zIndex: 20,
+                    background: "rgba(20,20,18,0.92)", border: "0.5px solid rgba(255,255,255,0.08)",
+                    padding: "6px 10px", borderRadius: 4, pointerEvents: "none",
+                  }}>
+                    <div style={{ fontSize: 10, fontWeight: 500, color: "rgba(255,255,255,0.7)", marginBottom: 2 }}>{hoveredGlobeNode.name}</div>
+                    <div style={{ fontSize: 7, color: "#9BA8AB", fontFamily: "'Geist Mono', monospace", marginBottom: 1 }}>{hoveredGlobeNode.type}</div>
+                    <div style={{ fontSize: 7, color: "rgba(255,255,255,0.25)", fontFamily: "'Geist Mono', monospace" }}>{hoveredGlobeNode.location}</div>
+                  </div>
+                )}
+                {/* Navigate button — shown when a layer filter is active */}
+                {globeFilterLayer && (
+                  <div style={{ position: "absolute", bottom: 16, right: 20, zIndex: 20 }}>
+                    <button
+                      onClick={() => {
+                        // Navigate into the supply tree for the selected layer
+                        const layerToVertical: Record<string, { type: string; id: string; name: string }[]> = {
+                          "raw-material": [{ type: "vertical", id: "resources", name: "Global Resources" }],
+                          "component": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }],
+                          "subsystem": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }],
+                          "end-use": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }],
+                        };
+                        const targetPath = layerToVertical[globeFilterLayer];
+                        if (targetPath) {
+                          setPath(targetPath as PathEntry[]);
+                          setAnimKey(k => k + 1);
+                          setGlobeFilterLayer(null);
+                          setSelectedLayer(null);
+                        }
+                      }}
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif", fontSize: 11,
+                        color: "#ece8e1", background: "#1a1816",
+                        border: "1px solid #252220", borderRadius: 8,
+                        padding: "8px 18px", cursor: "pointer",
+                        display: "flex", alignItems: "center", gap: 8,
+                        transition: "border-color 0.15s, background 0.15s",
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = "#3a3835"; e.currentTarget.style.background = "#1e1c18"; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = "#252220"; e.currentTarget.style.background = "#1a1816"; }}
+                    >
+                      View {selectedLayer ?? "supply tree"}
+                      <span style={{ fontSize: 11, color: "#706a60" }}>&rarr;</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+          <>
           {/* Header area — fixed, doesn't scroll */}
           <div style={{ padding: "16px 30px 0", flexShrink: 0 }}>
             {renderBreadcrumb()}
@@ -2474,6 +2571,8 @@ export default function TreeView() {
               );
             })()}
           </div>
+          </>
+          )}
         </div>
 
         {/* Right panel — two sections */}
