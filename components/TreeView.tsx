@@ -2386,7 +2386,7 @@ export default function TreeView() {
                   if (info) {
                     return (
                       <div style={{
-                        width: "fit-content", maxWidth: "40%", background: "rgba(36, 32, 29, 0.5)",
+                        width: "fit-content", maxWidth: "fit-content", background: "rgba(26, 26, 26, 1)",
                         border: "0.5px solid rgba(255,255,255,0.06)",
                         borderRadius: 6, padding: "10px 14px",
                       }}>
@@ -2411,7 +2411,7 @@ export default function TreeView() {
                   );
                 })()}
                 {/* View toggle */}
-                <div style={{ display: "flex", gap: 12, flexShrink: 0, marginTop: 4 }}>
+                <div style={{ display: "flex", gap: 12, flexShrink: 0 }}>
                   <button
                     onClick={() => { setCenterView("tree"); setGlobeNavTarget(null); }}
                     style={{
@@ -2798,7 +2798,9 @@ export default function TreeView() {
 
             {rightTab === "summary" && (() => {
               let bullets: string[] = [];
-              if (lastEntry?.id === "germanium") {
+              // Use globeNavTarget in globe view, otherwise lastEntry
+              const summaryId = (centerView === "globe" && globeNavTarget) ? globeNavTarget.toLowerCase() : lastEntry?.id;
+              if (summaryId === "germanium") {
                 bullets = [
                   "Trace element recovered as a byproduct of zinc smelting and coal combustion. Cannot be mined directly.",
                   "Doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in IR defense optics, satellite solar cells, and SiGe semiconductors.",
@@ -2807,7 +2809,7 @@ export default function TreeView() {
                   "Demand accelerating from AI datacenter fiber buildout, defense IR optics, and satellite constellation expansion.",
                   "No near-term supply relief. Hollow-core fiber, new mine capacity, and DRC feedstock ramp all target 2027-2028.",
                 ];
-              } else if (lastEntry?.id === "gallium") {
+              } else if (summaryId === "gallium") {
                 bullets = [
                   "Trace element recovered as a byproduct of alumina refining from bauxite. Cannot be mined directly.",
                   "Forms compound semiconductors (GaAs and GaN) for AI datacenter power, 5G amplifiers, LEDs, EV chargers, and defense radar.",
@@ -2816,7 +2818,7 @@ export default function TreeView() {
                   "Demand accelerating from GaN power electronics (42% CAGR), defense radar, and AI datacenter 800V architecture.",
                   "Four western production projects target ~230 t/yr by 2029. None resolves structural dependency before 2028.",
                 ];
-              } else if (lastEntry?.id === "fiber") {
+              } else if (summaryId === "fiber" || summaryId === "fiber optic cable") {
                 bullets = [
                   "Glass strands that transmit data as pulses of light. Physical layer connecting AI datacenters, telecom, and subsea systems.",
                   "Core inputs: high-purity silica, germanium, and helium. All three are constrained simultaneously.",
