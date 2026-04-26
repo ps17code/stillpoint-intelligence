@@ -2396,17 +2396,9 @@ export default function TreeView() {
                     );
                   }
                   return (
-                    <div>
-                      <h1 style={{
-                        fontFamily: "'Instrument Serif', serif",
-                        fontSize: 20,
-                        fontWeight: 400, color: warmWhite, margin: "0 0 6px 0",
-                      }}>
-                        {templateTitle}
-                      </h1>
-                      <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
-                        {templateSubtitle}
-                      </p>
+                    <div style={{ width: "fit-content", maxWidth: "fit-content", padding: "10px 14px" }}>
+                      <p style={{ fontSize: 16, fontWeight: 400, color: "#ece8e1", margin: "0 0 4px 0", fontFamily: "'Instrument Serif', serif" }}>{templateTitle}</p>
+                      <p style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", lineHeight: 1.5, margin: 0 }}>{templateSubtitle}</p>
                     </div>
                   );
                 })()}
