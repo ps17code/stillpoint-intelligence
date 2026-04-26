@@ -1835,10 +1835,15 @@ export default function TreeView() {
   /* ── main render — unified page template ── */
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#141414" }}>
-      <div style={{ display: "flex", gap: 0, padding: "32px 20px" }}>
+      <div style={{ display: "flex", gap: 0, padding: "10px 0 0 0" }}>
 
         {/* Left panel */}
-        <div style={{ width: 200, maxWidth: 200, flexShrink: 0, padding: "0 12px 0 0" }}>
+        <div style={{
+          width: 150, maxWidth: 150, flexShrink: 0,
+          background: "#111111", borderRadius: 10,
+          margin: "0 5px",
+          border: "0.2px solid rgb(42, 42, 42)",
+        }}>
           {/* Left panel content placeholder */}
         </div>
 
@@ -1849,6 +1854,7 @@ export default function TreeView() {
           background: "#111111",
           borderRadius: 10,
           overflow: "hidden",
+          border: "0.2px solid rgb(42, 42, 42)",
         }}>
           {/* Header area */}
           <div style={{ padding: "18px 18px 0" }}>
