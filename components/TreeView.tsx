@@ -2183,8 +2183,9 @@ export default function TreeView() {
           <div style={{
             height: 160, flexShrink: 0,
             borderTop: `1px solid ${borderColor}`,
-            padding: "12px 30px",
+            padding: "0 30px",
             overflowY: "auto",
+            display: "flex", alignItems: "center",
           }}>
             {(() => {
               let takeaways: string[] = [];
@@ -2212,8 +2213,8 @@ export default function TreeView() {
               }
               if (takeaways.length === 0) return null;
               return (
-                <div style={{ background: "rgb(36, 32, 29)", borderRadius: 8, padding: "14px 18px" }}>
-                  <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>KEY TAKEAWAYS</p>
+                <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 8, padding: "14px 18px", width: "100%" }}>
+                  <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>KEY TAKEAWAYS</p>
                   {takeaways.map((text, i) => (
                     <div key={i} style={{ display: "flex", gap: 6, marginBottom: 4 }}>
                       <span style={{ fontSize: 11, color: "#555", flexShrink: 0, minWidth: 14 }}>{i + 1}.</span>
@@ -2226,14 +2227,65 @@ export default function TreeView() {
           </div>
         </div>
 
-        {/* Right panel */}
+        {/* Right panel — layer overview cards */}
         <div style={{
           flex: 1,
           background: "#111111", borderRadius: 10,
           margin: "0 5px",
           border: "0.2px solid rgb(42, 42, 42)",
+          padding: "14px 12px",
+          overflowY: "auto",
         }}>
-          {/* Right panel content placeholder */}
+          {(() => {
+            // Determine layer cards based on current path
+            let layerCards: { label: string; content: string; whyHard: string; stat: string; statLabel: string }[] = [];
+            const accent = templateAccent ?? "#706a60";
+
+            if (lastEntry?.id === "germanium" || (lastEntry?.type === "raw-material" && lastEntry?.id === "germanium")) {
+              layerCards = [
+                { label: "HOST ORE EXTRACTION", content: "Germanium-rich residues collect in flue dust and leach solutions during zinc smelting. Operations with specialized hydrometallurgical circuits extract it; most don\u2019t.", whyHard: "Germanium exists at 50-800 ppm in host ores. Recovery requires circuits most zinc smelters never install. China operates ~83% of primary capacity.", stat: "~140t/yr", statLabel: "primary germanium extracted" },
+                { label: "REFINING TO HIGH PURITY", content: "Crude oxide is reduced to metal, then zone-refined to 5N+ purity. For fiber optics, converted to GeCl\u2084 and purified to 8N.", whyHard: "Fiber-grade GeCl\u2084 requires parts-per-billion purity. Only 6 facilities globally: four in China, one in Russia, one in the west \u2014 Umicore.", stat: "~230t/yr", statLabel: "refined germanium" },
+                { label: "CONVERSION TO END PRODUCTS", content: "Each end product needs a different form: GeCl\u2084 for fiber, GeO\u2082 blanks for IR optics, wafers for satellite solar, SiGe substrates.", whyHard: "No single facility serves all end markets. Five distinct markets pull on the same ~230t/yr supply.", stat: "5 markets", statLabel: "competing for same supply" },
+              ];
+            } else if (lastEntry?.id === "gallium" || (lastEntry?.type === "raw-material" && lastEntry?.id === "gallium")) {
+              layerCards = [
+                { label: "BYPRODUCT SOURCE", content: "Bauxite is mined and shipped to alumina refineries. Gallium is not extracted at this layer \u2014 it rides along at ~50 ppm.", whyHard: "Gallium content is uniform across all bauxite. Output is determined by aluminum industry decisions, not gallium demand.", stat: "~346M t/yr", statLabel: "bauxite mined globally" },
+                { label: "PRIMARY PRODUCER", content: "Bauxite is processed into alumina. Refineries with ion-exchange circuits capture gallium as a byproduct.", whyHard: "Only ~20 alumina refineries globally have gallium recovery installed, almost all in China.", stat: "~600 t/yr", statLabel: "primary gallium extracted" },
+                { label: "REFINER", content: "Crude 99.99% gallium is purified to 99.9999%+ via zone refining, vacuum distillation, and electrolytic processes.", whyHard: "Each additional nine of purity is exponentially harder. Western refiners depend on Chinese primary feedstock.", stat: "~320 t/yr", statLabel: "high-purity refined gallium" },
+              ];
+            } else if (lastEntry?.id === "fiber" || (lastEntry?.type === "component" && lastEntry?.id === "fiber")) {
+              layerCards = [
+                { label: "CHEMICAL CONVERSION", content: "Refined germanium is converted to GeCl\u2084 at 8N purity. High-purity silica is converted to SiCl\u2084. Helium is purified for cooling.", whyHard: "Only 6 facilities globally produce fiber-grade GeCl\u2084. Helium has no substitute and trades on physical scarcity.", stat: "~220t/yr", statLabel: "fiber-grade GeCl\u2084" },
+                { label: "PREFORM MANUFACTURING", content: "GeCl\u2084 is vaporized and deposited layer by layer inside a silica tube, building a glass preform rod.", whyHard: "Only one equipment supplier \u2014 Rosendahl Nextrom. Adding a new preform line takes 18-24 months.", stat: "~24,000t/yr", statLabel: "preform produced" },
+                { label: "FIBER DRAW & ASSEMBLY", content: "Preforms are drawn into hair-thin strands at 10-20 m/s, coated, bundled, and sheathed into cable.", whyHard: "Drawing isn\u2019t the constraint \u2014 preform supply is. Helium supply is tight.", stat: "~720M km/yr", statLabel: "fiber strand produced" },
+              ];
+            }
+
+            if (layerCards.length === 0) return null;
+
+            return (
+              <>
+                <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>LAYER OVERVIEW</p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {layerCards.map(card => (
+                    <div key={card.label} style={{
+                      background: "rgb(36, 32, 29)", border: "1px solid rgb(45, 41, 39)",
+                      borderRadius: 6, padding: "10px 12px",
+                    }}>
+                      <p style={{ fontSize: 8, letterSpacing: "0.08em", color: accent, margin: "0 0 6px 0", fontWeight: 500, textTransform: "uppercase" as const }}>{card.label}</p>
+                      <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: "0 0 8px 0" }}>{card.content}</p>
+                      <p style={{ fontSize: 7, letterSpacing: "0.06em", color: "#555", margin: "0 0 3px 0", textTransform: "uppercase" as const }}>WHY IT&apos;S HARD</p>
+                      <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: "0 0 0 0" }}>{card.whyHard}</p>
+                      <div style={{ marginTop: 8, paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
+                        <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{card.stat}</span>
+                        <span style={{ fontSize: 7, color: "#555", marginLeft: 5 }}>{card.statLabel}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            );
+          })()}
         </div>
 
       </div>
