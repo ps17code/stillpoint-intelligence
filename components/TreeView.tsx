@@ -2238,7 +2238,9 @@ export default function TreeView() {
           overflow: "hidden",
         }}>
           {/* Top section — matches contextual header height */}
-          <div style={{ flexShrink: 0, padding: "14px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+          <div style={{ flexShrink: 0, padding: "0 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+            {/* Spacer to align tabs with main panel tabs */}
+            <div style={{ height: 88 }} />
             {/* Tabs at bottom of top section */}
             <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}` }}>
               {["Layers", "Summary"].map((tab, ti) => {
@@ -2296,14 +2298,12 @@ export default function TreeView() {
               if (layerCards.length === 0) return null;
 
               return (
-                <>
-                  <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>LAYER OVERVIEW</p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    {layerCards.map(card => (
-                      <div key={card.label} style={{
-                        background: "rgb(36, 32, 29)", border: "1px solid rgb(45, 41, 39)",
-                        borderRadius: 6, padding: "10px 12px",
-                      }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {layerCards.map(card => (
+                    <div key={card.label} style={{
+                      background: "rgba(36, 32, 29, 0.28)", border: "1px solid rgb(45, 41, 39)",
+                      borderRadius: 6, padding: "10px 12px",
+                    }}>
                         <p style={{ fontSize: 8, letterSpacing: "0.08em", color: accent, margin: "0 0 6px 0", fontWeight: 500, textTransform: "uppercase" as const }}>{card.label}</p>
                         <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: "0 0 8px 0" }}>{card.content}</p>
                         <p style={{ fontSize: 7, letterSpacing: "0.06em", color: "#555", margin: "0 0 3px 0", textTransform: "uppercase" as const }}>WHY IT&apos;S HARD</p>
@@ -2314,8 +2314,7 @@ export default function TreeView() {
                         </div>
                       </div>
                     ))}
-                  </div>
-                </>
+                </div>
               );
             })()}
 
