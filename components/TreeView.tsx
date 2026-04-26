@@ -2019,6 +2019,7 @@ export default function TreeView() {
               display: "flex", flexDirection: "column",
               position: "sticky", top: 10,
               height: "calc(100vh - 15px)",
+              minHeight: 770,
               alignSelf: "flex-start",
             }}>
               {/* Verticals section */}
@@ -2156,10 +2157,10 @@ export default function TreeView() {
             </div>
           </div>
 
-          {/* Supply tree area — takes remaining space */}
+          {/* Supply tree area — fixed height, scrollable */}
           <div style={{
-            flex: 1,
-            overflow: "hidden",
+            height: 450,
+            overflowY: "auto", overflowX: "hidden",
             padding: "0 30px",
           }}>
             <div
@@ -2181,9 +2182,9 @@ export default function TreeView() {
             </div>
           </div>
 
-          {/* Bottom section — 20% height */}
+          {/* Bottom section */}
           <div style={{
-            height: "20%", flexShrink: 0,
+            height: 160, flexShrink: 0,
             borderTop: `1px solid ${borderColor}`,
             padding: "12px 30px",
           }}>
