@@ -585,6 +585,13 @@ const INPUT_ACCENT: Record<string, string> = {
   gallium: "#7a8a6a",
 };
 
+/* ── supply-demand metrics per input ── */
+const INPUT_METRICS: Record<string, { price: string; supply: string; demand: string; gap: string; status: string }> = {
+  germanium: { price: "$8,500/kg", supply: "~230t/yr", demand: "~286t by 2027", gap: "~56t", status: "Structural deficit" },
+  gallium: { price: "$2,269/kg", supply: "320t/yr", demand: "800t/yr by 2028", gap: "480t/yr", status: "Critical shortage" },
+  fiber: { price: "35–50 RMB/km", supply: "720M km", demand: "~850M km", gap: "130M km", status: "Supply constrained" },
+};
+
 /* ── sub-components ── */
 
 function StatusBadge({ status }: { status: string }) {
@@ -2103,28 +2110,55 @@ export default function TreeView() {
           {/* Header area — fixed, doesn't scroll */}
           <div style={{ padding: "16px 30px 0", flexShrink: 0 }}>
             {renderBreadcrumb()}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-              <h1 style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontSize: 20,
-                fontWeight: 400, color: warmWhite, margin: 0,
-              }}>
-                {templateTitle}
-              </h1>
-              {templateAnalysisHref && (
-                <a href={templateAnalysisHref} style={{
-                  fontSize: 10, color: "#fff", padding: "6px 14px",
-                  background: templateAccent ?? "#706a60", border: "none", borderRadius: 6,
-                  textDecoration: "none", transition: "opacity 0.15s", flexShrink: 0,
-                }}
-                  onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
-                  onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
-                >Full analysis &rarr;</a>
-              )}
-            </div>
-            <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.5, margin: "0 0 14px 0", maxWidth: "50%" }}>
-              {templateSubtitle}
-            </p>
+            {(() => {
+              const metrics = lastEntry ? INPUT_METRICS[lastEntry.id] : null;
+              return (
+                <div style={{ display: "grid", gridTemplateColumns: metrics ? "1fr 1fr" : "1fr", gap: 24, marginBottom: 14 }}>
+                  {/* Left column — title + description */}
+                  <div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
+                      <h1 style={{
+                        fontFamily: "'Instrument Serif', serif",
+                        fontSize: 20,
+                        fontWeight: 400, color: warmWhite, margin: 0,
+                      }}>
+                        {templateTitle}
+                      </h1>
+                      {templateAnalysisHref && (
+                        <a href={templateAnalysisHref} style={{
+                          fontSize: 10, color: "#fff", padding: "6px 14px",
+                          background: templateAccent ?? "#706a60", border: "none", borderRadius: 6,
+                          textDecoration: "none", transition: "opacity 0.15s", flexShrink: 0,
+                        }}
+                          onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
+                          onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                        >Full analysis &rarr;</a>
+                      )}
+                    </div>
+                    <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
+                      {templateSubtitle}
+                    </p>
+                  </div>
+                  {/* Right column — metrics row */}
+                  {metrics && (
+                    <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-end", gap: 16 }}>
+                      {[
+                        { label: "Price", value: metrics.price },
+                        { label: "Supply", value: metrics.supply },
+                        { label: "Demand", value: metrics.demand },
+                        { label: "Gap", value: metrics.gap },
+                        { label: "Status", value: metrics.status },
+                      ].map(m => (
+                        <div key={m.label} style={{ textAlign: "right" }}>
+                          <p style={{ fontSize: 7, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: dimmer, margin: "0 0 3px 0", fontFamily: "'Geist Mono', monospace" }}>{m.label}</p>
+                          <p style={{ fontSize: 10, color: m.label === "Status" ? (templateAccent ?? "#a09888") : warmWhite, margin: 0, fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{m.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
             {/* Tabs */}
             <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}` }}>
               {["Supply Tree", "Map", "Dependencies", "Analysis", "Investment Ideas"].map((tab, ti) => {
