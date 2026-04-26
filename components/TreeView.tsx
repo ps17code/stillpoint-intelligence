@@ -2237,8 +2237,8 @@ export default function TreeView() {
           display: "flex", flexDirection: "column",
           overflow: "hidden",
         }}>
-          {/* Top section — same height as contextual header, tabs at bottom */}
-          <div style={{ flexShrink: 0, padding: "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+          {/* Top section — tabs aligned with main panel tabs */}
+          <div style={{ flexShrink: 0, padding: "120px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
             <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 10 }}>
               {["Summary", "Layers"].map((tab, ti) => {
                 const tabId = tab.toLowerCase();
