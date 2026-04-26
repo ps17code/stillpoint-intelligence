@@ -611,6 +611,8 @@ const GLOBE_CARD_INFO: Record<string, { title: string; description: string }> = 
 
 /* ── Geographic concentration summaries ── */
 const GEO_SUMMARY: Record<string, string> = {
+  resources: "Frontier technology supply chains are concentrated in a small number of countries. China controls 83% of germanium, 98% of gallium refining, and dominates rare earth processing. Western alternatives are 3-5 years from meaningful scale. Geographic chokepoints exist at every tier — extraction, refining, and conversion.",
+  ai: "The AI infrastructure supply chain spans 15+ countries but funnels through critical chokepoints. Germanium deposits in China feed Belgian refiners who supply American preform makers. Fiber cable is drawn in the US, China, Japan, and Europe — but all depend on a single Austrian equipment supplier.",
   germanium: "Hosted across 8 deposits — 6 in China, 1 in Russia, 1 in DRC. Mined as a byproduct of zinc and coal, then sent to refiners. Only 2 western refiners: Umicore (Belgium) and Teck Trail (Canada). 83% of primary supply is Chinese.",
   gallium: "Extracted as a byproduct at alumina refineries. ~98% of refining capacity is in China across ~20 facilities. One major non-Chinese refiner: Dowa in Japan. Four western projects announced but none at scale before 2028.",
   fiber: "Preform manufactured in 6 countries — US, China, Japan, India, Italy. Cable drawn at ~25 plants globally. Corning (US) controls ~40% of capacity. YOFC (China) is the largest by volume. Equipment monopoly: Rosendahl Nextrom (Austria).",
@@ -618,6 +620,21 @@ const GEO_SUMMARY: Record<string, string> = {
 
 /* ── Node lists grouped by layer for right panel ── */
 const INPUT_NODE_LAYERS: Record<string, { layer: string; nodes: string[] }[]> = {
+  resources: [
+    { layer: "Germanium — Deposits", nodes: ["Lincang", "Wulantuga", "Yimin", "Huize", "Yiliang", "Red Dog", "Spetsugli", "Big Hill DRC"] },
+    { layer: "Germanium — Operations", nodes: ["Lincang Xinyuan", "Shengli Coal", "Yunnan Chihong Zinc", "Huize Zinc", "Teck Trail", "STL Mining DRC", "Various Chinese Ops"] },
+    { layer: "Germanium — Refiners", nodes: ["Umicore", "5N Plus", "Teck Trail Refinery", "PPM Pure Metals", "JSC Germanium", "Lincang Xinyuan Refinery", "Yunnan Chihong Refinery"] },
+    { layer: "Gallium — Sources", nodes: ["Guinea Bauxite", "Australia Bauxite", "China Bauxite", "Brazil Bauxite", "Indonesia Bauxite"] },
+    { layer: "Gallium — Refineries", nodes: ["Chalco", "China Hongqiao", "Shandong Nanshan", "Hindalco", "South32"] },
+    { layer: "Gallium — Refiners", nodes: ["Dowa Electronics", "CMK", "AXT Inc", "Neo Performance", "Vital Materials"] },
+  ],
+  ai: [
+    { layer: "Germanium — Deposits", nodes: ["Lincang", "Wulantuga", "Huize", "Red Dog", "Spetsugli", "Big Hill DRC"] },
+    { layer: "Germanium — Refiners", nodes: ["Umicore", "5N Plus", "Teck Trail Refinery", "JSC Germanium"] },
+    { layer: "Fiber — Chemical Conversion", nodes: ["Umicore GeCl₄", "Yunnan Chihong GeCl₄", "Nanjing Germanium"] },
+    { layer: "Fiber — Preform", nodes: ["Corning Preform", "YOFC", "Shin-Etsu", "Prysmian", "Sumitomo Electric"] },
+    { layer: "Fiber — Cable Assembly", nodes: ["Corning Hickory", "Corning Concord", "Prysmian Milan", "YOFC Wuhan", "Sumitomo Cable"] },
+  ],
   germanium: [
     { layer: "Deposits", nodes: ["Lincang", "Wulantuga", "Yimin", "Huize", "Yiliang", "Red Dog", "Spetsugli", "Big Hill DRC"] },
     { layer: "Host Operations", nodes: ["Lincang Xinyuan", "Shengli Coal", "Yunnan Chihong Zinc", "Huize Zinc", "Teck Trail", "STL Mining DRC", "Various Chinese Ops"] },
@@ -2768,8 +2785,10 @@ export default function TreeView() {
                 }
               }
               // Default: geo summary
-              const rpId = globeNavTarget ? globeNavTarget.toLowerCase() : null;
-              const geo = rpId ? GEO_SUMMARY[rpId === "fiber optic cable" ? "fiber" : rpId] : null;
+              const effVert = (globeNavTarget === "ai" || globeNavTarget === "resources") ? globeNavTarget : currentVertical?.id ?? "resources";
+              const rpId = globeNavTarget ? globeNavTarget.toLowerCase() : effVert;
+              const geoKey = rpId === "fiber optic cable" ? "fiber" : rpId;
+              const geo = GEO_SUMMARY[geoKey];
               if (!geo) return <div style={{ height: 40 }} />;
               return (
                 <div style={{ marginBottom: 10 }}>
@@ -2858,7 +2877,8 @@ export default function TreeView() {
 
             {/* Summary tab — globe view: node list; tree view: executive summary */}
             {rightTab === "summary" && centerView === "globe" && (() => {
-              const summaryId = globeNavTarget ? globeNavTarget.toLowerCase() : null;
+              const effVert2 = (globeNavTarget === "ai" || globeNavTarget === "resources") ? globeNavTarget : currentVertical?.id ?? "resources";
+              const summaryId = globeNavTarget ? globeNavTarget.toLowerCase() : effVert2;
               const resolvedId = summaryId === "fiber optic cable" ? "fiber" : summaryId;
               const nodeLayers = resolvedId ? INPUT_NODE_LAYERS[resolvedId] : null;
 
