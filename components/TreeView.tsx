@@ -14,6 +14,7 @@ import chainsJson from "@/data/chains.json";
 import nodesJson from "@/data/nodes.json";
 import galliumChainJson from "@/data/gallium-chain.json";
 import galliumNodesJson from "@/data/gallium-nodes.json";
+import germaniumNodesJson from "@/data/germanium-nodes.json";
 import type { CompChain, SubChain, RawChain, GalliumChain, NodeData } from "@/types";
 
 /* ── data casts ── */
@@ -26,6 +27,7 @@ const chainsData = chainsJson as unknown as {
 const allNodes = nodesJson as unknown as Record<string, NodeData>;
 const galliumChain = (galliumChainJson as Record<string, unknown>).GALLIUM_CHAIN as unknown as GalliumChain;
 const galliumNodes = galliumNodesJson as unknown as Record<string, NodeData>;
+const germaniumNodes = germaniumNodesJson as unknown as Record<string, NodeData>;
 const galliumLc = (galliumChainJson as Record<string, unknown>).layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
 
 /* ── palette ── */
@@ -1304,6 +1306,7 @@ export default function TreeView() {
   const [selectedLayer, setSelectedLayer] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("supply-tree");
   const [rightTab, setRightTab] = useState("summary");
+  const [selectedTreeNode, setSelectedTreeNode] = useState<string | null>(null);
   /* ── accordion expanded index (for verticals level only) ── */
   const [expandedVertical, setExpandedVertical] = useState<number>(() => {
     const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
@@ -1826,13 +1829,8 @@ export default function TreeView() {
       return (
         <FiberSupplyTree
           onNodeClick={(name) => {
-            if (name === "Germanium") {
-              setPath([
-                { type: "vertical", id: currentVertical?.id ?? "ai", name: currentVertical?.name ?? "AI Infrastructure" },
-                { type: "raw-material", id: "germanium", name: "Germanium" },
-              ]);
-              setAnimKey(k => k + 1);
-            }
+            setSelectedTreeNode(name);
+            setRightTab("nodes");
           }}
           upstream={[
             { id: "germanium", name: "Germanium", pill: "~230t/yr" },
@@ -1854,7 +1852,7 @@ export default function TreeView() {
     if (lastEntry.type === "raw-material" && lastEntry.id === "germanium") {
       return (
         <>
-          <GermaniumSupplyTree onNodeClick={() => {}} downstream={[
+          <GermaniumSupplyTree onNodeClick={(name) => { setSelectedTreeNode(name); setRightTab("nodes"); }} downstream={[
             { id: "fiber", name: "Fiber Optic Cable", pill: "~87t/yr" },
             { id: "ir", name: "IR Optics", pill: "~55t/yr" },
             { id: "solar", name: "Satellite Solar", pill: "~35t/yr" },
@@ -1868,7 +1866,7 @@ export default function TreeView() {
     if (lastEntry.type === "raw-material" && lastEntry.id === "gallium") {
       return (
         <>
-          <GalliumSupplyTree onNodeClick={() => {}} downstream={[
+          <GalliumSupplyTree onNodeClick={(name) => { setSelectedTreeNode(name); setRightTab("nodes"); }} downstream={[
             { id: "gan", name: "GaN Power", pill: "~110t/yr" },
             { id: "gaas", name: "GaAs Devices", pill: "~140t/yr" },
             { id: "ndfeb", name: "NdFeB Magnets", pill: "~80t/yr" },
@@ -2238,9 +2236,9 @@ export default function TreeView() {
           overflow: "hidden",
         }}>
           {/* Top section — tabs aligned with main panel tabs */}
-          <div style={{ flexShrink: 0, padding: "120px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+          <div style={{ flexShrink: 0, padding: "112px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
             <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 10 }}>
-              {["Summary", "Layers"].map((tab, ti) => {
+              {["Summary", "Layers", "Nodes"].map((tab, ti) => {
                 const tabId = tab.toLowerCase();
                 const isActive = rightTab === tabId;
                 return (
@@ -2355,10 +2353,59 @@ export default function TreeView() {
                     {bullets.map((bullet, i) => (
                       <div key={i} style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
                         <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 5 }} />
-                        <p style={{ fontSize: 10, color: "#807870", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
+                        <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
                       </div>
                     ))}
                   </div>
+                </div>
+              );
+            })()}
+
+            {rightTab === "nodes" && (() => {
+              if (!selectedTreeNode) {
+                return <p style={{ fontSize: 10, color: "#555", padding: "20px 0" }}>Click a node to view context</p>;
+              }
+
+              // Look up node data from the appropriate source
+              const nodeData = allNodes[selectedTreeNode] ?? galliumNodes[selectedTreeNode] ?? germaniumNodes[selectedTreeNode];
+              if (!nodeData) {
+                return (
+                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                    <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>{selectedTreeNode}</p>
+                    <p style={{ fontSize: 10, color: "#555" }}>No additional data available for this node.</p>
+                  </div>
+                );
+              }
+
+              return (
+                <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                  <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0", fontFamily: "'EB Garamond', Georgia, serif" }}>{selectedTreeNode}</p>
+                  {nodeData.type && <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>{nodeData.type}</p>}
+                  {nodeData.loc && <p style={{ fontSize: 9, color: "#706a60", margin: "0 0 8px 0" }}>{nodeData.loc}</p>}
+                  {nodeData.stat && (
+                    <>
+                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>KEY STAT</p>
+                      <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 8px 0", lineHeight: 1.4 }}>{nodeData.stat}</p>
+                    </>
+                  )}
+                  {nodeData.role && (
+                    <>
+                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>ROLE</p>
+                      <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{nodeData.role}</p>
+                    </>
+                  )}
+                  {nodeData.risk && (
+                    <>
+                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>RISK</p>
+                      <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{nodeData.risk}</p>
+                    </>
+                  )}
+                  {nodeData.inv && (
+                    <>
+                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>INVESTMENT ANGLE</p>
+                      <p style={{ fontSize: 10, color: "#807870", margin: "0", lineHeight: 1.5 }}>{nodeData.inv}</p>
+                    </>
+                  )}
                 </div>
               );
             })()}
