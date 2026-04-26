@@ -319,9 +319,9 @@ export default function HorizontalTree({
           {/* Layer label */}
           <p
             style={{
-              fontSize: 5,
+              fontSize: 6,
               letterSpacing: "0.1em",
-              color: "#4a4540",
+              color: "rgb(158, 156, 153)",
               textTransform: "uppercase",
               margin: "0 0 4px 0",
               fontFamily: "'Geist Mono', monospace",

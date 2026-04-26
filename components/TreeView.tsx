@@ -597,6 +597,18 @@ const INPUT_METRICS: Record<string, { price: string; priceSub: string; supply: s
   fiber: { price: "48 RMB/km", priceSub: "Apr 2026", supply: "720M km", supplySub: "2026", demand: "~850M km", demandSub: "by 2027", gap: "130M km", gapSub: "2027", status: "Supply constrained", statusSub: "~¥6.2B" },
 };
 
+/* ── Globe card descriptions per selectable item ── */
+const GLOBE_CARD_INFO: Record<string, { title: string; description: string }> = {
+  ai: { title: "AI Infrastructure", description: "End-to-end supply chain powering AI datacenters — from raw germanium deposits to hyperscale GPU clusters." },
+  resources: { title: "Global Resources", description: "Critical minerals and materials that underpin frontier technology sectors — extraction, refining, and geopolitical control." },
+  "Germanium": { title: "Germanium", description: "Trace element doped into glass to guide light through fiber optic cable. 83% of supply controlled by China." },
+  "Gallium": { title: "Gallium", description: "Byproduct of alumina refining. Forms compound semiconductors for AI power conversion, 5G, and defense radar." },
+  "Fiber optic cable": { title: "Fiber Optic Cable", description: "Physical layer connecting every AI datacenter. Demand surging as GPU clusters consume 36x more fiber than traditional servers." },
+  "Connectivity": { title: "Connectivity", description: "Subsystem linking compute nodes — fiber optic cable, optical transceivers, and network switching infrastructure." },
+  "AI Datacenter": { title: "AI Datacenter", description: "Hyperscale facilities housing GPU clusters. Each GW of AI capacity consumes ~6.5M strand-km of fiber." },
+  "AI Datacenters": { title: "AI Datacenters", description: "Hyperscale facilities housing GPU clusters. Each GW of AI capacity consumes ~6.5M strand-km of fiber." },
+};
+
 /* ── 12-month price history per input (monthly close, Apr 2025 → Apr 2026) ── */
 const INPUT_PRICE_HISTORY: Record<string, { points: number[]; unit: string; currentPrice: string; change12m: string }> = {
   germanium: {
@@ -2370,18 +2382,35 @@ export default function TreeView() {
             <>
               {/* Globe view — default landing */}
               <div style={{ padding: "16px 30px 0", flexShrink: 0, display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <div>
-                  <h1 style={{
-                    fontFamily: "'Instrument Serif', serif",
-                    fontSize: 20,
-                    fontWeight: 400, color: warmWhite, margin: "0 0 6px 0",
-                  }}>
-                    {templateTitle}
-                  </h1>
-                  <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
-                    {templateSubtitle}
-                  </p>
-                </div>
+                {(() => {
+                  const info = globeNavTarget ? GLOBE_CARD_INFO[globeNavTarget] : null;
+                  if (info) {
+                    return (
+                      <div style={{
+                        width: "40%", background: "rgba(36, 32, 29, 0.5)",
+                        border: "0.5px solid rgba(255,255,255,0.06)",
+                        borderRadius: 6, padding: "10px 14px",
+                      }}>
+                        <p style={{ fontSize: 14, fontWeight: 400, color: "#ece8e1", margin: "0 0 4px 0", fontFamily: "'Instrument Serif', serif" }}>{info.title}</p>
+                        <p style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", lineHeight: 1.5, margin: 0 }}>{info.description}</p>
+                      </div>
+                    );
+                  }
+                  return (
+                    <div>
+                      <h1 style={{
+                        fontFamily: "'Instrument Serif', serif",
+                        fontSize: 20,
+                        fontWeight: 400, color: warmWhite, margin: "0 0 6px 0",
+                      }}>
+                        {templateTitle}
+                      </h1>
+                      <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
+                        {templateSubtitle}
+                      </p>
+                    </div>
+                  );
+                })()}
                 {/* View toggle */}
                 <div style={{ display: "flex", gap: 12, flexShrink: 0, marginTop: 4 }}>
                   <button
@@ -2803,7 +2832,7 @@ export default function TreeView() {
 
               return (
                 <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
-                  <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>EXECUTIVE SUMMARY</p>
+                  <p style={{ fontSize: 10, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>EXECUTIVE SUMMARY</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                     {bullets.map((bullet, i) => (
                       <div key={i} style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
