@@ -871,10 +871,10 @@ function DependenciesTable({ inputId }: { inputId: string }) {
       )}
 
       {/* Table label */}
-      <p style={{ fontSize: 8, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 12px 0", fontFamily: "'Geist Mono', monospace" }}>{table.label}</p>
+      <p style={{ fontSize: 8, letterSpacing: "0.1em", color: "rgb(128, 120, 112)", textTransform: "uppercase" as const, margin: "0 0 12px 0", fontFamily: "'Geist Mono', monospace" }}>{table.label}</p>
 
       {/* Table */}
-      <div style={{ overflowX: "auto" }}>
+      <div style={{ overflowX: "auto", background: "rgb(160, 152, 136)", borderRadius: 6, padding: 5 }}>
         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 10 }}>
           <thead>
             <tr>
@@ -898,7 +898,7 @@ function DependenciesTable({ inputId }: { inputId: string }) {
                   return (
                     <td key={ci} style={{
                       padding: "7px 8px",
-                      color: ci === 0 ? "#ece8e1" : bodyText,
+                      color: ci === 0 ? "rgb(160, 152, 136)" : bodyText,
                       fontWeight: ci === 0 ? 500 : 400,
                       textAlign: isRight ? "right" : "left",
                       borderBottom: `1px solid rgba(255,255,255,0.04)`,
