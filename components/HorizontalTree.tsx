@@ -14,10 +14,10 @@ const COUNTRY_COLORS: Record<string, string> = {
   "South Korea": "#5a7a9c", "Global": "#888880", "Multiple": "#888880",
 };
 
-/* ── Layout constants (scaled to fit container) ── */
-const CARD_WIDTH = 104;
-const CARD_GAP = 6;
-const COLUMN_GAP = 38;
+/* ── Layout constants ── */
+const CARD_WIDTH = 94;
+const CARD_GAP = 5;
+const COLUMN_GAP = 34;
 
 /* ── Types ── */
 interface HorizontalTreeProps {
@@ -75,7 +75,7 @@ function NodeCard({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       style={{
-        padding: "6px 9px",
+        padding: "5px 8px",
         background: highlighted ? "rgb(42, 38, 35)" : "rgb(36, 32, 29)",
         border: highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
         borderRadius: 4,
@@ -88,21 +88,21 @@ function NodeCard({
     >
       {/* Name */}
       <p style={{
-        fontSize: 11, fontWeight: 600, color: "#ece8e1",
+        fontSize: 10, fontWeight: 600, color: "#ece8e1",
         margin: 0, lineHeight: 1.2, marginBottom: hasCountry ? 2 : 3,
         fontFamily: "'EB Garamond', Georgia, serif",
         whiteSpace: "nowrap",
       }}>{name}</p>
       {/* Country dot + label */}
       {hasCountry && (
-        <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 3 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: 2 }}>
           <div style={{ width: 4, height: 4, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
-          <p style={{ fontSize: 7, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em", whiteSpace: "nowrap" }}>{country}</p>
+          <p style={{ fontSize: 6, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em", whiteSpace: "nowrap" }}>{country}</p>
         </div>
       )}
       {/* Pills — same data as vertical tree */}
       {pills.slice(0, 2).map((pill, i) => (
-        <p key={i} style={{ fontSize: 7, color: "rgba(255,255,255,0.62)", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>{pill}</p>
+        <p key={i} style={{ fontSize: 6, color: "rgba(255,255,255,0.62)", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>{pill}</p>
       ))}
     </div>
   );
@@ -297,7 +297,7 @@ export default function HorizontalTree({
         position: "relative",
         display: "flex",
         gap: COLUMN_GAP,
-        padding: "28px 0",
+        padding: "24px 0",
         overflow: "visible",
         maxWidth: "100%",
         margin: "0 auto",
@@ -317,11 +317,11 @@ export default function HorizontalTree({
           {/* Layer label */}
           <p
             style={{
-              fontSize: 6,
+              fontSize: 5,
               letterSpacing: "0.1em",
               color: "#4a4540",
               textTransform: "uppercase",
-              margin: "0 0 5px 0",
+              margin: "0 0 4px 0",
               fontFamily: "'Geist Mono', monospace",
               whiteSpace: "nowrap",
             }}
@@ -340,7 +340,7 @@ export default function HorizontalTree({
                     if (el) cardRefs.current.set(node.refKey, el);
                   }}
                   style={{
-                    padding: "6px 9px",
+                    padding: "5px 8px",
                     background: "rgb(36, 32, 29)",
                     border: "1px solid rgb(45, 41, 39)",
                     borderRadius: 4,
@@ -350,7 +350,7 @@ export default function HorizontalTree({
                 >
                   <p
                     style={{
-                      fontSize: 11,
+                      fontSize: 10,
                       fontWeight: 600,
                       color: "#ece8e1",
                       margin: 0,
@@ -364,9 +364,9 @@ export default function HorizontalTree({
                   {dsItem?.pill && (
                     <p
                       style={{
-                        fontSize: 7,
+                        fontSize: 6,
                         color: "#555",
-                        margin: "3px 0 0 0",
+                        margin: "2px 0 0 0",
                         fontFamily: "'Geist Mono', monospace",
                       }}
                     >
