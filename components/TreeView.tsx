@@ -3,6 +3,7 @@ import React, { useState, useMemo, useCallback, useRef } from "react";
 import HorizontalTree from "@/components/HorizontalTree";
 import Globe from "@/components/Globe";
 import type { GlobeHandle } from "@/components/Globe";
+import NodeMap from "@/components/NodeMap";
 import {
   computeCompSvgWidth,
   buildRawGeometry,
@@ -649,6 +650,66 @@ const INPUT_NODE_LAYERS: Record<string, { layer: string; nodes: string[] }[]> = 
     { layer: "Chemical Conversion", nodes: ["Umicore GeCl4", "Yunnan Chihong GeCl4", "Chinese State GeCl4 Plants", "JSC Germanium GeCl4"] },
     { layer: "Preform Manufacturers", nodes: ["Corning", "YOFC", "Shin-Etsu", "Prysmian", "Sumitomo Electric", "Fujikura"] },
     { layer: "End Use", nodes: ["Microsoft", "Google", "Amazon", "Meta", "xAI", "Oracle", "Equinix", "CoreWeave"] },
+  ],
+};
+
+/* ── Map node coordinates per input ── */
+const MAP_NODES: Record<string, { name: string; lat: number; lon: number; type: string; country?: string }[]> = {
+  germanium: [
+    { name: "Lincang", lat: 23.88, lon: 100.08, type: "Deposit", country: "China" },
+    { name: "Wulantuga", lat: 44.5, lon: 116.8, type: "Deposit", country: "China" },
+    { name: "Yimin", lat: 48.5, lon: 119.8, type: "Deposit", country: "China" },
+    { name: "Huize", lat: 26.4, lon: 103.3, type: "Deposit", country: "China" },
+    { name: "Yiliang + SYGT", lat: 27.6, lon: 104.1, type: "Deposit", country: "China" },
+    { name: "Spetsugli", lat: 47.5, lon: 133.0, type: "Deposit", country: "Russia" },
+    { name: "Big Hill", lat: -3.5, lon: 27.5, type: "Deposit", country: "DRC" },
+    { name: "Red Dog", lat: 68.1, lon: -162.9, type: "Deposit", country: "USA" },
+    { name: "Lincang Xinyuan", lat: 23.5, lon: 100.2, type: "Host Operation", country: "China" },
+    { name: "Shengli Coal Group", lat: 44.8, lon: 117.0, type: "Host Operation", country: "China" },
+    { name: "Yunnan Chihong", lat: 26.1, lon: 103.5, type: "Host Operation", country: "China" },
+    { name: "Various State Operators", lat: 40.0, lon: 115.5, type: "Host Operation", country: "China" },
+    { name: "JSC Germanium", lat: 47.0, lon: 132.5, type: "Host Operation", country: "Russia" },
+    { name: "STL / Gécamines", lat: -3.8, lon: 27.8, type: "Host Operation", country: "DRC" },
+    { name: "Teck Resources", lat: 49.3, lon: -120.5, type: "Host Operation", country: "Canada" },
+    { name: "Umicore", lat: 51.2, lon: 5.5, type: "Refiner", country: "Belgium" },
+    { name: "5N Plus", lat: 45.5, lon: -73.6, type: "Refiner", country: "Canada" },
+    { name: "PPM Pure Metals", lat: 42.3, lon: -83.0, type: "Refiner", country: "Germany" },
+    { name: "JSC Germanium Refinery", lat: 47.8, lon: 132.8, type: "Refiner", country: "Russia" },
+    { name: "Yunnan Chihong Refinery", lat: 25.8, lon: 103.0, type: "Refiner", country: "China" },
+    { name: "Chinese State Refiners", lat: 38.0, lon: 113.5, type: "Refiner", country: "China" },
+  ],
+  gallium: [
+    { name: "Guinea Bauxite", lat: 11.0, lon: -12.0, type: "Bauxite Source", country: "Guinea" },
+    { name: "Australian Bauxite", lat: -23.0, lon: 134.0, type: "Bauxite Source", country: "Australia" },
+    { name: "Chinese Domestic Bauxite", lat: 34.0, lon: 108.0, type: "Bauxite Source", country: "China" },
+    { name: "Brazilian Bauxite", lat: -2.0, lon: -55.0, type: "Bauxite Source", country: "Brazil" },
+    { name: "Indonesian Bauxite", lat: 0.5, lon: 104.0, type: "Bauxite Source", country: "Indonesia" },
+    { name: "Chinese Bauxite Refineries", lat: 36.0, lon: 114.0, type: "Alumina Refinery", country: "China" },
+    { name: "Alcoa / JAGA (Wagerup)", lat: -33.0, lon: 116.0, type: "Alumina Refinery", country: "Australia" },
+    { name: "Metlen Energy & Metals", lat: 38.0, lon: 23.7, type: "Alumina Refinery", country: "Greece" },
+    { name: "Rio Tinto / Indium JV", lat: 46.8, lon: -71.2, type: "Alumina Refinery", country: "Canada" },
+    { name: "Dowa Holdings", lat: 35.7, lon: 139.7, type: "Gallium Refiner", country: "Japan" },
+    { name: "5N Plus", lat: 45.5, lon: -73.6, type: "Gallium Refiner", country: "Canada" },
+    { name: "Indium Corporation", lat: 43.1, lon: -75.2, type: "Gallium Refiner", country: "USA" },
+    { name: "Vital Materials", lat: 28.2, lon: 113.0, type: "Gallium Refiner", country: "China" },
+    { name: "Zhuzhou Smelter Group", lat: 27.8, lon: 113.1, type: "Gallium Refiner", country: "China" },
+  ],
+  fiber: [
+    { name: "Umicore GeCl4", lat: 51.2, lon: 5.0, type: "Converter", country: "Belgium" },
+    { name: "Yunnan Chihong GeCl4", lat: 25.5, lon: 104.0, type: "Converter", country: "China" },
+    { name: "Chinese State GeCl4 Plants", lat: 31.2, lon: 121.5, type: "Converter", country: "China" },
+    { name: "Corning", lat: 35.8, lon: -81.3, type: "Manufacturer", country: "USA" },
+    { name: "YOFC", lat: 30.6, lon: 114.3, type: "Manufacturer", country: "China" },
+    { name: "Shin-Etsu", lat: 35.9, lon: 140.7, type: "Manufacturer", country: "Japan" },
+    { name: "Prysmian", lat: 45.5, lon: 9.2, type: "Manufacturer", country: "Italy" },
+    { name: "Sumitomo Electric", lat: 34.7, lon: 135.5, type: "Manufacturer", country: "Japan" },
+    { name: "Fujikura", lat: 35.7, lon: 139.7, type: "Manufacturer", country: "Japan" },
+    { name: "Microsoft", lat: 47.6, lon: -122.3, type: "Datacenter", country: "USA" },
+    { name: "Google", lat: 37.4, lon: -122.0, type: "Datacenter", country: "USA" },
+    { name: "Amazon", lat: 38.9, lon: -77.5, type: "Datacenter", country: "USA" },
+    { name: "Meta", lat: 37.5, lon: -122.2, type: "Datacenter", country: "USA" },
+    { name: "Equinix", lat: 35.7, lon: 139.8, type: "Datacenter", country: "Japan" },
+    { name: "CoreWeave", lat: 40.7, lon: -74.0, type: "Datacenter", country: "USA" },
   ],
 };
 
@@ -2674,7 +2735,21 @@ export default function TreeView() {
               {activeTab === "dependencies" && lastEntry && (
                 <DependenciesTable inputId={lastEntry.id} />
               )}
-              {activeTab !== "supply-tree" && activeTab !== "dependencies" && (
+              {activeTab === "map" && (() => {
+                const mapId = lastEntry?.id === "fiber" ? "fiber" : lastEntry?.id;
+                const mapNodes = mapId ? MAP_NODES[mapId] : null;
+                if (!mapNodes) return <div style={{ padding: "40px 0", color: "#4a4540", fontSize: 12 }}>Select an input to view its map.</div>;
+                return (
+                  <div style={{ width: "100%", height: 400 }}>
+                    <NodeMap
+                      nodes={mapNodes}
+                      selectedNode={selectedTreeNode}
+                      onClickNode={(name) => setSelectedTreeNode(prev => prev === name ? null : name)}
+                    />
+                  </div>
+                );
+              })()}
+              {activeTab !== "supply-tree" && activeTab !== "dependencies" && activeTab !== "map" && (
                 <div style={{ padding: "40px 0", color: "#4a4540", fontSize: 12 }}>
                   {activeTab.charAt(0).toUpperCase() + activeTab.slice(1).replace(/-/g, " ")} — coming soon
                 </div>
@@ -2784,7 +2859,7 @@ export default function TreeView() {
               if (!geo) return <div style={{ height: 40 }} />;
               return (
                 <div style={{ marginBottom: 10 }}>
-                  <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>Geographic Concentration</p>
+                  <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>Geographic Concentration</p>
                   <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "8px 10px" }}>
                     <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.5, margin: 0 }}>{geo}</p>
                   </div>
