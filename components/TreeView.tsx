@@ -2235,16 +2235,8 @@ export default function TreeView() {
           display: "flex", flexDirection: "column",
           overflow: "hidden",
         }}>
-          {/* Top section — illustration + tabs */}
-          <div style={{ flexShrink: 0, padding: "0 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-            {/* Illustration */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 100, opacity: 0.35 }}>
-              {(() => {
-                const illusId = lastEntry?.id === "fiber" ? "fiber" : lastEntry?.id;
-                const Illus = illusId ? ILLUSTRATION_MAP[illusId] : null;
-                return Illus ? <div style={{ transform: "scale(0.3)", transformOrigin: "center" }}><Illus /></div> : null;
-              })()}
-            </div>
+          {/* Top section — tabs */}
+          <div style={{ flexShrink: 0, padding: "130px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
             <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 10 }}>
               {["Summary", "Layers", "Nodes"].map((tab, ti) => {
                 const tabId = tab.toLowerCase();
