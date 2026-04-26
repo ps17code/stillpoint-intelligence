@@ -15,6 +15,9 @@ import nodesJson from "@/data/nodes.json";
 import galliumChainJson from "@/data/gallium-chain.json";
 import galliumNodesJson from "@/data/gallium-nodes.json";
 import germaniumNodesJson from "@/data/germanium-nodes.json";
+import germaniumInputJson from "@/data/inputs/germanium.json";
+import galliumInputJson from "@/data/inputs/gallium.json";
+import fiberInputJson from "@/data/inputs/fiber-optic-cable.json";
 import type { CompChain, SubChain, RawChain, GalliumChain, NodeData } from "@/types";
 
 /* ── data casts ── */
@@ -656,6 +659,147 @@ function PriceChart({ inputId, accent, name }: { inputId: string; accent: string
           <span key={i} style={{ fontSize: 6, color: "#444", fontFamily: "'Geist Mono', monospace" }}>{months[i]}</span>
         ))}
       </div>
+    </div>
+  );
+}
+
+/* ── dependencies data per input ── */
+type DepTable = {
+  label: string;
+  headers: { label: string; width: string; right?: boolean }[];
+  rows: Record<string, string>[];
+  totalRow?: Record<string, string>;
+  summaryRows?: { label: string; values: string[] }[];
+  takeaway?: string;
+};
+const INPUT_DEPS: Record<string, { upstream?: DepTable; downstream?: DepTable }> = {
+  germanium: { downstream: (germaniumInputJson as unknown as { dependencies: { downstream: DepTable } }).dependencies.downstream },
+  gallium: { downstream: (galliumInputJson as unknown as { dependencies: { downstream: DepTable } }).dependencies.downstream },
+  fiber: {
+    upstream: (fiberInputJson as unknown as { dependencies: { upstream: DepTable; downstream: DepTable } }).dependencies.upstream,
+    downstream: (fiberInputJson as unknown as { dependencies: { upstream: DepTable; downstream: DepTable } }).dependencies.downstream,
+  },
+};
+
+/* ── Dependencies table component ── */
+function DependenciesTable({ inputId }: { inputId: string }) {
+  const deps = INPUT_DEPS[inputId];
+  const hasUpstream = !!deps?.upstream;
+  const hasDownstream = !!deps?.downstream;
+  const hasBoth = hasUpstream && hasDownstream;
+  const [direction, setDirection] = useState<"upstream" | "downstream">(hasDownstream ? "downstream" : "upstream");
+
+  if (!deps) return <div style={{ padding: "40px 0", color: "#4a4540", fontSize: 12 }}>No dependency data available</div>;
+
+  const table = direction === "upstream" ? deps.upstream : deps.downstream;
+  if (!table) return null;
+
+  const headerKeys = table.headers.map(h => h.label);
+
+  return (
+    <div style={{ padding: "20px 0" }}>
+      {/* Toggle */}
+      {hasBoth && (
+        <div style={{ display: "flex", gap: 0, marginBottom: 16, background: "#1a1816", border: "1px solid #252220", borderRadius: 8, padding: 2, width: "fit-content" }}>
+          {(["upstream", "downstream"] as const).map(dir => {
+            const active = direction === dir;
+            return (
+              <button
+                key={dir}
+                onClick={() => setDirection(dir)}
+                style={{
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.04em",
+                  background: active ? "#252220" : "transparent",
+                  color: active ? "#ece8e1" : "#555",
+                  border: "none", borderRadius: 6, padding: "5px 14px",
+                  cursor: "pointer", transition: "color 0.15s, background 0.15s",
+                  textTransform: "capitalize",
+                }}
+              >
+                {dir}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Table label */}
+      <p style={{ fontSize: 8, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 12px 0", fontFamily: "'Geist Mono', monospace" }}>{table.label}</p>
+
+      {/* Table */}
+      <div style={{ overflowX: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 10 }}>
+          <thead>
+            <tr>
+              {table.headers.map((h, i) => (
+                <th key={i} style={{
+                  textAlign: h.right ? "right" : "left",
+                  padding: "6px 8px",
+                  fontSize: 7, letterSpacing: "0.08em", textTransform: "uppercase" as const,
+                  color: "#4a4540", fontWeight: 500, fontFamily: "'Geist Mono', monospace",
+                  borderBottom: `1px solid ${borderColor}`,
+                  width: h.width,
+                }}>{h.label}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {table.rows.map((row, ri) => (
+              <tr key={ri}>
+                {headerKeys.map((key, ci) => {
+                  const isRight = table.headers[ci]?.right;
+                  return (
+                    <td key={ci} style={{
+                      padding: "7px 8px",
+                      color: ci === 0 ? "#ece8e1" : bodyText,
+                      fontWeight: ci === 0 ? 500 : 400,
+                      textAlign: isRight ? "right" : "left",
+                      borderBottom: `1px solid rgba(255,255,255,0.04)`,
+                      whiteSpace: "nowrap",
+                    }}>{row[key] ?? ""}</td>
+                  );
+                })}
+              </tr>
+            ))}
+            {table.totalRow && (
+              <tr>
+                {headerKeys.map((key, ci) => {
+                  const isRight = table.headers[ci]?.right;
+                  return (
+                    <td key={ci} style={{
+                      padding: "7px 8px",
+                      color: "#ece8e1", fontWeight: 600,
+                      textAlign: isRight ? "right" : "left",
+                      borderTop: `1px solid ${borderColor}`,
+                    }}>{table.totalRow![key] ?? ""}</td>
+                  );
+                })}
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Summary rows */}
+      {table.summaryRows && table.summaryRows.length > 0 && (
+        <div style={{ marginTop: 12, borderTop: `1px solid ${borderColor}`, paddingTop: 8 }}>
+          {table.summaryRows.map((sr, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, marginBottom: 4 }}>
+              <span style={{ fontSize: 9, color: "#706a60", fontWeight: 500, minWidth: 140 }}>{sr.label}</span>
+              {sr.values.map((v, vi) => (
+                <span key={vi} style={{ fontSize: 9, color: bodyText, flex: 1, textAlign: vi === sr.values.length - 1 ? "right" : "left" }}>{v}</span>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Takeaway */}
+      {table.takeaway && (
+        <div style={{ marginTop: 16, background: "rgba(36, 32, 29, 0.28)", borderRadius: 8, padding: "12px 16px" }}>
+          <p style={{ fontSize: 10, color: "#706a60", lineHeight: 1.6, margin: 0 }}>{table.takeaway}</p>
+        </div>
+      )}
     </div>
   );
 }
@@ -2273,7 +2417,10 @@ export default function TreeView() {
               {activeTab === "supply-tree" && (
                 path.length === 0 ? renderVerticalsContent() : renderContainerContent()
               )}
-              {activeTab !== "supply-tree" && (
+              {activeTab === "dependencies" && lastEntry && (
+                <DependenciesTable inputId={lastEntry.id} />
+              )}
+              {activeTab !== "supply-tree" && activeTab !== "dependencies" && (
                 <div style={{ padding: "40px 0", color: "#4a4540", fontSize: 12 }}>
                   {activeTab.charAt(0).toUpperCase() + activeTab.slice(1).replace(/-/g, " ")} — coming soon
                 </div>
@@ -2339,7 +2486,7 @@ export default function TreeView() {
           overflow: "hidden",
         }}>
           {/* Top section — price chart + tabs */}
-          <div style={{ flexShrink: 0, padding: "12px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+          <div style={{ flexShrink: 0, padding: "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
             {lastEntry && INPUT_PRICE_HISTORY[lastEntry.id] && (
               <PriceChart inputId={lastEntry.id} accent={templateAccent ?? "#706a60"} name={templateTitle} />
             )}
