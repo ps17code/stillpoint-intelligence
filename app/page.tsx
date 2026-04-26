@@ -629,11 +629,37 @@ export default function HomePage() {
       <div style={{
         height: 42, flexShrink: 0,
         background: "#131210", borderBottom: "1px solid #252220",
-        display: "flex", alignItems: "center", paddingLeft: 16,
+        display: "flex", alignItems: "center", justifyContent: "space-between", paddingLeft: 16, paddingRight: 16,
       }}>
-        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 300, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Stillpoint</span>
-        <span style={{ width: 5, display: "inline-block" }} />
-        <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 200, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)" }}>Intelligence</span>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 300, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Stillpoint</span>
+          <span style={{ width: 5, display: "inline-block" }} />
+          <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 200, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)" }}>Intelligence</span>
+        </div>
+        <div style={{
+          background: "#1a1816", border: "1px solid #252220", borderRadius: 8, padding: 2,
+          display: "flex", gap: 0,
+        }}>
+          {(["map", "anatomy", "tree"] as const).map(mode => {
+            const active = viewMode === mode;
+            const label = mode === "map" ? "Map" : mode === "anatomy" ? "Anatomy" : "Tree";
+            return (
+              <button
+                key={mode}
+                onClick={() => setViewMode(mode)}
+                style={{
+                  fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.05em",
+                  background: active ? "#252220" : "transparent",
+                  color: active ? "#ece8e1" : "#555",
+                  border: "none", borderRadius: 6, padding: "5px 14px",
+                  cursor: "pointer", transition: "color 0.15s, background 0.15s",
+                }}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Content area below header */}
@@ -650,32 +676,7 @@ export default function HomePage() {
         {/* Main area */}
         <div style={{ flex: 1, position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
 
-          {/* View toggle — top right */}
-          <div style={{
-            position: "absolute", top: 10, right: 20, zIndex: 20,
-            background: "#1a1816", border: "1px solid #252220", borderRadius: 8, padding: 2,
-            display: "flex", gap: 0,
-          }}>
-            {(["map", "anatomy", "tree"] as const).map(mode => {
-              const active = viewMode === mode;
-              const label = mode === "map" ? "Map" : mode === "anatomy" ? "Anatomy" : "Tree";
-              return (
-                <button
-                  key={mode}
-                  onClick={() => setViewMode(mode)}
-                  style={{
-                    fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.05em",
-                    background: active ? "#252220" : "transparent",
-                    color: active ? "#ece8e1" : "#555",
-                    border: "none", borderRadius: 6, padding: "5px 14px",
-                    cursor: "pointer", transition: "color 0.15s, background 0.15s",
-                  }}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
+          {/* View toggle moved to nav bar */}
 
           {/* Globe */}
           <div ref={mountRef} style={{ position: "absolute", inset: 0, cursor: hoveredNode ? "crosshair" : "grab", display: viewMode === "map" ? "block" : "none" }} />

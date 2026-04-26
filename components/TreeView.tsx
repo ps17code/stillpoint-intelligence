@@ -586,10 +586,10 @@ const INPUT_ACCENT: Record<string, string> = {
 };
 
 /* ── supply-demand metrics per input ── */
-const INPUT_METRICS: Record<string, { price: string; supply: string; demand: string; gap: string; status: string }> = {
-  germanium: { price: "$8,500/kg", supply: "~230t/yr", demand: "~286t by 2027", gap: "~56t", status: "Structural deficit" },
-  gallium: { price: "$2,269/kg", supply: "320t/yr", demand: "800t/yr by 2028", gap: "480t/yr", status: "Critical shortage" },
-  fiber: { price: "35–50 RMB/km", supply: "720M km", demand: "~850M km", gap: "130M km", status: "Supply constrained" },
+const INPUT_METRICS: Record<string, { price: string; priceSub: string; supply: string; supplySub: string; demand: string; demandSub: string; gap: string; gapSub: string; status: string; statusSub: string }> = {
+  germanium: { price: "$8,500/kg", priceSub: "Apr 2026", supply: "~230t/yr", supplySub: "2026", demand: "~286t", demandSub: "by 2027", gap: "~56t", gapSub: "2027", status: "Structural deficit", statusSub: "~$476M" },
+  gallium: { price: "$2,269/kg", priceSub: "Apr 2026", supply: "320t/yr", supplySub: "2026", demand: "800t/yr", demandSub: "by 2028", gap: "480t/yr", gapSub: "2027", status: "Critical shortage", statusSub: "~$1.09B" },
+  fiber: { price: "48 RMB/km", priceSub: "Apr 2026", supply: "720M km", supplySub: "2026", demand: "~850M km", demandSub: "by 2027", gap: "130M km", gapSub: "2027", status: "Supply constrained", statusSub: "~¥6.2B" },
 };
 
 /* ── 12-month price history per input (monthly close, Apr 2025 → Apr 2026) ── */
@@ -2181,7 +2181,7 @@ export default function TreeView() {
             {(() => {
               const metrics = lastEntry ? INPUT_METRICS[lastEntry.id] : null;
               return (
-                <div style={{ display: "grid", gridTemplateColumns: metrics ? "1fr 1fr" : "1fr", gap: 24, marginBottom: 14 }}>
+                <div style={{ display: "grid", gridTemplateColumns: metrics ? ".9fr 1fr" : "1fr", gap: 24, marginBottom: 14 }}>
                   {/* Left column — title + description */}
                   <div>
                     <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
@@ -2209,17 +2209,18 @@ export default function TreeView() {
                   </div>
                   {/* Right column — metrics row */}
                   {metrics && (
-                    <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-end", gap: 16 }}>
+                    <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-end", gap: 20 }}>
                       {[
-                        { label: "Price", value: metrics.price },
-                        { label: "Supply", value: metrics.supply },
-                        { label: "Demand", value: metrics.demand },
-                        { label: "Gap", value: metrics.gap },
-                        { label: "Status", value: metrics.status },
-                      ].map(m => (
-                        <div key={m.label} style={{ textAlign: "right" }}>
+                        { label: "Price", value: metrics.price, sub: metrics.priceSub },
+                        { label: "Supply", value: metrics.supply, sub: metrics.supplySub },
+                        { label: "Demand", value: metrics.demand, sub: metrics.demandSub },
+                        { label: "Gap", value: metrics.gap, sub: metrics.gapSub },
+                        { label: "Status", value: metrics.status, sub: metrics.statusSub },
+                      ].map((m, i, arr) => (
+                        <div key={m.label} style={{ textAlign: "right", paddingRight: 10, borderRight: i < arr.length - 1 ? "1px solid rgb(83, 83, 83)" : "none" }}>
                           <p style={{ fontSize: 7, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: dimmer, margin: "0 0 3px 0", fontFamily: "'Geist Mono', monospace" }}>{m.label}</p>
                           <p style={{ fontSize: 10, color: m.label === "Status" ? (templateAccent ?? "#a09888") : warmWhite, margin: 0, fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{m.value}</p>
+                          <p style={{ fontSize: 7, color: "#555", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{m.sub}</p>
                         </div>
                       ))}
                     </div>
