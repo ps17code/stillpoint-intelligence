@@ -874,7 +874,7 @@ function DependenciesTable({ inputId }: { inputId: string }) {
       <p style={{ fontSize: 8, letterSpacing: "0.1em", color: "rgb(128, 120, 112)", textTransform: "uppercase" as const, margin: "0 0 12px 0", fontFamily: "'Geist Mono', monospace" }}>{table.label}</p>
 
       {/* Table */}
-      <div style={{ overflowX: "auto", background: "rgb(160, 152, 136)", borderRadius: 6, padding: 5 }}>
+      <div style={{ overflowX: "auto", background: "rgb(22, 21, 20)", borderRadius: 6, padding: 5 }}>
         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 10 }}>
           <thead>
             <tr>
