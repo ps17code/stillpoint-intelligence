@@ -1303,7 +1303,7 @@ export default function TreeView() {
   const [animKey, setAnimKey] = useState(0);
   const [selectedLayer, setSelectedLayer] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("supply-tree");
-  const [rightTab, setRightTab] = useState("layers");
+  const [rightTab, setRightTab] = useState("summary");
   /* ── accordion expanded index (for verticals level only) ── */
   const [expandedVertical, setExpandedVertical] = useState<number>(() => {
     const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
@@ -2237,13 +2237,10 @@ export default function TreeView() {
           display: "flex", flexDirection: "column",
           overflow: "hidden",
         }}>
-          {/* Top section — matches contextual header height */}
-          <div style={{ flexShrink: 0, padding: "0 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-            {/* Spacer to align tabs with main panel tabs */}
-            <div style={{ height: 88 }} />
-            {/* Tabs at bottom of top section */}
-            <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}` }}>
-              {["Layers", "Summary"].map((tab, ti) => {
+          {/* Top section — same height as contextual header, tabs at bottom */}
+          <div style={{ flexShrink: 0, padding: "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+            <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 10 }}>
+              {["Summary", "Layers"].map((tab, ti) => {
                 const tabId = tab.toLowerCase();
                 const isActive = rightTab === tabId;
                 return (
@@ -2301,7 +2298,7 @@ export default function TreeView() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   {layerCards.map(card => (
                     <div key={card.label} style={{
-                      background: "rgba(36, 32, 29, 0.28)", border: "1px solid rgb(45, 41, 39)",
+                      background: "rgba(36, 32, 29, 0.28)",
                       borderRadius: 6, padding: "10px 12px",
                     }}>
                         <p style={{ fontSize: 8, letterSpacing: "0.08em", color: accent, margin: "0 0 6px 0", fontWeight: 500, textTransform: "uppercase" as const }}>{card.label}</p>
@@ -2352,7 +2349,7 @@ export default function TreeView() {
               if (bullets.length === 0) return <p style={{ fontSize: 10, color: "#555", padding: "20px 0" }}>Select an input to view its executive summary.</p>;
 
               return (
-                <>
+                <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
                   <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>EXECUTIVE SUMMARY</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                     {bullets.map((bullet, i) => (
@@ -2362,7 +2359,7 @@ export default function TreeView() {
                       </div>
                     ))}
                   </div>
-                </>
+                </div>
               );
             })()}
           </div>
