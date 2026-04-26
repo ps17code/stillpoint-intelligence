@@ -936,6 +936,156 @@ function SpineDashedLine() {
 /* ═══════════════════════════════════════════ */
 
 /* ── AI Infrastructure Overview Tree ── */
+/* ── Global Resources Overview Tree ── */
+function ResourcesOverviewTree({ onNodeClick }: { onNodeClick: (id: string) => void }) {
+  const geo = useMemo(() => {
+    const rawMaterials = [
+      "Germanium", "Gallium", "Cobalt", "Lithium", "Copper",
+      "Silicon", "Rare Earths", "Helium", "Nickel", "Tin",
+    ];
+    const products = [
+      "Fiber optic cable", "GaN power chips", "Li-ion batteries",
+      "Permanent magnets", "Wiring & PCBs", "Semiconductor wafers",
+      "IR optics", "Solar cells",
+    ];
+    const endApps = [
+      "AI Datacenters", "Electric Vehicles", "Defense & Radar",
+      "Telecom Networks", "Space Systems", "Grid & Energy",
+    ];
+
+    const ancX = 500;
+    const gap = 170;
+    const SLOT = 94;
+
+    const spread = (count: number) => {
+      if (count === 1) return [ancX];
+      const total = count * SLOT;
+      const start = ancX - total / 2 + SLOT / 2;
+      return Array.from({ length: count }, (_, i) => start + i * SLOT);
+    };
+
+    const rmXs = spread(rawMaterials.length);
+    const prodXs = spread(products.length);
+    const appXs = spread(endApps.length);
+
+    const rmCY = 80;
+    const prodCY = rmCY + gap;
+    const appCY = prodCY + gap;
+
+    const edgeColor = "rgba(255,255,255,0.18)";
+    const EDGE_Y1 = 79;
+    const EDGE_Y2 = 7;
+
+    // Raw materials → Products
+    const rmToProd: [number, number][] = [
+      [0, 0], // Germanium → Fiber
+      [0, 6], // Germanium → IR optics
+      [0, 7], // Germanium → Solar cells
+      [1, 1], // Gallium → GaN chips
+      [1, 7], // Gallium → Solar cells
+      [2, 2], // Cobalt → Batteries
+      [3, 2], // Lithium → Batteries
+      [4, 4], // Copper → Wiring & PCBs
+      [5, 5], // Silicon → Wafers
+      [5, 1], // Silicon → GaN chips
+      [6, 3], // Rare Earths → Magnets
+      [7, 0], // Helium → Fiber
+      [8, 2], // Nickel → Batteries
+      [9, 4], // Tin → Wiring & PCBs
+    ];
+
+    // Products → End Applications
+    const prodToApp: [number, number][] = [
+      [0, 0], // Fiber → AI Datacenters
+      [0, 3], // Fiber → Telecom
+      [1, 0], // GaN chips → AI Datacenters
+      [1, 2], // GaN chips → Defense
+      [1, 1], // GaN chips → EVs
+      [2, 1], // Batteries → EVs
+      [2, 5], // Batteries → Grid
+      [3, 1], // Magnets → EVs
+      [3, 5], // Magnets → Grid (wind)
+      [3, 2], // Magnets → Defense
+      [4, 0], // Wiring → AI Datacenters
+      [5, 0], // Wafers → AI Datacenters
+      [5, 2], // Wafers → Defense
+      [6, 2], // IR optics → Defense
+      [7, 4], // Solar cells → Space
+    ];
+
+    const layers = [
+      {
+        key: "rawMaterials", label: "RAW MATERIALS", cy: rmCY,
+        nodes: rawMaterials.map((n, i) => ({ name: n, cx: rmXs[i], cy: rmCY, opacity: 1 })),
+        color: { stroke: "#c8a85a", text: "#8a6820", pip: "#c8a85a" },
+      },
+      {
+        key: "products", label: "COMPONENTS & PRODUCTS", cy: prodCY,
+        nodes: products.map((n, i) => ({ name: n, cx: prodXs[i], cy: prodCY, opacity: 1 })),
+        color: { stroke: "#4d9ab8", text: "#1e3d52", pip: "#4d9ab8" },
+      },
+      {
+        key: "endApps", label: "END APPLICATIONS", cy: appCY,
+        nodes: endApps.map((n, i) => ({ name: n, cx: appXs[i], cy: appCY, opacity: 1 })),
+        color: { stroke: "#5a4a6a", text: "#2e1e40", pip: "#5a4a6a" },
+      },
+    ];
+
+    const edges = [
+      ...rmToProd.map(([fi, ti]) => ({
+        x1: rmXs[fi], y1: rmCY + EDGE_Y1, x2: prodXs[ti], y2: prodCY - EDGE_Y2,
+        color: edgeColor, fromLayer: 0,
+      })),
+      ...prodToApp.map(([fi, ti]) => ({
+        x1: prodXs[fi], y1: prodCY + EDGE_Y1, x2: appXs[ti], y2: appCY - EDGE_Y2,
+        color: edgeColor, fromLayer: 1,
+      })),
+    ];
+
+    return { layers, edges, outputNode: { name: endApps[0], cx: appXs[0], cy: appCY } };
+  }, []);
+
+  const overviewNodes = useMemo<Record<string, NodeData>>(() => {
+    const items: [string, string][] = [
+      ["Germanium", "Constrained"], ["Gallium", "Constrained"], ["Cobalt", "Tightening"],
+      ["Lithium", "Oversupplied"], ["Copper", "Tightening"], ["Silicon", "Available"],
+      ["Rare Earths", "Constrained"], ["Helium", "Constrained"], ["Nickel", "Tightening"], ["Tin", "Available"],
+      ["Fiber optic cable", "Constrained"], ["GaN power chips", "Constrained"], ["Li-ion batteries", "Tightening"],
+      ["Permanent magnets", "Constrained"], ["Wiring & PCBs", "Available"], ["Semiconductor wafers", "Constrained"],
+      ["IR optics", "Tightening"], ["Solar cells", "Tightening"],
+      ["AI Datacenters", ""], ["Electric Vehicles", ""], ["Defense & Radar", ""],
+      ["Telecom Networks", ""], ["Space Systems", ""], ["Grid & Energy", ""],
+    ];
+    const map: Record<string, NodeData> = {};
+    for (const [name, status] of items) {
+      map[name] = { type: "", loc: "", stat: "", risk: "", stats: [], role: "", inv: "", risks: [], country: "", descriptor_pill: status, quantity_pill: "" } as unknown as NodeData;
+    }
+    return map;
+  }, []);
+
+  const overviewLc = useMemo(() => ({
+    rawmaterials: { displayFields: [{ key: "descriptor_pill", label: "Status" }] },
+    products: { displayFields: [{ key: "descriptor_pill", label: "Status" }] },
+    endapps: { displayFields: [] },
+  }), []);
+
+  return (
+    <HorizontalTree
+      geometry={geo}
+      nodes={overviewNodes}
+      layerConfig={overviewLc}
+      onNodeClick={(name) => {
+        const rmIds: Record<string, string> = {
+          "Germanium": "germanium", "Gallium": "gallium", "Cobalt": "cobalt",
+          "Lithium": "lithium", "Copper": "copper", "Silicon": "silicon",
+          "Rare Earths": "rare-earths", "Helium": "helium", "Nickel": "nickel", "Tin": "tin",
+        };
+        if (rmIds[name]) onNodeClick(rmIds[name]);
+      }}
+    />
+  );
+}
+
 function AIOverviewTree({ onNodeClick }: { onNodeClick: (id: string, type: "raw-material" | "component" | "subsystem" | "end-use") => void }) {
   // Build a simple TreeGeometry for the overview
   const geo = useMemo(() => {
@@ -1588,24 +1738,19 @@ export default function TreeView() {
   /* ── container content based on current level ── */
   function renderContainerContent() {
     if (currentLevel === "subsystems") {
-      /* Resources vertical — skip subsystems, show all materials directly */
+      /* Resources vertical — full horizontal overview tree */
       if (currentVertical?.id === "resources") {
-        const allMaterials = getSubsystems().flatMap(s => s.components);
-        const nodes = allMaterials.map(c => ({
-          id: c.id,
-          name: c.name,
-          pill: c.keyNumber ?? "",
-          clickable: !c.comingSoon && c.hasTree,
-          dimmed: c.comingSoon,
-        }));
-        return (
-          <NodeRow nodes={nodes} onNodeClick={(id) => {
-            const mat = allMaterials.find(c => c.id === id);
-            if (mat && mat.hasTree) {
-              pushPath({ type: "raw-material", id: mat.id, name: mat.name });
-            }
-          }} />
-        );
+        return <ResourcesOverviewTree onNodeClick={(id) => {
+          const nameMap: Record<string, string> = {
+            "germanium": "Germanium", "gallium": "Gallium", "cobalt": "Cobalt",
+            "lithium": "Lithium", "copper": "Copper", "silicon": "Silicon",
+            "rare-earths": "Rare Earths", "helium": "Helium", "nickel": "Nickel", "tin": "Tin",
+          };
+          const hasTree = id === "germanium" || id === "gallium";
+          if (hasTree) {
+            pushPath({ type: "raw-material", id, name: nameMap[id] ?? id });
+          }
+        }} />;
       }
 
       /* AI Infrastructure — render full horizontal overview tree */
@@ -1888,7 +2033,7 @@ export default function TreeView() {
           border: "0.2px solid rgb(42, 42, 42)",
         }}>
           {/* Header area */}
-          <div style={{ padding: "18px 18px 0" }}>
+          <div style={{ padding: "18px 30px 0" }}>
             {renderBreadcrumb()}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
               <h1 style={{
@@ -1919,7 +2064,7 @@ export default function TreeView() {
           <div
             key={animKey}
             style={{
-              padding: "0 18px 24px",
+              padding: "0 30px 24px",
               animation: "containerOpen 350ms ease-out forwards",
               position: "relative",
             }}
