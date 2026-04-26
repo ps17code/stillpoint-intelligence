@@ -1835,7 +1835,7 @@ export default function TreeView() {
   /* ── main render — unified page template ── */
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#141414" }}>
-      <div style={{ display: "flex", gap: 0, padding: "10px 0 0 0", minHeight: "calc(100vh - 10px)" }}>
+      <div style={{ display: "flex", gap: 0, padding: "10px 0 0 0", height: "calc(100vh - 10px)" }}>
 
         {/* Left panel */}
         <div style={{
@@ -1852,7 +1852,7 @@ export default function TreeView() {
           width: 1000, maxWidth: 1000, flexShrink: 0,
           background: "#111111",
           borderRadius: 10,
-          overflow: "hidden",
+          overflowY: "auto", overflowX: "hidden",
           border: "0.2px solid rgb(42, 42, 42)",
         }}>
           {/* Header area */}
