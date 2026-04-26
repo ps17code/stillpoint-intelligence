@@ -592,6 +592,73 @@ const INPUT_METRICS: Record<string, { price: string; supply: string; demand: str
   fiber: { price: "35–50 RMB/km", supply: "720M km", demand: "~850M km", gap: "130M km", status: "Supply constrained" },
 };
 
+/* ── 12-month price history per input (monthly close, Apr 2025 → Apr 2026) ── */
+const INPUT_PRICE_HISTORY: Record<string, { points: number[]; unit: string; currentPrice: string; change12m: string }> = {
+  germanium: {
+    points: [3200, 3600, 4100, 4800, 5200, 5500, 6000, 6400, 7100, 7600, 8100, 8500],
+    unit: "$/kg", currentPrice: "$8,500", change12m: "+166%",
+  },
+  gallium: {
+    points: [820, 900, 980, 1050, 1200, 1350, 1500, 1650, 1800, 1950, 2100, 2269],
+    unit: "$/kg", currentPrice: "$2,269", change12m: "+177%",
+  },
+  fiber: {
+    points: [20, 21, 22, 24, 26, 28, 30, 33, 36, 40, 44, 48],
+    unit: "RMB/km", currentPrice: "48 RMB", change12m: "+140%",
+  },
+};
+
+/* ── Price sparkline chart ── */
+function PriceChart({ inputId, accent }: { inputId: string; accent: string }) {
+  const data = INPUT_PRICE_HISTORY[inputId];
+  if (!data) return null;
+
+  const W = 200, H = 60;
+  const padX = 0, padY = 6;
+  const min = Math.min(...data.points);
+  const max = Math.max(...data.points);
+  const range = max - min || 1;
+
+  const pts = data.points.map((v, i) => {
+    const x = padX + (i / (data.points.length - 1)) * (W - padX * 2);
+    const y = padY + (1 - (v - min) / range) * (H - padY * 2);
+    return { x, y };
+  });
+
+  const linePath = pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x},${p.y}`).join(" ");
+  const areaPath = linePath + ` L ${pts[pts.length - 1].x},${H} L ${pts[0].x},${H} Z`;
+
+  const months = ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
+
+  return (
+    <div style={{ padding: "16px 14px 10px" }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 8 }}>
+        <div>
+          <span style={{ fontSize: 16, fontWeight: 600, color: "#ece8e1", fontFamily: "'Geist Mono', monospace" }}>{data.currentPrice}</span>
+          <span style={{ fontSize: 8, color: "#555", marginLeft: 4, fontFamily: "'Geist Mono', monospace" }}>{data.unit}</span>
+        </div>
+        <span style={{ fontSize: 10, color: accent, fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>{data.change12m}</span>
+      </div>
+      <svg width="100%" height={H} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{ display: "block" }}>
+        <defs>
+          <linearGradient id={`priceGrad-${inputId}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={accent} stopOpacity="0.25" />
+            <stop offset="100%" stopColor={accent} stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path d={areaPath} fill={`url(#priceGrad-${inputId})`} />
+        <path d={linePath} fill="none" stroke={accent} strokeWidth="1.5" />
+        <circle cx={pts[pts.length - 1].x} cy={pts[pts.length - 1].y} r="2" fill={accent} />
+      </svg>
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
+        {[0, 3, 6, 9, 11].map(i => (
+          <span key={i} style={{ fontSize: 6, color: "#444", fontFamily: "'Geist Mono', monospace" }}>{months[i]}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ── sub-components ── */
 
 function StatusBadge({ status }: { status: string }) {
@@ -2269,8 +2336,12 @@ export default function TreeView() {
           display: "flex", flexDirection: "column",
           overflow: "hidden",
         }}>
-          {/* Top section — tabs */}
-          <div style={{ flexShrink: 0, padding: "130px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+          {/* Top section — price chart + tabs */}
+          <div style={{ flexShrink: 0, padding: "12px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+            {lastEntry && INPUT_PRICE_HISTORY[lastEntry.id] && (
+              <PriceChart inputId={lastEntry.id} accent={templateAccent ?? "#706a60"} />
+            )}
+            {!lastEntry || !INPUT_PRICE_HISTORY[lastEntry.id] ? <div style={{ height: 130 }} /> : null}
             <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 10 }}>
               {["Summary", "Layers", "Nodes"].map((tab, ti) => {
                 const tabId = tab.toLowerCase();
