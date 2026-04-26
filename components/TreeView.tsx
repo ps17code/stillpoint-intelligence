@@ -1982,7 +1982,7 @@ export default function TreeView() {
   /* ── main render — unified page template ── */
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#141414" }}>
-      <div style={{ display: "flex", gap: 0, padding: "10px 0 0 0", height: "calc(100vh - 10px)" }}>
+      <div style={{ display: "flex", gap: 0, padding: "10px 0 0 0", minHeight: "calc(100vh - 10px)", alignItems: "flex-start" }}>
 
         {/* Left panel — vertical selector + layers + items */}
         {(() => {
@@ -2017,6 +2017,9 @@ export default function TreeView() {
               padding: "14px 0",
               overflowY: "auto",
               display: "flex", flexDirection: "column",
+              position: "sticky", top: 10,
+              maxHeight: "calc(100vh - 20px)",
+              alignSelf: "flex-start",
             }}>
               {/* Verticals section */}
               <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 12px 8px", fontFamily: "'Geist Mono', monospace" }}>Verticals</p>
@@ -2127,7 +2130,7 @@ export default function TreeView() {
             </p>
             {/* Tabs */}
             <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}` }}>
-              {["Supply Tree", "Map", "Dependencies", "Analysis", "Investment Ideas"].map(tab => {
+              {["Supply Tree", "Map", "Dependencies", "Analysis", "Investment Ideas"].map((tab, ti) => {
                 const tabId = tab.toLowerCase().replace(/\s+/g, "-");
                 const isActive = activeTab === tabId;
                 return (
@@ -2135,16 +2138,16 @@ export default function TreeView() {
                     key={tabId}
                     onClick={() => setActiveTab(tabId)}
                     style={{
-                      padding: "8px 14px",
-                      fontSize: 10,
-                      color: isActive ? warmWhite : "#706a60",
+                      padding: ti === 0 ? "8px 12px 8px 0" : "8px 12px",
+                      fontSize: 8,
+                      color: isActive ? "#a09888" : "#555",
                       cursor: "pointer",
                       borderBottom: isActive ? "1.5px solid #888" : "1.5px solid transparent",
                       transition: "color 0.15s, border-color 0.15s",
                       marginBottom: -1,
                     }}
-                    onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = bodyText; }}
-                    onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "#706a60"; }}
+                    onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "#706a60"; }}
+                    onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "#555"; }}
                   >
                     {tab}
                   </div>
