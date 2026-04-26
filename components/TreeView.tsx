@@ -2732,20 +2732,51 @@ export default function TreeView() {
           display: "flex", flexDirection: "column",
           overflow: "hidden",
         }}>
-          {/* Top section — price chart + tabs */}
+          {/* Top section — price chart (tree) or geo summary / node detail (globe) + tabs */}
           <div style={{ flexShrink: 0, padding: "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-            {lastEntry && INPUT_PRICE_HISTORY[lastEntry.id] && (
-              <PriceChart inputId={lastEntry.id} accent={templateAccent ?? "#706a60"} name={templateTitle} />
+            {centerView === "tree" && (
+              <>
+                {lastEntry && INPUT_PRICE_HISTORY[lastEntry.id] && (
+                  <PriceChart inputId={lastEntry.id} accent={templateAccent ?? "#706a60"} name={templateTitle} />
+                )}
+                {!lastEntry || !INPUT_PRICE_HISTORY[lastEntry.id] ? <div style={{ height: 130 }} /> : null}
+              </>
             )}
-            {!lastEntry || !INPUT_PRICE_HISTORY[lastEntry.id] ? <div style={{ height: 130 }} /> : null}
-            {/* Geographic concentration summary — globe view only */}
             {centerView === "globe" && (() => {
+              // If a node is selected, show its detail card
+              if (selectedTreeNode) {
+                const nodeData = allNodes[selectedTreeNode] ?? galliumNodes[selectedTreeNode] ?? germaniumNodes[selectedTreeNode];
+                if (nodeData) {
+                  const raw = nodeData as unknown as Record<string, unknown>;
+                  return (
+                    <div style={{ marginBottom: 10 }}>
+                      <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>{String(raw.type ?? "")}</p>
+                      <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                        <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0" }}>{selectedTreeNode}</p>
+                        <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>{String(raw.loc ?? "")}</p>
+                        {raw.stat ? <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 6px 0" }}>{String(raw.stat)}</p> : null}
+                        {raw.role ? <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.5, margin: "0 0 6px 0" }}>{String(raw.role)}</p> : null}
+                        {raw.risk ? (
+                          <div style={{ paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
+                            <p style={{ fontSize: 7, letterSpacing: "0.06em", color: "#555", margin: "0 0 3px 0", textTransform: "uppercase" as const }}>KEY RISK</p>
+                            <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: 0 }}>{String(raw.risk)}</p>
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                  );
+                }
+              }
+              // Default: geo summary
               const rpId = globeNavTarget ? globeNavTarget.toLowerCase() : null;
               const geo = rpId ? GEO_SUMMARY[rpId === "fiber optic cable" ? "fiber" : rpId] : null;
-              if (!geo) return null;
+              if (!geo) return <div style={{ height: 40 }} />;
               return (
-                <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "8px 10px", marginBottom: 10 }}>
-                  <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: 0 }}>{geo}</p>
+                <div style={{ marginBottom: 10 }}>
+                  <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>Geographic Concentration</p>
+                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "8px 10px" }}>
+                    <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.5, margin: 0 }}>{geo}</p>
+                  </div>
                 </div>
               );
             })()}
@@ -2875,26 +2906,6 @@ export default function TreeView() {
                       </div>
                     ))}
                   </div>
-                  {/* Node detail — shown when selected from globe node list */}
-                  {selectedTreeNode && (() => {
-                    const nodeData = allNodes[selectedTreeNode] ?? galliumNodes[selectedTreeNode] ?? germaniumNodes[selectedTreeNode];
-                    if (!nodeData) return null;
-                    const raw = nodeData as unknown as Record<string, unknown>;
-                    return (
-                      <div style={{ marginTop: 12, background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
-                        <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0" }}>{selectedTreeNode}</p>
-                        <p style={{ fontSize: 8, color: "#555", margin: "0 0 8px 0", fontFamily: "'Geist Mono', monospace" }}>{String(raw.type ?? "")} · {String(raw.loc ?? "")}</p>
-                        {raw.stat ? <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 6px 0" }}>{String(raw.stat)}</p> : null}
-                        {raw.role ? <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: "0 0 8px 0" }}>{String(raw.role)}</p> : null}
-                        {raw.risk ? (
-                          <div style={{ paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
-                            <p style={{ fontSize: 7, letterSpacing: "0.06em", color: "#555", margin: "0 0 3px 0", textTransform: "uppercase" as const }}>KEY RISK</p>
-                            <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: 0 }}>{String(raw.risk)}</p>
-                          </div>
-                        ) : null}
-                      </div>
-                    );
-                  })()}
                 </>
               );
             })()}
