@@ -1982,7 +1982,7 @@ export default function TreeView() {
   /* ── main render — unified page template ── */
   return (
     <div style={{ fontFamily: "'DM Sans', sans-serif", height: "100vh", background: "#141414", overflow: "hidden" }}>
-      <div style={{ display: "flex", gap: 0, padding: "10px 0 0 0", height: "calc(100vh - 10px)", alignItems: "stretch" }}>
+      <div style={{ display: "flex", gap: 0, padding: "10px 0 0 0", height: "calc(100vh - 50px)", alignItems: "stretch" }}>
 
         {/* Left panel — vertical selector + layers + items */}
         {(() => {
@@ -2212,15 +2212,15 @@ export default function TreeView() {
               }
               if (takeaways.length === 0) return null;
               return (
-                <>
-                  <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 8px 0", fontFamily: "'Geist Mono', monospace" }}>KEY TAKEAWAYS</p>
+                <div style={{ background: "rgb(36, 32, 29)", borderRadius: 8, padding: "14px 18px" }}>
+                  <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>KEY TAKEAWAYS</p>
                   {takeaways.map((text, i) => (
-                    <div key={i} style={{ display: "flex", gap: 6, marginBottom: 3 }}>
-                      <span style={{ fontSize: 9, color: "#555", flexShrink: 0, minWidth: 12 }}>{i + 1}.</span>
-                      <p style={{ fontSize: 9, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{text}</p>
+                    <div key={i} style={{ display: "flex", gap: 6, marginBottom: 4 }}>
+                      <span style={{ fontSize: 11, color: "#555", flexShrink: 0, minWidth: 14 }}>{i + 1}.</span>
+                      <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{text}</p>
                     </div>
                   ))}
-                </>
+                </div>
               );
             })()}
           </div>
