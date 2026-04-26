@@ -1530,6 +1530,8 @@ export default function TreeView() {
   const [selectedTreeNode, setSelectedTreeNode] = useState<string | null>(null);
   const [globeFilterLayer, setGlobeFilterLayer] = useState<string | null>(null);
   const [hoveredGlobeNode, setHoveredGlobeNode] = useState<{ name: string; type: string; location: string } | null>(null);
+  const [centerView, setCenterView] = useState<"globe" | "tree">("globe");
+  const [globeNavTarget, setGlobeNavTarget] = useState<string | null>(null);
   const globeRef = useRef<GlobeHandle>(null);
   /* ── accordion expanded index (for verticals level only) ── */
   const [expandedVertical, setExpandedVertical] = useState<number>(() => {
@@ -2226,12 +2228,12 @@ export default function TreeView() {
                 { layer: "End Applications", items: ["AI Datacenters", "Electric Vehicles", "Defense & Radar", "Telecom Networks", "Space Systems", "Grid & Energy"] },
               ];
             }
-            if (path.length === 0) {
+            if (path.length === 0 && centerView === "globe") {
               return [
-                { layer: "Raw Materials", items: ["Deposits", "Miners", "Refiners"], globeLayer: "raw-material" },
-                { layer: "Components", items: ["Converters", "Manufacturers"], globeLayer: "component" },
-                { layer: "Subsystems", items: ["Assemblers", "Recyclers"], globeLayer: "subsystem" },
-                { layer: "End Use", items: ["Datacenters", "Telecom"], globeLayer: "end-use" },
+                { layer: "Raw Materials", items: ["Germanium", "Gallium", "Cobalt", "Lithium", "Copper", "Silicon", "Rare Earths", "Helium"], globeLayer: "raw-material" },
+                { layer: "Components", items: ["Fiber optic cable", "GaN power chips", "Optical transceivers", "Semiconductor wafers"], globeLayer: "component" },
+                { layer: "Subsystems", items: ["Connectivity", "Compute", "Power", "Cooling"], globeLayer: "subsystem" },
+                { layer: "End Use", items: ["AI Datacenters", "Defense", "Telecom", "EVs"], globeLayer: "end-use" },
               ];
             }
             return [];
@@ -2259,6 +2261,11 @@ export default function TreeView() {
                     key={v.id}
                     onClick={() => {
                       if (v.comingSoon) return;
+                      if (centerView === "globe" && path.length === 0) {
+                        // In globe view, set nav target instead of navigating
+                        setGlobeNavTarget(v.id === globeNavTarget ? null : v.id);
+                        return;
+                      }
                       setPath([{ type: "vertical", id: v.id, name: v.name }]);
                       setAnimKey(k => k + 1);
                       setSelectedLayer(null);
@@ -2323,11 +2330,29 @@ export default function TreeView() {
                 <>
                   <div style={{ height: 1, background: "rgb(42, 42, 42)", margin: "12px 12px" }} />
                   <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 12px 8px", fontFamily: "'Geist Mono', monospace" }}>{selectedLayer}</p>
-                  {activeLayerData.items.map(item => (
-                    <div key={item} style={{ padding: "4px 12px" }}>
-                      <p style={{ fontSize: 9, margin: 0, color: "#706a60" }}>{item}</p>
-                    </div>
-                  ))}
+                  {activeLayerData.items.map(item => {
+                    const isItemActive = globeNavTarget === item;
+                    return (
+                      <div
+                        key={item}
+                        onClick={() => {
+                          if (centerView === "globe" && path.length === 0) {
+                            setGlobeNavTarget(isItemActive ? null : item);
+                          }
+                        }}
+                        style={{
+                          padding: "4px 12px",
+                          cursor: centerView === "globe" && path.length === 0 ? "pointer" : "default",
+                          background: isItemActive ? "rgba(255,255,255,0.04)" : "transparent",
+                          transition: "background 0.15s",
+                        }}
+                        onMouseEnter={e => { if (centerView === "globe") e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
+                        onMouseLeave={e => { if (!isItemActive) e.currentTarget.style.background = "transparent"; }}
+                      >
+                        <p style={{ fontSize: 9, margin: 0, color: isItemActive ? warmWhite : "#706a60" }}>{item}</p>
+                      </div>
+                    );
+                  })}
                 </>
               )}
             </div>
@@ -2344,20 +2369,42 @@ export default function TreeView() {
           display: "flex", flexDirection: "column",
           position: "relative",
         }}>
-          {path.length === 0 ? (
+          {path.length === 0 && centerView === "globe" ? (
             <>
               {/* Globe view — default landing */}
-              <div style={{ padding: "16px 30px 0", flexShrink: 0 }}>
-                <h1 style={{
-                  fontFamily: "'Instrument Serif', serif",
-                  fontSize: 20,
-                  fontWeight: 400, color: warmWhite, margin: "0 0 6px 0",
-                }}>
-                  {templateTitle}
-                </h1>
-                <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
-                  {templateSubtitle}
-                </p>
+              <div style={{ padding: "16px 30px 0", flexShrink: 0, display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <div>
+                  <h1 style={{
+                    fontFamily: "'Instrument Serif', serif",
+                    fontSize: 20,
+                    fontWeight: 400, color: warmWhite, margin: "0 0 6px 0",
+                  }}>
+                    {templateTitle}
+                  </h1>
+                  <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
+                    {templateSubtitle}
+                  </p>
+                </div>
+                {/* Tree toggle */}
+                <button
+                  onClick={() => { setCenterView("tree"); setGlobeNavTarget(null); }}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 5,
+                    background: "transparent", border: "none", cursor: "pointer",
+                    color: "#555", fontSize: 10, fontFamily: "'Geist Mono', monospace",
+                    padding: "4px 0", transition: "color 0.15s", flexShrink: 0, marginTop: 4,
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = "#555"; }}
+                >
+                  {/* Branch icon */}
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                    <line x1="8" y1="2" x2="8" y2="14" />
+                    <line x1="8" y1="6" x2="13" y2="3" />
+                    <line x1="8" y1="10" x2="13" y2="13" />
+                  </svg>
+                  Tree
+                </button>
               </div>
               <div style={{ flex: 1, position: "relative", minHeight: 0 }}>
                 <Globe
@@ -2376,25 +2423,28 @@ export default function TreeView() {
                     <div style={{ fontSize: 7, color: "rgba(255,255,255,0.25)", fontFamily: "'Geist Mono', monospace" }}>{hoveredGlobeNode.location}</div>
                   </div>
                 )}
-                {/* Navigate button — shown when a layer filter is active */}
-                {globeFilterLayer && (
+                {/* Navigate button — shown when a vertical or item is selected */}
+                {globeNavTarget && (
                   <div style={{ position: "absolute", bottom: 16, right: 20, zIndex: 20 }}>
                     <button
                       onClick={() => {
-                        // Navigate into the supply tree for the selected layer
-                        const layerToVertical: Record<string, { type: string; id: string; name: string }[]> = {
-                          "raw-material": [{ type: "vertical", id: "resources", name: "Global Resources" }],
-                          "component": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }],
-                          "subsystem": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }],
-                          "end-use": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }],
+                        // Map nav target to a path
+                        const vertMap: Record<string, PathEntry[]> = {
+                          ai: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }],
+                          resources: [{ type: "vertical", id: "resources", name: "Global Resources" }],
                         };
-                        const targetPath = layerToVertical[globeFilterLayer];
+                        const targetPath = vertMap[globeNavTarget];
                         if (targetPath) {
-                          setPath(targetPath as PathEntry[]);
-                          setAnimKey(k => k + 1);
-                          setGlobeFilterLayer(null);
-                          setSelectedLayer(null);
+                          setPath(targetPath);
+                          setCenterView("tree");
+                        } else {
+                          // Item-level: switch to tree view, keep path empty so verticals show
+                          setCenterView("tree");
                         }
+                        setAnimKey(k => k + 1);
+                        setGlobeNavTarget(null);
+                        setGlobeFilterLayer(null);
+                        setSelectedLayer(null);
                       }}
                       style={{
                         fontFamily: "'DM Sans', sans-serif", fontSize: 11,
@@ -2407,7 +2457,7 @@ export default function TreeView() {
                       onMouseEnter={e => { e.currentTarget.style.borderColor = "#3a3835"; e.currentTarget.style.background = "#1e1c18"; }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor = "#252220"; e.currentTarget.style.background = "#1a1816"; }}
                     >
-                      View {selectedLayer ?? "supply tree"}
+                      View {globeNavTarget}
                       <span style={{ fontSize: 11, color: "#706a60" }}>&rarr;</span>
                     </button>
                   </div>
@@ -2417,8 +2467,31 @@ export default function TreeView() {
           ) : (
           <>
           {/* Header area — fixed, doesn't scroll */}
-          <div style={{ padding: "16px 30px 0", flexShrink: 0 }}>
+          <div style={{ padding: "16px 30px 0", flexShrink: 0, position: "relative" }}>
             {renderBreadcrumb()}
+            {/* Globe toggle — top right */}
+            {path.length === 0 && (
+              <button
+                onClick={() => { setCenterView("globe"); setGlobeNavTarget(null); setSelectedLayer(null); }}
+                style={{
+                  position: "absolute", top: 16, right: 30,
+                  display: "flex", alignItems: "center", gap: 5,
+                  background: "transparent", border: "none", cursor: "pointer",
+                  color: "#555", fontSize: 10, fontFamily: "'Geist Mono', monospace",
+                  padding: "4px 0", transition: "color 0.15s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "#555"; }}
+              >
+                {/* Globe icon */}
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2">
+                  <circle cx="8" cy="8" r="6.5" />
+                  <ellipse cx="8" cy="8" rx="3" ry="6.5" />
+                  <line x1="1.5" y1="8" x2="14.5" y2="8" />
+                </svg>
+                Globe
+              </button>
+            )}
             {(() => {
               const metrics = lastEntry ? INPUT_METRICS[lastEntry.id] : null;
               return (
