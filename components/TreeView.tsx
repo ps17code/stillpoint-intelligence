@@ -2223,11 +2223,10 @@ export default function TreeView() {
 
         {/* Left panel — vertical selector + layers + items */}
         {(() => {
-          // Determine effective vertical: use selected or default to "ai"
-          // In globe view, use nav target vertical if set; otherwise use current vertical or default "ai"
+          // Determine effective vertical: use nav target in globe view, otherwise current vertical or default "resources"
           const effectiveVertical = (centerView === "globe" && (globeNavTarget === "ai" || globeNavTarget === "resources"))
             ? globeNavTarget
-            : currentVertical?.id ?? "ai";
+            : currentVertical?.id ?? "resources";
 
           // Define layers and items based on effective vertical — same for globe and tree
           const layerData: { layer: string; items: string[]; globeLayer?: string }[] = (() => {
@@ -2265,7 +2264,7 @@ export default function TreeView() {
               {/* Verticals section */}
               <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 12px 8px", fontFamily: "'Geist Mono', monospace" }}>Verticals</p>
               {VERTICALS_DATA.map(v => {
-                const isActive = currentVertical?.id === v.id || (path.length === 0 && v.id === "ai") || globeNavTarget === v.id;
+                const isActive = currentVertical?.id === v.id || globeNavTarget === v.id;
                 return (
                   <div
                     key={v.id}
@@ -2387,12 +2386,12 @@ export default function TreeView() {
                   if (info) {
                     return (
                       <div style={{
-                        width: "40%", background: "rgba(36, 32, 29, 0.5)",
+                        width: "fit-content", maxWidth: "40%", background: "rgba(36, 32, 29, 0.5)",
                         border: "0.5px solid rgba(255,255,255,0.06)",
                         borderRadius: 6, padding: "10px 14px",
                       }}>
-                        <p style={{ fontSize: 14, fontWeight: 400, color: "#ece8e1", margin: "0 0 4px 0", fontFamily: "'Instrument Serif', serif" }}>{info.title}</p>
-                        <p style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", lineHeight: 1.5, margin: 0 }}>{info.description}</p>
+                        <p style={{ fontSize: 16, fontWeight: 400, color: "#ece8e1", margin: "0 0 4px 0", fontFamily: "'Instrument Serif', serif" }}>{info.title}</p>
+                        <p style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", lineHeight: 1.5, margin: 0 }}>{info.description}</p>
                       </div>
                     );
                   }
