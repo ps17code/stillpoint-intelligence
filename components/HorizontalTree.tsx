@@ -122,7 +122,7 @@ export default function HorizontalTree({
 }: HorizontalTreeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
-  const [lines, setLines] = useState<{ d: string; color: string; fromName: string; toName: string }[]>([]);
+  const [lines, setLines] = useState<{ d: string; color: string; fromName: string; toName: string; fromX: number; fromY: number }[]>([]);
   const [svgSize, setSvgSize] = useState({ w: 0, h: 0 });
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
@@ -162,7 +162,7 @@ export default function HorizontalTree({
     // Small delay to let the DOM settle after render
     const raf = requestAnimationFrame(() => {
       const containerRect = container.getBoundingClientRect();
-      const newLines: { d: string; color: string; fromName: string; toName: string }[] = [];
+      const newLines: { d: string; color: string; fromName: string; toName: string; fromX: number; fromY: number }[] = [];
 
       // Build a reverse lookup: for each layer, map cx -> node index
       for (const edge of geometry.edges) {
@@ -198,6 +198,7 @@ export default function HorizontalTree({
           color: edge.color,
           fromName: fromNode.name,
           toName: toNode.name,
+          fromX, fromY,
         });
       }
 
@@ -230,6 +231,7 @@ export default function HorizontalTree({
               color: lastLayer.color.stroke,
               fromName: node.name,
               toName: geometry.outputNode.name,
+              fromX, fromY,
             });
           }
         }
@@ -418,15 +420,23 @@ export default function HorizontalTree({
           const lineHighlighted = hoveredNode != null && (line.fromName === hoveredNode || line.toName === hoveredNode);
           const lineDimmed = hoveredNode != null && !lineHighlighted;
           return (
-            <path
-              key={i}
-              d={line.d}
-              fill="none"
-              stroke={lineHighlighted ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.18)"}
-              strokeWidth={lineHighlighted ? "1.2" : "0.8"}
-              strokeDasharray="4,3"
-              style={{ opacity: lineDimmed ? 0.15 : 1, transition: "opacity 0.15s, stroke 0.15s, stroke-width 0.15s" }}
-            />
+            <g key={i} style={{ opacity: lineDimmed ? 0.15 : 1, transition: "opacity 0.15s" }}>
+              <circle
+                cx={line.fromX}
+                cy={line.fromY}
+                r="1.5"
+                fill={lineHighlighted ? "rgba(255,255,255,0.5)" : "rgba(200,200,200,0.4)"}
+                style={{ transition: "fill 0.15s" }}
+              />
+              <path
+                d={line.d}
+                fill="none"
+                stroke={lineHighlighted ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.18)"}
+                strokeWidth={lineHighlighted ? "1.2" : "0.8"}
+                strokeDasharray="4,3"
+                style={{ transition: "stroke 0.15s, stroke-width 0.15s" }}
+              />
+            </g>
           );
         })}
       </svg>
