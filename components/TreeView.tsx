@@ -1303,6 +1303,7 @@ export default function TreeView() {
   const [animKey, setAnimKey] = useState(0);
   const [selectedLayer, setSelectedLayer] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("supply-tree");
+  const [rightTab, setRightTab] = useState("layers");
   /* ── accordion expanded index (for verticals level only) ── */
   const [expandedVertical, setExpandedVertical] = useState<number>(() => {
     const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
@@ -2227,65 +2228,145 @@ export default function TreeView() {
           </div>
         </div>
 
-        {/* Right panel — layer overview cards */}
+        {/* Right panel — two sections */}
         <div style={{
           flex: 1,
           background: "#111111", borderRadius: 10,
           margin: "0 5px",
           border: "0.2px solid rgb(42, 42, 42)",
-          padding: "14px 12px",
-          overflowY: "auto",
+          display: "flex", flexDirection: "column",
+          overflow: "hidden",
         }}>
-          {(() => {
-            // Determine layer cards based on current path
-            let layerCards: { label: string; content: string; whyHard: string; stat: string; statLabel: string }[] = [];
-            const accent = templateAccent ?? "#706a60";
+          {/* Top section — matches contextual header height */}
+          <div style={{ flexShrink: 0, padding: "14px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+            {/* Tabs at bottom of top section */}
+            <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}` }}>
+              {["Layers", "Summary"].map((tab, ti) => {
+                const tabId = tab.toLowerCase();
+                const isActive = rightTab === tabId;
+                return (
+                  <div
+                    key={tabId}
+                    onClick={() => setRightTab(tabId)}
+                    style={{
+                      padding: ti === 0 ? "8px 12px 8px 0" : "8px 12px",
+                      fontSize: 8,
+                      color: isActive ? "#a09888" : "#555",
+                      cursor: "pointer",
+                      borderBottom: isActive ? "1.5px solid #888" : "1.5px solid transparent",
+                      transition: "color 0.15s, border-color 0.15s",
+                      marginBottom: -1,
+                    }}
+                    onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "#706a60"; }}
+                    onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "#555"; }}
+                  >
+                    {tab}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
 
-            if (lastEntry?.id === "germanium" || (lastEntry?.type === "raw-material" && lastEntry?.id === "germanium")) {
-              layerCards = [
-                { label: "HOST ORE EXTRACTION", content: "Germanium-rich residues collect in flue dust and leach solutions during zinc smelting. Operations with specialized hydrometallurgical circuits extract it; most don\u2019t.", whyHard: "Germanium exists at 50-800 ppm in host ores. Recovery requires circuits most zinc smelters never install. China operates ~83% of primary capacity.", stat: "~140t/yr", statLabel: "primary germanium extracted" },
-                { label: "REFINING TO HIGH PURITY", content: "Crude oxide is reduced to metal, then zone-refined to 5N+ purity. For fiber optics, converted to GeCl\u2084 and purified to 8N.", whyHard: "Fiber-grade GeCl\u2084 requires parts-per-billion purity. Only 6 facilities globally: four in China, one in Russia, one in the west \u2014 Umicore.", stat: "~230t/yr", statLabel: "refined germanium" },
-                { label: "CONVERSION TO END PRODUCTS", content: "Each end product needs a different form: GeCl\u2084 for fiber, GeO\u2082 blanks for IR optics, wafers for satellite solar, SiGe substrates.", whyHard: "No single facility serves all end markets. Five distinct markets pull on the same ~230t/yr supply.", stat: "5 markets", statLabel: "competing for same supply" },
-              ];
-            } else if (lastEntry?.id === "gallium" || (lastEntry?.type === "raw-material" && lastEntry?.id === "gallium")) {
-              layerCards = [
-                { label: "BYPRODUCT SOURCE", content: "Bauxite is mined and shipped to alumina refineries. Gallium is not extracted at this layer \u2014 it rides along at ~50 ppm.", whyHard: "Gallium content is uniform across all bauxite. Output is determined by aluminum industry decisions, not gallium demand.", stat: "~346M t/yr", statLabel: "bauxite mined globally" },
-                { label: "PRIMARY PRODUCER", content: "Bauxite is processed into alumina. Refineries with ion-exchange circuits capture gallium as a byproduct.", whyHard: "Only ~20 alumina refineries globally have gallium recovery installed, almost all in China.", stat: "~600 t/yr", statLabel: "primary gallium extracted" },
-                { label: "REFINER", content: "Crude 99.99% gallium is purified to 99.9999%+ via zone refining, vacuum distillation, and electrolytic processes.", whyHard: "Each additional nine of purity is exponentially harder. Western refiners depend on Chinese primary feedstock.", stat: "~320 t/yr", statLabel: "high-purity refined gallium" },
-              ];
-            } else if (lastEntry?.id === "fiber" || (lastEntry?.type === "component" && lastEntry?.id === "fiber")) {
-              layerCards = [
-                { label: "CHEMICAL CONVERSION", content: "Refined germanium is converted to GeCl\u2084 at 8N purity. High-purity silica is converted to SiCl\u2084. Helium is purified for cooling.", whyHard: "Only 6 facilities globally produce fiber-grade GeCl\u2084. Helium has no substitute and trades on physical scarcity.", stat: "~220t/yr", statLabel: "fiber-grade GeCl\u2084" },
-                { label: "PREFORM MANUFACTURING", content: "GeCl\u2084 is vaporized and deposited layer by layer inside a silica tube, building a glass preform rod.", whyHard: "Only one equipment supplier \u2014 Rosendahl Nextrom. Adding a new preform line takes 18-24 months.", stat: "~24,000t/yr", statLabel: "preform produced" },
-                { label: "FIBER DRAW & ASSEMBLY", content: "Preforms are drawn into hair-thin strands at 10-20 m/s, coated, bundled, and sheathed into cable.", whyHard: "Drawing isn\u2019t the constraint \u2014 preform supply is. Helium supply is tight.", stat: "~720M km/yr", statLabel: "fiber strand produced" },
-              ];
-            }
+          {/* Bottom section — content based on selected tab */}
+          <div style={{ flex: 1, overflowY: "auto", padding: "12px 12px" }}>
+            {rightTab === "layers" && (() => {
+              let layerCards: { label: string; content: string; whyHard: string; stat: string; statLabel: string }[] = [];
+              const accent = templateAccent ?? "#706a60";
 
-            if (layerCards.length === 0) return null;
+              if (lastEntry?.id === "germanium" || (lastEntry?.type === "raw-material" && lastEntry?.id === "germanium")) {
+                layerCards = [
+                  { label: "HOST ORE EXTRACTION", content: "Germanium-rich residues collect in flue dust and leach solutions during zinc smelting. Operations with specialized hydrometallurgical circuits extract it; most don\u2019t.", whyHard: "Germanium exists at 50-800 ppm in host ores. Recovery requires circuits most zinc smelters never install. China operates ~83% of primary capacity.", stat: "~140t/yr", statLabel: "primary germanium extracted" },
+                  { label: "REFINING TO HIGH PURITY", content: "Crude oxide is reduced to metal, then zone-refined to 5N+ purity. For fiber optics, converted to GeCl\u2084 and purified to 8N.", whyHard: "Fiber-grade GeCl\u2084 requires parts-per-billion purity. Only 6 facilities globally: four in China, one in Russia, one in the west \u2014 Umicore.", stat: "~230t/yr", statLabel: "refined germanium" },
+                  { label: "CONVERSION TO END PRODUCTS", content: "Each end product needs a different form: GeCl\u2084 for fiber, GeO\u2082 blanks for IR optics, wafers for satellite solar, SiGe substrates.", whyHard: "No single facility serves all end markets. Five distinct markets pull on the same ~230t/yr supply.", stat: "5 markets", statLabel: "competing for same supply" },
+                ];
+              } else if (lastEntry?.id === "gallium" || (lastEntry?.type === "raw-material" && lastEntry?.id === "gallium")) {
+                layerCards = [
+                  { label: "BYPRODUCT SOURCE", content: "Bauxite is mined and shipped to alumina refineries. Gallium is not extracted at this layer \u2014 it rides along at ~50 ppm.", whyHard: "Gallium content is uniform across all bauxite. Output is determined by aluminum industry decisions, not gallium demand.", stat: "~346M t/yr", statLabel: "bauxite mined globally" },
+                  { label: "PRIMARY PRODUCER", content: "Bauxite is processed into alumina. Refineries with ion-exchange circuits capture gallium as a byproduct.", whyHard: "Only ~20 alumina refineries globally have gallium recovery installed, almost all in China.", stat: "~600 t/yr", statLabel: "primary gallium extracted" },
+                  { label: "REFINER", content: "Crude 99.99% gallium is purified to 99.9999%+ via zone refining, vacuum distillation, and electrolytic processes.", whyHard: "Each additional nine of purity is exponentially harder. Western refiners depend on Chinese primary feedstock.", stat: "~320 t/yr", statLabel: "high-purity refined gallium" },
+                ];
+              } else if (lastEntry?.id === "fiber" || (lastEntry?.type === "component" && lastEntry?.id === "fiber")) {
+                layerCards = [
+                  { label: "CHEMICAL CONVERSION", content: "Refined germanium is converted to GeCl\u2084 at 8N purity. High-purity silica is converted to SiCl\u2084. Helium is purified for cooling.", whyHard: "Only 6 facilities globally produce fiber-grade GeCl\u2084. Helium has no substitute and trades on physical scarcity.", stat: "~220t/yr", statLabel: "fiber-grade GeCl\u2084" },
+                  { label: "PREFORM MANUFACTURING", content: "GeCl\u2084 is vaporized and deposited layer by layer inside a silica tube, building a glass preform rod.", whyHard: "Only one equipment supplier \u2014 Rosendahl Nextrom. Adding a new preform line takes 18-24 months.", stat: "~24,000t/yr", statLabel: "preform produced" },
+                  { label: "FIBER DRAW & ASSEMBLY", content: "Preforms are drawn into hair-thin strands at 10-20 m/s, coated, bundled, and sheathed into cable.", whyHard: "Drawing isn\u2019t the constraint \u2014 preform supply is. Helium supply is tight.", stat: "~720M km/yr", statLabel: "fiber strand produced" },
+                ];
+              }
 
-            return (
-              <>
-                <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>LAYER OVERVIEW</p>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  {layerCards.map(card => (
-                    <div key={card.label} style={{
-                      background: "rgb(36, 32, 29)", border: "1px solid rgb(45, 41, 39)",
-                      borderRadius: 6, padding: "10px 12px",
-                    }}>
-                      <p style={{ fontSize: 8, letterSpacing: "0.08em", color: accent, margin: "0 0 6px 0", fontWeight: 500, textTransform: "uppercase" as const }}>{card.label}</p>
-                      <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: "0 0 8px 0" }}>{card.content}</p>
-                      <p style={{ fontSize: 7, letterSpacing: "0.06em", color: "#555", margin: "0 0 3px 0", textTransform: "uppercase" as const }}>WHY IT&apos;S HARD</p>
-                      <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: "0 0 0 0" }}>{card.whyHard}</p>
-                      <div style={{ marginTop: 8, paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
-                        <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{card.stat}</span>
-                        <span style={{ fontSize: 7, color: "#555", marginLeft: 5 }}>{card.statLabel}</span>
+              if (layerCards.length === 0) return null;
+
+              return (
+                <>
+                  <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>LAYER OVERVIEW</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {layerCards.map(card => (
+                      <div key={card.label} style={{
+                        background: "rgb(36, 32, 29)", border: "1px solid rgb(45, 41, 39)",
+                        borderRadius: 6, padding: "10px 12px",
+                      }}>
+                        <p style={{ fontSize: 8, letterSpacing: "0.08em", color: accent, margin: "0 0 6px 0", fontWeight: 500, textTransform: "uppercase" as const }}>{card.label}</p>
+                        <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: "0 0 8px 0" }}>{card.content}</p>
+                        <p style={{ fontSize: 7, letterSpacing: "0.06em", color: "#555", margin: "0 0 3px 0", textTransform: "uppercase" as const }}>WHY IT&apos;S HARD</p>
+                        <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: "0 0 0 0" }}>{card.whyHard}</p>
+                        <div style={{ marginTop: 8, paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
+                          <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{card.stat}</span>
+                          <span style={{ fontSize: 7, color: "#555", marginLeft: 5 }}>{card.statLabel}</span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </>
-            );
-          })()}
+                    ))}
+                  </div>
+                </>
+              );
+            })()}
+
+            {rightTab === "summary" && (() => {
+              let bullets: string[] = [];
+              if (lastEntry?.id === "germanium") {
+                bullets = [
+                  "Trace element recovered as a byproduct of zinc smelting and coal combustion. Cannot be mined directly.",
+                  "Doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in IR defense optics, satellite solar cells, and SiGe semiconductors.",
+                  "Global supply fixed at ~230t/yr. 83% Chinese under export licensing. One western refiner \u2014 Umicore, Belgium.",
+                  "Price has risen from $1,500/kg to over $8,500/kg in two years. 3.5x premium between western and Chinese markets.",
+                  "Demand accelerating from AI datacenter fiber buildout, defense IR optics, and satellite constellation expansion.",
+                  "No near-term supply relief. Hollow-core fiber, new mine capacity, and DRC feedstock ramp all target 2027-2028.",
+                ];
+              } else if (lastEntry?.id === "gallium") {
+                bullets = [
+                  "Trace element recovered as a byproduct of alumina refining from bauxite. Cannot be mined directly.",
+                  "Forms compound semiconductors (GaAs and GaN) for AI datacenter power, 5G amplifiers, LEDs, EV chargers, and defense radar.",
+                  "Global refined production is ~320 t/yr. ~290 t Chinese; ~15-30 t non-Chinese, almost entirely Japan via Dowa.",
+                  "Price has risen from $298/kg to $2,269/kg since 2020. 9x spread between Chinese domestic and western markets.",
+                  "Demand accelerating from GaN power electronics (42% CAGR), defense radar, and AI datacenter 800V architecture.",
+                  "Four western production projects target ~230 t/yr by 2029. None resolves structural dependency before 2028.",
+                ];
+              } else if (lastEntry?.id === "fiber") {
+                bullets = [
+                  "Glass strands that transmit data as pulses of light. Physical layer connecting AI datacenters, telecom, and subsea systems.",
+                  "Core inputs: high-purity silica, germanium, and helium. All three are constrained simultaneously.",
+                  "Global production at ~720M fiber strand-km/yr. Preform lines at full utilization. One equipment supplier with 18-24 month backlogs.",
+                  "Fiber prices at 7-year highs. G.652D up 150%, G.657A up over 210%.",
+                  "AI datacenter buildout is the dominant growth vector. ~20 GW entering construction annually.",
+                  "Supply response is 2027-2028 at earliest. New preform capacity, DRC germanium ramp, hollow-core fiber all target same window.",
+                ];
+              }
+
+              if (bullets.length === 0) return <p style={{ fontSize: 10, color: "#555", padding: "20px 0" }}>Select an input to view its executive summary.</p>;
+
+              return (
+                <>
+                  <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>EXECUTIVE SUMMARY</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    {bullets.map((bullet, i) => (
+                      <div key={i} style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
+                        <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 5 }} />
+                        <p style={{ fontSize: 10, color: "#807870", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              );
+            })()}
+          </div>
         </div>
 
       </div>
