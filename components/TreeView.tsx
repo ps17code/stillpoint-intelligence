@@ -1301,6 +1301,7 @@ export default function TreeView() {
     return result;
   });
   const [animKey, setAnimKey] = useState(0);
+  const [selectedLayer, setSelectedLayer] = useState<string | null>(null);
   /* ── accordion expanded index (for verticals level only) ── */
   const [expandedVertical, setExpandedVertical] = useState<number>(() => {
     const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
@@ -1982,51 +1983,116 @@ export default function TreeView() {
     <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#141414" }}>
       <div style={{ display: "flex", gap: 0, padding: "10px 0 0 0", height: "calc(100vh - 10px)" }}>
 
-        {/* Left panel — vertical selector */}
-        <div style={{
-          width: 150, minWidth: 150, flexShrink: 0,
-          background: "#111111", borderRadius: 10,
-          margin: "0 5px",
-          border: "0.2px solid rgb(42, 42, 42)",
-          padding: "16px 0",
-          overflowY: "auto",
-        }}>
-          <p style={{ fontSize: 8, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 14px 10px", fontFamily: "'Geist Mono', monospace" }}>Verticals</p>
-          {VERTICALS_DATA.map(v => {
-            const isActive = currentVertical?.id === v.id || (path.length === 0 && v.id === "resources");
-            return (
-              <div
-                key={v.id}
-                onClick={() => {
-                  if (v.comingSoon) return;
-                  setPath([{ type: "vertical", id: v.id, name: v.name }]);
-                  setAnimKey(k => k + 1);
-                }}
-                style={{
-                  padding: "8px 14px",
-                  cursor: v.comingSoon ? "default" : "pointer",
-                  opacity: v.comingSoon ? 0.35 : 1,
-                  background: isActive ? "rgba(255,255,255,0.04)" : "transparent",
-                  borderLeft: isActive ? "2px solid #555" : "2px solid transparent",
-                  transition: "background 0.15s, border-color 0.15s",
-                }}
-                onMouseEnter={e => { if (!v.comingSoon && !isActive) e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
-                onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
-              >
-                <p style={{
-                  fontSize: 11, margin: 0,
-                  color: isActive ? warmWhite : "#706a60",
-                  fontWeight: isActive ? 500 : 400,
-                  transition: "color 0.15s",
-                }}>{v.name}</p>
-              </div>
-            );
-          })}
-        </div>
+        {/* Left panel — vertical selector + layers + items */}
+        {(() => {
+          // Define layers and items based on current vertical
+          const layerData: { layer: string; items: string[] }[] = (() => {
+            if (currentVertical?.id === "ai" || (!currentVertical && path.length > 0)) {
+              return [
+                { layer: "Raw Materials", items: ["Germanium", "Gallium", "Helium", "Silica", "Copper", "Silicon"] },
+                { layer: "Components", items: ["Fiber optic cable", "Optical transceivers", "Network switches", "GPUs", "HBM memory", "Server boards", "Power transformers"] },
+                { layer: "Subsystems", items: ["Connectivity", "Compute", "Power", "Cooling"] },
+                { layer: "End Use", items: ["AI Datacenter"] },
+              ];
+            }
+            if (currentVertical?.id === "resources") {
+              return [
+                { layer: "Raw Materials", items: ["Germanium", "Gallium", "Cobalt", "Lithium", "Copper", "Silicon", "Rare Earths", "Helium", "Nickel", "Tin"] },
+                { layer: "Products", items: ["Fiber optic cable", "GaN power chips", "Li-ion batteries", "Permanent magnets", "Wiring & PCBs", "Semiconductor wafers", "IR optics", "Solar cells"] },
+                { layer: "End Applications", items: ["AI Datacenters", "Electric Vehicles", "Defense & Radar", "Telecom Networks", "Space Systems", "Grid & Energy"] },
+              ];
+            }
+            return [];
+          })();
+
+          const activeLayerData = layerData.find(l => l.layer === selectedLayer);
+
+          return (
+            <div style={{
+              width: 150, minWidth: 150, flexShrink: 0,
+              background: "#111111", borderRadius: 10,
+              margin: "0 5px",
+              border: "0.2px solid rgb(42, 42, 42)",
+              padding: "14px 0",
+              overflowY: "auto",
+              display: "flex", flexDirection: "column",
+            }}>
+              {/* Verticals section */}
+              <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 12px 8px", fontFamily: "'Geist Mono', monospace" }}>Verticals</p>
+              {VERTICALS_DATA.map(v => {
+                const isActive = currentVertical?.id === v.id || (path.length === 0 && v.id === "resources");
+                return (
+                  <div
+                    key={v.id}
+                    onClick={() => {
+                      if (v.comingSoon) return;
+                      setPath([{ type: "vertical", id: v.id, name: v.name }]);
+                      setAnimKey(k => k + 1);
+                      setSelectedLayer(null);
+                    }}
+                    style={{
+                      padding: "6px 12px",
+                      cursor: v.comingSoon ? "default" : "pointer",
+                      opacity: v.comingSoon ? 0.35 : 1,
+                      background: isActive ? "rgba(255,255,255,0.04)" : "transparent",
+                      borderLeft: isActive ? "2px solid #555" : "2px solid transparent",
+                      transition: "background 0.15s",
+                    }}
+                    onMouseEnter={e => { if (!v.comingSoon && !isActive) e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
+                    onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+                  >
+                    <p style={{ fontSize: 10, margin: 0, color: isActive ? warmWhite : "#706a60", fontWeight: isActive ? 500 : 400 }}>{v.name}</p>
+                  </div>
+                );
+              })}
+
+              {/* Layers section */}
+              {layerData.length > 0 && (
+                <>
+                  <div style={{ height: 1, background: "rgb(42, 42, 42)", margin: "12px 12px" }} />
+                  <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 12px 8px", fontFamily: "'Geist Mono', monospace" }}>Layers</p>
+                  {layerData.map(l => {
+                    const isActive = selectedLayer === l.layer;
+                    return (
+                      <div
+                        key={l.layer}
+                        onClick={() => setSelectedLayer(isActive ? null : l.layer)}
+                        style={{
+                          padding: "5px 12px",
+                          cursor: "pointer",
+                          background: isActive ? "rgba(255,255,255,0.04)" : "transparent",
+                          borderLeft: isActive ? "2px solid #555" : "2px solid transparent",
+                          transition: "background 0.15s",
+                        }}
+                        onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
+                        onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+                      >
+                        <p style={{ fontSize: 10, margin: 0, color: isActive ? warmWhite : "#706a60", fontWeight: isActive ? 500 : 400 }}>{l.layer}</p>
+                      </div>
+                    );
+                  })}
+                </>
+              )}
+
+              {/* Items section — shows items of selected layer */}
+              {activeLayerData && (
+                <>
+                  <div style={{ height: 1, background: "rgb(42, 42, 42)", margin: "12px 12px" }} />
+                  <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 12px 8px", fontFamily: "'Geist Mono', monospace" }}>{selectedLayer}</p>
+                  {activeLayerData.items.map(item => (
+                    <div key={item} style={{ padding: "4px 12px" }}>
+                      <p style={{ fontSize: 9, margin: 0, color: "#706a60" }}>{item}</p>
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+          );
+        })()}
 
         {/* Center — header + supply tree in one container */}
         <div style={{
-          width: 1000, maxWidth: 1000, flexShrink: 0,
+          width: 1020, maxWidth: 1020, flexShrink: 0,
           background: "#111111",
           borderRadius: 10,
           overflowY: "auto", overflowX: "hidden",
