@@ -1981,8 +1981,8 @@ export default function TreeView() {
 
   /* ── main render — unified page template ── */
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#141414" }}>
-      <div style={{ display: "flex", gap: 0, padding: "10px 0 0 0", minHeight: "calc(100vh - 10px)", alignItems: "flex-start" }}>
+    <div style={{ fontFamily: "'DM Sans', sans-serif", height: "100vh", background: "#141414", overflow: "hidden" }}>
+      <div style={{ display: "flex", gap: 0, padding: "10px 0 0 0", height: "calc(100vh - 10px)", alignItems: "stretch" }}>
 
         {/* Left panel — vertical selector + layers + items */}
         {(() => {
@@ -2017,10 +2017,7 @@ export default function TreeView() {
               padding: "14px 0",
               overflowY: "auto",
               display: "flex", flexDirection: "column",
-              position: "sticky", top: 10,
-              height: "calc(100vh - 15px)",
-              minHeight: 770,
-              alignSelf: "flex-start",
+              minHeight: 0,
             }}>
               {/* Verticals section */}
               <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 12px 8px", fontFamily: "'Geist Mono', monospace" }}>Verticals</p>
@@ -2182,13 +2179,50 @@ export default function TreeView() {
             </div>
           </div>
 
-          {/* Bottom section */}
+          {/* Bottom section — key takeaways */}
           <div style={{
             height: 160, flexShrink: 0,
             borderTop: `1px solid ${borderColor}`,
             padding: "12px 30px",
+            overflowY: "auto",
           }}>
-            {/* Bottom section placeholder */}
+            {(() => {
+              let takeaways: string[] = [];
+              if (lastEntry?.id === "germanium" || (lastEntry?.type === "raw-material" && lastEntry.id === "germanium")) {
+                takeaways = [
+                  "Only 8 coal and zinc deposits in the world host germanium at high enough concentration to be commercially extracted.",
+                  "83% of that supply is in China.",
+                  "Two western sources exist \u2014 Big Hill is new DRC tailings refined exclusively by Umicore, and Red Dog is a declining Alaskan zinc mine expected to expire in 2031.",
+                  "Outside China, Umicore and 5N Plus are the sole western supply for germanium-reliant products.",
+                ];
+              } else if (lastEntry?.id === "gallium" || (lastEntry?.type === "raw-material" && lastEntry.id === "gallium")) {
+                takeaways = [
+                  "Bauxite is mined globally across five regions \u2014 Guinea, Australia, China, Brazil, and Indonesia \u2014 with ~346M tonnes produced per year.",
+                  "Gallium isn\u2019t extracted at the mine \u2014 it\u2019s recovered downstream at alumina refineries, and ~98% of those refineries are in China.",
+                  "Four western projects are trying to rebuild primary capacity \u2014 but none operate at scale before 2028.",
+                  "Outside China, Dowa in Japan does the bulk of high-purity refining \u2014 but all depend on Chinese primary feedstock.",
+                ];
+              } else if (lastEntry?.id === "fiber" || (lastEntry?.type === "component" && lastEntry.id === "fiber")) {
+                takeaways = [
+                  "Three constrained inputs feed fiber production \u2014 germanium tetrachloride, silicon tetrachloride, and helium for cooling.",
+                  "Only about 20 preform manufacturers globally produce doped silica rods, and lines are at full utilization.",
+                  "Rosendahl Nextrom in Austria is the global monopoly on preform deposition equipment \u2014 18-24 month backlogs.",
+                  "Corning controls ~40% of global fiber capacity and stopped selling bare glass to competitors in late 2025.",
+                ];
+              }
+              if (takeaways.length === 0) return null;
+              return (
+                <>
+                  <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 8px 0", fontFamily: "'Geist Mono', monospace" }}>KEY TAKEAWAYS</p>
+                  {takeaways.map((text, i) => (
+                    <div key={i} style={{ display: "flex", gap: 6, marginBottom: 3 }}>
+                      <span style={{ fontSize: 9, color: "#555", flexShrink: 0, minWidth: 12 }}>{i + 1}.</span>
+                      <p style={{ fontSize: 9, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{text}</p>
+                    </div>
+                  ))}
+                </>
+              );
+            })()}
           </div>
         </div>
 
