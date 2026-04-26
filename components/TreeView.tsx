@@ -1837,14 +1837,46 @@ export default function TreeView() {
     <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#141414" }}>
       <div style={{ display: "flex", gap: 0, padding: "10px 0 0 0", height: "calc(100vh - 10px)" }}>
 
-        {/* Left panel */}
+        {/* Left panel — vertical selector */}
         <div style={{
           width: 150, minWidth: 150, flexShrink: 0,
           background: "#111111", borderRadius: 10,
           margin: "0 5px",
           border: "0.2px solid rgb(42, 42, 42)",
+          padding: "16px 0",
+          overflowY: "auto",
         }}>
-          {/* Left panel content placeholder */}
+          <p style={{ fontSize: 8, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 14px 10px", fontFamily: "'Geist Mono', monospace" }}>Verticals</p>
+          {VERTICALS_DATA.map(v => {
+            const isActive = currentVertical?.id === v.id || (path.length === 0 && v.id === "resources");
+            return (
+              <div
+                key={v.id}
+                onClick={() => {
+                  if (v.comingSoon) return;
+                  setPath([{ type: "vertical", id: v.id, name: v.name }]);
+                  setAnimKey(k => k + 1);
+                }}
+                style={{
+                  padding: "8px 14px",
+                  cursor: v.comingSoon ? "default" : "pointer",
+                  opacity: v.comingSoon ? 0.35 : 1,
+                  background: isActive ? "rgba(255,255,255,0.04)" : "transparent",
+                  borderLeft: isActive ? "2px solid #555" : "2px solid transparent",
+                  transition: "background 0.15s, border-color 0.15s",
+                }}
+                onMouseEnter={e => { if (!v.comingSoon && !isActive) e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
+                onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+              >
+                <p style={{
+                  fontSize: 11, margin: 0,
+                  color: isActive ? warmWhite : "#706a60",
+                  fontWeight: isActive ? 500 : 400,
+                  transition: "color 0.15s",
+                }}>{v.name}</p>
+              </div>
+            );
+          })}
         </div>
 
         {/* Center — header + supply tree in one container */}
