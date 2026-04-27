@@ -878,6 +878,14 @@ const INPUT_WTMI: Record<string, WtmiData> = {
   fiber: (fiberInputJson as unknown as { wtmi: WtmiData }).wtmi,
 };
 
+/* ── So-What / Analysis data per input ── */
+type SoWhatItem = { id: string; label: string; question: string; teaser: string; analysis: { type: string; text: string; title?: string }[] };
+const INPUT_SOWHAT: Record<string, SoWhatItem[]> = {
+  germanium: (germaniumInputJson as unknown as { soWhat: SoWhatItem[] }).soWhat,
+  gallium: (galliumInputJson as unknown as { soWhat: SoWhatItem[] }).soWhat,
+  fiber: (fiberInputJson as unknown as { soWhat: SoWhatItem[] }).soWhat,
+};
+
 /* ── Dependencies table component ── */
 function DependenciesTable({ inputId }: { inputId: string }) {
   const deps = INPUT_DEPS[inputId];
@@ -1717,6 +1725,7 @@ export default function TreeView() {
   const [rightTab, setRightTab] = useState("summary");
   const [selectedTreeNode, setSelectedTreeNode] = useState<string | null>(null);
   const [selectedBriefId, setSelectedBriefId] = useState<string | null>(null);
+  const [selectedAnalysisIdx, setSelectedAnalysisIdx] = useState(0);
   const [globeFilterLayer, setGlobeFilterLayer] = useState<string | null>(null);
   const [hoveredGlobeNode, setHoveredGlobeNode] = useState<{ name: string; type: string; location: string } | null>(null);
   const [centerView, setCenterView] = useState<"globe" | "tree">("globe");
@@ -2934,7 +2943,57 @@ export default function TreeView() {
                   </div>
                 );
               })()}
-              {activeTab !== "supply-tree" && activeTab !== "dependencies" && activeTab !== "map" && activeTab !== "investment-ideas" && (
+              {activeTab === "analysis" && (() => {
+                const inputId = lastEntry?.id === "fiber" ? "fiber" : lastEntry?.id;
+                const soWhat = inputId ? INPUT_SOWHAT[inputId] : null;
+                if (!soWhat || soWhat.length === 0) return <div style={{ padding: "40px 0", color: "#4a4540", fontSize: 12 }}>Select an input to view analysis.</div>;
+
+                const activeSection = soWhat[selectedAnalysisIdx] ?? soWhat[0];
+
+                return (
+                  <div style={{ display: "flex", gap: 0, padding: "12px 0", height: "100%" }}>
+                    {/* Left column — section labels */}
+                    <div style={{ width: 240, minWidth: 240, flexShrink: 0, borderRight: `1px solid ${borderColor}`, paddingRight: 16 }}>
+                      {soWhat.map((item, i) => {
+                        const isActive = i === selectedAnalysisIdx;
+                        return (
+                          <div
+                            key={item.id}
+                            onClick={() => setSelectedAnalysisIdx(i)}
+                            style={{
+                              padding: "12px 12px",
+                              cursor: "pointer",
+                              borderBottom: `1px solid rgba(255,255,255,0.04)`,
+                              borderLeft: isActive ? "2px solid #706a60" : "2px solid transparent",
+                              background: isActive ? "rgba(255,255,255,0.02)" : "transparent",
+                              transition: "background 0.15s, border-color 0.15s",
+                            }}
+                            onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.015)"; }}
+                            onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+                          >
+                            <p style={{ fontSize: 11, fontWeight: isActive ? 600 : 500, color: isActive ? warmWhite : "rgb(160, 152, 136)", margin: "0 0 2px 0" }}>{item.label}</p>
+                            <p style={{ fontSize: 9, color: isActive ? "#706a60" : "#4a4540", margin: 0, fontStyle: "italic" }}>{item.question}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    {/* Right column — full analysis content */}
+                    <div style={{ flex: 1, paddingLeft: 20, overflowY: "auto" }}>
+                      {activeSection.analysis.map((block, bi) => (
+                        <div key={bi} style={{ marginBottom: 12 }}>
+                          {block.title && <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{block.title}</p>}
+                          <p style={{
+                            fontSize: 11, color: block.type === "callout" ? "#a09888" : "#807870",
+                            lineHeight: 1.7, margin: 0,
+                            ...(block.type === "callout" ? { borderLeft: "2px solid #4a4540", paddingLeft: 12, fontStyle: "italic" as const } : {}),
+                          }}>{block.text}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
+              {activeTab !== "supply-tree" && activeTab !== "dependencies" && activeTab !== "map" && activeTab !== "investment-ideas" && activeTab !== "analysis" && (
                 <div style={{ padding: "40px 0", color: "#4a4540", fontSize: 12 }}>
                   {activeTab.charAt(0).toUpperCase() + activeTab.slice(1).replace(/-/g, " ")} — coming soon
                 </div>
