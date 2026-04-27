@@ -928,10 +928,10 @@ function DependenciesTable({ inputId }: { inputId: string }) {
                 {headerKeys.map((_, ci) => {
                   // First column: label. Remaining: values array (index ci-1)
                   if (ci === 0) {
-                    return <td key={ci} style={{ padding: "7px 8px", color: "rgb(160, 152, 136)", fontWeight: 700, borderTop: sri === 0 ? `1px solid ${borderColor}` : "none" }}>{sr.label}</td>;
+                    return <td key={ci} style={{ padding: "7px 8px", color: "rgb(207, 207, 207)", fontWeight: 600, borderTop: sri === 0 ? `1px solid ${borderColor}` : "none" }}>{sr.label}</td>;
                   }
                   const val = sr.values[ci - 1] ?? "";
-                  return <td key={ci} style={{ padding: "7px 8px", color: "#ece8e1", fontWeight: 700, borderTop: sri === 0 ? `1px solid ${borderColor}` : "none" }}>{val}</td>;
+                  return <td key={ci} style={{ padding: "7px 8px", color: "rgb(207, 207, 207)", fontWeight: 600, borderTop: sri === 0 ? `1px solid ${borderColor}` : "none" }}>{val}</td>;
                 })}
               </tr>
             ))}
