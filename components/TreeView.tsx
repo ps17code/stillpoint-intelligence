@@ -2890,7 +2890,7 @@ export default function TreeView() {
                       <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 10 }}>
                         <thead>
                           <tr>
-                            {["Company", "Ticker", "Category", "Layer", "Thesis"].map((h, i) => (
+                            {["Company", "Category", "Layer", "Thesis"].map((h, i) => (
                               <th key={i} style={{
                                 textAlign: "left", padding: "6px 8px",
                                 fontSize: 7, letterSpacing: "0.08em", textTransform: "uppercase" as const,
@@ -2928,10 +2928,9 @@ export default function TreeView() {
                                       );
                                     })()}
                                   </div>
-                                  {idea.name}
+                                  {idea.name} <span style={{ color: "#555", fontWeight: 400, fontSize: 8, fontFamily: "'Geist Mono', monospace" }}>({idea.ticker})</span>
                                 </div>
                               </td>
-                              <td style={{ padding: "7px 8px", color: "#555", fontSize: 8, fontFamily: "'Geist Mono', monospace", borderBottom: "1px solid rgba(255,255,255,0.04)", whiteSpace: "nowrap" }}>{idea.ticker}</td>
                               <td style={{ padding: "7px 8px", color: templateAccent ?? "#706a60", fontSize: 8, borderBottom: "1px solid rgba(255,255,255,0.04)", whiteSpace: "nowrap" }}>{idea.category}</td>
                               <td style={{ padding: "7px 8px", color: "#555", fontSize: 8, fontFamily: "'Geist Mono', monospace", borderBottom: "1px solid rgba(255,255,255,0.04)", whiteSpace: "nowrap" }}>{idea.layer}</td>
                               <td style={{ padding: "7px 8px", color: bodyText, fontSize: 9, borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{idea.line1}</td>
@@ -2951,7 +2950,7 @@ export default function TreeView() {
                 const activeSection = soWhat[selectedAnalysisIdx] ?? soWhat[0];
 
                 return (
-                  <div style={{ display: "flex", gap: 0, padding: "12px 0", height: "100%" }}>
+                  <div style={{ display: "flex", gap: 0, padding: 10, margin: "10px 0", background: "rgb(22, 21, 20)", borderRadius: 6 }}>
                     {/* Left column — section labels */}
                     <div style={{ width: 240, minWidth: 240, flexShrink: 0, borderRight: `1px solid ${borderColor}`, paddingRight: 16 }}>
                       {soWhat.map((item, i) => {
@@ -2971,14 +2970,14 @@ export default function TreeView() {
                             onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.015)"; }}
                             onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
                           >
-                            <p style={{ fontSize: 11, fontWeight: isActive ? 600 : 500, color: isActive ? warmWhite : "rgb(160, 152, 136)", margin: "0 0 2px 0" }}>{item.label}</p>
-                            <p style={{ fontSize: 9, color: isActive ? "#706a60" : "#4a4540", margin: 0, fontStyle: "italic" }}>{item.question}</p>
+                            <p style={{ fontSize: 11, fontWeight: isActive ? 600 : 500, color: isActive ? warmWhite : "rgb(160, 152, 136)", margin: 0 }}>{item.label}</p>
                           </div>
                         );
                       })}
                     </div>
                     {/* Right column — full analysis content */}
                     <div style={{ flex: 1, paddingLeft: 20, overflowY: "auto" }}>
+                      <p style={{ fontSize: 12, color: "#706a60", margin: "0 0 12px 0", fontStyle: "italic" }}>{activeSection.question}</p>
                       {activeSection.analysis.map((block, bi) => (
                         <div key={bi} style={{ marginBottom: 12 }}>
                           {block.title && <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{block.title}</p>}
