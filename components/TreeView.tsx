@@ -915,7 +915,7 @@ function DependenciesTable({ inputId }: { inputId: string }) {
                   return (
                     <td key={ci} style={{
                       padding: "7px 8px",
-                      color: "#ece8e1", fontWeight: 600,
+                      color: "rgb(207, 207, 207)", fontWeight: 600,
                       textAlign: isRight ? "right" : "left",
                       borderTop: `1px solid ${borderColor}`,
                     }}>{table.totalRow![key] ?? ""}</td>
