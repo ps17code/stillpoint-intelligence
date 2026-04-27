@@ -834,6 +834,44 @@ type WtmiLayer = { label: string; ideas: WtmiIdea[] };
 type WtmiBrief = { name: string; ticker: string; category: string; metrics: { label: string; value: string }[]; sections: { label: string; items: { title?: string; text: string }[] }[] };
 type WtmiData = { layers: WtmiLayer[]; briefs: Record<string, WtmiBrief> };
 
+/* ── Company logo domains for Clearbit ── */
+const LOGO_DOMAINS: Record<string, string> = {
+  "Umicore": "umicore.com",
+  "5N Plus": "5nplus.com",
+  "Teck Resources": "teck.com",
+  "Blue Moon Metals": "bluemoonmetals.com",
+  "LightPath Technologies": "lightpath.com",
+  "Corning": "corning.com",
+  "Prysmian": "prysmian.com",
+  "Sumitomo Electric": "sumitomoelectric.com",
+  "Shin-Etsu": "shinetsu.co.jp",
+  "Fujikura": "fujikura.co.jp",
+  "Alcoa Corporation": "alcoa.com",
+  "Metlen Energy & Metals": "metlengroup.com",
+  "Rio Tinto": "riotinto.com",
+  "Korea Zinc": "koreazinc.co.kr",
+  "Nyrstar": "nyrstar.com",
+  "Dowa Holdings": "dowa.co.jp",
+  "Indium Corporation": "indium.com",
+  "Neo Performance": "neomaterials.com",
+  "CommScope": "commscope.com",
+  "Nexans": "nexans.com",
+  "Lumentum": "lumentum.com",
+  "II-VI": "coherent.com",
+  "Rosendahl Nextrom": "rosendahlnextrom.com",
+  "Microsoft": "microsoft.com",
+  "Google": "google.com",
+  "Amazon": "amazon.com",
+  "Meta": "meta.com",
+  "Oracle": "oracle.com",
+  "Equinix": "equinix.com",
+  "Digital Realty": "digitalrealty.com",
+  "CoreWeave": "coreweave.com",
+  "STL / Gécamines": "stl.tech",
+  "Yunnan Chihong": "",
+  "YOFC": "yofc.com",
+};
+
 const INPUT_WTMI: Record<string, WtmiData> = {
   germanium: (germaniumInputJson as unknown as { wtmi: WtmiData }).wtmi,
   gallium: (galliumInputJson as unknown as { wtmi: WtmiData }).wtmi,
@@ -2865,12 +2903,21 @@ export default function TreeView() {
                               <td style={{ padding: "7px 8px", color: "rgb(160, 152, 136)", fontWeight: 500, borderBottom: "1px solid rgba(255,255,255,0.04)", whiteSpace: "nowrap" }}>
                                 <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                                   <div style={{ width: 16, height: 16, borderRadius: 3, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                                    <img
-                                      src={`https://logo.clearbit.com/${idea.name.toLowerCase().replace(/[^a-z0-9]/g, "")}.com`}
-                                      alt=""
-                                      style={{ width: 12, height: 12, borderRadius: 2 }}
-                                      onError={e => { (e.target as HTMLImageElement).style.display = "none"; }}
-                                    />
+                                    {(() => {
+                                      const domain = LOGO_DOMAINS[idea.name];
+                                      if (!domain) return <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="rgba(255,255,255,0.08)" /><text x="8" y="11" textAnchor="middle" fill="#555" fontSize="9" fontFamily="sans-serif">{idea.name.charAt(0)}</text></svg>;
+                                      return (
+                                        <img
+                                          src={`https://logo.clearbit.com/${domain}`}
+                                          alt=""
+                                          style={{ width: 12, height: 12, borderRadius: 2 }}
+                                          onError={e => {
+                                            const el = e.target as HTMLImageElement;
+                                            el.style.display = "none";
+                                          }}
+                                        />
+                                      );
+                                    })()}
                                   </div>
                                   {idea.name}
                                 </div>
