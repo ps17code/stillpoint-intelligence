@@ -2841,7 +2841,7 @@ export default function TreeView() {
                 if (selectedBriefId && wtmi.briefs[selectedBriefId]) {
                   const brief = wtmi.briefs[selectedBriefId];
                   return (
-                    <div style={{ padding: "16px 0" }}>
+                    <div style={{ padding: "16px", margin: "12px 0", background: "rgb(22, 21, 20)", borderRadius: 6 }}>
                       <button
                         onClick={() => setSelectedBriefId(null)}
                         style={{
