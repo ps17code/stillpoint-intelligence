@@ -923,23 +923,21 @@ function DependenciesTable({ inputId }: { inputId: string }) {
                 })}
               </tr>
             )}
+            {table.summaryRows && table.summaryRows.map((sr, sri) => (
+              <tr key={`sr-${sri}`}>
+                {headerKeys.map((_, ci) => {
+                  // First column: label. Remaining: values array (index ci-1)
+                  if (ci === 0) {
+                    return <td key={ci} style={{ padding: "7px 8px", color: "rgb(160, 152, 136)", fontWeight: 700, borderTop: sri === 0 ? `1px solid ${borderColor}` : "none" }}>{sr.label}</td>;
+                  }
+                  const val = sr.values[ci - 1] ?? "";
+                  return <td key={ci} style={{ padding: "7px 8px", color: "#ece8e1", fontWeight: 700, borderTop: sri === 0 ? `1px solid ${borderColor}` : "none" }}>{val}</td>;
+                })}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-
-      {/* Summary rows */}
-      {table.summaryRows && table.summaryRows.length > 0 && (
-        <div style={{ marginTop: 12, borderTop: `1px solid ${borderColor}`, paddingTop: 8 }}>
-          {table.summaryRows.map((sr, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, marginBottom: 4 }}>
-              <span style={{ fontSize: 9, color: "#706a60", fontWeight: 500, minWidth: 140 }}>{sr.label}</span>
-              {sr.values.map((v, vi) => (
-                <span key={vi} style={{ fontSize: 9, color: bodyText, flex: 1, textAlign: vi === sr.values.length - 1 ? "right" : "left" }}>{v}</span>
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
 
       {/* Takeaway moved to bottom section of center panel */}
     </div>
