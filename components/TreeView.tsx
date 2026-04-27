@@ -828,6 +828,18 @@ const INPUT_DEPS: Record<string, { upstream?: DepTable; downstream?: DepTable }>
   },
 };
 
+/* ── Investment ideas data per input ── */
+type WtmiIdea = { id: string; name: string; ticker: string; category: string; line1: string };
+type WtmiLayer = { label: string; ideas: WtmiIdea[] };
+type WtmiBrief = { name: string; ticker: string; category: string; metrics: { label: string; value: string }[]; sections: { label: string; items: { title?: string; text: string }[] }[] };
+type WtmiData = { layers: WtmiLayer[]; briefs: Record<string, WtmiBrief> };
+
+const INPUT_WTMI: Record<string, WtmiData> = {
+  germanium: (germaniumInputJson as unknown as { wtmi: WtmiData }).wtmi,
+  gallium: (galliumInputJson as unknown as { wtmi: WtmiData }).wtmi,
+  fiber: (fiberInputJson as unknown as { wtmi: WtmiData }).wtmi,
+};
+
 /* ── Dependencies table component ── */
 function DependenciesTable({ inputId }: { inputId: string }) {
   const deps = INPUT_DEPS[inputId];
@@ -1666,6 +1678,7 @@ export default function TreeView() {
   const [activeTab, setActiveTab] = useState("supply-tree");
   const [rightTab, setRightTab] = useState("summary");
   const [selectedTreeNode, setSelectedTreeNode] = useState<string | null>(null);
+  const [selectedBriefId, setSelectedBriefId] = useState<string | null>(null);
   const [globeFilterLayer, setGlobeFilterLayer] = useState<string | null>(null);
   const [hoveredGlobeNode, setHoveredGlobeNode] = useState<{ name: string; type: string; location: string } | null>(null);
   const [centerView, setCenterView] = useState<"globe" | "tree">("globe");
@@ -2772,7 +2785,109 @@ export default function TreeView() {
                   </div>
                 );
               })()}
-              {activeTab !== "supply-tree" && activeTab !== "dependencies" && activeTab !== "map" && (
+              {activeTab === "investment-ideas" && (() => {
+                const inputId = lastEntry?.id === "fiber" ? "fiber" : lastEntry?.id;
+                const wtmi = inputId ? INPUT_WTMI[inputId] : null;
+                if (!wtmi) return <div style={{ padding: "40px 0", color: "#4a4540", fontSize: 12 }}>Select an input to view investment ideas.</div>;
+
+                // Show full brief if one is selected
+                if (selectedBriefId && wtmi.briefs[selectedBriefId]) {
+                  const brief = wtmi.briefs[selectedBriefId];
+                  return (
+                    <div style={{ padding: "16px 0" }}>
+                      <button
+                        onClick={() => setSelectedBriefId(null)}
+                        style={{
+                          background: "transparent", border: "none", cursor: "pointer",
+                          color: "#706a60", fontSize: 9, fontFamily: "'Geist Mono', monospace",
+                          padding: "0 0 12px 0", display: "flex", alignItems: "center", gap: 4,
+                        }}
+                      >
+                        &larr; Back to ideas
+                      </button>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
+                        <h3 style={{ fontSize: 16, fontWeight: 500, color: warmWhite, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{brief.name}</h3>
+                        <span style={{ fontSize: 8, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{brief.ticker}</span>
+                      </div>
+                      <p style={{ fontSize: 8, color: templateAccent ?? "#706a60", margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}>{brief.category}</p>
+                      {/* Metrics row */}
+                      <div style={{ display: "flex", gap: 16, marginBottom: 16, paddingBottom: 12, borderBottom: `1px solid ${borderColor}` }}>
+                        {brief.metrics.map(m => (
+                          <div key={m.label}>
+                            <p style={{ fontSize: 7, color: "#555", margin: "0 0 2px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>{m.label}</p>
+                            <p style={{ fontSize: 11, color: warmWhite, margin: 0, fontWeight: 500 }}>{m.value}</p>
+                          </div>
+                        ))}
+                      </div>
+                      {/* Sections */}
+                      {brief.sections.map((sec, si) => (
+                        <div key={si} style={{ marginBottom: 16 }}>
+                          <p style={{ fontSize: 9, color: "rgb(158, 156, 153)", fontWeight: 500, margin: "0 0 8px 0" }}>{sec.label}</p>
+                          {sec.items.map((item, ii) => (
+                            <div key={ii} style={{ marginBottom: 8 }}>
+                              {item.title && <p style={{ fontSize: 10, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{item.title}</p>}
+                              <p style={{ fontSize: 10, color: "#807870", lineHeight: 1.6, margin: 0 }}>{item.text}</p>
+                            </div>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
+
+                // Ideas table
+                const allIdeas = wtmi.layers.flatMap(l => l.ideas.map(idea => ({ ...idea, layer: l.label })));
+                return (
+                  <div style={{ padding: "12px 0" }}>
+                    <div style={{ background: "rgb(22, 21, 20)", borderRadius: 6, padding: 5, overflowX: "auto" }}>
+                      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 10 }}>
+                        <thead>
+                          <tr>
+                            {["Company", "Ticker", "Category", "Layer", "Thesis"].map((h, i) => (
+                              <th key={i} style={{
+                                textAlign: "left", padding: "6px 8px",
+                                fontSize: 7, letterSpacing: "0.08em", textTransform: "uppercase" as const,
+                                color: "#4a4540", fontWeight: 500, fontFamily: "'Geist Mono', monospace",
+                                borderBottom: `1px solid ${borderColor}`,
+                              }}>{h}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {allIdeas.map(idea => (
+                            <tr
+                              key={idea.id}
+                              onClick={() => setSelectedBriefId(idea.id)}
+                              style={{ cursor: "pointer", transition: "background 0.15s" }}
+                              onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
+                              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                            >
+                              <td style={{ padding: "7px 8px", color: "rgb(160, 152, 136)", fontWeight: 500, borderBottom: "1px solid rgba(255,255,255,0.04)", whiteSpace: "nowrap" }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                  <div style={{ width: 16, height: 16, borderRadius: 3, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                                    <img
+                                      src={`https://logo.clearbit.com/${idea.name.toLowerCase().replace(/[^a-z0-9]/g, "")}.com`}
+                                      alt=""
+                                      style={{ width: 12, height: 12, borderRadius: 2 }}
+                                      onError={e => { (e.target as HTMLImageElement).style.display = "none"; }}
+                                    />
+                                  </div>
+                                  {idea.name}
+                                </div>
+                              </td>
+                              <td style={{ padding: "7px 8px", color: "#555", fontSize: 8, fontFamily: "'Geist Mono', monospace", borderBottom: "1px solid rgba(255,255,255,0.04)", whiteSpace: "nowrap" }}>{idea.ticker}</td>
+                              <td style={{ padding: "7px 8px", color: templateAccent ?? "#706a60", fontSize: 8, borderBottom: "1px solid rgba(255,255,255,0.04)", whiteSpace: "nowrap" }}>{idea.category}</td>
+                              <td style={{ padding: "7px 8px", color: "#555", fontSize: 8, fontFamily: "'Geist Mono', monospace", borderBottom: "1px solid rgba(255,255,255,0.04)", whiteSpace: "nowrap" }}>{idea.layer}</td>
+                              <td style={{ padding: "7px 8px", color: bodyText, fontSize: 9, borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{idea.line1}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                );
+              })()}
+              {activeTab !== "supply-tree" && activeTab !== "dependencies" && activeTab !== "map" && activeTab !== "investment-ideas" && (
                 <div style={{ padding: "40px 0", color: "#4a4540", fontSize: 12 }}>
                   {activeTab.charAt(0).toUpperCase() + activeTab.slice(1).replace(/-/g, " ")} — coming soon
                 </div>
