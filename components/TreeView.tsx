@@ -2253,6 +2253,13 @@ export default function TreeView() {
       return (
         <FiberSupplyTree
           onNodeClick={(name) => {
+            // Navigate to raw material if clicked
+            const nodeNav: Record<string, PathEntry[]> = {
+              "Germanium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
+              "Gallium": [{ type: "vertical", id: "resources", name: "Global Resources" }, { type: "raw-material", id: "gallium", name: "Gallium" }],
+            };
+            const navTarget = nodeNav[name];
+            if (navTarget) { setPath(navTarget); setAnimKey(k => k + 1); setSelectedTreeNode(null); return; }
             setSelectedTreeNode(name);
             setRightTab("nodes");
           }}
@@ -2269,8 +2276,11 @@ export default function TreeView() {
             { id: "bead", name: "BEAD Broadband", pill: "~65M km" },
           ]}
           onDownstreamClick={(id) => {
-            const dsRoutes: Record<string, string> = { "germanium": "/input/germanium", "gallium": "/input/gallium" };
-            if (dsRoutes[id]) window.location.href = dsRoutes[id];
+            const dsNav: Record<string, PathEntry[]> = {
+              "germanium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
+            };
+            const target = dsNav[id];
+            if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); }
           }}
         />
       );
@@ -2280,14 +2290,20 @@ export default function TreeView() {
     if (lastEntry.type === "raw-material" && lastEntry.id === "germanium") {
       return (
         <>
-          <GermaniumSupplyTree onNodeClick={(name) => { setSelectedTreeNode(name); setRightTab("nodes"); }} downstream={[
+          <GermaniumSupplyTree onNodeClick={(name) => {
+            setSelectedTreeNode(name);
+            setRightTab("nodes");
+          }} downstream={[
             { id: "fiber", name: "Fiber Optic Cable", pill: "~87t/yr" },
             { id: "ir", name: "IR Optics", pill: "~55t/yr" },
             { id: "solar", name: "Satellite Solar", pill: "~35t/yr" },
             { id: "sige", name: "SiGe Chips", pill: "~25t/yr" },
           ]} onDownstreamClick={(id) => {
-            const dsRoutes: Record<string, string> = { "fiber": "/input/fiber-optic-cable" };
-            if (dsRoutes[id]) window.location.href = dsRoutes[id];
+            const dsNav: Record<string, PathEntry[]> = {
+              "fiber": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
+            };
+            const target = dsNav[id];
+            if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); }
           }} />
         </>
       );
@@ -2303,7 +2319,11 @@ export default function TreeView() {
             { id: "ndfeb", name: "NdFeB Magnets", pill: "~80t/yr" },
             { id: "led", name: "LEDs", pill: "~75t/yr" },
             { id: "defense", name: "Defense Radar", pill: "~25t/yr" },
-          ]} onDownstreamClick={() => {}} />
+          ]} onDownstreamClick={(id) => {
+            const dsNav: Record<string, PathEntry[]> = {};
+            const target = dsNav[id];
+            if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); }
+          }} />
         </>
       );
     }
