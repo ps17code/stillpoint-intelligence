@@ -27,6 +27,7 @@ interface HorizontalTreeProps {
   onNodeClick?: (name: string) => void;
   /** Optional downstream demand items rendered as a final column */
   downstream?: { id: string; name: string; pill: string }[];
+  onDownstreamClick?: (id: string) => void;
 }
 
 /* ── Individual node card ── */
@@ -119,6 +120,7 @@ export default function HorizontalTree({
   layerConfig,
   onNodeClick,
   downstream,
+  onDownstreamClick,
 }: HorizontalTreeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
@@ -237,12 +239,45 @@ export default function HorizontalTree({
         }
       }
 
+      // Draw edges from output node (or last layer single node) to downstream
+      if (downstream && downstream.length > 0) {
+        // Find the output element
+        const ll = geometry.layers[geometry.layers.length - 1];
+        const outInLast = ll && ll.nodes.length === 1 && ll.nodes[0].name === geometry.outputNode.name;
+        const outputKey = outInLast ? `layer-${geometry.layers.length - 1}-${geometry.outputNode.name}` : "output-node";
+        const outputEl = cardRefs.current.get(outputKey);
+        if (outputEl) {
+          for (const ds of downstream) {
+            const dsKey = `downstream-${ds.id}`;
+            const dsEl = cardRefs.current.get(dsKey);
+            if (!dsEl) continue;
+
+            const fromRect = outputEl.getBoundingClientRect();
+            const toRect = dsEl.getBoundingClientRect();
+
+            const fromX = fromRect.right - containerRect.left;
+            const fromY = fromRect.top + fromRect.height / 2 - containerRect.top;
+            const toX = toRect.left - containerRect.left;
+            const toY = toRect.top + toRect.height / 2 - containerRect.top;
+            const midX = (fromX + toX) / 2;
+
+            newLines.push({
+              d: `M ${fromX},${fromY} C ${midX},${fromY} ${midX},${toY} ${toX},${toY}`,
+              color: "rgba(255,255,255,0.25)",
+              fromName: geometry.outputNode.name,
+              toName: ds.name,
+              fromX, fromY,
+            });
+          }
+        }
+      }
+
       setSvgSize({ w: container.scrollWidth, h: container.scrollHeight });
       setLines(newLines);
     });
 
     return () => cancelAnimationFrame(raf);
-  }, [geometry, buildNodeKey]);
+  }, [geometry, buildNodeKey, downstream]);
 
   /* Determine if the output node is already in the last layer */
   const lastLayer = geometry.layers[geometry.layers.length - 1];
@@ -335,12 +370,14 @@ export default function HorizontalTree({
             // For downstream items, render a simpler pill card
             if (col.key === "downstream") {
               const dsItem = downstream?.find((d) => d.name === node.name);
+              const dsClickable = !!onDownstreamClick && !!dsItem;
               return (
                 <div
                   key={node.name}
                   ref={(el) => {
                     if (el) cardRefs.current.set(node.refKey, el);
                   }}
+                  onClick={() => { if (dsClickable && dsItem) onDownstreamClick(dsItem.id); }}
                   style={{
                     padding: "5px 8px",
                     background: "rgb(36, 32, 29)",
@@ -348,7 +385,11 @@ export default function HorizontalTree({
                     borderRadius: 4,
                     width: "100%",
                     boxSizing: "border-box",
+                    cursor: dsClickable ? "pointer" : "default",
+                    transition: "border-color 0.15s",
                   }}
+                  onMouseEnter={e => { if (dsClickable) e.currentTarget.style.borderColor = "rgb(60, 56, 52)"; }}
+                  onMouseLeave={e => { if (dsClickable) e.currentTarget.style.borderColor = "rgb(45, 41, 39)"; }}
                 >
                   <p
                     style={{

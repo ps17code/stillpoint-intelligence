@@ -1159,7 +1159,7 @@ function DashedDividerLabel({ label, marginTop = 20 }: { label: string; marginTo
 }
 
 /* ── Fiber supply tree (merged comp + sub into one continuous tree) ── */
-function FiberSupplyTree({ onNodeClick, upstream, downstream }: { onNodeClick: (name: string) => void; upstream?: { id: string; name: string; pill: string }[]; downstream?: { id: string; name: string; pill: string }[] }) {
+function FiberSupplyTree({ onNodeClick, upstream, downstream, onDownstreamClick }: { onNodeClick: (name: string) => void; upstream?: { id: string; name: string; pill: string }[]; downstream?: { id: string; name: string; pill: string }[]; onDownstreamClick?: (id: string) => void }) {
   const compChain = chainsData.COMP_DATA["GeO\u2082 / GeCl\u2084"];
   const subChain = chainsData.SUB_DATA["Fiber Optics"];
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
@@ -1277,29 +1277,29 @@ function FiberSupplyTree({ onNodeClick, upstream, downstream }: { onNodeClick: (
   }, [svgW, compChain, subChain]);
 
   return (
-    <HorizontalTree geometry={geo} nodes={allNodes} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} />
+    <HorizontalTree geometry={geo} nodes={allNodes} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
   );
 }
 
 /* ── Germanium supply tree ── */
-function GermaniumSupplyTree({ onNodeClick, downstream }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[] }) {
+function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[]; onDownstreamClick?: (id: string) => void }) {
   const rawChain = chainsData.RAW_DATA["Germanium"];
   const rawW = useMemo(() => computeRawSvgWidth(rawChain), [rawChain]);
   const rawGeo = useMemo(() => buildRawGeometry(rawChain, rawW / 2, 80), [rawChain, rawW]);
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
 
   return (
-    <HorizontalTree geometry={rawGeo} nodes={allNodes} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} />
+    <HorizontalTree geometry={rawGeo} nodes={allNodes} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
   );
 }
 
 /* ── Gallium supply tree ── */
-function GalliumSupplyTree({ onNodeClick, downstream }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[] }) {
+function GalliumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[]; onDownstreamClick?: (id: string) => void }) {
   const gW = useMemo(() => computeGalliumSvgWidth(galliumChain), []);
   const gGeo = useMemo(() => buildGalliumGeometry(galliumChain, gW / 2, 80), [gW]);
 
   return (
-    <HorizontalTree geometry={gGeo} nodes={galliumNodes} layerConfig={galliumLc} onNodeClick={onNodeClick} downstream={downstream} />
+    <HorizontalTree geometry={gGeo} nodes={galliumNodes} layerConfig={galliumLc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
   );
 }
 
@@ -2268,6 +2268,10 @@ export default function TreeView() {
             { id: "military", name: "Military / UAV", pill: "~55M km" },
             { id: "bead", name: "BEAD Broadband", pill: "~65M km" },
           ]}
+          onDownstreamClick={(id) => {
+            const dsRoutes: Record<string, string> = { "germanium": "/input/germanium", "gallium": "/input/gallium" };
+            if (dsRoutes[id]) window.location.href = dsRoutes[id];
+          }}
         />
       );
     }
@@ -2281,7 +2285,10 @@ export default function TreeView() {
             { id: "ir", name: "IR Optics", pill: "~55t/yr" },
             { id: "solar", name: "Satellite Solar", pill: "~35t/yr" },
             { id: "sige", name: "SiGe Chips", pill: "~25t/yr" },
-          ]} />
+          ]} onDownstreamClick={(id) => {
+            const dsRoutes: Record<string, string> = { "fiber": "/input/fiber-optic-cable" };
+            if (dsRoutes[id]) window.location.href = dsRoutes[id];
+          }} />
         </>
       );
     }
@@ -2296,7 +2303,7 @@ export default function TreeView() {
             { id: "ndfeb", name: "NdFeB Magnets", pill: "~80t/yr" },
             { id: "led", name: "LEDs", pill: "~75t/yr" },
             { id: "defense", name: "Defense Radar", pill: "~25t/yr" },
-          ]} />
+          ]} onDownstreamClick={() => {}} />
         </>
       );
     }
