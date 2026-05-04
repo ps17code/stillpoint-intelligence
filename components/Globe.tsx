@@ -179,16 +179,16 @@ const Globe = forwardRef<GlobeHandle, GlobeProps>(function Globe({ style, onHove
     const camera = new THREE.PerspectiveCamera(46, mW / mH, 0.1, 100);
     camera.position.set(0, 0, 3.2);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-    const kl = new THREE.DirectionalLight(0xffffff, 1.4); kl.position.set(-3, 2.5, 2.5); scene.add(kl);
-    const fl = new THREE.DirectionalLight(0xffffff, 0.3); fl.position.set(3, -2, 1);     scene.add(fl);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+    const kl = new THREE.DirectionalLight(0xffffff, 1.8); kl.position.set(-3, 2.5, 2.5); scene.add(kl);
+    const fl = new THREE.DirectionalLight(0xffffff, 0.5); fl.position.set(3, -2, 1);     scene.add(fl);
 
     const globeGroup = new THREE.Group();
     globeGroup.rotation.y = 0.09;
     globeGroup.rotation.x = 0.35;
     scene.add(globeGroup);
 
-    const sphereMat = new THREE.MeshPhongMaterial({ color: new THREE.Color("#B0A490"), specular: new THREE.Color("#111111"), shininess: 5 });
+    const sphereMat = new THREE.MeshPhongMaterial({ color: new THREE.Color("#C8BEA8"), specular: new THREE.Color("#222222"), shininess: 8 });
     globeGroup.add(new THREE.Mesh(new THREE.SphereGeometry(R, 72, 72), sphereMat));
     new THREE.TextureLoader().load("/earth-topology.png", (tex) => { sphereMat.map = tex; sphereMat.needsUpdate = true; });
 
