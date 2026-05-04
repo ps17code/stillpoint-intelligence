@@ -630,8 +630,8 @@
         "key": "supplyAggregates",
         "label": "SUPPLY",
         "nodes": [
-          "Western Refined Supply",
-          "Chinese Primary Supply"
+          "Gallium Chinese Primary Supply",
+          "Gallium Western Refined Supply"
         ]
       }
     ],
@@ -694,38 +694,38 @@
       },
       {
         "from": "Dowa Holdings",
-        "to": "Western Refined Supply"
+        "to": "Gallium Western Refined Supply"
       },
       {
         "from": "5N Plus",
-        "to": "Western Refined Supply"
+        "to": "Gallium Western Refined Supply"
       },
       {
         "from": "Indium Corporation",
-        "to": "Western Refined Supply"
+        "to": "Gallium Western Refined Supply"
       },
       {
         "from": "Vital Materials",
-        "to": "Chinese Primary Supply"
+        "to": "Gallium Chinese Primary Supply"
       },
       {
         "from": "Zhuzhou Smelter Group",
-        "to": "Chinese Primary Supply"
+        "to": "Gallium Chinese Primary Supply"
       },
       {
-        "from": "Western Refined Supply",
+        "from": "Gallium Western Refined Supply",
         "to": [
           "Global Supply"
         ]
       },
       {
-        "from": "Chinese Primary Supply",
+        "from": "Gallium Chinese Primary Supply",
         "to": [
           "Global Supply"
         ]
       }
     ],
-    "output": "Global Supply",
+    "output": "Gallium Global Supply",
     "minor": [
       "Brazilian Bauxite",
       "Indonesian Bauxite",

@@ -1598,7 +1598,7 @@
     "location_detail": "China",
     "layer": "Aggregate",
     "descriptor_pill": "Primary supply node",
-    "quantity_pill": "~120t Ge + ~290t Ga/yr",
+    "quantity_pill": "~120 t/yr primary Ge",
     "status": "Active",
     "about": "China Primary Supply represents the aggregated output of Chinese germanium refiners — Lincang Xinyuan Refinery, Yunnan Chihong Refinery, and smaller operators. This is primary germanium refined from coal fly ash and zinc smelting byproducts. China implemented export licensing requirements for germanium in August 2023, creating structural uncertainty for all western buyers.",
     "stats": [
@@ -1608,15 +1608,15 @@
       ],
       [
         "Global share",
-        "~57%"
+        "~57% of Ge supply"
       ],
       [
         "Export control",
         "Active since Aug 2023"
       ],
       [
-        "Price impact",
-        "+88% in 2024"
+        "Key sources",
+        "Yunnan, Inner Mongolia, Jilin"
       ]
     ],
     "risk": "Export controls implemented August 2023 — ongoing supply risk for western buyers.",
@@ -1636,7 +1636,7 @@
     "location_detail": "Belgium, Canada, Germany",
     "layer": "Aggregate",
     "descriptor_pill": "~90-110 t/yr recycled",
-    "quantity_pill": "~$270M @ $8,500/kg",
+    "quantity_pill": "~90-110 t/yr recycled Ge",
     "status": "Active",
     "about": "Aggregate of western refining capacity — Umicore (Belgium), 5N Plus (Canada), PPM Pure Metals (Germany) combined. Predominantly processes recycled fiber optic scrap and IR optics rework plus the DRC tailings feedstock. ~9% of global refined supply reaches western buyers at significantly higher unit prices than Chinese domestic.",
     "stats": [
@@ -1646,15 +1646,15 @@
       ],
       [
         "Global share",
-        "~43%"
+        "~43% of Ge supply"
       ],
       [
         "Primary recycler",
         "Umicore (Belgium)"
       ],
       [
-        "Growth driver",
-        "China export control response"
+        "Source",
+        "Fiber optic + IR scrap"
       ]
     ],
     "risk": "Feedstock-limited; cannot scale independently of recycled pool or DRC tailings depletion.",
@@ -1674,25 +1674,25 @@
     "location_detail": "Global",
     "layer": "Aggregate",
     "descriptor_pill": "~320 t/yr refined",
-    "quantity_pill": "~$200-250M realized",
+    "quantity_pill": "~230 t/yr total Ge",
     "status": "Active",
-    "about": "Total worldwide gallium production. The ~280t gap between primary (600t) and refined (320t) reflects losses in conversion to semiconductor-grade purity plus some primary metal that never gets refined.",
+    "about": "Total global germanium supply combining Chinese primary production (~120 t/yr) and western recycled supply (~90-110 t/yr). At current pricing of $8,500/kg, the total market is approximately $1.96B annually.",
     "stats": [
       [
-        "Refined output",
-        "320 t/yr"
+        "Total supply",
+        "~230 t/yr"
       ],
       [
-        "Primary output",
-        "600 t/yr"
+        "Value at $8,500/kg",
+        "~$1.96B/yr"
       ],
       [
-        "Market value",
-        "~$560M/yr refined"
+        "Chinese primary",
+        "~120 t/yr (57%)"
       ],
       [
-        "Status",
-        "Active"
+        "Western recycled",
+        "~90-110 t/yr (43%)"
       ]
     ],
     "risk": "n/a",
@@ -3219,40 +3219,112 @@
     ],
     "inv": "Together with Vital Materials, comprise core Chinese downstream high-purity gallium production serving the Chinese semiconductor industry."
   },
-  "Western Refined Supply": {
-    "id": "western-refined-supply",
+  "Gallium Chinese Primary Supply": {
+    "id": "gallium-chinese-primary-supply",
+    "name": "Chinese Primary Supply",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Multiple provinces, China",
+    "layer": "Aggregate",
+    "descriptor_pill": "Primary Ga supply",
+    "quantity_pill": "~290 t/yr primary Ga",
+    "status": "Active",
+    "about": "Aggregate Chinese primary gallium production from ~20 alumina refineries with ion-exchange recovery circuits. Represents ~98% of global primary gallium output.",
+    "stats": [
+      [
+        "Volume",
+        "~290 t/yr primary"
+      ],
+      [
+        "Global share",
+        "~98%"
+      ],
+      [
+        "Export control",
+        "Active since Aug 2023"
+      ],
+      [
+        "Recovery from",
+        "Alumina refining byproduct"
+      ]
+    ],
+    "risk": "Export licensing restricts western access to primary supply.",
+    "risks": [
+      "Export licensing restricts western access"
+    ],
+    "inv": ""
+  },
+  "Gallium Western Refined Supply": {
+    "id": "gallium-western-refined-supply",
     "name": "Western Refined Supply",
     "type": "Aggregate",
     "ticker": null,
     "country": "Multiple",
-    "location_detail": "Japan, Canada, USA (aggregate)",
+    "location_detail": "Japan, Canada, USA",
     "layer": "Aggregate",
-    "descriptor_pill": "~15-30 t/yr refined",
-    "quantity_pill": "~$26-52M @ $1,750/kg",
+    "descriptor_pill": "Western Ga refining",
+    "quantity_pill": "~15-30 t/yr refined Ga",
     "status": "Active",
-    "about": "Combined non-Chinese, non-Russian high-purity refined gallium output. Dominated by Dowa Holdings in Japan. The structural gap the four western primary producer projects aim to close.",
+    "about": "Aggregate non-Chinese high-purity gallium refining capacity. Primarily Dowa (Japan), with smaller volumes from 5N Plus (Canada) and Indium Corporation (USA). All dependent on Chinese primary feedstock.",
     "stats": [
       [
-        "Combined output",
-        "15-30 t/yr"
-      ],
-      [
-        "Key producers",
-        "Dowa, 5N Plus, Indium Corp"
-      ],
-      [
-        "Market value",
-        "$26-52M/yr"
+        "Volume",
+        "~15-30 t/yr refined"
       ],
       [
         "Global share",
-        "~9%"
+        "~5-8%"
+      ],
+      [
+        "Key refiner",
+        "Dowa Holdings (Japan)"
+      ],
+      [
+        "Feedstock",
+        "Chinese primary dependent"
       ]
     ],
-    "risk": "Scale gap vs Chinese supply; timing of western production ramps",
+    "risk": "Dependent on Chinese primary feedstock imports.",
     "risks": [
-      "Scale gap vs Chinese supply; timing of western production ramps"
+      "Feedstock dependency on Chinese primary"
     ],
-    "inv": "Summary view of non-Chinese refined gallium supply. The structural gap the western primary producer projects aim to close over 2026-2029."
+    "inv": ""
+  },
+  "Gallium Global Supply": {
+    "id": "gallium-global-supply",
+    "name": "Global Supply",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": "Global",
+    "location_detail": "Global",
+    "layer": "Aggregate",
+    "descriptor_pill": "Global Ga supply",
+    "quantity_pill": "~320 t/yr total Ga",
+    "status": "Active",
+    "about": "Total global refined gallium supply of ~320 t/yr. At current western pricing of $2,269/kg, the total market is approximately $726M annually. Demand projected to reach 800 t/yr by 2028.",
+    "stats": [
+      [
+        "Total supply",
+        "~320 t/yr"
+      ],
+      [
+        "Value at $2,269/kg",
+        "~$726M/yr"
+      ],
+      [
+        "Chinese primary",
+        "~290 t/yr (98%)"
+      ],
+      [
+        "Western refined",
+        "~15-30 t/yr"
+      ]
+    ],
+    "risk": "Structural deficit of ~480 t/yr by 2028.",
+    "risks": [
+      "480 t/yr structural deficit by 2028"
+    ],
+    "inv": ""
   }
 }
