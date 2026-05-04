@@ -76,14 +76,13 @@ function NodeCard({
   cardRef?: React.Ref<HTMLDivElement>;
 }) {
   const raw = nodeData as unknown as Record<string, unknown>;
-  const uNode = uNodes[name];
-  const country = String(raw?.["country"] ?? uNode?.country ?? "");
+  const country = String(raw?.["country"] ?? "");
   const hasCountry = country !== "";
   const countryCode = COUNTRY_CODES[country] || "";
   const hasIdea = IDEA_NODES.has(name);
 
-  // Output line — only use quantity_pill from universal data
-  const qtyVal = raw?.["quantity_pill"] ?? uNode?.quantity_pill;
+  // Output line — only quantity_pill
+  const qtyVal = raw?.["quantity_pill"];
   const outputLine = qtyVal != null && String(qtyVal) !== "" ? String(qtyVal) : "";
 
   return (

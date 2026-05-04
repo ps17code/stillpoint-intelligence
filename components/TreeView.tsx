@@ -1306,7 +1306,7 @@ function FiberSupplyTree({ onNodeClick, upstream, downstream, onDownstreamClick 
   }, [svgW, compChain, subChain]);
 
   return (
-    <HorizontalTree geometry={geo} nodes={allNodes} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
+    <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
   );
 }
 
@@ -1318,7 +1318,7 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
 
   return (
-    <HorizontalTree geometry={rawGeo} nodes={allNodes} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
+    <HorizontalTree geometry={rawGeo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
   );
 }
 
@@ -1328,7 +1328,7 @@ function GalliumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { onN
   const gGeo = useMemo(() => buildGalliumGeometry(galliumChain, gW / 2, 80), [gW]);
 
   return (
-    <HorizontalTree geometry={gGeo} nodes={galliumNodes} layerConfig={galliumLc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
+    <HorizontalTree geometry={gGeo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={galliumLc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
   );
 }
 
