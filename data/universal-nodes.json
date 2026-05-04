@@ -1,0 +1,3345 @@
+{
+  "Lincang": {
+    "id": "lincang",
+    "name": "Lincang",
+    "type": "Deposit",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Lincang Prefecture, Yunnan Province, China",
+    "layer": "Deposit",
+    "output_headline": "~1,000 t Ge reserves · 850 ppm grade",
+    "descriptor_pill": "Coal deposit",
+    "quantity_pill": ">1,000 t Ge reserves",
+    "status": "Active",
+    "about": "One of the world's highest-grade germanium deposits. Germanium was concentrated by hydrothermal fluids from the Lincang granite batholith into ancient swamp coal seams. Operated by Lincang Xinyuan (Shenzhen listed).",
+    "stats": [
+      [
+        "Type",
+        "Coal-hosted lignite"
+      ],
+      [
+        "Grade",
+        "~850 ppm avg"
+      ],
+      [
+        "Reserves",
+        "~1,000 t Ge"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
+    ],
+    "risk": "State-affiliated operator under export licensing regime; zero direct western access.",
+    "risks": [
+      "State-affiliated operator under export licensing regime; zero direct western access.",
+      "Chinese export controls limit westward flow",
+      "Single operator concentration risk"
+    ],
+    "inv": "Highest-grade germanium deposit in the world. Sets the upstream cost floor for Chinese primary production — anyone producing outside China must contend with Lincang's grade advantage when competing on price."
+  },
+  "Wulantuga": {
+    "id": "wulantuga",
+    "name": "Wulantuga",
+    "type": "Deposit",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Xilingol League, Inner Mongolia, China",
+    "layer": "Deposit",
+    "output_headline": "~1,600 t Ge reserves · 137 ppm grade",
+    "descriptor_pill": "Coal deposit",
+    "quantity_pill": "~1,600 t Ge reserves",
+    "status": "Active",
+    "about": "Largest coal-hosted germanium deposit by reserve size. Only ~15-25% of theoretical germanium content is commercially recovered due to specialist extraction requirements. Operated by Shengli Coal Group (state-owned).",
+    "stats": [
+      [
+        "Type",
+        "Coal-hosted lignite"
+      ],
+      [
+        "Grade",
+        "137 ppm (#6 seam)"
+      ],
+      [
+        "Reserves",
+        "~1,600 t Ge"
+      ],
+      [
+        "Recovery",
+        "~20-35 t/yr actual"
+      ]
+    ],
+    "risk": "State ownership means output is policy-driven rather than price-responsive.",
+    "risks": [
+      "State ownership means output is policy-driven rather than price-responsive.",
+      "Low recovery rate limits supply upside",
+      "No western investment access"
+    ],
+    "inv": "Largest known germanium deposit by reserve size but only ~15-25% of theoretical content is commercially recovered. Theoretical supply headroom exists but isn't being realized by current operators."
+  },
+  "Yimin": {
+    "id": "yimin",
+    "name": "Yimin",
+    "type": "Deposit",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Inner Mongolia, China",
+    "layer": "Deposit",
+    "output_headline": "~4,000 t Ge resources",
+    "descriptor_pill": "Coal deposit",
+    "quantity_pill": "~4,000 t Ge resources",
+    "status": "Active",
+    "about": "Germanium-bearing lignite basin in Inner Mongolia. Worked by various state-affiliated operators. Recovery rates are low and output is more geographically dispersed than Wulantuga.",
+    "stats": [
+      [
+        "Type",
+        "Coal-hosted lignite"
+      ],
+      [
+        "Grade",
+        "28-135 ppm"
+      ],
+      [
+        "Reserves",
+        "~4,000 t Ge"
+      ],
+      [
+        "Status",
+        "Partial / low activity"
+      ]
+    ],
+    "risk": "Fragmented operator base, opaque production data.",
+    "risks": [
+      "Fragmented operator base, opaque production data.",
+      "Grade too low at current prices",
+      "State control limits western access"
+    ],
+    "inv": "Additional Chinese coal-hosted germanium resource. Worked by various smaller state-affiliated operators; low recovery rates, limited price responsiveness."
+  },
+  "Huize": {
+    "id": "huize",
+    "name": "Huize",
+    "type": "Deposit",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Yunnan Province, China",
+    "layer": "Deposit",
+    "output_headline": "443 t Ge resources (Chihong) · zinc-lead ore host",
+    "descriptor_pill": "Zinc ore deposit",
+    "quantity_pill": "443 t Ge resources",
+    "status": "Active",
+    "about": "Zinc-lead deposit with significant germanium content. Primary source of germanium recovered through the Chihong zinc smelter operations — a separate extraction pathway from coal-hosted germanium.",
+    "stats": [
+      [
+        "Type",
+        "Zinc-lead sulfide ore"
+      ],
+      [
+        "Zn grade",
+        "World-class"
+      ],
+      [
+        "Ge content",
+        "443 t Ge resources"
+      ],
+      [
+        "Operator",
+        "Yunnan Chihong (600497.SH)"
+      ]
+    ],
+    "risk": "Output tied to zinc pricing, not germanium demand signals.",
+    "risks": [
+      "Output tied to zinc pricing, not germanium demand signals.",
+      "Ge output tied to zinc production decisions",
+      "Chinese listed - limited western access"
+    ],
+    "inv": "Primary source of germanium recovered through Yunnan Chihong's zinc smelter operations. The zinc-ore pathway complements the coal-hosted pathway as Chinese germanium's second extraction route."
+  },
+  "Yiliang + SYGT": {
+    "id": "yiliang-sygt",
+    "name": "Yiliang + SYGT",
+    "type": "Deposit",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Yunnan Province, China",
+    "layer": "Deposit",
+    "output_headline": "186 t Ge proven reserves",
+    "descriptor_pill": "Zinc ore deposit",
+    "quantity_pill": "186 t Ge reserves",
+    "status": "Active",
+    "about": "Additional Yunnan zinc-lead deposits with germanium content. Feeds into Chinese primary germanium supply via associated smelter operations.",
+    "stats": [
+      [
+        "Type",
+        "Zn-Pb-Ge sulfide belt"
+      ],
+      [
+        "Belt",
+        "Sichuan-Yunnan-Guizhou"
+      ],
+      [
+        "Zn reserves",
+        ">32M t combined"
+      ],
+      [
+        "Deposits",
+        "450+ Ge-bearing"
+      ]
+    ],
+    "risk": "Limited public disclosure on reserves and production.",
+    "risks": [
+      "Limited public disclosure on reserves and production.",
+      "Regional concentration risk",
+      "Ownership fragmentation"
+    ],
+    "inv": "Additional Yunnan zinc-lead resources with germanium content. Feeds into Chinese primary germanium supply via associated smelter operations."
+  },
+  "Lincang Xinyuan": {
+    "id": "lincang-xinyuan",
+    "name": "Lincang Xinyuan",
+    "type": "Private",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Lincang, Yunnan Province, China",
+    "layer": "Host Operation",
+    "output_headline": "~40 t Ge/yr extracted from Lincang coal",
+    "descriptor_pill": "Coal-hosted Ge operator",
+    "quantity_pill": "~40 t Ge/yr extracted",
+    "status": "Active",
+    "about": "Shenzhen-listed operator of Lincang germanium-bearing coal. One of few Chinese germanium operators with a public listing, giving indirect investor exposure to Chinese germanium supply.",
+    "stats": [
+      [
+        "Ticker",
+        "002428.SZ"
+      ],
+      [
+        "Lignite mined",
+        "~40,000 t/yr"
+      ],
+      [
+        "Ge output",
+        "~40 t/yr extracted"
+      ],
+      [
+        "Integration",
+        "Mine to refinery to wafers"
+      ]
+    ],
+    "risk": "Chinese export controls limit westward flow of output.",
+    "risks": [
+      "Chinese export controls limit westward flow of output.",
+      "A-share listing limits western investors",
+      "Single-site concentration risk"
+    ],
+    "inv": "Shenzhen-listed operator of the highest-grade Chinese germanium deposit. Provides indirect public investor exposure to Chinese germanium supply, though A-share access is limited for non-Chinese investors."
+  },
+  "Shengli Coal Group": {
+    "id": "shengli-coal-group",
+    "name": "Shengli Coal Group",
+    "type": "Private",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Inner Mongolia, China",
+    "layer": "Host Operation",
+    "output_headline": "~20-35 t Ge/yr extracted (est.)",
+    "descriptor_pill": "Coal-hosted Ge operator",
+    "quantity_pill": "~20-35 t/yr extracted",
+    "status": "Active",
+    "about": "State-owned Chinese coal mining group operating the Wulantuga deposit in Inner Mongolia. Primary recovered germanium flows into Chinese refining chain; details of specific offtake arrangements not publicly disclosed.",
+    "stats": [
+      [
+        "Ownership",
+        "State-owned enterprise"
+      ],
+      [
+        "Coal mined",
+        "~1M t/yr"
+      ],
+      [
+        "Ge content",
+        "~137 ppm in #6 seam"
+      ],
+      [
+        "Ge recovered",
+        "~20-35 t/yr"
+      ]
+    ],
+    "risk": "Opaque production data and no western investment vehicle.",
+    "risks": [
+      "Opaque production data and no western investment vehicle.",
+      "Power generation is primary — Ge always secondary",
+      "Policy shifts directly impact output"
+    ],
+    "inv": "State-owned operator of the largest reserve-size germanium deposit. Output is policy-driven rather than price-responsive; limits upside even during supply constraints."
+  },
+  "Yunnan Chihong": {
+    "id": "yunnan-chihong",
+    "name": "Yunnan Chihong",
+    "type": "Public",
+    "ticker": "600497 · Shanghai",
+    "country": "China",
+    "location_detail": "Yunnan Province, China",
+    "layer": "Host Operation",
+    "output_headline": "~66 t Ge/yr refined (largest single Chinese source)",
+    "descriptor_pill": "Zinc smelter + Ge recovery",
+    "quantity_pill": "~66 t/yr refined",
+    "status": "Active",
+    "about": "Shanghai-listed zinc-lead mining and smelting company. Operates the largest single source of primary germanium globally via the Huize zinc smelter. Integrated from zinc concentrate through refined germanium output.",
+    "stats": [
+      [
+        "Ticker",
+        "600497.SH"
+      ],
+      [
+        "Zn concentrate",
+        "290,000 t/yr"
+      ],
+      [
+        "Ge output",
+        "~66 t/yr refined"
+      ],
+      [
+        "Role",
+        "China's largest Ge producer"
+      ]
+    ],
+    "risk": "Chinese export controls limit direct western access to the output.",
+    "risks": [
+      "Chinese export controls limit direct western access to the output.",
+      "Ge output tied to zinc production",
+      "Zinc price weakness reduces Ge output"
+    ],
+    "inv": "Largest single source of primary germanium globally. Shanghai-listed — primary A-share vehicle for Chinese germanium exposure. Integrated zinc-ore-to-refined-germanium pathway through the Huize smelter."
+  },
+  "Lincang Xinyuan Refinery": {
+    "id": "lincang-xinyuan-refinery",
+    "name": "Lincang Xinyuan Refinery",
+    "type": "Private",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Kunming / Lincang, Yunnan",
+    "layer": "Refiner",
+    "output_headline": "~40 t/yr refined Ge",
+    "descriptor_pill": "Refinery",
+    "quantity_pill": "~40 t/yr refined Ge",
+    "status": "Active",
+    "about": "Refines Ge concentrate all the way through to finished products including solar-grade wafers — the only facility with full vertical integration from coal mine to wafer.",
+    "stats": [
+      [
+        "Output",
+        "~40 t/yr refined Ge"
+      ],
+      [
+        "Products",
+        "GeO₂, GeCl₄, Ge ingots, wafers"
+      ],
+      [
+        "Wafer capacity",
+        "300,000 four-inch wafers/yr"
+      ],
+      [
+        "Integration",
+        "Vertically integrated"
+      ]
+    ],
+    "risk": "US export ban directly impacts western revenue.",
+    "risks": [
+      "US export ban cuts wafer sales to western satellite manufacturers",
+      "Single-facility risk",
+      "Trade policy exposure"
+    ],
+    "inv": "Part of Lincang Xinyuan (002428.SZ). Wafer business commands significant premiums over commodity Ge."
+  },
+  "Yunnan Chihong Refinery": {
+    "id": "yunnan-chihong-refinery",
+    "name": "Yunnan Chihong Refinery",
+    "type": "Private",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Yunnan Province, China",
+    "layer": "Refiner",
+    "output_headline": "~66 t/yr refined Ge · GeO₂, Ge metal, GeCl₄",
+    "descriptor_pill": "Integrated Ge refiner",
+    "quantity_pill": "~66 t/yr refined",
+    "status": "Active",
+    "about": "Refining and chemical conversion arm of Yunnan Chihong. Produces fiber-grade GeCl₄ in addition to GeO₂ and metal forms. One of four fiber-grade GeCl₄ facilities in China and a major feeder of Chinese domestic fiber preform production.",
+    "stats": [
+      [
+        "Output",
+        "~66 t/yr refined Ge"
+      ],
+      [
+        "Products",
+        "GeO₂, Ge metal, GeCl₄"
+      ],
+      [
+        "Scale",
+        "Largest single Ge refinery globally"
+      ],
+      [
+        "Ticker",
+        "600497.SH"
+      ]
+    ],
+    "risk": "Output primarily stays within Chinese domestic ecosystem.",
+    "risks": [
+      "Output primarily stays within Chinese domestic ecosystem.",
+      "Single-facility concentration",
+      "Dependent on zinc smelter economics"
+    ],
+    "inv": "One of four fiber-grade GeCl₄ facilities in China. Integrated with upstream Chihong zinc-ore germanium extraction. Major feeder of Chinese domestic fiber preform production at YOFC, Hengtong, and ZTT."
+  },
+  "Chinese State GeCl4 Plants": {
+    "id": "chinese-state-gecl4-plants",
+    "name": "Chinese State GeCl₄ Plants",
+    "type": "Private",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Multiple provinces, China",
+    "layer": "Chemical Converter",
+    "output_headline": "~50–60t Ge/yr combined · Nanjing Ge, GRINM, Lincang Xinyuan",
+    "descriptor_pill": "GeCl₄ chemical suppliers",
+    "quantity_pill": "~50–60t GeCl₄/yr",
+    "status": "Active",
+    "about": "Multiple Chinese state-linked processors produce GeCl₄ at various scales and purity levels. Includes Nanjing Germanium, GRINM Goujing (formerly Vital Materials), and Yunnan Lincang Xinyuan Germanium Industry. Collectively serve China’s domestic fiber optic market alongside Yunnan Chihong.",
+    "stats": [
+      [
+        "Ge equiv./yr",
+        "~50-60t"
+      ],
+      [
+        "Purity range",
+        "6N-8N"
+      ],
+      [
+        "Pricing",
+        "Domestic"
+      ],
+      [
+        "MOFCOM",
+        "Export-controlled"
+      ]
+    ],
+    "risk": "Export controls block western access. MOFCOM licensed for any international shipments.",
+    "risks": [
+      "Export controls block all western supply",
+      "Aggregated opacity — actual output uncertain",
+      "State directive risk could redirect supply to strategic uses"
+    ],
+    "inv": "No direct western investment vehicle. Exposure only via Chinese state-owned enterprise listings."
+  },
+  "Corning": {
+    "id": "corning",
+    "name": "Corning",
+    "type": "Public",
+    "ticker": "GLW · NYSE",
+    "country": "USA",
+    "location_detail": "Corning, New York, USA",
+    "layer": "Device Manufacturer",
+    "output_headline": "~$36B market cap · $1.65B optical comms Q3’25 (+33%)",
+    "descriptor_pill": "Fiber optic manufacturer — vertically integrated",
+    "quantity_pill": "~300–400M fkm/yr",
+    "status": "Active",
+    "about": "Invented low-loss optical fiber in 1970. World’s largest western fiber manufacturer operating across Optical Communications, Display, Specialty Materials, Environmental, and Life Sciences. Optical communications is the growth engine — Q3 2025 revenue hit $1.65B (+33% YoY) with enterprise sales surging 58% on AI network demand.",
+    "stats": [
+      [
+        "Market cap",
+        "~$36B"
+      ],
+      [
+        "Q3’25 optical rev",
+        "$1.65B"
+      ],
+      [
+        "Q3’25 net income",
+        "$530M"
+      ],
+      [
+        "Fiber-km/yr",
+        "~300-400M"
+      ]
+    ],
+    "risk": "GeO₂/GeCl₄ supply constraint limits capacity expansion.",
+    "risks": [
+      "GeO₂/GeCl₄ supply constraint limits capacity",
+      "Significant China revenue exposure (~$1B+ annually)",
+      "Overcapacity risk if datacenter buildout slows"
+    ],
+    "inv": "GLW is the most liquid western proxy for AI infrastructure fiber demand. Multi-year datacenter backlogs give rare earnings visibility."
+  },
+  "Prysmian": {
+    "id": "prysmian",
+    "name": "Prysmian",
+    "type": "Public",
+    "ticker": "PRY · Milan",
+    "country": "Italy",
+    "location_detail": "Milan, Italy",
+    "layer": "Device Manufacturer",
+    "output_headline": "~€17B market cap · 15% global fiber share · World’s largest cable co.",
+    "descriptor_pill": "Fiber optic manufacturer — vertically integrated",
+    "quantity_pill": ">30M km/yr",
+    "status": "Active",
+    "about": "World’s largest cable company — energy cables, telecom cables, and submarine cable systems. 15% global fiber market share, the single largest. Acquired Encore Wire to expand North American footprint. Covers full cable value chain from preform manufacturing through finished cable.",
+    "stats": [
+      [
+        "Market cap",
+        "~€17B"
+      ],
+      [
+        "FY24 revenue",
+        "€16B+"
+      ],
+      [
+        "US optical capex",
+        "$115M+"
+      ],
+      [
+        "Cable-km/yr",
+        ">30M"
+      ]
+    ],
+    "risk": "European telecom capex cycles. 18–24 month preform expansion lag.",
+    "risks": [
+      "More exposed to European telecom capex cycles",
+      "Italian listing reduces liquidity for US investors",
+      "Currency risk (EUR-denominated)"
+    ],
+    "inv": "PRY offers terrestrial and subsea exposure. Subsea demand is driven by AI hyperscalers building private subsea networks."
+  },
+  "Fujikura": {
+    "id": "fujikura",
+    "name": "Fujikura",
+    "type": "Public",
+    "ticker": "5803 · Tokyo",
+    "country": "Japan",
+    "location_detail": "Tokyo, Japan",
+    "layer": "Device Manufacturer",
+    "output_headline": "~¥2.5T market cap · ¥979B revenue (+22.5%) FY25 · +160% stock 2025",
+    "descriptor_pill": "Fiber optic manufacturer — vertically integrated",
+    "quantity_pill": "~10–15M fkm/yr",
+    "status": "Active",
+    "about": "Developed the world’s first optical fiber in 1959. Revenue from Information Technology (fiber, cables), Electronics (PCBs), Automotive (wiring harnesses), and Energy (power cables). Over 50% of revenue from the US. ~75% of optical fiber output exported. Stock surged 160% in 2025 on AI data center demand.",
+    "stats": [
+      [
+        "Market cap",
+        "~¥2.5T"
+      ],
+      [
+        "FY25 revenue",
+        "¥979B"
+      ],
+      [
+        "FY26 net income (fcst)",
+        "¥132B"
+      ],
+      [
+        "Fiber-km/yr",
+        "~10-15M"
+      ]
+    ],
+    "risk": "Full Umicore dependency for GeCl₄ — no domestic Japanese alternative.",
+    "risks": [
+      "Full Umicore dependency — no domestic Japanese GeCl₄ production",
+      "Yen depreciation impacts USD returns",
+      "Post-AI-surge valuation re-rating risk if growth decelerates"
+    ],
+    "inv": "TSE-listed with meaningful western investor access. Closest pure-play on the AI fiber demand + germanium supply constraint thesis."
+  },
+  "Sumitomo Electric": {
+    "id": "sumitomo-electric",
+    "name": "Sumitomo Electric",
+    "type": "Public",
+    "ticker": "5802 · Tokyo",
+    "country": "Japan",
+    "location_detail": "Osaka, Japan",
+    "layer": "Device Manufacturer",
+    "output_headline": "~¥2.8T market cap · ¥4.1T FY24 revenue · Top 3 global fiber",
+    "descriptor_pill": "Fiber optic manufacturer — vertically integrated",
+    "quantity_pill": "~10–15M fkm/yr",
+    "status": "Active",
+    "about": "One of Japan’s largest diversified industrial companies. Business includes Automotive (wiring harnesses — largest segment), Infocommunications (optical fiber, cables, photonic devices), Electronics, Environment & Energy, and Industrial Materials. Optical fiber is a meaningful but minority portion of total revenue.",
+    "stats": [
+      [
+        "Market cap",
+        "~¥2.8T"
+      ],
+      [
+        "FY24 revenue",
+        "¥4.1T"
+      ],
+      [
+        "Net income",
+        "—"
+      ],
+      [
+        "Fiber-km/yr",
+        "~10-15M"
+      ]
+    ],
+    "risk": "Fiber is a minority of revenue — diversified industrial reduces direct germanium exposure.",
+    "risks": [
+      "Fiber is a minority of revenue — auto wiring harness dominates valuation",
+      "TSE listing limits western direct access",
+      "Auto wiring harness slowdown could weigh on overall valuation"
+    ],
+    "inv": "Unique dual exposure: AI fiber demand and EV wiring harness demand. Less pure-play than Fujikura given diversified revenue base."
+  },
+  "Shin-Etsu": {
+    "id": "shin-etsu",
+    "name": "Shin-Etsu",
+    "type": "Public",
+    "ticker": "4063 · Tokyo",
+    "country": "Japan",
+    "location_detail": "Tokyo, Japan",
+    "layer": "Device Manufacturer",
+    "output_headline": "~¥8T market cap · Japan’s largest chemical co. · Dual Si + Ge expertise",
+    "descriptor_pill": "Fiber optic preform specialist",
+    "quantity_pill": "~5–8M fkm/yr",
+    "status": "Active",
+    "about": "Japan’s largest chemical company. World leader in PVC, semiconductor silicon wafers, and silicones. Optical fiber preform is part of the Electronics Materials segment. Produces preforms at Kashima (Japan), plus two China JVs — Shin-Etsu Jiangsu (with Fasten Group) and Shin-Etsu YOFC (Hubei, with YOFC).",
+    "stats": [
+      [
+        "Market cap",
+        "~¥8T"
+      ],
+      [
+        "FY24 revenue",
+        "¥2.4T"
+      ],
+      [
+        "Net income",
+        "—"
+      ],
+      [
+        "Fiber-km/yr (Japan)",
+        "~5-8M"
+      ]
+    ],
+    "risk": "Silicon wafer oversupply risk if AI chip demand cycles down.",
+    "risks": [
+      "Silicon wafer oversupply risk if AI chip demand cycles",
+      "Japanese listed — limited western direct access",
+      "Yen exposure for USD investors"
+    ],
+    "inv": "Unique dual-exposure play: AI chip demand drives silicon wafer volumes AND AI datacenter buildout drives fiber preform volumes."
+  },
+  "YOFC": {
+    "id": "yofc",
+    "name": "YOFC",
+    "type": "Public",
+    "ticker": "601869 · Shanghai",
+    "country": "China",
+    "location_detail": "Wuhan, China",
+    "layer": "Device Manufacturer",
+    "output_headline": "~HK$18B market cap · World’s largest preform capacity · 3,500t/yr",
+    "descriptor_pill": "Fiber optic manufacturer — vertically integrated",
+    "quantity_pill": "3,500t preform/yr",
+    "status": "Active",
+    "about": "World’s largest optical fiber preform manufacturer by capacity. China’s dominant fiber and cable producer. Vertically integrated from preform to cable. JVs with Shin-Etsu for advanced preform technology. International plants in Mexico, Indonesia, South Africa, Brazil, and Poland. Supplies China Mobile (30% of their fiber needs).",
+    "stats": [
+      [
+        "Market cap",
+        "~HK$18B"
+      ],
+      [
+        "2025 rev (proj.)",
+        "~$5B"
+      ],
+      [
+        "Preform capacity",
+        "3,500t/yr"
+      ],
+      [
+        "Export countries",
+        "100+"
+      ]
+    ],
+    "risk": "Chinese state-backed. Geopolitically complex. Corning JV creates IP exposure.",
+    "risks": [
+      "Geopolitical risk — Chinese state ownership",
+      "Corning JV creates IP transfer concerns",
+      "Export control risk limits western sales potential"
+    ],
+    "inv": "HKEX-listed with more western accessibility than SSE. The Corning JV structure creates a direct link between Chinese Ge supply and western fiber manufacturing IP."
+  },
+  "Optical Fiber Strand": {
+    "id": "optical-fiber-strand",
+    "name": "Optical Fiber Strand",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "Global",
+    "layer": "Aggregate",
+    "output_headline": "~720M fiber-km/yr",
+    "descriptor_pill": "Output node",
+    "quantity_pill": "~720M km/yr global",
+    "status": "Active",
+    "about": "Continuous strands of germanium-doped silica glass, 125 micrometers in diameter — thinner than a human hair. Drawn from preforms at 10-20 meters per second. Each strand carries data as pulses of light through the germanium-doped core. The germanium doping raises the refractive index by ~0.35%, creating the waveguide effect that makes fiber optic communication possible.",
+    "stats": [
+      [
+        "Output",
+        "~720M fiber-km/yr"
+      ],
+      [
+        "2030 forecast",
+        "1.3-1.4B"
+      ],
+      [
+        "Ge per fiber-km",
+        "0.087g"
+      ]
+    ],
+    "risk": "Supply gap cannot close before late 2027 due to 18–24 month preform expansion lag.",
+    "risks": [
+      "Supply gap cannot close before late 2027 due to 18–24 month preform lag",
+      "Chinese export controls directly constrain capacity expansion",
+      "Demand pull-forward could exhaust western GeCl₄ stocks"
+    ],
+    "inv": "The cable itself is a commodity. Invest in manufacturers with highest datacenter/subsea mix (Corning, Prysmian) or at the hyperscale operator level."
+  },
+  "Vertiv": {
+    "id": "vertiv",
+    "name": "Vertiv",
+    "type": "Public",
+    "ticker": "VRT · NYSE",
+    "country": "USA",
+    "location_detail": "Columbus, Ohio, USA",
+    "layer": "End Use",
+    "output_headline": "Power + thermal systems · VRT NYSE",
+    "descriptor_pill": "Datacenter infrastructure",
+    "quantity_pill": "~$7.6B revenue (FY25)",
+    "status": "Active",
+    "about": "Vertiv makes the power distribution, uninterruptible power supply, and thermal management systems that every datacenter depends on. AI GPU clusters consume 40-100kW per rack versus 5-10kW for traditional compute — Vertiv is the primary beneficiary of this density explosion.",
+    "stats": [
+      [
+        "Ticker",
+        "VRT (NYSE)"
+      ],
+      [
+        "Specialty",
+        "Power, cooling, UPS systems"
+      ],
+      [
+        "AI exposure",
+        "GPU clusters require 5-10x more cooling than CPUs"
+      ],
+      [
+        "Revenue",
+        "~$7.6B (2024)"
+      ]
+    ],
+    "risk": "AI density driving unprecedented thermal load per rack.",
+    "risks": [
+      "Backlog-driven revenue creates lumpy delivery timing",
+      "High valuations leave limited margin of safety",
+      "Supply chain constraints on transformers and cooling components"
+    ],
+    "inv": "VRT is arguably the purest AI infrastructure play outside of Nvidia. Every GPU cluster needs Vertiv power and cooling systems. Revenue growing >20% annually driven entirely by AI datacenter buildout."
+  },
+  "Equinix": {
+    "id": "equinix",
+    "name": "Equinix",
+    "type": "Public",
+    "ticker": "EQIX · NASDAQ",
+    "country": "USA",
+    "location_detail": "Redwood City, California, USA",
+    "layer": "End Use",
+    "output_headline": "Global colo leader · EQIX NASDAQ",
+    "descriptor_pill": "Colocation and interconnection",
+    "quantity_pill": "260+ DCs globally",
+    "status": "Active",
+    "about": "Equinix provides colocation space, power, and physical interconnection between networks. The Equinix fabric connects 10,000+ networks globally — it is the physical internet exchange infrastructure that routes traffic between cloud providers, enterprises, and content networks.",
+    "stats": [
+      [
+        "Ticker",
+        "EQIX (NASDAQ)"
+      ],
+      [
+        "Business",
+        "Colocation + interconnection REIT"
+      ],
+      [
+        "Locations",
+        "240+ datacenters in 70+ metros"
+      ],
+      [
+        "Revenue",
+        "~$8.5B (2024)"
+      ]
+    ],
+    "risk": "AI workloads require owned capacity, not colo — structural headwind.",
+    "risks": [
+      "Hyperscalers increasingly building their own infrastructure rather than using colo",
+      "AI training clusters prefer owned facilities for power density control",
+      "Interest rate sensitivity as a REIT with significant debt"
+    ],
+    "inv": "EQIX is a REIT with stable recurring revenue. Less direct AI exposure than Vertiv — hyperscalers prefer to own their AI training facilities rather than colocate them. The interconnection business (charging for cross-connects between networks) is durable and high-margin."
+  },
+  "CoreWeave": {
+    "id": "coreweave",
+    "name": "CoreWeave",
+    "type": "Private",
+    "ticker": null,
+    "country": "USA",
+    "location_detail": "Livingston, New Jersey, USA",
+    "layer": "End Use",
+    "output_headline": "AI GPU cloud · CRWV NASDAQ",
+    "descriptor_pill": "AI-native cloud provider",
+    "quantity_pill": "~2 GW AI cloud capacity",
+    "status": "Active",
+    "about": "CoreWeave is an AI-native cloud built entirely around GPU compute. Unlike AWS or Azure which offer GPUs as a small fraction of their portfolio, CoreWeave's entire infrastructure is optimized for AI training and inference. Rents GPU capacity to AI companies and enterprises that cannot get enough capacity from hyperscalers.",
+    "stats": [
+      [
+        "Ticker",
+        "CRWV (NASDAQ)"
+      ],
+      [
+        "Specialty",
+        "GPU cloud for AI workloads"
+      ],
+      [
+        "GPU fleet",
+        "50,000+ Nvidia H100 and H200"
+      ],
+      [
+        "Key customer",
+        "Microsoft ~60% of revenue"
+      ]
+    ],
+    "risk": "Highly concentrated customer base. Microsoft is ~60% of revenue.",
+    "risks": [
+      "~60% revenue from Microsoft creates existential concentration risk",
+      "Massive debt load from GPU purchases (~$8B+)",
+      "Nvidia dependency — entire business model depends on Nvidia GPU supply"
+    ],
+    "inv": "CRWV IPO'd in March 2025. The only pure-play GPU cloud stock. Extraordinary growth but extreme customer concentration risk with Microsoft as dominant customer."
+  },
+  "Schneider Electric": {
+    "id": "schneider-electric",
+    "name": "Schneider Electric",
+    "type": "Public",
+    "ticker": "SU · Euronext",
+    "country": "France",
+    "location_detail": "Rueil-Malmaison, France",
+    "layer": "End Use",
+    "output_headline": "Datacenter power systems · SU Paris",
+    "descriptor_pill": "Energy management and automation",
+    "quantity_pill": "~$40B revenue (FY25)",
+    "status": "Active",
+    "about": "Schneider Electric makes the switchgear, PDUs, DCIM software, and prefabricated datacenter modules that sit upstream of servers in every datacenter power chain. Also operates EcoStruxure — a datacenter management platform monitoring power and cooling efficiency.",
+    "stats": [
+      [
+        "Ticker",
+        "SU (Euronext Paris)"
+      ],
+      [
+        "Specialty",
+        "Power distribution, automation, EcoStruxure"
+      ],
+      [
+        "AI exposure",
+        "Medium-high"
+      ],
+      [
+        "Revenue",
+        "~€36B (2024)"
+      ]
+    ],
+    "risk": "Less pure-play than Vertiv — diversified industrial conglomerate.",
+    "risks": [
+      "Diversified revenue base dilutes AI datacenter growth contribution",
+      "European listing and currency risk for USD investors",
+      "Competition from Vertiv and Eaton in core power distribution market"
+    ],
+    "inv": "SU offers European-listed AI infrastructure exposure with a more diversified risk profile than Vertiv. Slower growth but more stable. The prefabricated datacenter module business is a strong AI tailwind."
+  },
+  "AECOM": {
+    "id": "aecom",
+    "name": "AECOM",
+    "type": "Public",
+    "ticker": "ACM · NYSE",
+    "country": "USA",
+    "location_detail": "Dallas, Texas, USA",
+    "layer": "End Use",
+    "output_headline": "Datacenter construction · ACM NYSE",
+    "descriptor_pill": "Engineering and construction",
+    "quantity_pill": "~$16B revenue (FY25)",
+    "status": "Active",
+    "about": "AECOM designs and manages construction of hyperscale datacenter campuses — the physical buildings, electrical infrastructure, cooling systems, and site development that house AI compute. Every major new hyperscale campus requires engineering firms like AECOM for permitting, design, and construction management.",
+    "stats": [
+      [
+        "Ticker",
+        "ACM (NYSE)"
+      ],
+      [
+        "Specialty",
+        "Engineering, design, construction management"
+      ],
+      [
+        "AI exposure",
+        "Datacenter campus design and build"
+      ],
+      [
+        "Revenue",
+        "~$16B (2024)"
+      ]
+    ],
+    "risk": "Construction is cyclical. Revenue recognized on project completion.",
+    "risks": [
+      "Construction revenue is lumpy and project-dependent",
+      "Labor and materials cost inflation squeezes margins",
+      "Less direct AI exposure than infrastructure equipment makers"
+    ],
+    "inv": "ACM is an indirect AI play through datacenter construction boom. Multi-billion dollar hyperscale buildouts create sustained engineering demand. More stable than hardware plays but less direct AI exposure."
+  },
+  "Microsoft": {
+    "id": "microsoft",
+    "name": "Microsoft",
+    "type": "Public",
+    "ticker": "MSFT · NASDAQ",
+    "country": null,
+    "location_detail": "Redmond, Washington, USA",
+    "layer": "End Use",
+    "output_headline": "Azure + OpenAI · MSFT NASDAQ",
+    "descriptor_pill": "Hyperscale operator",
+    "quantity_pill": "~60 GW planned capacity",
+    "status": "Active",
+    "about": "Microsoft is the largest single consumer of fiber optic cable and datacenter infrastructure globally. Its exclusive cloud relationship with OpenAI makes Azure the primary deployment platform for GPT-4 and successors. The Copilot integration across Office 365 (1.4B users) creates the largest AI inference workload in existence.",
+    "stats": [
+      [
+        "Ticker",
+        "MSFT (NASDAQ)"
+      ],
+      [
+        "AI partnership",
+        "OpenAI exclusive cloud provider"
+      ],
+      [
+        "Capex (2025)",
+        "~$80B datacenter investment"
+      ],
+      [
+        "Azure AI revenue",
+        "Fastest growing segment"
+      ]
+    ],
+    "risk": "Massive AI capex commitment. $80B+ in datacenter spend (2025).",
+    "risks": [
+      "OpenAI relationship is non-exclusive at the model level",
+      "Azure losing market share to AWS in some enterprise segments",
+      "Regulatory scrutiny of OpenAI partnership in EU and UK"
+    ],
+    "inv": "MSFT is the most accessible AI infrastructure play at the hyperscale level. The OpenAI relationship creates durable AI revenue moats. Trading at ~32x forward earnings — premium but justified by AI growth trajectory."
+  },
+  "Google": {
+    "id": "google",
+    "name": "Google",
+    "type": "Public",
+    "ticker": "GOOGL · NASDAQ",
+    "country": null,
+    "location_detail": "Mountain View, California, USA",
+    "layer": "End Use",
+    "output_headline": "GCP + Gemini + TPUs · GOOGL NASDAQ",
+    "descriptor_pill": "Hyperscale operator",
+    "quantity_pill": "~40 GW planned capacity",
+    "status": "Active",
+    "about": "Google pioneered large-scale AI infrastructure. Its Tensor Processing Units (TPUs) are purpose-built AI accelerators that rival Nvidia GPUs at scale. DeepMind and Google Brain merged into Google DeepMind — the world's most published AI research organization. GCP is the third-largest cloud platform globally.",
+    "stats": [
+      [
+        "Ticker",
+        "GOOGL (NASDAQ)"
+      ],
+      [
+        "AI model",
+        "Gemini Ultra / Pro"
+      ],
+      [
+        "Custom silicon",
+        "TPU v5 — world-class AI accelerator"
+      ],
+      [
+        "Infrastructure",
+        "~$50B datacenter capex (2025)"
+      ]
+    ],
+    "risk": "Search revenue under threat from AI-native search alternatives.",
+    "risks": [
+      "Search revenue disruption from AI-native search (Perplexity, ChatGPT Search)",
+      "Antitrust scrutiny on search monopoly",
+      "GCP continues to lag AWS and Azure in enterprise market share"
+    ],
+    "inv": "GOOGL offers AI exposure plus the most diversified revenue base of any hyperscaler — search, YouTube, GCP, hardware. The TPU custom silicon strategy reduces Nvidia dependency and improves margins at scale."
+  },
+  "Amazon": {
+    "id": "amazon",
+    "name": "Amazon",
+    "type": "Public",
+    "ticker": "AMZN · NASDAQ",
+    "country": null,
+    "location_detail": "Seattle, Washington, USA",
+    "layer": "End Use",
+    "output_headline": "AWS + Trainium + Inferentia · AMZN NASDAQ",
+    "descriptor_pill": "Hyperscale operator",
+    "quantity_pill": "~50 GW planned capacity",
+    "status": "Active",
+    "about": "AWS is the world's largest cloud platform and the primary infrastructure layer for thousands of AI startups. Amazon Bedrock provides API access to models from Anthropic, Meta, Mistral, and others. Trainium chips are purpose-built for AI training at AWS scale.",
+    "stats": [
+      [
+        "Ticker",
+        "AMZN (NASDAQ)"
+      ],
+      [
+        "Cloud platform",
+        "AWS — #1 globally by revenue"
+      ],
+      [
+        "Custom silicon",
+        "Trainium2, Inferentia2"
+      ],
+      [
+        "AI platform",
+        "Amazon Bedrock — multi-model API"
+      ]
+    ],
+    "risk": "AWS AI revenue growing but Bedrock faces stiff competition.",
+    "risks": [
+      "Bedrock's multi-model strategy may commoditize AI API revenue",
+      "Trainium chip adoption slower than hoped vs Nvidia GPUs",
+      "Retail segment margins remain thin despite logistics improvements"
+    ],
+    "inv": "AMZN offers AI exposure plus the strongest e-commerce and logistics moats of any tech company. AWS is ~75% of Amazon operating income. The Anthropic investment (~$4B) provides strategic AI model access."
+  },
+  "Meta": {
+    "id": "meta",
+    "name": "Meta",
+    "type": "Public",
+    "ticker": "META · NASDAQ",
+    "country": "USA",
+    "location_detail": "Menlo Park, CA",
+    "layer": "End Use",
+    "output_headline": "30 DCs · 10GW by end 2026 · $100B+ capex 2026",
+    "descriptor_pill": "Hyperscaler — social AI platform",
+    "quantity_pill": "~35 GW planned capacity",
+    "status": "Active",
+    "about": "Meta operates approximately 30 major hyperscale datacenters and has committed to reaching 10GW of total datacenter power capacity by the end of 2026. Meta's $6 billion multi-year supply agreement with Corning — equal to Corning's entire 2025 optical-communications revenue — is the single largest fiber supply contract in history. Meta's Project Waterworth is the longest submarine cable ever built at 50,000km.",
+    "stats": [
+      [
+        "Capex 2026",
+        "$100B+"
+      ],
+      [
+        "Ticker",
+        "META · NASDAQ"
+      ],
+      [
+        "DC power",
+        "10GW by end 2026"
+      ],
+      [
+        "Fiber deal",
+        "$6B Corning agreement"
+      ]
+    ],
+    "risk": "Open-source AI strategy — Llama models reduce Meta's AI moat over time.",
+    "risks": [
+      "Open-source AI strategy reduces Meta's AI differentiation moat",
+      "Social platform revenue base subject to advertising cycle",
+      "10GW build timeline requires flawless construction execution"
+    ],
+    "inv": "META (NASDAQ) is the most aggressive AI infrastructure builder among social platforms. Its $6B Corning agreement is the most tangible expression of hyperscaler fiber demand — locking in supply that smaller buyers cannot access. Meta's open-source AI strategy (Llama) may limit direct AI monetization but reduces dependency on OpenAI-licensed models."
+  },
+  "xAI": {
+    "id": "xai",
+    "name": "xAI",
+    "type": "Public",
+    "ticker": "Private",
+    "country": null,
+    "location_detail": "Memphis, Tennessee, USA",
+    "layer": "End Use",
+    "output_headline": "Grok + Colossus cluster · Private",
+    "descriptor_pill": "Hyperscale operator",
+    "quantity_pill": "~5 GW Memphis cluster",
+    "status": "Active",
+    "about": "xAI built the Colossus supercomputer in Memphis in 122 days — the fastest large-scale GPU cluster deployment in history. Grok 3 is competitive with GPT-4o and Claude 3.5 on benchmarks. Deep integration with X (Twitter) provides unique real-time data advantage for training.",
+    "stats": [
+      [
+        "Ownership",
+        "Private — Elon Musk"
+      ],
+      [
+        "AI model",
+        "Grok 3"
+      ],
+      [
+        "Infrastructure",
+        "Colossus — 100,000 H100 GPUs"
+      ],
+      [
+        "Status",
+        "Series C raised at ~$50B valuation"
+      ]
+    ],
+    "risk": "Private company. No direct investment vehicle currently.",
+    "risks": [
+      "No direct investment access",
+      "Elon Musk concentration risk across Tesla, SpaceX, X, xAI simultaneously",
+      "Competing against Microsoft+OpenAI, Google, Amazon with deeper resources"
+    ],
+    "inv": "No direct investment vehicle. Monitor for IPO. Indirect exposure via Nvidia (GPU supplier) and Tesla (Elon relationship and shared compute resources). Series C at ~$50B valuation implies significant upside if Grok achieves meaningful enterprise adoption."
+  },
+  "Oracle": {
+    "id": "oracle",
+    "name": "Oracle",
+    "type": "Public",
+    "ticker": "ORCL · NYSE",
+    "country": null,
+    "location_detail": "Austin, Texas, USA",
+    "layer": "End Use",
+    "output_headline": "OCI + AI infrastructure · ORCL NYSE",
+    "descriptor_pill": "Hyperscale operator",
+    "quantity_pill": "~20 GW planned capacity",
+    "status": "Active",
+    "about": "Oracle is the fastest-growing major cloud platform driven entirely by AI infrastructure demand. xAI chose OCI for Colossus overflow capacity. The US government's $500B Stargate initiative includes Oracle as a primary infrastructure partner alongside Microsoft and SoftBank. Oracle's database dominance in enterprise creates a natural migration path to OCI.",
+    "stats": [
+      [
+        "Ticker",
+        "ORCL (NYSE)"
+      ],
+      [
+        "Cloud platform",
+        "OCI — Oracle Cloud Infrastructure"
+      ],
+      [
+        "AI customers",
+        "xAI, Nvidia, US government"
+      ],
+      [
+        "Growth",
+        "OCI growing >50% YoY"
+      ]
+    ],
+    "risk": "Late cloud entrant. OCI growing fast but from small base.",
+    "risks": [
+      "OCI starting from a much smaller base than AWS, Azure, GCP",
+      "Database licensing revenue declining as enterprises migrate to cloud",
+      "Stargate project timelines and funding are uncertain"
+    ],
+    "inv": "ORCL is the most underappreciated AI infrastructure play among large-cap tech. OCI growing faster than any major cloud platform. Stargate partnership with US government creates durable, long-term contracted revenue."
+  },
+  "AI Datacenter": {
+    "id": "ai-datacenter",
+    "name": "AI Datacenter",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "Global",
+    "layer": "Aggregate",
+    "output_headline": "The culmination of the Ge supply chain",
+    "descriptor_pill": "End use output",
+    "quantity_pill": "~130 GW global demand by 2030",
+    "status": "Active",
+    "about": "The AI datacenter is where the entire germanium supply chain terminates. Every fiber optic cable connecting GPU to GPU, switch to switch, and datacenter to datacenter began as germanium dioxide in a Chinese coal seam or zinc mine. A single hyperscale AI training cluster may contain millions of kilometers of fiber — representing thousands of kilograms of germanium permanently embedded in glass.",
+    "stats": [
+      [
+        "Global spend",
+        "~$500B+ annually (2025)"
+      ],
+      [
+        "Ge per datacenter",
+        "Hundreds of km of fiber"
+      ],
+      [
+        "Power density",
+        "40-100kW per rack (AI vs 5kW traditional)"
+      ],
+      [
+        "Growth driver",
+        "LLM training + inference scale"
+      ]
+    ],
+    "risk": "Demand growing faster than supply chain can support.",
+    "risks": [
+      "AI compute demand could slow if model efficiency improves faster than scale",
+      "Power grid constraints limiting datacenter buildout in key markets",
+      "Geopolitical risk to fiber supply chain (Chinese Ge export controls) creates cost headwinds for all operators"
+    ],
+    "inv": "At the end use layer, invest in the operators and infrastructure suppliers — not the fiber or cable itself. The value of connected AI infrastructure accrues to the compute owners (Microsoft, Google, Amazon, Meta) and the infrastructure enablers (Vertiv, Schneider, CoreWeave). The Ge supply chain is upstream leverage on this entire ecosystem."
+  },
+  "Deployed Fiber Network": {
+    "id": "deployed-fiber-network",
+    "name": "Deployed Fiber Network",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "Global",
+    "layer": "Aggregate",
+    "output_headline": "~720M fiber-km/yr",
+    "descriptor_pill": "Global fiber infrastructure",
+    "quantity_pill": "~5B strand-km installed",
+    "status": "Active",
+    "about": "The deployed fiber network measures route-km of installed cable infrastructure — distinct from the fiber-km strand output of the component layer. One route-km of terrestrial cable contains ~144 fiber-km of strand; one route-km of subsea cable contains ~16-24 fiber pairs. Global new cable deployment runs ~3-4M route-km/yr. AI datacenter demand requires an additional 2-3M route-km of high-density datacenter cable by 2026 — on top of existing telecom, FTTH, and backbone deployment. The gap cannot close before late 2027 due to the 18-24 month preform expansion lag at the component layer above.",
+    "stats": [
+      [
+        "Output",
+        "~720M fiber-km/yr"
+      ],
+      [
+        "Routes",
+        "3-4M route-km/yr"
+      ],
+      [
+        "Conversion",
+        "1 route-km = ~144 fiber-km strand"
+      ],
+      [
+        "Supply gap",
+        "Cannot close before late 2027"
+      ]
+    ],
+    "risk": "Supply gap cannot close before late 2027 due to 18-24 month preform expansion lag.",
+    "risks": [
+      "Supply cannot triple without proportional GeCl₄ increase",
+      "Chinese export controls directly constrain capacity expansion",
+      "Demand pull-forward could exhaust western GeCl₄ stocks"
+    ],
+    "inv": "The cable itself is a commodity. Invest in manufacturers with highest datacenter/subsea mix (Corning, Prysmian) or at the hyperscale operator level."
+  },
+  "Datacenter Cable": {
+    "id": "datacenter-cable",
+    "name": "Datacenter Cable",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "Global",
+    "layer": "Aggregate",
+    "output_headline": "96 to 6,912 fibers/cable · AI demand +500% 2025–2026",
+    "descriptor_pill": "Cable specification",
+    "quantity_pill": "~210M km/yr demand",
+    "status": "Active",
+    "about": "Datacenter fiber optic cable connects GPU clusters, spine-leaf switching networks, and datacenter interconnects. AI datacenters require 36x more fiber than traditional CPU racks — a single million-GPU cluster can consume tens of thousands of fiber-km. High fiber count cables (1,728+ strands) are now standard for hyperscale AI builds. Prices surged 500%+ in 2025-2026 driven by AI demand. Meta's $6B Corning deal and Lumen's Corning agreement represent the new norm of multi-year locked supply.",
+    "stats": [
+      [
+        "Fiber count",
+        "96 to 6,912 per cable"
+      ],
+      [
+        "AI multiplier",
+        "36x more vs CPU rack"
+      ],
+      [
+        "Price surge",
+        "+500% since Jan 2025"
+      ],
+      [
+        "Key buyers",
+        "AWS · Google · Microsoft · Meta"
+      ]
+    ],
+    "risk": "Prices surged 500%+ in 2025–2026 on AI demand.",
+    "risks": [
+      "Commoditization risk as manufacturing scales",
+      "Hyperscaler in-sourcing risk",
+      "Demand tied entirely to datacenter capex cycles"
+    ],
+    "inv": "Invest in manufacturers with the highest datacenter revenue mix: Corning, CommScope."
+  },
+  "Terrestrial Long-Haul": {
+    "id": "terrestrial-long-haul",
+    "name": "Terrestrial Long-Haul",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "Global",
+    "layer": "Aggregate",
+    "output_headline": "12 to 432 fibers/cable · 213M fiber-miles needed US by 2029",
+    "descriptor_pill": "Cable specification",
+    "quantity_pill": "~290M km/yr demand",
+    "status": "Active",
+    "about": "Long-haul terrestrial fiber cables carry internet backbone traffic between cities and datacenters. Standard single-mode fiber (G.652D) is the dominant cable type. US needs to add 213.3 million fiber miles by 2029 to support AI datacenter interconnect demands — more than doubling current installed base. 5G transport backhaul adds additional demand on top of existing FTTH and backbone replacement cycles.",
+    "stats": [
+      [
+        "Fiber count",
+        "12 to 432 per cable"
+      ],
+      [
+        "US demand",
+        "213M fiber-miles needed by 2029"
+      ],
+      [
+        "Price",
+        "G.652D +150% since Jan 2025"
+      ],
+      [
+        "Key operators",
+        "AT&T · Verizon · Deutsche Telekom"
+      ]
+    ],
+    "risk": "Telecom operator capex sensitivity.",
+    "risks": [
+      "Telecom operator capex cycles create demand volatility",
+      "5G backhaul buildout varies by country",
+      "Competition from wireless backhaul alternatives"
+    ],
+    "inv": "More telecom-dependent than datacenter cable — slower growth but more stable recurring demand."
+  },
+  "Subsea Cable": {
+    "id": "subsea-cable",
+    "name": "Subsea Cable",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "Ocean floors globally",
+    "layer": "Aggregate",
+    "output_headline": "8 to 24 fiber pairs · ~40 new systems entering service 2026",
+    "descriptor_pill": "Cable specification",
+    "quantity_pill": "~70M km/yr demand",
+    "status": "Active",
+    "about": "Submarine fiber optic cables carry ~99% of international internet traffic across ocean floors. Nearly 40 new submarine cable systems enter service in 2026 alone — the most active year in history, worth ~$6B in construction. Hyperscalers (Google, Meta, Microsoft, Amazon) now fund private submarine cables directly, bypassing traditional telecom carriers. SubCom, Alcatel Submarine Networks, and NEC collectively control >60% of wet-plant revenue. Each system uses Ge-doped single-mode fiber for the entire cable length.",
+    "stats": [
+      [
+        "Fiber pairs",
+        "8 to 24 per cable"
+      ],
+      [
+        "2026 pipeline",
+        "~40 new systems · ~$6B"
+      ],
+      [
+        "Market control",
+        "SubCom + ASN + NEC >60%"
+      ],
+      [
+        "Hyperscaler shift",
+        "Private ownership growing fast"
+      ]
+    ],
+    "risk": "Geopolitical risk around cable routes and landing rights.",
+    "risks": [
+      "Geopolitical tension around cable landing rights",
+      "Repair costs and lead times are extremely high",
+      "Route concentration through a handful of landing stations"
+    ],
+    "inv": "AI hyperscalers are funding private subsea cable projects. This structural demand shift benefits Alcatel SN and SubCom most directly."
+  },
+  "Alcatel SN": {
+    "id": "alcatel-sn",
+    "name": "Alcatel SN",
+    "type": "Private",
+    "ticker": null,
+    "country": "France",
+    "location_detail": "Paris, France",
+    "layer": "Device Manufacturer",
+    "output_headline": "~20%+ submarine wet-plant · French state-owned",
+    "descriptor_pill": "Subsea cable manufacturer",
+    "quantity_pill": "~25,000 route-km/yr",
+    "status": "Active",
+    "about": "Alcatel Submarine Networks is one of three companies controlling over 60% of global submarine cable wet-plant revenue. Recently transferred to French state ownership — underscoring governments' heightened interest in controlling critical subsea infrastructure. Partners with hyperscalers (Google, Meta, Microsoft, Amazon) building private submarine cable systems. Signed partnership with leading cloud provider for next-generation submarine cable system in July 2025.",
+    "stats": [
+      [
+        "Ownership",
+        "French state (post Nokia divestiture)"
+      ],
+      [
+        "Market share",
+        "~20%+ submarine wet-plant"
+      ],
+      [
+        "Customers",
+        "Hyperscalers + telecoms"
+      ],
+      [
+        "Strategic",
+        "French critical infrastructure asset"
+      ]
+    ],
+    "risk": "Recently transferred to French state ownership — geopolitical asset.",
+    "risks": [
+      "Geopolitical risk around cable routes and landing rights",
+      "Subsea projects have 3-5 year lead times — lumpy revenue",
+      "State ownership may affect commercial flexibility"
+    ],
+    "inv": "Exposure via Nokia (NOKIA HE) prior to divestiture. Now French state asset. AI hyperscalers are funding private subsea cables directly, driving unprecedented demand."
+  },
+  "SubCom": {
+    "id": "subcom",
+    "name": "SubCom",
+    "type": "Private",
+    "ticker": null,
+    "country": "USA",
+    "location_detail": "Eatontown, New Jersey, USA",
+    "layer": "Device Manufacturer",
+    "output_headline": "#2 global · cable + installation vessels · US-preferred",
+    "descriptor_pill": "Subsea cable manufacturer",
+    "quantity_pill": "~15,000 route-km/yr est.",
+    "status": "Active",
+    "about": "SubCom is the leading US submarine cable system supplier, combining cable manufacturing with marine installation vessels — a critical vertical integration that limits competition. SubCom controls a major share of US government-approved submarine cable projects given national security scrutiny of Chinese competitors. Expanding marine fulfillment capabilities to meet surging demand from 40 new submarine cable systems entering service in 2026.",
+    "stats": [
+      [
+        "Ownership",
+        "Private · Cerberus Capital"
+      ],
+      [
+        "Vertically integrated",
+        "Cable + installation vessels"
+      ],
+      [
+        "2026 pipeline",
+        "40 new systems entering service"
+      ],
+      [
+        "US advantage",
+        "National security preferred vendor"
+      ]
+    ],
+    "risk": "Private — no direct investment vehicle.",
+    "risks": [
+      "Private — no investment access",
+      "Revenue concentration in large contracts",
+      "US government scrutiny of subsea cable routes"
+    ],
+    "inv": "No direct investment — private Cerberus portfolio company. An IPO or strategic sale would be significant given AI-driven subsea demand."
+  },
+  "NEC": {
+    "id": "nec",
+    "name": "NEC",
+    "type": "Private",
+    "ticker": null,
+    "country": "Japan",
+    "location_detail": "Tokyo, Japan",
+    "layer": "Device Manufacturer",
+    "output_headline": "400,000+ km deployed · Asia-Pacific dominant",
+    "descriptor_pill": "Subsea cable manufacturer",
+    "quantity_pill": "400,000+ km deployed total",
+    "status": "Active",
+    "about": "NEC Corporation has deployed over 400,000 km of undersea cables worldwide, making it one of the most experienced submarine cable installers globally. Dominant in the Asia-Pacific submarine cable market. Unveiled new submarine cable system for Asia in September 2025 to meet growing data traffic. Competes with SubCom and Alcatel Submarine Networks for hyperscaler private cable projects.",
+    "stats": [
+      [
+        "Ticker",
+        "6701 · TSE"
+      ],
+      [
+        "Deployed",
+        "400,000+ km subsea"
+      ],
+      [
+        "Region",
+        "Asia-Pacific dominant"
+      ],
+      [
+        "2025",
+        "New system for Asian AI traffic"
+      ]
+    ],
+    "risk": "Subsea is a minority of NEC's total revenue.",
+    "risks": [
+      "Subsea is minority of revenue",
+      "TSE listing limits western access",
+      "Japanese government IT services is the primary business"
+    ],
+    "inv": "NEC is a diversified Japanese IT company — subsea cable is important but not dominant. Indirect play via TSE listing."
+  },
+  "CommScope": {
+    "id": "commscope",
+    "name": "CommScope",
+    "type": "Public",
+    "ticker": "COMM · NASDAQ",
+    "country": "USA",
+    "location_detail": "Hickory, North Carolina, USA",
+    "layer": "Device Manufacturer",
+    "output_headline": "CCS segment +27% YoY Q4 2024 · Propel 800G platform",
+    "descriptor_pill": "Cable assembler",
+    "quantity_pill": "~5M fiber-km/yr est.",
+    "status": "Active",
+    "about": "CommScope's Connectivity & Cable Solutions segment is the fastest-growing division, driven by hyperscale and cloud datacenter GenAI buildout. Q4 2024 net sales +27% YoY with CCS leading all segments. Launched Propel modular fiber platform in 2024 enabling 400G and 800G datacenter applications, reducing installation time by 30%. Strong US manufacturing presence for BABA-compliant broadband infrastructure.",
+    "stats": [
+      [
+        "Ticker",
+        "COMM · NASDAQ"
+      ],
+      [
+        "2024 revenue",
+        "$4.2B total"
+      ],
+      [
+        "Q4 2024",
+        "CCS +27% YoY"
+      ],
+      [
+        "Innovation",
+        "Propel 800G platform 2024"
+      ]
+    ],
+    "risk": "$9B+ debt load from 2019 ARRIS acquisition.",
+    "risks": [
+      "$9B+ debt from 2019 ARRIS acquisition",
+      "Not vertically integrated — exposed to strand price fluctuations",
+      "Slower to benefit from Ge supply constraint than upstream players"
+    ],
+    "inv": "COMM is a more leveraged play on US datacenter infrastructure buildout. Higher risk than Corning but also higher upside if datacenter spending continues."
+  },
+  "AFL": {
+    "id": "afl",
+    "name": "AFL",
+    "type": "Private",
+    "ticker": null,
+    "country": "USA",
+    "location_detail": "Duncan, South Carolina, USA",
+    "layer": "Device Manufacturer",
+    "output_headline": "US domestic · utility + datacenter · BABA-compliant",
+    "descriptor_pill": "Cable assembler",
+    "quantity_pill": "~2-3M fiber-km/yr est.",
+    "status": "Active",
+    "about": "AFL (Fujikura subsidiary) is a major US cable assembler focused on utility, datacenter, and enterprise fiber optic infrastructure. Produces specialty cables for power utilities, military, and hyperscale datacenter applications. Fully US-based manufacturing makes AFL a BABA-compliant domestic supplier for government-funded broadband and defense programs.",
+    "stats": [
+      [
+        "Ownership",
+        "Fujikura subsidiary"
+      ],
+      [
+        "Headquarters",
+        "Duncan, SC, USA"
+      ],
+      [
+        "Focus",
+        "Utility + DC + defense"
+      ],
+      [
+        "Advantage",
+        "US domestic manufacturing"
+      ]
+    ],
+    "risk": "Private company — no direct investment vehicle.",
+    "risks": [
+      "No listed equity vehicle",
+      "Dependent on Fujikura parent strategy",
+      "US utility cable market has different demand cycle than datacenter"
+    ],
+    "inv": "No direct investment — privately held Fujikura subsidiary. Indirect exposure via Fujikura (5803 TSE)."
+  },
+  "Umicore": {
+    "id": "umicore",
+    "name": "Umicore",
+    "type": "Public",
+    "ticker": "UMI · Euronext",
+    "country": "Belgium",
+    "location_detail": "Olen, Belgium (Ge facility); Brussels HQ, Belgium",
+    "layer": "Refiner",
+    "output_headline": "~40-50 t/yr recycled Ge · fiber-grade GeCl₄, IR optics, wafers",
+    "descriptor_pill": "Sole western Ge refiner",
+    "quantity_pill": "~40-50 t/yr recycled",
+    "status": "Active",
+    "about": "Diversified Belgian materials technology group. Operates the only commercial-scale fiber-grade GeCl₄ facility outside China and Russia, in Olen, Belgium. Processes essentially all non-Chinese, non-Russian germanium supply including the DRC tailings feedstock from Umicore-STL/Gécamines offtake. Structural western chokepoint.",
+    "stats": [
+      [
+        "Ticker",
+        "UMI (Euronext)"
+      ],
+      [
+        "Ge output",
+        "~40-50 t/yr est."
+      ],
+      [
+        "Feed source",
+        ">50% recycled scrap"
+      ],
+      [
+        "GeCl₄ output/yr",
+        "~86t"
+      ]
+    ],
+    "risk": "Single-facility risk at Olen; business distractions from other Umicore segments.",
+    "risks": [
+      "Single-facility risk at Olen; business distractions from other Umicore segments.",
+      "DRC Big Hill ramp timeline uncertain",
+      "Recycled scrap feed shrinks if Chinese fiber output declines"
+    ],
+    "inv": "The western chokepoint for fiber-grade germanium tetrachloride. Operates the only commercial-scale GeCl₄ facility outside China and Russia. The December 2024 Chinese export ban made Umicore's position structural rather than discretionary."
+  },
+  "5N Plus": {
+    "id": "5n-plus",
+    "name": "5N Plus",
+    "type": "Public",
+    "ticker": "VNP · TSX",
+    "country": "Canada",
+    "location_detail": "Montreal (HQ); Salt Lake City, Utah, Canada",
+    "layer": "Refiner",
+    "output_headline": "~2-5 t/yr gallium · multi-metal refiner",
+    "descriptor_pill": "Specialty metals refiner",
+    "quantity_pill": "~2-5 t/yr refined Ga",
+    "status": "Active",
+    "about": "Canadian specialty semiconductor materials company refining high-purity Ge, Ga, Te, In, Bi. Two main segments: Specialty Semiconductors (73% of revenue) and Performance Materials. FY25 revenue +35%, EBITDA +73%.",
+    "stats": [
+      [
+        "Ga output",
+        "2-5 t/yr"
+      ],
+      [
+        "Total revenue",
+        "$391M"
+      ],
+      [
+        "Net debt/EBITDA",
+        "0.5x"
+      ],
+      [
+        "Ticker",
+        "VNP (TSX)"
+      ]
+    ],
+    "risk": "Gallium is a small fraction of 5N Plus revenue; gallium thesis exposure is diluted",
+    "risks": [
+      "Gallium is a small fraction of 5N Plus revenue; gallium thesis exposure is diluted"
+    ],
+    "inv": "Most direct western investment vehicle for critical minerals refining broadly. Gallium is a smaller exposure than germanium within 5N Plus's portfolio."
+  },
+  "PPM Pure Metals": {
+    "id": "ppm-pure-metals",
+    "name": "PPM Pure Metals",
+    "type": "Private",
+    "ticker": null,
+    "country": "Germany",
+    "location_detail": "Langelsheim, Lower Saxony, Germany",
+    "layer": "Refiner",
+    "output_headline": "~10-15 t/yr est. · zone-refined Ge, GeO₂, GeCl₄",
+    "descriptor_pill": "German specialty refiner",
+    "quantity_pill": "~10-15 t/yr est.",
+    "status": "Active",
+    "about": "Privately-held German specialty materials refiner. Produces zone-refined germanium for IR optics and SiGe semiconductor markets. Smaller scale than Umicore; part of western refining diversification but not at fiber-grade GeCl₄ volumes.",
+    "stats": [
+      [
+        "Status",
+        "Private company"
+      ],
+      [
+        "Ge output",
+        "~10-15 t/yr est."
+      ],
+      [
+        "Process",
+        "Zone refining to 7N+ purity"
+      ],
+      [
+        "Location",
+        "Langelsheim, Germany"
+      ]
+    ],
+    "risk": "Private — not directly investable. Scale limited.",
+    "risks": [
+      "Private — not directly investable. Scale limited.",
+      "Small scale, niche market focus",
+      "Dependent on scrap feed from European fiber and IR optics manufacturers"
+    ],
+    "inv": "Privately-held German specialty refiner. Zone-refined germanium for IR optics and SiGe markets; not at fiber-grade GeCl₄ volumes. Part of western refining diversification but smaller scale than Umicore."
+  },
+  "China Primary Supply": {
+    "id": "china-primary-supply",
+    "name": "China Primary Supply",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "China",
+    "layer": "Aggregate",
+    "output_headline": "~120 t/yr · ~57% of global supply",
+    "descriptor_pill": "Primary supply node",
+    "quantity_pill": "~120t Ge + ~290t Ga/yr",
+    "status": "Active",
+    "about": "China Primary Supply represents the aggregated output of Chinese germanium refiners — Lincang Xinyuan Refinery, Yunnan Chihong Refinery, and smaller operators. This is primary germanium refined from coal fly ash and zinc smelting byproducts. China implemented export licensing requirements for germanium in August 2023, creating structural uncertainty for all western buyers.",
+    "stats": [
+      [
+        "Volume",
+        "~120 t/yr primary"
+      ],
+      [
+        "Global share",
+        "~57%"
+      ],
+      [
+        "Export control",
+        "Active since Aug 2023"
+      ],
+      [
+        "Price impact",
+        "+88% in 2024"
+      ]
+    ],
+    "risk": "Export controls implemented August 2023 — ongoing supply risk for western buyers.",
+    "risks": [
+      "Export licensing can be tightened or revoked at any time",
+      "Chinese domestic demand consuming growing share of output",
+      "No western alternative at equivalent scale"
+    ],
+    "inv": "China's dominance of primary germanium supply is the central investment thesis of this supply chain. The export control regime has bifurcated the market — Chinese buyers get unrestricted access while western buyers face licensing delays and price premiums. This creates durable demand for western recycling alternatives."
+  },
+  "Western Recycled Supply": {
+    "id": "western-recycled-supply",
+    "name": "Western Recycled Supply",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": "Multiple",
+    "location_detail": "Belgium, Canada, Germany",
+    "layer": "Aggregate",
+    "output_headline": "~90-110 t/yr recycled · ~$270M est.",
+    "descriptor_pill": "~90-110 t/yr recycled",
+    "quantity_pill": "~$270M @ $8,500/kg",
+    "status": "Active",
+    "about": "Aggregate of western refining capacity — Umicore (Belgium), 5N Plus (Canada), PPM Pure Metals (Germany) combined. Predominantly processes recycled fiber optic scrap and IR optics rework plus the DRC tailings feedstock. ~9% of global refined supply reaches western buyers at significantly higher unit prices than Chinese domestic.",
+    "stats": [
+      [
+        "Volume",
+        "~90-110 t/yr recycled"
+      ],
+      [
+        "Global share",
+        "~43%"
+      ],
+      [
+        "Primary recycler",
+        "Umicore (Belgium)"
+      ],
+      [
+        "Growth driver",
+        "China export control response"
+      ]
+    ],
+    "risk": "Feedstock-limited; cannot scale independently of recycled pool or DRC tailings depletion.",
+    "risks": [
+      "Feedstock-limited; cannot scale independently of recycled pool or DRC tailings depletion.",
+      "Still partially dependent on Chinese primary Ge for high-purity applications",
+      "Western recycling capacity remains well below Chinese primary output"
+    ],
+    "inv": "Non-Chinese supply reaching western buyers. Predominantly recycled, with the DRC tailings feedstock ramping to feed Umicore. ~9% of global refined supply."
+  },
+  "Global Supply": {
+    "id": "global-supply",
+    "name": "Global Supply",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": "Global",
+    "location_detail": "Global",
+    "layer": "Aggregate",
+    "output_headline": "~320 t/yr refined · ~600 t/yr primary",
+    "descriptor_pill": "~320 t/yr refined",
+    "quantity_pill": "~$200-250M realized",
+    "status": "Active",
+    "about": "Total worldwide gallium production. The ~280t gap between primary (600t) and refined (320t) reflects losses in conversion to semiconductor-grade purity plus some primary metal that never gets refined.",
+    "stats": [
+      [
+        "Refined output",
+        "320 t/yr"
+      ],
+      [
+        "Primary output",
+        "600 t/yr"
+      ],
+      [
+        "Market value",
+        "~$560M/yr refined"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
+    ],
+    "risk": "n/a",
+    "risks": [
+      "n/a"
+    ],
+    "inv": "Top-level summary. Refined is the figure that matters for end markets."
+  },
+  "Spetsugli": {
+    "id": "spetsugli",
+    "name": "Spetsugli",
+    "type": "Deposit",
+    "ticker": null,
+    "country": "Russia",
+    "location_detail": "Primorsky Krai, Russia",
+    "layer": "Deposit",
+    "output_headline": "~1,015 t Ge reserves · coal-hosted",
+    "descriptor_pill": "Coal deposit",
+    "quantity_pill": "~1,015 t Ge reserves",
+    "status": "Active",
+    "about": "Russia's primary germanium deposit. Worked by JSC Germanium. Output is effectively unavailable to western buyers due to sanctions imposed after Russia's invasion of Ukraine.",
+    "stats": [
+      [
+        "Reserves",
+        "~1,015 t Ge"
+      ],
+      [
+        "Grade",
+        "450–514 ppm avg"
+      ],
+      [
+        "Operator",
+        "JSC Germanium (Rostec)"
+      ],
+      [
+        "Status",
+        "Active but sanctioned"
+      ]
+    ],
+    "risk": "Sanctions-exposed; no western route to market.",
+    "risks": [
+      "Sanctions-exposed; no western route to market.",
+      "JSC Germanium is part of Rostec, a sanctioned state defense conglomerate",
+      "Sanctions could be reversed but political timeline is entirely unpredictable"
+    ],
+    "inv": "Russia's primary germanium deposit. Effectively unavailable to western buyers due to sanctions. Output likely flows to Chinese and non-western buyers, reinforcing Chinese supply dominance over western markets."
+  },
+  "Big Hill": {
+    "id": "big-hill",
+    "name": "Big Hill",
+    "type": "Deposit",
+    "ticker": null,
+    "country": "DRC",
+    "location_detail": "Lubumbashi, Haut-Katanga, DRC",
+    "layer": "Deposit",
+    "output_headline": "~700 t Ge potential · copper-cobalt tailings",
+    "descriptor_pill": "Tailings deposit",
+    "quantity_pill": "700+ t Ge potential",
+    "status": "Active",
+    "about": "Historic copper-cobalt mining tailings near Lubumbashi with significant germanium content. Being reprocessed by STL/Gécamines joint venture under an offtake agreement with Umicore.",
+    "stats": [
+      [
+        "Slag volume",
+        "14 million tonnes"
+      ],
+      [
+        "Ge potential",
+        "700+ t est."
+      ],
+      [
+        "Operator",
+        "STL / Gécamines"
+      ],
+      [
+        "First export",
+        "October 2024"
+      ]
+    ],
+    "risk": "DRC operating risk; reprocessing ramp-up delays possible.",
+    "risks": [
+      "DRC operating risk; reprocessing ramp-up delays possible.",
+      "Hydrometallurgical plant is new — ramp-up timeline uncertain",
+      "Exclusive Umicore offtake means no price competition"
+    ],
+    "inv": "The single most important western supply development. ~700 t of germanium-bearing tailings being reprocessed by STL/Gécamines under Umicore offtake. Critical feedstock for Umicore as recycled-only supply saturates."
+  },
+  "Red Dog": {
+    "id": "red-dog",
+    "name": "Red Dog",
+    "type": "Deposit",
+    "ticker": null,
+    "country": "USA",
+    "location_detail": "Northwest Arctic Borough, Alaska, USA",
+    "layer": "Deposit",
+    "output_headline": "World-class zinc-lead deposit with Ge · declining",
+    "descriptor_pill": "Zinc ore deposit",
+    "quantity_pill": "Declining — to 2031",
+    "status": "Active",
+    "about": "World-class zinc-lead deposit in northwest Alaska, operated by Teck Resources. Declining toward planned end-of-mine in 2031, though Teck is exploring Aktigiruq extension. Germanium content recovered but volumes not separately disclosed.",
+    "stats": [
+      [
+        "Operator",
+        "Teck Resources (TECK)"
+      ],
+      [
+        "Zinc output",
+        "~555,600 t Zn (2024)"
+      ],
+      [
+        "Mine life",
+        "To 2031 (current pits)"
+      ],
+      [
+        "Ge processing",
+        "Trail smelter, BC"
+      ]
+    ],
+    "risk": "Declining toward planned end-of-mine in 2031 (Aktigiruq extension possible but not yet permitted).",
+    "risks": [
+      "Declining toward planned end-of-mine in 2031 (Aktigiruq extension possible but not yet permitted).",
+      "Germanium output volumes not publicly disclosed",
+      "Teck-Anglo American merger may change operational priorities"
+    ],
+    "inv": "North America's only significant western germanium-bearing zinc operation. Teck Resources operates and refines through Trail smelter; exposure to US Defense Production Act Title III investments possible."
+  },
+  "JSC Germanium": {
+    "id": "jsc-germanium",
+    "name": "JSC Germanium",
+    "type": "Private",
+    "ticker": null,
+    "country": "Russia",
+    "location_detail": "Krasnoyarsk, Russia",
+    "layer": "Host Operation",
+    "output_headline": "~20 t Ge/yr capacity · sanctioned",
+    "descriptor_pill": "Ge mine + refinery",
+    "quantity_pill": "~20 t/yr capacity",
+    "status": "Active",
+    "about": "Russia's integrated germanium operator, working the Spetsugli deposit and operating downstream refining. Output is effectively unavailable to western buyers due to post-2022 sanctions; may flow to Chinese and other non-western buyers.",
+    "stats": [
+      [
+        "Capacity",
+        "~20 t/yr"
+      ],
+      [
+        "Refinery",
+        "Krasnoyarsk, Siberia"
+      ],
+      [
+        "Ownership",
+        "Rostec (state defense)"
+      ],
+      [
+        "Export",
+        "Blocked post-2022"
+      ]
+    ],
+    "risk": "Sanctions-exposed; no western route to market.",
+    "risks": [
+      "Sanctions-exposed; no western route to market.",
+      "Part of Rostec defense conglomerate",
+      "Production continues but serves only Russia and potentially China"
+    ],
+    "inv": "Russia's integrated germanium operator. Effectively unavailable to western buyers due to sanctions. Tracked for geopolitical signaling but not investable."
+  },
+  "STL / Gécamines": {
+    "id": "stl-g-camines",
+    "name": "STL / Gécamines",
+    "type": "Private",
+    "ticker": null,
+    "country": "DRC",
+    "location_detail": "Lubumbashi, Haut-Katanga, DRC",
+    "layer": "Host Operation",
+    "output_headline": "~30 t Ge/yr target · reprocessing Big Hill tailings",
+    "descriptor_pill": "Tailings reprocessor",
+    "quantity_pill": "~30 t/yr target",
+    "status": "Active",
+    "about": "Joint venture between La Société de Traitement du Terril de Lubumbashi (STL) and Congolese state mining company Gécamines. Reprocessing Big Hill copper-cobalt tailings for germanium and other byproducts. Umicore has offtake rights on germanium output.",
+    "stats": [
+      [
+        "Operator",
+        "STL / Gécamines"
+      ],
+      [
+        "Offtake",
+        "100% to Umicore"
+      ],
+      [
+        "Plant",
+        "Commissioned Oct 2023"
+      ],
+      [
+        "Target",
+        "Up to 30% world demand"
+      ]
+    ],
+    "risk": "DRC operating risk; JV structure and political sensitivity around Gécamines.",
+    "risks": [
+      "DRC operating risk; JV structure and political sensitivity around Gécamines.",
+      "Hydrometallurgical plant is new — ramp-up timeline uncertain",
+      "Exclusive Umicore offtake means no market price competition"
+    ],
+    "inv": "Most important western supply development in the chain. Feeds directly into Umicore under offtake — the tailings flow is what enables Umicore's continued non-Chinese output at scale."
+  },
+  "Teck Resources": {
+    "id": "teck-resources",
+    "name": "Teck Resources",
+    "type": "Public",
+    "ticker": "TECK · TSX/NYSE",
+    "country": "Canada",
+    "location_detail": "Vancouver HQ, Canada; Red Dog mine, Alaska USA; Trail smelter, British Columbia, Canada",
+    "layer": "Host Operation",
+    "output_headline": "Undisclosed Ge from Red Dog zinc · North America's only western Ge source",
+    "descriptor_pill": "Diversified zinc miner",
+    "quantity_pill": "Undisclosed Ge volumes",
+    "status": "Active",
+    "about": "Diversified Canadian mining company. Operates Red Dog zinc mine in Alaska — the only significant germanium-bearing zinc operation in North America. Trail smelter in British Columbia processes concentrate but germanium output volumes not separately disclosed in filings.",
+    "stats": [
+      [
+        "Ticker",
+        "TECK (NYSE/TSX)"
+      ],
+      [
+        "Zinc output",
+        "~555,600 t/yr (2024)"
+      ],
+      [
+        "Ge output",
+        "Not disclosed"
+      ],
+      [
+        "Mine life",
+        "Red Dog to 2031"
+      ]
+    ],
+    "risk": "Red Dog declines toward 2031 end-of-mine; Ge output volumes not separately disclosed.",
+    "risks": [
+      "Red Dog declines toward 2031 end-of-mine; Ge output volumes not separately disclosed.",
+      "Teck-Anglo American merger may change operational priorities at Red Dog",
+      "Germanium revenue is unquantified"
+    ],
+    "inv": "North America's only significant western germanium operator via Red Dog. Germanium is a small line in Teck's overall business but carries strategic weight for US supply chain diversification."
+  },
+  "Dycom Industries": {
+    "id": "dycom-industries",
+    "name": "Dycom Industries",
+    "type": "Public",
+    "ticker": "DY · NYSE",
+    "country": "USA",
+    "location_detail": "Palm Beach Gardens, FL",
+    "layer": "End Use",
+    "output_headline": "$4.7B/yr · largest US fiber contractor",
+    "descriptor_pill": "Fiber installer",
+    "quantity_pill": "~$4.6B revenue (FY25)",
+    "status": "Active",
+    "about": "Dycom is the largest dedicated fiber and telecommunications contractor in the United States, installing underground and aerial fiber networks for AT&T, Verizon, Lumen, and increasingly hyperscalers building private fiber WANs. Revenues surpassed $4.7B in FY2025, driven by BEAD-funded rural broadband and hyperscaler private network programs.",
+    "stats": [
+      [
+        "Revenue",
+        "$4.7B/yr (FY2025)"
+      ],
+      [
+        "Ticker",
+        "DY · NYSE"
+      ],
+      [
+        "Customers",
+        "AT&T · Verizon · hyperscalers"
+      ],
+      [
+        "Growth",
+        "+12.6% YoY FY2025"
+      ]
+    ],
+    "risk": "Customer concentration — AT&T and Lumen represent majority of revenue.",
+    "risks": [
+      "Customer concentration — AT&T and Lumen represent majority of revenue",
+      "Labor-intensive model with thin margins subject to cost inflation",
+      "Hyperscaler in-house build teams reduce addressable market over time"
+    ],
+    "inv": "DY (NYSE) is the most direct public vehicle for fiber installation exposure. As hyperscalers shift from leasing to building private fiber networks — Microsoft's 120,000-mile private WAN being the leading example — Dycom captures the labor-intensive installation phase that no hyperscaler performs in-house."
+  },
+  "MasTec": {
+    "id": "mastec",
+    "name": "MasTec",
+    "type": "Public",
+    "ticker": "MTZ · NYSE",
+    "country": "USA",
+    "location_detail": "Coral Gables, FL",
+    "layer": "End Use",
+    "output_headline": "$13.5B/yr · communications + fiber",
+    "descriptor_pill": "Infrastructure contractor",
+    "quantity_pill": "~$12B revenue (FY25)",
+    "status": "Active",
+    "about": "MasTec is one of the largest specialty contractors in North America, with infrastructure segments spanning communications (fiber, 5G), power delivery, oil/gas pipelines, and renewables. Its communications segment installs fiber networks and 5G infrastructure for AT&T, DirecTV, and regional telcos, as well as datacenter-related cabling for enterprise customers.",
+    "stats": [
+      [
+        "Revenue",
+        "$13.5B/yr (2024)"
+      ],
+      [
+        "Ticker",
+        "MTZ · NYSE"
+      ],
+      [
+        "Segment",
+        "Communications ~30% of rev"
+      ],
+      [
+        "Backlog",
+        "$14B+ total backlog"
+      ]
+    ],
+    "risk": "Diversified into oil/gas and renewables — fiber is a minority segment.",
+    "risks": [
+      "Diversified model dilutes pure fiber exposure",
+      "Margins under pressure from project mix and labor costs",
+      "Integration risk from recent acquisitions"
+    ],
+    "inv": "MTZ (NYSE) offers diversified infrastructure exposure with fiber as a significant but minority segment. The communications division benefits from the same BEAD and hyperscaler-driven fiber deployment cycle as Dycom, but MasTec's power delivery segment also benefits from datacenter power infrastructure buildout — double exposure to the AI buildout."
+  },
+  "MYR Group": {
+    "id": "myr-group",
+    "name": "MYR Group",
+    "type": "Public",
+    "ticker": "MYRG · NASDAQ",
+    "country": "USA",
+    "location_detail": "Northbrook, IL",
+    "layer": "End Use",
+    "output_headline": "~$3.8B/yr · MYRG NASDAQ",
+    "descriptor_pill": "Electrical contractor",
+    "quantity_pill": "~$3.6B revenue (FY25)",
+    "status": "Active",
+    "about": "MYR Group provides electrical construction services through two segments: Transmission and Distribution (T&D) and Commercial and Industrial (C&I). Its C&I segment installs electrical systems in large commercial buildings including datacenters — wiring, power distribution, emergency systems, and increasingly the high-density power infrastructure required for GPU clusters.",
+    "stats": [
+      [
+        "Revenue",
+        "~$3.8B/yr (2024)"
+      ],
+      [
+        "Ticker",
+        "MYRG · NASDAQ"
+      ],
+      [
+        "Segment",
+        "C&I electrical for DCs"
+      ],
+      [
+        "Margin",
+        "~3-4% net margin"
+      ]
+    ],
+    "risk": "Commercial & industrial segment is the core — fiber is indirect exposure.",
+    "risks": [
+      "Fiber is indirect exposure — primary business is electrical contracting",
+      "Labor cost inflation pressures margins",
+      "C&I segment competes with many regional electrical contractors"
+    ],
+    "inv": "MYRG (NASDAQ) benefits from the datacenter electrical infrastructure buildout — every hyperscale facility requires millions of dollars of electrical work. As datacenter power density increases from 10kW to 100kW+ per rack for AI, electrical installation complexity and contract value per facility increases proportionally."
+  },
+  "Wesco International": {
+    "id": "wesco-international",
+    "name": "Wesco International",
+    "type": "Public",
+    "ticker": "WCC · NYSE",
+    "country": "USA",
+    "location_detail": "Pittsburgh, PA",
+    "layer": "End Use",
+    "output_headline": "~$22B/yr · WCC NYSE · fiber products distribution",
+    "descriptor_pill": "Electrical/fiber distributor",
+    "quantity_pill": "~$22B revenue (FY25)",
+    "status": "Active",
+    "about": "Wesco International is the largest US distributor of electrical and electronic products and supply chain services, including a significant communications and fiber segment. It sources fiber optic cable, connectors, conduit, and related equipment from Corning, Prysmian, and other manufacturers and distributes to electrical contractors, systems integrators, and datacenter builders. Acquired Anixter in 2020 to build out the communications/fiber distribution segment.",
+    "stats": [
+      [
+        "Revenue",
+        "~$22B/yr (2024)"
+      ],
+      [
+        "Ticker",
+        "WCC · NYSE"
+      ],
+      [
+        "Segment",
+        "Communications & security"
+      ],
+      [
+        "Customers",
+        "EPC contractors · hyperscalers"
+      ]
+    ],
+    "risk": "Distributor margin compression as hyperscalers develop direct manufacturer relationships.",
+    "risks": [
+      "Distributor margin compression as hyperscalers develop direct manufacturer relationships",
+      "Fiber price spike benefits revenues but inventory risk increases",
+      "Commoditization pressure on distribution margins long-term"
+    ],
+    "inv": "WCC (NYSE) benefits from the fiber supply chain buildup — as fiber prices surge and availability tightens, distributors with supplier relationships and inventory positions gain pricing power. Wesco's communications segment captures a percentage of every fiber deployment without the installation labor execution risk."
+  },
+  "Hyperscaler In-House": {
+    "id": "hyperscaler-in-house",
+    "name": "Hyperscaler In-House",
+    "type": "Private",
+    "ticker": null,
+    "country": "USA",
+    "location_detail": "USA (distributed)",
+    "layer": "Aggregate",
+    "output_headline": "120,000mi Microsoft private fiber WAN alone",
+    "descriptor_pill": "Internal deployment team",
+    "quantity_pill": "Internal teams",
+    "status": "Active",
+    "about": "Hyperscalers are increasingly building and owning their own fiber infrastructure rather than leasing from telcos or contracting to fiber network operators. Microsoft has deployed 120,000 miles of dedicated fiber for its AI Wide Area Network. Google owns over 30 submarine cables plus extensive private terrestrial fiber. Meta's Waterworth project is the longest submarine cable ever built. This in-house capability competes directly with external installation contractors for the most strategic fiber projects.",
+    "stats": [
+      [
+        "Scale",
+        "Microsoft: 120,000 mi"
+      ],
+      [
+        "Driver",
+        "AI WAN latency requirements"
+      ],
+      [
+        "Trend",
+        "Accelerating self-build"
+      ],
+      [
+        "Impact",
+        "Reduces contractor market"
+      ]
+    ],
+    "risk": "Competes directly with external contractors — reduces Dycom/MasTec addressable market.",
+    "risks": [
+      "Represents direct competition to external fiber contractors",
+      "No public investment vehicle",
+      "Accelerating trend as AI WAN requirements intensify"
+    ],
+    "inv": "No direct investment — this represents a trend toward hyperscaler disintermediation of the fiber installation supply chain. The investment angle is the constraint it creates: even with in-house teams, hyperscalers still purchase fiber from Corning and Prysmian, and still contract out the majority of installation work to Dycom and MasTec for scale."
+  },
+  "Turner Construction": {
+    "id": "turner-construction",
+    "name": "Turner Construction",
+    "type": "Private",
+    "ticker": null,
+    "country": "USA",
+    "location_detail": "New York, NY",
+    "layer": "End Use",
+    "output_headline": "$9B DC revenue 2025 · 250+ projects · 37% of backlog",
+    "descriptor_pill": "General contractor — datacenter specialist",
+    "quantity_pill": "~$20B revenue (FY25)",
+    "status": "Active",
+    "about": "Turner Construction is the largest general contractor by revenue in the United States and the dominant datacenter construction firm. Approximately 37% of its entire project backlog is datacenter construction — a concentration unmatched by any peer. Turner builds hyperscale facilities for Microsoft, Meta, Google, and AWS across North America and Europe, managing the full construction lifecycle from foundation to commissioning.",
+    "stats": [
+      [
+        "DC revenue",
+        "$9B (2025 est.)"
+      ],
+      [
+        "Backlog share",
+        "37% datacenter"
+      ],
+      [
+        "Customers",
+        "Microsoft · Meta · Google · AWS"
+      ],
+      [
+        "Status",
+        "Private · Turner Industries"
+      ]
+    ],
+    "risk": "Private company — no direct investment. DC concentration creates cyclicality exposure.",
+    "risks": [
+      "Private company — no direct investment vehicle",
+      "37% datacenter concentration creates significant cyclicality exposure",
+      "Labor and material cost inflation pressures fixed-price construction contracts"
+    ],
+    "inv": "No direct public investment — Turner is privately held. The investment angle is indirect: Turner's order backlog is the clearest leading indicator of datacenter construction activity. Turner's dominance means hyperscaler capex plans translate directly into Turner revenues — but the play is the customers, not the contractor."
+  },
+  "Mortenson": {
+    "id": "mortenson",
+    "name": "Mortenson",
+    "type": "Private",
+    "ticker": null,
+    "country": "USA",
+    "location_detail": "Minneapolis, MN",
+    "layer": "End Use",
+    "output_headline": "~$4-5B DC est. · Meta · Microsoft · Google",
+    "descriptor_pill": "Construction company — datacenter",
+    "quantity_pill": "~$6B revenue (FY25)",
+    "status": "Active",
+    "about": "Mortenson is one of the top five datacenter construction firms in the United States, with a strong presence in modular and prefabricated datacenter construction for hyperscalers. It has built facilities for Meta, Microsoft, and Google, and has developed proprietary prefabrication techniques that reduce construction timelines for large-scale deployments. Employee-owned and privately held.",
+    "stats": [
+      [
+        "DC revenue",
+        "~$4-5B est."
+      ],
+      [
+        "Customers",
+        "Meta · Microsoft · Google"
+      ],
+      [
+        "Specialty",
+        "Prefab modular DC"
+      ],
+      [
+        "Status",
+        "Private · employee-owned"
+      ]
+    ],
+    "risk": "Private company. DC market share below Turner and Holder — subject to pricing competition.",
+    "risks": [
+      "Private — no investment vehicle",
+      "Modular approach reduces labor requirements but requires factory capacity",
+      "Competition from Turner, DPR, and Holder for hyperscaler relationships"
+    ],
+    "inv": "No direct investment — private company. Mortenson's modular datacenter expertise is increasingly relevant as hyperscalers seek to accelerate build timelines. The investment angle is hyperscaler capex execution risk — Mortenson is one of a small number of contractors capable of delivering 100MW+ facilities on schedule."
+  },
+  "DPR Construction": {
+    "id": "dpr-construction",
+    "name": "DPR Construction",
+    "type": "Private",
+    "ticker": null,
+    "country": "USA",
+    "location_detail": "Redwood City, CA",
+    "layer": "End Use",
+    "output_headline": "~$2-3B DC est. · hyperscaler focus",
+    "descriptor_pill": "Construction company — technology focus",
+    "quantity_pill": "~$8B revenue (FY25)",
+    "status": "Active",
+    "about": "DPR Construction is a top-ten US general contractor with a strong focus on technology sector and mission-critical facilities including datacenters. Its Silicon Valley roots give it deep relationships with technology companies. DPR specializes in complex, high-specification builds requiring tight coordination between electrical, mechanical, and IT systems — the profile demanded by AI-ready hyperscale facilities.",
+    "stats": [
+      [
+        "DC revenue",
+        "~$2-3B est."
+      ],
+      [
+        "Focus",
+        "Technology sector DCs"
+      ],
+      [
+        "Specialty",
+        "Mission-critical builds"
+      ],
+      [
+        "Status",
+        "Private · employee-owned"
+      ]
+    ],
+    "risk": "Private company. Smaller scale than Turner — limited to specific hyperscaler programs.",
+    "risks": [
+      "Private — no investment vehicle",
+      "Smaller scale limits ability to compete for the largest hyperscaler projects",
+      "Technology sector concentration creates correlation with tech capex cycles"
+    ],
+    "inv": "No direct investment — private company. DPR's technology sector expertise positions it well for the AI datacenter buildout, but the scale is smaller than Turner or Hyperscaler Self-Build programs."
+  },
+  "Holder Construction": {
+    "id": "holder-construction",
+    "name": "Holder Construction",
+    "type": "Private",
+    "ticker": null,
+    "country": "USA",
+    "location_detail": "Atlanta, GA",
+    "layer": "End Use",
+    "output_headline": "Undisclosed · private · Google · Microsoft projects",
+    "descriptor_pill": "Construction company — mission critical",
+    "quantity_pill": "~$3B revenue (FY25)",
+    "status": "Active",
+    "about": "Holder Construction is one of the leading datacenter construction companies in the southeastern and mid-Atlantic United States, with significant projects for Google (multiple Virginia facilities) and Microsoft. The company is private with revenue not publicly disclosed. Holder's strength is in Northern Virginia, which hosts the world's highest concentration of hyperscale datacenters by megawatt capacity.",
+    "stats": [
+      [
+        "DC revenue",
+        "Undisclosed"
+      ],
+      [
+        "Customers",
+        "Google · Microsoft"
+      ],
+      [
+        "Geography",
+        "Southeast · mid-Atlantic"
+      ],
+      [
+        "Status",
+        "Private"
+      ]
+    ],
+    "risk": "Private company. Revenue undisclosed. Southeast and mid-Atlantic focus limits geographic reach.",
+    "risks": [
+      "Private — no investment vehicle",
+      "Revenue and backlog undisclosed — no visibility into pipeline",
+      "Northern Virginia concentration creates geographic single-point exposure"
+    ],
+    "inv": "No direct investment. Holder's Northern Virginia concentration is strategically valuable given that region's dominance in US datacenter capacity, but the company is not investable."
+  },
+  "Hyperscaler Self-Build": {
+    "id": "hyperscaler-self-build",
+    "name": "Hyperscaler Self-Build",
+    "type": "Private",
+    "ticker": null,
+    "country": "USA",
+    "location_detail": "USA (global)",
+    "layer": "Aggregate",
+    "output_headline": "770 facilities in pipeline · $500B+ capex 2026",
+    "descriptor_pill": "In-house development program",
+    "quantity_pill": "Self-build programs",
+    "status": "Active",
+    "about": "The four major hyperscalers (Amazon, Microsoft, Google, Meta) are developing, building, and owning the majority of new large-scale datacenter capacity directly, with self-build programs that dwarf any external developer. Combined 2026 capex plans exceed $500 billion. The current pipeline of approximately 770 global facilities represents the largest coordinated construction program in history, requiring fiber, copper, power equipment, and cooling at quantities that strain every upstream supply chain.",
+    "stats": [
+      [
+        "Pipeline",
+        "770 facilities globally"
+      ],
+      [
+        "Capex 2026",
+        "$500B+ combined"
+      ],
+      [
+        "Growth",
+        "130-140 new per year"
+      ],
+      [
+        "Driver",
+        "AI training + inference"
+      ]
+    ],
+    "risk": "Competes with external developers. Execution risk at unprecedented scale.",
+    "risks": [
+      "Unprecedented scale creates execution risk at all levels",
+      "AI-driven demand could moderate if training efficiency improves",
+      "Power availability and permitting are increasingly the binding constraints"
+    ],
+    "inv": "The hyperscaler self-build programs are the demand signal for every upstream supply chain covered in this analysis. The investment angle is not the construction itself but the supply chains that serve it: Corning (fiber), Prysmian (cable), Umicore (GeCl₄), Dycom (installation). Every dollar of hyperscaler capex flows through these companies."
+  },
+  "Digital Realty": {
+    "id": "digital-realty",
+    "name": "Digital Realty",
+    "type": "Public",
+    "ticker": "DLR · NYSE",
+    "country": "USA",
+    "location_detail": "Austin, TX",
+    "layer": "End Use",
+    "output_headline": "15% US leased power share · N.Virginia concentrated",
+    "descriptor_pill": "Colocation REIT",
+    "quantity_pill": "300+ DCs globally",
+    "status": "Active",
+    "about": "Digital Realty is the world's largest datacenter REIT by market cap, operating colocation and wholesale datacenter facilities globally. Its portfolio is heavily concentrated in Northern Virginia, which hosts the world's densest hyperscale datacenter cluster. Digital Realty leases space and power to hyperscalers, enterprises, and interconnection-dependent businesses, taking approximately 15% of US leased datacenter power.",
+    "stats": [
+      [
+        "Ticker",
+        "DLR · NYSE"
+      ],
+      [
+        "Market",
+        "~$50B market cap"
+      ],
+      [
+        "Power share",
+        "15% US leased"
+      ],
+      [
+        "Geography",
+        "N.Virginia dominant"
+      ]
+    ],
+    "risk": "Northern Virginia power moratorium creates near-term capacity constraint.",
+    "risks": [
+      "Northern Virginia power moratorium creates near-term capacity constraints",
+      "REIT structure requires high dividend payout, limiting retained capital for development",
+      "Hyperscaler self-build trend reduces long-term colocation demand"
+    ],
+    "inv": "DLR (NYSE) offers REIT-structured exposure to datacenter infrastructure with dividend yield characteristics. Northern Virginia concentration is a double-edged sword — the market is the largest but faces power moratoriums and land scarcity. Digital Realty's wholesale model means hyperscaler spending flows through it rather than around it."
+  },
+  "G42": {
+    "id": "g42",
+    "name": "G42",
+    "type": "State-owned",
+    "ticker": null,
+    "country": "UAE",
+    "location_detail": "Abu Dhabi, UAE",
+    "layer": "End Use",
+    "output_headline": "Abu Dhabi AI hub · Microsoft $1.5B JV",
+    "descriptor_pill": "Sovereign AI investor",
+    "quantity_pill": "UAE sovereign AI",
+    "status": "Active",
+    "about": "G42 is the UAE government's primary artificial intelligence and technology investment vehicle, backed by the Abu Dhabi royal family. In 2024, Microsoft invested $1.5 billion in G42 in exchange for G42 adopting Azure as its primary cloud platform and committing to US technology standards. G42 is building hyperscale AI datacenters in Abu Dhabi to position the UAE as a sovereign AI infrastructure hub independent of Chinese technology.",
+    "stats": [
+      [
+        "Partner",
+        "Microsoft $1.5B investment"
+      ],
+      [
+        "Role",
+        "UAE sovereign AI vehicle"
+      ],
+      [
+        "Geography",
+        "Abu Dhabi · expanding"
+      ],
+      [
+        "Risk",
+        "Huawei ties scrutiny"
+      ]
+    ],
+    "risk": "Geopolitical exposure — historical Huawei ties created US government scrutiny.",
+    "risks": [
+      "Historical Huawei technology partnerships created US national security scrutiny",
+      "Sovereign ownership means strategic priorities can override commercial logic",
+      "UAE geopolitical position between US and China technology blocs creates binary risk"
+    ],
+    "inv": "No direct public investment — G42 is private. The investment angle is Microsoft (MSFT), which is G42's technology partner and cloud provider. G42's datacenter buildout is a revenue opportunity for Azure and increases Microsoft's footprint in the Middle East AI market."
+  },
+  "NEOM / PIF": {
+    "id": "neom-pif",
+    "name": "NEOM / PIF",
+    "type": "State-owned",
+    "ticker": null,
+    "country": "Saudi Arabia",
+    "location_detail": "Tabuk Province, Saudi Arabia",
+    "layer": "Aggregate",
+    "output_headline": "Smart city program · $500B planned",
+    "descriptor_pill": "Sovereign infrastructure program",
+    "quantity_pill": "Saudi sovereign infra",
+    "status": "Active",
+    "about": "NEOM is Saudi Arabia's flagship Vision 2030 megaproject, backed by the Public Investment Fund with a stated budget of $500 billion. The project includes THE LINE (a 170km linear city), OXAGON (an industrial complex), and SINDALAH (a tourism island). NEOM's digital infrastructure requirements — including AI datacenters for a fully automated smart city — represent a significant latent demand source for fiber optic cable and associated supply chains, though actual deployment remains years away.",
+    "stats": [
+      [
+        "Backer",
+        "Saudi PIF sovereign fund"
+      ],
+      [
+        "Budget",
+        "$500B total planned"
+      ],
+      [
+        "Spent",
+        "~$6.4B through 2023"
+      ],
+      [
+        "Driver",
+        "Vision 2030 AI goals"
+      ]
+    ],
+    "risk": "Megaproject execution risk at unprecedented scale. $500B commitment vs. $6.4B spent through 2023.",
+    "risks": [
+      "Megaproject execution risk — $500B committed vs. $6.4B actually spent through 2023",
+      "Project scope reductions already announced — THE LINE scaled back significantly",
+      "Political risk — government priorities can change, especially with oil price volatility"
+    ],
+    "inv": "No direct investment — NEOM is a sovereign project. The Saudi PIF is a sovereign wealth fund with no public vehicle. The investment angle is as a signal of Gulf state demand for AI infrastructure that will eventually require fiber, germanium, and associated supply chains from western providers."
+  },
+  "Global AI Datacenter Capacity": {
+    "id": "global-ai-datacenter-capacity",
+    "name": "Global AI Datacenter Capacity",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Aggregate",
+    "output_headline": "~115t Ge/yr · exceeds total supply before 2030",
+    "descriptor_pill": "Output node",
+    "quantity_pill": "~130 GW by 2030",
+    "status": "Active",
+    "about": "Global AI datacenter capacity is the end demand signal that propagates through the entire germanium supply chain. Each new hyperscale facility requires fiber optic cable that contains germanium-doped glass core — and AI-optimized datacenters require 36× more fiber than traditional CPU facilities. At 130-140 new hyperscale facilities per year and growing, fiber demand is projected to reach 455M fiber-km/yr by 2030, requiring more germanium annually than the entire global supply can produce.",
+    "stats": [
+      [
+        "New DCs/yr",
+        "~130-140 hyperscale/yr"
+      ],
+      [
+        "Germanium",
+        "~115t Ge/yr by 2026"
+      ]
+    ],
+    "risk": "Germanium supply shortfall is structural and uncorrectable before 2030.",
+    "risks": [
+      "AI demand growth rate assumptions may prove optimistic if training efficiency improves",
+      "Chinese export controls on germanium may throttle western fiber production before demand is met",
+      "Power availability is becoming the binding constraint faster than fiber supply"
+    ],
+    "inv": "The entire supply chain — from Umicore (GeCl₄), to Corning/Prysmian (fiber and cable), to Dycom (installation) — is an expression of this single demand driver. The investment thesis is not the datacenters themselves but the supply chain constraints they create."
+  },
+  "Various State Operators": {
+    "id": "various-state-operators",
+    "name": "Various State Operators",
+    "type": "Private",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Multiple sites, China",
+    "layer": "Host Operation",
+    "output_headline": "~5-10 t Ge/yr (estimated aggregate)",
+    "descriptor_pill": "Coal operators aggregate",
+    "quantity_pill": "~5-10 t/yr est.",
+    "status": "Active",
+    "about": "Aggregate representing various smaller Chinese state-affiliated coal operators working the Yimin basin and other smaller germanium-bearing coal deposits.",
+    "stats": [
+      [
+        "Type",
+        "Multiple state operators"
+      ],
+      [
+        "Region",
+        "Inner Mongolia"
+      ],
+      [
+        "Activity",
+        "Low — partial extraction"
+      ],
+      [
+        "Data",
+        "Limited disclosure"
+      ]
+    ],
+    "risk": "Fragmented, opaque operator base.",
+    "risks": [
+      "Fragmented, opaque operator base.",
+      "Opaque operations with no public reporting",
+      "Output highly variable"
+    ],
+    "inv": "Aggregate of smaller Chinese state-affiliated coal operators. Represents fragmented supply with limited responsiveness to price signals."
+  },
+  "Chinese State Refiners": {
+    "id": "chinese-state-refiners",
+    "name": "Chinese State Refiners",
+    "type": "Private",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Multiple sites, China",
+    "layer": "Refiner",
+    "output_headline": "~14 t/yr combined (est.) · GeO₂, Ge metal",
+    "descriptor_pill": "Chinese refiners aggregate",
+    "quantity_pill": "~14 t/yr est. combined",
+    "status": "Active",
+    "about": "Aggregate representing smaller Chinese germanium refiners with limited public disclosure. Focus on GeO₂ and crude metal output; limited high-purity GeCl₄ capacity at individual facilities.",
+    "stats": [
+      [
+        "Combined output",
+        "~14 t/yr est."
+      ],
+      [
+        "Feedstock",
+        "Wulantuga + Yimin fly ash"
+      ],
+      [
+        "Products",
+        "GeO₂ and Ge metal"
+      ],
+      [
+        "Visibility",
+        "Limited public data"
+      ]
+    ],
+    "risk": "Opaque individual facility data; output subject to Chinese export controls.",
+    "risks": [
+      "Opaque individual facility data; output subject to Chinese export controls.",
+      "High exit risk when prices fall",
+      "Opaque output reporting"
+    ],
+    "inv": "Aggregate of smaller Chinese refiners. Focus on GeO₂ and crude metal; limited fiber-grade GeCl₄ capacity at individual facilities."
+  },
+  "Blue Moon Metals": {
+    "id": "blue-moon-metals",
+    "name": "Blue Moon Metals",
+    "type": "Public",
+    "ticker": "MOON · TSXV",
+    "country": "USA",
+    "location_detail": "Washington County, Utah, USA",
+    "layer": "Refiner",
+    "output_headline": "~5-10 t/yr Ge target · only past-producing US Ge-Ga mine",
+    "descriptor_pill": "US Ge-Ga mine (planned)",
+    "quantity_pill": "5-10 t/yr target 2028",
+    "status": "Active",
+    "about": "Toronto-listed junior acquired the Apex mine in Utah — the only past-producing primary germanium and gallium mine in the United States. Ge grades 10-100x higher than typical deposits; 1Mt resource. Backed by Oaktree Capital, Hartree Partners, Teck Resources (8% equity), Wheaton Precious Metals, and Altius Minerals. Production target 2028 pending permitting and financing.",
+    "stats": [
+      [
+        "Ticker",
+        "MOON (TSXV/NASDAQ)"
+      ],
+      [
+        "Resource",
+        "1Mt at 0.087% Ge"
+      ],
+      [
+        "Ge target",
+        "5-10 t/yr by 2028"
+      ],
+      [
+        "Backers",
+        "Oaktree, Hartree, Teck (8%)"
+      ]
+    ],
+    "risk": "Pre-production junior; permitting, financing, and ramp-up risk typical of early-stage mining projects.",
+    "risks": [
+      "Pre-production junior; permitting, financing, and ramp-up risk typical of early-stage mining projects.",
+      "No modern NI 43-101 resource estimate yet",
+      "2028 production target is aspirational"
+    ],
+    "inv": "Most important US-domiciled germanium supply development. First new primary Ge mine on US soil in decades. Success would materially reduce US dependency on Chinese primary supply."
+  },
+  "LightPath Technologies": {
+    "id": "lightpath-technologies",
+    "name": "LightPath Technologies",
+    "type": "Public",
+    "ticker": "LPTH · NASDAQ",
+    "country": "USA",
+    "location_detail": "Orlando, Florida, USA (HQ); manufacturing in New Hampshire, Florida, Latvia, China",
+    "layer": "Device Manufacturer",
+    "output_headline": "BlackDiamond IR glass substitute · $40M camera supply deal through 2027",
+    "descriptor_pill": "IR optics substitution play",
+    "quantity_pill": "$40M backlog · F-35 validated",
+    "status": "Active",
+    "about": "Orlando-listed IR optics and imaging systems company. Holds exclusive license to BlackDiamond chalcogenide glass that substitutes for germanium in infrared optics applications — a direct hedge against germanium scarcity. $40M camera supply contract through 2027; F-35 combat aircraft program validation.",
+    "stats": [
+      [
+        "Ticker",
+        "LPTH (NASDAQ)"
+      ],
+      [
+        "Revenue",
+        "$37.2M TTM"
+      ],
+      [
+        "Backlog",
+        "~$90M"
+      ],
+      [
+        "Status",
+        "Active · F-35 validated"
+      ]
+    ],
+    "risk": "Substitution penetration is slow; BlackDiamond requires design-in cycles that take years per customer platform.",
+    "risks": [
+      "Substitution penetration is slow; BlackDiamond requires design-in cycles that take years per customer platform.",
+      "Pre-profit company competing against Umicore's GASIR®",
+      "Germanium price decline would reduce urgency for substitution"
+    ],
+    "inv": "The substitution hedge on germanium scarcity. If germanium prices remain elevated or supply tightens further, BlackDiamond glass captures displaced IR optics demand. Downstream of the germanium chain but structurally important to the investment thesis."
+  },
+  "Germanium Metal": {
+    "id": "germanium-metal",
+    "name": "Germanium Metal",
+    "type": "Commodity",
+    "ticker": null,
+    "country": "Global",
+    "location_detail": "Global (OTC physical markets)",
+    "layer": "Aggregate",
+    "output_headline": "~230 t/yr global · $1,500 → $8,500+/kg in two years",
+    "descriptor_pill": "Physical commodity",
+    "quantity_pill": "$8,500+/kg (west) · $2,500/kg (China)",
+    "status": "Active",
+    "about": "Physical germanium metal traded OTC. No futures market, no ETF, no exchange pricing. Market characterized by bilateral transactions between producers and consumers. Price has risen from ~$1,500/kg to over $8,500/kg in the western market in two years.",
+    "stats": [
+      [
+        "Global supply",
+        "~230 t/yr"
+      ],
+      [
+        "Western price",
+        "$8,500+/kg"
+      ],
+      [
+        "Chinese price",
+        "~$2,500/kg"
+      ],
+      [
+        "Price spread",
+        "~3.5x west vs China"
+      ]
+    ],
+    "risk": "Illiquidity amplifies price moves in both directions; no exchange pricing transparency.",
+    "risks": [
+      "Illiquidity amplifies price moves in both directions; no exchange pricing transparency.",
+      "Storage and handling requirements non-trivial",
+      "No futures market for hedging"
+    ],
+    "inv": "Direct commodity exposure for investors wanting to express a view on germanium without equity-specific business risk. Physical accumulation is the only route — no liquid derivatives exist."
+  },
+  "Guinea Bauxite": {
+    "id": "guinea-bauxite",
+    "name": "Guinea Bauxite",
+    "type": "Private",
+    "ticker": null,
+    "country": "Guinea",
+    "location_detail": "Boke region, Guinea",
+    "layer": "Byproduct Source",
+    "output_headline": "~97M t/yr bauxite · ~4,850t gallium content",
+    "descriptor_pill": "Bauxite-producing region",
+    "quantity_pill": "~97M t/yr bauxite",
+    "status": "Active",
+    "about": "Guinea hosts the world's largest bauxite reserves (~7.4 billion tonnes) and is the largest bauxite exporter globally. CBG (51% Halco / 49% Guinea government) operates Sangaredi. SMB-Winning (Chinese-led consortium) operates Boke. Most Guinean bauxite is exported unrefined — primarily to China — because Guinea has minimal domestic alumina capacity.",
+    "stats": [
+      [
+        "Bauxite output",
+        "97M t/yr"
+      ],
+      [
+        "Gallium content",
+        "~4,850t"
+      ],
+      [
+        "Ga concentration",
+        "~50 ppm"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
+    ],
+    "risk": "Political stability in Guinea; Chinese strategic lock-in via SMB-Winning consortium ownership",
+    "risks": [
+      "Political stability in Guinea; Chinese strategic lock-in via SMB-Winning consortium ownership"
+    ],
+    "inv": "Guinea is the world's largest bauxite exporter but refines almost none of its own output. Roughly 80% of Guinean bauxite flows to Chinese refineries, meaning Guinea structurally underwrites Chinese gallium dominance."
+  },
+  "Australian Bauxite": {
+    "id": "australian-bauxite",
+    "name": "Australian Bauxite",
+    "type": "Private",
+    "ticker": null,
+    "country": "Australia",
+    "location_detail": "Weipa (QLD), Huntly/Willowdale (WA), Australia",
+    "layer": "Byproduct Source",
+    "output_headline": "~100M t/yr bauxite · ~5,000t gallium content",
+    "descriptor_pill": "Bauxite-producing region",
+    "quantity_pill": "~100M t/yr bauxite",
+    "status": "Active",
+    "about": "Australia is the world's largest bauxite producer at ~100M t/yr. Unlike Guinea, most Australian bauxite is refined domestically through integrated operations. Rio Tinto's Weipa feeds Yarwun and Queensland Alumina. Alcoa's Huntly and Willowdale feed Kwinana, Pinjarra, and Wagerup — the last being the planned JAGA gallium project site.",
+    "stats": [
+      [
+        "Bauxite output",
+        "100M t/yr"
+      ],
+      [
+        "Gallium content",
+        "~5,000t"
+      ],
+      [
+        "Ga concentration",
+        "~50 ppm"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
+    ],
+    "risk": "Project-level execution risk at JAGA; FID delays",
+    "risks": [
+      "Project-level execution risk at JAGA; FID delays"
+    ],
+    "inv": "Australia is the only major bauxite-producing region with domestic alumina refining at scale AND a western-aligned political posture. The Wagerup refinery operated by Alcoa — the planned JAGA gallium site — processes Australian-origin bauxite."
+  },
+  "Chinese Domestic Bauxite": {
+    "id": "chinese-domestic-bauxite",
+    "name": "Chinese Domestic Bauxite",
+    "type": "Private",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Shanxi, Guangxi, Henan, Guizhou, China",
+    "layer": "Byproduct Source",
+    "output_headline": "~90M t/yr domestic + ~130M t/yr imports · ~11,000t gallium content",
+    "descriptor_pill": "Bauxite-producing region",
+    "quantity_pill": "~90M t/yr domestic + imports",
+    "status": "Active",
+    "about": "China produces ~90M t/yr of bauxite domestically and imports an additional ~130M t/yr, primarily from Guinea. The combined feedstock pool feeds ~20 Chinese alumina refineries, most of which have installed gallium recovery circuits. This is where ~83% of global primary gallium is produced.",
+    "stats": [
+      [
+        "Domestic output",
+        "90M t/yr"
+      ],
+      [
+        "Imports",
+        "~130M t/yr"
+      ],
+      [
+        "Total Ga content",
+        "~11,000t"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
+    ],
+    "risk": "None chain-specific; Chinese integrated control is a feature, not a risk, from Chinese policy perspective",
+    "risks": [
+      "None chain-specific; Chinese integrated control is a feature from Chinese policy perspective"
+    ],
+    "inv": "China's combined domestic bauxite production and imports feed the ~20 Chinese alumina refineries that produce ~83% of global primary gallium."
+  },
+  "Brazilian Bauxite": {
+    "id": "brazilian-bauxite",
+    "name": "Brazilian Bauxite",
+    "type": "Private",
+    "ticker": null,
+    "country": "Brazil",
+    "location_detail": "Trombetas / Juruti, Para state, Brazil",
+    "layer": "Byproduct Source",
+    "output_headline": "~33M t/yr bauxite · ~1,650t gallium content",
+    "descriptor_pill": "Bauxite-producing region",
+    "quantity_pill": "~33M t/yr bauxite",
+    "status": "Active",
+    "about": "Brazil is the world's fourth-largest bauxite producer. MRN Trombetas (Vale, BHP, Rio Tinto, Alcoa, Norsk Hydro, CBA consortium) produces ~12M t/yr. Alcoa's Juruti adds ~6M t/yr. Combined output primarily feeds Alunorte (Norsk Hydro) — the world's largest alumina refinery — which does not currently produce gallium.",
+    "stats": [
+      [
+        "Bauxite output",
+        "33M t/yr"
+      ],
+      [
+        "Gallium content",
+        "~1,650t"
+      ],
+      [
+        "Key refinery",
+        "Alunorte (no Ga recovery)"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
+    ],
+    "risk": "No active project; latent supply may never materialize without specific catalyst",
+    "risks": [
+      "No active project; latent supply may never materialize without specific catalyst"
+    ],
+    "inv": "Brazil's bauxite feeds Alunorte, the world's largest alumina refinery, which currently does not produce gallium. A latent supply source — if any operator decides to retrofit recovery circuits."
+  },
+  "Indonesian Bauxite": {
+    "id": "indonesian-bauxite",
+    "name": "Indonesian Bauxite",
+    "type": "Private",
+    "ticker": null,
+    "country": "Indonesia",
+    "location_detail": "West Kalimantan / Bintan, Indonesia",
+    "layer": "Byproduct Source",
+    "output_headline": "~26M t/yr bauxite · ~1,300t gallium content",
+    "descriptor_pill": "Bauxite-producing region",
+    "quantity_pill": "~26M t/yr bauxite",
+    "status": "Active",
+    "about": "Indonesia banned unprocessed bauxite exports in June 2023, pushing domestic refining investment. Most output currently still reaches Chinese refineries via various workarounds. Strategic relevance is optionality — large reserves could support future gallium-producing refineries if domestic alumina capacity scales.",
+    "stats": [
+      [
+        "Bauxite output",
+        "26M t/yr"
+      ],
+      [
+        "Gallium content",
+        "~1,300t"
+      ],
+      [
+        "Export ban",
+        "June 2023"
+      ],
+      [
+        "Status",
+        "Active"
+      ]
+    ],
+    "risk": "Export ban enforcement variability; no direct gallium investment vehicle",
+    "risks": [
+      "Export ban enforcement variability; no direct gallium investment vehicle"
+    ],
+    "inv": "Indonesia's 2023 unrefined-export ban is reshaping bauxite flows globally. Limited current relevance to gallium production — strategic optionality if domestic Indonesian alumina capacity scales."
+  },
+  "Chinese Bauxite Refineries": {
+    "id": "chinese-bauxite-refineries",
+    "name": "Chinese Bauxite Refineries",
+    "type": "Private",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Shandong, Guangxi, Henan, Shanxi, Yunnan, China",
+    "layer": "Primary Producer",
+    "output_headline": "~1,000 t/yr capacity · ~590 t/yr actual",
+    "descriptor_pill": "Alumina refineries + Ga recovery",
+    "quantity_pill": "~590 t/yr primary Ga",
+    "status": "Active",
+    "about": "~20 Chinese alumina refineries produce gallium as a byproduct of the Bayer process. Operators include state-owned Chalco and Shandong Weiqiao plus private Vital Materials and Zhuzhou Keneng. Chinese capacity grew from ~140 t/yr in 2010 to ~1,000 t/yr by 2022.",
+    "stats": [
+      [
+        "Capacity",
+        "~1,000 t/yr"
+      ],
+      [
+        "Actual output",
+        "~590 t/yr"
+      ],
+      [
+        "Utilization",
+        "~59%"
+      ],
+      [
+        "Pricing",
+        "$245/kg domestic"
+      ]
+    ],
+    "risk": "Export licensing policy cycles; utilization decisions at Beijing's discretion",
+    "risks": [
+      "Export licensing policy cycles; utilization decisions at Beijing's discretion"
+    ],
+    "inv": "The structural core of global gallium supply. ~590 t/yr actual production across ~20 refineries at ~59% utilization represents China's ability to scale output up or down by hundreds of tonnes per year based on policy direction."
+  },
+  "Alcoa / JAGA (Wagerup)": {
+    "id": "alcoa-jaga-wagerup",
+    "name": "Alcoa / JAGA (Wagerup)",
+    "type": "Private",
+    "ticker": null,
+    "country": "Australia",
+    "location_detail": "Wagerup, Western Australia",
+    "layer": "Primary Producer",
+    "output_headline": "100 t/yr target 2028 · 0 t/yr current · FID pending",
+    "descriptor_pill": "Gallium extraction (planned)",
+    "quantity_pill": "100 t/yr target 2028",
+    "status": "Active",
+    "about": "Japan-Australia Gallium (JAGA) project announced October 2025 to extract gallium from Alcoa's existing Wagerup alumina refinery liquor stream. Backed by four sovereign governments (US, Australia, Japan) with AUD 200M concessional Australian equity.",
+    "stats": [
+      [
+        "Target capacity",
+        "100 t/yr"
+      ],
+      [
+        "Current output",
+        "0 t/yr"
+      ],
+      [
+        "Status",
+        "Pre-FID"
+      ],
+      [
+        "Government backing",
+        "AUD 200M"
+      ]
+    ],
+    "risk": "FID delay; sovereign backing concentration creates political dependency",
+    "risks": [
+      "FID delay; sovereign backing concentration creates political dependency"
+    ],
+    "inv": "The single largest non-Chinese primary production facility in development. 100 t/yr at full ramp would be roughly 30% of current global refined supply."
+  },
+  "Alcoa Corporation": {
+    "id": "alcoa-corporation",
+    "name": "Alcoa Corporation",
+    "type": "Public",
+    "ticker": "AA · NYSE",
+    "country": "USA",
+    "location_detail": "Pittsburgh PA (HQ); Australia, North America, Brazil",
+    "layer": "Primary Producer",
+    "output_headline": "~$11B market cap · Wagerup gallium project targeting 100 t/yr",
+    "descriptor_pill": "Integrated aluminum producer",
+    "quantity_pill": "~$11B market cap",
+    "status": "Active",
+    "about": "Alcoa is one of the world's largest integrated aluminum producers, with bauxite mining, alumina refining, and aluminum smelting operations across Australia, North America, Brazil, and Europe. Gallium is a new product line that would leverage existing Wagerup refinery infrastructure.",
+    "stats": [
+      [
+        "Market cap",
+        "~$10B"
+      ],
+      [
+        "Revenue",
+        "~$12B"
+      ],
+      [
+        "Gallium target",
+        "100 t/yr via JAGA"
+      ],
+      [
+        "Ticker",
+        "AA (NYSE)"
+      ]
+    ],
+    "risk": "Gallium thesis is small relative to aluminum; aluminum price volatility drives share price more than JAGA milestones",
+    "risks": [
+      "Gallium thesis is small relative to aluminum; aluminum price volatility drives share price"
+    ],
+    "inv": "The corporate vehicle for gallium exposure via the JAGA project. Given sovereign backing, Alcoa is the most liquid western vehicle for primary production exposure."
+  },
+  "Metlen Energy & Metals": {
+    "id": "metlen-energy-metals",
+    "name": "Metlen Energy & Metals",
+    "type": "Public",
+    "ticker": "MYTIL · Athens",
+    "country": "Greece",
+    "location_detail": "Agios Nikolaos, Greece",
+    "layer": "Primary Producer",
+    "output_headline": "50 t/yr target 2028 · ~5 kg first production Jan 2026",
+    "descriptor_pill": "Alumina refinery + Ga recovery",
+    "quantity_pill": "50 t/yr target 2028",
+    "status": "Active",
+    "about": "Diversified Greek industrial group with metals, energy, and infrastructure operations. Operates one of Europe's largest alumina refineries at Agios Nikolaos. Announced first 5 kg gallium production January 2026. Designated EU Critical Raw Materials Act Strategic Project.",
+    "stats": [
+      [
+        "Target capacity",
+        "50 t/yr by 2028"
+      ],
+      [
+        "Current output",
+        "~5 kg"
+      ],
+      [
+        "EIB financing",
+        "€90M"
+      ],
+      [
+        "Ticker",
+        "MYTIL (Athens)"
+      ]
+    ],
+    "risk": "Scale-up execution; 10,000x ramp from 5 kg to 50 tonnes",
+    "risks": [
+      "Scale-up execution; Greek sovereign risk; European demand capture vs export"
+    ],
+    "inv": "Europe's first industrial gallium producer. 50 t/yr by 2028 would fully cover current EU gallium demand. Already in production at demo scale."
+  },
+  "Rio Tinto / Indium JV": {
+    "id": "rio-tinto-indium-jv",
+    "name": "Rio Tinto / Indium JV",
+    "type": "Public",
+    "ticker": "RIO · NYSE/LSE",
+    "country": "Canada",
+    "location_detail": "Vaudreuil, Quebec, Canada",
+    "layer": "Primary Producer",
+    "output_headline": "~3.5 t/yr demo · 40 t/yr commercial target",
+    "descriptor_pill": "Gallium demo plant",
+    "quantity_pill": "~3.5 t/yr demo",
+    "status": "Active",
+    "about": "World's second-largest mining company with significant bauxite and alumina operations. Vaudreuil gallium project is a partnership with Indium Corporation (which owns the extraction process IP). Demo plant began operating 2024.",
+    "stats": [
+      [
+        "Demo capacity",
+        "3.5 t/yr"
+      ],
+      [
+        "Commercial target",
+        "40 t/yr"
+      ],
+      [
+        "Status",
+        "Demo stage"
+      ],
+      [
+        "Ticker",
+        "RIO (NYSE/LSE/ASX)"
+      ]
+    ],
+    "risk": "Commercial-scale FID not yet made; gallium thesis diluted by mega-cap scale",
+    "risks": [
+      "Commercial-scale FID not yet made; gallium thesis diluted by mega-cap scale"
+    ],
+    "inv": "Demonstration-stage North American producer with 40 t/yr commercial target post-2028. Less binary than Alcoa (demo already running) but further from commercial scale."
+  },
+  "Korea Zinc / Crucible JV": {
+    "id": "korea-zinc-crucible-jv",
+    "name": "Korea Zinc / Crucible JV",
+    "type": "Public",
+    "ticker": "010130 · KRX",
+    "country": "USA",
+    "location_detail": "Clarksville, Tennessee, USA",
+    "layer": "Primary Producer",
+    "output_headline": "$7.4B JV · DoD 40% equity · 40 t/yr gallium target 2029",
+    "descriptor_pill": "Critical minerals JV",
+    "quantity_pill": "40 t/yr Ga target 2029",
+    "status": "Active",
+    "about": "$7.4B joint venture announced December 2025. Korea Zinc (<10% equity, operator role), US DoD (40% equity), JPMorgan (advisor). Largest critical minerals processing investment in US history.",
+    "stats": [
+      [
+        "Total investment",
+        "$7.4B"
+      ],
+      [
+        "DoD equity",
+        "40%"
+      ],
+      [
+        "Gallium target",
+        "40 t/yr"
+      ],
+      [
+        "Operations",
+        "2029"
+      ]
+    ],
+    "risk": "Construction timing (2026-2029); ownership dispute affects execution",
+    "risks": [
+      "Construction timing (2026-2029); ownership dispute (Korea Zinc vs Young Poong) affects execution"
+    ],
+    "inv": "40 t/yr gallium from a multi-output smelter scheduled 2029. The US DoD 40% equity stake signals strategic-asset treatment of gallium alongside other outputs."
+  },
+  "Nyrstar Tennessee": {
+    "id": "nyrstar-tennessee",
+    "name": "Nyrstar Tennessee",
+    "type": "Private",
+    "ticker": null,
+    "country": "USA",
+    "location_detail": "Clarksville, Tennessee, USA",
+    "layer": "Primary Producer",
+    "output_headline": "126-145 t/yr gallium content in mine feed · facility in demolition",
+    "descriptor_pill": "Zinc smelter (demolition)",
+    "quantity_pill": "126-145 t/yr Ga in feed",
+    "status": "Active",
+    "about": "Trafigura-owned zinc smelter operating since the 1970s. Zinc concentrate feed contains significant gallium but recovery was never commercially implemented. Being demolished to make way for Korea Zinc / Crucible JV.",
+    "stats": [
+      [
+        "Ga in feed",
+        "126-145 t/yr"
+      ],
+      [
+        "Recovery",
+        "Never commercialized"
+      ],
+      [
+        "Status",
+        "Demolition"
+      ],
+      [
+        "Successor",
+        "Crucible JV"
+      ]
+    ],
+    "risk": "Demolition execution timing affects Crucible construction schedule",
+    "risks": [
+      "Demolition execution timing affects Crucible construction schedule"
+    ],
+    "inv": "Historic zinc smelter illustrating the 'lost' western recovery opportunity that the Crucible rebuild is meant to finally capture."
+  },
+  "Dowa Holdings": {
+    "id": "dowa-holdings",
+    "name": "Dowa Holdings",
+    "type": "Public",
+    "ticker": "5714 · Tokyo",
+    "country": "Japan",
+    "location_detail": "Tokyo (HQ); Kosaka, Akita, Japan",
+    "layer": "Refiner",
+    "output_headline": "~10-30 t/yr high-purity gallium · 6N+ purity",
+    "descriptor_pill": "High-purity Ga refiner",
+    "quantity_pill": "~10-30 t/yr refined Ga",
+    "status": "Active",
+    "about": "Diversified Japanese specialty materials group. Japan's primary high-purity refining capacity at 6N+ — the grade compound semiconductor wafer production requires. Dependent on imported feedstock (Chinese primary plus Japanese recycled).",
+    "stats": [
+      [
+        "Output",
+        "10-30 t/yr"
+      ],
+      [
+        "Purity",
+        "99.9999%+"
+      ],
+      [
+        "Global position",
+        "Leading non-Chinese"
+      ],
+      [
+        "Ticker",
+        "5714.T (Tokyo)"
+      ]
+    ],
+    "risk": "Feedstock dependence on Chinese primary supply; diversified portfolio dilutes gallium thesis",
+    "risks": [
+      "Feedstock dependence on Chinese primary supply; diversified portfolio dilutes gallium thesis"
+    ],
+    "inv": "The de facto western pipeline for GaAs wafer supply. Japan's primary high-purity gallium refiner at the 6N+ purity grade required for compound semiconductor wafer production."
+  },
+  "Indium Corporation": {
+    "id": "indium-corporation",
+    "name": "Indium Corporation",
+    "type": "Private",
+    "ticker": null,
+    "country": "USA",
+    "location_detail": "Clinton, New York, USA",
+    "layer": "Refiner",
+    "output_headline": "Process IP owner · limited direct production",
+    "descriptor_pill": "Process IP + GaAs recycler",
+    "quantity_pill": "Limited direct output",
+    "status": "Active",
+    "about": "Privately-held specialty materials company known for solder, indium, and specialty metals refining. Owns the gallium extraction process IP used in Rio Tinto's Vaudreuil demo plant. Operates GaAs manufacturing scrap recycling in New York.",
+    "stats": [
+      [
+        "Role",
+        "Process IP licensing"
+      ],
+      [
+        "Partner",
+        "Rio Tinto (Vaudreuil)"
+      ],
+      [
+        "Recycling",
+        "GaAs scrap, New York"
+      ],
+      [
+        "Status",
+        "Private"
+      ]
+    ],
+    "risk": "Private; limited visibility; IP value crystallizes only if Rio Tinto commercial conversion goes ahead",
+    "risks": [
+      "Private; limited visibility; IP value crystallizes only if Rio Tinto commercial conversion goes ahead"
+    ],
+    "inv": "Owns the process IP used in Rio Tinto's Vaudreuil demo plant. More of an IP-licensing and recycling play than a volume producer. Private, so no direct investment vehicle."
+  },
+  "Vital Materials": {
+    "id": "vital-materials",
+    "name": "Vital Materials",
+    "type": "Private",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Guangzhou, Guangdong, China",
+    "layer": "Refiner",
+    "output_headline": "Leading Chinese high-purity refiner · MOCVD precursors",
+    "descriptor_pill": "Chinese high-purity refiner",
+    "quantity_pill": "MOCVD precursors + Ga metal",
+    "status": "Active",
+    "about": "One of China's largest integrated specialty metals producers. Refines Ga, In, Ge, Te, rare earths. Produces MOCVD precursor chemicals (trimethylgallium) used to grow thin GaN layers during chip manufacturing.",
+    "stats": [
+      [
+        "Products",
+        "High-purity Ga, MOCVD precursors"
+      ],
+      [
+        "Market position",
+        "Leading Chinese refiner"
+      ],
+      [
+        "Status",
+        "Active"
+      ],
+      [
+        "Ownership",
+        "Private"
+      ]
+    ],
+    "risk": "Private Chinese company; subject to same export licensing regime",
+    "risks": [
+      "Private Chinese company; subject to same export licensing regime"
+    ],
+    "inv": "Core Chinese high-purity gallium refiner. Produces MOCVD precursor chemicals — the specific chemical form gallium takes in GaN chip manufacturing."
+  },
+  "Zhuzhou Smelter Group": {
+    "id": "zhuzhou-smelter-group",
+    "name": "Zhuzhou Smelter Group",
+    "type": "Private",
+    "ticker": null,
+    "country": "China",
+    "location_detail": "Hunan Province, China",
+    "layer": "Refiner",
+    "output_headline": "Chinese high-purity refining capacity · aggregated figures",
+    "descriptor_pill": "Chinese high-purity refiner",
+    "quantity_pill": "Aggregated refining capacity",
+    "status": "Active",
+    "about": "Two Hunan-based Chinese operators of high-purity gallium refining capacity. Zhuzhou Smelter Group is state-affiliated; Zhuzhou Keneng is private. Together with Vital Materials, comprise the core of Chinese downstream high-purity gallium production.",
+    "stats": [
+      [
+        "Type",
+        "State-affiliated + Private"
+      ],
+      [
+        "Refined output",
+        "Aggregated (~290 t/yr total Chinese)"
+      ],
+      [
+        "Status",
+        "Active"
+      ],
+      [
+        "Ownership",
+        "State-affiliated / Private"
+      ]
+    ],
+    "risk": "Subject to Chinese export licensing regime",
+    "risks": [
+      "Subject to Chinese export licensing regime"
+    ],
+    "inv": "Together with Vital Materials, comprise core Chinese downstream high-purity gallium production serving the Chinese semiconductor industry."
+  },
+  "Western Refined Supply": {
+    "id": "western-refined-supply",
+    "name": "Western Refined Supply",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": "Multiple",
+    "location_detail": "Japan, Canada, USA (aggregate)",
+    "layer": "Aggregate",
+    "output_headline": "~15-30 t/yr · ~9% of global refined supply",
+    "descriptor_pill": "~15-30 t/yr refined",
+    "quantity_pill": "~$26-52M @ $1,750/kg",
+    "status": "Active",
+    "about": "Combined non-Chinese, non-Russian high-purity refined gallium output. Dominated by Dowa Holdings in Japan. The structural gap the four western primary producer projects aim to close.",
+    "stats": [
+      [
+        "Combined output",
+        "15-30 t/yr"
+      ],
+      [
+        "Key producers",
+        "Dowa, 5N Plus, Indium Corp"
+      ],
+      [
+        "Market value",
+        "$26-52M/yr"
+      ],
+      [
+        "Global share",
+        "~9%"
+      ]
+    ],
+    "risk": "Scale gap vs Chinese supply; timing of western production ramps",
+    "risks": [
+      "Scale gap vs Chinese supply; timing of western production ramps"
+    ],
+    "inv": "Summary view of non-Chinese refined gallium supply. The structural gap the western primary producer projects aim to close over 2026-2029."
+  }
+}

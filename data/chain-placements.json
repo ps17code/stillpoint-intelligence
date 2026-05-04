@@ -1,0 +1,882 @@
+[
+  {
+    "chain_id": "germanium",
+    "node_id": "Lincang",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Lincang Xinyuan"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Wulantuga",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Shengli Coal Group"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Yimin",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Various State Ops"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Huize",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Yunnan Chihong"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Yiliang + SYGT",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Yunnan Chihong"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Spetsugli",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "JSC Germanium"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Big Hill",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "STL / Gécamines"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Red Dog",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Teck Resources"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Lincang Xinyuan",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Lincang"
+    ],
+    "feeds_into": [
+      "Lincang Xinyuan Refinery"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Shengli Coal Group",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Wulantuga"
+    ],
+    "feeds_into": [
+      "Smaller Chinese Refiners"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Various State Ops",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Yimin"
+    ],
+    "feeds_into": [
+      "Smaller Chinese Refiners"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Yunnan Chihong",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Huize",
+      "Yiliang + SYGT"
+    ],
+    "feeds_into": [
+      "Yunnan Chihong Refinery"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Market maker",
+    "wtmi_display_order": 0
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "JSC Germanium",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Spetsugli"
+    ],
+    "feeds_into": [
+      "JSC Germanium Refinery"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "STL / Gécamines",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Big Hill"
+    ],
+    "feeds_into": [
+      "Umicore"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Feedstock supplier",
+    "wtmi_display_order": 2
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Teck Resources",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Red Dog"
+    ],
+    "feeds_into": [
+      "5N Plus"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Feedstock supplier",
+    "wtmi_display_order": 1
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Lincang Xinyuan Refinery",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Lincang Xinyuan"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Smaller Chinese Refiners",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Shengli Coal Group",
+      "Various State Ops"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Yunnan Chihong Refinery",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Yunnan Chihong"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "JSC Germanium Refinery",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "JSC Germanium"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Umicore",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "STL / Gécamines"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Chokepoint holder",
+    "wtmi_display_order": 4
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "5N Plus",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Teck Resources"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Capacity builder",
+    "wtmi_display_order": 5
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "PPM Pure Metals",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "China Primary Supply",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "germanium",
+    "node_id": "Western Recycled Supply",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "Umicore GeCl4",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Corning",
+      "Prysmian",
+      "Fujikura"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "Yunnan Chihong GeCl4",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Sumitomo Electric",
+      "Shin-Etsu",
+      "YOFC"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "Chinese State GeCl4 Plants",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Sumitomo Electric",
+      "Shin-Etsu",
+      "YOFC"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "JSC Germanium GeCl4",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Sumitomo Electric"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "Corning",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Umicore GeCl4"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Chokepoint holder",
+    "wtmi_display_order": 0
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "Prysmian",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Umicore GeCl4"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Capacity builder",
+    "wtmi_display_order": 1
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "Fujikura",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Umicore GeCl4"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Pure-play",
+    "wtmi_display_order": 2
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "Sumitomo Electric",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Yunnan Chihong GeCl4",
+      "Chinese State GeCl4 Plants",
+      "JSC Germanium GeCl4"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "Shin-Etsu",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Yunnan Chihong GeCl4",
+      "Chinese State GeCl4 Plants"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "YOFC",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Yunnan Chihong GeCl4",
+      "Chinese State GeCl4 Plants"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Technology",
+    "wtmi_display_order": 3
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "CommScope",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "AFL",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "Alcatel SN",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "SubCom",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "NEC",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "Datacenter Cable",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "Terrestrial Long-Haul",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "fiber",
+    "node_id": "Subsea Cable",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Guinea Bauxite",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Chinese Bauxite Refineries"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Australian Bauxite",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Alcoa / JAGA (Wagerup)",
+      "Alcoa Corporation"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Chinese Domestic Bauxite",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Chinese Bauxite Refineries"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Brazilian Bauxite",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Chinese Bauxite Refineries"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Indonesian Bauxite",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Chinese Bauxite Refineries"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Chinese Bauxite Refineries",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Guinea Bauxite",
+      "Chinese Domestic Bauxite",
+      "Brazilian Bauxite",
+      "Indonesian Bauxite"
+    ],
+    "feeds_into": [
+      "Vital Materials",
+      "Zhuzhou Smelter Group",
+      "Dowa Holdings",
+      "5N Plus"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Alcoa / JAGA (Wagerup)",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Australian Bauxite"
+    ],
+    "feeds_into": [
+      "Dowa Holdings"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Alcoa Corporation",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Australian Bauxite"
+    ],
+    "feeds_into": [
+      "Indium Corporation"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Capacity builder",
+    "wtmi_display_order": 0
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Metlen Energy & Metals",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Dowa Holdings"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Capacity builder",
+    "wtmi_display_order": 1
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Rio Tinto / Indium JV",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [
+      "Indium Corporation"
+    ],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Korea Zinc / Crucible JV",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Nyrstar Tennessee",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Dowa Holdings",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Chinese Bauxite Refineries",
+      "Alcoa / JAGA (Wagerup)",
+      "Metlen Energy & Metals"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Chokepoint holder",
+    "wtmi_display_order": 5
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "5N Plus",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Chinese Bauxite Refineries"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Pure-play",
+    "wtmi_display_order": 6
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Indium Corporation",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Alcoa Corporation",
+      "Rio Tinto / Indium JV"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Vital Materials",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Chinese Bauxite Refineries"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Zhuzhou Smelter Group",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [
+      "Chinese Bauxite Refineries"
+    ],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Western Refined Supply",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": "Chinese Primary Supply",
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": true,
+    "wtmi_category_tag": "Market maker",
+    "wtmi_display_order": 4
+  },
+  {
+    "chain_id": "gallium",
+    "node_id": [
+      "Global Supply"
+    ],
+    "relevance": "",
+    "chain_specific_risk": "",
+    "feeds_from": [],
+    "feeds_into": [],
+    "show_on_tree": true,
+    "show_in_wtmi": false,
+    "wtmi_category_tag": null,
+    "wtmi_display_order": null
+  }
+]

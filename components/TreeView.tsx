@@ -18,6 +18,8 @@ import nodesJson from "@/data/nodes.json";
 import galliumChainJson from "@/data/gallium-chain.json";
 import galliumNodesJson from "@/data/gallium-nodes.json";
 import germaniumNodesJson from "@/data/germanium-nodes.json";
+import universalNodesJson from "@/data/universal-nodes.json";
+import chainPlacementsJson from "@/data/chain-placements.json";
 import germaniumInputJson from "@/data/inputs/germanium.json";
 import galliumInputJson from "@/data/inputs/gallium.json";
 import fiberInputJson from "@/data/inputs/fiber-optic-cable.json";
@@ -35,6 +37,39 @@ const galliumChain = (galliumChainJson as Record<string, unknown>).GALLIUM_CHAIN
 const galliumNodes = galliumNodesJson as unknown as Record<string, NodeData>;
 const germaniumNodes = germaniumNodesJson as unknown as Record<string, NodeData>;
 const galliumLc = (galliumChainJson as Record<string, unknown>).layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
+
+/* ── Universal node data (v5.2) ── */
+type UniversalNode = {
+  id: string; name: string; type: string; ticker: string | null;
+  country: string | null; location_detail: string; layer: string;
+  output_headline: string; descriptor_pill: string; quantity_pill: string;
+  status: string; about: string; stats: [string, string][];
+  risk: string; risks: string[]; inv: string;
+};
+const universalNodes = universalNodesJson as unknown as Record<string, UniversalNode>;
+
+type ChainPlacement = {
+  chain_id: string; node_id: string; relevance: string; chain_specific_risk: string;
+  feeds_from: string[]; feeds_into: string[];
+  show_on_tree: boolean; show_in_wtmi: boolean;
+  wtmi_category_tag: string | null; wtmi_display_order: number | null;
+};
+const chainPlacements = chainPlacementsJson as unknown as ChainPlacement[];
+
+/** Look up a node from universal data, falling back to legacy sources */
+function getUniversalNode(name: string): UniversalNode | null {
+  return universalNodes[name] ?? null;
+}
+
+/** Get placements for a node across all chains */
+function getNodePlacements(nodeName: string): ChainPlacement[] {
+  return chainPlacements.filter(p => p.node_id === nodeName);
+}
+
+/** Get placements for a specific chain */
+function getChainPlacements(chainId: string): ChainPlacement[] {
+  return chainPlacements.filter(p => p.chain_id === chainId);
+}
 
 /* ── palette ── */
 const borderColor = "#252220";
@@ -3151,23 +3186,22 @@ export default function TreeView() {
               </>
             )}
             {centerView === "globe" && (() => {
-              // If a node is selected, show its detail card
+              // If a node is selected, show its detail card from universal data
               if (selectedTreeNode) {
-                const nodeData = allNodes[selectedTreeNode] ?? galliumNodes[selectedTreeNode] ?? germaniumNodes[selectedTreeNode];
-                if (nodeData) {
-                  const raw = nodeData as unknown as Record<string, unknown>;
+                const uNode = getUniversalNode(selectedTreeNode);
+                if (uNode) {
                   return (
                     <div style={{ marginBottom: 10 }}>
-                      <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>{String(raw.type ?? "")}</p>
+                      <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>{uNode.layer}</p>
                       <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
-                        <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0" }}>{selectedTreeNode}</p>
-                        <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>{String(raw.loc ?? "")}</p>
-                        {raw.stat ? <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 6px 0" }}>{String(raw.stat)}</p> : null}
-                        {raw.role ? <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.5, margin: "0 0 6px 0" }}>{String(raw.role)}</p> : null}
-                        {raw.risk ? (
+                        <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0" }}>{uNode.name}</p>
+                        <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>{uNode.location_detail}</p>
+                        {uNode.output_headline ? <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 6px 0" }}>{uNode.output_headline}</p> : null}
+                        {uNode.about ? <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.5, margin: "0 0 6px 0" }}>{uNode.about}</p> : null}
+                        {uNode.risk ? (
                           <div style={{ paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
                             <p style={{ fontSize: 7, letterSpacing: "0.06em", color: "#555", margin: "0 0 3px 0", textTransform: "uppercase" as const }}>KEY RISK</p>
-                            <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: 0 }}>{String(raw.risk)}</p>
+                            <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: 0 }}>{uNode.risk}</p>
                           </div>
                         ) : null}
                       </div>
@@ -3275,7 +3309,7 @@ export default function TreeView() {
 
               if (!nodeLayers) return <p style={{ fontSize: 10, color: "#555", padding: "20px 0" }}>Select an input to view its nodes.</p>;
 
-              const getNodeData = (name: string) => allNodes[name] ?? galliumNodes[name] ?? germaniumNodes[name];
+              const getNodeData = (name: string) => universalNodes[name] ?? allNodes[name] ?? galliumNodes[name] ?? germaniumNodes[name];
 
               return (
                 <>
@@ -3379,9 +3413,8 @@ export default function TreeView() {
                 return <p style={{ fontSize: 10, color: "#555", padding: "20px 0" }}>Click a node to view context</p>;
               }
 
-              // Look up node data from the appropriate source
-              const nodeData = allNodes[selectedTreeNode] ?? galliumNodes[selectedTreeNode] ?? germaniumNodes[selectedTreeNode];
-              if (!nodeData) {
+              const uNode = getUniversalNode(selectedTreeNode);
+              if (!uNode) {
                 return (
                   <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
                     <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>{selectedTreeNode}</p>
@@ -3390,34 +3423,91 @@ export default function TreeView() {
                 );
               }
 
+              const placements = getNodePlacements(selectedTreeNode);
+              const currentChainId = lastEntry?.id === "fiber" ? "fiber" : lastEntry?.id;
+              const currentPlacement = placements.find(p => p.chain_id === currentChainId);
+              const relatedChains = placements.filter(p => p.chain_id !== currentChainId).map(p => p.chain_id);
+              const countryCode = uNode.country ? ({"China":"cn","USA":"us","Belgium":"be","Canada":"ca","Russia":"ru","DRC":"cd","Japan":"jp","Germany":"de","France":"fr","Italy":"it","Australia":"au","Brazil":"br","Indonesia":"id","India":"in","Guinea":"gn","South Korea":"kr","Austria":"at","Netherlands":"nl","UAE":"ae","Saudi Arabia":"sa","Greece":"gr","Global":"un","Multiple":"un"} as Record<string,string>)[uNode.country] : null;
+
               return (
                 <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
-                  <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0", fontFamily: "'EB Garamond', Georgia, serif" }}>{selectedTreeNode}</p>
-                  {nodeData.type && <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>{nodeData.type}</p>}
-                  {nodeData.loc && <p style={{ fontSize: 9, color: "#706a60", margin: "0 0 8px 0" }}>{nodeData.loc}</p>}
-                  {nodeData.stat && (
+                  {/* 1. Header: name + type + country */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{uNode.name}</p>
+                    {uNode.ticker && <span style={{ fontSize: 7, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{uNode.ticker}</span>}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
+                    <span style={{ fontSize: 7, color: templateAccent ?? "#706a60", letterSpacing: "0.04em", textTransform: "uppercase" as const }}>{uNode.layer}</span>
+                    {uNode.country && countryCode && (
+                      <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+                        <img src={`https://flagcdn.com/16x12/${countryCode}.png`} alt={uNode.country} style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7 }} />
+                        <span style={{ fontSize: 7, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{uNode.country}</span>
+                      </div>
+                    )}
+                    <span style={{ fontSize: 7, color: uNode.status === "Active" ? "#5a8a5a" : "#8a7a5a", fontFamily: "'Geist Mono', monospace" }}>{uNode.status}</span>
+                  </div>
+
+                  {/* 2. Output headline */}
+                  {uNode.output_headline && (
+                    <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 8px 0", lineHeight: 1.4 }}>{uNode.output_headline}</p>
+                  )}
+
+                  {/* 3. About (universal) */}
+                  {uNode.about && (
                     <>
-                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>KEY STAT</p>
-                      <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 8px 0", lineHeight: 1.4 }}>{nodeData.stat}</p>
+                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>ABOUT</p>
+                      <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{uNode.about}</p>
                     </>
                   )}
-                  {nodeData.role && (
+
+                  {/* 4. Chain-specific relevance */}
+                  {currentPlacement?.relevance && (
                     <>
-                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>ROLE</p>
-                      <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{nodeData.role}</p>
+                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>RELEVANCE TO {currentChainId?.toUpperCase()}</p>
+                      <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{currentPlacement.relevance}</p>
                     </>
                   )}
-                  {nodeData.risk && (
-                    <>
-                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>RISK</p>
-                      <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{nodeData.risk}</p>
-                    </>
+
+                  {/* 5. Connections */}
+                  {currentPlacement && (currentPlacement.feeds_from.length > 0 || currentPlacement.feeds_into.length > 0) && (
+                    <div style={{ marginBottom: 8 }}>
+                      {currentPlacement.feeds_from.length > 0 && (
+                        <div style={{ marginBottom: 4 }}>
+                          <span style={{ fontSize: 7, color: "#555", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>FEEDS FROM: </span>
+                          <span style={{ fontSize: 9, color: "#706a60" }}>{currentPlacement.feeds_from.join(", ")}</span>
+                        </div>
+                      )}
+                      {currentPlacement.feeds_into.length > 0 && (
+                        <div>
+                          <span style={{ fontSize: 7, color: "#555", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>FEEDS INTO: </span>
+                          <span style={{ fontSize: 9, color: "#706a60" }}>{currentPlacement.feeds_into.join(", ")}</span>
+                        </div>
+                      )}
+                    </div>
                   )}
-                  {nodeData.inv && (
-                    <>
+
+                  {/* 6. Risk */}
+                  {(currentPlacement?.chain_specific_risk || uNode.risk) && (
+                    <div style={{ paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)", marginBottom: 8 }}>
+                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>KEY RISK</p>
+                      <p style={{ fontSize: 10, color: "#807870", margin: 0, lineHeight: 1.5 }}>{currentPlacement?.chain_specific_risk || uNode.risk}</p>
+                    </div>
+                  )}
+
+                  {/* 7. Investment angle */}
+                  {uNode.inv && (
+                    <div style={{ paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)", marginBottom: 8 }}>
                       <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>INVESTMENT ANGLE</p>
-                      <p style={{ fontSize: 10, color: "#807870", margin: "0", lineHeight: 1.5 }}>{nodeData.inv}</p>
-                    </>
+                      <p style={{ fontSize: 10, color: "#807870", margin: 0, lineHeight: 1.5 }}>{uNode.inv}</p>
+                    </div>
+                  )}
+
+                  {/* 8. Related chains */}
+                  {relatedChains.length > 0 && (
+                    <div style={{ paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
+                      <span style={{ fontSize: 7, color: "#555", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>ALSO APPEARS ON: </span>
+                      <span style={{ fontSize: 9, color: templateAccent ?? "#706a60" }}>{relatedChains.join(", ")}</span>
+                    </div>
                   )}
                 </div>
               );
