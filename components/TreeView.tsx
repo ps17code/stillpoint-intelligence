@@ -12,7 +12,11 @@ import {
   computeGalliumSvgWidth,
   contentAwareSpread,
   PALETTES,
+  buildChainGeometry,
+  computeChainSvgWidth,
 } from "@/lib/treeGeometry";
+import type { ChainDefinition } from "@/lib/treeGeometry";
+import chainDefsJson from "@/data/chain-definitions.json";
 import chainsJson from "@/data/chains.json";
 import nodesJson from "@/data/nodes.json";
 import galliumChainJson from "@/data/gallium-chain.json";
@@ -37,6 +41,7 @@ const galliumChain = (galliumChainJson as Record<string, unknown>).GALLIUM_CHAIN
 const galliumNodes = galliumNodesJson as unknown as Record<string, NodeData>;
 const germaniumNodes = germaniumNodesJson as unknown as Record<string, NodeData>;
 const galliumLc = (galliumChainJson as Record<string, unknown>).layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
+const chainDefs = chainDefsJson as unknown as Record<string, ChainDefinition>;
 
 /* ── Universal node data (v5.2) ── */
 type UniversalNode = {
@@ -1189,146 +1194,76 @@ function DashedDividerLabel({ label, marginTop = 20 }: { label: string; marginTo
 
 /* ── Fiber supply tree (merged comp + sub into one continuous tree) ── */
 function FiberSupplyTree({ onNodeClick, upstream, downstream, onDownstreamClick }: { onNodeClick: (name: string) => void; upstream?: { id: string; name: string; pill: string }[]; downstream?: { id: string; name: string; pill: string }[]; onDownstreamClick?: (id: string) => void }) {
-  const compChain = chainsData.COMP_DATA["GeO\u2082 / GeCl\u2084"];
-  const subChain = chainsData.SUB_DATA["Fiber Optics"];
+  const chain = chainDefs.fiber;
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
 
-  const svgW = useMemo(() => {
-    const widths = [
-      compChain.geCl4.length * 175,
-      compChain.fiberMfg.length * 175,
-      subChain.assembly.length * 175,
-      subChain.cableType.length * 175,
-    ];
-    return Math.max(1800, Math.max(...widths) + 400);
-  }, [compChain, subChain]);
+  const svgW = useMemo(() => computeChainSvgWidth(chain), [chain]);
 
   const geo = useMemo(() => {
     const ancX = svgW / 2;
     const topY = 80;
     const gap = 170;
     const hasUpstream = upstream && upstream.length > 0;
-    const layerOffset = hasUpstream ? 1 : 0;
 
-    const upstreamXs = hasUpstream ? contentAwareSpread(upstream.length, ancX) : [];
-    const gecl4Xs = contentAwareSpread(compChain.geCl4.length, ancX);
-    const fiberXs = contentAwareSpread(compChain.fiberMfg.length, ancX);
-    const assemblyXs = contentAwareSpread(subChain.assembly.length, ancX);
-    const cableXs = contentAwareSpread(subChain.cableType.length, ancX);
+    // Build base geometry from chain definition
+    const baseGeo = buildChainGeometry(chain, ancX, topY + (hasUpstream ? gap : 0), gap);
 
+    if (!hasUpstream) return baseGeo;
+
+    // Prepend upstream layer
     const upstreamCY = topY;
-    const gecl4CY = topY + (hasUpstream ? gap : 0);
-    const fiberCY = gecl4CY + gap;
-    const assemblyCY = fiberCY + gap;
-    const cableCY = assemblyCY + gap;
-    const outputCY = cableCY + gap;
+    const upstreamXs = contentAwareSpread(upstream.length, ancX);
+    const upstreamLayer = {
+      key: "rawMaterials", label: "RAW MATERIALS", cy: upstreamCY,
+      nodes: upstream.map((u, i) => ({ name: u.name, cx: upstreamXs[i], cy: upstreamCY, opacity: 1 })),
+      color: { stroke: "#c8a85a", text: "#8a6820", pip: "#c8a85a" },
+    };
 
-    const gecl4Minor = new Set(compChain.minor.geCl4);
-
+    // Add edges from upstream germanium to first chain layer
+    const firstLayer = baseGeo.layers[0];
     const EDGE_Y1 = 79;
     const EDGE_Y2 = 7;
+    const upstreamEdges = firstLayer ? firstLayer.nodes.map(n => ({
+      x1: upstreamXs[0], y1: upstreamCY + EDGE_Y1,
+      x2: n.cx, y2: firstLayer.cy - EDGE_Y2,
+      color: "#c8a85a", fromLayer: 0,
+    })) : [];
 
-    const layers = [
-      // Raw materials layer (if upstream provided)
-      ...(hasUpstream ? [{
-        key: "rawMaterials", label: "RAW MATERIALS", cy: upstreamCY,
-        nodes: upstream.map((u, i) => ({ name: u.name, cx: upstreamXs[i], cy: upstreamCY, opacity: 1 })),
-        color: { stroke: "#c8a85a", text: "#8a6820", pip: "#c8a85a" },
-      }] : []),
-      {
-        key: "geCl4", label: "GeCl\u2084 SUPPLIERS", cy: gecl4CY,
-        nodes: compChain.geCl4.map((n: string, i: number) => ({ name: n, cx: gecl4Xs[i], cy: gecl4CY, opacity: gecl4Minor.has(i) ? 0.4 : 1 })),
-        color: PALETTES.geCl4,
-      },
-      {
-        key: "fiberMfg", label: "FIBER MANUFACTURERS", cy: fiberCY,
-        nodes: compChain.fiberMfg.map((n: string, i: number) => ({ name: n, cx: fiberXs[i], cy: fiberCY, opacity: 1 })),
-        color: PALETTES.fiberMfg,
-      },
-      {
-        key: "assembly", label: "ASSEMBLY", cy: assemblyCY,
-        nodes: subChain.assembly.map((n: string, i: number) => ({ name: n, cx: assemblyXs[i], cy: assemblyCY, opacity: 1 })),
-        color: PALETTES.assembly,
-      },
-      {
-        key: "cableType", label: "CABLE TYPE", cy: cableCY,
-        nodes: subChain.cableType.map((n: string, i: number) => ({ name: n, cx: cableXs[i], cy: cableCY, opacity: 1 })),
-        color: PALETTES.cableType,
-      },
-      {
-        key: "output", label: "OUTPUT", cy: outputCY,
-        nodes: [{ name: subChain.output, cx: ancX, cy: outputCY, opacity: 1 }],
-        color: PALETTES.cableType,
-      },
-    ];
-
-    const edges = [
-      // Raw Materials -> GeCl4 (Germanium feeds all GeCl4 suppliers, Helium/Silica feed fiber mfg)
-      ...(hasUpstream ? [
-        // Germanium (index 0) → all GeCl4 suppliers
-        ...compChain.geCl4.map((_: string, ti: number) => ({
-          x1: upstreamXs[0], y1: upstreamCY + EDGE_Y1,
-          x2: gecl4Xs[ti], y2: gecl4CY - EDGE_Y2,
-          color: "#c8a85a", fromLayer: 0,
-        })),
-      ] : []),
-      // GeCl4 -> Fiber Mfg
-      ...compChain.geCl4ToFiber.map(([fi, ti]: [number, number]) => ({
-        x1: gecl4Xs[fi], y1: gecl4CY + EDGE_Y1,
-        x2: fiberXs[ti], y2: fiberCY - EDGE_Y2,
-        color: PALETTES.geCl4.stroke, fromLayer: 0 + layerOffset,
-      })),
-      // Fiber Mfg -> Assembly
-      ...([[0,0],[0,3],[1,1],[1,5],[2,4],[3,2],[4,2],[5,0]] as [number,number][]).map(([fi, ti]) => ({
-        x1: fiberXs[fi], y1: fiberCY + EDGE_Y1,
-        x2: assemblyXs[ti], y2: assemblyCY - EDGE_Y2,
-        color: PALETTES.fiberMfg.stroke, fromLayer: 1 + layerOffset,
-      })),
-      // Assembly -> Cable Type
-      ...subChain.assToType.map(([fi, ti]: [number, number]) => ({
-        x1: assemblyXs[fi], y1: assemblyCY + EDGE_Y1,
-        x2: cableXs[ti], y2: cableCY - EDGE_Y2,
-        color: PALETTES.assembly.stroke, fromLayer: 2 + layerOffset,
-      })),
-      // Cable Type -> Output
-      ...subChain.cableType.map((_: string, i: number) => ({
-        x1: cableXs[i], y1: cableCY + EDGE_Y1,
-        x2: ancX, y2: outputCY - EDGE_Y2,
-        color: PALETTES.cableType.stroke, fromLayer: 3 + layerOffset,
-      })),
-    ];
+    // Shift all existing edge fromLayer indices by 1
+    const shiftedEdges = baseGeo.edges.map(e => ({ ...e, fromLayer: e.fromLayer + 1 }));
 
     return {
-      layers,
-      edges,
-      outputNode: { name: subChain.output, cx: ancX, cy: outputCY },
+      layers: [upstreamLayer, ...baseGeo.layers],
+      edges: [...upstreamEdges, ...shiftedEdges],
+      outputNode: baseGeo.outputNode,
     };
-  }, [svgW, compChain, subChain]);
+  }, [svgW, chain, upstream]);
 
   return (
     <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
   );
 }
 
-/* ── Germanium supply tree ── */
+/* ── Germanium supply tree (from chain-definitions) ── */
 function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[]; onDownstreamClick?: (id: string) => void }) {
-  const rawChain = chainsData.RAW_DATA["Germanium"];
-  const rawW = useMemo(() => computeRawSvgWidth(rawChain), [rawChain]);
-  const rawGeo = useMemo(() => buildRawGeometry(rawChain, rawW / 2, 80), [rawChain, rawW]);
+  const chain = chainDefs.germanium;
+  const svgW = useMemo(() => computeChainSvgWidth(chain), [chain]);
+  const geo = useMemo(() => buildChainGeometry(chain, svgW / 2, 80), [chain, svgW]);
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
 
   return (
-    <HorizontalTree geometry={rawGeo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
+    <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
   );
 }
 
-/* ── Gallium supply tree ── */
+/* ── Gallium supply tree (from chain-definitions) ── */
 function GalliumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[]; onDownstreamClick?: (id: string) => void }) {
-  const gW = useMemo(() => computeGalliumSvgWidth(galliumChain), []);
-  const gGeo = useMemo(() => buildGalliumGeometry(galliumChain, gW / 2, 80), [gW]);
+  const chain = chainDefs.gallium;
+  const svgW = useMemo(() => computeChainSvgWidth(chain), [chain]);
+  const geo = useMemo(() => buildChainGeometry(chain, svgW / 2, 80), [chain, svgW]);
 
   return (
-    <HorizontalTree geometry={gGeo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={galliumLc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
+    <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={galliumLc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} />
   );
 }
 

@@ -115,26 +115,26 @@ function NodeCard({
       {/* Name */}
       <p style={{
         fontSize: 10, fontWeight: 600, color: "#ece8e1",
-        margin: 0, lineHeight: 1.2, marginBottom: 2,
+        margin: 0, lineHeight: 1.2, marginBottom: 4,
         fontFamily: "'EB Garamond', Georgia, serif",
         whiteSpace: "nowrap",
       }}>{name}</p>
       {/* Flag + country */}
       {hasCountry && (
-        <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: outputLine ? 2 : 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: outputLine ? 4 : 0 }}>
           {countryCode && (
             <img
               src={`https://flagcdn.com/16x12/${countryCode}.png`}
               alt={country}
-              style={{ width: 12, height: 9, objectFit: "cover", borderRadius: 1, opacity: 0.7 }}
+              style={{ width: 9, height: 6, objectFit: "cover", borderRadius: 1, opacity: 0.7 }}
             />
           )}
-          <p style={{ fontSize: 6, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em", whiteSpace: "nowrap" }}>{country}</p>
+          <p style={{ fontSize: 7, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em", whiteSpace: "nowrap" }}>{country}</p>
         </div>
       )}
       {/* Output line */}
       {outputLine && (
-        <p style={{ fontSize: 6, color: "rgba(255,255,255,0.55)", margin: "1px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>{outputLine}</p>
+        <p style={{ fontSize: 7, color: "rgba(255,255,255,0.55)", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>{outputLine}</p>
       )}
     </div>
   );

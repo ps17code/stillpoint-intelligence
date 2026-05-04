@@ -145,7 +145,133 @@ export const PALETTES = {
   galliumDevice:    { stroke: "#3a5a6a", text: "#0a1a2a", pip: "#3a5a6a" },
 } as const;
 
-// ── RAW TREE GEOMETRY ─────────────────────────────────────────────
+// ── GENERIC CHAIN GEOMETRY (from chain-definitions.json) ─────────
+
+export type ChainDefinitionLayer = { key: string; label: string; nodes: string[] };
+export type ChainDefinitionEdge = { from: string; to: string };
+export type ChainDefinition = {
+  id: string;
+  name: string;
+  layers: ChainDefinitionLayer[];
+  edges: ChainDefinitionEdge[];
+  output: string;
+  minor: string[];
+};
+
+/** Palette lookup: maps chain layer keys to color palettes */
+const CHAIN_PALETTES: Record<string, Record<string, { stroke: string; text: string; pip: string }>> = {
+  germanium: {
+    deposits: PALETTES.deposits,
+    hostOperations: PALETTES.miners,
+    refiners: PALETTES.refiners,
+    supplyAggregates: PALETTES.supplyNodes,
+    output: PALETTES.supply,
+  },
+  fiber: {
+    geCl4: PALETTES.geCl4,
+    fiberMfg: PALETTES.fiberMfg,
+    assembly: PALETTES.assembly,
+    cableType: PALETTES.cableType,
+    output: PALETTES.subOut,
+  },
+  gallium: {
+    byproductSource: PALETTES.galliumSource,
+    primaryProducer: PALETTES.galliumProducer,
+    refiner: PALETTES.galliumRefiner,
+    supplyAggregates: PALETTES.galliumSubstrate,
+    output: PALETTES.galliumDevice,
+  },
+};
+
+export function computeChainSvgWidth(chain: ChainDefinition): number {
+  const widths = chain.layers.map(l => l.nodes.length * SLOT);
+  return Math.max(1800, Math.max(...widths) + 400);
+}
+
+export function buildChainGeometry(
+  chain: ChainDefinition,
+  ancX: number,
+  topY: number,
+  gap = 180,
+): TreeGeometry {
+  const palettes = CHAIN_PALETTES[chain.id] ?? {};
+  const defaultPalette = { stroke: "#706a60", text: "#4a4540", pip: "#706a60" };
+  const minorSet = new Set(chain.minor);
+
+  // Build layers with positions
+  const layers: LayerGeometry[] = chain.layers.map((layer, li) => {
+    const cy = topY + gap * li;
+    const xs = contentAwareSpread(layer.nodes.length, ancX);
+    return {
+      key: layer.key,
+      label: layer.label,
+      cy,
+      color: palettes[layer.key] ?? defaultPalette,
+      nodes: layer.nodes.map((name, ni) => ({
+        name,
+        cx: xs[ni],
+        cy,
+        opacity: minorSet.has(name) ? 0.4 : 1,
+      })),
+    };
+  });
+
+  // Output node (after last layer)
+  const outputCY = topY + gap * chain.layers.length;
+  const outputLayer: LayerGeometry = {
+    key: "output",
+    label: "OUTPUT",
+    cy: outputCY,
+    color: palettes.output ?? defaultPalette,
+    nodes: [{ name: chain.output, cx: ancX, cy: outputCY, opacity: 1 }],
+  };
+  layers.push(outputLayer);
+
+  // Build name-to-position lookup
+  const nodePos = new Map<string, { cx: number; cy: number; layerIdx: number }>();
+  layers.forEach((layer, li) => {
+    layer.nodes.forEach(n => {
+      nodePos.set(n.name, { cx: n.cx, cy: n.cy, layerIdx: li });
+    });
+  });
+
+  // Build edges from named references
+  const EDGE_Y1 = 79;
+  const EDGE_Y2 = 7;
+  const edges: EdgeGeometry[] = [];
+  for (const edge of chain.edges) {
+    const fromPos = nodePos.get(edge.from);
+    const toPos = nodePos.get(edge.to);
+    if (!fromPos || !toPos) continue;
+    edges.push({
+      x1: fromPos.cx, y1: fromPos.cy + EDGE_Y1,
+      x2: toPos.cx,   y2: toPos.cy - EDGE_Y2,
+      color: (layers[fromPos.layerIdx]?.color.stroke) ?? "#706a60",
+      fromLayer: fromPos.layerIdx,
+    });
+  }
+
+  // Add edges from last data layer to output
+  const lastDataLayer = layers[layers.length - 2];
+  if (lastDataLayer) {
+    for (const node of lastDataLayer.nodes) {
+      edges.push({
+        x1: node.cx, y1: node.cy + EDGE_Y1,
+        x2: ancX,    y2: outputCY - EDGE_Y2,
+        color: lastDataLayer.color.stroke,
+        fromLayer: layers.length - 2,
+      });
+    }
+  }
+
+  return {
+    layers,
+    edges,
+    outputNode: { name: chain.output, cx: ancX, cy: outputCY },
+  };
+}
+
+// ── LEGACY RAW TREE GEOMETRY (kept for backward compat) ──────────
 import type { RawChain } from "@/types";
 
 export function buildRawGeometry(
