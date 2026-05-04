@@ -622,12 +622,9 @@ const GEO_SUMMARY: Record<string, string> = {
 /* ── Node lists grouped by layer for right panel ── */
 const INPUT_NODE_LAYERS: Record<string, { layer: string; nodes: string[] }[]> = {
   resources: [
-    { layer: "Germanium — Deposits", nodes: ["Lincang", "Wulantuga", "Yimin", "Huize", "Yiliang + SYGT", "Red Dog", "Spetsugli", "Big Hill"] },
-    { layer: "Germanium — Operations", nodes: ["Lincang Xinyuan", "Shengli Coal Group", "Yunnan Chihong", "Teck Resources", "STL / Gécamines", "Various State Operators"] },
-    { layer: "Germanium — Refiners", nodes: ["Umicore", "5N Plus", "PPM Pure Metals", "JSC Germanium", "Yunnan Chihong Refinery", "Chinese State Refiners"] },
-    { layer: "Gallium — Bauxite Sources", nodes: ["Guinea Bauxite", "Australian Bauxite", "Chinese Domestic Bauxite", "Brazilian Bauxite", "Indonesian Bauxite"] },
-    { layer: "Gallium — Refineries", nodes: ["Chinese Bauxite Refineries", "Alcoa / JAGA (Wagerup)", "Metlen Energy & Metals", "Rio Tinto / Indium JV"] },
-    { layer: "Gallium — Refiners", nodes: ["Dowa Holdings", "5N Plus", "Indium Corporation", "Vital Materials", "Zhuzhou Smelter Group"] },
+    { layer: "Deposits & Sources", nodes: ["Lincang", "Wulantuga", "Yimin", "Huize", "Yiliang + SYGT", "Red Dog", "Spetsugli", "Big Hill", "Guinea Bauxite", "Australian Bauxite", "Chinese Domestic Bauxite", "Brazilian Bauxite", "Indonesian Bauxite"] },
+    { layer: "Operations & Producers", nodes: ["Lincang Xinyuan", "Shengli Coal Group", "Yunnan Chihong", "Teck Resources", "STL / Gécamines", "Various State Operators", "Chinese Bauxite Refineries", "Alcoa / JAGA (Wagerup)", "Metlen Energy & Metals", "Rio Tinto / Indium JV"] },
+    { layer: "Refiners", nodes: ["Umicore", "5N Plus", "PPM Pure Metals", "JSC Germanium", "Yunnan Chihong Refinery", "Chinese State Refiners", "Dowa Holdings", "Indium Corporation", "Vital Materials", "Zhuzhou Smelter Group"] },
   ],
   ai: [
     { layer: "Germanium — Deposits", nodes: ["Lincang", "Wulantuga", "Huize", "Red Dog", "Spetsugli", "Big Hill"] },
@@ -2553,24 +2550,38 @@ export default function TreeView() {
                   <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 12px 8px", fontFamily: "'Geist Mono', monospace" }}>{selectedLayer}</p>
                   {activeLayerData.items.map(item => {
                     const isItemActive = globeNavTarget === item;
+                    // Map item names to navigable paths for tree view
+                    const itemNavMap: Record<string, PathEntry[]> = {
+                      "Germanium": [{ type: "vertical", id: currentVertical?.id ?? "resources", name: currentVertical?.name ?? "Global Resources" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
+                      "Gallium": [{ type: "vertical", id: currentVertical?.id ?? "resources", name: currentVertical?.name ?? "Global Resources" }, { type: "raw-material", id: "gallium", name: "Gallium" }],
+                      "Fiber optic cable": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
+                      "Connectivity": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }],
+                    };
+                    const canNavigate = centerView === "tree" && !!itemNavMap[item];
+                    const isClickable = centerView === "globe" || canNavigate;
                     return (
                       <div
                         key={item}
                         onClick={() => {
                           if (centerView === "globe") {
                             setGlobeNavTarget(isItemActive ? null : item);
+                          } else if (canNavigate) {
+                            setPath(itemNavMap[item]);
+                            setAnimKey(k => k + 1);
+                            setSelectedLayer(null);
+                            setSelectedTreeNode(null);
                           }
                         }}
                         style={{
                           padding: "4px 12px",
-                          cursor: centerView === "globe" ? "pointer" : "default",
+                          cursor: isClickable ? "pointer" : "default",
                           background: isItemActive ? "rgba(255,255,255,0.04)" : "transparent",
                           transition: "background 0.15s",
                         }}
-                        onMouseEnter={e => { if (centerView === "globe") e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
+                        onMouseEnter={e => { if (isClickable) e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
                         onMouseLeave={e => { if (!isItemActive) e.currentTarget.style.background = "transparent"; }}
                       >
-                        <p style={{ fontSize: 9, margin: 0, color: isItemActive ? warmWhite : "#706a60" }}>{item}</p>
+                        <p style={{ fontSize: 9, margin: 0, color: isItemActive ? warmWhite : (canNavigate ? "#807870" : "#706a60") }}>{item}{canNavigate ? " →" : ""}</p>
                       </div>
                     );
                   })}

@@ -30,6 +30,25 @@ interface HorizontalTreeProps {
   onDownstreamClick?: (id: string) => void;
 }
 
+/* ── Country code mapping for flag icons ── */
+const COUNTRY_CODES: Record<string, string> = {
+  "China": "cn", "USA": "us", "Belgium": "be", "Canada": "ca", "Russia": "ru",
+  "DRC": "cd", "Japan": "jp", "Germany": "de", "France": "fr", "Italy": "it",
+  "Australia": "au", "Brazil": "br", "Indonesia": "id", "India": "in",
+  "Guinea": "gn", "South Korea": "kr", "Austria": "at", "Netherlands": "nl",
+  "UAE": "ae", "Saudi Arabia": "sa", "Greece": "gr", "Global": "un", "Multiple": "un",
+};
+
+/* ── Nodes with investment briefs ── */
+const IDEA_NODES = new Set([
+  "Umicore", "5N Plus", "Teck Resources", "STL / Gécamines", "Blue Moon Metals",
+  "LightPath Technologies", "Yunnan Chihong", "Corning", "YOFC", "Prysmian",
+  "Fujikura", "Sumitomo Electric", "Shin-Etsu", "Alcoa Corporation",
+  "Metlen Energy & Metals", "Rio Tinto / Indium JV", "Korea Zinc / Crucible JV",
+  "Dowa Holdings", "CommScope",
+]);
+const IDEA_DOT_COLOR = "#6a9ab8";
+
 /* ── Individual node card ── */
 function NodeCard({
   name,
@@ -59,15 +78,13 @@ function NodeCard({
   const val0 = field0 ? raw?.[field0.key] : undefined;
   const hasCountry = field0?.key === "country" && val0 != null && String(val0) !== "";
   const country = hasCountry ? String(val0) : "";
-  const dotColor = COUNTRY_COLORS[country] || "#888";
+  const countryCode = COUNTRY_CODES[country] || "";
+  const hasIdea = IDEA_NODES.has(name);
 
-  // Pill fields (same as vertical TreeMap)
-  const pills: string[] = [];
-  const pillFields = hasCountry ? displayFields.slice(1, 3) : displayFields.slice(0, 2);
-  for (const f of pillFields) {
-    const v = raw?.[f.key];
-    if (v != null && String(v) !== "") pills.push(String(v));
-  }
+  // Output pill — quantity_pill field
+  const qtyField = displayFields.find(f => f.key === "quantity_pill");
+  const qtyVal = qtyField ? raw?.[qtyField.key] : undefined;
+  const outputLine = qtyVal != null && String(qtyVal) !== "" ? String(qtyVal) : "";
 
   return (
     <div
@@ -77,6 +94,7 @@ function NodeCard({
       onMouseLeave={onLeave}
       style={{
         padding: "5px 8px",
+        paddingLeft: hasIdea ? 12 : 8,
         background: highlighted ? "rgb(42, 38, 35)" : "rgb(36, 32, 29)",
         border: highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
         borderRadius: 4,
@@ -85,26 +103,40 @@ function NodeCard({
         transition: "border-color 0.15s, opacity 0.15s, background 0.15s",
         opacity: dimmedByHover ? 0.25 : opacity,
         boxSizing: "border-box",
+        position: "relative" as const,
       }}
     >
+      {/* Investment idea dot on left edge */}
+      {hasIdea && (
+        <div style={{
+          position: "absolute", left: 3, top: "50%", transform: "translateY(-50%)",
+          width: 4, height: 4, borderRadius: "50%", background: IDEA_DOT_COLOR,
+        }} />
+      )}
       {/* Name */}
       <p style={{
         fontSize: 10, fontWeight: 600, color: "#ece8e1",
-        margin: 0, lineHeight: 1.2, marginBottom: hasCountry ? 2 : 3,
+        margin: 0, lineHeight: 1.2, marginBottom: 2,
         fontFamily: "'EB Garamond', Georgia, serif",
         whiteSpace: "nowrap",
       }}>{name}</p>
-      {/* Country dot + label */}
+      {/* Flag + country */}
       {hasCountry && (
-        <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: 2 }}>
-          <div style={{ width: 4, height: 4, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: outputLine ? 2 : 0 }}>
+          {countryCode && (
+            <img
+              src={`https://flagcdn.com/16x12/${countryCode}.png`}
+              alt={country}
+              style={{ width: 12, height: 9, objectFit: "cover", borderRadius: 1, opacity: 0.7 }}
+            />
+          )}
           <p style={{ fontSize: 6, color: "#706a60", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em", whiteSpace: "nowrap" }}>{country}</p>
         </div>
       )}
-      {/* Pills — same data as vertical tree */}
-      {pills.slice(0, 2).map((pill, i) => (
-        <p key={i} style={{ fontSize: 6, color: "rgba(255,255,255,0.62)", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>{pill}</p>
-      ))}
+      {/* Output line */}
+      {outputLine && (
+        <p style={{ fontSize: 6, color: "rgba(255,255,255,0.55)", margin: "1px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>{outputLine}</p>
+      )}
     </div>
   );
 }
@@ -481,6 +513,12 @@ export default function HorizontalTree({
           );
         })}
       </svg>
+
+      {/* Legend — bottom right */}
+      <div style={{ position: "absolute", bottom: 4, right: 4, display: "flex", alignItems: "center", gap: 5, padding: "3px 8px", background: "rgba(17,17,17,0.8)", borderRadius: 4 }}>
+        <div style={{ width: 5, height: 5, borderRadius: "50%", background: IDEA_DOT_COLOR, flexShrink: 0 }} />
+        <span style={{ fontSize: 7, color: "#706a60", fontFamily: "'Geist Mono', monospace" }}>Investment idea</span>
+      </div>
     </div>
   );
 }
