@@ -81,9 +81,8 @@ function NodeCard({
   const countryCode = COUNTRY_CODES[country] || "";
   const hasIdea = IDEA_NODES.has(name);
 
-  // Output pill — quantity_pill field
-  const qtyField = displayFields.find(f => f.key === "quantity_pill");
-  const qtyVal = qtyField ? raw?.[qtyField.key] : undefined;
+  // Output line — try quantity_pill first, then stat
+  const qtyVal = raw?.["quantity_pill"] ?? raw?.["stat"];
   const outputLine = qtyVal != null && String(qtyVal) !== "" ? String(qtyVal) : "";
 
   return (
