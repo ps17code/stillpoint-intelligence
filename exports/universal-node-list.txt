@@ -1,0 +1,100 @@
+Total unique node keys: 98
+
+5N Plus | Germanium refiner | Canada | nodes.json
+AECOM | Engineering and construction | USA | nodes.json
+AFL | Cable assembler | USA | nodes.json
+AI Datacenter | End use output | Global | nodes.json
+Alcatel SN | Subsea cable manufacturer | France | nodes.json
+Alcoa / JAGA (Wagerup) | Primary Producer | Australia | gallium-nodes.json
+Alcoa Corporation | Primary Producer | USA | gallium-nodes.json
+Amazon | Hyperscale operator | Seattle, Washington, USA | nodes.json
+Amazon / AWS | Hyperscaler — cloud infrastructure | USA | nodes.json
+Australian Bauxite | Byproduct Source | Australia | gallium-nodes.json
+Big Hill | Industrial tailings deposit | DRC | nodes.json
+Blue Moon Metals | Refiner | USA | germanium-nodes.json
+Brazilian Bauxite | Byproduct Source | Brazil | gallium-nodes.json
+China Primary Supply | Primary supply node | China | nodes.json
+China Supply | Aggregate supply node | China | nodes.json
+Chinese Bauxite Refineries | Primary Producer | China | gallium-nodes.json
+Chinese Domestic Bauxite | Byproduct Source | China | gallium-nodes.json
+Chinese Primary Supply | Aggregate | China | gallium-nodes.json
+Chinese State GeCl4 Plants | GeCl₄ chemical suppliers | China | nodes.json
+Chinese State Refiners | Refiner | China | germanium-nodes.json
+CommScope | Cable assembler | USA | nodes.json
+CoreWeave | AI-native cloud provider | USA | nodes.json
+Corning | Fiber optic manufacturer — vertically integrated | USA | nodes.json
+DPR Construction | Construction company — technology focus | USA | nodes.json
+Datacenter Cable | Cable specification | Global | nodes.json
+Deployed Fiber Network | Global fiber infrastructure | Global | nodes.json
+Digital Realty | Colocation REIT | USA | nodes.json
+Dowa Holdings | Refiner | Japan | gallium-nodes.json
+Dycom Industries | Fiber installer | USA | nodes.json
+Equinix | Colocation and interconnection | USA | nodes.json
+Fujikura | Fiber optic manufacturer — vertically integrated | Japan | nodes.json
+G42 | Sovereign AI investor | UAE | nodes.json
+Germanium Metal | Commodity | Global | germanium-nodes.json
+Global AI Datacenter Capacity | Output node | ? | nodes.json
+Global Supply | Global market output | Global | nodes.json
+Google | Hyperscale operator | Mountain View, California, USA | nodes.json
+Google / Alphabet | Hyperscaler — cloud + AI hardware | USA | nodes.json
+Guinea Bauxite | Byproduct Source | Guinea | gallium-nodes.json
+Holder Construction | Construction company — mission critical | USA | nodes.json
+Huize | Deposit | China | nodes.json
+Hyperscaler In-House | Internal deployment team | USA | nodes.json
+Hyperscaler Self-Build | In-house development program | USA | nodes.json
+Indium Corporation | Refiner | USA | gallium-nodes.json
+Indonesian Bauxite | Byproduct Source | Indonesia | gallium-nodes.json
+JSC Germanium | Germanium miner and refiner | Russia | nodes.json
+JSC Germanium GeCl4 | Germanium processor — military/defense | Russia | nodes.json
+JSC Germanium Refinery | Germanium refinery | Russia | nodes.json
+Korea Zinc / Crucible JV | Primary Producer | USA | gallium-nodes.json
+LightPath Technologies | Device Manufacturer | USA | germanium-nodes.json
+Lincang | Deposit | China | nodes.json
+Lincang Xinyuan | Miner | China | nodes.json
+Lincang Xinyuan Refinery | Refinery | China | nodes.json
+MYR Group | Electrical contractor | USA | nodes.json
+MasTec | Infrastructure contractor | USA | nodes.json
+Meta | Hyperscaler — social AI platform | USA | nodes.json
+Metlen Energy & Metals | Primary Producer | Greece | gallium-nodes.json
+Microsoft | Hyperscale operator | Redmond, Washington, USA | nodes.json
+Microsoft / Azure | Hyperscaler — cloud + AI platform | USA | nodes.json
+Mortenson | Construction company — datacenter | USA | nodes.json
+NEC | Subsea cable manufacturer | Japan | nodes.json
+NEOM / PIF | Sovereign infrastructure program | Saudi Arabia | nodes.json
+Nyrstar Tennessee | Primary Producer | USA | gallium-nodes.json
+Optical Fiber Strand | Output node | Global | nodes.json
+Oracle | Hyperscale operator | Austin, Texas, USA | nodes.json
+PPM Pure Metals | Germanium refiner | Germany | nodes.json
+Prysmian | Fiber optic manufacturer — vertically integrated | Italy | nodes.json
+Red Dog | Zinc-germanium ore deposit | USA | nodes.json
+Rio Tinto / Indium JV | Primary Producer | Canada | gallium-nodes.json
+STL / Gécamines | Tailings processor | DRC | nodes.json
+Schneider Electric | Energy management and automation | France | nodes.json
+Shengli Coal Group | Miner | China | nodes.json
+Shin-Etsu | Fiber optic preform specialist | Japan | nodes.json
+Smaller Chinese Refiners | Refiners | China | nodes.json
+Spetsugli | Coal-hosted germanium deposit | Russia | nodes.json
+SubCom | Subsea cable manufacturer | USA | nodes.json
+Subsea Cable | Cable specification | Ocean floors globally | nodes.json
+Sumitomo Electric | Fiber optic manufacturer — vertically integrated | Japan | nodes.json
+Teck Resources | Zinc miner — germanium byproduct | Canada | nodes.json
+Terrestrial Long-Haul | Cable specification | Global | nodes.json
+Turner Construction | General contractor — datacenter specialist | USA | nodes.json
+Umicore | Germanium recycler | Belgium | nodes.json
+Umicore GeCl4 | GeCl₄ chemical supplier | Belgium | nodes.json
+Various State Operators | Host Operation | China | germanium-nodes.json
+Various State Ops | Miners | China | nodes.json
+Vertiv | Datacenter infrastructure | USA | nodes.json
+Vital Materials | Refiner | China | gallium-nodes.json
+Wesco International | Electrical/fiber distributor | USA | nodes.json
+Western Recycled Supply | Secondary supply node | Belgium | nodes.json
+Western Refined Supply | Aggregate | Multiple | gallium-nodes.json
+Wulantuga | Deposit | China | nodes.json
+YOFC | Fiber optic manufacturer — vertically integrated | China | nodes.json
+Yiliang + SYGT | Deposit belt | China | nodes.json
+Yimin | Deposit | China | nodes.json
+Yunnan Chihong | Miner / Refiner | China | nodes.json
+Yunnan Chihong GeCl4 | GeCl₄ chemical supplier | China | nodes.json
+Yunnan Chihong Refinery | Refinery | China | nodes.json
+Zhuzhou Smelter Group | Refiner | China | gallium-nodes.json
+xAI | Hyperscale operator | Memphis, Tennessee, USA | nodes.json

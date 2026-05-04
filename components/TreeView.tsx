@@ -629,14 +629,14 @@ const INPUT_NODE_LAYERS: Record<string, { layer: string; nodes: string[] }[]> = 
   ai: [
     { layer: "Germanium — Deposits", nodes: ["Lincang", "Wulantuga", "Huize", "Red Dog", "Spetsugli", "Big Hill"] },
     { layer: "Germanium — Refiners", nodes: ["Umicore", "5N Plus", "JSC Germanium"] },
-    { layer: "Fiber — Chemical Conversion", nodes: ["Umicore GeCl4", "Yunnan Chihong GeCl4", "Chinese State GeCl4 Plants"] },
+    { layer: "Fiber — Conversion", nodes: ["Umicore", "Yunnan Chihong", "Chinese State GeCl4 Plants"] },
     { layer: "Fiber — Preform", nodes: ["Corning", "YOFC", "Shin-Etsu", "Prysmian", "Sumitomo Electric"] },
     { layer: "Fiber — End Use", nodes: ["Microsoft", "Google", "Amazon", "Meta", "xAI", "Oracle"] },
   ],
   germanium: [
     { layer: "Deposits", nodes: ["Lincang", "Wulantuga", "Yimin", "Huize", "Yiliang + SYGT", "Red Dog", "Spetsugli", "Big Hill"] },
     { layer: "Host Operations", nodes: ["Lincang Xinyuan", "Shengli Coal Group", "Yunnan Chihong", "Teck Resources", "STL / Gécamines", "Various State Operators"] },
-    { layer: "Refiners", nodes: ["Umicore", "5N Plus", "PPM Pure Metals", "JSC Germanium", "Yunnan Chihong Refinery", "JSC Germanium Refinery", "Chinese State Refiners"] },
+    { layer: "Refiners", nodes: ["Umicore", "5N Plus", "PPM Pure Metals", "JSC Germanium", "Yunnan Chihong Refinery", "Chinese State Refiners"] },
   ],
   gallium: [
     { layer: "Bauxite Sources", nodes: ["Guinea Bauxite", "Australian Bauxite", "Chinese Domestic Bauxite", "Brazilian Bauxite", "Indonesian Bauxite"] },
@@ -644,7 +644,7 @@ const INPUT_NODE_LAYERS: Record<string, { layer: string; nodes: string[] }[]> = 
     { layer: "Gallium Refiners", nodes: ["Dowa Holdings", "5N Plus", "Indium Corporation", "Vital Materials", "Zhuzhou Smelter Group"] },
   ],
   fiber: [
-    { layer: "Chemical Conversion", nodes: ["Umicore GeCl4", "Yunnan Chihong GeCl4", "Chinese State GeCl4 Plants", "JSC Germanium GeCl4"] },
+    { layer: "Chemical Conversion", nodes: ["Umicore", "Yunnan Chihong", "Chinese State GeCl4 Plants", "JSC Germanium"] },
     { layer: "Preform Manufacturers", nodes: ["Corning", "YOFC", "Shin-Etsu", "Prysmian", "Sumitomo Electric", "Fujikura"] },
     { layer: "End Use", nodes: ["Microsoft", "Google", "Amazon", "Meta", "xAI", "Oracle", "Equinix", "CoreWeave"] },
   ],
@@ -671,7 +671,6 @@ const MAP_NODES: Record<string, { name: string; lat: number; lon: number; type: 
     { name: "Umicore", lat: 51.2, lon: 5.5, type: "Refiner", country: "Belgium" },
     { name: "5N Plus", lat: 45.5, lon: -73.6, type: "Refiner", country: "Canada" },
     { name: "PPM Pure Metals", lat: 42.3, lon: -83.0, type: "Refiner", country: "Germany" },
-    { name: "JSC Germanium Refinery", lat: 47.8, lon: 132.8, type: "Refiner", country: "Russia" },
     { name: "Yunnan Chihong Refinery", lat: 25.8, lon: 103.0, type: "Refiner", country: "China" },
     { name: "Chinese State Refiners", lat: 38.0, lon: 113.5, type: "Refiner", country: "China" },
   ],
@@ -692,8 +691,6 @@ const MAP_NODES: Record<string, { name: string; lat: number; lon: number; type: 
     { name: "Zhuzhou Smelter Group", lat: 27.8, lon: 113.1, type: "Gallium Refiner", country: "China" },
   ],
   fiber: [
-    { name: "Umicore GeCl4", lat: 51.2, lon: 5.0, type: "Converter", country: "Belgium" },
-    { name: "Yunnan Chihong GeCl4", lat: 25.5, lon: 104.0, type: "Converter", country: "China" },
     { name: "Chinese State GeCl4 Plants", lat: 31.2, lon: 121.5, type: "Converter", country: "China" },
     { name: "Corning", lat: 35.8, lon: -81.3, type: "Manufacturer", country: "USA" },
     { name: "YOFC", lat: 30.6, lon: 114.3, type: "Manufacturer", country: "China" },
@@ -718,7 +715,7 @@ const MAP_CONNECTIONS: Record<string, { from: string; to: string }[]> = {
     { from: "Yiliang + SYGT", to: "Yunnan Chihong" }, { from: "Spetsugli", to: "JSC Germanium" },
     { from: "Big Hill", to: "STL / Gécamines" }, { from: "Red Dog", to: "Teck Resources" },
     { from: "Lincang Xinyuan", to: "Yunnan Chihong Refinery" }, { from: "Shengli Coal Group", to: "Chinese State Refiners" },
-    { from: "Yunnan Chihong", to: "Yunnan Chihong Refinery" }, { from: "JSC Germanium", to: "JSC Germanium Refinery" },
+    { from: "Yunnan Chihong", to: "Yunnan Chihong Refinery" },
     { from: "STL / Gécamines", to: "Umicore" }, { from: "Teck Resources", to: "5N Plus" },
     { from: "Various State Operators", to: "Chinese State Refiners" },
   ],
@@ -731,8 +728,8 @@ const MAP_CONNECTIONS: Record<string, { from: string; to: string }[]> = {
     { from: "Metlen Energy & Metals", to: "5N Plus" }, { from: "Rio Tinto / Indium JV", to: "Indium Corporation" },
   ],
   fiber: [
-    { from: "Umicore GeCl4", to: "Corning" }, { from: "Umicore GeCl4", to: "Prysmian" },
-    { from: "Yunnan Chihong GeCl4", to: "YOFC" }, { from: "Chinese State GeCl4 Plants", to: "YOFC" },
+    { from: "Umicore", to: "Corning" }, { from: "Umicore", to: "Prysmian" },
+    { from: "Yunnan Chihong", to: "YOFC" }, { from: "Chinese State GeCl4 Plants", to: "YOFC" },
     { from: "Corning", to: "Microsoft" }, { from: "Corning", to: "Amazon" }, { from: "Corning", to: "Meta" },
     { from: "YOFC", to: "Equinix" }, { from: "Prysmian", to: "CoreWeave" },
     { from: "Shin-Etsu", to: "Google" }, { from: "Sumitomo Electric", to: "Equinix" },

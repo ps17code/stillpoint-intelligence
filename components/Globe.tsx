@@ -87,16 +87,12 @@ const NODES = [
   { name: "5N Plus",                  lat:  37.1, lng: -113.6, type: "refiner",      key: false, location: "Utah, USA" },
   { name: "PPM Pure Metals",          lat:  50.9, lng:    6.9, type: "refiner",      key: false, location: "Germany" },
   { name: "JSC Germanium",            lat:  56.0, lng:   93.0, type: "refiner",      key: false, location: "Krasnoyarsk, Russia" },
-  { name: "JSC Germanium Refinery",   lat:  56.2, lng:   93.2, type: "refiner",      key: false, location: "Krasnoyarsk, Russia" },
   { name: "Lincang Xinyuan Refinery", lat:  23.8, lng:  100.0, type: "refiner",      key: false, location: "Yunnan, China" },
   { name: "Yunnan Chihong Refinery",  lat:  25.6, lng:  103.9, type: "refiner",      key: false, location: "Yunnan, China" },
   { name: "Chinese State Refiners",   lat:  30.6, lng:  114.3, type: "refiner",      key: false, location: "Wuhan, China" },
   { name: "Blue Moon Metals",         lat:  37.3, lng: -113.5, type: "refiner",      key: false, location: "Utah, USA" },
-  // ── Fiber converters ──
-  { name: "Umicore GeCl4",            lat:  51.2, lng:    5.0, type: "converter",    key: true,  location: "Olen, Belgium" },
-  { name: "Yunnan Chihong GeCl4",     lat:  25.5, lng:  104.0, type: "converter",    key: false, location: "Yunnan, China" },
+  // ── Fiber converters (non-duplicate) ──
   { name: "Chinese State GeCl4 Plants", lat: 31.2, lng: 121.5, type: "converter",    key: false, location: "Shanghai, China" },
-  { name: "JSC Germanium GeCl4",      lat:  55.8, lng:   37.6, type: "converter",    key: false, location: "Moscow, Russia" },
   // ── Fiber manufacturers ──
   { name: "Corning",                  lat:  35.8, lng:  -81.3, type: "manufacturer", key: true,  location: "Concord, NC" },
   { name: "YOFC",                     lat:  30.6, lng:  114.3, type: "manufacturer", key: false, location: "Wuhan, China" },
@@ -145,8 +141,8 @@ const ARCS: [string, string][] = [
   ["Red Dog", "Teck Resources"], ["Teck Resources", "5N Plus"], ["STL / Gécamines", "Umicore"],
   ["Huize", "Yunnan Chihong"], ["Spetsugli", "JSC Germanium"], ["Yunnan Chihong", "Yunnan Chihong Refinery"],
   ["Lincang", "Lincang Xinyuan"], ["Lincang Xinyuan", "Lincang Xinyuan Refinery"],
-  // Fiber chain
-  ["Umicore GeCl4", "Corning"], ["Umicore GeCl4", "Prysmian"], ["Yunnan Chihong GeCl4", "YOFC"],
+  // Fiber chain (Umicore and Yunnan Chihong are also converters)
+  ["Umicore", "Corning"], ["Umicore", "Prysmian"], ["Yunnan Chihong", "YOFC"],
   ["Corning", "Amazon"], ["Corning", "Meta"],
   ["YOFC", "Equinix"], ["Prysmian", "Microsoft"],
   ["Shin-Etsu", "Google"], ["Sumitomo Electric", "Oracle"],
