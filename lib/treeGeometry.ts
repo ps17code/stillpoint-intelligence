@@ -151,6 +151,7 @@ export type ChainDefinitionLayer = { key: string; label: string; nodes: string[]
 export type ChainDefinitionEdge = { from: string; to: string };
 export type ChainSupplyNode = { name: string; quantity_pill: string; descriptor_pill: string; country?: string; stats?: [string, string][] };
 export type ChainOutputNode = { name: string; quantity_pill: string; descriptor_pill: string; stats?: [string, string][] };
+export type ChainNodeContext = { relevance?: string; chain_specific_risk?: string; show_in_wtmi?: boolean; wtmi_category_tag?: string | null };
 export type ChainDefinition = {
   id: string;
   name: string;
@@ -160,6 +161,7 @@ export type ChainDefinition = {
   minor: string[];
   supplyNodes?: ChainSupplyNode[];
   outputNode?: ChainOutputNode;
+  nodeContext?: Record<string, ChainNodeContext>;
 };
 
 /** Palette lookup: maps chain layer keys to color palettes */

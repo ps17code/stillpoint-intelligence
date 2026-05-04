@@ -157,62 +157,62 @@
     ],
     "nodeContext": {
       "Lincang": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Lincang sets the upstream cost floor for Chinese primary germanium production. The 850 ppm grade is roughly six times higher than Wulantuga and an order of magnitude higher than typical zinc-byproduct deposits, which means Lincang Xinyuan can extract germanium at lower cost per tonne than any other operator in the world. Anyone producing germanium outside China — Umicore, 5N Plus, the planned Big Hill and Apex projects — has to contend with Lincang's structural grade advantage when competing on price. The deposit's existence is part of why Chinese domestic germanium trades at one-third western pricing.",
+        "chain_specific_risk": "State-affiliated operator under export licensing regime; zero direct western access.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "Wulantuga": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Wulantuga is the largest germanium deposit in the world by contained reserves but punches well below its weight in actual output. The 137 ppm average grade and the technical challenges of recovering germanium from low-grade lignite ash mean only an estimated 15-25% of the deposit's theoretical germanium content is commercially extracted. The remainder sits as theoretical headroom that could in principle expand Chinese supply if better extraction technology or higher prices justified the additional capital — but at current operating economics, that headroom is not being realized.",
+        "chain_specific_risk": "State ownership means output is policy-driven rather than price-responsive.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "Yimin": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Yimin represents the long tail of Chinese coal-hosted germanium resources beyond the named majors. Total resource size is large at around 4,000 tonnes, but the deposits are dispersed across multiple smaller operators with low recovery rates and fragmented disclosure. The basin's contribution to actual refined output is small — perhaps 5-10 t/yr feeding into the Smaller Chinese Refiners aggregate — but it matters for understanding why Chinese germanium supply estimates carry meaningful uncertainty bands. The unrealized resource potential here is part of what makes long-run Chinese supply forecasting difficult.",
+        "chain_specific_risk": "Fragmented operator base, opaque production data.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "Huize": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Huize is the upstream resource that anchors the largest single primary germanium output stream in the world. The zinc-byproduct extraction pathway is technically simpler and more economically efficient than coal-ash extraction, which is part of why Chihong's Huize-to-smelter pipeline outperforms Wulantuga on actual output despite Wulantuga having larger contained reserves. Output economics are tied to the underlying zinc-lead operation rather than germanium prices alone — when zinc prices weaken, smelter throughput slows and germanium output falls correspondingly.",
+        "chain_specific_risk": "Output tied to zinc pricing, not germanium demand signals.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "Yiliang + SYGT": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Yiliang and SYGT serve as supplemental concentrate feedstock to Yunnan Chihong's Qujing smelter, complementing the primary Huize stream. Combined germanium reserves of 186 tonnes are modest compared to Huize's 443 tonnes, but the deposits matter because they extend the operational life of Chihong's vertically integrated zinc-to-germanium pipeline beyond what Huize alone could sustain. Without these supplemental sources, Chihong's primary germanium output would taper as Huize matures.",
+        "chain_specific_risk": "Limited public disclosure on reserves and production.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "Spetsugli": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Spetsugli holds reserves of around 1,015 tonnes of contained germanium — meaningful in absolute terms, comparable to Lincang in size. Under different geopolitics this would represent a structurally important supply diversification away from China. Under current sanctions, the entire output flows to Chinese buyers, which paradoxically reinforces rather than challenges Chinese dominance over western germanium markets. The deposit's existence is a reminder that geological supply and market-accessible supply are different things.",
+        "chain_specific_risk": "Sanctions-exposed; no western route to market.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "Big Hill": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Big Hill is the single most important new western germanium feedstock development of the past decade. Around 700 tonnes of contained germanium sit in tailings that already exist above ground — meaning STL/Gécamines avoids the typical greenfield mining timeline of exploration, permitting, and capital construction. Under offtake to Umicore, the recovered material flows directly to the western chokepoint refinery in Olen, Belgium. If Big Hill ramps successfully, it materially extends the runway of western germanium supply through the late 2020s.",
+        "chain_specific_risk": "DRC operating risk; reprocessing ramp-up delays possible.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "Red Dog": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Red Dog is North America's only commercial germanium-bearing zinc deposit. The germanium content is incidental to the primary zinc-lead operation, but the byproduct stream feeding Teck's Trail smelter has been the only commercial source of North American germanium feedstock for decades. The mine is currently scheduled to deplete by 2031 unless Teck advances the adjacent Aktigiruq extension — which would extend the deposit's operational life but requires its own permitting and capital decision. If neither Aktigiruq nor a similar extension proceeds, North America loses its primary germanium feedstock entirely with Red Dog's closure.",
+        "chain_specific_risk": "Declining toward planned end-of-mine in 2031 (Aktigiruq extension possible but not yet permitted).",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "Lincang Xinyuan": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Lincang Xinyuan is the only publicly listed pure-play germanium producer in China and one of the few globally. It mines the world's highest-grade germanium-bearing coal at Lincang and refines the output in-house, capturing margin across the full value chain from raw extraction through finished germanium products. The integrated structure means a single corporate entity controls roughly 40 t/yr of refined Chinese germanium output, all subject to MOFCOM export licensing. The Shenzhen A-share listing gives Chinese investors direct equity exposure to Chinese germanium policy decisions, but the share class is not freely accessible to most western investors.",
+        "chain_specific_risk": "Chinese export controls limit westward flow of output.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "Shengli Coal Group": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Shengli Coal Group operates the largest known germanium-bearing coal deposit in the world at Wulantuga in Inner Mongolia. Crude germanium is recovered from coal fly ash and combustion residues during routine power-plant coal use, then sold into the network of smaller Chinese refiners that handle the downstream purification. Output is harder to track than Yunnan-based operators because germanium is incidental to Shengli's primary business of supplying coal to power generators, and individual smelter-level production data is not publicly disclosed.",
+        "chain_specific_risk": "Opaque production data and no western investment vehicle.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
@@ -223,32 +223,32 @@
         "wtmi_category_tag": null
       },
       "Yunnan Chihong": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Yunnan Chihong is the largest single primary germanium producer in the world. Crude germanium is recovered from the Huize and Yiliang zinc-lead concentrates as a byproduct of zinc smelting, then refined in-house to germanium dioxide, zone-melted ingots, and fiber-grade germanium tetrachloride that supplies Chinese fiber preform manufacturers including YOFC, Hengtong, and ZTT. All output flows into the Chinese primary supply pool and is subject to MOFCOM export licensing. If Chihong's smelter went offline, roughly 30% of global primary germanium supply would disappear in a single shock.",
+        "chain_specific_risk": "Chinese export controls limit direct western access to the output.",
         "show_in_wtmi": true,
         "wtmi_category_tag": "Market maker"
       },
       "JSC Germanium": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "JSC Germanium represents the third-country production tier on the germanium chain — neither western nor Chinese, but Russian state-owned and currently sanctioned from western markets. Roughly 20 t/yr of refined germanium that previously flowed to global IR optics and fiber buyers now goes to Chinese and other non-western customers, effectively transferring Russian germanium output into the Chinese supply pool. The node appears on the chain to track the flow rather than because it is investable. If sanctions ever reverse, JSC Germanium would re-enter as a meaningful western-accessible supplemental supplier.",
+        "chain_specific_risk": "Sanctions-exposed; no western route to market.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "STL / Gécamines": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "STL/Gécamines is the most important new western germanium feedstock supply development of the past decade. Umicore holds the offtake rights on the germanium recovered from Big Hill, which means the project directly supplies the western chokepoint refinery in Olen, Belgium. The first germanium concentrate is expected by 2027 with a target of ~30 t/yr at full ramp. If STL ramps successfully, it materially expands the volume Umicore can refine and reduces western dependency on Chinese primary supply.",
+        "chain_specific_risk": "DRC operating risk; JV structure and political sensitivity around Gécamines.",
         "show_in_wtmi": true,
         "wtmi_category_tag": "Feedstock supplier"
       },
       "Teck Resources": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Teck is North America's only commercial source of germanium-bearing zinc concentrate. The Red Dog mine in northwestern Alaska produces zinc concentrate that is shipped to the Trail smelter in British Columbia, where germanium is recovered as a byproduct of zinc refining. Specific germanium output volumes are not disclosed separately in Teck's filings, but the recovered material flows downstream to Umicore and 5N Plus as feedstock. Red Dog is currently scheduled to deplete by 2031, with the adjacent Aktigiruq extension under evaluation as a potential successor. If Aktigiruq does not advance, North American primary germanium feedstock disappears with Red Dog's closure.",
+        "chain_specific_risk": "Red Dog declines toward 2031 end-of-mine; Ge output volumes not separately disclosed.",
         "show_in_wtmi": true,
         "wtmi_category_tag": "Feedstock supplier"
       },
       "Lincang Xinyuan Refinery": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "The refining capacity that converts Lincang's high-grade coal-extracted germanium into finished products. Together with Yunnan Chihong Refinery and the Smaller Chinese Refiners aggregate, it forms the bulk of the China Primary Supply pool — the 120 t/yr of refined germanium that represents 83% of global primary supply and is subject to MOFCOM export licensing. Investment exposure flows through the parent company's SZSE listing rather than the refinery as a separate entity.",
+        "chain_specific_risk": "Chinese export licensing controls downstream access.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
@@ -259,44 +259,80 @@
         "wtmi_category_tag": null
       },
       "Yunnan Chihong Refinery": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "The refining capacity that converts the largest single primary germanium feedstock stream in the world — the byproduct germanium recovered at the Huize zinc smelter — into fiber-grade GeCl₄ supplying YOFC, Hengtong, ZTT, and other Chinese fiber preform manufacturers. The integrated zinc-to-germanium-to-GeCl₄ pathway gives Chihong Refinery a structural cost advantage over standalone refiners and explains why China's fiber preform industry runs primarily on domestic GeCl₄. Output flows into the Chinese Primary Supply pool. Investment exposure runs through the parent SHSE listing.",
+        "chain_specific_risk": "Output primarily stays within Chinese domestic ecosystem.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "JSC Germanium Refinery": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "The integrated Russian refining capacity that processes Spetsugli coal-extracted germanium into finished products. Output volumes are similar to PPM Pure Metals — meaningful at around 20 t/yr — but unlike PPM, this capacity is unavailable to western buyers under post-2022 sanctions. The refinery node appears on the chain to track the supply that has shifted from western to Chinese markets, not because it is investable. Russian sanctions are the structural reason the world's third-largest germanium producer no longer participates in western fiber, IR optics, or satellite solar supply chains.",
+        "chain_specific_risk": "Sanctions-exposed; not investable.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "Umicore": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "Umicore's Olen facility is the only commercial-scale germanium tetrachloride producer outside China and Russia, which makes it the structural chokepoint for western fiber optic cable manufacturing. It pulls feedstock from two sources: copper-cobalt tailings reprocessed by STL/Gécamines in the DRC, where Umicore holds the germanium offtake rights, and recycled scrap returning from Prysmian and other fiber preform makers. The refined GeCl₄ ships out to every major non-Chinese fiber preform line in the world. If Umicore stopped operating, western fiber manufacturing would lose its primary GeCl₄ supply within months.",
+        "chain_specific_risk": "Single-facility risk at Olen; business distractions from other Umicore segments (batteries, automotive catalysts) create quarterly earnings volatility unrelated to germanium.",
         "show_in_wtmi": true,
         "wtmi_category_tag": "Chokepoint holder"
       },
       "5N Plus": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "5N Plus is the second western high-purity germanium refiner alongside Umicore, but with a different operational profile — its output flows primarily into satellite solar cells via AZUR Space rather than fiber-grade GeCl₄. Refining capacity sits in Montreal and Salt Lake City, with the Utah facility scaling up under an $18.1 million US Department of Energy grant awarded January 2026 specifically for germanium recycling. Feedstock comes from Teck Resources zinc concentrate streams plus end-of-life recovered material. 5N Plus is pre-commercial on fiber-grade GeCl₄ but pursuing qualification, which would materially diversify the western refining base if achieved.",
+        "chain_specific_risk": "Pre-commercial on fiber-grade GeCl₄; qualification timeline and customer adoption unclear.",
         "show_in_wtmi": true,
         "wtmi_category_tag": "Capacity builder"
       },
       "PPM Pure Metals": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "PPM Pure Metals is Europe's second germanium refiner alongside Umicore, operating at smaller scale and focused on zone-refined germanium for IR optics and SiGe semiconductor customers rather than fiber-grade GeCl₄. Estimated output is around 10-15 t/yr — meaningful for European supply diversification but not at the volumes that would replace Umicore in any feedstock disruption scenario. PPM does not feature in the western chokepoint discussion the way Umicore does, but its existence ensures Europe has more than one specialty germanium refiner serving the regional industrial base.",
+        "chain_specific_risk": "Private — not directly investable. Scale limited.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "China Primary Supply": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "China Primary Supply is the single most important node on the germanium chain. It captures the structural reality that 83% of global primary germanium production happens in China, that essentially all of it flows through MOFCOM-licensed export decisions, and that Chinese domestic pricing trades at roughly one-third of western retail levels because of that policy lever. The bifurcated price structure — $2,500/kg in China versus $8,500/kg in the West — exists because of this aggregate's position in the chain. If MOFCOM tightened licensing further, western germanium prices would spike again as they did in late 2024.",
+        "chain_specific_risk": "Export licensing can be tightened or released unilaterally.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       },
       "Western Recycled Supply": {
-        "relevance": "",
-        "chain_specific_risk": "",
+        "relevance": "This aggregate is the entirety of germanium that western fiber preform makers, IR optics manufacturers, defense contractors, and satellite solar producers can rely on without depending on Chinese export licensing or sanctioned Russian supply. It is meaningfully smaller than China Primary Supply — roughly 90-110 t/yr versus 120 t/yr — and it is structurally constrained by the recycled feedstock pool. Adding new western primary supply (Big Hill, Apex) is the only way this aggregate grows materially. The bifurcated pricing structure exists because western buyers compete for limited supply at this layer.",
+        "chain_specific_risk": "Feedstock-limited; cannot scale independently of recycled pool or DRC tailings depletion.",
+        "show_in_wtmi": false,
+        "wtmi_category_tag": null
+      },
+      "Various State Operators": {
+        "relevance": "Various State Operators captures the long tail of smaller Chinese germanium feedstock producers that flow into the Smaller Chinese Refiners aggregate. The category exists because Chinese germanium production is highly fragmented at the source — beyond Yunnan Chihong and Lincang Xinyuan, dozens of smaller state coal operators contribute crude germanium that is harder to attribute to specific named entities. Output stays within the Chinese ecosystem and is subject to the same MOFCOM export licensing as the named majors. Useful for understanding why total Chinese supply estimates carry uncertainty bands.",
+        "chain_specific_risk": "Fragmented, opaque operator base.",
+        "show_in_wtmi": false,
+        "wtmi_category_tag": null
+      },
+      "Chinese State Refiners": {
+        "relevance": "The fragmented portion of Chinese refining capacity that operates outside the named major operators. Important for accurately estimating Chinese supply totals — without this aggregate, China Primary Supply would be undercounted — but each individual constituent is too small to track separately. Output flows into the Chinese Primary Supply pool with the same MOFCOM export licensing exposure as the named majors. The category is a useful reminder that Chinese germanium production is structurally more dispersed than headline market-share figures suggest.",
+        "chain_specific_risk": "Opaque individual facility data; output subject to Chinese export controls.",
+        "show_in_wtmi": false,
+        "wtmi_category_tag": null
+      },
+      "Global Supply": {
+        "relevance": "Global Supply provides the framing for the total germanium market: 230 t/yr is small by industrial commodity standards, comparable to the annual output of a single large copper mine. The chain's smallness is what makes single-facility risks at Olen, Krasnoyarsk, or Qujing structurally meaningful — there is no global market that smooths out localized disruptions because total volume is too thin. Demand sits around 230 t/yr today and is projected to outgrow supply by 2027 as fiber, satellite solar, and IR optics applications expand, which is why new western primary supply is being underwritten across multiple jurisdictions simultaneously.",
+        "chain_specific_risk": "Bifurcated market persists structurally.",
+        "show_in_wtmi": false,
+        "wtmi_category_tag": null
+      },
+      "Blue Moon Metals": {
+        "relevance": "Blue Moon's Apex restart project is the only meaningful primary germanium development in the United States. The mine produced germanium and gallium historically before going on care-and-maintenance under previous owners; Blue Moon is targeting 5-10 t/yr of germanium output starting 2028, contingent on permitting and ramp-up financing. Apex would be the first new western primary germanium source to come online since the Russian sanctions, materially reducing US dependence on Chinese primary supply. The project carries typical junior-mining execution risk — pre-production timing, permitting, and financing — but the strategic positioning has attracted high-quality institutional backing.",
+        "chain_specific_risk": "Pre-production junior; permitting, financing, and ramp-up risk typical of early-stage mining projects.",
+        "show_in_wtmi": false,
+        "wtmi_category_tag": null
+      },
+      "LightPath Technologies": {
+        "relevance": "LightPath sits adjacent to the germanium chain rather than within it. BlackDiamond chalcogenide glass replaces germanium in IR optics applications, so LightPath captures displaced demand whenever germanium prices stay elevated or supply tightens further. The F-35 fighter jet program has validated BlackDiamond as a qualified IR optics material, which opens the path to broader defense and commercial adoption. LightPath does not consume germanium feedstock and does not supply the chain; it appears on the germanium tree as a substitution play. The cleaner the BlackDiamond design-in path becomes, the more germanium demand it will absorb.",
+        "chain_specific_risk": "Substitution penetration is slow; BlackDiamond requires design-in cycles that take years per customer platform.",
+        "show_in_wtmi": false,
+        "wtmi_category_tag": null
+      },
+      "Germanium Metal": {
+        "relevance": "Direct physical germanium accumulation is the only way to express a clean view on germanium prices without taking equity-specific operational risk in a refiner or miner. The OTC market structure means buyers must navigate bilateral relationships with producers (Umicore, 5N Plus, PPM, Lincang Xinyuan) or specialty metal traders, and storage and handling logistics matter. Hartree Partners, the commodity stockpile operator backing Blue Moon's Apex restart, is one of the few institutional buyers known to hold physical germanium positions. Most institutional germanium exposure flows through equity rather than physical, but the option exists.",
+        "chain_specific_risk": "Illiquidity amplifies price moves in both directions; no exchange pricing transparency; storage and handling requirements non-trivial.",
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       }

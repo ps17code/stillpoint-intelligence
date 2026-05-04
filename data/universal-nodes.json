@@ -5,28 +5,24 @@
     "type": "Deposit",
     "ticker": null,
     "country": "China",
-    "location_detail": "Lincang Prefecture, Yunnan Province, China",
+    "location_detail": "Lincang, China",
     "layer": "Deposit",
     "descriptor_pill": "Coal deposit",
     "quantity_pill": ">1,000 t Ge reserves",
     "status": "Active",
-    "about": "One of the world's highest-grade germanium deposits. Germanium was concentrated by hydrothermal fluids from the Lincang granite batholith into ancient swamp coal seams. Operated by Lincang Xinyuan (Shenzhen listed).",
+    "about": "Lincang is a coal-hosted germanium deposit in Yunnan Province, southwestern China. The germanium concentration in the local coal beds is around 850 parts per million, the highest commercially mined anywhere in the world. The metal accumulated when hydrothermal fluids from the underlying Lincang granite batholith infiltrated ancient swamp coal seams over geological time, leaching germanium from the granite into organic-rich sediments that later compacted into coal. Reserves are estimated at over 1,000 tonnes of contained germanium. Operated by Yunnan Lincang Xinyuan Germanium Industry.",
     "stats": [
       [
-        "Type",
-        "Coal-hosted lignite"
+        "reserves",
+        ">1,000 t Ge"
       ],
       [
-        "Grade",
-        "~850 ppm avg"
+        "grade",
+        "~850 ppm"
       ],
       [
-        "Reserves",
-        "~1,000 t Ge"
-      ],
-      [
-        "Status",
-        "Active"
+        "output",
+        "~40 t/yr extracted"
       ]
     ],
     "risk": "State-affiliated operator under export licensing regime; zero direct western access.",
@@ -43,28 +39,24 @@
     "type": "Deposit",
     "ticker": null,
     "country": "China",
-    "location_detail": "Xilingol League, Inner Mongolia, China",
+    "location_detail": "Inner Mongolia, China",
     "layer": "Deposit",
     "descriptor_pill": "Coal deposit",
     "quantity_pill": "~1,600 t Ge reserves",
     "status": "Active",
-    "about": "Largest coal-hosted germanium deposit by reserve size. Only ~15-25% of theoretical germanium content is commercially recovered due to specialist extraction requirements. Operated by Shengli Coal Group (state-owned).",
+    "about": "Wulantuga is a germanium-bearing lignite deposit in Xilingol League, Inner Mongolia, China. By contained germanium reserves it is the largest deposit in the world at approximately 1,600 tonnes, but the average grade of around 137 ppm is significantly lower than Lincang and the lignite ash chemistry makes commercial extraction technically difficult. Only an estimated 15-25% of the theoretical germanium content is recovered in practice. Operated by Shengli Coal Group as part of routine thermal coal mining for Chinese power generators.",
     "stats": [
       [
-        "Type",
-        "Coal-hosted lignite"
-      ],
-      [
-        "Grade",
-        "137 ppm (#6 seam)"
-      ],
-      [
-        "Reserves",
+        "reserves",
         "~1,600 t Ge"
       ],
       [
-        "Recovery",
-        "~20-35 t/yr actual"
+        "grade",
+        "~137 ppm"
+      ],
+      [
+        "output",
+        "~20-35 t/yr extracted"
       ]
     ],
     "risk": "State ownership means output is policy-driven rather than price-responsive.",
@@ -86,23 +78,15 @@
     "descriptor_pill": "Coal deposit",
     "quantity_pill": "~4,000 t Ge resources",
     "status": "Active",
-    "about": "Germanium-bearing lignite basin in Inner Mongolia. Worked by various state-affiliated operators. Recovery rates are low and output is more geographically dispersed than Wulantuga.",
+    "about": "Yimin is a germanium-bearing lignite basin in Inner Mongolia, China, containing an estimated 4,000 tonnes of total germanium resources distributed across multiple smaller deposits. Total resource size is larger than Wulantuga, but grade is lower and the deposits are more geographically dispersed across the basin. Recovery rates are correspondingly lower, and output is fragmented across multiple smaller state-affiliated coal operators rather than concentrated under a single major. As a result, the basin's contribution to actual refined germanium output is much smaller than its raw resource size suggests.",
     "stats": [
       [
-        "Type",
-        "Coal-hosted lignite"
+        "resources",
+        "~4,000 t Ge total"
       ],
       [
-        "Grade",
-        "28-135 ppm"
-      ],
-      [
-        "Reserves",
-        "~4,000 t Ge"
-      ],
-      [
-        "Status",
-        "Partial / low activity"
+        "output",
+        "~5-10 t/yr extracted (aggregate across operators)"
       ]
     ],
     "risk": "Fragmented operator base, opaque production data.",
@@ -124,23 +108,19 @@
     "descriptor_pill": "Zinc ore deposit",
     "quantity_pill": "443 t Ge resources",
     "status": "Active",
-    "about": "Zinc-lead deposit with significant germanium content. Primary source of germanium recovered through the Chihong zinc smelter operations — a separate extraction pathway from coal-hosted germanium.",
+    "about": "Huize is a zinc-lead ore deposit in Yunnan Province, China, with significant germanium content concentrated in the sphalerite zinc mineralization. The germanium content is recovered as a byproduct of zinc smelting rather than through standalone germanium mining — a different extraction pathway from the coal-hosted deposits at Lincang or Wulantuga. The zinc smelter byproduct route is technically simpler and more economically efficient than coal-ash extraction, which is part of why Huize anchors the largest single primary germanium output stream globally. Operated by Yunnan Chihong with reserves estimated at 443 tonnes of contained germanium.",
     "stats": [
       [
-        "Type",
-        "Zinc-lead sulfide ore"
+        "resources",
+        "443 t Ge"
       ],
       [
-        "Zn grade",
-        "World-class"
+        "ore_type",
+        "zinc-lead"
       ],
       [
-        "Ge content",
-        "443 t Ge resources"
-      ],
-      [
-        "Operator",
-        "Yunnan Chihong (600497.SH)"
+        "output",
+        "~40-50 t/yr Ge feedstock"
       ]
     ],
     "risk": "Output tied to zinc pricing, not germanium demand signals.",
@@ -162,23 +142,19 @@
     "descriptor_pill": "Zinc ore deposit",
     "quantity_pill": "186 t Ge reserves",
     "status": "Active",
-    "about": "Additional Yunnan zinc-lead deposits with germanium content. Feeds into Chinese primary germanium supply via associated smelter operations.",
+    "about": "Yiliang and SYGT are additional zinc-lead deposits in Yunnan Province with germanium content, located in the same regional Huize-Yiliang carbonate-hosted zinc-lead district. Combined proven germanium reserves are around 186 tonnes — smaller than Huize but feeding into the same Yunnan Chihong-operated smelter system. The deposits are part of the broader resource base that anchors Chihong's vertically integrated zinc-to-germanium-to-GeCl₄ pathway, supplementing Huize as concentrate feedstock for the Qujing smelter.",
     "stats": [
       [
-        "Type",
-        "Zn-Pb-Ge sulfide belt"
+        "reserves",
+        "186 t Ge proven"
       ],
       [
-        "Belt",
-        "Sichuan-Yunnan-Guizhou"
+        "ore_type",
+        "zinc-lead"
       ],
       [
-        "Zn reserves",
-        ">32M t combined"
-      ],
-      [
-        "Deposits",
-        "450+ Ge-bearing"
+        "output",
+        "feedstock supplemental to Huize"
       ]
     ],
     "risk": "Limited public disclosure on reserves and production.",
@@ -192,31 +168,31 @@
   "Lincang Xinyuan": {
     "id": "lincang-xinyuan",
     "name": "Lincang Xinyuan",
-    "type": "Private",
-    "ticker": null,
+    "type": "Public",
+    "ticker": "002428",
     "country": "China",
-    "location_detail": "Lincang, Yunnan Province, China",
+    "location_detail": "Lincang, China",
     "layer": "Host Operation",
     "descriptor_pill": "Coal-hosted Ge operator",
     "quantity_pill": "~40 t Ge/yr extracted",
     "status": "Active",
-    "about": "Shenzhen-listed operator of Lincang germanium-bearing coal. One of few Chinese germanium operators with a public listing, giving indirect investor exposure to Chinese germanium supply.",
+    "about": "Yunnan Lincang Xinyuan Germanium Industry is a Chinese specialty mining and refining company listed on the Shenzhen Stock Exchange and headquartered in Kunming, Yunnan Province. It mines coal-hosted germanium at the Lincang deposit — the world's highest-grade germanium-bearing coal beds at around 850 ppm — and refines the recovered material into germanium dioxide, zone-refined ingots, photovoltaic-grade GeCl₄, infrared optics components, and gallium arsenide wafers. The company is one of the few publicly listed pure-play germanium producers globally, and its product range spans across most major germanium end uses.",
     "stats": [
       [
-        "Ticker",
-        "002428.SZ"
+        "market_cap",
+        "CNY ~32B (~$4.4B USD, volatile)"
       ],
       [
-        "Lignite mined",
-        "~40,000 t/yr"
+        "revenue_fy24",
+        "CNY 767M (~$105M USD)"
       ],
       [
-        "Ge output",
-        "~40 t/yr extracted"
+        "net_earnings_fy24",
+        "CNY 53M (~$7M)"
       ],
       [
-        "Integration",
-        "Mine to refinery to wafers"
+        "output",
+        "~40 t/yr Ge extracted"
       ]
     ],
     "risk": "Chinese export controls limit westward flow of output.",
@@ -230,7 +206,7 @@
   "Shengli Coal Group": {
     "id": "shengli-coal-group",
     "name": "Shengli Coal Group",
-    "type": "Private",
+    "type": "State-owned",
     "ticker": null,
     "country": "China",
     "location_detail": "Inner Mongolia, China",
@@ -238,23 +214,11 @@
     "descriptor_pill": "Coal-hosted Ge operator",
     "quantity_pill": "~20-35 t/yr extracted",
     "status": "Active",
-    "about": "State-owned Chinese coal mining group operating the Wulantuga deposit in Inner Mongolia. Primary recovered germanium flows into Chinese refining chain; details of specific offtake arrangements not publicly disclosed.",
+    "about": "Shengli Coal Group is a Chinese state-owned coal mining group operating in Inner Mongolia, primarily working the Wulantuga lignite basin. The group's main business is thermal coal supply to Chinese power generators, with germanium recovered as a byproduct from the coal fly ash and combustion residues. Wulantuga is the largest known germanium-bearing coal deposit by reserve size, though the low concentration and complex extraction process mean only 15-25% of theoretical germanium content is commercially recovered. Shengli is not publicly listed and operates under regional state-owned enterprise governance.",
     "stats": [
       [
-        "Ownership",
-        "State-owned enterprise"
-      ],
-      [
-        "Coal mined",
-        "~1M t/yr"
-      ],
-      [
-        "Ge content",
-        "~137 ppm in #6 seam"
-      ],
-      [
-        "Ge recovered",
-        "~20-35 t/yr"
+        "output",
+        "~20-35 t/yr Ge extracted (state-owned)"
       ]
     ],
     "risk": "Opaque production data and no western investment vehicle.",
@@ -269,30 +233,30 @@
     "id": "yunnan-chihong",
     "name": "Yunnan Chihong",
     "type": "Public",
-    "ticker": "600497 · Shanghai",
+    "ticker": "600497",
     "country": "China",
-    "location_detail": "Yunnan Province, China",
-    "layer": "Host Operation",
+    "location_detail": "Kunming, China",
+    "layer": "Host Operation + Primary Producer",
     "descriptor_pill": "Zinc smelter + Ge recovery",
     "quantity_pill": "~66 t/yr refined",
     "status": "Active",
-    "about": "Shanghai-listed zinc-lead mining and smelting company. Operates the largest single source of primary germanium globally via the Huize zinc smelter. Integrated from zinc concentrate through refined germanium output.",
+    "about": "Yunnan Chihong Zinc & Germanium is a Chinese state-affiliated mining and smelting company listed on the Shanghai Stock Exchange and headquartered in Qujing, Yunnan Province. It mines zinc, lead, and germanium-bearing ore at the Huize and Yiliang deposits in Yunnan, smelts the concentrates at integrated facilities in Qujing, and produces zinc, lead, sulfuric acid, silver, and germanium products including high-purity germanium tetrachloride and zone-melted ingots. Chihong is the largest single primary germanium producer globally and one of four operators in China with fiber-grade GeCl₄ capacity. The company traces back to 1951.",
     "stats": [
       [
-        "Ticker",
-        "600497.SH"
+        "market_cap",
+        "CNY 36.85B (~$5.1B USD)"
       ],
       [
-        "Zn concentrate",
-        "290,000 t/yr"
+        "revenue_ttm",
+        "CNY 21.33B (~$3B USD)"
       ],
       [
-        "Ge output",
-        "~66 t/yr refined"
+        "net_earnings",
+        "CNY 1.43B (~$200M)"
       ],
       [
-        "Role",
-        "China's largest Ge producer"
+        "output",
+        "~66 t/yr Ge refined"
       ]
     ],
     "risk": "Chinese export controls limit direct western access to the output.",
@@ -306,31 +270,19 @@
   "Lincang Xinyuan Refinery": {
     "id": "lincang-xinyuan-refinery",
     "name": "Lincang Xinyuan Refinery",
-    "type": "Private",
-    "ticker": null,
+    "type": "Public",
+    "ticker": "002428",
     "country": "China",
-    "location_detail": "Kunming / Lincang, Yunnan",
+    "location_detail": "Lincang, China",
     "layer": "Refiner",
-    "descriptor_pill": "Refinery",
-    "quantity_pill": "~40 t/yr refined Ge",
+    "descriptor_pill": "Integrated Ge refiner",
+    "quantity_pill": "~40 t/yr refined",
     "status": "Active",
-    "about": "Refines Ge concentrate all the way through to finished products including solar-grade wafers — the only facility with full vertical integration from coal mine to wafer.",
+    "about": "Lincang Xinyuan Refinery is the downstream refining division of Yunnan Lincang Xinyuan Germanium Industry, the Shenzhen-listed Chinese pure-play germanium operator. The refinery converts crude germanium recovered from the Lincang coal deposit into a full product range — germanium dioxide, zone-refined ingots, photovoltaic-grade GeCl₄, infrared germanium components, and gallium arsenide wafers — for Chinese semiconductor, fiber, and photovoltaic customers. As an integrated downstream of the same parent company, the refinery's output volumes track parent group disclosure rather than a separate corporate identity.",
     "stats": [
       [
-        "Output",
-        "~40 t/yr refined Ge"
-      ],
-      [
-        "Products",
-        "GeO₂, GeCl₄, Ge ingots, wafers"
-      ],
-      [
-        "Wafer capacity",
-        "300,000 four-inch wafers/yr"
-      ],
-      [
-        "Integration",
-        "Vertically integrated"
+        "output",
+        "~40 t/yr Ge refined (linked to parent SZSE:002428)"
       ]
     ],
     "risk": "US export ban directly impacts western revenue.",
@@ -344,31 +296,19 @@
   "Yunnan Chihong Refinery": {
     "id": "yunnan-chihong-refinery",
     "name": "Yunnan Chihong Refinery",
-    "type": "Private",
-    "ticker": null,
+    "type": "Public",
+    "ticker": "600497",
     "country": "China",
-    "location_detail": "Yunnan Province, China",
-    "layer": "Refiner",
+    "location_detail": "Kunming, China",
+    "layer": "Refiner + Chemical Converter",
     "descriptor_pill": "Integrated Ge refiner",
     "quantity_pill": "~66 t/yr refined",
     "status": "Active",
-    "about": "Refining and chemical conversion arm of Yunnan Chihong. Produces fiber-grade GeCl₄ in addition to GeO₂ and metal forms. One of four fiber-grade GeCl₄ facilities in China and a major feeder of Chinese domestic fiber preform production.",
+    "about": "Yunnan Chihong Refinery is the downstream refining and chemical conversion division of Yunnan Chihong Zinc & Germanium, the Shanghai-listed Chinese state-affiliated zinc-lead miner and smelter. The refinery takes crude germanium recovered from Huize zinc concentrate smelting and converts it into refined germanium products — germanium dioxide, zone-melted ingots, fiber-grade germanium tetrachloride, and zinc-lead refined products. As one of four operators in China with fiber-grade GeCl₄ capacity, it is a key supplier to Chinese fiber preform manufacturers. Output is reported within Chihong's parent group disclosures.",
     "stats": [
       [
-        "Output",
-        "~66 t/yr refined Ge"
-      ],
-      [
-        "Products",
-        "GeO₂, Ge metal, GeCl₄"
-      ],
-      [
-        "Scale",
-        "Largest single Ge refinery globally"
-      ],
-      [
-        "Ticker",
-        "600497.SH"
+        "output",
+        "~66 t/yr Ge refined (linked to parent SHSE:600497)"
       ]
     ],
     "risk": "Output primarily stays within Chinese domestic ecosystem.",
@@ -1257,30 +1197,30 @@
     "id": "umicore",
     "name": "Umicore",
     "type": "Public",
-    "ticker": "UMI · Euronext",
+    "ticker": "UMI",
     "country": "Belgium",
-    "location_detail": "Olen, Belgium (Ge facility); Brussels HQ, Belgium",
-    "layer": "Refiner",
+    "location_detail": "Olen, Belgium",
+    "layer": "Refiner + Chemical Converter",
     "descriptor_pill": "Sole western Ge refiner",
     "quantity_pill": "~40-50 t/yr recycled",
     "status": "Active",
-    "about": "Diversified Belgian materials technology group. Operates the only commercial-scale fiber-grade GeCl₄ facility outside China and Russia, in Olen, Belgium. Processes essentially all non-Chinese, non-Russian germanium supply including the DRC tailings feedstock from Umicore-STL/Gécamines offtake. Structural western chokepoint.",
+    "about": "Umicore is a Belgian specialty materials and recycling company listed on Euronext Brussels. It refines platinum, palladium, and rhodium from spent automotive catalysts; recovers cobalt and lithium from used batteries; and produces high-purity germanium, indium, and other materials for semiconductor, fiber optic, and battery customers. The Olen, Belgium facility is the western world's only commercial-scale germanium tetrachloride producer. Operations span Europe, North America, and Asia.",
     "stats": [
       [
-        "Ticker",
-        "UMI (Euronext)"
+        "market_cap",
+        "€4.13B"
       ],
       [
-        "Ge output",
-        "~40-50 t/yr est."
+        "revenue_fy25",
+        "€3.6B (excl. traded metal turnover)"
       ],
       [
-        "Feed source",
-        ">50% recycled scrap"
+        "ebitda_fy25_adj",
+        "€847M"
       ],
       [
-        "GeCl₄ output/yr",
-        "~86t"
+        "output",
+        "~40-50 t/yr Ge"
       ]
     ],
     "risk": "Single-facility risk at Olen; business distractions from other Umicore segments.",
@@ -1295,30 +1235,34 @@
     "id": "5n-plus",
     "name": "5N Plus",
     "type": "Public",
-    "ticker": "VNP · TSX",
+    "ticker": "VNP",
     "country": "Canada",
-    "location_detail": "Montreal (HQ); Salt Lake City, Utah, Canada",
+    "location_detail": "Montreal, Canada",
     "layer": "Refiner",
-    "descriptor_pill": "Specialty metals refiner",
-    "quantity_pill": "~2-5 t/yr refined Ga",
+    "descriptor_pill": "Multi-metal specialty refiner",
+    "quantity_pill": "~15-20 t/yr est.",
     "status": "Active",
-    "about": "Canadian specialty semiconductor materials company refining high-purity Ge, Ga, Te, In, Bi. Two main segments: Specialty Semiconductors (73% of revenue) and Performance Materials. FY25 revenue +35%, EBITDA +73%.",
+    "about": "5N Plus is a Canadian specialty metals refiner listed on the Toronto Stock Exchange and headquartered in Montreal. It purifies raw germanium, gallium, indium, tellurium, and bismuth into the high-purity grades that semiconductor wafer producers, satellite solar manufacturers, and defense suppliers require. The company owns AZUR Space, the German subsidiary that produces germanium-based multi-junction solar cells used on satellites — a vertical integration that links 5N Plus's refining capacity directly to a high-margin downstream end use. Operations span Canada, the US, Germany, and Vietnam.",
     "stats": [
       [
-        "Ga output",
-        "2-5 t/yr"
+        "market_cap",
+        "CAD 2.96B"
       ],
       [
-        "Total revenue",
-        "$391M"
+        "revenue_fy25",
+        "$391M USD"
       ],
       [
-        "Net debt/EBITDA",
-        "0.5x"
+        "net_earnings_fy25",
+        "$50.6M"
       ],
       [
-        "Ticker",
-        "VNP (TSX)"
+        "ebitda_fy25",
+        "~$92M"
+      ],
+      [
+        "output",
+        "~15-20 t/yr Ge"
       ]
     ],
     "risk": "Gallium is a small fraction of 5N Plus revenue; gallium thesis exposure is diluted",
@@ -1333,28 +1277,16 @@
     "type": "Private",
     "ticker": null,
     "country": "Germany",
-    "location_detail": "Langelsheim, Lower Saxony, Germany",
+    "location_detail": "Langelsheim, Germany",
     "layer": "Refiner",
     "descriptor_pill": "German specialty refiner",
     "quantity_pill": "~10-15 t/yr est.",
     "status": "Active",
-    "about": "Privately-held German specialty materials refiner. Produces zone-refined germanium for IR optics and SiGe semiconductor markets. Smaller scale than Umicore; part of western refining diversification but not at fiber-grade GeCl₄ volumes.",
+    "about": "PPM Pure Metals is a privately held German specialty materials company headquartered in Langelsheim, Lower Saxony. It produces zone-refined germanium, gallium, indium, and other high-purity specialty metals for European semiconductor, IR optics, and SiGe customers. Operating at meaningfully smaller scale than Umicore, PPM serves as the second European refining presence and supplies customers that prefer geographic redundancy or non-Belgian sourcing. The company sits within the broader German specialty chemicals and materials industrial base but is not publicly listed.",
     "stats": [
       [
-        "Status",
-        "Private company"
-      ],
-      [
-        "Ge output",
-        "~10-15 t/yr est."
-      ],
-      [
-        "Process",
-        "Zone refining to 7N+ purity"
-      ],
-      [
-        "Location",
-        "Langelsheim, Germany"
+        "output",
+        "~10-15 t/yr Ge est. (private)"
       ]
     ],
     "risk": "Private — not directly investable. Scale limited.",
@@ -1375,24 +1307,20 @@
     "layer": "Deposit",
     "descriptor_pill": "Coal deposit",
     "quantity_pill": "~1,015 t Ge reserves",
-    "status": "Active",
-    "about": "Russia's primary germanium deposit. Worked by JSC Germanium. Output is effectively unavailable to western buyers due to sanctions imposed after Russia's invasion of Ukraine.",
+    "status": "Active (sanctioned)",
+    "about": "Spetsugli is Russia's primary germanium-bearing coal deposit, located in Primorsky Krai in the Russian Far East. It is a coal-hosted deposit similar in formation type to Lincang and Wulantuga, with reserves estimated at around 1,015 tonnes of contained germanium. Operated by JSC Germanium, the state-owned vertically integrated Russian operator. Following Russia's 2022 invasion of Ukraine and the subsequent western sanctions on JSC Germanium's parent organization, output from Spetsugli is now redirected entirely to non-western buyers, primarily Chinese.",
     "stats": [
       [
-        "Reserves",
+        "reserves",
         "~1,015 t Ge"
       ],
       [
-        "Grade",
-        "450–514 ppm avg"
+        "status",
+        "sanctioned"
       ],
       [
-        "Operator",
-        "JSC Germanium (Rostec)"
-      ],
-      [
-        "Status",
-        "Active but sanctioned"
+        "output",
+        "~20 t/yr feedstock"
       ]
     ],
     "risk": "Sanctions-exposed; no western route to market.",
@@ -1409,28 +1337,24 @@
     "type": "Deposit",
     "ticker": null,
     "country": "DRC",
-    "location_detail": "Lubumbashi, Haut-Katanga, DRC",
+    "location_detail": "Lubumbashi, DRC",
     "layer": "Deposit",
     "descriptor_pill": "Tailings deposit",
     "quantity_pill": "700+ t Ge potential",
-    "status": "Active",
-    "about": "Historic copper-cobalt mining tailings near Lubumbashi with significant germanium content. Being reprocessed by STL/Gécamines joint venture under an offtake agreement with Umicore.",
+    "status": "Under development",
+    "about": "Big Hill is a historic copper-cobalt mining tailings dump in Lubumbashi, in the Haut-Katanga province of the DRC. The pile contains the residual waste from decades of colonial-era and post-independence copper-cobalt mining and is being reprocessed by the STL/Gécamines joint venture to recover germanium, cobalt, and copper. Estimated germanium content sits at around 700 tonnes — a meaningful resource, particularly because tailings reprocessing avoids the permitting, exploration, and capital cost overhead of greenfield mining. Umicore holds the germanium offtake rights, locking the Big Hill output to its Olen, Belgium refinery.",
     "stats": [
       [
-        "Slag volume",
-        "14 million tonnes"
+        "resources",
+        "~700+ t Ge potential"
       ],
       [
-        "Ge potential",
-        "700+ t est."
+        "ore_type",
+        "copper-cobalt tailings"
       ],
       [
-        "Operator",
-        "STL / Gécamines"
-      ],
-      [
-        "First export",
-        "October 2024"
+        "output",
+        "~30 t/yr Ge target"
       ]
     ],
     "risk": "DRC operating risk; reprocessing ramp-up delays possible.",
@@ -1447,28 +1371,24 @@
     "type": "Deposit",
     "ticker": null,
     "country": "USA",
-    "location_detail": "Northwest Arctic Borough, Alaska, USA",
+    "location_detail": "Alaska, USA",
     "layer": "Deposit",
     "descriptor_pill": "Zinc ore deposit",
     "quantity_pill": "Declining — to 2031",
-    "status": "Active",
-    "about": "World-class zinc-lead deposit in northwest Alaska, operated by Teck Resources. Declining toward planned end-of-mine in 2031, though Teck is exploring Aktigiruq extension. Germanium content recovered but volumes not separately disclosed.",
+    "status": "Active (declining)",
+    "about": "Red Dog is a world-class zinc-lead deposit located in northwest Alaska, one of the largest zinc operations globally. The orebody contains germanium as a trace element within the sphalerite zinc mineralization, recovered as a byproduct during smelting at Teck's Trail facility in British Columbia. Operated by Teck Resources, Red Dog is currently scheduled to deplete by 2031 under existing mine plans, with the adjacent Aktigiruq extension prospect under evaluation as a potential successor. If Aktigiruq does not advance, the only North American commercial source of germanium-bearing zinc concentrate disappears with Red Dog's closure.",
     "stats": [
       [
-        "Operator",
-        "Teck Resources (TECK)"
+        "ore_type",
+        "zinc-lead with Ge byproduct"
       ],
       [
-        "Zinc output",
-        "~555,600 t Zn (2024)"
+        "status",
+        "declining to 2031"
       ],
       [
-        "Mine life",
-        "To 2031 (current pits)"
-      ],
-      [
-        "Ge processing",
-        "Trail smelter, BC"
+        "output",
+        "undisclosed Ge volumes"
       ]
     ],
     "risk": "Declining toward planned end-of-mine in 2031 (Aktigiruq extension possible but not yet permitted).",
@@ -1482,31 +1402,19 @@
   "JSC Germanium": {
     "id": "jsc-germanium",
     "name": "JSC Germanium",
-    "type": "Private",
+    "type": "State-owned",
     "ticker": null,
     "country": "Russia",
     "location_detail": "Krasnoyarsk, Russia",
-    "layer": "Host Operation",
+    "layer": "Host Operation + Refiner",
     "descriptor_pill": "Ge mine + refinery",
     "quantity_pill": "~20 t/yr capacity",
-    "status": "Active",
-    "about": "Russia's integrated germanium operator, working the Spetsugli deposit and operating downstream refining. Output is effectively unavailable to western buyers due to post-2022 sanctions; may flow to Chinese and other non-western buyers.",
+    "status": "Active (sanctioned)",
+    "about": "JSC Germanium is a Russian state-owned vertically integrated germanium producer headquartered in Krasnoyarsk. It mines the Spetsugli germanium-bearing coal deposit in Primorsky Krai in the Russian Far East, refines the recovered material in-house, and produces a complete range of germanium products including refined metal, dioxide, fiber-grade tetrachloride, IR optics blanks, and wafers. Historically a meaningful contributor to global germanium supply with around 20 t/yr of refined output, JSC Germanium is now sanctioned from western markets following Russia's 2022 invasion of Ukraine, with output redirected to Chinese and other non-western buyers.",
     "stats": [
       [
-        "Capacity",
-        "~20 t/yr"
-      ],
-      [
-        "Refinery",
-        "Krasnoyarsk, Siberia"
-      ],
-      [
-        "Ownership",
-        "Rostec (state defense)"
-      ],
-      [
-        "Export",
-        "Blocked post-2022"
+        "output",
+        "~20 t/yr Ge refined (sanctioned, state-owned)"
       ]
     ],
     "risk": "Sanctions-exposed; no western route to market.",
@@ -1523,28 +1431,16 @@
     "type": "Private",
     "ticker": null,
     "country": "DRC",
-    "location_detail": "Lubumbashi, Haut-Katanga, DRC",
+    "location_detail": "Lubumbashi, DRC",
     "layer": "Host Operation",
     "descriptor_pill": "Tailings reprocessor",
     "quantity_pill": "~30 t/yr target",
-    "status": "Active",
-    "about": "Joint venture between La Société de Traitement du Terril de Lubumbashi (STL) and Congolese state mining company Gécamines. Reprocessing Big Hill copper-cobalt tailings for germanium and other byproducts. Umicore has offtake rights on germanium output.",
+    "status": "Under construction",
+    "about": "STL/Gécamines is a private joint venture between La Société de Traitement du Terril de Lubumbashi and Gécamines, the Congolese state-owned mining company. It operates in Lubumbashi, in the Haut-Katanga province of the DRC, where it reprocesses the Big Hill tailings dump — the residual waste from decades of historical Belgian-era copper and cobalt mining. Big Hill contains an estimated 700+ tonnes of recoverable germanium alongside its copper and cobalt content, making it one of the largest single germanium resources outside China.",
     "stats": [
       [
-        "Operator",
-        "STL / Gécamines"
-      ],
-      [
-        "Offtake",
-        "100% to Umicore"
-      ],
-      [
-        "Plant",
-        "Commissioned Oct 2023"
-      ],
-      [
-        "Target",
-        "Up to 30% world demand"
+        "output",
+        "~30 t/yr Ge target (private)"
       ]
     ],
     "risk": "DRC operating risk; JV structure and political sensitivity around Gécamines.",
@@ -1559,30 +1455,30 @@
     "id": "teck-resources",
     "name": "Teck Resources",
     "type": "Public",
-    "ticker": "TECK · TSX/NYSE",
+    "ticker": "TECK",
     "country": "Canada",
-    "location_detail": "Vancouver HQ, Canada; Red Dog mine, Alaska USA; Trail smelter, British Columbia, Canada",
-    "layer": "Host Operation",
+    "location_detail": "Vancouver, Canada",
+    "layer": "Host Operation + Primary Producer",
     "descriptor_pill": "Diversified zinc miner",
     "quantity_pill": "Undisclosed Ge volumes",
     "status": "Active",
-    "about": "Diversified Canadian mining company. Operates Red Dog zinc mine in Alaska — the only significant germanium-bearing zinc operation in North America. Trail smelter in British Columbia processes concentrate but germanium output volumes not separately disclosed in filings.",
+    "about": "Teck Resources is a Canadian diversified mining company listed on the NYSE and TSX, headquartered in Vancouver. It mines and processes copper, zinc, and lead from large-scale operations in Canada, Chile, Peru, and the United States, with copper as the largest revenue contributor following the divestiture of its steelmaking coal business in 2024. Teck operates the Red Dog zinc mine in Alaska — one of the largest zinc operations globally — and the Trail smelter in British Columbia, where germanium is recovered as a byproduct of zinc concentrate processing. In September 2025, Teck announced a merger of equals with Anglo American to form Anglo Teck, with shareholder and Investment Canada Act approvals secured by December 2025; the deal awaits remaining regulatory approvals through 2026.",
     "stats": [
       [
-        "Ticker",
-        "TECK (NYSE/TSX)"
+        "market_cap",
+        "$28.30B USD"
       ],
       [
-        "Zinc output",
-        "~555,600 t/yr (2024)"
+        "revenue_ttm",
+        "$9.08B"
       ],
       [
-        "Ge output",
-        "Not disclosed"
+        "ebitda_ttm",
+        "$3.53B"
       ],
       [
-        "Mine life",
-        "Red Dog to 2031"
+        "output",
+        "undisclosed Ge volumes"
       ]
     ],
     "risk": "Red Dog declines toward 2031 end-of-mine; Ge output volumes not separately disclosed.",
@@ -2014,31 +1910,19 @@
   "Various State Operators": {
     "id": "various-state-operators",
     "name": "Various State Operators",
-    "type": "Private",
+    "type": "Aggregate",
     "ticker": null,
     "country": "China",
-    "location_detail": "Multiple sites, China",
+    "location_detail": "Multiple regions, China",
     "layer": "Host Operation",
     "descriptor_pill": "Coal operators aggregate",
     "quantity_pill": "~5-10 t/yr est.",
     "status": "Active",
-    "about": "Aggregate representing various smaller Chinese state-affiliated coal operators working the Yimin basin and other smaller germanium-bearing coal deposits.",
+    "about": "Various State Operators is an aggregate node representing the smaller Chinese state-affiliated coal operators that work germanium-bearing lignite deposits across the Yimin basin and other secondary regions in Inner Mongolia and northern China. Individual operators are typically county-level or municipal-level state enterprises with limited public disclosure, opaque ownership structures, and small individual germanium output volumes. Combined, this category represents an estimated 5-10 tonnes per year of crude germanium extraction — a meaningful supplemental fraction of Chinese supply but smaller than the named majors.",
     "stats": [
       [
-        "Type",
-        "Multiple state operators"
-      ],
-      [
-        "Region",
-        "Inner Mongolia"
-      ],
-      [
-        "Activity",
-        "Low — partial extraction"
-      ],
-      [
-        "Data",
-        "Limited disclosure"
+        "output",
+        "~5-10 t/yr Ge est. combined (aggregate)"
       ]
     ],
     "risk": "Fragmented, opaque operator base.",
@@ -2052,31 +1936,19 @@
   "Chinese State Refiners": {
     "id": "chinese-state-refiners",
     "name": "Chinese State Refiners",
-    "type": "Private",
+    "type": "Aggregate",
     "ticker": null,
     "country": "China",
-    "location_detail": "Multiple sites, China",
+    "location_detail": "Multiple regions, China",
     "layer": "Refiner",
     "descriptor_pill": "Chinese refiners aggregate",
     "quantity_pill": "~14 t/yr est. combined",
     "status": "Active",
-    "about": "Aggregate representing smaller Chinese germanium refiners with limited public disclosure. Focus on GeO₂ and crude metal output; limited high-purity GeCl₄ capacity at individual facilities.",
+    "about": "Smaller Chinese Refiners is an aggregate node representing the long tail of Chinese germanium refining capacity beyond the named majors — Yunnan Chihong Refinery and Lincang Xinyuan Refinery. Individual operators are typically smaller specialty chemicals companies or regional state enterprises that focus on germanium dioxide and crude metal output rather than fiber-grade GeCl₄, where the technical bar is higher. Combined output is estimated around 14 t/yr. Few are publicly listed; most operate within Chinese supply chains with limited disclosure to international markets.",
     "stats": [
       [
-        "Combined output",
-        "~14 t/yr est."
-      ],
-      [
-        "Feedstock",
-        "Wulantuga + Yimin fly ash"
-      ],
-      [
-        "Products",
-        "GeO₂ and Ge metal"
-      ],
-      [
-        "Visibility",
-        "Limited public data"
+        "output",
+        "~14 t/yr Ge est. combined (aggregate)"
       ]
     ],
     "risk": "Opaque individual facility data; output subject to Chinese export controls.",
@@ -2090,31 +1962,31 @@
   "Blue Moon Metals": {
     "id": "blue-moon-metals",
     "name": "Blue Moon Metals",
-    "type": "Public",
-    "ticker": "MOON · TSXV",
+    "type": "Public (project stage)",
+    "ticker": "MOON / BMM",
     "country": "USA",
-    "location_detail": "Washington County, Utah, USA",
-    "layer": "Refiner",
+    "location_detail": "Washington County, USA",
+    "layer": "Host Operation (planned)",
     "descriptor_pill": "US Ge-Ga mine (planned)",
     "quantity_pill": "5-10 t/yr target 2028",
-    "status": "Active",
-    "about": "Toronto-listed junior acquired the Apex mine in Utah — the only past-producing primary germanium and gallium mine in the United States. Ge grades 10-100x higher than typical deposits; 1Mt resource. Backed by Oaktree Capital, Hartree Partners, Teck Resources (8% equity), Wheaton Precious Metals, and Altius Minerals. Production target 2028 pending permitting and financing.",
+    "status": "Under development",
+    "about": "Blue Moon Metals is a Canadian junior mining company developing five brownfield polymetallic projects across the United States and Norway, listed on the TSX Venture Exchange and NASDAQ. The Apex mine in Washington County, southern Utah, is one of those projects and the only past-producing primary germanium and gallium mine in the United States. Blue Moon acquired Apex from Teck American (a Teck Resources subsidiary) and is restarting development with backing from Oaktree Capital, Hartree Partners, Wheaton Precious Metals, and Altius Minerals. Teck retained an 8% equity stake in Blue Moon as part of the acquisition.",
     "stats": [
       [
-        "Ticker",
-        "MOON (TSXV/NASDAQ)"
+        "market_cap",
+        "CAD ~885M"
       ],
       [
-        "Resource",
-        "1Mt at 0.087% Ge"
+        "revenue",
+        "pre-revenue"
       ],
       [
-        "Ge target",
-        "5-10 t/yr by 2028"
+        "eps_ttm",
+        "-$0.12"
       ],
       [
-        "Backers",
-        "Oaktree, Hartree, Teck (8%)"
+        "output",
+        "Apex 5-10 t/yr Ge target by 2028"
       ]
     ],
     "risk": "Pre-production junior; permitting, financing, and ramp-up risk typical of early-stage mining projects.",
@@ -2129,30 +2001,34 @@
     "id": "lightpath-technologies",
     "name": "LightPath Technologies",
     "type": "Public",
-    "ticker": "LPTH · NASDAQ",
+    "ticker": "LPTH",
     "country": "USA",
-    "location_detail": "Orlando, Florida, USA (HQ); manufacturing in New Hampshire, Florida, Latvia, China",
+    "location_detail": "Orlando, Florida, USA",
     "layer": "Device Manufacturer",
     "descriptor_pill": "IR optics substitution play",
     "quantity_pill": "$40M backlog · F-35 validated",
     "status": "Active",
-    "about": "Orlando-listed IR optics and imaging systems company. Holds exclusive license to BlackDiamond chalcogenide glass that substitutes for germanium in infrared optics applications — a direct hedge against germanium scarcity. $40M camera supply contract through 2027; F-35 combat aircraft program validation.",
+    "about": "LightPath Technologies is a US-listed infrared optics and imaging systems company headquartered in Orlando, Florida. It designs and manufactures infrared lenses, thermal imaging cameras, and complete optical assemblies for defense, surveillance, and industrial inspection customers. LightPath holds an exclusive license to BlackDiamond chalcogenide glass, an alternative material to germanium for IR optics applications. The company is in the middle of a strategic transition from selling individual lens components to selling complete imaging systems, which carries higher margins. Listed on NASDAQ with manufacturing operations in Florida, New Hampshire, Latvia, and China.",
     "stats": [
       [
-        "Ticker",
-        "LPTH (NASDAQ)"
+        "market_cap",
+        "~$650M"
       ],
       [
-        "Revenue",
-        "$37.2M TTM"
+        "revenue_ttm",
+        "$52.79M"
       ],
       [
-        "Backlog",
-        "~$90M"
+        "q2_fy26_revenue",
+        "$16.4M (+120% YoY)"
       ],
       [
-        "Status",
-        "Active · F-35 validated"
+        "ebitda_ttm",
+        "-$14.26M"
+      ],
+      [
+        "backlog",
+        "$90M"
       ]
     ],
     "risk": "Substitution penetration is slow; BlackDiamond requires design-in cycles that take years per customer platform.",

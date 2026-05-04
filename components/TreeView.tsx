@@ -3374,9 +3374,9 @@ export default function TreeView() {
                 );
               }
 
-              const placements = getNodePlacements(selectedTreeNode);
               const currentChainId = lastEntry?.id === "fiber" ? "fiber" : lastEntry?.id;
-              const currentPlacement = placements.find(p => p.chain_id === currentChainId);
+              const chainDef = currentChainId ? chainDefs[currentChainId] : null;
+              const nodeCtx = chainDef?.nodeContext?.[selectedTreeNode] as { relevance?: string; chain_specific_risk?: string } | undefined;
 
               return (
                 <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
@@ -3401,10 +3401,10 @@ export default function TreeView() {
                   )}
 
                   {/* Relevance to chain */}
-                  {currentPlacement?.relevance && (
+                  {nodeCtx?.relevance && (
                     <>
                       <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>RELEVANCE TO {currentChainId?.toUpperCase()}</p>
-                      <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{currentPlacement.relevance}</p>
+                      <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{nodeCtx.relevance}</p>
                     </>
                   )}
 
