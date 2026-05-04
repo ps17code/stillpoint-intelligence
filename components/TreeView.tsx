@@ -3361,88 +3361,47 @@ export default function TreeView() {
               const placements = getNodePlacements(selectedTreeNode);
               const currentChainId = lastEntry?.id === "fiber" ? "fiber" : lastEntry?.id;
               const currentPlacement = placements.find(p => p.chain_id === currentChainId);
-              const relatedChains = placements.filter(p => p.chain_id !== currentChainId).map(p => p.chain_id);
-              const countryCode = uNode.country ? ({"China":"cn","USA":"us","Belgium":"be","Canada":"ca","Russia":"ru","DRC":"cd","Japan":"jp","Germany":"de","France":"fr","Italy":"it","Australia":"au","Brazil":"br","Indonesia":"id","India":"in","Guinea":"gn","South Korea":"kr","Austria":"at","Netherlands":"nl","UAE":"ae","Saudi Arabia":"sa","Greece":"gr","Global":"un","Multiple":"un"} as Record<string,string>)[uNode.country] : null;
 
               return (
                 <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
-                  {/* 1. Header: name + type + country */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                  {/* Name + ticker */}
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 2 }}>
                     <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{uNode.name}</p>
-                    {uNode.ticker && <span style={{ fontSize: 7, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{uNode.ticker}</span>}
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
-                    <span style={{ fontSize: 7, color: templateAccent ?? "#706a60", letterSpacing: "0.04em", textTransform: "uppercase" as const }}>{uNode.layer}</span>
-                    {uNode.country && countryCode && (
-                      <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
-                        <img src={`https://flagcdn.com/16x12/${countryCode}.png`} alt={uNode.country} style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7 }} />
-                        <span style={{ fontSize: 7, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{uNode.country}</span>
-                      </div>
-                    )}
-                    <span style={{ fontSize: 7, color: uNode.status === "Active" ? "#5a8a5a" : "#8a7a5a", fontFamily: "'Geist Mono', monospace" }}>{uNode.status}</span>
+                    <span style={{ fontSize: 8, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{uNode.ticker ?? "Private"}</span>
                   </div>
 
-                  {/* 2. Output headline */}
-                  {uNode.quantity_pill && (
-                    <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 8px 0", lineHeight: 1.4 }}>{uNode.quantity_pill}</p>
+                  {/* Location */}
+                  <p style={{ fontSize: 9, color: "#706a60", margin: "0 0 4px 0" }}>{uNode.location_detail}</p>
+
+                  {/* Type */}
+                  <p style={{ fontSize: 8, color: templateAccent ?? "#706a60", margin: "0 0 8px 0", letterSpacing: "0.04em", textTransform: "uppercase" as const }}>{uNode.descriptor_pill || uNode.layer}</p>
+
+                  {/* Key metrics */}
+                  {uNode.stats && uNode.stats.length > 0 && (
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 10, paddingBottom: 8, borderBottom: "1px solid rgb(45, 41, 39)" }}>
+                      {uNode.stats.map(([label, value]) => (
+                        <div key={label}>
+                          <p style={{ fontSize: 7, color: "#555", margin: "0 0 2px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em", textTransform: "uppercase" as const }}>{label}</p>
+                          <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{value}</p>
+                        </div>
+                      ))}
+                    </div>
                   )}
 
-                  {/* 3. About (universal) */}
+                  {/* What it does — universal description */}
                   {uNode.about && (
                     <>
-                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>ABOUT</p>
+                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>WHAT IT DOES</p>
                       <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{uNode.about}</p>
                     </>
                   )}
 
-                  {/* 4. Chain-specific relevance */}
+                  {/* Relevance to chain */}
                   {currentPlacement?.relevance && (
                     <>
                       <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>RELEVANCE TO {currentChainId?.toUpperCase()}</p>
-                      <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{currentPlacement.relevance}</p>
+                      <p style={{ fontSize: 10, color: "#807870", margin: 0, lineHeight: 1.5 }}>{currentPlacement.relevance}</p>
                     </>
-                  )}
-
-                  {/* 5. Connections */}
-                  {currentPlacement && (currentPlacement.feeds_from.length > 0 || currentPlacement.feeds_into.length > 0) && (
-                    <div style={{ marginBottom: 8 }}>
-                      {currentPlacement.feeds_from.length > 0 && (
-                        <div style={{ marginBottom: 4 }}>
-                          <span style={{ fontSize: 7, color: "#555", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>FEEDS FROM: </span>
-                          <span style={{ fontSize: 9, color: "#706a60" }}>{currentPlacement.feeds_from.join(", ")}</span>
-                        </div>
-                      )}
-                      {currentPlacement.feeds_into.length > 0 && (
-                        <div>
-                          <span style={{ fontSize: 7, color: "#555", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>FEEDS INTO: </span>
-                          <span style={{ fontSize: 9, color: "#706a60" }}>{currentPlacement.feeds_into.join(", ")}</span>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* 6. Risk */}
-                  {(currentPlacement?.chain_specific_risk || uNode.risk) && (
-                    <div style={{ paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)", marginBottom: 8 }}>
-                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>KEY RISK</p>
-                      <p style={{ fontSize: 10, color: "#807870", margin: 0, lineHeight: 1.5 }}>{currentPlacement?.chain_specific_risk || uNode.risk}</p>
-                    </div>
-                  )}
-
-                  {/* 7. Investment angle */}
-                  {uNode.inv && (
-                    <div style={{ paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)", marginBottom: 8 }}>
-                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>INVESTMENT ANGLE</p>
-                      <p style={{ fontSize: 10, color: "#807870", margin: 0, lineHeight: 1.5 }}>{uNode.inv}</p>
-                    </div>
-                  )}
-
-                  {/* 8. Related chains */}
-                  {relatedChains.length > 0 && (
-                    <div style={{ paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
-                      <span style={{ fontSize: 7, color: "#555", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>ALSO APPEARS ON: </span>
-                      <span style={{ fontSize: 9, color: templateAccent ?? "#706a60" }}>{relatedChains.join(", ")}</span>
-                    </div>
                   )}
                 </div>
               );
