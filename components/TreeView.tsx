@@ -42,7 +42,7 @@ const galliumLc = (galliumChainJson as Record<string, unknown>).layerConfig as R
 type UniversalNode = {
   id: string; name: string; type: string; ticker: string | null;
   country: string | null; location_detail: string; layer: string;
-  output_headline: string; descriptor_pill: string; quantity_pill: string;
+  descriptor_pill: string; quantity_pill: string;
   status: string; about: string; stats: [string, string][];
   risk: string; risks: string[]; inv: string;
 };
@@ -3196,7 +3196,7 @@ export default function TreeView() {
                       <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
                         <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0" }}>{uNode.name}</p>
                         <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>{uNode.location_detail}</p>
-                        {uNode.output_headline ? <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 6px 0" }}>{uNode.output_headline}</p> : null}
+                        {uNode.quantity_pill ? <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 6px 0" }}>{uNode.quantity_pill}</p> : null}
                         {uNode.about ? <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.5, margin: "0 0 6px 0" }}>{uNode.about}</p> : null}
                         {uNode.risk ? (
                           <div style={{ paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
@@ -3448,8 +3448,8 @@ export default function TreeView() {
                   </div>
 
                   {/* 2. Output headline */}
-                  {uNode.output_headline && (
-                    <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 8px 0", lineHeight: 1.4 }}>{uNode.output_headline}</p>
+                  {uNode.quantity_pill && (
+                    <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 8px 0", lineHeight: 1.4 }}>{uNode.quantity_pill}</p>
                   )}
 
                   {/* 3. About (universal) */}
