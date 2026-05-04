@@ -2,6 +2,8 @@
 import React, { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import type { TreeGeometry } from "@/lib/treeGeometry";
 import type { NodeData } from "@/types";
+import universalNodesJson from "@/data/universal-nodes.json";
+const uNodes = universalNodesJson as unknown as Record<string, { quantity_pill?: string; country?: string }>;
 
 /* ── Country dot colors ── */
 const COUNTRY_COLORS: Record<string, string> = {
@@ -74,15 +76,14 @@ function NodeCard({
   cardRef?: React.Ref<HTMLDivElement>;
 }) {
   const raw = nodeData as unknown as Record<string, unknown>;
-  const field0 = displayFields[0];
-  const val0 = field0 ? raw?.[field0.key] : undefined;
-  const hasCountry = field0?.key === "country" && val0 != null && String(val0) !== "";
-  const country = hasCountry ? String(val0) : "";
+  const uNode = uNodes[name];
+  const country = String(raw?.["country"] ?? uNode?.country ?? "");
+  const hasCountry = country !== "";
   const countryCode = COUNTRY_CODES[country] || "";
   const hasIdea = IDEA_NODES.has(name);
 
-  // Output line — try quantity_pill first, then stat
-  const qtyVal = raw?.["quantity_pill"] ?? raw?.["stat"];
+  // Output line — only use quantity_pill from universal data
+  const qtyVal = raw?.["quantity_pill"] ?? uNode?.quantity_pill;
   const outputLine = qtyVal != null && String(qtyVal) !== "" ? String(qtyVal) : "";
 
   return (
