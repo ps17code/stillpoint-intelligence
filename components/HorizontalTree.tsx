@@ -30,6 +30,8 @@ interface HorizontalTreeProps {
   /** Optional downstream demand items rendered as a final column */
   downstream?: { id: string; name: string; pill: string }[];
   onDownstreamClick?: (id: string) => void;
+  /** Inline chain-specific nodes (supply aggregates, output) not in universal data */
+  inlineNodes?: Record<string, { quantity_pill?: string; descriptor_pill?: string; country?: string }>;
 }
 
 /* ── Country code mapping for flag icons ── */
@@ -63,6 +65,7 @@ function NodeCard({
   onHover,
   onLeave,
   cardRef,
+  inlineNodeData,
 }: {
   name: string;
   nodeData: NodeData | undefined;
@@ -74,15 +77,17 @@ function NodeCard({
   onHover?: () => void;
   onLeave?: () => void;
   cardRef?: React.Ref<HTMLDivElement>;
+  inlineNodeData?: { quantity_pill?: string; descriptor_pill?: string; country?: string };
 }) {
   const raw = nodeData as unknown as Record<string, unknown>;
-  const country = String(raw?.["country"] ?? "");
+  const inl = inlineNodeData;
+  const country = String(raw?.["country"] ?? inl?.country ?? "");
   const hasCountry = country !== "";
   const countryCode = COUNTRY_CODES[country] || "";
   const hasIdea = IDEA_NODES.has(name);
 
-  // Output line — only quantity_pill
-  const qtyVal = raw?.["quantity_pill"];
+  // Output line — only quantity_pill, check inline data first
+  const qtyVal = inl?.quantity_pill ?? raw?.["quantity_pill"];
   const outputLine = qtyVal != null && String(qtyVal) !== "" ? String(qtyVal) : "";
 
   return (
@@ -152,6 +157,7 @@ export default function HorizontalTree({
   onNodeClick,
   downstream,
   onDownstreamClick,
+  inlineNodes,
 }: HorizontalTreeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
@@ -470,6 +476,7 @@ export default function HorizontalTree({
                 cardRef={(el: HTMLDivElement | null) => {
                   if (el) cardRefs.current.set(node.refKey, el);
                 }}
+                inlineNodeData={inlineNodes?.[node.name]}
               />
             );
           })}

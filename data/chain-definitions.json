@@ -300,6 +300,79 @@
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       }
+    },
+    "supplyNodes": [
+      {
+        "name": "China Primary Supply",
+        "quantity_pill": "~120 t/yr primary Ge",
+        "descriptor_pill": "Chinese primary production",
+        "country": "China",
+        "stats": [
+          [
+            "Volume",
+            "~120 t/yr primary"
+          ],
+          [
+            "Global share",
+            "~57%"
+          ],
+          [
+            "Export control",
+            "Active since Aug 2023"
+          ],
+          [
+            "Key sources",
+            "Yunnan, Inner Mongolia, Jilin"
+          ]
+        ]
+      },
+      {
+        "name": "Western Recycled Supply",
+        "quantity_pill": "~90-110 t/yr recycled Ge",
+        "descriptor_pill": "Western recycled supply",
+        "country": "Multiple",
+        "stats": [
+          [
+            "Volume",
+            "~90-110 t/yr recycled"
+          ],
+          [
+            "Global share",
+            "~43%"
+          ],
+          [
+            "Primary recycler",
+            "Umicore (Belgium)"
+          ],
+          [
+            "Source",
+            "Fiber optic + IR scrap"
+          ]
+        ]
+      }
+    ],
+    "outputNode": {
+      "name": "Global Supply",
+      "quantity_pill": "~230 t/yr total Ge",
+      "descriptor_pill": "Global Ge supply",
+      "stats": [
+        [
+          "Total supply",
+          "~230 t/yr"
+        ],
+        [
+          "Value at $8,500/kg",
+          "~$1.96B/yr"
+        ],
+        [
+          "Chinese primary",
+          "~120 t/yr (57%)"
+        ],
+        [
+          "Western recycled",
+          "~90-110 t/yr (43%)"
+        ]
+      ]
     }
   },
   "fiber": {
@@ -585,6 +658,29 @@
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       }
+    },
+    "outputNode": {
+      "name": "Deployed Fiber Network",
+      "quantity_pill": "~720M strand-km/yr",
+      "descriptor_pill": "Global fiber output",
+      "stats": [
+        [
+          "Production",
+          "~720M strand-km/yr"
+        ],
+        [
+          "Value",
+          "~$12B/yr"
+        ],
+        [
+          "Demand by 2027",
+          "~850M km"
+        ],
+        [
+          "Gap",
+          "~130M km shortfall"
+        ]
+      ]
     }
   },
   "gallium": {
@@ -855,6 +951,79 @@
         "show_in_wtmi": false,
         "wtmi_category_tag": null
       }
+    },
+    "supplyNodes": [
+      {
+        "name": "Chinese Primary Supply",
+        "quantity_pill": "~290 t/yr primary Ga",
+        "descriptor_pill": "Chinese primary production",
+        "country": "China",
+        "stats": [
+          [
+            "Volume",
+            "~290 t/yr primary"
+          ],
+          [
+            "Global share",
+            "~98%"
+          ],
+          [
+            "Export control",
+            "Active since Aug 2023"
+          ],
+          [
+            "Recovery from",
+            "Alumina refining byproduct"
+          ]
+        ]
+      },
+      {
+        "name": "Western Refined Supply",
+        "quantity_pill": "~15-30 t/yr refined Ga",
+        "descriptor_pill": "Western refined supply",
+        "country": "Multiple",
+        "stats": [
+          [
+            "Volume",
+            "~15-30 t/yr refined"
+          ],
+          [
+            "Global share",
+            "~5-8%"
+          ],
+          [
+            "Key refiner",
+            "Dowa Holdings (Japan)"
+          ],
+          [
+            "Feedstock",
+            "Chinese primary dependent"
+          ]
+        ]
+      }
+    ],
+    "outputNode": {
+      "name": "Global Supply",
+      "quantity_pill": "~320 t/yr total Ga",
+      "descriptor_pill": "Global Ga supply",
+      "stats": [
+        [
+          "Total supply",
+          "~320 t/yr"
+        ],
+        [
+          "Value at $2,269/kg",
+          "~$726M/yr"
+        ],
+        [
+          "Chinese primary",
+          "~290 t/yr (98%)"
+        ],
+        [
+          "Western refined",
+          "~15-30 t/yr"
+        ]
+      ]
     }
   }
 }

@@ -149,6 +149,8 @@ export const PALETTES = {
 
 export type ChainDefinitionLayer = { key: string; label: string; nodes: string[] };
 export type ChainDefinitionEdge = { from: string; to: string };
+export type ChainSupplyNode = { name: string; quantity_pill: string; descriptor_pill: string; country?: string; stats?: [string, string][] };
+export type ChainOutputNode = { name: string; quantity_pill: string; descriptor_pill: string; stats?: [string, string][] };
 export type ChainDefinition = {
   id: string;
   name: string;
@@ -156,6 +158,8 @@ export type ChainDefinition = {
   edges: ChainDefinitionEdge[];
   output: string;
   minor: string[];
+  supplyNodes?: ChainSupplyNode[];
+  outputNode?: ChainOutputNode;
 };
 
 /** Palette lookup: maps chain layer keys to color palettes */
