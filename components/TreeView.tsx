@@ -3392,18 +3392,6 @@ export default function TreeView() {
                   {/* Type */}
                   <p style={{ fontSize: 8, color: templateAccent ?? "#706a60", margin: "0 0 8px 0", letterSpacing: "0.04em", textTransform: "uppercase" as const }}>{uNode.descriptor_pill || uNode.layer}</p>
 
-                  {/* Key metrics */}
-                  {uNode.stats && uNode.stats.length > 0 && (
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 10, paddingBottom: 8, borderBottom: "1px solid rgb(45, 41, 39)" }}>
-                      {uNode.stats.map(([label, value]) => (
-                        <div key={label}>
-                          <p style={{ fontSize: 7, color: "#555", margin: "0 0 2px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em", textTransform: "uppercase" as const }}>{label}</p>
-                          <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{value}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
                   {/* What it does — universal description */}
                   {uNode.about && (
                     <>
@@ -3416,8 +3404,21 @@ export default function TreeView() {
                   {currentPlacement?.relevance && (
                     <>
                       <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>RELEVANCE TO {currentChainId?.toUpperCase()}</p>
-                      <p style={{ fontSize: 10, color: "#807870", margin: 0, lineHeight: 1.5 }}>{currentPlacement.relevance}</p>
+                      <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{currentPlacement.relevance}</p>
                     </>
+                  )}
+
+                  {/* Key metrics — stacked vertically */}
+                  {uNode.stats && uNode.stats.length > 0 && (
+                    <div style={{ paddingTop: 8, borderTop: "1px solid rgb(45, 41, 39)" }}>
+                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>KEY METRICS</p>
+                      {uNode.stats.map(([label, value]) => (
+                        <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
+                          <span style={{ fontSize: 9, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{label}</span>
+                          <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{value}</span>
+                        </div>
+                      ))}
+                    </div>
                   )}
                 </div>
               );
