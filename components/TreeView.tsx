@@ -3400,13 +3400,6 @@ export default function TreeView() {
                     </>
                   )}
 
-                  {/* Relevance to chain */}
-                  {nodeCtx?.relevance && (
-                    <>
-                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>RELEVANCE TO {currentChainId?.toUpperCase()}</p>
-                      <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{nodeCtx.relevance}</p>
-                    </>
-                  )}
 
                   {/* Key metrics — stacked vertically */}
                   {uNode.stats && uNode.stats.length > 0 && (
