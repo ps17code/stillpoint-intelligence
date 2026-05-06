@@ -3378,19 +3378,26 @@ export default function TreeView() {
               const chainDef = currentChainId ? chainDefs[currentChainId] : null;
               const nodeCtx = chainDef?.nodeContext?.[selectedTreeNode] as { relevance?: string; chain_specific_risk?: string } | undefined;
 
+              const nodeCountryCode = uNode.country ? ({"China":"cn","USA":"us","Belgium":"be","Canada":"ca","Russia":"ru","DRC":"cd","Japan":"jp","Germany":"de","France":"fr","Italy":"it","Australia":"au","Brazil":"br","Indonesia":"id","India":"in","Guinea":"gn","South Korea":"kr","Austria":"at","Netherlands":"nl","UAE":"ae","Saudi Arabia":"sa","Greece":"gr","Global":"un","Multiple":"un"} as Record<string,string>)[uNode.country] : null;
+
               return (
                 <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
                   {/* Name + ticker */}
                   <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 2 }}>
-                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{uNode.name}</p>
+                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0", fontFamily: "'Instrument Serif', serif" }}>{uNode.name}</p>
                     <span style={{ fontSize: 8, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{uNode.ticker ?? "Private"}</span>
                   </div>
 
-                  {/* Location */}
-                  <p style={{ fontSize: 9, color: "#706a60", margin: "0 0 4px 0" }}>{uNode.location_detail}</p>
+                  {/* Location with flag */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 10 }}>
+                    {nodeCountryCode && (
+                      <img src={`https://flagcdn.com/16x12/${nodeCountryCode}.png`} alt={uNode.country ?? ""} style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7 }} />
+                    )}
+                    <p style={{ fontSize: 10, color: "#706a60", margin: 0 }}>{uNode.location_detail}</p>
+                  </div>
 
-                  {/* Type */}
-                  <p style={{ fontSize: 8, color: templateAccent ?? "#706a60", margin: "0 0 8px 0", letterSpacing: "0.04em", textTransform: "uppercase" as const }}>{uNode.descriptor_pill || uNode.layer}</p>
+                  {/* Type / descriptor */}
+                  <p style={{ fontSize: 9, color: templateAccent ?? "#706a60", margin: "0 0 10px 0", letterSpacing: "0.04em" }}>{uNode.descriptor_pill || uNode.layer}</p>
 
                   {/* What it does — universal description */}
                   {uNode.about && (
@@ -3400,7 +3407,6 @@ export default function TreeView() {
                     </>
                   )}
 
-
                   {/* Key metrics — stacked vertically */}
                   {uNode.stats && uNode.stats.length > 0 && (
                     <div style={{ paddingTop: 8, borderTop: "1px solid rgb(45, 41, 39)" }}>
@@ -3408,7 +3414,7 @@ export default function TreeView() {
                       {uNode.stats.map(([label, value]) => (
                         <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
                           <span style={{ fontSize: 9, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{label}</span>
-                          <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{value}</span>
+                          <span style={{ fontSize: 10, color: warmWhite, fontWeight: 300, textAlign: "right" as const }}>{value}</span>
                         </div>
                       ))}
                     </div>
