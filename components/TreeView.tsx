@@ -3399,11 +3399,18 @@ export default function TreeView() {
                   {/* Type / descriptor */}
                   <p style={{ fontSize: 9, color: templateAccent ?? "#706a60", margin: "0 0 10px 0", letterSpacing: "0.04em" }}>{uNode.descriptor_pill || uNode.layer}</p>
 
-                  {/* What it does — universal description */}
+                  {/* What it does — universal description as bullets */}
                   {uNode.about && (
                     <>
-                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>WHAT IT DOES</p>
-                      <p style={{ fontSize: 10, color: "#807870", margin: "0 0 8px 0", lineHeight: 1.5 }}>{uNode.about}</p>
+                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>WHAT IT DOES</p>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 8 }}>
+                        {uNode.about.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 10).map((sentence, i) => (
+                          <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                            <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
+                            <p style={{ fontSize: 11, color: "rgb(158, 156, 153)", margin: 0, lineHeight: 1.5 }}>{sentence.trim()}</p>
+                          </div>
+                        ))}
+                      </div>
                     </>
                   )}
 
