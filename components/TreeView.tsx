@@ -2818,9 +2818,9 @@ export default function TreeView() {
             </div>
           </div>
 
-          {/* Supply tree area — fixed height, scrollable */}
+          {/* Supply tree area — fixed height normally, flex when investment ideas */}
           <div style={{
-            height: 450,
+            ...(activeTab === "investment-ideas" ? { flex: 1, minHeight: 0 } : { height: 450 }),
             overflowY: "auto", overflowX: "hidden",
             padding: "0 30px",
           }}>
@@ -3038,11 +3038,13 @@ export default function TreeView() {
             </div>
           </div>
 
-          {/* Bottom section — key takeaways (changes per tab) */}
+          {/* Bottom section — key takeaways (hidden on investment ideas tab) */}
           <div style={{
-            height: 160, flexShrink: 0,
-            borderTop: `1px solid ${borderColor}`,
-            padding: "0 30px",
+            height: activeTab === "investment-ideas" ? 0 : 160,
+            flexShrink: 0,
+            borderTop: activeTab === "investment-ideas" ? "none" : `1px solid ${borderColor}`,
+            padding: activeTab === "investment-ideas" ? 0 : "0 30px",
+            overflow: "hidden",
             overflowY: "auto",
             display: "flex", alignItems: "center",
           }}>
@@ -3405,7 +3407,7 @@ export default function TreeView() {
                       {uNode.about.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 10).map((sentence, i) => (
                         <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
                           <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
-                          <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", margin: 0, lineHeight: 1.5 }}>{sentence.trim()}</p>
+                          <p style={{ fontSize: 11, color: "rgb(158, 156, 153)", margin: 0, lineHeight: 1.5 }}>{sentence.trim()}</p>
                         </div>
                       ))}
                     </div>
@@ -3414,7 +3416,7 @@ export default function TreeView() {
                   {/* Key metrics — stacked vertically */}
                   {uNode.stats && uNode.stats.length > 0 && (
                     <div style={{ paddingTop: 8, borderTop: "1px solid rgb(45, 41, 39)" }}>
-                      <p style={{ fontSize: 10, color: "#555", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>KEY METRICS</p>
+                      <p style={{ fontSize: 10, color: templateAccent ?? "#706a60", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>KEY METRICS</p>
                       {uNode.stats.map(([label, value]) => (
                         <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
                           <span style={{ fontSize: 10, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{label}</span>
