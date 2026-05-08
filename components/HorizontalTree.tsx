@@ -116,13 +116,19 @@ function NodeCard({
       }}
     >
       {/* Investment idea dot — on left edge where connection lines arrive */}
-      {hasIdea && (
-        <div style={{
-          position: "absolute", left: -5, top: "50%", transform: "translateY(-50%)",
-          width: 8, height: 8, borderRadius: "50%", background: accentColor ?? IDEA_DOT_COLOR,
-          border: "1px solid rgb(36, 32, 29)",
-        }} />
-      )}
+      {hasIdea && (() => {
+        // Brighten accent color for visibility
+        const BRIGHT: Record<string, string> = { "#81713c": "#c8a85a", "#6a9ab8": "#8ec4e8", "#7a8a6a": "#a8c890" };
+        const dotColor = BRIGHT[accentColor ?? ""] ?? accentColor ?? IDEA_DOT_COLOR;
+        return (
+          <div style={{
+            position: "absolute", left: -5, top: "50%", transform: "translateY(-50%)",
+            width: 8, height: 8, borderRadius: "50%", background: dotColor,
+            border: "1px solid rgb(36, 32, 29)",
+            boxShadow: `0 0 4px ${dotColor}`,
+          }} />
+        );
+      })()}
       {/* Name */}
       <p style={{
         fontSize: 10, fontWeight: 600, color: "#ece8e1",
