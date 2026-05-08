@@ -1240,7 +1240,7 @@ function FiberSupplyTree({ onNodeClick, upstream, downstream, onDownstreamClick 
   }, [svgW, chain, upstream]);
 
   return (
-    <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} inlineNodes={useMemo(() => buildInlineNodes(chain), [chain])} />
+    <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} inlineNodes={useMemo(() => buildInlineNodes(chain), [chain])} accentColor="#6a9ab8" />
   );
 }
 
@@ -1267,7 +1267,7 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
   const inl = useMemo(() => buildInlineNodes(chain), [chain]);
 
   return (
-    <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} inlineNodes={inl} />
+    <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} inlineNodes={inl} accentColor="#81713c" />
   );
 }
 
@@ -1279,7 +1279,7 @@ function GalliumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { onN
   const inl = useMemo(() => buildInlineNodes(chain), [chain]);
 
   return (
-    <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={galliumLc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} inlineNodes={inl} />
+    <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={galliumLc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} inlineNodes={inl} accentColor="#7a8a6a" />
   );
 }
 
@@ -3384,8 +3384,8 @@ export default function TreeView() {
                 <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
                   {/* Name + ticker */}
                   <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 2 }}>
-                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0", fontFamily: "'Instrument Serif', serif" }}>{uNode.name}</p>
-                    <span style={{ fontSize: 8, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{uNode.ticker ?? "Private"}</span>
+                    <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0", fontFamily: "'Instrument Serif', serif" }}>{uNode.name}</p>
+                    <span style={{ fontSize: 9, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{uNode.ticker ?? "Private"}</span>
                   </div>
 
                   {/* Location with flag */}
@@ -3393,35 +3393,32 @@ export default function TreeView() {
                     {nodeCountryCode && (
                       <img src={`https://flagcdn.com/16x12/${nodeCountryCode}.png`} alt={uNode.country ?? ""} style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7 }} />
                     )}
-                    <p style={{ fontSize: 10, color: "#706a60", margin: 0 }}>{uNode.location_detail}</p>
+                    <p style={{ fontSize: 11, color: "#706a60", margin: 0 }}>{uNode.location_detail}</p>
                   </div>
 
-                  {/* Type / descriptor */}
-                  <p style={{ fontSize: 9, color: templateAccent ?? "#706a60", margin: "0 0 10px 0", letterSpacing: "0.04em" }}>{uNode.descriptor_pill || uNode.layer}</p>
+                  {/* Type / descriptor — uppercase */}
+                  <p style={{ fontSize: 10, color: templateAccent ?? "#706a60", margin: "0 0 10px 0", letterSpacing: "0.04em", textTransform: "uppercase" as const }}>{uNode.descriptor_pill || uNode.layer}</p>
 
-                  {/* What it does — universal description as bullets */}
+                  {/* Description as bullets (no label) */}
                   {uNode.about && (
-                    <>
-                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>WHAT IT DOES</p>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 8 }}>
-                        {uNode.about.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 10).map((sentence, i) => (
-                          <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                            <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
-                            <p style={{ fontSize: 11, color: "rgb(158, 156, 153)", margin: 0, lineHeight: 1.5 }}>{sentence.trim()}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 10 }}>
+                      {uNode.about.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 10).map((sentence, i) => (
+                        <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
+                          <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", margin: 0, lineHeight: 1.5 }}>{sentence.trim()}</p>
+                        </div>
+                      ))}
+                    </div>
                   )}
 
                   {/* Key metrics — stacked vertically */}
                   {uNode.stats && uNode.stats.length > 0 && (
                     <div style={{ paddingTop: 8, borderTop: "1px solid rgb(45, 41, 39)" }}>
-                      <p style={{ fontSize: 7, color: "#555", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>KEY METRICS</p>
+                      <p style={{ fontSize: 10, color: "#555", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>KEY METRICS</p>
                       {uNode.stats.map(([label, value]) => (
                         <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
-                          <span style={{ fontSize: 9, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{label}</span>
-                          <span style={{ fontSize: 10, color: warmWhite, fontWeight: 300, textAlign: "right" as const }}>{value}</span>
+                          <span style={{ fontSize: 10, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{label}</span>
+                          <span style={{ fontSize: 11, color: warmWhite, fontWeight: 300, textAlign: "right" as const }}>{value}</span>
                         </div>
                       ))}
                     </div>

@@ -32,6 +32,8 @@ interface HorizontalTreeProps {
   onDownstreamClick?: (id: string) => void;
   /** Inline chain-specific nodes (supply aggregates, output) not in universal data */
   inlineNodes?: Record<string, { quantity_pill?: string; descriptor_pill?: string; country?: string }>;
+  /** Accent color for the input (used for idea dots) */
+  accentColor?: string;
 }
 
 /* ── Country code mapping for flag icons ── */
@@ -67,6 +69,7 @@ function NodeCard({
   onLeave,
   cardRef,
   inlineNodeData,
+  accentColor,
 }: {
   name: string;
   nodeData: NodeData | undefined;
@@ -80,6 +83,7 @@ function NodeCard({
   onLeave?: () => void;
   cardRef?: React.Ref<HTMLDivElement>;
   inlineNodeData?: { quantity_pill?: string; descriptor_pill?: string; country?: string };
+  accentColor?: string;
 }) {
   const raw = nodeData as unknown as Record<string, unknown>;
   const inl = inlineNodeData;
@@ -100,8 +104,8 @@ function NodeCard({
       onMouseLeave={onLeave}
       style={{
         padding: "5px 8px",
-        background: isActiveNode ? "rgb(50, 46, 42)" : highlighted ? "rgb(42, 38, 35)" : "rgb(36, 32, 29)",
-        border: isActiveNode ? "1px solid rgb(80, 74, 68)" : highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
+        background: isActiveNode ? "rgb(60, 56, 52)" : highlighted ? "rgb(42, 38, 35)" : "rgb(36, 32, 29)",
+        border: isActiveNode ? "1px solid rgb(60, 56, 52)" : highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
         borderRadius: 4,
         width: "100%",
         cursor: onClick ? "pointer" : "default",
@@ -114,8 +118,8 @@ function NodeCard({
       {/* Investment idea dot — on left edge where connection lines arrive */}
       {hasIdea && (
         <div style={{
-          position: "absolute", left: -4, top: "50%", transform: "translateY(-50%)",
-          width: 6, height: 6, borderRadius: "50%", background: IDEA_DOT_COLOR,
+          position: "absolute", left: -5, top: "50%", transform: "translateY(-50%)",
+          width: 8, height: 8, borderRadius: "50%", background: accentColor ?? IDEA_DOT_COLOR,
           border: "1px solid rgb(36, 32, 29)",
         }} />
       )}
@@ -160,6 +164,7 @@ export default function HorizontalTree({
   downstream,
   onDownstreamClick,
   inlineNodes,
+  accentColor,
 }: HorizontalTreeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
@@ -487,6 +492,7 @@ export default function HorizontalTree({
                   if (el) cardRefs.current.set(node.refKey, el);
                 }}
                 inlineNodeData={inlineNodes?.[node.name]}
+                accentColor={accentColor}
               />
             );
           })}
@@ -532,7 +538,7 @@ export default function HorizontalTree({
 
       {/* Legend — bottom right */}
       <div style={{ position: "absolute", bottom: 4, right: 4, display: "flex", alignItems: "center", gap: 5, padding: "3px 8px", background: "rgba(17,17,17,0.8)", borderRadius: 4 }}>
-        <div style={{ width: 5, height: 5, borderRadius: "50%", background: IDEA_DOT_COLOR, flexShrink: 0 }} />
+        <div style={{ width: 6, height: 6, borderRadius: "50%", background: accentColor ?? IDEA_DOT_COLOR, flexShrink: 0 }} />
         <span style={{ fontSize: 7, color: "#706a60", fontFamily: "'Geist Mono', monospace" }}>Investment idea</span>
       </div>
     </div>
