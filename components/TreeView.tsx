@@ -2874,27 +2874,27 @@ export default function TreeView() {
                         &larr; Back to ideas
                       </button>
                       <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
-                        <h3 style={{ fontSize: 16, fontWeight: 500, color: warmWhite, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{brief.name}</h3>
-                        <span style={{ fontSize: 8, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{brief.ticker}</span>
+                        <h3 style={{ fontSize: 18, fontWeight: 500, color: warmWhite, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{brief.name}</h3>
+                        <span style={{ fontSize: 10, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{brief.ticker}</span>
                       </div>
-                      <p style={{ fontSize: 8, color: templateAccent ?? "#706a60", margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}>{brief.category}</p>
+                      <p style={{ fontSize: 10, color: templateAccent ?? "#706a60", margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}>{brief.category}</p>
                       {/* Metrics row */}
                       <div style={{ display: "flex", gap: 16, marginBottom: 16, paddingBottom: 12, borderBottom: `1px solid ${borderColor}` }}>
                         {brief.metrics.map(m => (
                           <div key={m.label}>
-                            <p style={{ fontSize: 7, color: "#555", margin: "0 0 2px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>{m.label}</p>
-                            <p style={{ fontSize: 11, color: warmWhite, margin: 0, fontWeight: 500 }}>{m.value}</p>
+                            <p style={{ fontSize: 9, color: "#555", margin: "0 0 2px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>{m.label}</p>
+                            <p style={{ fontSize: 12, color: warmWhite, margin: 0, fontWeight: 500 }}>{m.value}</p>
                           </div>
                         ))}
                       </div>
                       {/* Sections */}
                       {brief.sections.map((sec, si) => (
                         <div key={si} style={{ marginBottom: 16 }}>
-                          <p style={{ fontSize: 9, color: "rgb(158, 156, 153)", fontWeight: 500, margin: "0 0 8px 0" }}>{sec.label}</p>
+                          <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", fontWeight: 500, margin: "0 0 8px 0" }}>{sec.label}</p>
                           {sec.items.map((item, ii) => (
                             <div key={ii} style={{ marginBottom: 8 }}>
-                              {item.title && <p style={{ fontSize: 10, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{item.title}</p>}
-                              <p style={{ fontSize: 10, color: "#807870", lineHeight: 1.6, margin: 0 }}>{item.text}</p>
+                              {item.title && <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{item.title}</p>}
+                              <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.6, margin: 0 }}>{item.text}</p>
                             </div>
                           ))}
                         </div>
