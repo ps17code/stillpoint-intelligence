@@ -3426,6 +3426,33 @@ export default function TreeView() {
                       ))}
                     </div>
                   )}
+
+                  {/* Investment brief link */}
+                  {(() => {
+                    const inputId = lastEntry?.id === "fiber" ? "fiber" : lastEntry?.id;
+                    const wtmi = inputId ? INPUT_WTMI[inputId] : null;
+                    if (!wtmi) return null;
+                    const ideaMatch = wtmi.layers.flatMap(l => l.ideas).find(idea => idea.name === selectedTreeNode);
+                    if (!ideaMatch || !wtmi.briefs[ideaMatch.id]) return null;
+                    return (
+                      <div style={{ paddingTop: 8, borderTop: "1px solid rgb(45, 41, 39)" }}>
+                        <button
+                          onClick={() => { setActiveTab("investment-ideas"); setSelectedBriefId(ideaMatch.id); }}
+                          style={{
+                            background: "transparent", border: `1px solid ${templateAccent ?? "#706a60"}`,
+                            borderRadius: 4, padding: "5px 10px", cursor: "pointer",
+                            fontSize: 9, color: templateAccent ?? "#706a60",
+                            fontFamily: "'Geist Mono', monospace", transition: "background 0.15s",
+                            width: "100%",
+                          }}
+                          onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
+                          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                        >
+                          View investment brief &rarr;
+                        </button>
+                      </div>
+                    );
+                  })()}
                 </div>
               );
             })()}

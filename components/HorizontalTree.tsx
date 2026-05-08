@@ -61,6 +61,7 @@ function NodeCard({
   opacity,
   highlighted,
   dimmedByHover,
+  isActiveNode,
   onClick,
   onHover,
   onLeave,
@@ -72,6 +73,7 @@ function NodeCard({
   displayFields: { key: string; label: string }[];
   opacity: number;
   highlighted?: boolean;
+  isActiveNode?: boolean;
   dimmedByHover?: boolean;
   onClick?: () => void;
   onHover?: () => void;
@@ -98,9 +100,8 @@ function NodeCard({
       onMouseLeave={onLeave}
       style={{
         padding: "5px 8px",
-        paddingLeft: hasIdea ? 12 : 8,
-        background: highlighted ? "rgb(42, 38, 35)" : "rgb(36, 32, 29)",
-        border: highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
+        background: isActiveNode ? "rgb(50, 46, 42)" : highlighted ? "rgb(42, 38, 35)" : "rgb(36, 32, 29)",
+        border: isActiveNode ? "1px solid rgb(80, 74, 68)" : highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
         borderRadius: 4,
         width: "100%",
         cursor: onClick ? "pointer" : "default",
@@ -110,11 +111,12 @@ function NodeCard({
         position: "relative" as const,
       }}
     >
-      {/* Investment idea dot on left edge */}
+      {/* Investment idea dot — on left edge where connection lines arrive */}
       {hasIdea && (
         <div style={{
-          position: "absolute", left: 3, top: "50%", transform: "translateY(-50%)",
-          width: 4, height: 4, borderRadius: "50%", background: IDEA_DOT_COLOR,
+          position: "absolute", left: -4, top: "50%", transform: "translateY(-50%)",
+          width: 6, height: 6, borderRadius: "50%", background: IDEA_DOT_COLOR,
+          border: "1px solid rgb(36, 32, 29)",
         }} />
       )}
       {/* Name */}
@@ -164,6 +166,8 @@ export default function HorizontalTree({
   const [lines, setLines] = useState<{ d: string; color: string; fromName: string; toName: string; fromX: number; fromY: number }[]>([]);
   const [svgSize, setSvgSize] = useState({ w: 0, h: 0 });
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [clickedNode, setClickedNode] = useState<string | null>(null);
+  const activeNode = clickedNode ?? hoveredNode;
 
   /* Build adjacency set for hover highlighting */
   const connectedNodes = useMemo(() => {
@@ -459,8 +463,10 @@ export default function HorizontalTree({
 
             const configKey = toConfigKey(col.key);
             const fields = layerConfig?.[configKey]?.displayFields ?? [];
-            const isHighlighted = hoveredNode === node.name || (hoveredNode != null && connectedNodes.get(hoveredNode)?.has(node.name));
-            const isDimmed = hoveredNode != null && !isHighlighted;
+            const isActive = activeNode === node.name;
+            const isConnected = activeNode != null && connectedNodes.get(activeNode)?.has(node.name);
+            const isHighlighted = isActive || !!isConnected;
+            const isDimmed = activeNode != null && !isHighlighted;
             return (
               <NodeCard
                 key={node.name}
@@ -468,9 +474,13 @@ export default function HorizontalTree({
                 nodeData={nodes[node.name]}
                 displayFields={fields}
                 opacity={node.opacity}
-                highlighted={!!isHighlighted}
+                highlighted={isHighlighted}
+                isActiveNode={isActive}
                 dimmedByHover={isDimmed}
-                onClick={onNodeClick ? () => onNodeClick(node.name) : undefined}
+                onClick={onNodeClick ? () => {
+                  setClickedNode(prev => prev === node.name ? null : node.name);
+                  onNodeClick(node.name);
+                } : undefined}
                 onHover={() => setHoveredNode(node.name)}
                 onLeave={() => setHoveredNode(null)}
                 cardRef={(el: HTMLDivElement | null) => {
@@ -496,8 +506,8 @@ export default function HorizontalTree({
         }}
       >
         {lines.map((line, i) => {
-          const lineHighlighted = hoveredNode != null && (line.fromName === hoveredNode || line.toName === hoveredNode);
-          const lineDimmed = hoveredNode != null && !lineHighlighted;
+          const lineHighlighted = activeNode != null && (line.fromName === activeNode || line.toName === activeNode);
+          const lineDimmed = activeNode != null && !lineHighlighted;
           return (
             <g key={i} style={{ opacity: lineDimmed ? 0.15 : 1, transition: "opacity 0.15s" }}>
               <circle
