@@ -2820,7 +2820,7 @@ export default function TreeView() {
 
           {/* Supply tree area — fixed height normally, flex when investment ideas */}
           <div style={{
-            ...(activeTab === "investment-ideas" ? { flex: 1, minHeight: 0 } : { height: 450 }),
+            ...(activeTab === "investment-ideas" || activeTab === "analysis" ? { flex: 1, minHeight: 0 } : { height: 450 }),
             overflowY: "auto", overflowX: "hidden",
             padding: "0 30px",
           }}>
@@ -2991,7 +2991,7 @@ export default function TreeView() {
                             onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.015)"; }}
                             onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
                           >
-                            <p style={{ fontSize: 11, fontWeight: isActive ? 600 : 500, color: isActive ? warmWhite : "rgb(160, 152, 136)", margin: 0 }}>{item.label}</p>
+                            <p style={{ fontSize: 12, fontWeight: isActive ? 600 : 500, color: isActive ? warmWhite : "rgb(160, 152, 136)", margin: 0 }}>{item.label}</p>
                           </div>
                         );
                       })}
@@ -3001,28 +3001,28 @@ export default function TreeView() {
                       <p style={{ fontSize: 12, color: "#706a60", margin: "0 0 12px 0", fontStyle: "italic" }}>{activeSection.question}</p>
                       {activeSection.analysis.map((block, bi) => {
                         if (block.type === "subhead") {
-                          return <p key={bi} style={{ fontSize: 11, color: warmWhite, fontWeight: 600, margin: bi === 0 ? "0 0 6px 0" : "16px 0 6px 0" }}>{block.text}</p>;
+                          return <p key={bi} style={{ fontSize: 12, color: warmWhite, fontWeight: 600, margin: bi === 0 ? "0 0 6px 0" : "16px 0 6px 0" }}>{block.text}</p>;
                         }
                         if (block.type === "item") {
                           return (
                             <div key={bi} style={{ marginBottom: 10, paddingLeft: 10, borderLeft: "2px solid rgba(255,255,255,0.06)" }}>
-                              <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", fontWeight: 500, margin: "0 0 3px 0" }}>{block.name}</p>
-                              <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.7, margin: 0 }}>{block.desc}</p>
+                              <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", fontWeight: 500, margin: "0 0 3px 0" }}>{block.name}</p>
+                              <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.7, margin: 0 }}>{block.desc}</p>
                             </div>
                           );
                         }
                         if (block.type === "callout") {
                           return (
                             <div key={bi} style={{ marginBottom: 12, borderLeft: "2px solid #4a4540", paddingLeft: 12 }}>
-                              <p style={{ fontSize: 11, color: "#a09888", lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>{block.text}</p>
+                              <p style={{ fontSize: 12, color: "#a09888", lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>{block.text}</p>
                             </div>
                           );
                         }
                         // prose (default)
                         return (
                           <div key={bi} style={{ marginBottom: 12 }}>
-                            {block.title && <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{block.title}</p>}
-                            <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.7, margin: 0 }}>{block.text}</p>
+                            {block.title && <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0" }}>{block.title}</p>}
+                            <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.7, margin: 0 }}>{block.text}</p>
                           </div>
                         );
                       })}
@@ -3040,10 +3040,10 @@ export default function TreeView() {
 
           {/* Bottom section — key takeaways (hidden on investment ideas tab) */}
           <div style={{
-            height: activeTab === "investment-ideas" ? 0 : 160,
+            height: activeTab === "investment-ideas" || activeTab === "analysis" ? 0 : 160,
             flexShrink: 0,
-            borderTop: activeTab === "investment-ideas" ? "none" : `1px solid ${borderColor}`,
-            padding: activeTab === "investment-ideas" ? 0 : "0 30px",
+            borderTop: activeTab === "investment-ideas" || activeTab === "analysis" ? "none" : `1px solid ${borderColor}`,
+            padding: activeTab === "investment-ideas" || activeTab === "analysis" ? 0 : "0 30px",
             overflow: "hidden",
             overflowY: "auto",
             display: "flex", alignItems: "center",
