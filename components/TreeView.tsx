@@ -2801,7 +2801,7 @@ export default function TreeView() {
                     onClick={() => setActiveTab(tabId)}
                     style={{
                       padding: ti === 0 ? "8px 12px 8px 0" : "8px 12px",
-                      fontSize: 8,
+                      fontSize: 10,
                       color: isActive ? "#a09888" : "#555",
                       cursor: "pointer",
                       borderBottom: isActive ? "1.5px solid #888" : "1.5px solid transparent",
@@ -3058,8 +3058,8 @@ export default function TreeView() {
                 if (!geo) return null;
                 return (
                   <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 8, padding: "14px 18px", width: "100%" }}>
-                    <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>GEOGRAPHIC CONCENTRATION</p>
-                    <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{geo}</p>
+                    <p style={{ fontSize: 10, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>GEOGRAPHIC CONCENTRATION</p>
+                    <p style={{ fontSize: 12, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{geo}</p>
                   </div>
                 );
               }
@@ -3071,8 +3071,8 @@ export default function TreeView() {
                 if (!takeaway) return null;
                 return (
                   <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 8, padding: "14px 18px", width: "100%" }}>
-                    <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>KEY TAKEAWAY</p>
-                    <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{takeaway}</p>
+                    <p style={{ fontSize: 10, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>KEY TAKEAWAY</p>
+                    <p style={{ fontSize: 12, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{takeaway}</p>
                   </div>
                 );
               }
@@ -3104,11 +3104,11 @@ export default function TreeView() {
               if (takeaways.length === 0) return null;
               return (
                 <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 8, padding: "14px 18px", width: "100%" }}>
-                  <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>KEY TAKEAWAYS</p>
+                  <p style={{ fontSize: 10, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>KEY TAKEAWAYS</p>
                   {takeaways.map((text, i) => (
                     <div key={i} style={{ display: "flex", gap: 6, marginBottom: 4 }}>
-                      <span style={{ fontSize: 11, color: "#555", flexShrink: 0, minWidth: 14 }}>{i + 1}.</span>
-                      <p style={{ fontSize: 11, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{text}</p>
+                      <span style={{ fontSize: 12, color: "#555", flexShrink: 0, minWidth: 14 }}>{i + 1}.</span>
+                      <p style={{ fontSize: 12, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{text}</p>
                     </div>
                   ))}
                 </div>
@@ -3187,7 +3187,7 @@ export default function TreeView() {
                     onClick={() => setRightTab(tabId)}
                     style={{
                       padding: ti === 0 ? "8px 12px 8px 0" : "8px 12px",
-                      fontSize: 8,
+                      fontSize: 10,
                       color: isActive ? "#a09888" : "#555",
                       cursor: "pointer",
                       borderBottom: isActive ? "1.5px solid #888" : "1.5px solid transparent",
@@ -3239,13 +3239,13 @@ export default function TreeView() {
                       background: "rgba(36, 32, 29, 0.28)",
                       borderRadius: 6, padding: "10px 12px",
                     }}>
-                        <p style={{ fontSize: 8, letterSpacing: "0.08em", color: accent, margin: "0 0 6px 0", fontWeight: 500, textTransform: "uppercase" as const }}>{card.label}</p>
-                        <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: "0 0 8px 0" }}>{card.content}</p>
-                        <p style={{ fontSize: 7, letterSpacing: "0.06em", color: "#555", margin: "0 0 3px 0", textTransform: "uppercase" as const }}>WHY IT&apos;S HARD</p>
-                        <p style={{ fontSize: 9, color: "#807870", lineHeight: 1.5, margin: "0 0 0 0" }}>{card.whyHard}</p>
+                        <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 6px 0", fontWeight: 500, textTransform: "uppercase" as const }}>{card.label}</p>
+                        <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.5, margin: "0 0 8px 0" }}>{card.content}</p>
+                        <p style={{ fontSize: 9, letterSpacing: "0.06em", color: "#555", margin: "0 0 3px 0", textTransform: "uppercase" as const }}>WHY IT&apos;S HARD</p>
+                        <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.5, margin: "0 0 0 0" }}>{card.whyHard}</p>
                         <div style={{ marginTop: 8, paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
-                          <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{card.stat}</span>
-                          <span style={{ fontSize: 7, color: "#555", marginLeft: 5 }}>{card.statLabel}</span>
+                          <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{card.stat}</span>
+                          <span style={{ fontSize: 9, color: "#555", marginLeft: 5 }}>{card.statLabel}</span>
                         </div>
                       </div>
                     ))}
