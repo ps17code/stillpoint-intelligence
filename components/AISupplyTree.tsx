@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import universalNodesJson from "@/data/universal-nodes.json";
 import chainDefsJson from "@/data/chain-definitions.json";
 
@@ -22,14 +22,6 @@ const STATUS_COLORS: Record<string, string> = {
   tbd: "#555",
 };
 
-const LAYER_ACCENT: Record<string, string> = {
-  rawMaterials: "#c8a85a",
-  intermediates: "#9BA8AB",
-  components: "#B87D5E",
-  subsystems: "#7a9abc",
-  endUse: "#D4CCBA",
-};
-
 interface AISupplyTreeProps {
   onNodeClick?: (name: string) => void;
 }
@@ -37,6 +29,10 @@ interface AISupplyTreeProps {
 export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const [lines, setLines] = useState<{ d: string; fromName: string; toName: string }[]>([]);
+  const [svgSize, setSvgSize] = useState({ w: 0, h: 0 });
 
   const categories = chain.rawMaterialCategories ?? {};
 
@@ -52,6 +48,44 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
     return map;
   }, []);
 
+  // Measure card positions and draw connection lines
+  const measureAndDraw = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const newLines: { d: string; fromName: string; toName: string }[] = [];
+
+    chain.edges.forEach(edge => {
+      const fromEl = cardRefs.current.get(edge.from);
+      const toEl = cardRefs.current.get(edge.to);
+      if (!fromEl || !toEl) return;
+
+      const fromRect = fromEl.getBoundingClientRect();
+      const toRect = toEl.getBoundingClientRect();
+
+      const fromX = fromRect.right - containerRect.left;
+      const fromY = fromRect.top + fromRect.height / 2 - containerRect.top;
+      const toX = toRect.left - containerRect.left;
+      const toY = toRect.top + toRect.height / 2 - containerRect.top;
+      const midX = (fromX + toX) / 2;
+
+      newLines.push({
+        d: `M ${fromX},${fromY} C ${midX},${fromY} ${midX},${toY} ${toX},${toY}`,
+        fromName: edge.from,
+        toName: edge.to,
+      });
+    });
+
+    setSvgSize({ w: container.scrollWidth, h: container.scrollHeight });
+    setLines(newLines);
+  }, []);
+
+  useEffect(() => {
+    const raf = requestAnimationFrame(measureAndDraw);
+    return () => cancelAnimationFrame(raf);
+  }, [measureAndDraw, expandedCategories]);
+
   // Get worst status in a category
   function getCategoryStatus(catKey: string): string {
     const cat = categories[catKey];
@@ -61,13 +95,6 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
     if (statuses.includes("tightening")) return "tightening";
     if (statuses.includes("available") || statuses.includes("Active")) return "available";
     return "tbd";
-  }
-
-  // Check if category has edge to a downstream node
-  function categoryHasEdgeTo(catKey: string, targetNode: string): boolean {
-    const cat = categories[catKey];
-    if (!cat) return false;
-    return cat.nodes.some(n => chain.edges.some(e => e.from === n && e.to === targetNode));
   }
 
   const toggleCategory = (catKey: string) => {
@@ -82,13 +109,14 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
   const collapseAll = () => setExpandedCategories(new Set());
 
   // Render a single node card
-  function NodeCard({ name, accent }: { name: string; accent: string }) {
-    const node = uNodes[name];
+  function NodeCard({ name, refKey }: { name: string; refKey?: string }) {
     const isHighlighted = hoveredNode === name || (hoveredNode != null && connectedNodes.get(hoveredNode)?.has(name));
     const isDimmed = hoveredNode != null && !isHighlighted;
+    const node = uNodes[name];
 
     return (
       <div
+        ref={el => { if (el) cardRefs.current.set(refKey ?? name, el); }}
         onClick={() => onNodeClick?.(name)}
         onMouseEnter={() => setHoveredNode(name)}
         onMouseLeave={() => setHoveredNode(null)}
@@ -98,7 +126,7 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
           border: isHighlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
           borderRadius: 4,
           cursor: "pointer",
-          opacity: isDimmed ? 0.25 : 1,
+          opacity: isDimmed ? 0.15 : 1,
           transition: "opacity 0.15s, background 0.15s, border-color 0.15s",
         }}
       >
@@ -110,7 +138,7 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
     );
   }
 
-  // Render category group (collapsed or expanded)
+  // Category group for raw materials
   function CategoryGroup({ catKey }: { catKey: string }) {
     const cat = categories[catKey];
     if (!cat) return null;
@@ -118,10 +146,18 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
     const status = getCategoryStatus(catKey);
     const statusColor = STATUS_COLORS[status] ?? "#555";
 
+    // When collapsed, register a ref for the category itself so edges can connect
+    // When expanded, individual nodes have their own refs
+
     return (
       <div style={{ marginBottom: 4 }}>
-        {/* Category header */}
         <div
+          ref={el => {
+            if (el && !isExpanded) {
+              // Register category as target for all its member nodes
+              cat.nodes.forEach(n => cardRefs.current.set(n, el));
+            }
+          }}
           onClick={() => toggleCategory(catKey)}
           style={{
             padding: "5px 8px",
@@ -140,11 +176,10 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
           </div>
           <span style={{ fontSize: 8, color: "#555", transform: isExpanded ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}>›</span>
         </div>
-        {/* Expanded: show individual nodes */}
         {isExpanded && (
           <div style={{ paddingLeft: 8, paddingTop: 4, display: "flex", flexDirection: "column", gap: 3 }}>
             {cat.nodes.map(nodeName => (
-              <NodeCard key={nodeName} name={nodeName} accent={LAYER_ACCENT.rawMaterials} />
+              <NodeCard key={nodeName} name={nodeName} refKey={nodeName} />
             ))}
           </div>
         )}
@@ -153,7 +188,10 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
   }
 
   return (
-    <div style={{ display: "flex", gap: 20, padding: "16px 0", overflow: "auto", minWidth: 0 }}>
+    <div
+      ref={containerRef}
+      style={{ display: "flex", gap: 20, padding: "16px 0", overflow: "auto", minWidth: 0, position: "relative" }}
+    >
       {/* Raw Materials column — categories */}
       <div style={{ minWidth: 170, maxWidth: 200, flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
@@ -162,24 +200,52 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
             <button onClick={collapseAll} style={{ background: "transparent", border: "none", cursor: "pointer", fontSize: 7, color: "#555", fontFamily: "'Geist Mono', monospace" }}>collapse all</button>
           )}
         </div>
-        <div style={{ maxHeight: 500, overflowY: "auto" }}>
+        <div style={{ maxHeight: "calc(100vh - 300px)", overflowY: "auto" }}>
           {Object.keys(categories).map(catKey => (
             <CategoryGroup key={catKey} catKey={catKey} />
           ))}
         </div>
       </div>
 
-      {/* Other layers — simple card columns */}
-      {chain.layers.slice(1).map((layer, li) => (
+      {/* Other layers */}
+      {chain.layers.slice(1).map(layer => (
         <div key={layer.key} style={{ minWidth: 150, maxWidth: 180, flexShrink: 0 }}>
           <p style={{ fontSize: 6, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 8px 0", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{layer.label} · {layer.nodes.length}</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 3, maxHeight: 500, overflowY: "auto" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 3, maxHeight: "calc(100vh - 300px)", overflowY: "auto" }}>
             {layer.nodes.map(nodeName => (
-              <NodeCard key={nodeName} name={nodeName} accent={LAYER_ACCENT[layer.key] ?? "#706a60"} />
+              <NodeCard key={nodeName} name={nodeName} refKey={nodeName} />
             ))}
           </div>
         </div>
       ))}
+
+      {/* SVG overlay for connection lines */}
+      <svg
+        style={{
+          position: "absolute",
+          top: 0, left: 0,
+          width: svgSize.w || "100%",
+          height: svgSize.h || "100%",
+          pointerEvents: "none",
+          overflow: "visible",
+        }}
+      >
+        {lines.map((line, i) => {
+          const lineHighlighted = hoveredNode != null && (line.fromName === hoveredNode || line.toName === hoveredNode);
+          const lineDimmed = hoveredNode != null && !lineHighlighted;
+          return (
+            <path
+              key={i}
+              d={line.d}
+              fill="none"
+              stroke={lineHighlighted ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.06)"}
+              strokeWidth={lineHighlighted ? "1" : "0.5"}
+              strokeDasharray="3,3"
+              style={{ opacity: lineDimmed ? 0.05 : 1, transition: "opacity 0.15s, stroke 0.15s" }}
+            />
+          );
+        })}
+      </svg>
     </div>
   );
 }

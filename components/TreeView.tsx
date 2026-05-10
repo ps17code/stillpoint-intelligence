@@ -2824,7 +2824,7 @@ export default function TreeView() {
 
           {/* Supply tree area — fixed height normally, flex when investment ideas */}
           <div style={{
-            ...(activeTab === "investment-ideas" || activeTab === "analysis" ? { flex: 1, minHeight: 0 } : { height: 450 }),
+            ...((activeTab === "investment-ideas" || activeTab === "analysis" || (currentVertical?.id === "ai" && currentLevel === "subsystems")) ? { flex: 1, minHeight: 0 } : { height: 450 }),
             overflowY: "auto", overflowX: "hidden",
             padding: "0 30px",
           }}>
@@ -3044,10 +3044,10 @@ export default function TreeView() {
 
           {/* Bottom section — key takeaways (hidden on investment ideas tab) */}
           <div style={{
-            height: activeTab === "investment-ideas" || activeTab === "analysis" ? 0 : 160,
+            height: activeTab === "investment-ideas" || activeTab === "analysis" || (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 0 : 160,
             flexShrink: 0,
-            borderTop: activeTab === "investment-ideas" || activeTab === "analysis" ? "none" : `1px solid ${borderColor}`,
-            padding: activeTab === "investment-ideas" || activeTab === "analysis" ? 0 : "0 30px",
+            borderTop: activeTab === "investment-ideas" || activeTab === "analysis" || (currentVertical?.id === "ai" && currentLevel === "subsystems") ? "none" : `1px solid ${borderColor}`,
+            padding: activeTab === "investment-ideas" || activeTab === "analysis" || (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 0 : "0 30px",
             overflow: "hidden",
             overflowY: "auto",
             display: "flex", alignItems: "center",
