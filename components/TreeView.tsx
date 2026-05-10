@@ -3348,12 +3348,12 @@ export default function TreeView() {
 
               return (
                 <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
-                  <p style={{ fontSize: 10, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>EXECUTIVE SUMMARY</p>
+                  <p style={{ fontSize: 12, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>EXECUTIVE SUMMARY</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                     {bullets.map((bullet, i) => (
                       <div key={i} style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
                         <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 5 }} />
-                        <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
+                        <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
                       </div>
                     ))}
                   </div>
