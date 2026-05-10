@@ -1061,5 +1061,1878 @@
         ]
       ]
     }
+  },
+  "ai": {
+    "id": "ai",
+    "name": "AI Infrastructure",
+    "layers": [
+      {
+        "key": "rawMaterials",
+        "label": "RAW MATERIALS",
+        "nodes": [
+          "Germanium",
+          "Gallium",
+          "Indium",
+          "Tantalum",
+          "Tungsten",
+          "Cobalt",
+          "Rhenium",
+          "Hafnium",
+          "Molybdenum",
+          "Chromium",
+          "Nickel",
+          "Neodymium",
+          "Praseodymium",
+          "Dysprosium",
+          "Terbium",
+          "Cerium",
+          "Yttrium",
+          "Helium",
+          "Neon",
+          "Krypton",
+          "Xenon",
+          "Argon",
+          "Ammonia",
+          "Chlorine",
+          "Fluorspar",
+          "Fluorochemicals",
+          "Uranium",
+          "Zirconium",
+          "Tellurium",
+          "Cadmium",
+          "Vanadium",
+          "Silver",
+          "Platinum Group Metals",
+          "Lithium",
+          "Natural Graphite",
+          "Petroleum Coke",
+          "Iron Phosphate",
+          "Phosphoric Acid",
+          "Boron",
+          "Arsenic",
+          "Phosphorus",
+          "Sulfuric Acid",
+          "Ethylene",
+          "Ethylene Glycol",
+          "Epichlorohydrin",
+          "Bisphenol A",
+          "Soda Ash",
+          "Tin",
+          "Gold",
+          "Copper",
+          "Aluminum",
+          "Metallurgical-Grade Quartz",
+          "Quartz Ore",
+          "Iron Ore",
+          "Scrap Steel",
+          "Coking Coal",
+          "Zinc",
+          "Cement",
+          "Aggregates",
+          "Water",
+          "Natural Gas",
+          "Crude Oil",
+          "Diesel Fuel"
+        ]
+      },
+      {
+        "key": "intermediates",
+        "label": "INTERMEDIATE MATERIALS",
+        "nodes": [
+          "Advanced Logic Wafers",
+          "Mature-Node Logic Wafers",
+          "DRAM Wafers",
+          "NAND Wafers",
+          "Solar Silicon Wafers",
+          "Electronic-Grade Silicon",
+          "Electronic-Grade Polysilicon",
+          "Solar-Grade Polysilicon",
+          "Silicon Metal (Metallurgical Grade)",
+          "High-Purity Quartz",
+          "CoWoS Advanced Packaging",
+          "Silicon Interposer",
+          "TSV Copper",
+          "ABF Substrate",
+          "FR-4 / High-Speed Laminate",
+          "EUV Photoresist",
+          "DUV Photoresist",
+          "CMP Slurries",
+          "NdFeB Magnets",
+          "InP Wafers",
+          "GaAs Wafers",
+          "GaN Wafers",
+          "Germanium Tetrachloride (GeCl4)",
+          "Nickel Single-Crystal Superalloy",
+          "Stainless Steel",
+          "Grain-Oriented Electrical Steel",
+          "LFP Battery Cells",
+          "LFP Cathode Active Material",
+          "Lithium Carbonate",
+          "Battery-Grade Graphite",
+          "Battery Electrolyte",
+          "Vanadium Redox Electrolyte",
+          "Vanadium Pentoxide (V2O5)",
+          "Cadmium Telluride Film",
+          "Silver Conductive Paste",
+          "Solar Glass",
+          "HALEU Fuel Assemblies",
+          "LEU Fuel Assemblies",
+          "Zircaloy Cladding",
+          "Tantalum Capacitors",
+          "Lead-Free Solder",
+          "Gold Bond Wire",
+          "YSZ Electrolyte",
+          "Engineered Coolants",
+          "Refrigerants",
+          "Clean Fire-Suppression Agents",
+          "Transformer Oil",
+          "XLPE Insulation Compound",
+          "SF6 / C4-FN Insulating Gas",
+          "Underfill Resin",
+          "Epoxy Resin",
+          "Fiberglass",
+          "Trichlorosilane (TCS)",
+          "Ultra-Pure Water",
+          "Semiconductor Specialty Solvents",
+          "Cerium Oxide"
+        ]
+      },
+      {
+        "key": "components",
+        "label": "COMPONENTS",
+        "nodes": [
+          "GPUs / AI Accelerators",
+          "CPUs (Host)",
+          "Server Boards",
+          "Cold Plates",
+          "PSUs & VRMs",
+          "HBM Stacks",
+          "DRAM Modules",
+          "Enterprise SSDs",
+          "Enterprise HDDs",
+          "NAND Flash",
+          "SSD Controllers",
+          "Switch ASICs",
+          "Optical Transceivers",
+          "Co-Packaged Optics",
+          "Photonic ICs",
+          "Network Switches",
+          "Fiber Optic Cable",
+          "DACs & AECs",
+          "NICs / DPUs",
+          "Coolant Distribution Units",
+          "Manifolds & QDs",
+          "Chillers",
+          "Cooling Towers",
+          "CRAH / Fan Wall Units",
+          "Heat Exchangers",
+          "MV Switchgear",
+          "Step-Down Transformers",
+          "UPS Systems",
+          "BESS",
+          "Vanadium Redox Flow Batteries",
+          "Automatic Transfer Switches",
+          "PDUs & Rack PDUs",
+          "Busways & Busbars",
+          "Backup Generators",
+          "LV/MV Cable",
+          "Frame Gas Turbines",
+          "Aeroderivative Turbines",
+          "Reciprocating Gas Engines",
+          "Solar PV Modules",
+          "Solar Inverters",
+          "Solar Racking & Trackers",
+          "Wind Turbines",
+          "Small Modular Reactors",
+          "Conventional Nuclear",
+          "Fuel Cells",
+          "Generator Step-Up Transformers",
+          "HV Switchgear & Breakers",
+          "HV Transmission Cable",
+          "Selective Catalytic Reduction",
+          "Heat Recovery Steam Generators",
+          "Structural Steel",
+          "Cold-Formed Steel",
+          "Concrete",
+          "Rebar",
+          "Raised Flooring",
+          "Fire Suppression",
+          "Security Systems",
+          "Land & Water Rights"
+        ]
+      },
+      {
+        "key": "subsystems",
+        "label": "SUBSYSTEMS",
+        "nodes": [
+          "Compute",
+          "Memory & Storage",
+          "Connectivity",
+          "Cooling",
+          "Power Distribution",
+          "Power Generation",
+          "Physical Structure"
+        ]
+      },
+      {
+        "key": "endUse",
+        "label": "END USE",
+        "nodes": [
+          "AI Datacenter"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "from": "Compute",
+        "to": "AI Datacenter"
+      },
+      {
+        "from": "Memory & Storage",
+        "to": "AI Datacenter"
+      },
+      {
+        "from": "Connectivity",
+        "to": "AI Datacenter"
+      },
+      {
+        "from": "Cooling",
+        "to": "AI Datacenter"
+      },
+      {
+        "from": "Power Distribution",
+        "to": "AI Datacenter"
+      },
+      {
+        "from": "Power Generation",
+        "to": "AI Datacenter"
+      },
+      {
+        "from": "Power Generation",
+        "to": "Power Distribution"
+      },
+      {
+        "from": "Physical Structure",
+        "to": "AI Datacenter"
+      },
+      {
+        "from": "GPUs / AI Accelerators",
+        "to": "Compute"
+      },
+      {
+        "from": "CPUs (Host)",
+        "to": "Compute"
+      },
+      {
+        "from": "Server Boards",
+        "to": "Compute"
+      },
+      {
+        "from": "Cold Plates",
+        "to": "Compute"
+      },
+      {
+        "from": "Cold Plates",
+        "to": "Cooling"
+      },
+      {
+        "from": "PSUs & VRMs",
+        "to": "Compute"
+      },
+      {
+        "from": "PSUs & VRMs",
+        "to": "Power Distribution"
+      },
+      {
+        "from": "HBM Stacks",
+        "to": "Memory & Storage"
+      },
+      {
+        "from": "HBM Stacks",
+        "to": "CoWoS Advanced Packaging"
+      },
+      {
+        "from": "DRAM Modules",
+        "to": "Memory & Storage"
+      },
+      {
+        "from": "Enterprise SSDs",
+        "to": "Memory & Storage"
+      },
+      {
+        "from": "Enterprise HDDs",
+        "to": "Memory & Storage"
+      },
+      {
+        "from": "NAND Flash",
+        "to": "Enterprise SSDs"
+      },
+      {
+        "from": "SSD Controllers",
+        "to": "Enterprise SSDs"
+      },
+      {
+        "from": "Switch ASICs",
+        "to": "Network Switches"
+      },
+      {
+        "from": "Switch ASICs",
+        "to": "Co-Packaged Optics"
+      },
+      {
+        "from": "Optical Transceivers",
+        "to": "Connectivity"
+      },
+      {
+        "from": "Co-Packaged Optics",
+        "to": "Connectivity"
+      },
+      {
+        "from": "Photonic ICs",
+        "to": "Optical Transceivers"
+      },
+      {
+        "from": "Photonic ICs",
+        "to": "Co-Packaged Optics"
+      },
+      {
+        "from": "Network Switches",
+        "to": "Connectivity"
+      },
+      {
+        "from": "Fiber Optic Cable",
+        "to": "Connectivity"
+      },
+      {
+        "from": "DACs & AECs",
+        "to": "Connectivity"
+      },
+      {
+        "from": "NICs / DPUs",
+        "to": "Connectivity"
+      },
+      {
+        "from": "NICs / DPUs",
+        "to": "Compute"
+      },
+      {
+        "from": "Coolant Distribution Units",
+        "to": "Cooling"
+      },
+      {
+        "from": "Manifolds & QDs",
+        "to": "Cooling"
+      },
+      {
+        "from": "Chillers",
+        "to": "Cooling"
+      },
+      {
+        "from": "Cooling Towers",
+        "to": "Cooling"
+      },
+      {
+        "from": "CRAH / Fan Wall Units",
+        "to": "Cooling"
+      },
+      {
+        "from": "Heat Exchangers",
+        "to": "Cooling"
+      },
+      {
+        "from": "MV Switchgear",
+        "to": "Power Distribution"
+      },
+      {
+        "from": "Step-Down Transformers",
+        "to": "Power Distribution"
+      },
+      {
+        "from": "UPS Systems",
+        "to": "Power Distribution"
+      },
+      {
+        "from": "BESS",
+        "to": "Power Distribution"
+      },
+      {
+        "from": "Vanadium Redox Flow Batteries",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Automatic Transfer Switches",
+        "to": "Power Distribution"
+      },
+      {
+        "from": "PDUs & Rack PDUs",
+        "to": "Power Distribution"
+      },
+      {
+        "from": "Busways & Busbars",
+        "to": "Power Distribution"
+      },
+      {
+        "from": "Backup Generators",
+        "to": "Power Distribution"
+      },
+      {
+        "from": "LV/MV Cable",
+        "to": "Power Distribution"
+      },
+      {
+        "from": "Frame Gas Turbines",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Aeroderivative Turbines",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Reciprocating Gas Engines",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Solar PV Modules",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Solar Inverters",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Solar Racking & Trackers",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Wind Turbines",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Small Modular Reactors",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Conventional Nuclear",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Fuel Cells",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Generator Step-Up Transformers",
+        "to": "Power Generation"
+      },
+      {
+        "from": "HV Switchgear & Breakers",
+        "to": "Power Generation"
+      },
+      {
+        "from": "HV Transmission Cable",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Selective Catalytic Reduction",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Heat Recovery Steam Generators",
+        "to": "Power Generation"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Physical Structure"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Chillers"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Cooling Towers"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "CRAH / Fan Wall Units"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "MV Switchgear"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Automatic Transfer Switches"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "PDUs & Rack PDUs"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Backup Generators"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Frame Gas Turbines"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Aeroderivative Turbines"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Reciprocating Gas Engines"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Solar Inverters"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Solar Racking & Trackers"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Wind Turbines"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Small Modular Reactors"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Conventional Nuclear"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "HV Switchgear & Breakers"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Heat Recovery Steam Generators"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Raised Flooring"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Fire Suppression"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Security Systems"
+      },
+      {
+        "from": "Structural Steel",
+        "to": "Vanadium Redox Flow Batteries"
+      },
+      {
+        "from": "Cold-Formed Steel",
+        "to": "Physical Structure"
+      },
+      {
+        "from": "Concrete",
+        "to": "Physical Structure"
+      },
+      {
+        "from": "Rebar",
+        "to": "Physical Structure"
+      },
+      {
+        "from": "Raised Flooring",
+        "to": "Physical Structure"
+      },
+      {
+        "from": "Fire Suppression",
+        "to": "Physical Structure"
+      },
+      {
+        "from": "Security Systems",
+        "to": "Physical Structure"
+      },
+      {
+        "from": "Land & Water Rights",
+        "to": "Physical Structure"
+      },
+      {
+        "from": "Advanced Logic Wafers",
+        "to": "GPUs / AI Accelerators"
+      },
+      {
+        "from": "Advanced Logic Wafers",
+        "to": "CPUs (Host)"
+      },
+      {
+        "from": "Advanced Logic Wafers",
+        "to": "Switch ASICs"
+      },
+      {
+        "from": "Advanced Logic Wafers",
+        "to": "Co-Packaged Optics"
+      },
+      {
+        "from": "Advanced Logic Wafers",
+        "to": "Photonic ICs"
+      },
+      {
+        "from": "Advanced Logic Wafers",
+        "to": "NICs / DPUs"
+      },
+      {
+        "from": "Mature-Node Logic Wafers",
+        "to": "SSD Controllers"
+      },
+      {
+        "from": "Mature-Node Logic Wafers",
+        "to": "PSUs & VRMs"
+      },
+      {
+        "from": "Mature-Node Logic Wafers",
+        "to": "UPS Systems"
+      },
+      {
+        "from": "Mature-Node Logic Wafers",
+        "to": "Solar Inverters"
+      },
+      {
+        "from": "Mature-Node Logic Wafers",
+        "to": "DACs & AECs"
+      },
+      {
+        "from": "Mature-Node Logic Wafers",
+        "to": "Optical Transceivers"
+      },
+      {
+        "from": "Mature-Node Logic Wafers",
+        "to": "Security Systems"
+      },
+      {
+        "from": "DRAM Wafers",
+        "to": "HBM Stacks"
+      },
+      {
+        "from": "DRAM Wafers",
+        "to": "DRAM Modules"
+      },
+      {
+        "from": "NAND Wafers",
+        "to": "NAND Flash"
+      },
+      {
+        "from": "Solar Silicon Wafers",
+        "to": "Solar PV Modules"
+      },
+      {
+        "from": "Electronic-Grade Silicon",
+        "to": "Advanced Logic Wafers"
+      },
+      {
+        "from": "Electronic-Grade Silicon",
+        "to": "Mature-Node Logic Wafers"
+      },
+      {
+        "from": "Electronic-Grade Silicon",
+        "to": "DRAM Wafers"
+      },
+      {
+        "from": "Electronic-Grade Silicon",
+        "to": "NAND Wafers"
+      },
+      {
+        "from": "Electronic-Grade Polysilicon",
+        "to": "Electronic-Grade Silicon"
+      },
+      {
+        "from": "Solar-Grade Polysilicon",
+        "to": "Solar Silicon Wafers"
+      },
+      {
+        "from": "Silicon Metal (Metallurgical Grade)",
+        "to": "Electronic-Grade Polysilicon"
+      },
+      {
+        "from": "Silicon Metal (Metallurgical Grade)",
+        "to": "Solar-Grade Polysilicon"
+      },
+      {
+        "from": "Silicon Metal (Metallurgical Grade)",
+        "to": "Trichlorosilane (TCS)"
+      },
+      {
+        "from": "High-Purity Quartz",
+        "to": "Electronic-Grade Silicon"
+      },
+      {
+        "from": "High-Purity Quartz",
+        "to": "Fiber Optic Cable"
+      },
+      {
+        "from": "High-Purity Quartz",
+        "to": "Solar Glass"
+      },
+      {
+        "from": "CoWoS Advanced Packaging",
+        "to": "GPUs / AI Accelerators"
+      },
+      {
+        "from": "CoWoS Advanced Packaging",
+        "to": "CPUs (Host)"
+      },
+      {
+        "from": "CoWoS Advanced Packaging",
+        "to": "HBM Stacks"
+      },
+      {
+        "from": "CoWoS Advanced Packaging",
+        "to": "Switch ASICs"
+      },
+      {
+        "from": "CoWoS Advanced Packaging",
+        "to": "SSD Controllers"
+      },
+      {
+        "from": "CoWoS Advanced Packaging",
+        "to": "Co-Packaged Optics"
+      },
+      {
+        "from": "CoWoS Advanced Packaging",
+        "to": "NICs / DPUs"
+      },
+      {
+        "from": "Silicon Interposer",
+        "to": "CoWoS Advanced Packaging"
+      },
+      {
+        "from": "TSV Copper",
+        "to": "HBM Stacks"
+      },
+      {
+        "from": "TSV Copper",
+        "to": "Silicon Interposer"
+      },
+      {
+        "from": "TSV Copper",
+        "to": "CoWoS Advanced Packaging"
+      },
+      {
+        "from": "ABF Substrate",
+        "to": "CoWoS Advanced Packaging"
+      },
+      {
+        "from": "ABF Substrate",
+        "to": "Server Boards"
+      },
+      {
+        "from": "ABF Substrate",
+        "to": "Switch ASICs"
+      },
+      {
+        "from": "FR-4 / High-Speed Laminate",
+        "to": "Server Boards"
+      },
+      {
+        "from": "FR-4 / High-Speed Laminate",
+        "to": "Network Switches"
+      },
+      {
+        "from": "EUV Photoresist",
+        "to": "Advanced Logic Wafers"
+      },
+      {
+        "from": "DUV Photoresist",
+        "to": "Advanced Logic Wafers"
+      },
+      {
+        "from": "DUV Photoresist",
+        "to": "Mature-Node Logic Wafers"
+      },
+      {
+        "from": "DUV Photoresist",
+        "to": "DRAM Wafers"
+      },
+      {
+        "from": "DUV Photoresist",
+        "to": "NAND Wafers"
+      },
+      {
+        "from": "CMP Slurries",
+        "to": "Advanced Logic Wafers"
+      },
+      {
+        "from": "NdFeB Magnets",
+        "to": "Enterprise HDDs"
+      },
+      {
+        "from": "NdFeB Magnets",
+        "to": "CRAH / Fan Wall Units"
+      },
+      {
+        "from": "NdFeB Magnets",
+        "to": "Wind Turbines"
+      },
+      {
+        "from": "NdFeB Magnets",
+        "to": "GPUs / AI Accelerators"
+      },
+      {
+        "from": "InP Wafers",
+        "to": "Optical Transceivers"
+      },
+      {
+        "from": "InP Wafers",
+        "to": "Co-Packaged Optics"
+      },
+      {
+        "from": "InP Wafers",
+        "to": "Photonic ICs"
+      },
+      {
+        "from": "GaAs Wafers",
+        "to": "Optical Transceivers"
+      },
+      {
+        "from": "GaN Wafers",
+        "to": "PSUs & VRMs"
+      },
+      {
+        "from": "GaN Wafers",
+        "to": "Solar Inverters"
+      },
+      {
+        "from": "Germanium Tetrachloride (GeCl4)",
+        "to": "Fiber Optic Cable"
+      },
+      {
+        "from": "Germanium Tetrachloride (GeCl4)",
+        "to": "Optical Transceivers"
+      },
+      {
+        "from": "Nickel Single-Crystal Superalloy",
+        "to": "Frame Gas Turbines"
+      },
+      {
+        "from": "Nickel Single-Crystal Superalloy",
+        "to": "Aeroderivative Turbines"
+      },
+      {
+        "from": "Stainless Steel",
+        "to": "Coolant Distribution Units"
+      },
+      {
+        "from": "Stainless Steel",
+        "to": "Manifolds & QDs"
+      },
+      {
+        "from": "Stainless Steel",
+        "to": "Heat Exchangers"
+      },
+      {
+        "from": "Stainless Steel",
+        "to": "Cold Plates"
+      },
+      {
+        "from": "Grain-Oriented Electrical Steel",
+        "to": "Step-Down Transformers"
+      },
+      {
+        "from": "Grain-Oriented Electrical Steel",
+        "to": "Generator Step-Up Transformers"
+      },
+      {
+        "from": "LFP Battery Cells",
+        "to": "UPS Systems"
+      },
+      {
+        "from": "LFP Battery Cells",
+        "to": "BESS"
+      },
+      {
+        "from": "LFP Cathode Active Material",
+        "to": "LFP Battery Cells"
+      },
+      {
+        "from": "Lithium Carbonate",
+        "to": "LFP Battery Cells"
+      },
+      {
+        "from": "Lithium Carbonate",
+        "to": "LFP Cathode Active Material"
+      },
+      {
+        "from": "Battery-Grade Graphite",
+        "to": "LFP Battery Cells"
+      },
+      {
+        "from": "Battery Electrolyte",
+        "to": "LFP Battery Cells"
+      },
+      {
+        "from": "Vanadium Redox Electrolyte",
+        "to": "Vanadium Redox Flow Batteries"
+      },
+      {
+        "from": "Vanadium Pentoxide (V2O5)",
+        "to": "Selective Catalytic Reduction"
+      },
+      {
+        "from": "Vanadium Pentoxide (V2O5)",
+        "to": "Vanadium Redox Electrolyte"
+      },
+      {
+        "from": "Cadmium Telluride Film",
+        "to": "Solar PV Modules"
+      },
+      {
+        "from": "Silver Conductive Paste",
+        "to": "Solar PV Modules"
+      },
+      {
+        "from": "Silver Conductive Paste",
+        "to": "Solar Silicon Wafers"
+      },
+      {
+        "from": "Solar Glass",
+        "to": "Solar PV Modules"
+      },
+      {
+        "from": "HALEU Fuel Assemblies",
+        "to": "Small Modular Reactors"
+      },
+      {
+        "from": "LEU Fuel Assemblies",
+        "to": "Conventional Nuclear"
+      },
+      {
+        "from": "Zircaloy Cladding",
+        "to": "HALEU Fuel Assemblies"
+      },
+      {
+        "from": "Zircaloy Cladding",
+        "to": "LEU Fuel Assemblies"
+      },
+      {
+        "from": "Zircaloy Cladding",
+        "to": "Small Modular Reactors"
+      },
+      {
+        "from": "Zircaloy Cladding",
+        "to": "Conventional Nuclear"
+      },
+      {
+        "from": "Tantalum Capacitors",
+        "to": "Server Boards"
+      },
+      {
+        "from": "Tantalum Capacitors",
+        "to": "PSUs & VRMs"
+      },
+      {
+        "from": "Lead-Free Solder",
+        "to": "Server Boards"
+      },
+      {
+        "from": "Lead-Free Solder",
+        "to": "CoWoS Advanced Packaging"
+      },
+      {
+        "from": "Gold Bond Wire",
+        "to": "Server Boards"
+      },
+      {
+        "from": "Gold Bond Wire",
+        "to": "CoWoS Advanced Packaging"
+      },
+      {
+        "from": "YSZ Electrolyte",
+        "to": "Fuel Cells"
+      },
+      {
+        "from": "Engineered Coolants",
+        "to": "Coolant Distribution Units"
+      },
+      {
+        "from": "Engineered Coolants",
+        "to": "Cooling"
+      },
+      {
+        "from": "Refrigerants",
+        "to": "Chillers"
+      },
+      {
+        "from": "Clean Fire-Suppression Agents",
+        "to": "Fire Suppression"
+      },
+      {
+        "from": "Transformer Oil",
+        "to": "Step-Down Transformers"
+      },
+      {
+        "from": "Transformer Oil",
+        "to": "Generator Step-Up Transformers"
+      },
+      {
+        "from": "XLPE Insulation Compound",
+        "to": "LV/MV Cable"
+      },
+      {
+        "from": "XLPE Insulation Compound",
+        "to": "HV Transmission Cable"
+      },
+      {
+        "from": "SF6 / C4-FN Insulating Gas",
+        "to": "MV Switchgear"
+      },
+      {
+        "from": "SF6 / C4-FN Insulating Gas",
+        "to": "HV Switchgear & Breakers"
+      },
+      {
+        "from": "Underfill Resin",
+        "to": "CoWoS Advanced Packaging"
+      },
+      {
+        "from": "Epoxy Resin",
+        "to": "ABF Substrate"
+      },
+      {
+        "from": "Epoxy Resin",
+        "to": "FR-4 / High-Speed Laminate"
+      },
+      {
+        "from": "Epoxy Resin",
+        "to": "Underfill Resin"
+      },
+      {
+        "from": "Fiberglass",
+        "to": "FR-4 / High-Speed Laminate"
+      },
+      {
+        "from": "Fiberglass",
+        "to": "Wind Turbines"
+      },
+      {
+        "from": "Fiberglass",
+        "to": "Cooling Towers"
+      },
+      {
+        "from": "Trichlorosilane (TCS)",
+        "to": "Electronic-Grade Polysilicon"
+      },
+      {
+        "from": "Trichlorosilane (TCS)",
+        "to": "Solar-Grade Polysilicon"
+      },
+      {
+        "from": "Ultra-Pure Water",
+        "to": "Advanced Logic Wafers"
+      },
+      {
+        "from": "Ultra-Pure Water",
+        "to": "Mature-Node Logic Wafers"
+      },
+      {
+        "from": "Ultra-Pure Water",
+        "to": "DRAM Wafers"
+      },
+      {
+        "from": "Ultra-Pure Water",
+        "to": "TSV Copper"
+      },
+      {
+        "from": "Semiconductor Specialty Solvents",
+        "to": "EUV Photoresist"
+      },
+      {
+        "from": "Semiconductor Specialty Solvents",
+        "to": "DUV Photoresist"
+      },
+      {
+        "from": "Semiconductor Specialty Solvents",
+        "to": "CMP Slurries"
+      },
+      {
+        "from": "Semiconductor Specialty Solvents",
+        "to": "Battery Electrolyte"
+      },
+      {
+        "from": "Cerium Oxide",
+        "to": "CMP Slurries"
+      },
+      {
+        "from": "Germanium",
+        "to": "Germanium Tetrachloride (GeCl4)"
+      },
+      {
+        "from": "Gallium",
+        "to": "GaN Wafers"
+      },
+      {
+        "from": "Gallium",
+        "to": "GaAs Wafers"
+      },
+      {
+        "from": "Indium",
+        "to": "InP Wafers"
+      },
+      {
+        "from": "Tantalum",
+        "to": "Tantalum Capacitors"
+      },
+      {
+        "from": "Tantalum",
+        "to": "Nickel Single-Crystal Superalloy"
+      },
+      {
+        "from": "Tungsten",
+        "to": "Advanced Logic Wafers"
+      },
+      {
+        "from": "Tungsten",
+        "to": "NAND Wafers"
+      },
+      {
+        "from": "Tungsten",
+        "to": "Nickel Single-Crystal Superalloy"
+      },
+      {
+        "from": "Tungsten",
+        "to": "Selective Catalytic Reduction"
+      },
+      {
+        "from": "Cobalt",
+        "to": "Nickel Single-Crystal Superalloy"
+      },
+      {
+        "from": "Rhenium",
+        "to": "Nickel Single-Crystal Superalloy"
+      },
+      {
+        "from": "Hafnium",
+        "to": "Advanced Logic Wafers"
+      },
+      {
+        "from": "Hafnium",
+        "to": "Nickel Single-Crystal Superalloy"
+      },
+      {
+        "from": "Hafnium",
+        "to": "Zircaloy Cladding"
+      },
+      {
+        "from": "Molybdenum",
+        "to": "Stainless Steel"
+      },
+      {
+        "from": "Chromium",
+        "to": "Stainless Steel"
+      },
+      {
+        "from": "Chromium",
+        "to": "Nickel Single-Crystal Superalloy"
+      },
+      {
+        "from": "Nickel",
+        "to": "Nickel Single-Crystal Superalloy"
+      },
+      {
+        "from": "Nickel",
+        "to": "Stainless Steel"
+      },
+      {
+        "from": "Nickel",
+        "to": "Fuel Cells"
+      },
+      {
+        "from": "Neodymium",
+        "to": "NdFeB Magnets"
+      },
+      {
+        "from": "Praseodymium",
+        "to": "NdFeB Magnets"
+      },
+      {
+        "from": "Dysprosium",
+        "to": "NdFeB Magnets"
+      },
+      {
+        "from": "Terbium",
+        "to": "NdFeB Magnets"
+      },
+      {
+        "from": "Cerium",
+        "to": "Cerium Oxide"
+      },
+      {
+        "from": "Yttrium",
+        "to": "YSZ Electrolyte"
+      },
+      {
+        "from": "Helium",
+        "to": "Advanced Logic Wafers"
+      },
+      {
+        "from": "Helium",
+        "to": "DRAM Wafers"
+      },
+      {
+        "from": "Helium",
+        "to": "NAND Flash"
+      },
+      {
+        "from": "Helium",
+        "to": "Enterprise HDDs"
+      },
+      {
+        "from": "Neon",
+        "to": "Advanced Logic Wafers"
+      },
+      {
+        "from": "Krypton",
+        "to": "NAND Wafers"
+      },
+      {
+        "from": "Krypton",
+        "to": "DRAM Wafers"
+      },
+      {
+        "from": "Krypton",
+        "to": "Advanced Logic Wafers"
+      },
+      {
+        "from": "Xenon",
+        "to": "Advanced Logic Wafers"
+      },
+      {
+        "from": "Argon",
+        "to": "Mature-Node Logic Wafers"
+      },
+      {
+        "from": "Argon",
+        "to": "DRAM Wafers"
+      },
+      {
+        "from": "Ammonia",
+        "to": "GaN Wafers"
+      },
+      {
+        "from": "Chlorine",
+        "to": "Germanium Tetrachloride (GeCl4)"
+      },
+      {
+        "from": "Chlorine",
+        "to": "Trichlorosilane (TCS)"
+      },
+      {
+        "from": "Fluorspar",
+        "to": "Fluorochemicals"
+      },
+      {
+        "from": "Fluorspar",
+        "to": "Battery Electrolyte"
+      },
+      {
+        "from": "Fluorochemicals",
+        "to": "Refrigerants"
+      },
+      {
+        "from": "Fluorochemicals",
+        "to": "Clean Fire-Suppression Agents"
+      },
+      {
+        "from": "Fluorochemicals",
+        "to": "SF6 / C4-FN Insulating Gas"
+      },
+      {
+        "from": "Fluorochemicals",
+        "to": "Engineered Coolants"
+      },
+      {
+        "from": "Uranium",
+        "to": "HALEU Fuel Assemblies"
+      },
+      {
+        "from": "Uranium",
+        "to": "LEU Fuel Assemblies"
+      },
+      {
+        "from": "Zirconium",
+        "to": "Zircaloy Cladding"
+      },
+      {
+        "from": "Zirconium",
+        "to": "YSZ Electrolyte"
+      },
+      {
+        "from": "Tellurium",
+        "to": "Cadmium Telluride Film"
+      },
+      {
+        "from": "Cadmium",
+        "to": "Cadmium Telluride Film"
+      },
+      {
+        "from": "Vanadium",
+        "to": "Vanadium Pentoxide (V2O5)"
+      },
+      {
+        "from": "Silver",
+        "to": "Silver Conductive Paste"
+      },
+      {
+        "from": "Silver",
+        "to": "Lead-Free Solder"
+      },
+      {
+        "from": "Platinum Group Metals",
+        "to": "Fuel Cells"
+      },
+      {
+        "from": "Platinum Group Metals",
+        "to": "Selective Catalytic Reduction"
+      },
+      {
+        "from": "Platinum Group Metals",
+        "to": "Enterprise HDDs"
+      },
+      {
+        "from": "Lithium",
+        "to": "Lithium Carbonate"
+      },
+      {
+        "from": "Lithium",
+        "to": "Battery Electrolyte"
+      },
+      {
+        "from": "Natural Graphite",
+        "to": "Battery-Grade Graphite"
+      },
+      {
+        "from": "Petroleum Coke",
+        "to": "Battery-Grade Graphite"
+      },
+      {
+        "from": "Iron Phosphate",
+        "to": "LFP Cathode Active Material"
+      },
+      {
+        "from": "Phosphoric Acid",
+        "to": "LFP Cathode Active Material"
+      },
+      {
+        "from": "Boron",
+        "to": "NdFeB Magnets"
+      },
+      {
+        "from": "Boron",
+        "to": "Fiberglass"
+      },
+      {
+        "from": "Arsenic",
+        "to": "GaAs Wafers"
+      },
+      {
+        "from": "Phosphorus",
+        "to": "InP Wafers"
+      },
+      {
+        "from": "Sulfuric Acid",
+        "to": "Vanadium Redox Electrolyte"
+      },
+      {
+        "from": "Ethylene",
+        "to": "XLPE Insulation Compound"
+      },
+      {
+        "from": "Ethylene Glycol",
+        "to": "Engineered Coolants"
+      },
+      {
+        "from": "Epichlorohydrin",
+        "to": "Epoxy Resin"
+      },
+      {
+        "from": "Bisphenol A",
+        "to": "Epoxy Resin"
+      },
+      {
+        "from": "Soda Ash",
+        "to": "Solar Glass"
+      },
+      {
+        "from": "Tin",
+        "to": "Lead-Free Solder"
+      },
+      {
+        "from": "Tin",
+        "to": "EUV Photoresist"
+      },
+      {
+        "from": "Tin",
+        "to": "Zircaloy Cladding"
+      },
+      {
+        "from": "Gold",
+        "to": "Gold Bond Wire"
+      },
+      {
+        "from": "Copper",
+        "to": "TSV Copper"
+      },
+      {
+        "from": "Copper",
+        "to": "Server Boards"
+      },
+      {
+        "from": "Copper",
+        "to": "Cold Plates"
+      },
+      {
+        "from": "Copper",
+        "to": "PSUs & VRMs"
+      },
+      {
+        "from": "Copper",
+        "to": "DRAM Modules"
+      },
+      {
+        "from": "Copper",
+        "to": "Network Switches"
+      },
+      {
+        "from": "Copper",
+        "to": "DACs & AECs"
+      },
+      {
+        "from": "Copper",
+        "to": "Coolant Distribution Units"
+      },
+      {
+        "from": "Copper",
+        "to": "Manifolds & QDs"
+      },
+      {
+        "from": "Copper",
+        "to": "Chillers"
+      },
+      {
+        "from": "Copper",
+        "to": "CRAH / Fan Wall Units"
+      },
+      {
+        "from": "Copper",
+        "to": "Heat Exchangers"
+      },
+      {
+        "from": "Copper",
+        "to": "MV Switchgear"
+      },
+      {
+        "from": "Copper",
+        "to": "Step-Down Transformers"
+      },
+      {
+        "from": "Copper",
+        "to": "UPS Systems"
+      },
+      {
+        "from": "Copper",
+        "to": "BESS"
+      },
+      {
+        "from": "Copper",
+        "to": "Automatic Transfer Switches"
+      },
+      {
+        "from": "Copper",
+        "to": "PDUs & Rack PDUs"
+      },
+      {
+        "from": "Copper",
+        "to": "Busways & Busbars"
+      },
+      {
+        "from": "Copper",
+        "to": "Backup Generators"
+      },
+      {
+        "from": "Copper",
+        "to": "LV/MV Cable"
+      },
+      {
+        "from": "Copper",
+        "to": "Reciprocating Gas Engines"
+      },
+      {
+        "from": "Copper",
+        "to": "Solar Inverters"
+      },
+      {
+        "from": "Copper",
+        "to": "Wind Turbines"
+      },
+      {
+        "from": "Copper",
+        "to": "Generator Step-Up Transformers"
+      },
+      {
+        "from": "Copper",
+        "to": "HV Switchgear & Breakers"
+      },
+      {
+        "from": "Copper",
+        "to": "HV Transmission Cable"
+      },
+      {
+        "from": "Copper",
+        "to": "Heat Recovery Steam Generators"
+      },
+      {
+        "from": "Copper",
+        "to": "Fuel Cells"
+      },
+      {
+        "from": "Copper",
+        "to": "LFP Battery Cells"
+      },
+      {
+        "from": "Copper",
+        "to": "Vanadium Redox Flow Batteries"
+      },
+      {
+        "from": "Copper",
+        "to": "ABF Substrate"
+      },
+      {
+        "from": "Copper",
+        "to": "FR-4 / High-Speed Laminate"
+      },
+      {
+        "from": "Copper",
+        "to": "Lead-Free Solder"
+      },
+      {
+        "from": "Aluminum",
+        "to": "Solar PV Modules"
+      },
+      {
+        "from": "Aluminum",
+        "to": "Solar Racking & Trackers"
+      },
+      {
+        "from": "Aluminum",
+        "to": "Busways & Busbars"
+      },
+      {
+        "from": "Aluminum",
+        "to": "LV/MV Cable"
+      },
+      {
+        "from": "Aluminum",
+        "to": "LFP Battery Cells"
+      },
+      {
+        "from": "Aluminum",
+        "to": "BESS"
+      },
+      {
+        "from": "Aluminum",
+        "to": "Raised Flooring"
+      },
+      {
+        "from": "Aluminum",
+        "to": "Fiber Optic Cable"
+      },
+      {
+        "from": "Aluminum",
+        "to": "Enterprise HDDs"
+      },
+      {
+        "from": "Aluminum",
+        "to": "HV Transmission Cable"
+      },
+      {
+        "from": "Metallurgical-Grade Quartz",
+        "to": "Silicon Metal (Metallurgical Grade)"
+      },
+      {
+        "from": "Quartz Ore",
+        "to": "High-Purity Quartz"
+      },
+      {
+        "from": "Iron Ore",
+        "to": "Structural Steel"
+      },
+      {
+        "from": "Iron Ore",
+        "to": "Cold-Formed Steel"
+      },
+      {
+        "from": "Iron Ore",
+        "to": "Rebar"
+      },
+      {
+        "from": "Iron Ore",
+        "to": "Stainless Steel"
+      },
+      {
+        "from": "Iron Ore",
+        "to": "Grain-Oriented Electrical Steel"
+      },
+      {
+        "from": "Iron Ore",
+        "to": "NdFeB Magnets"
+      },
+      {
+        "from": "Scrap Steel",
+        "to": "Structural Steel"
+      },
+      {
+        "from": "Scrap Steel",
+        "to": "Cold-Formed Steel"
+      },
+      {
+        "from": "Scrap Steel",
+        "to": "Rebar"
+      },
+      {
+        "from": "Coking Coal",
+        "to": "Structural Steel"
+      },
+      {
+        "from": "Coking Coal",
+        "to": "Silicon Metal (Metallurgical Grade)"
+      },
+      {
+        "from": "Zinc",
+        "to": "Cold-Formed Steel"
+      },
+      {
+        "from": "Cement",
+        "to": "Concrete"
+      },
+      {
+        "from": "Aggregates",
+        "to": "Concrete"
+      },
+      {
+        "from": "Water",
+        "to": "Cooling Towers"
+      },
+      {
+        "from": "Water",
+        "to": "Concrete"
+      },
+      {
+        "from": "Water",
+        "to": "Ultra-Pure Water"
+      },
+      {
+        "from": "Water",
+        "to": "Land & Water Rights"
+      },
+      {
+        "from": "Natural Gas",
+        "to": "Frame Gas Turbines"
+      },
+      {
+        "from": "Natural Gas",
+        "to": "Aeroderivative Turbines"
+      },
+      {
+        "from": "Natural Gas",
+        "to": "Reciprocating Gas Engines"
+      },
+      {
+        "from": "Natural Gas",
+        "to": "Fuel Cells"
+      },
+      {
+        "from": "Natural Gas",
+        "to": "Backup Generators"
+      },
+      {
+        "from": "Natural Gas",
+        "to": "Semiconductor Specialty Solvents"
+      },
+      {
+        "from": "Natural Gas",
+        "to": "Ethylene"
+      },
+      {
+        "from": "Crude Oil",
+        "to": "Diesel Fuel"
+      },
+      {
+        "from": "Crude Oil",
+        "to": "Ethylene"
+      },
+      {
+        "from": "Crude Oil",
+        "to": "Transformer Oil"
+      },
+      {
+        "from": "Crude Oil",
+        "to": "Semiconductor Specialty Solvents"
+      },
+      {
+        "from": "Crude Oil",
+        "to": "Petroleum Coke"
+      },
+      {
+        "from": "Crude Oil",
+        "to": "Bisphenol A"
+      },
+      {
+        "from": "Diesel Fuel",
+        "to": "Backup Generators"
+      }
+    ],
+    "output": "AI Datacenter",
+    "minor": [],
+    "rawMaterialCategories": {
+      "specialty_metals": {
+        "name": "Specialty Metals",
+        "description": "Chokepoint metals with high-thesis value: Ge, Ga, In, Ta, W, Re, Hf, Mo.",
+        "nodes": [
+          "Germanium",
+          "Gallium",
+          "Indium",
+          "Tantalum",
+          "Tungsten",
+          "Rhenium",
+          "Hafnium",
+          "Molybdenum"
+        ]
+      },
+      "rare_earths": {
+        "name": "Rare Earths",
+        "description": "Light and heavy rare earths feeding magnets, ceramics, and polishing slurries.",
+        "nodes": [
+          "Neodymium",
+          "Praseodymium",
+          "Dysprosium",
+          "Terbium",
+          "Cerium",
+          "Yttrium"
+        ]
+      },
+      "base_metals": {
+        "name": "Base & Industrial Metals",
+        "description": "Large-volume metals flowing into structural, electrical, and battery uses.",
+        "nodes": [
+          "Cobalt",
+          "Chromium",
+          "Nickel",
+          "Tin",
+          "Copper",
+          "Aluminum",
+          "Zinc"
+        ]
+      },
+      "precious_metals": {
+        "name": "Precious Metals",
+        "description": "Small-volume high-value metals for contacts, paste, and catalysis.",
+        "nodes": [
+          "Silver",
+          "Platinum Group Metals",
+          "Gold"
+        ]
+      },
+      "specialty_gases": {
+        "name": "Specialty Gases",
+        "description": "Noble and process gases for semiconductor fabs and HDD sealing.",
+        "nodes": [
+          "Helium",
+          "Neon",
+          "Krypton",
+          "Xenon",
+          "Argon"
+        ]
+      },
+      "industrial_chemicals": {
+        "name": "Industrial Gases & Chemicals",
+        "description": "Bulk reactive chemistry feeding battery, fab, and refrigerant chains.",
+        "nodes": [
+          "Ammonia",
+          "Chlorine",
+          "Fluorspar",
+          "Fluorochemicals",
+          "Sulfuric Acid"
+        ]
+      },
+      "nuclear_materials": {
+        "name": "Nuclear Materials",
+        "description": "Uranium and cladding metals for SMR and conventional reactor fuel.",
+        "nodes": [
+          "Uranium",
+          "Zirconium"
+        ]
+      },
+      "battery_materials": {
+        "name": "Battery Materials",
+        "description": "Cathode, anode, and electrolyte precursors for lithium-ion stationary storage.",
+        "nodes": [
+          "Lithium",
+          "Natural Graphite",
+          "Petroleum Coke",
+          "Iron Phosphate",
+          "Phosphoric Acid"
+        ]
+      },
+      "solar_materials": {
+        "name": "Solar & Storage Specialty",
+        "description": "Thin-film semiconductors and redox-active metals for PV and flow batteries.",
+        "nodes": [
+          "Tellurium",
+          "Cadmium",
+          "Vanadium"
+        ]
+      },
+      "petrochemicals": {
+        "name": "Petrochemicals",
+        "description": "Hydrocarbon fuels and feedstocks for plastics, resins, and backup power.",
+        "nodes": [
+          "Ethylene",
+          "Ethylene Glycol",
+          "Epichlorohydrin",
+          "Bisphenol A",
+          "Natural Gas",
+          "Crude Oil",
+          "Diesel Fuel"
+        ]
+      },
+      "construction_materials": {
+        "name": "Construction Materials",
+        "description": "Bulk inputs for foundations, framing, and structural shell.",
+        "nodes": [
+          "Iron Ore",
+          "Scrap Steel",
+          "Coking Coal",
+          "Cement",
+          "Aggregates"
+        ]
+      },
+      "quartz_silica": {
+        "name": "Quartz & Silica",
+        "description": "Quartzite ore in metallurgical and high-purity grades feeding silicon and glass.",
+        "nodes": [
+          "Metallurgical-Grade Quartz",
+          "Quartz Ore"
+        ]
+      },
+      "other_specialty": {
+        "name": "Other Specialty Inputs",
+        "description": "Water, boron, group-V dopants, soda ash, and other narrow-use raw inputs.",
+        "nodes": [
+          "Boron",
+          "Arsenic",
+          "Phosphorus",
+          "Soda Ash",
+          "Water"
+        ]
+      }
+    },
+    "nodeContext": {}
   }
 }

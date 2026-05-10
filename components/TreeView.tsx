@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useMemo, useCallback, useRef } from "react";
 import HorizontalTree from "@/components/HorizontalTree";
+import AISupplyTree from "@/components/AISupplyTree";
 import Globe from "@/components/Globe";
 import type { GlobeHandle } from "@/components/Globe";
 import NodeMap from "@/components/NodeMap";
@@ -2163,20 +2164,23 @@ export default function TreeView() {
         }} />;
       }
 
-      /* AI Infrastructure — render full horizontal overview tree */
+      /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
-        return <AIOverviewTree onNodeClick={(id, type) => {
-          if (type === "raw-material") {
-            pushPath({ type: "raw-material", id, name: id.charAt(0).toUpperCase() + id.slice(1) });
-          } else if (type === "component") {
-            const sub = AI_SUBSYSTEMS.flatMap(s => s.components).find(c => c.id === id);
-            if (sub) {
-              const parent = AI_SUBSYSTEMS.find(s => s.components.some(c => c.id === id));
-              if (parent) pushPath({ type: "subsystem", id: parent.id, name: parent.name });
-              pushPath({ type: "component", id, name: sub.name });
-            }
-          } else if (type === "subsystem") {
-            pushPath({ type: "subsystem", id, name: AI_SUBSYSTEMS.find(s => s.id === id)?.name ?? id });
+        return <AISupplyTree onNodeClick={(name) => {
+          // Navigate to input chain if it exists
+          const inputMap: Record<string, PathEntry[]> = {
+            "Germanium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
+            "Gallium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "gallium", name: "Gallium" }],
+            "Fiber Optic Cable": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
+          };
+          const target = inputMap[name];
+          if (target) {
+            setPath(target);
+            setAnimKey(k => k + 1);
+            setSelectedTreeNode(null);
+          } else {
+            setSelectedTreeNode(name);
+            setRightTab("nodes");
           }
         }} />;
       }

@@ -2614,5 +2614,5881 @@
       "Subject to Chinese export licensing regime"
     ],
     "inv": "Together with Vital Materials, comprise core Chinese downstream high-purity gallium production serving the Chinese semiconductor industry."
+  },
+  "AI Datacenter": {
+    "id": "ai_datacenter",
+    "name": "AI Datacenter",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "End Use",
+    "descriptor_pill": "Multi-gigawatt facility where AI models are trained and s...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Multi-gigawatt facility where AI models are trained and served; the terminal product the entire chain feeds.",
+    "stats": [
+      [
+        "Key players",
+        "Microsoft, Meta, CoreWeave"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "end_use",
+    "ai_category": null,
+    "ai_feeds_into": [],
+    "ai_receives_from": [
+      "compute",
+      "memory_storage",
+      "connectivity",
+      "cooling",
+      "power_distribution",
+      "power_generation",
+      "physical_structure"
+    ]
+  },
+  "Compute": {
+    "id": "compute",
+    "name": "Compute",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Subsystem",
+    "descriptor_pill": "Processing infrastructure where AI training and inference...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Processing infrastructure where AI training and inference happens; rack-scale GPU/CPU systems.",
+    "stats": [
+      [
+        "Key players",
+        "Nvidia, AMD, Supermicro"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "subsystems",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "ai_datacenter"
+    ],
+    "ai_receives_from": [
+      "gpu_accelerator",
+      "cpu_host",
+      "server_board",
+      "cold_plate_chip",
+      "psu_vrm",
+      "nic_dpu"
+    ]
+  },
+  "Memory & Storage": {
+    "id": "memory_storage",
+    "name": "Memory & Storage",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Subsystem",
+    "descriptor_pill": "Working memory and persistent storage feeding data to com...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Working memory and persistent storage feeding data to compute at terabyte-per-second bandwidth.",
+    "stats": [
+      [
+        "Key players",
+        "SK Hynix, Samsung, Micron"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "subsystems",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "ai_datacenter"
+    ],
+    "ai_receives_from": [
+      "hbm_stack",
+      "dram_module",
+      "enterprise_ssd",
+      "enterprise_hdd"
+    ]
+  },
+  "Connectivity": {
+    "id": "connectivity",
+    "name": "Connectivity",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Subsystem",
+    "descriptor_pill": "Networking fabric moving data between GPUs, racks, buildi...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Networking fabric moving data between GPUs, racks, buildings; the nervous system of the cluster.",
+    "stats": [
+      [
+        "Key players",
+        "Nvidia (NVLink), Broadcom, Arista"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "subsystems",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "ai_datacenter"
+    ],
+    "ai_receives_from": [
+      "network_switch",
+      "optical_transceiver",
+      "co_packaged_optics",
+      "fiber_optic_cable",
+      "dac_aec",
+      "nic_dpu"
+    ]
+  },
+  "Cooling": {
+    "id": "cooling",
+    "name": "Cooling",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Subsystem",
+    "descriptor_pill": "Thermal management removing heat from 120+ kW racks; mand...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Thermal management removing heat from 120+ kW racks; mandatory liquid cooling at modern density.",
+    "stats": [
+      [
+        "Key players",
+        "Vertiv, CoolIT, Boyd"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "subsystems",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "ai_datacenter"
+    ],
+    "ai_receives_from": [
+      "cold_plate_chip",
+      "cdu",
+      "manifold",
+      "chiller",
+      "cooling_tower",
+      "crah_fanwall",
+      "heat_exchanger"
+    ]
+  },
+  "Power Distribution": {
+    "id": "power_distribution",
+    "name": "Power Distribution",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Subsystem",
+    "descriptor_pill": "In-facility electrical infrastructure stepping power down...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "In-facility electrical infrastructure stepping power down from MV to chip-level voltage.",
+    "stats": [
+      [
+        "Key players",
+        "Schneider Electric, Eaton, Vertiv"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "subsystems",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "ai_datacenter"
+    ],
+    "ai_receives_from": [
+      "mv_switchgear",
+      "step_down_transformer",
+      "ups_system",
+      "bess",
+      "ats",
+      "pdu_rack_pdu",
+      "busway_busbar",
+      "backup_generator",
+      "lv_mv_cable"
+    ]
+  },
+  "Power Generation": {
+    "id": "power_generation",
+    "name": "Power Generation",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Subsystem",
+    "descriptor_pill": "On-campus and grid-tied generation supplying gigawatt-sca...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "On-campus and grid-tied generation supplying gigawatt-scale loads; behind-the-meter increasingly common.",
+    "stats": [
+      [
+        "Key players",
+        "GE Vernova, Caterpillar, Constellation Energy"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "subsystems",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "ai_datacenter",
+      "power_distribution"
+    ],
+    "ai_receives_from": [
+      "frame_gas_turbine",
+      "aero_gas_turbine",
+      "recip_gas_engine",
+      "solar_pv_module",
+      "solar_inverter",
+      "solar_racking_tracker",
+      "wind_turbine",
+      "smr",
+      "conventional_nuclear",
+      "fuel_cell",
+      "gsu_transformer",
+      "hv_switchgear_breaker",
+      "hv_transmission_cable",
+      "scr",
+      "hrsg",
+      "vanadium_redox_flow"
+    ]
+  },
+  "Physical Structure": {
+    "id": "physical_structure",
+    "name": "Physical Structure",
+    "type": "Aggregate",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Subsystem",
+    "descriptor_pill": "Building shell, foundations, raised flooring, fire suppre...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Building shell, foundations, raised flooring, fire suppression, and site that contains everything.",
+    "stats": [
+      [
+        "Key players",
+        "DPR Construction, Turner, Holder"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "subsystems",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "ai_datacenter"
+    ],
+    "ai_receives_from": [
+      "structural_steel",
+      "cold_formed_steel",
+      "concrete",
+      "rebar",
+      "raised_flooring",
+      "fire_suppression",
+      "security_systems",
+      "land_water_rights"
+    ]
+  },
+  "GPUs / AI Accelerators": {
+    "id": "gpu_accelerator",
+    "name": "GPUs / AI Accelerators",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Parallel processors handling AI training and inference; h...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Parallel processors handling AI training and inference; highest-value, most supply-constrained component.",
+    "stats": [
+      [
+        "Key players",
+        "Nvidia, AMD, Google (TPU)"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "compute"
+    ],
+    "ai_receives_from": [
+      "logic_wafer_advanced",
+      "hbm_stack",
+      "cowos_package",
+      "ndfeb_magnet"
+    ]
+  },
+  "CPUs (Host)": {
+    "id": "cpu_host",
+    "name": "CPUs (Host)",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "General-purpose processors orchestrating GPU workloads in...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "General-purpose processors orchestrating GPU workloads in compute trays.",
+    "stats": [
+      [
+        "Key players",
+        "Nvidia (Grace), AMD (EPYC), Intel (Xeon)"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "compute"
+    ],
+    "ai_receives_from": [
+      "logic_wafer_advanced",
+      "cowos_package"
+    ]
+  },
+  "Server Boards": {
+    "id": "server_board",
+    "name": "Server Boards",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Multi-layer PCBs hosting GPUs, CPUs, memory, NICs and pow...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Multi-layer PCBs hosting GPUs, CPUs, memory, NICs and power delivery in compute trays.",
+    "stats": [
+      [
+        "Key players",
+        "Foxconn, Quanta, Wiwynn"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "compute"
+    ],
+    "ai_receives_from": [
+      "fr4_laminate",
+      "abf_substrate",
+      "tantalum_capacitor",
+      "solder_alloy",
+      "gold_bond_wire",
+      "copper"
+    ]
+  },
+  "Cold Plates": {
+    "id": "cold_plate_chip",
+    "name": "Cold Plates",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Copper micro-channel plates mounted on each GPU/CPU to ab...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Copper micro-channel plates mounted on each GPU/CPU to absorb heat into the liquid loop.",
+    "stats": [
+      [
+        "Key players",
+        "Boyd, AVC, CoolIT"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "compute",
+      "cooling"
+    ],
+    "ai_receives_from": [
+      "copper",
+      "stainless_steel"
+    ]
+  },
+  "PSUs & VRMs": {
+    "id": "psu_vrm",
+    "name": "PSUs & VRMs",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Power supplies and voltage regulator modules stepping rac...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Power supplies and voltage regulator modules stepping rack voltage down to chip operating voltage.",
+    "stats": [
+      [
+        "Key players",
+        "Delta Electronics, Lite-On, Infineon"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "compute",
+      "power_distribution"
+    ],
+    "ai_receives_from": [
+      "gan_wafer",
+      "logic_wafer_mature",
+      "tantalum_capacitor",
+      "copper"
+    ]
+  },
+  "HBM Stacks": {
+    "id": "hbm_stack",
+    "name": "HBM Stacks",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Stacked DRAM bonded by TSVs and co-packaged with GPUs; wi...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Stacked DRAM bonded by TSVs and co-packaged with GPUs; without it, accelerators starve.",
+    "stats": [
+      [
+        "Key players",
+        "SK Hynix, Samsung, Micron"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "memory_storage",
+      "cowos_package"
+    ],
+    "ai_receives_from": [
+      "dram_wafer",
+      "tsv_copper",
+      "cowos_package"
+    ]
+  },
+  "DRAM Modules": {
+    "id": "dram_module",
+    "name": "DRAM Modules",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "System memory for CPUs in DDR5/MRDIMM form factors.",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "System memory for CPUs in DDR5/MRDIMM form factors.",
+    "stats": [
+      [
+        "Key players",
+        "Samsung, SK Hynix, Micron"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "memory_storage"
+    ],
+    "ai_receives_from": [
+      "dram_wafer",
+      "copper"
+    ]
+  },
+  "Enterprise SSDs": {
+    "id": "enterprise_ssd",
+    "name": "Enterprise SSDs",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "PCIe Gen4/5 NVMe drives in EDSFF form factors for hot-tie...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "PCIe Gen4/5 NVMe drives in EDSFF form factors for hot-tier storage up to 245 TB QLC.",
+    "stats": [
+      [
+        "Key players",
+        "Samsung, Kioxia, Sandisk"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "memory_storage"
+    ],
+    "ai_receives_from": [
+      "nand_flash",
+      "ssd_controller"
+    ]
+  },
+  "Enterprise HDDs": {
+    "id": "enterprise_hdd",
+    "name": "Enterprise HDDs",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Helium-sealed 30 TB+ nearline drives for cold and archiva...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Helium-sealed 30 TB+ nearline drives for cold and archival storage tiers.",
+    "stats": [
+      [
+        "Key players",
+        "Seagate, Western Digital, Toshiba"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "memory_storage"
+    ],
+    "ai_receives_from": [
+      "ndfeb_magnet",
+      "helium",
+      "aluminum",
+      "platinum_pgm"
+    ]
+  },
+  "NAND Flash": {
+    "id": "nand_flash",
+    "name": "NAND Flash",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "3D-stacked non-volatile memory chips with 200+ layers in ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "3D-stacked non-volatile memory chips with 200+ layers in TLC/QLC configurations.",
+    "stats": [
+      [
+        "Key players",
+        "Samsung, SK Hynix, Kioxia"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "enterprise_ssd"
+    ],
+    "ai_receives_from": [
+      "nand_wafer",
+      "krypton",
+      "helium",
+      "tungsten"
+    ]
+  },
+  "SSD Controllers": {
+    "id": "ssd_controller",
+    "name": "SSD Controllers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "ASICs managing NAND, wear leveling, and NVMe protocol on ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "ASICs managing NAND, wear leveling, and NVMe protocol on each drive.",
+    "stats": [
+      [
+        "Key players",
+        "Marvell, Phison, Silicon Motion"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "enterprise_ssd"
+    ],
+    "ai_receives_from": [
+      "logic_wafer_mature",
+      "cowos_package"
+    ]
+  },
+  "Switch ASICs": {
+    "id": "switch_asic",
+    "name": "Switch ASICs",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Custom silicon routing data between servers at 51.2T–102....",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Custom silicon routing data between servers at 51.2T–102.4T bandwidth.",
+    "stats": [
+      [
+        "Key players",
+        "Broadcom, Nvidia, Cisco"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "network_switch",
+      "co_packaged_optics"
+    ],
+    "ai_receives_from": [
+      "logic_wafer_advanced",
+      "cowos_package",
+      "abf_substrate"
+    ]
+  },
+  "Optical Transceivers": {
+    "id": "optical_transceiver",
+    "name": "Optical Transceivers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Pluggable 800G/1.6T modules converting electrical signals...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Pluggable 800G/1.6T modules converting electrical signals to light for fiber links.",
+    "stats": [
+      [
+        "Key players",
+        "Coherent, Lumentum, Innolight"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "connectivity"
+    ],
+    "ai_receives_from": [
+      "inp_wafer",
+      "gaas_wafer",
+      "logic_wafer_mature",
+      "germanium_glass_dopant"
+    ]
+  },
+  "Co-Packaged Optics": {
+    "id": "co_packaged_optics",
+    "name": "Co-Packaged Optics",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Optical engines integrated onto switch package, replacing...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Optical engines integrated onto switch package, replacing pluggables for power efficiency.",
+    "stats": [
+      [
+        "Key players",
+        "Broadcom, TSMC, Nvidia"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "connectivity"
+    ],
+    "ai_receives_from": [
+      "inp_wafer",
+      "logic_wafer_advanced",
+      "cowos_package",
+      "switch_asic"
+    ]
+  },
+  "Photonic ICs": {
+    "id": "photonic_ic",
+    "name": "Photonic ICs",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Silicon photonics chips with heterogeneously-integrated I...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Silicon photonics chips with heterogeneously-integrated InP lasers for high-bandwidth optical I/O.",
+    "stats": [
+      [
+        "Key players",
+        "OpenLight, Ayar Labs, Marvell"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "optical_transceiver",
+      "co_packaged_optics"
+    ],
+    "ai_receives_from": [
+      "inp_wafer",
+      "logic_wafer_advanced"
+    ]
+  },
+  "Network Switches": {
+    "id": "network_switch",
+    "name": "Network Switches",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Assembled switch boxes routing rack-to-rack and building-...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Assembled switch boxes routing rack-to-rack and building-to-building traffic.",
+    "stats": [
+      [
+        "Key players",
+        "Arista, Cisco, Nvidia"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "connectivity"
+    ],
+    "ai_receives_from": [
+      "switch_asic",
+      "optical_transceiver",
+      "fr4_laminate",
+      "copper"
+    ]
+  },
+  "Fiber Optic Cable": {
+    "id": "fiber_optic_cable",
+    "name": "Fiber Optic Cable",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Glass strands doped with germanium carrying optical signa...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Glass strands doped with germanium carrying optical signals between racks, buildings, and continents.",
+    "stats": [
+      [
+        "Key players",
+        "Corning, Prysmian, Sumitomo Electric"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "connectivity"
+    ],
+    "ai_receives_from": [
+      "germanium_glass_dopant",
+      "high_purity_quartz",
+      "aluminum"
+    ]
+  },
+  "DACs & AECs": {
+    "id": "dac_aec",
+    "name": "DACs & AECs",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Direct-attach copper and active electrical cables for sho...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Direct-attach copper and active electrical cables for short-reach in-rack connections.",
+    "stats": [
+      [
+        "Key players",
+        "Amphenol, Molex, TE Connectivity"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "connectivity"
+    ],
+    "ai_receives_from": [
+      "copper",
+      "logic_wafer_mature"
+    ]
+  },
+  "NICs / DPUs": {
+    "id": "nic_dpu",
+    "name": "NICs / DPUs",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Network interface and data processing units offloading ne...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Network interface and data processing units offloading networking and storage work from CPUs.",
+    "stats": [
+      [
+        "Key players",
+        "Nvidia, AMD (Pensando), Intel"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "connectivity",
+      "compute"
+    ],
+    "ai_receives_from": [
+      "logic_wafer_advanced",
+      "cowos_package"
+    ]
+  },
+  "Coolant Distribution Units": {
+    "id": "cdu",
+    "name": "Coolant Distribution Units",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Pumps, heat exchangers, and controls circulating coolant ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Pumps, heat exchangers, and controls circulating coolant from chillers to rack manifolds.",
+    "stats": [
+      [
+        "Key players",
+        "Vertiv, Boyd, CoolIT"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "cooling"
+    ],
+    "ai_receives_from": [
+      "stainless_steel",
+      "copper",
+      "engineered_coolant"
+    ]
+  },
+  "Manifolds & QDs": {
+    "id": "manifold",
+    "name": "Manifolds & QDs",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "In-rack flow distribution and quick-disconnect fittings s...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "In-rack flow distribution and quick-disconnect fittings serving each compute tray.",
+    "stats": [
+      [
+        "Key players",
+        "Parker Hannifin, CPC, Staubli"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "cooling"
+    ],
+    "ai_receives_from": [
+      "stainless_steel",
+      "copper"
+    ]
+  },
+  "Chillers": {
+    "id": "chiller",
+    "name": "Chillers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Air- or water-cooled chillers rejecting facility heat fro...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Air- or water-cooled chillers rejecting facility heat from secondary loops.",
+    "stats": [
+      [
+        "Key players",
+        "Trane, Carrier, Johnson Controls"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "cooling"
+    ],
+    "ai_receives_from": [
+      "copper",
+      "structural_steel",
+      "refrigerant"
+    ]
+  },
+  "Cooling Towers": {
+    "id": "cooling_tower",
+    "name": "Cooling Towers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Evaporative or dry coolers rejecting heat to atmosphere, ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Evaporative or dry coolers rejecting heat to atmosphere, often paired with adiabatic assist.",
+    "stats": [
+      [
+        "Key players",
+        "SPX, Baltimore Aircoil, Evapco"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "cooling"
+    ],
+    "ai_receives_from": [
+      "structural_steel",
+      "fiberglass",
+      "water"
+    ]
+  },
+  "CRAH / Fan Wall Units": {
+    "id": "crah_fanwall",
+    "name": "CRAH / Fan Wall Units",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Air-handling units cooling residual loads from networking...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Air-handling units cooling residual loads from networking, storage, and ancillary equipment.",
+    "stats": [
+      [
+        "Key players",
+        "Vertiv, Stulz, Trane"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "cooling"
+    ],
+    "ai_receives_from": [
+      "ndfeb_magnet",
+      "structural_steel",
+      "copper"
+    ]
+  },
+  "Heat Exchangers": {
+    "id": "heat_exchanger",
+    "name": "Heat Exchangers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Plate-and-frame and shell-and-tube exchangers transferrin...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Plate-and-frame and shell-and-tube exchangers transferring heat between facility loops.",
+    "stats": [
+      [
+        "Key players",
+        "Alfa Laval, Kelvion, SWEP"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "cooling"
+    ],
+    "ai_receives_from": [
+      "stainless_steel",
+      "copper"
+    ]
+  },
+  "MV Switchgear": {
+    "id": "mv_switchgear",
+    "name": "MV Switchgear",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Medium-voltage breakers, relays, and metering routing uti...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Medium-voltage breakers, relays, and metering routing utility/onsite power inside the facility.",
+    "stats": [
+      [
+        "Key players",
+        "ABB, Schneider Electric, Eaton"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_distribution"
+    ],
+    "ai_receives_from": [
+      "copper",
+      "structural_steel",
+      "sf6_alternative"
+    ]
+  },
+  "Step-Down Transformers": {
+    "id": "step_down_transformer",
+    "name": "Step-Down Transformers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Pad-mount three-phase transformers stepping MV to 415V fo...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Pad-mount three-phase transformers stepping MV to 415V for IT and facility loads.",
+    "stats": [
+      [
+        "Key players",
+        "ABB, Hitachi Energy, Eaton"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_distribution"
+    ],
+    "ai_receives_from": [
+      "goes_steel",
+      "copper",
+      "transformer_oil"
+    ]
+  },
+  "UPS Systems": {
+    "id": "ups_system",
+    "name": "UPS Systems",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Static double-conversion units providing instantaneous ba...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Static double-conversion units providing instantaneous backup until generators come online.",
+    "stats": [
+      [
+        "Key players",
+        "Vertiv, Schneider Electric, Eaton"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_distribution"
+    ],
+    "ai_receives_from": [
+      "lfp_cell",
+      "logic_wafer_mature",
+      "copper"
+    ]
+  },
+  "BESS": {
+    "id": "bess",
+    "name": "BESS",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Containerized 5 MWh+ battery systems for longer-duration ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Containerized 5 MWh+ battery systems for longer-duration backup and grid services.",
+    "stats": [
+      [
+        "Key players",
+        "Tesla, Fluence, CATL"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_distribution"
+    ],
+    "ai_receives_from": [
+      "lfp_cell",
+      "copper",
+      "aluminum"
+    ]
+  },
+  "Vanadium Redox Flow Batteries": {
+    "id": "vanadium_redox_flow",
+    "name": "Vanadium Redox Flow Batteries",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Long-duration storage pairing with renewables; emerging a...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Long-duration storage pairing with renewables; emerging alternative to lithium for 8+ hour discharge.",
+    "stats": [
+      [
+        "Key players",
+        "Invinity Energy, Sumitomo Electric, VRB Energy"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "vanadium_electrolyte",
+      "copper",
+      "structural_steel"
+    ]
+  },
+  "Automatic Transfer Switches": {
+    "id": "ats",
+    "name": "Automatic Transfer Switches",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Source-switching gear handing over between utility, gener...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Source-switching gear handing over between utility, generator, and UPS during disruptions.",
+    "stats": [
+      [
+        "Key players",
+        "ASCO, Eaton, Russelectric"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_distribution"
+    ],
+    "ai_receives_from": [
+      "copper",
+      "structural_steel"
+    ]
+  },
+  "PDUs & Rack PDUs": {
+    "id": "pdu_rack_pdu",
+    "name": "PDUs & Rack PDUs",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Distribute conditioned power from facility level down to ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Distribute conditioned power from facility level down to individual rack receptacles.",
+    "stats": [
+      [
+        "Key players",
+        "Vertiv, Schneider Electric, Server Technology"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_distribution"
+    ],
+    "ai_receives_from": [
+      "copper",
+      "structural_steel"
+    ]
+  },
+  "Busways & Busbars": {
+    "id": "busway_busbar",
+    "name": "Busways & Busbars",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Overhead copper or aluminum distribution running power al...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Overhead copper or aluminum distribution running power along rack rows.",
+    "stats": [
+      [
+        "Key players",
+        "Schneider Electric, Eaton, Siemens"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_distribution"
+    ],
+    "ai_receives_from": [
+      "copper",
+      "aluminum"
+    ]
+  },
+  "Backup Generators": {
+    "id": "backup_generator",
+    "name": "Backup Generators",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Diesel and gas gensets providing extended-runtime backup ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Diesel and gas gensets providing extended-runtime backup during utility outages.",
+    "stats": [
+      [
+        "Key players",
+        "Caterpillar, Cummins, Kohler"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_distribution"
+    ],
+    "ai_receives_from": [
+      "structural_steel",
+      "copper",
+      "diesel_fuel",
+      "natural_gas"
+    ]
+  },
+  "LV/MV Cable": {
+    "id": "lv_mv_cable",
+    "name": "LV/MV Cable",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Insulated copper or aluminum power cabling distributing e...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Insulated copper or aluminum power cabling distributing electricity throughout the facility.",
+    "stats": [
+      [
+        "Key players",
+        "Prysmian, Nexans, Southwire"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_distribution"
+    ],
+    "ai_receives_from": [
+      "copper",
+      "aluminum",
+      "xlpe_compound"
+    ]
+  },
+  "Frame Gas Turbines": {
+    "id": "frame_gas_turbine",
+    "name": "Frame Gas Turbines",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "H- and F-class utility-scale turbines (140–600 MW) for pr...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "H- and F-class utility-scale turbines (140–600 MW) for primary on-campus power.",
+    "stats": [
+      [
+        "Key players",
+        "GE Vernova, Siemens Energy, Mitsubishi Power"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "nickel_superalloy",
+      "structural_steel",
+      "natural_gas"
+    ]
+  },
+  "Aeroderivative Turbines": {
+    "id": "aero_gas_turbine",
+    "name": "Aeroderivative Turbines",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Jet-engine-derived 30–70 MW turbines (e.g., LM2500) deplo...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Jet-engine-derived 30–70 MW turbines (e.g., LM2500) deployed at Stargate for fast ramp.",
+    "stats": [
+      [
+        "Key players",
+        "GE Vernova, Siemens Energy, Solar Turbines"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "nickel_superalloy",
+      "structural_steel",
+      "natural_gas"
+    ]
+  },
+  "Reciprocating Gas Engines": {
+    "id": "recip_gas_engine",
+    "name": "Reciprocating Gas Engines",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "3–20 MW modular gas engines providing fast-start power an...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "3–20 MW modular gas engines providing fast-start power and transient load following.",
+    "stats": [
+      [
+        "Key players",
+        "Caterpillar, Wartsila, INNIO Jenbacher"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "structural_steel",
+      "copper",
+      "natural_gas"
+    ]
+  },
+  "Solar PV Modules": {
+    "id": "solar_pv_module",
+    "name": "Solar PV Modules",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Crystalline silicon or CdTe panels providing renewable su...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Crystalline silicon or CdTe panels providing renewable supply, often paired with BESS.",
+    "stats": [
+      [
+        "Key players",
+        "First Solar, Trina Solar, Longi"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "solar_wafer",
+      "cdte_film",
+      "silver_paste",
+      "aluminum",
+      "solar_glass"
+    ]
+  },
+  "Solar Inverters": {
+    "id": "solar_inverter",
+    "name": "Solar Inverters",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "String and central inverters converting DC PV output to g...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "String and central inverters converting DC PV output to grid-compatible AC.",
+    "stats": [
+      [
+        "Key players",
+        "Sungrow, SMA, Power Electronics"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "logic_wafer_mature",
+      "gan_wafer",
+      "copper",
+      "structural_steel"
+    ]
+  },
+  "Solar Racking & Trackers": {
+    "id": "solar_racking_tracker",
+    "name": "Solar Racking & Trackers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Steel mounting structures and single-axis trackers positi...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Steel mounting structures and single-axis trackers positioning PV modules toward the sun.",
+    "stats": [
+      [
+        "Key players",
+        "Nextracker, Array Technologies, GameChange Solar"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "structural_steel",
+      "aluminum"
+    ]
+  },
+  "Wind Turbines": {
+    "id": "wind_turbine",
+    "name": "Wind Turbines",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Onshore turbines occasionally co-located with datacenter ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Onshore turbines occasionally co-located with datacenter campuses (e.g., Abilene region).",
+    "stats": [
+      [
+        "Key players",
+        "Vestas, GE Vernova, Siemens Gamesa"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "ndfeb_magnet",
+      "structural_steel",
+      "copper",
+      "fiberglass"
+    ]
+  },
+  "Small Modular Reactors": {
+    "id": "smr",
+    "name": "Small Modular Reactors",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Factory-built 50–350 MW reactors emerging as long-duratio...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Factory-built 50–350 MW reactors emerging as long-duration clean baseload for AI campuses.",
+    "stats": [
+      [
+        "Key players",
+        "Oklo, X-energy, Kairos Power"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "haleu_fuel",
+      "zircaloy_cladding",
+      "structural_steel"
+    ]
+  },
+  "Conventional Nuclear": {
+    "id": "conventional_nuclear",
+    "name": "Conventional Nuclear",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Recommissioned or extended large reactors supplying datac...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Recommissioned or extended large reactors supplying datacenter PPAs (e.g., Three Mile Island).",
+    "stats": [
+      [
+        "Key players",
+        "Constellation Energy, Vistra, Duke Energy"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "leu_fuel",
+      "zircaloy_cladding",
+      "structural_steel"
+    ]
+  },
+  "Fuel Cells": {
+    "id": "fuel_cell",
+    "name": "Fuel Cells",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Solid-oxide cells providing distributed onsite power, dep...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Solid-oxide cells providing distributed onsite power, deployed at hyperscale sites like Stargate.",
+    "stats": [
+      [
+        "Key players",
+        "Bloom Energy, FuelCell Energy, Plug Power"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "natural_gas",
+      "platinum_pgm",
+      "ysz_electrolyte",
+      "nickel"
+    ]
+  },
+  "Generator Step-Up Transformers": {
+    "id": "gsu_transformer",
+    "name": "Generator Step-Up Transformers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Large transformers stepping plant output up to transmissi...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Large transformers stepping plant output up to transmission voltage; 144-week lead times.",
+    "stats": [
+      [
+        "Key players",
+        "Hitachi Energy, GE Vernova, Hyundai Electric"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "goes_steel",
+      "copper",
+      "transformer_oil"
+    ]
+  },
+  "HV Switchgear & Breakers": {
+    "id": "hv_switchgear_breaker",
+    "name": "HV Switchgear & Breakers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "High-voltage substation gear protecting and isolating tra...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "High-voltage substation gear protecting and isolating transmission interconnects.",
+    "stats": [
+      [
+        "Key players",
+        "ABB, Siemens Energy, Hitachi Energy"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "copper",
+      "structural_steel",
+      "sf6_alternative"
+    ]
+  },
+  "HV Transmission Cable": {
+    "id": "hv_transmission_cable",
+    "name": "HV Transmission Cable",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Overhead conductor and underground HVDC cables connecting...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Overhead conductor and underground HVDC cables connecting plants to load.",
+    "stats": [
+      [
+        "Key players",
+        "Prysmian, Nexans, NKT"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "copper",
+      "aluminum",
+      "xlpe_compound"
+    ]
+  },
+  "Selective Catalytic Reduction": {
+    "id": "scr",
+    "name": "Selective Catalytic Reduction",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Emissions control reducing NOx output from gas turbines t...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Emissions control reducing NOx output from gas turbines to permit-compliant levels.",
+    "stats": [
+      [
+        "Key players",
+        "Cormetech, Johnson Matthey, Haldor Topsoe"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "vanadium_pentoxide",
+      "tungsten",
+      "platinum_pgm"
+    ]
+  },
+  "Heat Recovery Steam Generators": {
+    "id": "hrsg",
+    "name": "Heat Recovery Steam Generators",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Recover exhaust heat from gas turbines for combined-cycle...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Recover exhaust heat from gas turbines for combined-cycle efficiency gains.",
+    "stats": [
+      [
+        "Key players",
+        "NEM Energy, Babcock & Wilcox, Doosan"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "power_generation"
+    ],
+    "ai_receives_from": [
+      "structural_steel",
+      "copper"
+    ]
+  },
+  "Structural Steel": {
+    "id": "structural_steel",
+    "name": "Structural Steel",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Hot-rolled frame, decking, and plate carrying multi-story...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Hot-rolled frame, decking, and plate carrying multi-story datacenter loads.",
+    "stats": [
+      [
+        "Key players",
+        "Nucor, Cleveland-Cliffs, ArcelorMittal"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "physical_structure",
+      "chiller",
+      "cooling_tower",
+      "crah_fanwall",
+      "mv_switchgear",
+      "ats",
+      "pdu_rack_pdu",
+      "backup_generator",
+      "frame_gas_turbine",
+      "aero_gas_turbine",
+      "recip_gas_engine",
+      "solar_inverter",
+      "solar_racking_tracker",
+      "wind_turbine",
+      "smr",
+      "conventional_nuclear",
+      "hv_switchgear_breaker",
+      "hrsg",
+      "raised_flooring",
+      "fire_suppression",
+      "security_systems",
+      "vanadium_redox_flow"
+    ],
+    "ai_receives_from": [
+      "iron_ore",
+      "scrap_steel",
+      "coking_coal"
+    ]
+  },
+  "Cold-Formed Steel": {
+    "id": "cold_formed_steel",
+    "name": "Cold-Formed Steel",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Lightweight studs, joists, and purlins for secondary fram...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Lightweight studs, joists, and purlins for secondary framing and walls.",
+    "stats": [
+      [
+        "Key players",
+        "ClarkDietrich, MarinoWARE, FrameCAD"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "physical_structure"
+    ],
+    "ai_receives_from": [
+      "iron_ore",
+      "scrap_steel",
+      "zinc"
+    ]
+  },
+  "Concrete": {
+    "id": "concrete",
+    "name": "Concrete",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Mass pours for foundations rated for ~1,875 kg/m² point l...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Mass pours for foundations rated for ~1,875 kg/m² point loads from NVL72 racks.",
+    "stats": [
+      [
+        "Key players",
+        "Cemex, Holcim, Heidelberg Materials"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "physical_structure"
+    ],
+    "ai_receives_from": [
+      "cement",
+      "aggregates",
+      "water"
+    ]
+  },
+  "Rebar": {
+    "id": "rebar",
+    "name": "Rebar",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Deformed steel bar reinforcing concrete foundations and s...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Deformed steel bar reinforcing concrete foundations and slabs.",
+    "stats": [
+      [
+        "Key players",
+        "Nucor, Commercial Metals, Gerdau"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "physical_structure"
+    ],
+    "ai_receives_from": [
+      "iron_ore",
+      "scrap_steel"
+    ]
+  },
+  "Raised Flooring": {
+    "id": "raised_flooring",
+    "name": "Raised Flooring",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Modular access floor system routing cabling, cooling, and...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Modular access floor system routing cabling, cooling, and power below the white space.",
+    "stats": [
+      [
+        "Key players",
+        "Tate Access Floors, ASM Modular, Haworth"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "physical_structure"
+    ],
+    "ai_receives_from": [
+      "structural_steel",
+      "aluminum"
+    ]
+  },
+  "Fire Suppression": {
+    "id": "fire_suppression",
+    "name": "Fire Suppression",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Clean-agent (FM-200, Novec 1230) and water-mist systems p...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Clean-agent (FM-200, Novec 1230) and water-mist systems protecting IT and electrical rooms.",
+    "stats": [
+      [
+        "Key players",
+        "Johnson Controls, Honeywell, 3M"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "physical_structure"
+    ],
+    "ai_receives_from": [
+      "clean_agent",
+      "structural_steel"
+    ]
+  },
+  "Security Systems": {
+    "id": "security_systems",
+    "name": "Security Systems",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "Fencing, access control, cameras, and intrusion detection...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Fencing, access control, cameras, and intrusion detection across the campus perimeter.",
+    "stats": [
+      [
+        "Key players",
+        "Honeywell, Genetec, Axis Communications"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "physical_structure"
+    ],
+    "ai_receives_from": [
+      "logic_wafer_mature",
+      "structural_steel"
+    ]
+  },
+  "Land & Water Rights": {
+    "id": "land_water_rights",
+    "name": "Land & Water Rights",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Component",
+    "descriptor_pill": "1,000+ acre parcels with water access and grid interconne...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "1,000+ acre parcels with water access and grid interconnect rights for hypergrid campuses.",
+    "stats": [
+      [
+        "Key players",
+        "Crusoe, Tract, Stack Infrastructure"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "components",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "physical_structure"
+    ],
+    "ai_receives_from": [
+      "water"
+    ]
+  },
+  "Advanced Logic Wafers": {
+    "id": "logic_wafer_advanced",
+    "name": "Advanced Logic Wafers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Patterned silicon wafers at 5nm/3nm/2nm nodes carrying GP...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Patterned silicon wafers at 5nm/3nm/2nm nodes carrying GPUs, CPUs, switch ASICs, and photonic ICs.",
+    "stats": [
+      [
+        "Key players",
+        "TSMC, Samsung Foundry, Intel Foundry"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "gpu_accelerator",
+      "cpu_host",
+      "switch_asic",
+      "co_packaged_optics",
+      "photonic_ic",
+      "nic_dpu"
+    ],
+    "ai_receives_from": [
+      "electronic_grade_silicon",
+      "euv_photoresist",
+      "duv_photoresist",
+      "tungsten",
+      "hafnium",
+      "neon",
+      "xenon",
+      "krypton",
+      "helium",
+      "ultra_pure_water",
+      "cmp_slurry"
+    ]
+  },
+  "Mature-Node Logic Wafers": {
+    "id": "logic_wafer_mature",
+    "name": "Mature-Node Logic Wafers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Patterned silicon at 28nm and older for SSD controllers, ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Patterned silicon at 28nm and older for SSD controllers, inverter controls, power management, and sensors.",
+    "stats": [
+      [
+        "Key players",
+        "TSMC, GlobalFoundries, UMC"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "ssd_controller",
+      "psu_vrm",
+      "ups_system",
+      "solar_inverter",
+      "dac_aec",
+      "optical_transceiver",
+      "security_systems"
+    ],
+    "ai_receives_from": [
+      "electronic_grade_silicon",
+      "duv_photoresist",
+      "argon",
+      "ultra_pure_water"
+    ]
+  },
+  "DRAM Wafers": {
+    "id": "dram_wafer",
+    "name": "DRAM Wafers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Patterned memory wafers feeding both standalone DDR modul...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Patterned memory wafers feeding both standalone DDR modules and HBM stacks.",
+    "stats": [
+      [
+        "Key players",
+        "SK Hynix, Samsung, Micron"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "hbm_stack",
+      "dram_module"
+    ],
+    "ai_receives_from": [
+      "electronic_grade_silicon",
+      "duv_photoresist",
+      "krypton",
+      "argon",
+      "helium",
+      "ultra_pure_water"
+    ]
+  },
+  "NAND Wafers": {
+    "id": "nand_wafer",
+    "name": "NAND Wafers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Patterned 200+ layer 3D NAND wafers; high-aspect-ratio et...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Patterned 200+ layer 3D NAND wafers; high-aspect-ratio etch limits scaling.",
+    "stats": [
+      [
+        "Key players",
+        "Samsung, SK Hynix, Kioxia"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "nand_flash"
+    ],
+    "ai_receives_from": [
+      "electronic_grade_silicon",
+      "krypton",
+      "duv_photoresist",
+      "tungsten"
+    ]
+  },
+  "Solar Silicon Wafers": {
+    "id": "solar_wafer",
+    "name": "Solar Silicon Wafers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Sliced monocrystalline ingots feeding c-Si solar cells; ~...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Sliced monocrystalline ingots feeding c-Si solar cells; ~97% Chinese production.",
+    "stats": [
+      [
+        "Key players",
+        "Longi, Tongwei, Zhonghuan"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "solar_pv_module"
+    ],
+    "ai_receives_from": [
+      "solar_grade_polysilicon",
+      "silver_paste"
+    ]
+  },
+  "Electronic-Grade Silicon": {
+    "id": "electronic_grade_silicon",
+    "name": "Electronic-Grade Silicon",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "99.9999999%+ pure CZ-grown ingots and wafers for every ch...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "99.9999999%+ pure CZ-grown ingots and wafers for every chip in the facility.",
+    "stats": [
+      [
+        "Key players",
+        "Shin-Etsu, SUMCO, SK Siltron"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "logic_wafer_advanced",
+      "logic_wafer_mature",
+      "dram_wafer",
+      "nand_wafer"
+    ],
+    "ai_receives_from": [
+      "electronic_grade_polysilicon",
+      "high_purity_quartz"
+    ]
+  },
+  "Electronic-Grade Polysilicon": {
+    "id": "electronic_grade_polysilicon",
+    "name": "Electronic-Grade Polysilicon",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Ultra-high-purity polysilicon feedstock distinct from sol...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Ultra-high-purity polysilicon feedstock distinct from solar grade; Siemens-process produced.",
+    "stats": [
+      [
+        "Key players",
+        "Wacker, Hemlock, Tokuyama"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "electronic_grade_silicon"
+    ],
+    "ai_receives_from": [
+      "silicon_metal",
+      "trichlorosilane"
+    ]
+  },
+  "Solar-Grade Polysilicon": {
+    "id": "solar_grade_polysilicon",
+    "name": "Solar-Grade Polysilicon",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "99.9999%+ polysilicon for PV ingots; China holds ~80% glo...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "99.9999%+ polysilicon for PV ingots; China holds ~80% global capacity.",
+    "stats": [
+      [
+        "Key players",
+        "GCL, Tongwei, Daqo"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "solar_wafer"
+    ],
+    "ai_receives_from": [
+      "silicon_metal",
+      "trichlorosilane"
+    ]
+  },
+  "Silicon Metal (Metallurgical Grade)": {
+    "id": "silicon_metal",
+    "name": "Silicon Metal (Metallurgical Grade)",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "98%+ silicon from carbothermic reduction of quartzite; fe...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "98%+ silicon from carbothermic reduction of quartzite; feedstock for all polysilicon.",
+    "stats": [
+      [
+        "Key players",
+        "Ferroglobe, Elkem, Wacker"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "electronic_grade_polysilicon",
+      "solar_grade_polysilicon",
+      "trichlorosilane"
+    ],
+    "ai_receives_from": [
+      "metallurgical_quartz",
+      "coking_coal"
+    ]
+  },
+  "High-Purity Quartz": {
+    "id": "high_purity_quartz",
+    "name": "High-Purity Quartz",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Crucibles for ingot growth and feedstock for fiber-optic ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Crucibles for ingot growth and feedstock for fiber-optic glass; Spruce Pine NC near-monopoly on top grades.",
+    "stats": [
+      [
+        "Key players",
+        "Sibelco, The Quartz Corp, Norwegian Crystallites"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "electronic_grade_silicon",
+      "fiber_optic_cable",
+      "solar_glass"
+    ],
+    "ai_receives_from": [
+      "quartz_ore"
+    ]
+  },
+  "CoWoS Advanced Packaging": {
+    "id": "cowos_package",
+    "name": "CoWoS Advanced Packaging",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Chip-on-wafer-on-substrate assembly integrating GPU die, ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Chip-on-wafer-on-substrate assembly integrating GPU die, HBM, and silicon interposer; the bottleneck behind every Nvidia GPU.",
+    "stats": [
+      [
+        "Key players",
+        "TSMC, ASE, Amkor"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "gpu_accelerator",
+      "cpu_host",
+      "hbm_stack",
+      "switch_asic",
+      "ssd_controller",
+      "co_packaged_optics",
+      "nic_dpu"
+    ],
+    "ai_receives_from": [
+      "abf_substrate",
+      "silicon_interposer",
+      "tsv_copper",
+      "solder_alloy",
+      "underfill_resin"
+    ]
+  },
+  "Silicon Interposer": {
+    "id": "silicon_interposer",
+    "name": "Silicon Interposer",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Passive silicon layer with TSVs routing signals between G...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Passive silicon layer with TSVs routing signals between GPU die and HBM stacks within CoWoS packages.",
+    "stats": [
+      [
+        "Key players",
+        "TSMC, UMC, ASE"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "cowos_package"
+    ],
+    "ai_receives_from": [
+      "electronic_grade_silicon",
+      "tsv_copper"
+    ]
+  },
+  "TSV Copper": {
+    "id": "tsv_copper",
+    "name": "TSV Copper",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Through-silicon-via electroplated copper plugs creating v...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Through-silicon-via electroplated copper plugs creating vertical interconnect in HBM and interposers.",
+    "stats": [
+      [
+        "Key players",
+        "Lam Research (equipment), Applied Materials (equipment), Atotech (chemistry)"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "hbm_stack",
+      "silicon_interposer",
+      "cowos_package"
+    ],
+    "ai_receives_from": [
+      "copper",
+      "ultra_pure_water"
+    ]
+  },
+  "ABF Substrate": {
+    "id": "abf_substrate",
+    "name": "ABF Substrate",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Ajinomoto Build-up Film organic substrate carrying GPU/CP...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Ajinomoto Build-up Film organic substrate carrying GPU/CPU packages; Ajinomoto holds ~95% of the material.",
+    "stats": [
+      [
+        "Key players",
+        "Ajinomoto (film), Unimicron, Ibiden"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "cowos_package",
+      "server_board",
+      "switch_asic"
+    ],
+    "ai_receives_from": [
+      "epoxy_resin",
+      "copper"
+    ]
+  },
+  "FR-4 / High-Speed Laminate": {
+    "id": "fr4_laminate",
+    "name": "FR-4 / High-Speed Laminate",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Glass-reinforced epoxy boards forming the bulk of server ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Glass-reinforced epoxy boards forming the bulk of server and switch PCBs.",
+    "stats": [
+      [
+        "Key players",
+        "Isola, Panasonic, Rogers"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "server_board",
+      "network_switch"
+    ],
+    "ai_receives_from": [
+      "epoxy_resin",
+      "fiberglass",
+      "copper"
+    ]
+  },
+  "EUV Photoresist": {
+    "id": "euv_photoresist",
+    "name": "EUV Photoresist",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Tin-oxide cluster light-sensitive films enabling sub-7 nm...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Tin-oxide cluster light-sensitive films enabling sub-7 nm patterning on advanced logic and HBM base die.",
+    "stats": [
+      [
+        "Key players",
+        "JSR, Tokyo Ohka Kogyo, Shin-Etsu"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "logic_wafer_advanced"
+    ],
+    "ai_receives_from": [
+      "tin",
+      "specialty_solvents"
+    ]
+  },
+  "DUV Photoresist": {
+    "id": "duv_photoresist",
+    "name": "DUV Photoresist",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "ArF and KrF chemically-amplified resists for 7nm+ and mat...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "ArF and KrF chemically-amplified resists for 7nm+ and mature nodes including DRAM and NAND.",
+    "stats": [
+      [
+        "Key players",
+        "JSR, Tokyo Ohka Kogyo, Fujifilm"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "logic_wafer_advanced",
+      "logic_wafer_mature",
+      "dram_wafer",
+      "nand_wafer"
+    ],
+    "ai_receives_from": [
+      "specialty_solvents"
+    ]
+  },
+  "CMP Slurries": {
+    "id": "cmp_slurry",
+    "name": "CMP Slurries",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Chemical-mechanical polishing slurries planarizing wafers...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Chemical-mechanical polishing slurries planarizing wafers between layers; ceria, silica, or alumina-based.",
+    "stats": [
+      [
+        "Key players",
+        "CMC Materials, Versum/Merck, Fujimi"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "logic_wafer_advanced"
+    ],
+    "ai_receives_from": [
+      "cerium_oxide",
+      "specialty_solvents"
+    ]
+  },
+  "NdFeB Magnets": {
+    "id": "ndfeb_magnet",
+    "name": "NdFeB Magnets",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Sintered neodymium-iron-boron permanent magnets in HDD vo...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Sintered neodymium-iron-boron permanent magnets in HDD voice coils, fans, wind turbines, EUV stages.",
+    "stats": [
+      [
+        "Key players",
+        "Hitachi Metals/Proterial, TDK, VAC"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "enterprise_hdd",
+      "crah_fanwall",
+      "wind_turbine",
+      "gpu_accelerator"
+    ],
+    "ai_receives_from": [
+      "neodymium",
+      "praseodymium",
+      "dysprosium",
+      "terbium",
+      "iron_ore",
+      "boron"
+    ]
+  },
+  "InP Wafers": {
+    "id": "inp_wafer",
+    "name": "InP Wafers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Indium phosphide substrates underlying every high-speed l...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Indium phosphide substrates underlying every high-speed laser and photodiode in 800G/1.6T transceivers.",
+    "stats": [
+      [
+        "Key players",
+        "Sumitomo Electric, AXT, JX Nippon"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "optical_transceiver",
+      "co_packaged_optics",
+      "photonic_ic"
+    ],
+    "ai_receives_from": [
+      "indium",
+      "phosphorus"
+    ]
+  },
+  "GaAs Wafers": {
+    "id": "gaas_wafer",
+    "name": "GaAs Wafers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Gallium arsenide substrates for 850 nm VCSELs in short-re...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Gallium arsenide substrates for 850 nm VCSELs in short-reach optics and RF/analog ICs.",
+    "stats": [
+      [
+        "Key players",
+        "AXT, Freiberger, Sumitomo Electric"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "optical_transceiver"
+    ],
+    "ai_receives_from": [
+      "gallium",
+      "arsenic"
+    ]
+  },
+  "GaN Wafers": {
+    "id": "gan_wafer",
+    "name": "GaN Wafers",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Gallium nitride epitaxial wafers (on Si or SiC) for high-...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Gallium nitride epitaxial wafers (on Si or SiC) for high-efficiency power switches in PSUs and inverters.",
+    "stats": [
+      [
+        "Key players",
+        "Sumitomo Electric, Coherent, Nichia"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "psu_vrm",
+      "solar_inverter"
+    ],
+    "ai_receives_from": [
+      "gallium",
+      "ammonia",
+      "silicon_metal"
+    ]
+  },
+  "Germanium Tetrachloride (GeCl4)": {
+    "id": "germanium_glass_dopant",
+    "name": "Germanium Tetrachloride (GeCl4)",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Refractive-index-raising dopant in fiber-optic glass core...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Refractive-index-raising dopant in fiber-optic glass cores; also feeds IR optics, SiGe, and PET catalysis.",
+    "stats": [
+      [
+        "Key players",
+        "Umicore, 5N Plus, Yunnan Lincang"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "fiber_optic_cable",
+      "optical_transceiver"
+    ],
+    "ai_receives_from": [
+      "germanium",
+      "chlorine"
+    ]
+  },
+  "Nickel Single-Crystal Superalloy": {
+    "id": "nickel_superalloy",
+    "name": "Nickel Single-Crystal Superalloy",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Ni-based alloy with Re/Co/W/Ta/Hf used in gas turbine hot...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Ni-based alloy with Re/Co/W/Ta/Hf used in gas turbine hot-section blades and vanes.",
+    "stats": [
+      [
+        "Key players",
+        "Precision Castparts, ATI, Haynes International"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "frame_gas_turbine",
+      "aero_gas_turbine"
+    ],
+    "ai_receives_from": [
+      "nickel",
+      "cobalt",
+      "rhenium",
+      "tungsten",
+      "tantalum",
+      "hafnium",
+      "chromium"
+    ]
+  },
+  "Stainless Steel": {
+    "id": "stainless_steel",
+    "name": "Stainless Steel",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "316-grade plate, tube, and fittings throughout cooling lo...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "316-grade plate, tube, and fittings throughout cooling loops, CDUs, and heat exchangers.",
+    "stats": [
+      [
+        "Key players",
+        "Outokumpu, Acerinox, POSCO"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "cdu",
+      "manifold",
+      "heat_exchanger",
+      "cold_plate_chip"
+    ],
+    "ai_receives_from": [
+      "nickel",
+      "iron_ore",
+      "chromium",
+      "molybdenum"
+    ]
+  },
+  "Grain-Oriented Electrical Steel": {
+    "id": "goes_steel",
+    "name": "Grain-Oriented Electrical Steel",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Specialized silicon steel laminations for transformer cor...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Specialized silicon steel laminations for transformer cores; the bottleneck behind the transformer bottleneck.",
+    "stats": [
+      [
+        "Key players",
+        "Cleveland-Cliffs, Baosteel, Nippon Steel"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "step_down_transformer",
+      "gsu_transformer"
+    ],
+    "ai_receives_from": [
+      "iron_ore",
+      "silicon_metal"
+    ]
+  },
+  "LFP Battery Cells": {
+    "id": "lfp_cell",
+    "name": "LFP Battery Cells",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Lithium iron phosphate cells dominating stationary storag...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Lithium iron phosphate cells dominating stationary storage for UPS and BESS.",
+    "stats": [
+      [
+        "Key players",
+        "CATL, BYD, EVE Energy"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "ups_system",
+      "bess"
+    ],
+    "ai_receives_from": [
+      "lithium_carbonate",
+      "iron_phosphate_cam",
+      "graphite_anode",
+      "electrolyte",
+      "copper",
+      "aluminum"
+    ]
+  },
+  "LFP Cathode Active Material": {
+    "id": "iron_phosphate_cam",
+    "name": "LFP Cathode Active Material",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Lithium iron phosphate cathode powder; China holds ~95% p...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Lithium iron phosphate cathode powder; China holds ~95% production capacity.",
+    "stats": [
+      [
+        "Key players",
+        "Hunan Yuneng, Dynanonic, Shenzhen Dynanonic"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "lfp_cell"
+    ],
+    "ai_receives_from": [
+      "lithium_carbonate",
+      "iron_phosphate",
+      "phosphoric_acid"
+    ]
+  },
+  "Lithium Carbonate": {
+    "id": "lithium_carbonate",
+    "name": "Lithium Carbonate",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Battery-grade Li2CO3 from brine or hard rock; precursor t...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Battery-grade Li2CO3 from brine or hard rock; precursor to all lithium cathode chemistries.",
+    "stats": [
+      [
+        "Key players",
+        "Albemarle, SQM, Ganfeng"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "lfp_cell",
+      "iron_phosphate_cam"
+    ],
+    "ai_receives_from": [
+      "lithium"
+    ]
+  },
+  "Battery-Grade Graphite": {
+    "id": "graphite_anode",
+    "name": "Battery-Grade Graphite",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Coated synthetic and natural graphite anode material; ~70...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Coated synthetic and natural graphite anode material; ~70% China-processed.",
+    "stats": [
+      [
+        "Key players",
+        "BTR, Shanshan, Syrah Resources"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "lfp_cell"
+    ],
+    "ai_receives_from": [
+      "natural_graphite",
+      "petroleum_coke"
+    ]
+  },
+  "Battery Electrolyte": {
+    "id": "electrolyte",
+    "name": "Battery Electrolyte",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "LiPF6 in carbonate solvents enabling lithium-ion conducti...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "LiPF6 in carbonate solvents enabling lithium-ion conduction inside cells.",
+    "stats": [
+      [
+        "Key players",
+        "Capchem, Mitsubishi Chemical, Tinci Materials"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "lfp_cell"
+    ],
+    "ai_receives_from": [
+      "lithium",
+      "fluorspar",
+      "specialty_solvents"
+    ]
+  },
+  "Vanadium Redox Electrolyte": {
+    "id": "vanadium_electrolyte",
+    "name": "Vanadium Redox Electrolyte",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Vanadium sulfate solution storing energy in redox flow ba...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Vanadium sulfate solution storing energy in redox flow batteries; same vanadium cycles for 25+ years.",
+    "stats": [
+      [
+        "Key players",
+        "US Vanadium, Largo, Bushveld Minerals"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "vanadium_redox_flow"
+    ],
+    "ai_receives_from": [
+      "vanadium_pentoxide",
+      "sulfuric_acid"
+    ]
+  },
+  "Vanadium Pentoxide (V2O5)": {
+    "id": "vanadium_pentoxide",
+    "name": "Vanadium Pentoxide (V2O5)",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Vanadium feedstock for both SCR catalysts and redox flow ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Vanadium feedstock for both SCR catalysts and redox flow electrolyte; dual-thesis node.",
+    "stats": [
+      [
+        "Key players",
+        "Largo, Bushveld Minerals, Glencore"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "scr",
+      "vanadium_electrolyte"
+    ],
+    "ai_receives_from": [
+      "vanadium"
+    ]
+  },
+  "Cadmium Telluride Film": {
+    "id": "cdte_film",
+    "name": "Cadmium Telluride Film",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Thin-film semiconductor deposited directly onto glass for...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Thin-film semiconductor deposited directly onto glass for First Solar PV modules.",
+    "stats": [
+      [
+        "Key players",
+        "First Solar, 5N Plus, Toxco"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "solar_pv_module"
+    ],
+    "ai_receives_from": [
+      "tellurium",
+      "cadmium"
+    ]
+  },
+  "Silver Conductive Paste": {
+    "id": "silver_paste",
+    "name": "Silver Conductive Paste",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Front-contact metallization on c-Si solar cells; consumes...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Front-contact metallization on c-Si solar cells; consumes ~10–15% of mined silver annually.",
+    "stats": [
+      [
+        "Key players",
+        "Heraeus, DuPont, Targray"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "solar_pv_module",
+      "solar_wafer"
+    ],
+    "ai_receives_from": [
+      "silver"
+    ]
+  },
+  "Solar Glass": {
+    "id": "solar_glass",
+    "name": "Solar Glass",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Tempered low-iron glass front cover protecting PV cells f...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Tempered low-iron glass front cover protecting PV cells from weather.",
+    "stats": [
+      [
+        "Key players",
+        "Xinyi Solar, Flat Glass Group, Borosil"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "solar_pv_module"
+    ],
+    "ai_receives_from": [
+      "high_purity_quartz",
+      "soda_ash"
+    ]
+  },
+  "HALEU Fuel Assemblies": {
+    "id": "haleu_fuel",
+    "name": "HALEU Fuel Assemblies",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "5–20% enriched uranium fuel required by most SMR designs;...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "5–20% enriched uranium fuel required by most SMR designs; only Russia, China, and pilot-scale Centrus produce it.",
+    "stats": [
+      [
+        "Key players",
+        "Centrus Energy, Tenex, X-energy"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "smr"
+    ],
+    "ai_receives_from": [
+      "uranium",
+      "zircaloy_cladding"
+    ]
+  },
+  "LEU Fuel Assemblies": {
+    "id": "leu_fuel",
+    "name": "LEU Fuel Assemblies",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Standard <5% enriched uranium fuel rods for conventional ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Standard <5% enriched uranium fuel rods for conventional light-water reactors.",
+    "stats": [
+      [
+        "Key players",
+        "Westinghouse, Framatome, Orano"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "conventional_nuclear"
+    ],
+    "ai_receives_from": [
+      "uranium",
+      "zircaloy_cladding"
+    ]
+  },
+  "Zircaloy Cladding": {
+    "id": "zircaloy_cladding",
+    "name": "Zircaloy Cladding",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Zirconium-alloy tubing encasing nuclear fuel pellets in b...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Zirconium-alloy tubing encasing nuclear fuel pellets in both conventional reactors and SMRs.",
+    "stats": [
+      [
+        "Key players",
+        "Westinghouse, Framatome, ATI"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "haleu_fuel",
+      "leu_fuel",
+      "smr",
+      "conventional_nuclear"
+    ],
+    "ai_receives_from": [
+      "zirconium",
+      "tin",
+      "hafnium"
+    ]
+  },
+  "Tantalum Capacitors": {
+    "id": "tantalum_capacitor",
+    "name": "Tantalum Capacitors",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "High-reliability capacitors on every server board, switch...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "High-reliability capacitors on every server board, switch, and PSU.",
+    "stats": [
+      [
+        "Key players",
+        "Kemet/Yageo, AVX, Vishay"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "server_board",
+      "psu_vrm"
+    ],
+    "ai_receives_from": [
+      "tantalum"
+    ]
+  },
+  "Lead-Free Solder": {
+    "id": "solder_alloy",
+    "name": "Lead-Free Solder",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "SAC (tin-silver-copper) alloy bonding every component on ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "SAC (tin-silver-copper) alloy bonding every component on every board and package.",
+    "stats": [
+      [
+        "Key players",
+        "Indium Corporation, Senju Metal, Alpha"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "server_board",
+      "cowos_package"
+    ],
+    "ai_receives_from": [
+      "tin",
+      "silver",
+      "copper"
+    ]
+  },
+  "Gold Bond Wire": {
+    "id": "gold_bond_wire",
+    "name": "Gold Bond Wire",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Ultra-fine gold wire bonding chip die to package leadfram...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Ultra-fine gold wire bonding chip die to package leadframes and ENIG PCB finishes.",
+    "stats": [
+      [
+        "Key players",
+        "Heraeus, Tanaka, Sumitomo Metal Mining"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "server_board",
+      "cowos_package"
+    ],
+    "ai_receives_from": [
+      "gold"
+    ]
+  },
+  "YSZ Electrolyte": {
+    "id": "ysz_electrolyte",
+    "name": "YSZ Electrolyte",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Yttria-stabilized zirconia ceramic electrolyte at the hea...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Yttria-stabilized zirconia ceramic electrolyte at the heart of solid-oxide fuel cells.",
+    "stats": [
+      [
+        "Key players",
+        "Bloom Energy (internal), Tosoh, Saint-Gobain"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "fuel_cell"
+    ],
+    "ai_receives_from": [
+      "yttrium",
+      "zirconium"
+    ]
+  },
+  "Engineered Coolants": {
+    "id": "engineered_coolant",
+    "name": "Engineered Coolants",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "EGW blends for direct-to-chip and fluorinated dielectric ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "EGW blends for direct-to-chip and fluorinated dielectric fluids for immersion cooling.",
+    "stats": [
+      [
+        "Key players",
+        "3M, Solvay, Castrol"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "cdu",
+      "cooling"
+    ],
+    "ai_receives_from": [
+      "ethylene_glycol",
+      "fluorochemicals"
+    ]
+  },
+  "Refrigerants": {
+    "id": "refrigerant",
+    "name": "Refrigerants",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "HFC, HFO, or ammonia working fluids in chiller vapor-comp...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "HFC, HFO, or ammonia working fluids in chiller vapor-compression cycles.",
+    "stats": [
+      [
+        "Key players",
+        "Honeywell, Chemours, Daikin"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "chiller"
+    ],
+    "ai_receives_from": [
+      "fluorspar",
+      "fluorochemicals"
+    ]
+  },
+  "Clean Fire-Suppression Agents": {
+    "id": "clean_agent",
+    "name": "Clean Fire-Suppression Agents",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "FM-200 and Novec 1230 fluorinated agents for fire suppres...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "FM-200 and Novec 1230 fluorinated agents for fire suppression in IT spaces.",
+    "stats": [
+      [
+        "Key players",
+        "3M, Honeywell, Chemours"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "fire_suppression"
+    ],
+    "ai_receives_from": [
+      "fluorochemicals"
+    ]
+  },
+  "Transformer Oil": {
+    "id": "transformer_oil",
+    "name": "Transformer Oil",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Mineral, synthetic ester, or silicone fluid insulating an...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Mineral, synthetic ester, or silicone fluid insulating and cooling transformer cores.",
+    "stats": [
+      [
+        "Key players",
+        "Nynas, Ergon, Cargill"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "step_down_transformer",
+      "gsu_transformer"
+    ],
+    "ai_receives_from": [
+      "crude_oil"
+    ]
+  },
+  "XLPE Insulation Compound": {
+    "id": "xlpe_compound",
+    "name": "XLPE Insulation Compound",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Cross-linked polyethylene insulation around HV/MV power c...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Cross-linked polyethylene insulation around HV/MV power cable conductors.",
+    "stats": [
+      [
+        "Key players",
+        "Borealis, Dow, LyondellBasell"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "lv_mv_cable",
+      "hv_transmission_cable"
+    ],
+    "ai_receives_from": [
+      "ethylene"
+    ]
+  },
+  "SF6 / C4-FN Insulating Gas": {
+    "id": "sf6_alternative",
+    "name": "SF6 / C4-FN Insulating Gas",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Dielectric gas in MV/HV switchgear; SF6 being phased to l...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Dielectric gas in MV/HV switchgear; SF6 being phased to lower-GWP C4-FN/CO2 mixes.",
+    "stats": [
+      [
+        "Key players",
+        "3M, Solvay, Honeywell"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "mv_switchgear",
+      "hv_switchgear_breaker"
+    ],
+    "ai_receives_from": [
+      "fluorochemicals"
+    ]
+  },
+  "Underfill Resin": {
+    "id": "underfill_resin",
+    "name": "Underfill Resin",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Capillary-flow epoxy filling gaps between chip die and su...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Capillary-flow epoxy filling gaps between chip die and substrate to absorb thermal stress.",
+    "stats": [
+      [
+        "Key players",
+        "Henkel, Namics, Hitachi Chemical/Resonac"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "cowos_package"
+    ],
+    "ai_receives_from": [
+      "epoxy_resin"
+    ]
+  },
+  "Epoxy Resin": {
+    "id": "epoxy_resin",
+    "name": "Epoxy Resin",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Polymer matrix for ABF substrate, FR-4 laminate, and unde...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Polymer matrix for ABF substrate, FR-4 laminate, and underfill compounds.",
+    "stats": [
+      [
+        "Key players",
+        "Hexion, Olin, Kukdo Chemical"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "abf_substrate",
+      "fr4_laminate",
+      "underfill_resin"
+    ],
+    "ai_receives_from": [
+      "epichlorohydrin",
+      "bpa"
+    ]
+  },
+  "Fiberglass": {
+    "id": "fiberglass",
+    "name": "Fiberglass",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Glass reinforcement in PCB laminate, wind turbine blades,...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Glass reinforcement in PCB laminate, wind turbine blades, and cooling tower fill.",
+    "stats": [
+      [
+        "Key players",
+        "Owens Corning, Jushi, Saint-Gobain"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "fr4_laminate",
+      "wind_turbine",
+      "cooling_tower"
+    ],
+    "ai_receives_from": [
+      "high_purity_quartz",
+      "boron"
+    ]
+  },
+  "Trichlorosilane (TCS)": {
+    "id": "trichlorosilane",
+    "name": "Trichlorosilane (TCS)",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Gaseous silicon precursor in the Siemens process producin...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Gaseous silicon precursor in the Siemens process producing polysilicon.",
+    "stats": [
+      [
+        "Key players",
+        "Wacker, Tokuyama, OCI"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "electronic_grade_polysilicon",
+      "solar_grade_polysilicon"
+    ],
+    "ai_receives_from": [
+      "silicon_metal",
+      "chlorine"
+    ]
+  },
+  "Ultra-Pure Water": {
+    "id": "ultra_pure_water",
+    "name": "Ultra-Pure Water",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "18 MΩ·cm DI water used by the millions of gallons in wafe...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "18 MΩ·cm DI water used by the millions of gallons in wafer fabs; siting constraint for new fabs.",
+    "stats": [
+      [
+        "Key players",
+        "Veolia, Ovivo, Suez"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "logic_wafer_advanced",
+      "logic_wafer_mature",
+      "dram_wafer",
+      "tsv_copper"
+    ],
+    "ai_receives_from": [
+      "water"
+    ]
+  },
+  "Semiconductor Specialty Solvents": {
+    "id": "specialty_solvents",
+    "name": "Semiconductor Specialty Solvents",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "PGMEA, IPA, NMP and other ultra-pure solvents in photores...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "PGMEA, IPA, NMP and other ultra-pure solvents in photoresist, etch, and clean chemistries.",
+    "stats": [
+      [
+        "Key players",
+        "BASF, Merck KGaA, Sumitomo Chemical"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "euv_photoresist",
+      "duv_photoresist",
+      "cmp_slurry",
+      "electrolyte"
+    ],
+    "ai_receives_from": [
+      "crude_oil",
+      "natural_gas"
+    ]
+  },
+  "Cerium Oxide": {
+    "id": "cerium_oxide",
+    "name": "Cerium Oxide",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Intermediate",
+    "descriptor_pill": "Light rare earth abrasive for CMP slurries polishing wafe...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Light rare earth abrasive for CMP slurries polishing wafers between fab layers.",
+    "stats": [
+      [
+        "Key players",
+        "Lynas, Solvay, Shenghe"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "intermediate_materials",
+    "ai_category": null,
+    "ai_feeds_into": [
+      "cmp_slurry"
+    ],
+    "ai_receives_from": [
+      "cerium"
+    ]
+  },
+  "Germanium": {
+    "id": "germanium",
+    "name": "Germanium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Trace metal feedstock for GeCl4 (fiber optics, IR optics,...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Trace metal feedstock for GeCl4 (fiber optics, IR optics, SiGe transistors, PET catalysts).",
+    "stats": [
+      [
+        "Key players",
+        "Yunnan Chihong, Umicore, 5N Plus"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_metals",
+    "ai_feeds_into": [
+      "germanium_glass_dopant"
+    ],
+    "ai_receives_from": []
+  },
+  "Gallium": {
+    "id": "gallium",
+    "name": "Gallium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Substrate metal for GaN power transistors and GaAs lasers...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Substrate metal for GaN power transistors and GaAs lasers; ~98% Chinese primary supply.",
+    "stats": [
+      [
+        "Key players",
+        "AXT, 5N Plus, Dowa"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_metals",
+    "ai_feeds_into": [
+      "gan_wafer",
+      "gaas_wafer"
+    ],
+    "ai_receives_from": []
+  },
+  "Indium": {
+    "id": "indium",
+    "name": "Indium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Metal feedstock for InP wafers underlying every high-spee...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Metal feedstock for InP wafers underlying every high-speed transceiver laser and photodiode.",
+    "stats": [
+      [
+        "Key players",
+        "Korea Zinc, Nyrstar, Teck Resources"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_metals",
+    "ai_feeds_into": [
+      "inp_wafer"
+    ],
+    "ai_receives_from": []
+  },
+  "Tantalum": {
+    "id": "tantalum",
+    "name": "Tantalum",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Feedstock for tantalum capacitors and turbine superalloy ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Feedstock for tantalum capacitors and turbine superalloy alloying.",
+    "stats": [
+      [
+        "Key players",
+        "Global Advanced Metals, AMG, Ulba"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_metals",
+    "ai_feeds_into": [
+      "tantalum_capacitor",
+      "nickel_superalloy"
+    ],
+    "ai_receives_from": []
+  },
+  "Tungsten": {
+    "id": "tungsten",
+    "name": "Tungsten",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Chip BEOL interconnect plugs, superalloy alloying, SCR ca...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Chip BEOL interconnect plugs, superalloy alloying, SCR catalyst support.",
+    "stats": [
+      [
+        "Key players",
+        "Almonty Industries, Sandvik, China Minmetals"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_metals",
+    "ai_feeds_into": [
+      "logic_wafer_advanced",
+      "nand_wafer",
+      "nickel_superalloy",
+      "scr"
+    ],
+    "ai_receives_from": []
+  },
+  "Cobalt": {
+    "id": "cobalt",
+    "name": "Cobalt",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Superalloy alloying element for turbine blades; ~70% DRC ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Superalloy alloying element for turbine blades; ~70% DRC mining, ~75% China refining.",
+    "stats": [
+      [
+        "Key players",
+        "Glencore, CMOC, Eurasian Resources"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "base_metals",
+    "ai_feeds_into": [
+      "nickel_superalloy"
+    ],
+    "ai_receives_from": []
+  },
+  "Rhenium": {
+    "id": "rhenium",
+    "name": "Rhenium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Single-crystal superalloy input for high-temp turbine bla...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Single-crystal superalloy input for high-temp turbine blades; ~50 t/yr global supply.",
+    "stats": [
+      [
+        "Key players",
+        "Molymet, KGHM, Freeport-McMoRan"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_metals",
+    "ai_feeds_into": [
+      "nickel_superalloy"
+    ],
+    "ai_receives_from": []
+  },
+  "Hafnium": {
+    "id": "hafnium",
+    "name": "Hafnium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "High-k gate dielectric in advanced-node logic; nickel-sup...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "High-k gate dielectric in advanced-node logic; nickel-superalloy and zircaloy stabilizer.",
+    "stats": [
+      [
+        "Key players",
+        "Framatome, ATI, Nuclear Fuel Industries"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_metals",
+    "ai_feeds_into": [
+      "logic_wafer_advanced",
+      "nickel_superalloy",
+      "zircaloy_cladding"
+    ],
+    "ai_receives_from": []
+  },
+  "Molybdenum": {
+    "id": "molybdenum",
+    "name": "Molybdenum",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Alloying element in stainless steels and superalloys; rhe...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Alloying element in stainless steels and superalloys; rhenium is largely a moly byproduct.",
+    "stats": [
+      [
+        "Key players",
+        "Freeport-McMoRan, Codelco, Antofagasta"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_metals",
+    "ai_feeds_into": [
+      "stainless_steel"
+    ],
+    "ai_receives_from": []
+  },
+  "Chromium": {
+    "id": "chromium",
+    "name": "Chromium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Stainless steel and superalloy alloying element; ferrochr...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Stainless steel and superalloy alloying element; ferrochrome feedstock.",
+    "stats": [
+      [
+        "Key players",
+        "Glencore, Eurasian Resources, Tharisa"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "base_metals",
+    "ai_feeds_into": [
+      "stainless_steel",
+      "nickel_superalloy"
+    ],
+    "ai_receives_from": []
+  },
+  "Nickel": {
+    "id": "nickel",
+    "name": "Nickel",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Stainless steel base, superalloy base metal, and fuel cel...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Stainless steel base, superalloy base metal, and fuel cell electrode current collectors.",
+    "stats": [
+      [
+        "Key players",
+        "Nornickel, Vale, BHP"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "base_metals",
+    "ai_feeds_into": [
+      "nickel_superalloy",
+      "stainless_steel",
+      "fuel_cell"
+    ],
+    "ai_receives_from": []
+  },
+  "Neodymium": {
+    "id": "neodymium",
+    "name": "Neodymium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Primary rare-earth element in NdFeB permanent magnets.",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Primary rare-earth element in NdFeB permanent magnets.",
+    "stats": [
+      [
+        "Key players",
+        "MP Materials, Lynas, Shenghe"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "rare_earths",
+    "ai_feeds_into": [
+      "ndfeb_magnet"
+    ],
+    "ai_receives_from": []
+  },
+  "Praseodymium": {
+    "id": "praseodymium",
+    "name": "Praseodymium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Light rare earth co-substituted with neodymium in NdFeB m...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Light rare earth co-substituted with neodymium in NdFeB magnets; usually sold as didymium.",
+    "stats": [
+      [
+        "Key players",
+        "MP Materials, Lynas, Shenghe"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "rare_earths",
+    "ai_feeds_into": [
+      "ndfeb_magnet"
+    ],
+    "ai_receives_from": []
+  },
+  "Dysprosium": {
+    "id": "dysprosium",
+    "name": "Dysprosium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Heavy rare earth stabilizing NdFeB magnets at high operat...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Heavy rare earth stabilizing NdFeB magnets at high operating temperatures.",
+    "stats": [
+      [
+        "Key players",
+        "Shenghe, China Northern Rare Earth, Lynas"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "rare_earths",
+    "ai_feeds_into": [
+      "ndfeb_magnet"
+    ],
+    "ai_receives_from": []
+  },
+  "Terbium": {
+    "id": "terbium",
+    "name": "Terbium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Heavy rare earth boosting magnetic performance in high-te...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Heavy rare earth boosting magnetic performance in high-temp NdFeB grades.",
+    "stats": [
+      [
+        "Key players",
+        "Shenghe, China Northern Rare Earth, Northern Minerals"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "rare_earths",
+    "ai_feeds_into": [
+      "ndfeb_magnet"
+    ],
+    "ai_receives_from": []
+  },
+  "Cerium": {
+    "id": "cerium",
+    "name": "Cerium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Most abundant rare earth; feeds CMP slurries, glass polis...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Most abundant rare earth; feeds CMP slurries, glass polishing, and catalysts.",
+    "stats": [
+      [
+        "Key players",
+        "Lynas, MP Materials, Shenghe"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "rare_earths",
+    "ai_feeds_into": [
+      "cerium_oxide"
+    ],
+    "ai_receives_from": []
+  },
+  "Yttrium": {
+    "id": "yttrium",
+    "name": "Yttrium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Stabilizer in YSZ ceramic electrolyte at the heart of sol...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Stabilizer in YSZ ceramic electrolyte at the heart of solid-oxide fuel cells.",
+    "stats": [
+      [
+        "Key players",
+        "Lynas, MP Materials, Shenghe"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "rare_earths",
+    "ai_feeds_into": [
+      "ysz_electrolyte"
+    ],
+    "ai_receives_from": []
+  },
+  "Helium": {
+    "id": "helium",
+    "name": "Helium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Cryogenic cooling and inert atmosphere for fabs; sealing ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Cryogenic cooling and inert atmosphere for fabs; sealing gas for high-capacity HDDs.",
+    "stats": [
+      [
+        "Key players",
+        "Air Liquide, Linde, Air Products"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_gases",
+    "ai_feeds_into": [
+      "logic_wafer_advanced",
+      "dram_wafer",
+      "nand_flash",
+      "enterprise_hdd"
+    ],
+    "ai_receives_from": []
+  },
+  "Neon": {
+    "id": "neon",
+    "name": "Neon",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "ArF excimer laser gas (>96% of mix) for DUV lithography o...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "ArF excimer laser gas (>96% of mix) for DUV lithography on every advanced chip.",
+    "stats": [
+      [
+        "Key players",
+        "Air Liquide, Linde, Iceblick"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_gases",
+    "ai_feeds_into": [
+      "logic_wafer_advanced"
+    ],
+    "ai_receives_from": []
+  },
+  "Krypton": {
+    "id": "krypton",
+    "name": "Krypton",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "KrF lasers and high-aspect-ratio etch gas for 3D NAND sca...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "KrF lasers and high-aspect-ratio etch gas for 3D NAND scaling beyond 300 layers.",
+    "stats": [
+      [
+        "Key players",
+        "Air Liquide, Linde, Messer"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_gases",
+    "ai_feeds_into": [
+      "nand_wafer",
+      "dram_wafer",
+      "logic_wafer_advanced"
+    ],
+    "ai_receives_from": []
+  },
+  "Xenon": {
+    "id": "xenon",
+    "name": "Xenon",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "EUV lithography light source plasma generating 13.5 nm ra...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "EUV lithography light source plasma generating 13.5 nm radiation for sub-7 nm nodes.",
+    "stats": [
+      [
+        "Key players",
+        "Air Liquide, Linde, Messer"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_gases",
+    "ai_feeds_into": [
+      "logic_wafer_advanced"
+    ],
+    "ai_receives_from": []
+  },
+  "Argon": {
+    "id": "argon",
+    "name": "Argon",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Bulk inert gas for sputtering, annealing, and ingot growt...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Bulk inert gas for sputtering, annealing, and ingot growth across all wafer fabs.",
+    "stats": [
+      [
+        "Key players",
+        "Air Liquide, Linde, Air Products"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "specialty_gases",
+    "ai_feeds_into": [
+      "logic_wafer_mature",
+      "dram_wafer"
+    ],
+    "ai_receives_from": []
+  },
+  "Ammonia": {
+    "id": "ammonia",
+    "name": "Ammonia",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Nitrogen source for GaN epitaxy and a feedstock for chip-...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Nitrogen source for GaN epitaxy and a feedstock for chip-fab process chemistries.",
+    "stats": [
+      [
+        "Key players",
+        "Yara, CF Industries, Nutrien"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "industrial_chemicals",
+    "ai_feeds_into": [
+      "gan_wafer"
+    ],
+    "ai_receives_from": []
+  },
+  "Chlorine": {
+    "id": "chlorine",
+    "name": "Chlorine",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Reactive halogen used to chlorinate germanium and silicon...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Reactive halogen used to chlorinate germanium and silicon precursors (GeCl4, TCS).",
+    "stats": [
+      [
+        "Key players",
+        "Olin, Westlake, Dow"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "industrial_chemicals",
+    "ai_feeds_into": [
+      "germanium_glass_dopant",
+      "trichlorosilane"
+    ],
+    "ai_receives_from": []
+  },
+  "Fluorspar": {
+    "id": "fluorspar",
+    "name": "Fluorspar",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Calcium fluoride ore feeding HF and all downstream fluoro...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Calcium fluoride ore feeding HF and all downstream fluorochemicals; ~65% China supply.",
+    "stats": [
+      [
+        "Key players",
+        "Masan Resources, Mexichem, Minersa"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "industrial_chemicals",
+    "ai_feeds_into": [
+      "fluorochemicals",
+      "electrolyte"
+    ],
+    "ai_receives_from": []
+  },
+  "Fluorochemicals": {
+    "id": "fluorochemicals",
+    "name": "Fluorochemicals",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "HF, fluoropolymers, and refrigerant precursors derived fr...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "HF, fluoropolymers, and refrigerant precursors derived from fluorspar.",
+    "stats": [
+      [
+        "Key players",
+        "Honeywell, Daikin, Solvay"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "industrial_chemicals",
+    "ai_feeds_into": [
+      "refrigerant",
+      "clean_agent",
+      "sf6_alternative",
+      "engineered_coolant"
+    ],
+    "ai_receives_from": [
+      "fluorspar"
+    ]
+  },
+  "Uranium": {
+    "id": "uranium",
+    "name": "Uranium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Mined U3O8 yellowcake feeding LEU and HALEU enrichment cy...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Mined U3O8 yellowcake feeding LEU and HALEU enrichment cycles.",
+    "stats": [
+      [
+        "Key players",
+        "Cameco, Kazatomprom, Orano"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "nuclear_materials",
+    "ai_feeds_into": [
+      "haleu_fuel",
+      "leu_fuel"
+    ],
+    "ai_receives_from": []
+  },
+  "Zirconium": {
+    "id": "zirconium",
+    "name": "Zirconium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Nuclear-grade Zr metal for fuel-rod cladding; hafnium-fre...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Nuclear-grade Zr metal for fuel-rod cladding; hafnium-free purity is critical.",
+    "stats": [
+      [
+        "Key players",
+        "Westinghouse, Framatome, ATI"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "nuclear_materials",
+    "ai_feeds_into": [
+      "zircaloy_cladding",
+      "ysz_electrolyte"
+    ],
+    "ai_receives_from": []
+  },
+  "Tellurium": {
+    "id": "tellurium",
+    "name": "Tellurium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Active layer in CdTe thin-film solar; byproduct of copper...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Active layer in CdTe thin-film solar; byproduct of copper refining.",
+    "stats": [
+      [
+        "Key players",
+        "First Solar, 5N Plus, Asarco"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "solar_materials",
+    "ai_feeds_into": [
+      "cdte_film"
+    ],
+    "ai_receives_from": []
+  },
+  "Cadmium": {
+    "id": "cadmium",
+    "name": "Cadmium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Paired with tellurium in CdTe solar; byproduct of zinc re...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Paired with tellurium in CdTe solar; byproduct of zinc refining.",
+    "stats": [
+      [
+        "Key players",
+        "Korea Zinc, Nyrstar, Teck Resources"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "solar_materials",
+    "ai_feeds_into": [
+      "cdte_film"
+    ],
+    "ai_receives_from": []
+  },
+  "Vanadium": {
+    "id": "vanadium",
+    "name": "Vanadium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Feeds vanadium pentoxide for SCR catalysts and redox-flow...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Feeds vanadium pentoxide for SCR catalysts and redox-flow battery electrolyte.",
+    "stats": [
+      [
+        "Key players",
+        "Largo, Bushveld Minerals, Glencore"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "solar_materials",
+    "ai_feeds_into": [
+      "vanadium_pentoxide"
+    ],
+    "ai_receives_from": []
+  },
+  "Silver": {
+    "id": "silver",
+    "name": "Silver",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Front-side metallization paste in c-Si solar cells; ~10–1...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Front-side metallization paste in c-Si solar cells; ~10–15% of mined silver flows here.",
+    "stats": [
+      [
+        "Key players",
+        "Fresnillo, Pan American Silver, Hochschild"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "precious_metals",
+    "ai_feeds_into": [
+      "silver_paste",
+      "solder_alloy"
+    ],
+    "ai_receives_from": []
+  },
+  "Platinum Group Metals": {
+    "id": "platinum_pgm",
+    "name": "Platinum Group Metals",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Pt/Pd/Rh catalysts for fuel cells, SCR, and electrical co...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Pt/Pd/Rh catalysts for fuel cells, SCR, and electrical contacts; HDD platter underlayer.",
+    "stats": [
+      [
+        "Key players",
+        "Anglo American Platinum, Sibanye-Stillwater, Impala"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "precious_metals",
+    "ai_feeds_into": [
+      "fuel_cell",
+      "scr",
+      "enterprise_hdd"
+    ],
+    "ai_receives_from": []
+  },
+  "Lithium": {
+    "id": "lithium",
+    "name": "Lithium",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Brine or hard-rock lithium feeding battery-grade Li2CO3 f...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Brine or hard-rock lithium feeding battery-grade Li2CO3 for all lithium cathode chemistries.",
+    "stats": [
+      [
+        "Key players",
+        "Albemarle, SQM, Ganfeng"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "battery_materials",
+    "ai_feeds_into": [
+      "lithium_carbonate",
+      "electrolyte"
+    ],
+    "ai_receives_from": []
+  },
+  "Natural Graphite": {
+    "id": "natural_graphite",
+    "name": "Natural Graphite",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Flake graphite mined and refined into anode powder; ~65% ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Flake graphite mined and refined into anode powder; ~65% China mining.",
+    "stats": [
+      [
+        "Key players",
+        "Syrah Resources, Nouveau Monde, South Star"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "battery_materials",
+    "ai_feeds_into": [
+      "graphite_anode"
+    ],
+    "ai_receives_from": []
+  },
+  "Petroleum Coke": {
+    "id": "petroleum_coke",
+    "name": "Petroleum Coke",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Refinery byproduct calcined into synthetic graphite anode...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Refinery byproduct calcined into synthetic graphite anode and graphite electrodes.",
+    "stats": [
+      [
+        "Key players",
+        "BP, Marathon Petroleum, Phillips 66"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "battery_materials",
+    "ai_feeds_into": [
+      "graphite_anode"
+    ],
+    "ai_receives_from": [
+      "crude_oil"
+    ]
+  },
+  "Iron Phosphate": {
+    "id": "iron_phosphate",
+    "name": "Iron Phosphate",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Cathode precursor pairing with lithium in LFP cells domin...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Cathode precursor pairing with lithium in LFP cells dominating stationary storage.",
+    "stats": [
+      [
+        "Key players",
+        "Hunan Yuneng, Dynanonic, Aleees"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "battery_materials",
+    "ai_feeds_into": [
+      "iron_phosphate_cam"
+    ],
+    "ai_receives_from": []
+  },
+  "Phosphoric Acid": {
+    "id": "phosphoric_acid",
+    "name": "Phosphoric Acid",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Phosphate feedstock for LFP cathodes and broader battery ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Phosphate feedstock for LFP cathodes and broader battery and fertilizer industry.",
+    "stats": [
+      [
+        "Key players",
+        "OCP, Mosaic, Nutrien"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "battery_materials",
+    "ai_feeds_into": [
+      "iron_phosphate_cam"
+    ],
+    "ai_receives_from": []
+  },
+  "Boron": {
+    "id": "boron",
+    "name": "Boron",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Boric oxide for NdFeB magnets and as a glass-strengthenin...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Boric oxide for NdFeB magnets and as a glass-strengthening additive in fiberglass.",
+    "stats": [
+      [
+        "Key players",
+        "Rio Tinto (US Borax), Eti Maden, 5E Advanced Materials"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "other_specialty",
+    "ai_feeds_into": [
+      "ndfeb_magnet",
+      "fiberglass"
+    ],
+    "ai_receives_from": []
+  },
+  "Arsenic": {
+    "id": "arsenic",
+    "name": "Arsenic",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Group-V element pairing with gallium in GaAs wafer growth...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Group-V element pairing with gallium in GaAs wafer growth; copper-smelting byproduct.",
+    "stats": [
+      [
+        "Key players",
+        "Codelco, Glencore, Sumitomo"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "other_specialty",
+    "ai_feeds_into": [
+      "gaas_wafer"
+    ],
+    "ai_receives_from": []
+  },
+  "Phosphorus": {
+    "id": "phosphorus",
+    "name": "Phosphorus",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Group-V element pairing with indium in InP wafer growth a...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Group-V element pairing with indium in InP wafer growth and a precursor to phosphoric acid.",
+    "stats": [
+      [
+        "Key players",
+        "Mosaic, OCP, Yuntianhua"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "other_specialty",
+    "ai_feeds_into": [
+      "inp_wafer"
+    ],
+    "ai_receives_from": []
+  },
+  "Sulfuric Acid": {
+    "id": "sulfuric_acid",
+    "name": "Sulfuric Acid",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Bulk industrial acid used to dissolve vanadium pentoxide ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Bulk industrial acid used to dissolve vanadium pentoxide into redox-flow electrolyte.",
+    "stats": [
+      [
+        "Key players",
+        "Nutrien, PVS Chemicals, Mosaic"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "industrial_chemicals",
+    "ai_feeds_into": [
+      "vanadium_electrolyte"
+    ],
+    "ai_receives_from": []
+  },
+  "Ethylene": {
+    "id": "ethylene",
+    "name": "Ethylene",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Petrochemical feedstock for polyethylene and XLPE cable i...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Petrochemical feedstock for polyethylene and XLPE cable insulation.",
+    "stats": [
+      [
+        "Key players",
+        "Dow, ExxonMobil Chemical, LyondellBasell"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "petrochemicals",
+    "ai_feeds_into": [
+      "xlpe_compound"
+    ],
+    "ai_receives_from": [
+      "crude_oil",
+      "natural_gas"
+    ]
+  },
+  "Ethylene Glycol": {
+    "id": "ethylene_glycol",
+    "name": "Ethylene Glycol",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Antifreeze base for the 50/50 EGW blends used in direct-t...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Antifreeze base for the 50/50 EGW blends used in direct-to-chip cooling loops.",
+    "stats": [
+      [
+        "Key players",
+        "Dow, SABIC, MEGlobal"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "petrochemicals",
+    "ai_feeds_into": [
+      "engineered_coolant"
+    ],
+    "ai_receives_from": [
+      "ethylene"
+    ]
+  },
+  "Epichlorohydrin": {
+    "id": "epichlorohydrin",
+    "name": "Epichlorohydrin",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Reactive monomer with bisphenol A producing the epoxy res...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Reactive monomer with bisphenol A producing the epoxy resin in ABF and PCB laminates.",
+    "stats": [
+      [
+        "Key players",
+        "Olin, Solvay, Hexion"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "petrochemicals",
+    "ai_feeds_into": [
+      "epoxy_resin"
+    ],
+    "ai_receives_from": []
+  },
+  "Bisphenol A": {
+    "id": "bpa",
+    "name": "Bisphenol A",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Aromatic monomer paired with epichlorohydrin to make epox...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Aromatic monomer paired with epichlorohydrin to make epoxy resin.",
+    "stats": [
+      [
+        "Key players",
+        "Covestro, Hexion, SABIC"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "petrochemicals",
+    "ai_feeds_into": [
+      "epoxy_resin"
+    ],
+    "ai_receives_from": [
+      "crude_oil"
+    ]
+  },
+  "Soda Ash": {
+    "id": "soda_ash",
+    "name": "Soda Ash",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Sodium carbonate flux lowering melting temperature in sol...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Sodium carbonate flux lowering melting temperature in solar and architectural glass.",
+    "stats": [
+      [
+        "Key players",
+        "Solvay, Genesis Energy, Tata Chemicals"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "other_specialty",
+    "ai_feeds_into": [
+      "solar_glass"
+    ],
+    "ai_receives_from": []
+  },
+  "Tin": {
+    "id": "tin",
+    "name": "Tin",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Lead-free SAC solder, EUV photoresist sensitizer, and zir...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Lead-free SAC solder, EUV photoresist sensitizer, and zircaloy alloying.",
+    "stats": [
+      [
+        "Key players",
+        "Yunnan Tin, Minsur, PT Timah"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "base_metals",
+    "ai_feeds_into": [
+      "solder_alloy",
+      "euv_photoresist",
+      "zircaloy_cladding"
+    ],
+    "ai_receives_from": []
+  },
+  "Gold": {
+    "id": "gold",
+    "name": "Gold",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Bond wires, plated contacts, and ENIG PCB finish; small p...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Bond wires, plated contacts, and ENIG PCB finish; small per-unit volume but ubiquitous.",
+    "stats": [
+      [
+        "Key players",
+        "Newmont, Barrick, Agnico Eagle"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "precious_metals",
+    "ai_feeds_into": [
+      "gold_bond_wire"
+    ],
+    "ai_receives_from": []
+  },
+  "Copper": {
+    "id": "copper",
+    "name": "Copper",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Most systemic input in the stack: chip interconnects, PCB...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Most systemic input in the stack: chip interconnects, PCB traces, busbars, transformer windings, cables, cold plates.",
+    "stats": [
+      [
+        "Key players",
+        "Codelco, Freeport-McMoRan, BHP"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "base_metals",
+    "ai_feeds_into": [
+      "tsv_copper",
+      "server_board",
+      "cold_plate_chip",
+      "psu_vrm",
+      "dram_module",
+      "network_switch",
+      "dac_aec",
+      "cdu",
+      "manifold",
+      "chiller",
+      "crah_fanwall",
+      "heat_exchanger",
+      "mv_switchgear",
+      "step_down_transformer",
+      "ups_system",
+      "bess",
+      "ats",
+      "pdu_rack_pdu",
+      "busway_busbar",
+      "backup_generator",
+      "lv_mv_cable",
+      "recip_gas_engine",
+      "solar_inverter",
+      "wind_turbine",
+      "gsu_transformer",
+      "hv_switchgear_breaker",
+      "hv_transmission_cable",
+      "hrsg",
+      "fuel_cell",
+      "lfp_cell",
+      "vanadium_redox_flow",
+      "abf_substrate",
+      "fr4_laminate",
+      "solder_alloy"
+    ],
+    "ai_receives_from": []
+  },
+  "Aluminum": {
+    "id": "aluminum",
+    "name": "Aluminum",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Heat sinks, rack frames, server chassis, busbars, PV fram...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Heat sinks, rack frames, server chassis, busbars, PV frames, cable conductor alternative.",
+    "stats": [
+      [
+        "Key players",
+        "Alcoa, Rio Tinto, Norsk Hydro"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "base_metals",
+    "ai_feeds_into": [
+      "solar_pv_module",
+      "solar_racking_tracker",
+      "busway_busbar",
+      "lv_mv_cable",
+      "lfp_cell",
+      "bess",
+      "raised_flooring",
+      "fiber_optic_cable",
+      "enterprise_hdd",
+      "hv_transmission_cable"
+    ],
+    "ai_receives_from": []
+  },
+  "Metallurgical-Grade Quartz": {
+    "id": "metallurgical_quartz",
+    "name": "Metallurgical-Grade Quartz",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Quartzite gravel feeding silicon-metal furnaces; less pur...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Quartzite gravel feeding silicon-metal furnaces; less pure than HPQ but vastly larger volume.",
+    "stats": [
+      [
+        "Key players",
+        "Sibelco, Elkem, Russian Mining"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "quartz_silica",
+    "ai_feeds_into": [
+      "silicon_metal"
+    ],
+    "ai_receives_from": []
+  },
+  "Quartz Ore": {
+    "id": "quartz_ore",
+    "name": "Quartz Ore",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Mined quartzite, primarily from Spruce Pine NC, refined i...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Mined quartzite, primarily from Spruce Pine NC, refined into high-purity quartz.",
+    "stats": [
+      [
+        "Key players",
+        "Sibelco, The Quartz Corp, Norwegian Crystallites"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "quartz_silica",
+    "ai_feeds_into": [
+      "high_purity_quartz"
+    ],
+    "ai_receives_from": []
+  },
+  "Iron Ore": {
+    "id": "iron_ore",
+    "name": "Iron Ore",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Feedstock for structural steel, rebar, cold-formed framin...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Feedstock for structural steel, rebar, cold-formed framing, GOES, and stainless.",
+    "stats": [
+      [
+        "Key players",
+        "Vale, Rio Tinto, BHP"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "construction_materials",
+    "ai_feeds_into": [
+      "structural_steel",
+      "cold_formed_steel",
+      "rebar",
+      "stainless_steel",
+      "goes_steel",
+      "ndfeb_magnet"
+    ],
+    "ai_receives_from": []
+  },
+  "Scrap Steel": {
+    "id": "scrap_steel",
+    "name": "Scrap Steel",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Recycled feedstock for EAF steelmaking; ~70% of US struct...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Recycled feedstock for EAF steelmaking; ~70% of US structural steel input.",
+    "stats": [
+      [
+        "Key players",
+        "Sims Metal, Schnitzer, Nucor"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "construction_materials",
+    "ai_feeds_into": [
+      "structural_steel",
+      "cold_formed_steel",
+      "rebar"
+    ],
+    "ai_receives_from": []
+  },
+  "Coking Coal": {
+    "id": "coking_coal",
+    "name": "Coking Coal",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Metallurgical coal reducing iron ore in blast furnaces an...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Metallurgical coal reducing iron ore in blast furnaces and feeding silicon-metal furnaces.",
+    "stats": [
+      [
+        "Key players",
+        "BHP, Teck Resources, Glencore"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "construction_materials",
+    "ai_feeds_into": [
+      "structural_steel",
+      "silicon_metal"
+    ],
+    "ai_receives_from": []
+  },
+  "Zinc": {
+    "id": "zinc",
+    "name": "Zinc",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Galvanizing on structural and cold-formed steel; cadmium ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Galvanizing on structural and cold-formed steel; cadmium and indium are zinc byproducts.",
+    "stats": [
+      [
+        "Key players",
+        "Glencore, Korea Zinc, Nyrstar"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "base_metals",
+    "ai_feeds_into": [
+      "cold_formed_steel"
+    ],
+    "ai_receives_from": []
+  },
+  "Cement": {
+    "id": "cement",
+    "name": "Cement",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Volume-dominant binder for foundation pours and slabs; ma...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Volume-dominant binder for foundation pours and slabs; major embodied-carbon line item.",
+    "stats": [
+      [
+        "Key players",
+        "Holcim, Cemex, Heidelberg Materials"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "construction_materials",
+    "ai_feeds_into": [
+      "concrete"
+    ],
+    "ai_receives_from": []
+  },
+  "Aggregates": {
+    "id": "aggregates",
+    "name": "Aggregates",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Sand, gravel, and crushed stone bulking out concrete and ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Sand, gravel, and crushed stone bulking out concrete and base layers.",
+    "stats": [
+      [
+        "Key players",
+        "Vulcan Materials, Martin Marietta, Heidelberg Materials"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "construction_materials",
+    "ai_feeds_into": [
+      "concrete"
+    ],
+    "ai_receives_from": []
+  },
+  "Water": {
+    "id": "water",
+    "name": "Water",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Cooling tower makeup, fab ultra-pure-water feedstock, and...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Cooling tower makeup, fab ultra-pure-water feedstock, and concrete mixing; major siting constraint.",
+    "stats": [
+      [
+        "Key players",
+        "Local utilities, Veolia, American Water"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "other_specialty",
+    "ai_feeds_into": [
+      "cooling_tower",
+      "concrete",
+      "ultra_pure_water",
+      "land_water_rights"
+    ],
+    "ai_receives_from": []
+  },
+  "Natural Gas": {
+    "id": "natural_gas",
+    "name": "Natural Gas",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Primary fuel for behind-the-meter turbines, recip engines...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Primary fuel for behind-the-meter turbines, recip engines, fuel cells; also a chemical feedstock.",
+    "stats": [
+      [
+        "Key players",
+        "EQT, Coterra, ExxonMobil"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "petrochemicals",
+    "ai_feeds_into": [
+      "frame_gas_turbine",
+      "aero_gas_turbine",
+      "recip_gas_engine",
+      "fuel_cell",
+      "backup_generator",
+      "specialty_solvents",
+      "ethylene"
+    ],
+    "ai_receives_from": []
+  },
+  "Crude Oil": {
+    "id": "crude_oil",
+    "name": "Crude Oil",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Refined into diesel for backup gensets and petrochemical ...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Refined into diesel for backup gensets and petrochemical feedstock for plastics and resins.",
+    "stats": [
+      [
+        "Key players",
+        "Saudi Aramco, ExxonMobil, Chevron"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "petrochemicals",
+    "ai_feeds_into": [
+      "diesel_fuel",
+      "ethylene",
+      "transformer_oil",
+      "specialty_solvents",
+      "petroleum_coke",
+      "bpa"
+    ],
+    "ai_receives_from": []
+  },
+  "Diesel Fuel": {
+    "id": "diesel_fuel",
+    "name": "Diesel Fuel",
+    "type": "Private",
+    "ticker": null,
+    "country": null,
+    "location_detail": "",
+    "layer": "Raw Material",
+    "descriptor_pill": "Backup-generator fuel with multi-day on-site storage; ref...",
+    "quantity_pill": "",
+    "status": "Active",
+    "about": "Backup-generator fuel with multi-day on-site storage; refined from crude oil.",
+    "stats": [
+      [
+        "Key players",
+        "ExxonMobil, Chevron, Shell"
+      ]
+    ],
+    "risk": "",
+    "risks": [],
+    "inv": "",
+    "ai_layer": "raw_materials",
+    "ai_category": "petrochemicals",
+    "ai_feeds_into": [
+      "backup_generator"
+    ],
+    "ai_receives_from": [
+      "crude_oil"
+    ]
   }
 }
