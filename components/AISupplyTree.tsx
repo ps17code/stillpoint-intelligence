@@ -128,6 +128,23 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     if (expandedIntGroup) expandedGroups.add(expandedIntGroup);
     if (expandedCompGroup) expandedGroups.add(expandedCompGroup);
 
+    // Build set of visible group keys per column — when a column has an expanded group,
+    // only that group and its members are visible; all other groups are hidden
+    const catKeys = new Set(Object.keys(categories));
+    const intKeys = new Set(Object.keys(intSubgroups));
+    const compKeys = new Set(Object.keys(compSubgroups));
+
+    const visibleGroupKeys = new Set<string>();
+    // Raw materials column
+    if (expandedRawCat) { visibleGroupKeys.add(expandedRawCat); }
+    else { catKeys.forEach(k => visibleGroupKeys.add(k)); }
+    // Intermediates column
+    if (expandedIntGroup) { visibleGroupKeys.add(expandedIntGroup); }
+    else { intKeys.forEach(k => visibleGroupKeys.add(k)); }
+    // Components column
+    if (expandedCompGroup) { visibleGroupKeys.add(expandedCompGroup); }
+    else { compKeys.forEach(k => visibleGroupKeys.add(k)); }
+
     const edgeSet = new Set<string>();
     const result: { from: string; to: string }[] = [];
 
@@ -136,8 +153,14 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
 
       const gFrom = nodeToGroup.get(e.from);
       const gTo = nodeToGroup.get(e.to);
+
+      // Resolve to group or node depending on expansion
       const resolvedFrom = (gFrom && expandedGroups.has(gFrom)) ? e.from : (gFrom ?? e.from);
       const resolvedTo = (gTo && expandedGroups.has(gTo)) ? e.to : (gTo ?? e.to);
+
+      // Skip if resolved target is a group that's not currently visible
+      if (gFrom && !expandedGroups.has(gFrom) && !visibleGroupKeys.has(gFrom)) return;
+      if (gTo && !expandedGroups.has(gTo) && !visibleGroupKeys.has(gTo)) return;
 
       const key = `${resolvedFrom}→${resolvedTo}`;
       if (!edgeSet.has(key) && resolvedFrom !== resolvedTo) {
