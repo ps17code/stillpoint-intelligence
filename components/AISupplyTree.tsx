@@ -85,45 +85,64 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     return m;
   }, [categories, intSubgroups, compSubgroups]);
 
-  // Node → connected nodes (direct edges)
-  const nodeAdj = useMemo(() => {
-    const m = new Map<string, Set<string>>();
+  // Downstream and upstream maps for BFS
+  const { downstreamMap, upstreamMap } = useMemo(() => {
+    const down = new Map<string, Set<string>>();
+    const up = new Map<string, Set<string>>();
     chain.edges.forEach(e => {
-      if (!m.has(e.from)) m.set(e.from, new Set());
-      if (!m.has(e.to)) m.set(e.to, new Set());
-      m.get(e.from)!.add(e.to);
-      m.get(e.to)!.add(e.from);
+      if (!down.has(e.from)) down.set(e.from, new Set());
+      down.get(e.from)!.add(e.to);
+      if (!up.has(e.to)) up.set(e.to, new Set());
+      up.get(e.to)!.add(e.from);
     });
-    return m;
+    return { downstreamMap: down, upstreamMap: up };
   }, []);
 
-  // Build group-to-group links
-  const groupLinks = useMemo(() => buildGroupLinks(categories, intSubgroups, compSubgroups, chain.edges), [categories, intSubgroups, compSubgroups]);
-
-  // Highlighted groups: from expanded group OR from selected sub-node
-  const highlightedGroups = useMemo(() => {
-    // If a sub-node is selected, highlight groups containing its connected nodes
-    if (selectedNode) {
-      const connected = nodeAdj.get(selectedNode) ?? new Set<string>();
-      const groups = new Set<string>();
-      connected.forEach(n => {
-        const g = nodeToGroup.get(n);
-        if (g) groups.add(g);
-      });
-      return groups;
+  // BFS: get all reachable nodes (upstream + downstream) from a set of start nodes
+  function getFullChain(startNodes: string[]): Set<string> {
+    const visited = new Set<string>();
+    const queue = [...startNodes];
+    startNodes.forEach(n => visited.add(n));
+    while (queue.length > 0) {
+      const curr = queue.shift()!;
+      (downstreamMap.get(curr) ?? new Set()).forEach(n => { if (!visited.has(n)) { visited.add(n); queue.push(n); } });
+      (upstreamMap.get(curr) ?? new Set()).forEach(n => { if (!visited.has(n)) { visited.add(n); queue.push(n); } });
     }
-    // If a group is expanded, highlight linked groups
+    return visited;
+  }
+
+  // All reachable nodes from selection (sub-node or group)
+  const reachableNodes = useMemo(() => {
+    if (selectedNode) {
+      return getFullChain([selectedNode]);
+    }
     if (activeGroupKey) {
-      return groupLinks.get(activeGroupKey) ?? new Set<string>();
+      // Get all member nodes of the expanded group
+      const allGroups = { ...categories, ...intSubgroups, ...compSubgroups };
+      const members = allGroups[activeGroupKey]?.nodes ?? [];
+      return getFullChain(members);
     }
     return new Set<string>();
-  }, [selectedNode, activeGroupKey, nodeAdj, nodeToGroup, groupLinks]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedNode, activeGroupKey]);
 
-  // Connected sub-nodes: when a sub-node is selected and a highlighted group is expanded, which specific nodes to highlight
+  // Highlighted groups: groups containing any reachable node
+  const highlightedGroups = useMemo(() => {
+    if (reachableNodes.size === 0) return new Set<string>();
+    const groups = new Set<string>();
+    reachableNodes.forEach(n => {
+      const g = nodeToGroup.get(n);
+      if (g) groups.add(g);
+    });
+    // Remove the active group itself so it doesn't highlight itself
+    if (activeGroupKey) groups.delete(activeGroupKey);
+    return groups;
+  }, [reachableNodes, nodeToGroup, activeGroupKey]);
+
+  // Connected sub-nodes: reachable nodes that are in expanded groups
   const connectedSubNodes = useMemo(() => {
-    if (!selectedNode) return new Set<string>();
-    return nodeAdj.get(selectedNode) ?? new Set<string>();
-  }, [selectedNode, nodeAdj]);
+    return reachableNodes;
+  }, [reachableNodes]);
 
   function getGroupStatus(nodes: string[]): string {
     const statuses = nodes.map(n => uNodes[n]?.status ?? "tbd");
@@ -182,7 +201,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
       >
         <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
           <div style={{ width: 4, height: 4, borderRadius: "50%", background: statusColor, flexShrink: 0 }} />
-          <span style={{ fontSize: 10, fontWeight: 600, color: highlighted ? "#ece8e1" : "#d0c8bc" }}>{name}</span>
+          <span style={{ fontSize: 10, fontWeight: 600, color: highlighted ? "#ece8e1" : "#d0c8bc", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</span>
           <span style={{ fontSize: 6, color: "#555", fontFamily: "'Geist Mono', monospace" }}>· {count}</span>
         </div>
         <span style={{ fontSize: 7, color: "#555" }}>›</span>
@@ -234,7 +253,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
         <div style={{ maxHeight: "calc(100vh - 280px)", overflowY: "auto", paddingRight: 4, display: "flex", flexDirection: "column", gap: 2 }}>
           {expandedGroup ? (
             <>
-              <p style={{ fontSize: 7, color: "#706a60", margin: "0 0 4px 0", fontWeight: 500 }}>{groups[expandedGroup]?.name}</p>
+              <p style={{ fontSize: 8, color: "#706a60", margin: "0 0 4px 0", fontWeight: 500, fontFamily: "'EB Garamond', Georgia, serif" }}>{groups[expandedGroup]?.name}</p>
               {groups[expandedGroup]?.nodes.map((n, i) => (
                 <NCard key={n} name={n} bright animate={animatingGroup === expandedGroup} animIndex={i} />
               ))}
