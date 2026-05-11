@@ -2169,17 +2169,12 @@ export default function TreeView() {
       if (currentVertical?.id === "ai") {
         return <AISupplyTree
           onNodeClick={(name) => {
-            const inputMap: Record<string, PathEntry[]> = {
-              "Germanium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
-              "Gallium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "gallium", name: "Gallium" }],
-              "Fiber Optic Cable": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
-            };
-            const target = inputMap[name];
-            if (target) {
-              setPath(target);
-              setAnimKey(k => k + 1);
-              setSelectedTreeNode(null);
+            // For inputs with supply trees, show exec summary instead of navigating
+            const inputIds: Record<string, string> = { "Germanium": "germanium", "Gallium": "gallium", "Fiber Optic Cable": "fiber" };
+            if (inputIds[name]) {
+              setSelectedTreeNode(name);
               setSelectedGroup(null);
+              setRightTab("summary");
             } else {
               setSelectedTreeNode(name);
               setSelectedGroup(null);
@@ -3335,17 +3330,101 @@ export default function TreeView() {
                     {selectedGroup.overview && (
                       <div>
                         <p style={{ fontSize: 10, color: templateAccent ?? "#706a60", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const, fontFamily: "'Geist Mono', monospace" }}>Overview</p>
-                        <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", lineHeight: 1.6, margin: 0 }}>{selectedGroup.overview}</p>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                          {selectedGroup.overview.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 10).map((s, i) => (
+                            <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                              <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
+                              <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", lineHeight: 1.5, margin: 0 }}>{s.trim()}</p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     )}
                     {selectedGroup.activity && (
                       <div>
                         <p style={{ fontSize: 10, color: templateAccent ?? "#706a60", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const, fontFamily: "'Geist Mono', monospace" }}>Where The Activity Is</p>
-                        <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", lineHeight: 1.6, margin: 0 }}>{selectedGroup.activity}</p>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                          {selectedGroup.activity.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 10).map((s, i) => (
+                            <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                              <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
+                              <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", lineHeight: 1.5, margin: 0 }}>{s.trim()}</p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
                 );
+              }
+
+              // Input node selected on AI tree — show exec summary + navigate button
+              if (selectedTreeNode && currentVertical?.id === "ai" && currentLevel === "subsystems") {
+                const inputIds: Record<string, { id: string; label: string }> = {
+                  "Germanium": { id: "germanium", label: "Germanium" },
+                  "Gallium": { id: "gallium", label: "Gallium" },
+                  "Fiber Optic Cable": { id: "fiber", label: "Fiber Optic Cable" },
+                };
+                const input = inputIds[selectedTreeNode];
+                if (input) {
+                  const inputBullets: Record<string, string[]> = {
+                    germanium: [
+                      "Trace element recovered as a byproduct of zinc smelting and coal combustion. Cannot be mined directly.",
+                      "Doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in IR defense optics, satellite solar cells, and SiGe semiconductors.",
+                      "Global supply fixed at ~230t/yr. 83% Chinese under export licensing. One western refiner — Umicore, Belgium.",
+                      "Price has risen from $1,500/kg to over $8,500/kg in two years. 3.5x premium between western and Chinese markets.",
+                    ],
+                    gallium: [
+                      "Trace element recovered as a byproduct of alumina refining from bauxite. Cannot be mined directly.",
+                      "Forms compound semiconductors (GaAs and GaN) for AI datacenter power, 5G amplifiers, LEDs, EV chargers, and defense radar.",
+                      "Global refined production is ~320 t/yr. ~290 t Chinese; ~15-30 t non-Chinese, almost entirely Japan via Dowa.",
+                      "Price has risen from $298/kg to $2,269/kg since 2020. 9x spread between Chinese domestic and western markets.",
+                    ],
+                    fiber: [
+                      "Glass strands that transmit data as pulses of light. Physical layer connecting AI datacenters, telecom, and subsea systems.",
+                      "Core inputs: high-purity silica, germanium, and helium. All three are constrained simultaneously.",
+                      "Global production at ~720M fiber strand-km/yr. Preform lines at full utilization. One equipment supplier with 18-24 month backlogs.",
+                      "Fiber prices at 7-year highs. G.652D up 150%, G.657A up over 210%.",
+                    ],
+                  };
+                  const bullets = inputBullets[input.id] ?? [];
+                  const navMap: Record<string, PathEntry[]> = {
+                    germanium: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
+                    gallium: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "gallium", name: "Gallium" }],
+                    fiber: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
+                  };
+                  return (
+                    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                      <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                        <p style={{ fontSize: 12, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>{input.label}</p>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                          {bullets.map((b, i) => (
+                            <div key={i} style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
+                              <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 5 }} />
+                              <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.5, margin: 0 }}>{b}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          const target = navMap[input.id];
+                          if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); }
+                        }}
+                        style={{
+                          background: "transparent", border: `1px solid ${templateAccent ?? "#706a60"}`,
+                          borderRadius: 4, padding: "8px 14px", cursor: "pointer",
+                          fontSize: 10, color: templateAccent ?? "#706a60",
+                          fontFamily: "'Geist Mono', monospace", transition: "background 0.15s",
+                          width: "100%",
+                        }}
+                        onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                      >
+                        View {input.label} supply tree &rarr;
+                      </button>
+                    </div>
+                  );
+                }
               }
 
               let bullets: string[] = [];

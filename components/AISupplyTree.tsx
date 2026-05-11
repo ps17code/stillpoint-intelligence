@@ -49,30 +49,29 @@ export default function AISupplyTree({ onNodeClick, onGroupClick }: AISupplyTree
   }
 
   // Node card
-  function NCard({ name }: { name: string }) {
+  function NCard({ name, bright }: { name: string; bright?: boolean }) {
     const node = uNodes[name];
     const statusColor = STATUS_COLORS[node?.status ?? "tbd"] ?? "#444";
+    const bg = bright ? "rgb(40, 37, 34)" : "rgb(34, 31, 29)";
+    const border = bright ? "rgb(50, 46, 42)" : "rgb(42, 39, 37)";
 
     return (
       <div
         onClick={() => onNodeClick?.(name)}
         style={{
-          padding: "3px 6px 3px 12px",
-          background: "rgb(34, 31, 29)",
-          border: "1px solid rgb(42, 39, 37)",
+          padding: "4px 6px 4px 12px",
+          background: bg,
+          border: `1px solid ${border}`,
           borderRadius: 3,
           cursor: "pointer",
           transition: "background 0.15s, border-color 0.15s",
           position: "relative" as const,
         }}
-        onMouseEnter={e => { e.currentTarget.style.background = "rgb(42, 38, 35)"; e.currentTarget.style.borderColor = "rgb(60, 56, 52)"; }}
-        onMouseLeave={e => { e.currentTarget.style.background = "rgb(34, 31, 29)"; e.currentTarget.style.borderColor = "rgb(42, 39, 37)"; }}
+        onMouseEnter={e => { e.currentTarget.style.background = "rgb(48, 44, 40)"; e.currentTarget.style.borderColor = "rgb(60, 56, 52)"; }}
+        onMouseLeave={e => { e.currentTarget.style.background = bg; e.currentTarget.style.borderColor = border; }}
       >
         <div style={{ position: "absolute", left: 3, top: "50%", transform: "translateY(-50%)", width: 4, height: 4, borderRadius: "50%", background: statusColor }} />
-        <p style={{ fontSize: 8, fontWeight: 600, color: "#ece8e1", margin: 0, lineHeight: 1.2, whiteSpace: "nowrap", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</p>
-        {node?.descriptor_pill && (
-          <p style={{ fontSize: 5.5, color: "rgba(255,255,255,0.35)", margin: "1px 0 0 0", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 140 }}>{node.descriptor_pill}</p>
-        )}
+        <p style={{ fontSize: 10, fontWeight: 600, color: bright ? "#f0ece4" : "#ece8e1", margin: 0, lineHeight: 1.2, whiteSpace: "nowrap", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</p>
       </div>
     );
   }
@@ -147,7 +146,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick }: AISupplyTree
             // Expanded: show only this group's nodes
             <>
               <p style={{ fontSize: 7, color: "#706a60", margin: "0 0 4px 0", fontWeight: 500 }}>{groups[expandedGroup]?.name}</p>
-              {groups[expandedGroup]?.nodes.map(n => <NCard key={n} name={n} />)}
+              {groups[expandedGroup]?.nodes.map(n => <NCard key={n} name={n} bright />)}
             </>
           ) : (
             // Collapsed: show all groups as headers
