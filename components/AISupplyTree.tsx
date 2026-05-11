@@ -88,10 +88,28 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     return m;
   }, [categories, intSubgroups, compSubgroups]);
 
-  // Compute visible edges based on which groups are expanded
-  // When collapsed: group-to-group edges (deduplicated)
-  // When expanded: node-level edges for that group's members
+  // Only compute visible edges when a sub-node is selected
   const visibleEdges = useMemo(() => {
+    if (!selectedNode) return [];
+
+    // BFS both directions from selected node to get full chain
+    const chainNodes = new Set<string>();
+    const queue = [selectedNode];
+    chainNodes.add(selectedNode);
+    // Downstream
+    const dq = [selectedNode];
+    while (dq.length > 0) {
+      const curr = dq.shift()!;
+      (downstreamMap.get(curr) ?? new Set()).forEach(n => { if (!chainNodes.has(n)) { chainNodes.add(n); dq.push(n); } });
+    }
+    // Upstream
+    const uq = [selectedNode];
+    while (uq.length > 0) {
+      const curr = uq.shift()!;
+      (upstreamMap.get(curr) ?? new Set()).forEach(n => { if (!chainNodes.has(n)) { chainNodes.add(n); uq.push(n); } });
+    }
+
+    // Filter edges to only those between chain nodes, then resolve to groups/nodes
     const expandedGroups = new Set<string>();
     if (expandedRawCat) expandedGroups.add(expandedRawCat);
     if (expandedIntGroup) expandedGroups.add(expandedIntGroup);
@@ -101,10 +119,10 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     const result: { from: string; to: string }[] = [];
 
     chain.edges.forEach(e => {
+      if (!chainNodes.has(e.from) || !chainNodes.has(e.to)) return;
+
       const gFrom = nodeToGroup.get(e.from);
       const gTo = nodeToGroup.get(e.to);
-
-      // Resolve: if the group is expanded, use the node name; otherwise use the group key
       const resolvedFrom = (gFrom && expandedGroups.has(gFrom)) ? e.from : (gFrom ?? e.from);
       const resolvedTo = (gTo && expandedGroups.has(gTo)) ? e.to : (gTo ?? e.to);
 
@@ -116,7 +134,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     });
 
     return result;
-  }, [nodeToGroup, expandedRawCat, expandedIntGroup, expandedCompGroup]);
+  }, [selectedNode, nodeToGroup, expandedRawCat, expandedIntGroup, expandedCompGroup, downstreamMap, upstreamMap]);
 
   // Measure card positions and draw bezier connections
   const measureAndDraw = useCallback(() => {
@@ -177,13 +195,20 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     }
     if (startNodes.length === 0) return new Set<string>();
 
-    // Traverse downstream only — shows what the selected node feeds into
+    // Traverse both downstream and upstream from start nodes
     const visited = new Set<string>();
-    const queue = [...startNodes];
     startNodes.forEach(n => visited.add(n));
-    while (queue.length > 0) {
-      const curr = queue.shift()!;
-      (downstreamMap.get(curr) ?? new Set()).forEach(n => { if (!visited.has(n)) { visited.add(n); queue.push(n); } });
+    // Downstream
+    const dq = [...startNodes];
+    while (dq.length > 0) {
+      const curr = dq.shift()!;
+      (downstreamMap.get(curr) ?? new Set()).forEach(n => { if (!visited.has(n)) { visited.add(n); dq.push(n); } });
+    }
+    // Upstream
+    const uq = [...startNodes];
+    while (uq.length > 0) {
+      const curr = uq.shift()!;
+      (upstreamMap.get(curr) ?? new Set()).forEach(n => { if (!visited.has(n)) { visited.add(n); uq.push(n); } });
     }
     return visited;
   }, [selectedNode, activeGroupKey, downstreamMap, upstreamMap, categories, intSubgroups, compSubgroups]);
@@ -366,25 +391,24 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
         <SimpleColumn layer={chain.layers[4]} />
       </div>
 
-      {/* SVG connection lines */}
-      <svg style={{ position: "absolute", top: 0, left: 0, width: svgSize.w || "100%", height: svgSize.h || "100%", pointerEvents: "none", overflow: "visible" }}>
-        {lines.map((line, i) => {
-          const isInChain = reachableNodes.size > 0 && reachableNodes.has(line.fromName) && reachableNodes.has(line.toName);
-          const isDirectEdge = selectedNode && (line.fromName === selectedNode || line.toName === selectedNode);
-          const isDimmed = reachableNodes.size > 0 && !isInChain;
-          return (
-            <path
-              key={i}
-              d={line.d}
-              fill="none"
-              stroke={isDirectEdge ? "rgba(255,255,255,0.35)" : isInChain ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.04)"}
-              strokeWidth={isDirectEdge ? "1" : "0.5"}
-              strokeDasharray="3,3"
-              style={{ opacity: isDimmed ? 0.03 : 1, transition: "opacity 0.2s, stroke 0.2s" }}
-            />
-          );
-        })}
-      </svg>
+      {/* SVG connection lines — only shown when a sub-node is selected */}
+      {lines.length > 0 && (
+        <svg style={{ position: "absolute", top: 0, left: 0, width: svgSize.w || "100%", height: svgSize.h || "100%", pointerEvents: "none", overflow: "visible" }}>
+          {lines.map((line, i) => {
+            const isDirectEdge = line.fromName === selectedNode || line.toName === selectedNode;
+            return (
+              <path
+                key={i}
+                d={line.d}
+                fill="none"
+                stroke={isDirectEdge ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.15)"}
+                strokeWidth={isDirectEdge ? "1" : "0.6"}
+                strokeDasharray="3,3"
+              />
+            );
+          })}
+        </svg>
+      )}
 
       {/* Navigate button — bottom right when an input node is selected */}
       {selectedNode && INPUT_NODES.has(selectedNode) && (
