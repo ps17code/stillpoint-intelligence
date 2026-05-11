@@ -3370,14 +3370,15 @@ export default function TreeView() {
               if (selectedTreeNode && currentVertical?.id === "ai" && currentLevel === "subsystems") {
                 const uNode = universalNodes[selectedTreeNode] as unknown as { ai_summary?: Record<string, string> } | undefined;
                 if (uNode?.ai_summary) {
-                  const sections: [string, string][] = [
+                  const sectionsRaw = [
                     ["What It Is", uNode.ai_summary.what_it_is ?? ""],
                     ["Where It Comes From", uNode.ai_summary.where_it_comes_from ?? ""],
                     ["What It's Used For", uNode.ai_summary.what_its_used_for ?? ""],
                     ["Supply Situation", uNode.ai_summary.supply_situation ?? ""],
                     ["Pricing & Scale", uNode.ai_summary.pricing_scale ?? ""],
                     ["Why It Matters", uNode.ai_summary.why_it_matters ?? ""],
-                  ].filter(([, v]) => v.length > 0);
+                  ] as [string, string][];
+                  const sections = sectionsRaw.filter(([, v]) => v.length > 0);
 
                   return (
                     <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 10 }}>
