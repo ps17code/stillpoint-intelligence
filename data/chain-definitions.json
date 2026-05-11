@@ -2793,7 +2793,7 @@
     "rawMaterialCategories": {
       "specialty_metals": {
         "name": "Specialty Metals",
-        "description": "Chokepoint metals with high-thesis value: Ge, Ga, In, Ta, W, Re, Hf, Mo.",
+        "description": "Small-volume metals for chips, fiber, and turbines; mostly refined in China.",
         "nodes": [
           "Germanium",
           "Gallium",
@@ -2807,7 +2807,7 @@
       },
       "rare_earths": {
         "name": "Rare Earths",
-        "description": "Light and heavy rare earths feeding magnets, ceramics, and polishing slurries.",
+        "description": "Magnet-making elements found in hard drives, fans, and wind turbines; China-refined.",
         "nodes": [
           "Neodymium",
           "Praseodymium",
@@ -2819,7 +2819,7 @@
       },
       "base_metals": {
         "name": "Base & Industrial Metals",
-        "description": "Large-volume metals flowing into structural, electrical, and battery uses.",
+        "description": "High-volume metals like copper and aluminum that show up almost everywhere in the build.",
         "nodes": [
           "Cobalt",
           "Chromium",
@@ -2832,7 +2832,7 @@
       },
       "precious_metals": {
         "name": "Precious Metals",
-        "description": "Small-volume high-value metals for contacts, paste, and catalysis.",
+        "description": "Small amounts of gold, silver, and platinum used in contacts, solder, and catalysts.",
         "nodes": [
           "Silver",
           "Platinum Group Metals",
@@ -2841,7 +2841,7 @@
       },
       "specialty_gases": {
         "name": "Specialty Gases",
-        "description": "Noble and process gases for semiconductor fabs and HDD sealing.",
+        "description": "Noble gases used in semiconductor fabs and to seal high-capacity hard drives.",
         "nodes": [
           "Helium",
           "Neon",
@@ -2852,7 +2852,7 @@
       },
       "industrial_chemicals": {
         "name": "Industrial Gases & Chemicals",
-        "description": "Bulk reactive chemistry feeding battery, fab, and refrigerant chains.",
+        "description": "Bulk reactive chemistries feeding battery, fab, and refrigerant production.",
         "nodes": [
           "Ammonia",
           "Chlorine",
@@ -2863,7 +2863,7 @@
       },
       "nuclear_materials": {
         "name": "Nuclear Materials",
-        "description": "Uranium and cladding metals for SMR and conventional reactor fuel.",
+        "description": "Uranium fuel and the zirconium tubing that holds it, for reactors powering datacenters.",
         "nodes": [
           "Uranium",
           "Zirconium"
@@ -2871,7 +2871,7 @@
       },
       "battery_materials": {
         "name": "Battery Materials",
-        "description": "Cathode, anode, and electrolyte precursors for lithium-ion stationary storage.",
+        "description": "Cathode and anode inputs for the lithium cells in UPS backup and grid storage.",
         "nodes": [
           "Lithium",
           "Natural Graphite",
@@ -2882,7 +2882,7 @@
       },
       "solar_materials": {
         "name": "Solar & Storage Specialty",
-        "description": "Thin-film semiconductors and redox-active metals for PV and flow batteries.",
+        "description": "Thin-film semiconductors and redox-active metals for solar panels and flow batteries.",
         "nodes": [
           "Tellurium",
           "Cadmium",
@@ -2891,7 +2891,7 @@
       },
       "petrochemicals": {
         "name": "Petrochemicals",
-        "description": "Hydrocarbon fuels and feedstocks for plastics, resins, and backup power.",
+        "description": "Hydrocarbon fuels and feedstocks for plastics, resins, and backup generator fuel.",
         "nodes": [
           "Ethylene",
           "Ethylene Glycol",
@@ -2904,7 +2904,7 @@
       },
       "construction_materials": {
         "name": "Construction Materials",
-        "description": "Bulk inputs for foundations, framing, and structural shell.",
+        "description": "Iron, steel, cement, and aggregates for the building shell and foundations.",
         "nodes": [
           "Iron Ore",
           "Scrap Steel",
@@ -2915,7 +2915,7 @@
       },
       "quartz_silica": {
         "name": "Quartz & Silica",
-        "description": "Quartzite ore in metallurgical and high-purity grades feeding silicon and glass.",
+        "description": "Mined quartzite refined into silicon and fiber-optic glass.",
         "nodes": [
           "Metallurgical-Grade Quartz",
           "Quartz Ore"
@@ -2923,7 +2923,7 @@
       },
       "other_specialty": {
         "name": "Other Specialty Inputs",
-        "description": "Water, boron, group-V dopants, soda ash, and other narrow-use raw inputs.",
+        "description": "Water, boron, and other narrow-use raw inputs scattered through the chain.",
         "nodes": [
           "Boron",
           "Arsenic",
@@ -2937,7 +2937,7 @@
       "processors": {
         "name": "Processors",
         "parent_subsystem": "compute",
-        "description": "Silicon doing the work — GPUs, CPUs, and offload processors.",
+        "description": "The chips that actually run AI workloads, plus the supporting silicon feeding them.",
         "nodes": [
           "GPUs / AI Accelerators",
           "CPUs (Host)",
@@ -2947,7 +2947,7 @@
       "compute_memory": {
         "name": "Compute-Side Memory",
         "parent_subsystem": "compute",
-        "description": "High-bandwidth memory co-packaged with the accelerator.",
+        "description": "High-bandwidth memory bonded to AI chips so they don't sit idle.",
         "nodes": [
           "HBM Stacks"
         ]
@@ -2955,7 +2955,7 @@
       "board_integration": {
         "name": "Board & Integration",
         "parent_subsystem": "compute",
-        "description": "PCBs hosting the chip assemblies and tying them together electrically.",
+        "description": "The multi-layer PCBs that physically host the chip assemblies.",
         "nodes": [
           "Server Boards"
         ]
@@ -2963,7 +2963,7 @@
       "chip_power_delivery": {
         "name": "Chip Power Delivery",
         "parent_subsystem": "compute",
-        "description": "Power supplies and voltage regulators feeding the chips on the board.",
+        "description": "Steps rack power down to the low voltage chips actually run on.",
         "nodes": [
           "PSUs & VRMs"
         ]
@@ -2971,7 +2971,7 @@
       "chip_thermal": {
         "name": "Chip Thermal",
         "parent_subsystem": "compute",
-        "description": "Direct-to-chip cooling hardware absorbing GPU and CPU heat.",
+        "description": "Direct-to-chip cooling hardware pulling heat off GPUs into the liquid loop.",
         "nodes": [
           "Cold Plates"
         ]
@@ -2979,7 +2979,7 @@
       "working_memory": {
         "name": "Working Memory",
         "parent_subsystem": "memory_storage",
-        "description": "CPU-attached DRAM in DDR/MRDIMM form factors.",
+        "description": "DRAM modules feeding the CPU; the system's main memory pool.",
         "nodes": [
           "DRAM Modules"
         ]
@@ -2987,7 +2987,7 @@
       "hot_storage": {
         "name": "Hot Storage",
         "parent_subsystem": "memory_storage",
-        "description": "NVMe SSDs and their underlying flash for low-latency persistent storage.",
+        "description": "NVMe SSDs and their flash for low-latency access to active data.",
         "nodes": [
           "Enterprise SSDs",
           "NAND Flash",
@@ -2997,7 +2997,7 @@
       "cold_storage": {
         "name": "Cold Storage",
         "parent_subsystem": "memory_storage",
-        "description": "High-capacity HDDs for archival and nearline tiers.",
+        "description": "High-capacity hard drives for archival and backup tiers.",
         "nodes": [
           "Enterprise HDDs"
         ]
@@ -3005,7 +3005,7 @@
       "switching_silicon": {
         "name": "Switching Silicon",
         "parent_subsystem": "connectivity",
-        "description": "Custom ASICs forwarding packets at terabit scale.",
+        "description": "Custom ASICs that forward packets at terabit scale.",
         "nodes": [
           "Switch ASICs"
         ]
@@ -3013,7 +3013,7 @@
       "switching_boxes": {
         "name": "Switching Boxes",
         "parent_subsystem": "connectivity",
-        "description": "Assembled switch chassis with ASIC, optics, and management.",
+        "description": "The assembled switches that route traffic between racks and buildings.",
         "nodes": [
           "Network Switches"
         ]
@@ -3021,7 +3021,7 @@
       "optical_io": {
         "name": "Optical I/O",
         "parent_subsystem": "connectivity",
-        "description": "Pluggables, co-packaged optics, and photonic ICs converting electrons to light.",
+        "description": "Hardware converting electrical signals to light for high-speed fiber links.",
         "nodes": [
           "Optical Transceivers",
           "Co-Packaged Optics",
@@ -3031,7 +3031,7 @@
       "cabling": {
         "name": "Cabling",
         "parent_subsystem": "connectivity",
-        "description": "Fiber and copper carrying signals between racks and across buildings.",
+        "description": "The fiber and copper actually carrying signals between equipment.",
         "nodes": [
           "Fiber Optic Cable",
           "DACs & AECs"
@@ -3040,7 +3040,7 @@
       "chip_level_cooling": {
         "name": "Chip-Level Cooling",
         "parent_subsystem": "cooling",
-        "description": "In-rack manifolds and quick-disconnects feeding each compute tray.",
+        "description": "In-rack manifolds and connectors feeding coolant to each compute tray.",
         "nodes": [
           "Manifolds & QDs"
         ]
@@ -3048,7 +3048,7 @@
       "rack_level_cooling": {
         "name": "Rack-Level Cooling",
         "parent_subsystem": "cooling",
-        "description": "CDUs circulating coolant between rack manifolds and facility loops.",
+        "description": "Pump units circulating coolant between rack manifolds and facility loops.",
         "nodes": [
           "Coolant Distribution Units"
         ]
@@ -3056,7 +3056,7 @@
       "heat_rejection": {
         "name": "Heat Rejection",
         "parent_subsystem": "cooling",
-        "description": "Chillers, towers, and heat exchangers expelling facility heat to atmosphere.",
+        "description": "Chillers and towers expelling facility heat to the atmosphere.",
         "nodes": [
           "Chillers",
           "Cooling Towers",
@@ -3066,7 +3066,7 @@
       "air_handling": {
         "name": "Air Handling",
         "parent_subsystem": "cooling",
-        "description": "CRAH and fan-wall units cooling networking and ancillary loads.",
+        "description": "Air-based cooling for networking, storage, and equipment that doesn't need liquid.",
         "nodes": [
           "CRAH / Fan Wall Units"
         ]
@@ -3074,7 +3074,7 @@
       "switching_protection": {
         "name": "Switching & Protection",
         "parent_subsystem": "power_distribution",
-        "description": "MV switchgear and transfer switches routing and protecting facility power.",
+        "description": "Gear routing and isolating power flows inside the facility.",
         "nodes": [
           "MV Switchgear",
           "Automatic Transfer Switches"
@@ -3083,7 +3083,7 @@
       "voltage_conversion": {
         "name": "Voltage Conversion",
         "parent_subsystem": "power_distribution",
-        "description": "Step-down transformers dropping medium-voltage feeds to facility utilization voltage.",
+        "description": "Transformers stepping medium-voltage feeds down to facility utilization voltage.",
         "nodes": [
           "Step-Down Transformers"
         ]
@@ -3091,7 +3091,7 @@
       "backup_energy": {
         "name": "Backup Energy",
         "parent_subsystem": "power_distribution",
-        "description": "UPS and BESS holding the load through utility disturbances.",
+        "description": "UPS and battery systems holding the load through utility disturbances.",
         "nodes": [
           "UPS Systems",
           "BESS"
@@ -3100,7 +3100,7 @@
       "distribution_paths": {
         "name": "Distribution Paths",
         "parent_subsystem": "power_distribution",
-        "description": "Busways, PDUs, and cables delivering power along rack rows to receptacles.",
+        "description": "Busways, PDUs, and cables delivering power along rack rows.",
         "nodes": [
           "PDUs & Rack PDUs",
           "Busways & Busbars",
@@ -3110,7 +3110,7 @@
       "last_mile_backup": {
         "name": "Last-Mile Backup",
         "parent_subsystem": "power_distribution",
-        "description": "Diesel and gas gensets providing extended-runtime backup behind UPS.",
+        "description": "Diesel and gas generators providing extended-runtime backup behind the UPS.",
         "nodes": [
           "Backup Generators"
         ]
@@ -3118,7 +3118,7 @@
       "gas_fired": {
         "name": "Gas-Fired Generation",
         "parent_subsystem": "power_generation",
-        "description": "Turbines, recip engines, and balance-of-plant burning natural gas onsite.",
+        "description": "Onsite natural gas plants bypassing grid bottlenecks for new capacity.",
         "nodes": [
           "Frame Gas Turbines",
           "Aeroderivative Turbines",
@@ -3130,7 +3130,7 @@
       "nuclear": {
         "name": "Nuclear Generation",
         "parent_subsystem": "power_generation",
-        "description": "Conventional reactors and emerging SMRs supplying clean baseload.",
+        "description": "Reactors providing 24/7 carbon-free baseload via PPAs or future onsite SMRs.",
         "nodes": [
           "Small Modular Reactors",
           "Conventional Nuclear"
@@ -3139,7 +3139,7 @@
       "renewable": {
         "name": "Renewable Generation",
         "parent_subsystem": "power_generation",
-        "description": "Solar PV, inverters, racking, and wind delivering variable clean power.",
+        "description": "Solar, wind, and inverters delivering variable clean power to the campus.",
         "nodes": [
           "Solar PV Modules",
           "Solar Inverters",
@@ -3158,7 +3158,7 @@
       "distributed_generation": {
         "name": "Distributed Generation",
         "parent_subsystem": "power_generation",
-        "description": "Fuel cells and other modular onsite generators.",
+        "description": "Fuel cells and modular onsite generators for distributed power.",
         "nodes": [
           "Fuel Cells"
         ]
@@ -3166,7 +3166,7 @@
       "grid_interface": {
         "name": "Grid Interface",
         "parent_subsystem": "power_generation",
-        "description": "Step-up transformers, HV switchgear, and transmission cable connecting plants to load.",
+        "description": "Step-up transformers and substation gear connecting plants to the wider grid.",
         "nodes": [
           "Generator Step-Up Transformers",
           "HV Switchgear & Breakers",
@@ -3176,7 +3176,7 @@
       "structural_shell": {
         "name": "Structural Shell",
         "parent_subsystem": "physical_structure",
-        "description": "Foundations, framing, and steel carrying the building load.",
+        "description": "The steel, concrete, and rebar carrying the building's load.",
         "nodes": [
           "Structural Steel",
           "Cold-Formed Steel",
@@ -3195,7 +3195,7 @@
       "life_safety": {
         "name": "Life Safety",
         "parent_subsystem": "physical_structure",
-        "description": "Fire suppression and security protecting people and equipment.",
+        "description": "Fire suppression and security protecting the people and the equipment.",
         "nodes": [
           "Fire Suppression",
           "Security Systems"
@@ -3204,7 +3204,7 @@
       "site": {
         "name": "Site",
         "parent_subsystem": "physical_structure",
-        "description": "Land, water rights, and grid interconnect rights underpinning the campus.",
+        "description": "The land, water, and grid interconnect rights underpinning the campus.",
         "nodes": [
           "Land & Water Rights"
         ]
@@ -3213,7 +3213,7 @@
     "intermediateSubgroups": {
       "patterned_wafers": {
         "name": "Patterned Wafers",
-        "description": "Lithographically processed wafers exiting the fab as logic, memory, or solar substrates.",
+        "description": "Silicon wafers that have been through the fab carrying actual chip designs.",
         "nodes": [
           "Advanced Logic Wafers",
           "Mature-Node Logic Wafers",
@@ -3224,7 +3224,7 @@
       },
       "silicon_feedstock": {
         "name": "Silicon Feedstock",
-        "description": "Quartzite to polysilicon to electronic-grade silicon feeding all wafer production.",
+        "description": "The progressively purified silicon between quartzite and finished wafers.",
         "nodes": [
           "Electronic-Grade Silicon",
           "Electronic-Grade Polysilicon",
@@ -3236,7 +3236,7 @@
       },
       "advanced_packaging": {
         "name": "Advanced Packaging",
-        "description": "CoWoS assembly, substrates, interposers, and bonding materials integrating chips into modules.",
+        "description": "Bonding chips, memory, and substrates into finished GPU and CPU modules.",
         "nodes": [
           "CoWoS Advanced Packaging",
           "Silicon Interposer",
@@ -3250,7 +3250,7 @@
       },
       "fab_chemistry": {
         "name": "Fab Chemistry",
-        "description": "Photoresists, slurries, solvents, and ultra-pure water consumed in semiconductor manufacturing.",
+        "description": "Photoresists, slurries, gases, and ultra-pure water consumed in chip manufacturing.",
         "nodes": [
           "EUV Photoresist",
           "DUV Photoresist",
@@ -3263,7 +3263,7 @@
       },
       "compound_semi_wafers": {
         "name": "Compound Semiconductor Wafers",
-        "description": "InP, GaAs, and GaN substrates for optical and power-electronics devices.",
+        "description": "Non-silicon wafers like InP and GaN for lasers and power switches.",
         "nodes": [
           "InP Wafers",
           "GaAs Wafers",
@@ -3272,7 +3272,7 @@
       },
       "specialty_alloys": {
         "name": "Specialty Alloys & Ceramics",
-        "description": "Superalloys, electrical steel, stainless, magnets, and structural ceramics.",
+        "description": "Superalloys, electrical steel, magnets, and ceramics for turbines and transformers.",
         "nodes": [
           "NdFeB Magnets",
           "Nickel Single-Crystal Superalloy",
@@ -3283,7 +3283,7 @@
       },
       "battery_intermediates": {
         "name": "Battery Cells & Precursors",
-        "description": "Lithium and vanadium cell chemistries and the cathode, anode, and electrolyte materials feeding them.",
+        "description": "Finished lithium cells plus the cathode, anode, and electrolyte chemistries inside.",
         "nodes": [
           "LFP Battery Cells",
           "LFP Cathode Active Material",
@@ -3296,7 +3296,7 @@
       },
       "nuclear_fuel": {
         "name": "Nuclear Fuel Forms",
-        "description": "Enriched uranium fuel assemblies and zircaloy cladding for SMRs and conventional reactors.",
+        "description": "Enriched uranium fuel assemblies and the zirconium tubing surrounding them.",
         "nodes": [
           "HALEU Fuel Assemblies",
           "LEU Fuel Assemblies",
@@ -3305,7 +3305,7 @@
       },
       "solar_intermediates": {
         "name": "Solar Intermediates",
-        "description": "Thin-film semiconductors, conductive pastes, and tempered glass feeding PV module assembly.",
+        "description": "Thin films, conductive pastes, and tempered glass feeding solar panel assembly.",
         "nodes": [
           "Cadmium Telluride Film",
           "Silver Conductive Paste",
@@ -3314,7 +3314,7 @@
       },
       "specialty_fluids_gases": {
         "name": "Specialty Fluids & Gases",
-        "description": "Coolants, refrigerants, clean agents, transformer oil, cable insulation, and switchgear gases.",
+        "description": "Coolants, refrigerants, transformer oils, and insulating gases throughout the facility.",
         "nodes": [
           "Engineered Coolants",
           "Refrigerants",
@@ -3326,7 +3326,7 @@
       },
       "polymers": {
         "name": "Polymers & Composites",
-        "description": "Epoxy resin and fiberglass underpinning PCB laminates, ABF substrate, and turbine blades.",
+        "description": "Epoxy resins and fiberglass forming substrates, laminates, and turbine blades.",
         "nodes": [
           "Epoxy Resin",
           "Fiberglass"
@@ -3334,7 +3334,7 @@
       },
       "discrete_passives": {
         "name": "Discrete Passives",
-        "description": "Tantalum and ceramic capacitors and other discrete board components.",
+        "description": "Capacitors and other small board components shared across nearly every device.",
         "nodes": [
           "Tantalum Capacitors"
         ]
