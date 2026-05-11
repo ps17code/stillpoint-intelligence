@@ -109,13 +109,13 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     }
     if (startNodes.length === 0) return new Set<string>();
 
+    // Traverse downstream only — shows what the selected node feeds into
     const visited = new Set<string>();
     const queue = [...startNodes];
     startNodes.forEach(n => visited.add(n));
     while (queue.length > 0) {
       const curr = queue.shift()!;
       (downstreamMap.get(curr) ?? new Set()).forEach(n => { if (!visited.has(n)) { visited.add(n); queue.push(n); } });
-      (upstreamMap.get(curr) ?? new Set()).forEach(n => { if (!visited.has(n)) { visited.add(n); queue.push(n); } });
     }
     return visited;
   }, [selectedNode, activeGroupKey, downstreamMap, upstreamMap, categories, intSubgroups, compSubgroups]);
