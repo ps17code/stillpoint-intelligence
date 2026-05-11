@@ -1706,6 +1706,7 @@ export default function TreeView() {
   const [rightTab, setRightTab] = useState("summary");
   const [selectedTreeNode, setSelectedTreeNode] = useState<string | null>(null);
   const [selectedBriefId, setSelectedBriefId] = useState<string | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<{ key: string; name: string; description: string } | null>(null);
   const [selectedAnalysisIdx, setSelectedAnalysisIdx] = useState(0);
   const [globeFilterLayer, setGlobeFilterLayer] = useState<string | null>(null);
   const [hoveredGlobeNode, setHoveredGlobeNode] = useState<{ name: string; type: string; location: string } | null>(null);
@@ -2166,23 +2167,31 @@ export default function TreeView() {
 
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
-        return <AISupplyTree onNodeClick={(name) => {
-          // Navigate to input chain if it exists
-          const inputMap: Record<string, PathEntry[]> = {
-            "Germanium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
-            "Gallium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "gallium", name: "Gallium" }],
-            "Fiber Optic Cable": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
-          };
-          const target = inputMap[name];
-          if (target) {
-            setPath(target);
-            setAnimKey(k => k + 1);
+        return <AISupplyTree
+          onNodeClick={(name) => {
+            const inputMap: Record<string, PathEntry[]> = {
+              "Germanium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
+              "Gallium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "gallium", name: "Gallium" }],
+              "Fiber Optic Cable": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
+            };
+            const target = inputMap[name];
+            if (target) {
+              setPath(target);
+              setAnimKey(k => k + 1);
+              setSelectedTreeNode(null);
+              setSelectedGroup(null);
+            } else {
+              setSelectedTreeNode(name);
+              setSelectedGroup(null);
+              setRightTab("nodes");
+            }
+          }}
+          onGroupClick={(key, name, desc) => {
+            setSelectedGroup({ key, name, description: desc });
             setSelectedTreeNode(null);
-          } else {
-            setSelectedTreeNode(name);
-            setRightTab("nodes");
-          }
-        }} />;
+            setRightTab("summary");
+          }}
+        />;
       }
 
       const nodes = getSubsystems().map(s => ({
@@ -3318,6 +3327,16 @@ export default function TreeView() {
             })()}
 
             {rightTab === "summary" && centerView === "tree" && (() => {
+              // Show group description if a group is selected on AI tree
+              if (selectedGroup && currentVertical?.id === "ai" && currentLevel === "subsystems") {
+                return (
+                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 6px 0", fontFamily: "'Instrument Serif', serif" }}>{selectedGroup.name}</p>
+                    <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", lineHeight: 1.6, margin: 0 }}>{selectedGroup.description}</p>
+                  </div>
+                );
+              }
+
               let bullets: string[] = [];
               const summaryId = lastEntry?.id;
               if (summaryId === "germanium") {

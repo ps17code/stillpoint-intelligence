@@ -2803,7 +2803,8 @@
           "Rhenium",
           "Hafnium",
           "Molybdenum"
-        ]
+        ],
+        "long_description": "Small-volume industrial metals scattered across the AI infrastructure chain — each one used in a very specific application that nothing else can do. Germanium dopes the glass inside fiber optic cables. Gallium goes into the power chips and laser chips that move electrons and light around inside datacenters. Indium makes the lasers in high-speed transceivers. Tantalum sits inside capacitors on every server board. Tungsten and rhenium go into the highest-temperature parts of chip interconnects and gas turbine blades. What unites them is they're almost all produced as byproducts of mining bigger, more common metals, which means you can't just scale up their supply on demand.\n\nGermanium and gallium are the most acute pressure points right now — both are about 80–98% Chinese supplied and both feed AI infrastructure directly. Rhenium is the smallest of the group at around 50 tonnes globally per year and gates how fast gas turbines for onsite datacenter power can be built."
       },
       "rare_earths": {
         "name": "Rare Earths",
@@ -2815,7 +2816,8 @@
           "Terbium",
           "Cerium",
           "Yttrium"
-        ]
+        ],
+        "long_description": "Despite the name, these seventeen metals aren't actually rare in the ground — they're just almost never concentrated enough in one place to mine economically, and they're chemically very hard to separate from each other. What makes them important is that a few of them make the strongest magnets ever invented. Those magnets end up inside hard drives, server fans, wind turbines, and the precision machinery that builds AI chips. China refines about 85% of the world's supply.\n\nThe most watched ones are dysprosium and terbium, which let those magnets keep working at high temperatures and are almost entirely refined in southern China. Neodymium and praseodymium are the bulk magnet inputs and demand keeps rising as more motors get built into everything from datacenters to EVs."
       },
       "base_metals": {
         "name": "Base & Industrial Metals",
@@ -2828,7 +2830,8 @@
           "Copper",
           "Aluminum",
           "Zinc"
-        ]
+        ],
+        "long_description": "The metals you'd recognize from any industrial product — copper, aluminum, steel ingredients, lithium. They show up almost everywhere in a datacenter: copper carries every electrical signal and every kilowatt of power, aluminum makes heat sinks and rack frames, nickel goes into stainless steel cooling systems, and lithium goes into the batteries backing up the whole facility. Unlike the specialty metals, these are produced at massive scale and traded on open commodity markets — but datacenters use enough of them that demand from AI buildouts is now noticeable in global pricing.\n\nCopper is the most systemic — a single hyperscale campus consumes thousands of tonnes across its wiring, transformers, and motors, and analysts increasingly see datacenter demand as one of the structural forces driving copper prices over the next decade. Nickel and lithium matter most for the battery side of the chain."
       },
       "precious_metals": {
         "name": "Precious Metals",
@@ -2837,7 +2840,8 @@
           "Silver",
           "Platinum Group Metals",
           "Gold"
-        ]
+        ],
+        "long_description": "Tiny amounts of gold, silver, and platinum-group metals used where their unique properties matter more than their cost. Gold makes the ultra-fine bond wires that connect chip dies to their packages, and plates the contact pads on circuit boards because it doesn't tarnish. Silver goes into the paste that conducts electricity on the front of every solar panel. Platinum, palladium, and rhodium are catalysts inside fuel cells and emissions control systems. None of these metals are used in large volumes per device, but they're irreplaceable for the specific job each one does.\n\nSilver is the most demand-sensitive — solar panel production consumes 10–15% of global mined silver and that share keeps growing as renewable buildouts accelerate. Platinum-group metals are tracked closely by the fuel cell and emissions control markets."
       },
       "specialty_gases": {
         "name": "Specialty Gases",
@@ -2848,7 +2852,8 @@
           "Krypton",
           "Xenon",
           "Argon"
-        ]
+        ],
+        "long_description": "The noble gases that semiconductor factories and high-end hard drives can't operate without. Helium cools the cryogenic equipment inside chip factories and seals high-capacity hard drives so the platters can spin faster without air resistance. Neon, krypton, and xenon are the working gases inside the lasers that pattern the circuits onto silicon wafers — without them, no advanced chip gets made. Argon is the bulk inert gas used across nearly every fab process. These gases are typically separated from air or extracted as byproducts of steel and gas production, so their supply depends on completely unrelated industries.\n\nThe most acute risk is xenon, which feeds the lasers in the most advanced lithography machines used for the newest AI chips. Neon supply was disrupted by the Ukraine war (most global neon was a byproduct of Ukrainian steel mills) and has been a watched item ever since."
       },
       "industrial_chemicals": {
         "name": "Industrial Gases & Chemicals",
@@ -2859,7 +2864,8 @@
           "Fluorspar",
           "Fluorochemicals",
           "Sulfuric Acid"
-        ]
+        ],
+        "long_description": "The reactive chemistries that show up upstream of almost everything else. Ammonia feeds the nitrogen used in semiconductor manufacturing. Chlorine is needed to turn raw silicon and germanium into the purified forms used in chips and fiber optics. Fluorspar (calcium fluoride) is the entry point for an entire family of fluorine chemicals that end up in refrigerants, fire suppression agents, and the insulating gases inside high-voltage equipment. Sulfuric acid is the workhorse acid used in countless processing steps. None of these chemicals is finished product — they're the reagents that make finished products possible.\n\nFluorspar is the most strategically watched of the group, since China controls about 65% of global supply and the downstream fluorine chemistry feeds critical applications across multiple industries."
       },
       "nuclear_materials": {
         "name": "Nuclear Materials",
@@ -2867,7 +2873,8 @@
         "nodes": [
           "Uranium",
           "Zirconium"
-        ]
+        ],
+        "long_description": "The fuel and structural materials for nuclear reactors. Uranium ore is enriched into two grades: regular low-enriched uranium (LEU) for conventional reactors like the ones supplying Three Mile Island's restart, and high-assay low-enriched uranium (HALEU) for the new small modular reactors being designed for direct datacenter power supply. Zirconium is the metal tubing that physically holds the uranium fuel pellets inside the reactor. As hyperscalers sign nuclear power deals — Microsoft with Three Mile Island, Amazon with X-energy — these materials become directly relevant to AI infrastructure.\n\nHALEU is the most constrained piece by far — currently only Russia and China produce it at commercial scale, with Centrus Energy operating the only US facility at pilot scale. Without HALEU, most SMR designs can't actually fuel up."
       },
       "battery_materials": {
         "name": "Battery Materials",
@@ -2878,7 +2885,8 @@
           "Petroleum Coke",
           "Iron Phosphate",
           "Phosphoric Acid"
-        ]
+        ],
+        "long_description": "The raw inputs that go into lithium battery cells. Lithium itself is mined from brine pools or hard rock deposits. Iron phosphate forms the cathode (the energy-storing side) of the LFP batteries used in datacenter backup. Graphite forms the anode (the energy-releasing side). Phosphoric acid is needed to make the cathode material. These same inputs feed the batteries powering electric vehicles, grid-scale storage projects, and the UPS systems backing up datacenters — they're all competing for the same supply.\n\nGraphite is one of the more concentrated chokepoints in the chain, with about 70% of global processing in China. Lithium itself is more diversified, with major producers in Australia, Chile, and China."
       },
       "solar_materials": {
         "name": "Solar & Storage Specialty",
@@ -2887,7 +2895,8 @@
           "Tellurium",
           "Cadmium",
           "Vanadium"
-        ]
+        ],
+        "long_description": "A small group of materials with specific roles in renewable energy and long-duration storage. Tellurium and cadmium are the active layer in CdTe thin-film solar panels — a different technology from the more common silicon panels, made almost entirely by First Solar. Vanadium has two completely separate uses worth tracking together: it's a catalyst in the emissions control systems on gas turbines, and it's the active electrolyte in vanadium redox flow batteries, an emerging long-duration storage technology that pairs well with renewables.\n\nVanadium is the most interesting of the group because the same metal feeds two very different theses — gas power emissions control today and grid-scale long-duration storage tomorrow."
       },
       "petrochemicals": {
         "name": "Petrochemicals",
@@ -2900,7 +2909,8 @@
           "Natural Gas",
           "Crude Oil",
           "Diesel Fuel"
-        ]
+        ],
+        "long_description": "The crude oil and natural gas products that supply both fuel and chemical feedstocks. Natural gas is the fuel for the onsite gas turbines increasingly being built for direct datacenter power supply. Diesel fuels the backup generators that every datacenter still keeps onsite for emergencies. Crude oil refines into a range of intermediate chemicals — ethylene becomes plastic cable insulation, BPA and epichlorohydrin become the epoxy resins used in circuit boards and chip packaging. Even datacenters being built around renewable and nuclear power still depend on these hydrocarbons for backup and for the plastics inside their equipment.\n\nNatural gas is the most directly relevant because it's the fuel underneath the fastest-growing piece of datacenter generation. Pipeline capacity to specific datacenter sites can become a real constraint independent of overall gas availability."
       },
       "construction_materials": {
         "name": "Construction Materials",
@@ -2911,7 +2921,8 @@
           "Coking Coal",
           "Cement",
           "Aggregates"
-        ]
+        ],
+        "long_description": "The bulk inputs that go into the building itself. Iron ore and scrap steel feed the steel mills that produce the structural beams and rebar. Coking coal is needed to actually smelt iron into steel. Cement and aggregates (sand, gravel, crushed stone) combine into the concrete that gets poured for foundations and slabs. These are the largest tonnage inputs in the entire chain — a single hyperscale campus uses millions of cubic feet of concrete and tens of thousands of tonnes of steel.\n\nThe most interesting dynamics here aren't supply chokepoints but regional capacity — most of these materials are too heavy to ship long distances economically, so where you can build a datacenter is partly determined by which steel mills and cement plants are within trucking range and aren't already booked up."
       },
       "quartz_silica": {
         "name": "Quartz & Silica",
@@ -2919,7 +2930,8 @@
         "nodes": [
           "Metallurgical-Grade Quartz",
           "Quartz Ore"
-        ]
+        ],
+        "long_description": "Mined quartz rock, refined into different grades for very different uses. Metallurgical-grade quartz is the bulk material that gets reduced into silicon metal — the starting point for both solar panels and computer chips. High-purity quartz is a much rarer grade used to make the crucibles that grow silicon ingots and the glass inside fiber optic cables. The high-purity grade comes almost entirely from a single deposit in Spruce Pine, North Carolina — a quiet near-monopoly that the entire global semiconductor industry depends on.\n\nThe Spruce Pine concentration is the watched item — any disruption there ripples through both chip and fiber optic supply chains."
       },
       "other_specialty": {
         "name": "Other Specialty Inputs",
@@ -2930,7 +2942,8 @@
           "Phosphorus",
           "Soda Ash",
           "Water"
-        ]
+        ],
+        "long_description": "A handful of materials scattered through the chain that don't fit cleanly into other categories. Water is the cooling input that's increasingly becoming a real siting constraint for datacenters — campuses consume millions of gallons annually. Boron makes specialty glass and goes into the NdFeB magnets that drive motors and disk drives. Arsenic and phosphorus are the chemical partners that pair with gallium and indium to make the wafers underlying laser and power chips. Soda ash is a flux used in making solar glass.\n\nWater is the most strategically important — water rights are now part of the negotiation for every new hyperscale campus and a major reason some regions can't host them at all."
       }
     },
     "componentSubgroups": {
@@ -2942,7 +2955,8 @@
           "GPUs / AI Accelerators",
           "CPUs (Host)",
           "NICs / DPUs"
-        ]
+        ],
+        "long_description": "The chips that do the actual AI work. GPUs do the heavy lifting — they crunch the math that trains and runs AI models. CPUs sit next to them handling everything else, like keeping the operating system running and moving data around. NICs and DPUs are smaller chips that take care of networking so the CPUs don't get bogged down. All three are made in the same handful of advanced chip factories.\n\nGPUs are the most supply-constrained part of the entire AI build — every hyperscaler is competing for the same Nvidia, AMD, and TSMC manufacturing capacity."
       },
       "compute_memory": {
         "name": "Compute-Side Memory",
@@ -2950,7 +2964,8 @@
         "description": "High-bandwidth memory bonded to AI chips so they don't sit idle.",
         "nodes": [
           "HBM Stacks"
-        ]
+        ],
+        "long_description": "The high-bandwidth memory bonded right next to the GPU. AI workloads move enormous amounts of data in and out of the chip thousands of times per second, and regular memory can't keep up — so a special kind of memory called HBM is stacked directly alongside the GPU, with thousands of tiny vertical wires connecting them. This setup feeds the GPU at terabytes per second. Without enough HBM bandwidth, the GPU sits idle waiting for data.\n\nHBM is supplied by just three companies — SK Hynix, Samsung, and Micron — and demand consistently outruns supply."
       },
       "board_integration": {
         "name": "Board & Integration",
@@ -2958,7 +2973,8 @@
         "description": "The multi-layer PCBs that physically host the chip assemblies.",
         "nodes": [
           "Server Boards"
-        ]
+        ],
+        "long_description": "The motherboards that physically hold the chips together. A server board is a multi-layer circuit board with copper wiring etched into it, connecting the processors, memory, power supplies, and networking onto a single platform that slides into a rack. AI server boards are unusually complex — modern designs have 20+ layers and have to carry signals at very high speeds without interference.\n\nMost of these are built by a small group of Taiwanese ODMs — Foxconn, Quanta, Wiwynn — that manufacture for both branded vendors and direct-to-hyperscaler."
       },
       "chip_power_delivery": {
         "name": "Chip Power Delivery",
@@ -2966,7 +2982,8 @@
         "description": "Steps rack power down to the low voltage chips actually run on.",
         "nodes": [
           "PSUs & VRMs"
-        ]
+        ],
+        "long_description": "The small power supplies sitting next to every chip. The power coming into a server rack is at hundreds of volts — but the chips themselves run at less than 1 volt. Something has to step it down in stages, and that's what PSUs and VRMs do. Modern AI accelerators draw enormous amounts of power, so getting the right voltage to the chip reliably is harder than it sounds.\n\nThe most efficient versions of these increasingly use gallium nitride (GaN) chips inside them, which links this subgroup back to gallium supply at the raw material layer."
       },
       "chip_thermal": {
         "name": "Chip Thermal",
@@ -2974,7 +2991,8 @@
         "description": "Direct-to-chip cooling hardware pulling heat off GPUs into the liquid loop.",
         "nodes": [
           "Cold Plates"
-        ]
+        ],
+        "long_description": "The metal plates that pull heat directly off the chips. Modern AI chips run so hot that air cooling can't keep up — you have to mount a metal plate directly onto the chip and pump liquid coolant through tiny channels carved into it. That liquid carries the heat away to the rest of the cooling system. Every GPU and CPU in a modern AI rack has one of these on top of it.\n\nBoyd, AVC, and CoolIT are the main suppliers, and demand has scaled dramatically with the shift from air to liquid cooling."
       },
       "working_memory": {
         "name": "Working Memory",
@@ -2982,7 +3000,8 @@
         "description": "DRAM modules feeding the CPU; the system's main memory pool.",
         "nodes": [
           "DRAM Modules"
-        ]
+        ],
+        "long_description": "The main memory feeding the CPU — like RAM in a regular computer, just much bigger. Unlike HBM (which sits next to the GPU), this memory plugs into the motherboard in stick form and serves the CPU's general-purpose work: managing the operating system, holding data the GPU isn't actively crunching, coordinating workloads. Modern AI servers can hold terabytes of this memory per node.\n\nSamsung, SK Hynix, and Micron supply almost all of it, the same three companies that make HBM."
       },
       "hot_storage": {
         "name": "Hot Storage",
@@ -2992,7 +3011,8 @@
           "Enterprise SSDs",
           "NAND Flash",
           "SSD Controllers"
-        ]
+        ],
+        "long_description": "The fast SSDs that hold data the system is actively using. When an AI model needs to load training data or save its state, it reads from hot storage. These are flash-based drives that can read and write data thousands of times faster than traditional hard drives. Modern enterprise SSDs hit hundreds of terabytes per drive and are packaged in slim form factors that slide into a server.\n\nThe flash chips inside them come from Samsung, SK Hynix, Kioxia, and Micron — the same companies that dominate memory more broadly."
       },
       "cold_storage": {
         "name": "Cold Storage",
@@ -3000,7 +3020,8 @@
         "description": "High-capacity hard drives for archival and backup tiers.",
         "nodes": [
           "Enterprise HDDs"
-        ]
+        ],
+        "long_description": "The traditional hard drives that hold data the system rarely touches. Spinning-disk drives are far slower than SSDs but also far cheaper per terabyte, which makes them the right choice for archival data, backups, and the long tail of files an AI training run might need access to but isn't reading constantly. Modern datacenter HDDs are sealed with helium inside so the platters can spin faster without air resistance.\n\nThree companies make all of them — Seagate, Western Digital, and Toshiba — and they're approaching 30+ TB per drive."
       },
       "switching_silicon": {
         "name": "Switching Silicon",
@@ -3008,7 +3029,8 @@
         "description": "Custom ASICs that forward packets at terabit scale.",
         "nodes": [
           "Switch ASICs"
-        ]
+        ],
+        "long_description": "The chips inside network switches that decide where each packet of data should go. When a GPU in one server sends data to a GPU in another server, a network switch has to route that packet to the right place at extreme speed. Switch ASICs are custom chips designed for exactly that job — modern ones move 51 to 102 terabits per second.\n\nBroadcom dominates this market with the Tomahawk and Jericho families, with Nvidia and Cisco competing more recently."
       },
       "switching_boxes": {
         "name": "Switching Boxes",
@@ -3016,7 +3038,8 @@
         "description": "The assembled switches that route traffic between racks and buildings.",
         "nodes": [
           "Network Switches"
-        ]
+        ],
+        "long_description": "The actual switch hardware that goes into a rack. A switch ASIC by itself is just a chip — to make it useful you have to package it with optics, cooling, management software, and a chassis. That's what a switching box is. These are what physically connect the racks in a datacenter to each other and to the outside world.\n\nArista, Cisco, and Nvidia (via Mellanox) are the main vendors. White-box switches from ODMs are increasingly common at hyperscale."
       },
       "optical_io": {
         "name": "Optical I/O",
@@ -3026,7 +3049,8 @@
           "Optical Transceivers",
           "Co-Packaged Optics",
           "Photonic ICs"
-        ]
+        ],
+        "long_description": "The hardware that converts electrical signals into light and back. Inside a server everything moves as electricity, but for any distance more than a few meters you have to convert to light pulses traveling through fiber. Optical transceivers do that conversion — they're plug-in modules that sit at each end of a fiber connection. New designs called co-packaged optics integrate the conversion directly into the switch chip to save power, which is becoming necessary at the highest speeds.\n\nCoherent, Lumentum, and Innolight are the main transceiver makers. Co-packaged optics is the emerging shift."
       },
       "cabling": {
         "name": "Cabling",
@@ -3035,7 +3059,8 @@
         "nodes": [
           "Fiber Optic Cable",
           "DACs & AECs"
-        ]
+        ],
+        "long_description": "The fiber and copper that physically carry the signals. Fiber optic cable is the long-distance medium — strands of specially-doped glass that guide light pulses across racks, buildings, and continents. Short-distance connections inside a rack often use copper instead, in the form of direct-attach cables. A single AI cluster can need millions of meters of fiber.\n\nCorning, Prysmian, Sumitomo Electric, and a handful of others dominate fiber. Amphenol and Molex dominate copper interconnect."
       },
       "chip_level_cooling": {
         "name": "Chip-Level Cooling",
@@ -3043,7 +3068,8 @@
         "description": "In-rack manifolds and connectors feeding coolant to each compute tray.",
         "nodes": [
           "Manifolds & QDs"
-        ]
+        ],
+        "long_description": "The plumbing that delivers coolant to each individual server. After the cold plates on each chip absorb heat into liquid, that liquid has to flow back out of the rack to be cooled and recirculated. Manifolds are the in-rack tubing that distributes coolant to each server tray. Quick-disconnect fittings let servers be removed for maintenance without leaks.\n\nParker Hannifin, CPC, and Staubli supply most of the precision fittings, while rack makers integrate them into the rack design."
       },
       "rack_level_cooling": {
         "name": "Rack-Level Cooling",
@@ -3051,7 +3077,8 @@
         "description": "Pump units circulating coolant between rack manifolds and facility loops.",
         "nodes": [
           "Coolant Distribution Units"
-        ]
+        ],
+        "long_description": "The pump units that circulate coolant between racks and the rest of the cooling system. A coolant distribution unit (CDU) is essentially a sophisticated pump and heat exchanger. It pulls warm coolant out of the racks, transfers the heat into the facility's main cooling loop, and pushes cool coolant back into the racks. They range from rack-sized units serving a single rack up to room-sized units serving entire rows.\n\nVertiv, Boyd, and CoolIT are the main suppliers, and demand has scaled rapidly with the shift to liquid cooling."
       },
       "heat_rejection": {
         "name": "Heat Rejection",
@@ -3061,7 +3088,8 @@
           "Chillers",
           "Cooling Towers",
           "Heat Exchangers"
-        ]
+        ],
+        "long_description": "The equipment that ultimately dumps the heat outside. Once the cooling system has collected heat from the racks, it has to get rid of it. Chillers compress refrigerant to move heat from one place to another. Cooling towers spray water that evaporates and carries heat into the air. Heat exchangers transfer heat between different fluid loops. Every datacenter uses some combination of these depending on its climate.\n\nTrane, Carrier, and Johnson Controls dominate chillers. SPX, Baltimore Aircoil, and Evapco dominate cooling towers."
       },
       "air_handling": {
         "name": "Air Handling",
@@ -3069,7 +3097,8 @@
         "description": "Air-based cooling for networking, storage, and equipment that doesn't need liquid.",
         "nodes": [
           "CRAH / Fan Wall Units"
-        ]
+        ],
+        "long_description": "The air-based cooling for the parts of the facility that don't get the liquid treatment. Networking equipment, storage drives, and various ancillary gear still rely on air cooling, even in an otherwise liquid-cooled facility. CRAH units (computer room air handlers) and fan walls push cooled air through these zones.\n\nVertiv, Stulz, and Trane supply most of these. The market is mature and the technology is well understood."
       },
       "switching_protection": {
         "name": "Switching & Protection",
@@ -3078,7 +3107,8 @@
         "nodes": [
           "MV Switchgear",
           "Automatic Transfer Switches"
-        ]
+        ],
+        "long_description": "The gear that routes power flows inside the facility and protects against faults. Medium-voltage switchgear is the electrical equivalent of a circuit breaker panel, but for the much higher voltages running between the datacenter's main feed and its various subsystems. Automatic transfer switches sense when the utility power fails and seamlessly switch the facility over to backup generators.\n\nABB, Schneider Electric, and Eaton dominate this market. Lead times have stretched significantly as datacenter demand has surged."
       },
       "voltage_conversion": {
         "name": "Voltage Conversion",
@@ -3086,7 +3116,8 @@
         "description": "Transformers stepping medium-voltage feeds down to facility utilization voltage.",
         "nodes": [
           "Step-Down Transformers"
-        ]
+        ],
+        "long_description": "The transformers that step medium-voltage power down to something the equipment can use. Power arrives at a datacenter at high voltages (saves losses over distance) but the IT equipment runs at much lower voltages. Step-down transformers do that conversion. A hyperscale campus might use dozens of these distributed throughout the facility.\n\nABB, Hitachi Energy, and Eaton are the main suppliers, and transformer lead times are now a major constraint on datacenter delivery timelines — sometimes 144+ weeks."
       },
       "backup_energy": {
         "name": "Backup Energy",
@@ -3095,7 +3126,8 @@
         "nodes": [
           "UPS Systems",
           "BESS"
-        ]
+        ],
+        "long_description": "The UPS systems and batteries that hold the load when utility power fails. A UPS (uninterruptible power supply) bridges the few seconds between when the grid fails and when the backup generators kick in. Behind every UPS is a stack of batteries — historically lead-acid, increasingly lithium iron phosphate. BESS (battery energy storage systems) are larger battery installations that can also play a role in grid services, not just backup.\n\nVertiv, Schneider Electric, and Eaton dominate UPS. Tesla, Fluence, and CATL dominate grid-scale BESS."
       },
       "distribution_paths": {
         "name": "Distribution Paths",
@@ -3105,7 +3137,8 @@
           "PDUs & Rack PDUs",
           "Busways & Busbars",
           "LV/MV Cable"
-        ]
+        ],
+        "long_description": "The actual physical paths power takes through the facility. After voltage conversion, power has to be delivered to each rack — busways run overhead carrying power along rows of racks, PDUs distribute it to individual racks, and various cables route it through the rest of the facility. These are the unglamorous but essential plumbing of a datacenter's electrical system.\n\nSchneider Electric, Eaton, and Vertiv dominate the busway and PDU markets. Cabling is supplied by Prysmian, Nexans, and Southwire."
       },
       "last_mile_backup": {
         "name": "Last-Mile Backup",
@@ -3113,7 +3146,8 @@
         "description": "Diesel and gas generators providing extended-runtime backup behind the UPS.",
         "nodes": [
           "Backup Generators"
-        ]
+        ],
+        "long_description": "The diesel and gas generators that provide extended-runtime backup. UPS systems can only hold the load for minutes — for anything longer, datacenters rely on combustion-engine generators. These are typically sized to run the entire facility for days on stored fuel. Every datacenter still has them, even those built around renewable or nuclear primary power.\n\nCaterpillar, Cummins, and Kohler are the dominant vendors. Diesel is still the most common fuel but natural gas is growing as a cleaner alternative."
       },
       "gas_fired": {
         "name": "Gas-Fired Generation",
@@ -3125,7 +3159,8 @@
           "Reciprocating Gas Engines",
           "Selective Catalytic Reduction",
           "Heat Recovery Steam Generators"
-        ]
+        ],
+        "long_description": "The fastest way to get a dedicated gigawatt of power to a datacenter today. With grid connection waits now stretching past five years in most US markets, hyperscalers are increasingly building their own gas power plants on the campus, behind the meter. The group spans three different turbine types — large frame turbines, smaller jet-engine-derived aeroderivatives, and modular reciprocating engines — plus the equipment that handles heat recovery and emissions.\n\nAeroderivative turbines are currently the workaround everyone is using because they ship faster than the larger frame turbines, which have delivery times stretching into 2029."
       },
       "nuclear": {
         "name": "Nuclear Generation",
@@ -3134,7 +3169,8 @@
         "nodes": [
           "Small Modular Reactors",
           "Conventional Nuclear"
-        ]
+        ],
+        "long_description": "Reactors providing round-the-clock carbon-free power. The current wave includes recommissioning existing reactors that were retired (Three Mile Island is restarting for Microsoft) and a new generation of smaller, factory-built reactors called SMRs that several companies are building specifically for datacenter customers. Nuclear is the most-watched future addition to the datacenter generation mix because it's the only practical source of 24/7 carbon-free power at scale.\n\nConstellation, Vistra, and Duke supply the conventional side. Oklo, X-energy, and Kairos Power are the leading SMR developers."
       },
       "renewable": {
         "name": "Renewable Generation",
@@ -3145,7 +3181,8 @@
           "Solar Inverters",
           "Solar Racking & Trackers",
           "Wind Turbines"
-        ]
+        ],
+        "long_description": "Solar panels, wind turbines, and the inverters that convert their output to grid-compatible electricity. Datacenters are major buyers of renewable power, but their 24/7 load doesn't match the variable output of solar and wind — so renewable generation typically gets paired with batteries or other firm power sources. Most hyperscalers have multi-gigawatt renewable power purchase agreements running alongside their other generation sources.\n\nFirst Solar (CdTe panels), Trina, and Longi dominate solar manufacturing. Vestas, GE Vernova, and Siemens Gamesa dominate wind."
       },
       "long_duration_storage": {
         "name": "Long-Duration Storage",
@@ -3153,7 +3190,8 @@
         "description": "Flow batteries and emerging multi-hour storage pairing with renewables.",
         "nodes": [
           "Vanadium Redox Flow Batteries"
-        ]
+        ],
+        "long_description": "Batteries designed to discharge over hours, not minutes. Pairing renewables with storage usually means lithium-ion batteries, but they only hold a few hours of charge before degrading. Vanadium redox flow batteries are an emerging alternative where the energy is stored in liquid tanks of vanadium electrolyte — they can discharge for 8+ hours, last 25+ years without degrading, and scale by adding more tanks. The whole subgroup is small today but growing as longer-duration storage becomes critical for renewable-heavy campuses.\n\nInvinity Energy, Sumitomo Electric, and VRB Energy are the main flow battery vendors."
       },
       "distributed_generation": {
         "name": "Distributed Generation",
@@ -3161,7 +3199,8 @@
         "description": "Fuel cells and modular onsite generators for distributed power.",
         "nodes": [
           "Fuel Cells"
-        ]
+        ],
+        "long_description": "Modular onsite generators that don't fit the centralized power plant pattern. Fuel cells are the main example — they generate electricity through a chemical reaction rather than combustion, which makes them quieter, lower-emission, and easier to deploy in distributed locations across a campus. Stargate Abilene reportedly includes Bloom Energy fuel cells as part of its generation mix.\n\nBloom Energy, FuelCell Energy, and Plug Power are the main suppliers."
       },
       "grid_interface": {
         "name": "Grid Interface",
@@ -3171,7 +3210,8 @@
           "Generator Step-Up Transformers",
           "HV Switchgear & Breakers",
           "HV Transmission Cable"
-        ]
+        ],
+        "long_description": "The transformers and high-voltage gear connecting the power plant to the wider electric grid. Even datacenters with onsite power generation typically stay connected to the grid as a backup and as a way to sell excess power. Generator step-up transformers convert plant output to transmission voltage. HV switchgear protects the connection. HV transmission cable physically carries the power.\n\nHitachi Energy, GE Vernova, and Hyundai Electric dominate large transformers. Lead times here are some of the worst in the entire chain."
       },
       "structural_shell": {
         "name": "Structural Shell",
@@ -3182,7 +3222,8 @@
           "Cold-Formed Steel",
           "Concrete",
           "Rebar"
-        ]
+        ],
+        "long_description": "The actual building. Datacenters are surprisingly heavy because the racks inside them are dense and concentrated — a single AI rack can weigh as much as a car sitting on a small footprint. That means the foundations have to be much thicker than a normal commercial building, and the steel frame has to carry serious load even when the building is only one story. A hyperscale campus uses 20,000+ tonnes of steel and millions of cubic feet of concrete.\n\nThe materials themselves aren't exotic — just steel, cement, and rebar — but datacenter construction is now big enough to noticeably tighten US steel mill capacity."
       },
       "white_space_buildout": {
         "name": "White-Space Build-Out",
@@ -3190,7 +3231,8 @@
         "description": "Raised flooring and interior fitout inside the IT halls.",
         "nodes": [
           "Raised Flooring"
-        ]
+        ],
+        "long_description": "The interior fit-out of the IT halls. Raised access flooring is the main element — a modular floor system about 18 inches off the slab, with removable panels that let cabling, cooling pipes, and power lines run underneath. The IT racks sit on top. Some modern designs are moving away from raised floors in favor of overhead distribution, but most facilities still use them.\n\nTate, ASM, and Haworth are the main suppliers."
       },
       "life_safety": {
         "name": "Life Safety",
@@ -3199,7 +3241,8 @@
         "nodes": [
           "Fire Suppression",
           "Security Systems"
-        ]
+        ],
+        "long_description": "The systems that protect the people and the equipment. Fire suppression in a datacenter can't use water as the primary agent because it would destroy the IT equipment — instead, special clean-agent gases (FM-200, Novec 1230) flood the rooms and starve a fire of oxygen without leaving residue. Security systems handle perimeter fencing, badge access, surveillance, and intrusion detection across what are increasingly hardened campuses.\n\nJohnson Controls, Honeywell, and 3M supply fire suppression. Various integrators handle security."
       },
       "site": {
         "name": "Site",
@@ -3207,7 +3250,8 @@
         "description": "The land, water, and grid interconnect rights underpinning the campus.",
         "nodes": [
           "Land & Water Rights"
-        ]
+        ],
+        "long_description": "The land, water rights, and grid interconnect rights underneath the campus. A hyperscale datacenter needs 1,000+ acres of land, significant water access for cooling, and a pre-negotiated grid connection. All three are getting harder to secure. Land near major transmission lines is scarce, water rights are politically contested in dry regions, and grid interconnect queues stretch years. These rights are increasingly the actual bottleneck on where new campuses can be built.\n\nCrusoe, Tract, and Stack Infrastructure are among the firms acquiring and developing sites at scale."
       }
     },
     "intermediateSubgroups": {
@@ -3220,7 +3264,8 @@
           "DRAM Wafers",
           "NAND Wafers",
           "Solar Silicon Wafers"
-        ]
+        ],
+        "long_description": "Silicon wafers that have already been through the chip factory and now carry actual chip designs etched into them. A wafer starts as a blank polished silicon disc — by the time it leaves the fab it's been through hundreds of process steps that have layered, patterned, and etched circuit designs into it. Each wafer contains dozens or hundreds of individual chip dies that get separated and packaged downstream.\n\nThe most advanced wafers (5nm, 3nm, 2nm) are made only by TSMC and Samsung. The mature-node wafers (28nm and older) are made by a wider group including GlobalFoundries and UMC."
       },
       "silicon_feedstock": {
         "name": "Silicon Feedstock",
@@ -3232,7 +3277,8 @@
           "Silicon Metal (Metallurgical Grade)",
           "High-Purity Quartz",
           "Trichlorosilane (TCS)"
-        ]
+        ],
+        "long_description": "The progressively purified silicon between raw quartz rock and finished wafers. It takes multiple chemical and physical steps to turn quartzite into the perfect single crystals needed for chips. First, quartz is reduced into silicon metal (98% pure). Then it gets refined into polysilicon (99.9999% pure). Then it gets grown into giant single crystal ingots and sliced into wafers. Each step has its own specialized producers and supply chain.\n\nThe most concentrated point is high-purity quartz, where nearly all the world's supply comes from a single deposit in Spruce Pine, North Carolina."
       },
       "advanced_packaging": {
         "name": "Advanced Packaging",
@@ -3246,7 +3292,8 @@
           "Lead-Free Solder",
           "Gold Bond Wire",
           "Underfill Resin"
-        ]
+        ],
+        "long_description": "The step that turns bare chips into finished products. When a chip comes out of the factory, it's just a tiny square of silicon — you can't actually plug it into anything. Advanced packaging is the assembly process that bonds the chip to memory, wires it up for high-speed communication, and mounts it on a substrate you can connect to a circuit board. Modern AI chips have this assembly step done by TSMC using a process called CoWoS, which stacks memory right next to the chip so data can move between them at extreme speeds.\n\nCoWoS capacity is the real bottleneck behind Nvidia GPU supply — TSMC can make the chips faster than it can package them. The substrate material that goes underneath is made almost entirely by one Japanese company, Ajinomoto."
       },
       "fab_chemistry": {
         "name": "Fab Chemistry",
@@ -3259,7 +3306,8 @@
           "Ultra-Pure Water",
           "Semiconductor Specialty Solvents",
           "Cerium Oxide"
-        ]
+        ],
+        "long_description": "The specialty chemicals and gases consumed inside chip factories. Making a chip involves hundreds of process steps, and many of them require very specific chemistries. Photoresist is the light-sensitive coating that lets patterns be projected onto the wafer. CMP slurries polish each layer flat between steps. Specialty solvents and ultra-pure water clean the wafer between every step. These chemistries are consumed in enormous volumes per fab — a leading-edge fab uses millions of gallons of ultra-pure water per day.\n\nPhotoresist for the most advanced chips is dominated by JSR, Tokyo Ohka Kogyo, and Shin-Etsu — all Japanese — making it a strategic concentration point."
       },
       "compound_semi_wafers": {
         "name": "Compound Semiconductor Wafers",
@@ -3268,7 +3316,8 @@
           "InP Wafers",
           "GaAs Wafers",
           "GaN Wafers"
-        ]
+        ],
+        "long_description": "Wafers made from silicon-substitute materials for specific high-performance jobs. Silicon is the workhorse semiconductor but it has limits — for lasers, very-high-frequency electronics, and high-efficiency power switches, materials like indium phosphide (InP), gallium arsenide (GaAs), and gallium nitride (GaN) work much better. These compound semiconductor wafers are far smaller volumes than silicon wafers but are essential for the specific applications they serve.\n\nInP wafers are particularly relevant to AI infrastructure because they underlie the lasers in every high-speed optical transceiver, and InP wafer capacity is a tracked supply constraint."
       },
       "specialty_alloys": {
         "name": "Specialty Alloys & Ceramics",
@@ -3279,7 +3328,8 @@
           "Stainless Steel",
           "Grain-Oriented Electrical Steel",
           "YSZ Electrolyte"
-        ]
+        ],
+        "long_description": "Engineered metal alloys and ceramic materials with very specific high-performance properties. Nickel single-crystal superalloys can withstand the extreme temperatures inside a gas turbine blade. Grain-oriented electrical steel (GOES) has magnetic properties that make it ideal for transformer cores. Stainless steel resists corrosion in cooling loops. NdFeB magnets are the strongest commercially available. None of these are made by simply melting one element — they're carefully formulated mixtures of multiple elements processed in specific ways.\n\nGOES electrical steel is one of the most consequential bottlenecks behind the transformer shortage that's now constraining datacenter buildout timelines."
       },
       "battery_intermediates": {
         "name": "Battery Cells & Precursors",
@@ -3292,7 +3342,8 @@
           "Battery Electrolyte",
           "Vanadium Redox Electrolyte",
           "Vanadium Pentoxide (V2O5)"
-        ]
+        ],
+        "long_description": "The lithium batteries that hold electricity for backup and storage, plus the materials that go inside them. A battery cell has three parts that matter — a cathode that stores energy, an anode that releases it, and a liquid electrolyte between them that carries the charge back and forth. Datacenter UPS systems and grid storage almost all use LFP cells (lithium iron phosphate), because that chemistry is cheaper and safer than the kind used in EVs. Vanadium flow batteries are an emerging alternative for storing power over longer durations.\n\nAlmost every step of LFP cell production is concentrated in China — about 95% of the cathode material is processed there."
       },
       "nuclear_fuel": {
         "name": "Nuclear Fuel Forms",
@@ -3301,7 +3352,8 @@
           "HALEU Fuel Assemblies",
           "LEU Fuel Assemblies",
           "Zircaloy Cladding"
-        ]
+        ],
+        "long_description": "The processed fuel assemblies that go inside reactors. Uranium has to go through several steps before it can power a reactor — mining produces raw uranium ore, which gets converted into uranium hexafluoride gas, which gets enriched (concentrating the fissile isotope), which gets pressed into fuel pellets, which get stacked inside zirconium tubes (cladding), which get bundled into fuel assemblies. The new SMR reactors require a more enriched version called HALEU that almost nobody currently produces.\n\nHALEU is the most acute bottleneck — only Russia and China produce it at commercial scale today, and Western SMR projects need it to actually fuel up."
       },
       "solar_intermediates": {
         "name": "Solar Intermediates",
@@ -3310,7 +3362,8 @@
           "Cadmium Telluride Film",
           "Silver Conductive Paste",
           "Solar Glass"
-        ]
+        ],
+        "long_description": "The processed materials that go into a solar panel between the raw silicon or thin-film and the finished panel. Silver paste forms the front-side conductors that collect electricity from each cell. CdTe film is the active layer in First Solar's thin-film panels (a separate technology from silicon). Solar glass is the tempered, low-iron glass on the front of every panel.\n\nSilver paste is the most demand-sensitive — solar manufacturing consumes 10–15% of global mined silver and that share grows every year."
       },
       "specialty_fluids_gases": {
         "name": "Specialty Fluids & Gases",
@@ -3322,7 +3375,8 @@
           "Transformer Oil",
           "XLPE Insulation Compound",
           "SF6 / C4-FN Insulating Gas"
-        ]
+        ],
+        "long_description": "The processed liquids and gases used throughout datacenter equipment. Engineered coolants flow through liquid cooling loops. Refrigerants run inside chillers. Transformer oil insulates and cools transformer cores. XLPE is the plastic insulation around HV cables. SF6 (and its replacements) is the insulating gas inside high-voltage switchgear. None of these are exotic in small quantities, but datacenters use them at massive scale.\n\nThe most strategically watched is SF6 — it's a potent greenhouse gas and is being phased out in favor of newer alternatives, which is reshaping the global switchgear market."
       },
       "polymers": {
         "name": "Polymers & Composites",
@@ -3330,14 +3384,16 @@
         "nodes": [
           "Epoxy Resin",
           "Fiberglass"
-        ]
+        ],
+        "long_description": "Engineered plastics and reinforcement materials used throughout the build. Epoxy resin is the matrix that holds together both ABF substrates (under every chip) and FR-4 circuit boards (under every other chip). Fiberglass reinforces those boards, as well as wind turbine blades and cooling tower fill. These materials don't get headlines but they're embedded in essentially every electrical and structural product in the chain.\n\nHexion, Olin, and Kukdo dominate epoxy. Owens Corning, Jushi, and Saint-Gobain dominate fiberglass."
       },
       "discrete_passives": {
         "name": "Discrete Passives",
         "description": "Capacitors and other small board components shared across nearly every device.",
         "nodes": [
           "Tantalum Capacitors"
-        ]
+        ],
+        "long_description": "The small electronic components soldered onto every board — capacitors, resistors, inductors. They don't process information themselves, they just shape the electrical environment that other components need to work in. The most strategically important type for AI infrastructure is tantalum capacitors, which provide highly reliable energy storage at small sizes — every server board has many of them, even though each one is tiny.\n\nTantalum capacitor production is concentrated in a handful of manufacturers (Kemet/Yageo, AVX, Vishay) and tantalum supply itself is a watched item."
       }
     },
     "nodeContext": {}

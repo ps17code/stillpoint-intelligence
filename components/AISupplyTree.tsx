@@ -27,9 +27,10 @@ const STATUS_COLORS: Record<string, string> = {
 
 interface AISupplyTreeProps {
   onNodeClick?: (name: string) => void;
+  onGroupClick?: (groupKey: string, groupName: string, longDescription: string) => void;
 }
 
-export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
+export default function AISupplyTree({ onNodeClick, onGroupClick }: AISupplyTreeProps) {
   // Each column tracks which group is expanded (null = show all groups collapsed)
   const [expandedRawCat, setExpandedRawCat] = useState<string | null>(null);
   const [expandedIntGroup, setExpandedIntGroup] = useState<string | null>(null);
@@ -77,7 +78,7 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
   }
 
   // Collapsible group header
-  function GroupHeader({ name, count, status, description, isExpanded, onClick }: { name: string; count: number; status: string; description?: string; isExpanded: boolean; onClick: () => void }) {
+  function GroupHeader({ name, count, status, isExpanded, onClick }: { name: string; count: number; status: string; isExpanded: boolean; onClick: () => void }) {
     const statusColor = STATUS_COLORS[status] ?? "#444";
     return (
       <div
@@ -87,20 +88,16 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
           background: isExpanded ? "rgb(38, 35, 33)" : "rgb(30, 28, 27)",
           border: isExpanded ? "1px solid rgb(55, 50, 46)" : "1px solid rgb(42, 39, 37)",
           borderRadius: 3, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "space-between",
           transition: "background 0.15s",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-            <div style={{ width: 4, height: 4, borderRadius: "50%", background: statusColor, flexShrink: 0 }} />
-            <span style={{ fontSize: 8, fontWeight: 600, color: "#d0c8bc" }}>{name}</span>
-            <span style={{ fontSize: 6, color: "#555", fontFamily: "'Geist Mono', monospace" }}>· {count}</span>
-          </div>
-          <span style={{ fontSize: 7, color: "#555", transform: isExpanded ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}>›</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+          <div style={{ width: 4, height: 4, borderRadius: "50%", background: statusColor, flexShrink: 0 }} />
+          <span style={{ fontSize: 8, fontWeight: 600, color: "#d0c8bc" }}>{name}</span>
+          <span style={{ fontSize: 6, color: "#555", fontFamily: "'Geist Mono', monospace" }}>· {count}</span>
         </div>
-        {description && (
-          <p style={{ fontSize: 6, color: "rgba(255,255,255,0.3)", margin: "3px 0 0 0", lineHeight: 1.3, fontFamily: "'Geist Mono', monospace" }}>{description}</p>
-        )}
+        <span style={{ fontSize: 7, color: "#555", transform: isExpanded ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}>›</span>
       </div>
     );
   }
@@ -115,7 +112,7 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
   }: {
     label: string;
     totalCount: number;
-    groups: Record<string, { name: string; description?: string; nodes: string[]; parent_subsystem?: string }>;
+    groups: Record<string, { name: string; description?: string; long_description?: string; nodes: string[]; parent_subsystem?: string }>;
     expandedGroup: string | null;
     setExpandedGroup: (g: string | null) => void;
   }) {
@@ -161,11 +158,10 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
                 <GroupHeader
                   key={gk}
                   name={g.name}
-                  description={g.description}
                   count={g.nodes.length}
                   status={getGroupStatus(g.nodes)}
                   isExpanded={false}
-                  onClick={() => setExpandedGroup(gk)}
+                  onClick={() => { setExpandedGroup(gk); onGroupClick?.(gk, g.name, g.long_description ?? g.description ?? ""); }}
                 />
               );
             })
