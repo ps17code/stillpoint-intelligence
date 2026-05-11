@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useRef, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import universalNodesJson from "@/data/universal-nodes.json";
 import chainDefsJson from "@/data/chain-definitions.json";
 
@@ -30,211 +30,141 @@ interface AISupplyTreeProps {
 }
 
 export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
-  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
-  const [clickedNode, setClickedNode] = useState<string | null>(null);
-  const activeNode = clickedNode ?? hoveredNode;
-  const containerRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
-  const [lines, setLines] = useState<{ d: string; fromName: string; toName: string }[]>([]);
-  const [svgSize, setSvgSize] = useState({ w: 0, h: 0 });
+  // Each column tracks which group is expanded (null = show all groups collapsed)
+  const [expandedRawCat, setExpandedRawCat] = useState<string | null>(null);
+  const [expandedIntGroup, setExpandedIntGroup] = useState<string | null>(null);
+  const [expandedCompGroup, setExpandedCompGroup] = useState<string | null>(null);
 
   const categories = chain.rawMaterialCategories ?? {};
   const compSubgroups = chain.componentSubgroups ?? {};
   const intSubgroups = chain.intermediateSubgroups ?? {};
 
-  // Build adjacency + full chain traversal
-  const { connectedNodes, fullChain } = useMemo(() => {
-    const adj = new Map<string, Set<string>>();
-    const downstream = new Map<string, Set<string>>();
-    const upstream = new Map<string, Set<string>>();
-    chain.edges.forEach(e => {
-      if (!adj.has(e.from)) adj.set(e.from, new Set());
-      if (!adj.has(e.to)) adj.set(e.to, new Set());
-      adj.get(e.from)!.add(e.to);
-      adj.get(e.to)!.add(e.from);
-      if (!downstream.has(e.from)) downstream.set(e.from, new Set());
-      downstream.get(e.from)!.add(e.to);
-      if (!upstream.has(e.to)) upstream.set(e.to, new Set());
-      upstream.get(e.to)!.add(e.from);
-    });
-    // BFS full chain
-    const getFullChain = (node: string): Set<string> => {
-      const visited = new Set<string>();
-      const queue = [node];
-      visited.add(node);
-      while (queue.length > 0) {
-        const curr = queue.shift()!;
-        (downstream.get(curr) ?? new Set()).forEach(n => { if (!visited.has(n)) { visited.add(n); queue.push(n); } });
-        (upstream.get(curr) ?? new Set()).forEach(n => { if (!visited.has(n)) { visited.add(n); queue.push(n); } });
-      }
-      return visited;
-    };
-    return { connectedNodes: adj, fullChain: getFullChain };
-  }, []);
-
-  // Measure and draw connections
-  const measureAndDraw = useCallback(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    const containerRect = container.getBoundingClientRect();
-    const newLines: { d: string; fromName: string; toName: string }[] = [];
-
-    chain.edges.forEach(edge => {
-      const fromEl = cardRefs.current.get(edge.from);
-      const toEl = cardRefs.current.get(edge.to);
-      if (!fromEl || !toEl) return;
-      const fromRect = fromEl.getBoundingClientRect();
-      const toRect = toEl.getBoundingClientRect();
-      const fromX = fromRect.right - containerRect.left;
-      const fromY = fromRect.top + fromRect.height / 2 - containerRect.top;
-      const toX = toRect.left - containerRect.left;
-      const toY = toRect.top + toRect.height / 2 - containerRect.top;
-      const midX = (fromX + toX) / 2;
-      newLines.push({ d: `M ${fromX},${fromY} C ${midX},${fromY} ${midX},${toY} ${toX},${toY}`, fromName: edge.from, toName: edge.to });
-    });
-
-    setSvgSize({ w: container.scrollWidth, h: container.scrollHeight });
-    setLines(newLines);
-  }, []);
-
-  useEffect(() => {
-    const raf = requestAnimationFrame(measureAndDraw);
-    return () => cancelAnimationFrame(raf);
-  }, [measureAndDraw, expandedCategories]);
-
-  // Highlight logic
-  const activeChain = useMemo(() => activeNode ? fullChain(activeNode) : null, [activeNode, fullChain]);
-
-  function getCategoryStatus(catKey: string): string {
-    const cat = categories[catKey];
-    if (!cat) return "tbd";
-    const statuses = cat.nodes.map(n => uNodes[n]?.status ?? "tbd");
+  function getGroupStatus(nodes: string[]): string {
+    const statuses = nodes.map(n => uNodes[n]?.status ?? "tbd");
     if (statuses.includes("constrained")) return "constrained";
     if (statuses.includes("tightening")) return "tightening";
     if (statuses.includes("available") || statuses.includes("Active")) return "available";
     return "tbd";
   }
 
-  const toggleCategory = (catKey: string) => {
-    setExpandedCategories(prev => {
-      const next = new Set(prev);
-      if (next.has(catKey)) next.delete(catKey); else next.add(catKey);
-      return next;
-    });
-  };
-
   // Node card
   function NCard({ name }: { name: string }) {
     const node = uNodes[name];
-    const isInChain = activeChain?.has(name);
-    const isActive = activeNode === name;
-    const isDimmed = activeNode != null && !isInChain;
     const statusColor = STATUS_COLORS[node?.status ?? "tbd"] ?? "#444";
 
     return (
       <div
-        ref={el => { if (el) cardRefs.current.set(name, el); }}
-        onClick={() => { setClickedNode(prev => prev === name ? null : name); onNodeClick?.(name); }}
-        onMouseEnter={() => setHoveredNode(name)}
-        onMouseLeave={() => setHoveredNode(null)}
+        onClick={() => onNodeClick?.(name)}
         style={{
-          padding: "3px 6px 3px 10px",
-          background: isActive ? "rgb(50, 46, 42)" : isInChain ? "rgb(42, 38, 35)" : "rgb(34, 31, 29)",
-          border: isActive ? "1px solid rgb(70, 64, 58)" : "1px solid rgb(42, 39, 37)",
+          padding: "3px 6px 3px 12px",
+          background: "rgb(34, 31, 29)",
+          border: "1px solid rgb(42, 39, 37)",
           borderRadius: 3,
           cursor: "pointer",
-          opacity: isDimmed ? 0.1 : 1,
-          transition: "opacity 0.15s, background 0.15s, border-color 0.15s",
+          transition: "background 0.15s, border-color 0.15s",
           position: "relative" as const,
         }}
+        onMouseEnter={e => { e.currentTarget.style.background = "rgb(42, 38, 35)"; e.currentTarget.style.borderColor = "rgb(60, 56, 52)"; }}
+        onMouseLeave={e => { e.currentTarget.style.background = "rgb(34, 31, 29)"; e.currentTarget.style.borderColor = "rgb(42, 39, 37)"; }}
       >
-        {/* Status dot */}
         <div style={{ position: "absolute", left: 3, top: "50%", transform: "translateY(-50%)", width: 4, height: 4, borderRadius: "50%", background: statusColor }} />
         <p style={{ fontSize: 8, fontWeight: 600, color: "#ece8e1", margin: 0, lineHeight: 1.2, whiteSpace: "nowrap", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</p>
         {node?.descriptor_pill && (
-          <p style={{ fontSize: 5.5, color: "rgba(255,255,255,0.35)", margin: "1px 0 0 0", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 130 }}>{node.descriptor_pill}</p>
+          <p style={{ fontSize: 5.5, color: "rgba(255,255,255,0.35)", margin: "1px 0 0 0", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 140 }}>{node.descriptor_pill}</p>
         )}
       </div>
     );
   }
 
-  // Category group
-  function CategoryGroup({ catKey }: { catKey: string }) {
-    const cat = categories[catKey];
-    if (!cat) return null;
-    const isExpanded = expandedCategories.has(catKey);
-    const status = getCategoryStatus(catKey);
+  // Collapsible group header
+  function GroupHeader({ name, count, status, isExpanded, onClick }: { name: string; count: number; status: string; isExpanded: boolean; onClick: () => void }) {
     const statusColor = STATUS_COLORS[status] ?? "#444";
-
     return (
-      <div style={{ marginBottom: 3 }}>
-        <div
-          ref={el => { if (el && !isExpanded) cat.nodes.forEach(n => cardRefs.current.set(n, el)); }}
-          onClick={() => toggleCategory(catKey)}
-          style={{
-            padding: "4px 7px",
-            background: isExpanded ? "rgb(38, 35, 33)" : "rgb(30, 28, 27)",
-            border: "1px solid rgb(42, 39, 37)",
-            borderRadius: 3, cursor: "pointer",
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-            <div style={{ width: 4, height: 4, borderRadius: "50%", background: statusColor, flexShrink: 0 }} />
-            <span style={{ fontSize: 8, fontWeight: 600, color: "#d0c8bc" }}>{cat.name}</span>
-            <span style={{ fontSize: 6, color: "#555", fontFamily: "'Geist Mono', monospace" }}>· {cat.nodes.length}</span>
-          </div>
-          <span style={{ fontSize: 7, color: "#555", transform: isExpanded ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}>›</span>
+      <div
+        onClick={onClick}
+        style={{
+          padding: "5px 8px",
+          background: isExpanded ? "rgb(38, 35, 33)" : "rgb(30, 28, 27)",
+          border: isExpanded ? "1px solid rgb(55, 50, 46)" : "1px solid rgb(42, 39, 37)",
+          borderRadius: 3, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          transition: "background 0.15s",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+          <div style={{ width: 4, height: 4, borderRadius: "50%", background: statusColor, flexShrink: 0 }} />
+          <span style={{ fontSize: 8, fontWeight: 600, color: "#d0c8bc" }}>{name}</span>
+          <span style={{ fontSize: 6, color: "#555", fontFamily: "'Geist Mono', monospace" }}>· {count}</span>
         </div>
-        {isExpanded && (
-          <div style={{ paddingLeft: 6, paddingTop: 3, display: "flex", flexDirection: "column", gap: 2 }}>
-            {cat.nodes.map(n => <NCard key={n} name={n} />)}
-          </div>
-        )}
+        <span style={{ fontSize: 7, color: "#555", transform: isExpanded ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}>›</span>
       </div>
     );
   }
 
-  // Subgroup-organized column
-  function SubgroupColumn({ subgroups, layerLabel, nodeCount }: { subgroups: Record<string, SubgroupDef>; layerLabel: string; nodeCount: number }) {
-    // Group subgroups by parent_subsystem for alignment (components only)
-    const subsystemOrder = chain.layers.find(l => l.key === "subsystems")?.nodes ?? [];
+  // Generic grouped column — when a group is clicked, only that group's nodes show
+  function GroupedColumn({
+    label,
+    totalCount,
+    groups,
+    expandedGroup,
+    setExpandedGroup,
+  }: {
+    label: string;
+    totalCount: number;
+    groups: Record<string, { name: string; nodes: string[]; parent_subsystem?: string }>;
+    expandedGroup: string | null;
+    setExpandedGroup: (g: string | null) => void;
+  }) {
+    const subsystemOrder = ["compute", "memory_storage", "connectivity", "cooling", "power_distribution", "power_generation", "physical_structure"];
 
-    // Sort subgroups: by parent_subsystem order (if present), then alphabetically
-    const sortedKeys = Object.keys(subgroups).sort((a, b) => {
-      const pa = subgroups[a].parent_subsystem;
-      const pb = subgroups[b].parent_subsystem;
+    // Sort groups by parent_subsystem order if present, then alphabetically
+    const sortedKeys = Object.keys(groups).sort((a, b) => {
+      const pa = groups[a].parent_subsystem;
+      const pb = groups[b].parent_subsystem;
       if (pa && pb) {
-        const ia = subsystemOrder.indexOf(pa === "compute" ? "Compute" : pa === "memory_storage" ? "Memory & Storage" : pa === "connectivity" ? "Connectivity" : pa === "cooling" ? "Cooling" : pa === "power_distribution" ? "Power Distribution" : pa === "power_generation" ? "Power Generation" : pa === "physical_structure" ? "Physical Structure" : pa);
-        const ib = subsystemOrder.indexOf(pb === "compute" ? "Compute" : pb === "memory_storage" ? "Memory & Storage" : pb === "connectivity" ? "Connectivity" : pb === "cooling" ? "Cooling" : pb === "power_distribution" ? "Power Distribution" : pb === "power_generation" ? "Power Generation" : pb === "physical_structure" ? "Physical Structure" : pb);
+        const ia = subsystemOrder.indexOf(pa);
+        const ib = subsystemOrder.indexOf(pb);
         if (ia !== ib) return ia - ib;
       }
+      if (pa && !pb) return -1;
+      if (!pa && pb) return 1;
       return a.localeCompare(b);
     });
 
-    let lastParent = "";
-
     return (
-      <div style={{ minWidth: 160, maxWidth: 190, flexShrink: 0 }}>
-        <p style={{ fontSize: 6, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{layerLabel} · {nodeCount}</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 2, maxHeight: "calc(100vh - 280px)", overflowY: "auto", paddingRight: 4 }}>
-          {sortedKeys.map(sgKey => {
-            const sg = subgroups[sgKey];
-            if (sg.nodes.length === 0) return null;
-            const showParentDivider = sg.parent_subsystem && sg.parent_subsystem !== lastParent;
-            if (sg.parent_subsystem) lastParent = sg.parent_subsystem;
-
-            return (
-              <React.Fragment key={sgKey}>
-                {showParentDivider && (
-                  <div style={{ height: 1, background: "rgba(255,255,255,0.04)", margin: "4px 0" }} />
-                )}
-                <p style={{ fontSize: 6, color: "#4a4540", margin: "3px 0 2px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>{sg.name}</p>
-                {sg.nodes.map(n => <NCard key={n} name={n} />)}
-              </React.Fragment>
-            );
-          })}
+      <div style={{ minWidth: 165, maxWidth: 200, flexShrink: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
+          <p style={{ fontSize: 6, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: 0, fontFamily: "'Geist Mono', monospace" }}>
+            {label} · {expandedGroup ? groups[expandedGroup]?.nodes.length ?? 0 : totalCount}
+          </p>
+          {expandedGroup && (
+            <button onClick={() => setExpandedGroup(null)} style={{ background: "transparent", border: "none", cursor: "pointer", fontSize: 6, color: "#555", fontFamily: "'Geist Mono', monospace" }}>← back</button>
+          )}
+        </div>
+        <div style={{ maxHeight: "calc(100vh - 280px)", overflowY: "auto", paddingRight: 4, display: "flex", flexDirection: "column", gap: 2 }}>
+          {expandedGroup ? (
+            // Expanded: show only this group's nodes
+            <>
+              <p style={{ fontSize: 7, color: "#706a60", margin: "0 0 4px 0", fontWeight: 500 }}>{groups[expandedGroup]?.name}</p>
+              {groups[expandedGroup]?.nodes.map(n => <NCard key={n} name={n} />)}
+            </>
+          ) : (
+            // Collapsed: show all groups as headers
+            sortedKeys.map(gk => {
+              const g = groups[gk];
+              if (!g || g.nodes.length === 0) return null;
+              return (
+                <GroupHeader
+                  key={gk}
+                  name={g.name}
+                  count={g.nodes.length}
+                  status={getGroupStatus(g.nodes)}
+                  isExpanded={false}
+                  onClick={() => setExpandedGroup(gk)}
+                />
+              );
+            })
+          )}
         </div>
       </div>
     );
@@ -253,51 +183,39 @@ export default function AISupplyTree({ onNodeClick }: AISupplyTreeProps) {
   }
 
   return (
-    <div ref={containerRef} style={{ display: "flex", gap: 16, padding: "12px 0", overflow: "auto", minWidth: 0, position: "relative" }}>
+    <div style={{ display: "flex", gap: 16, padding: "12px 0", overflow: "auto", minWidth: 0 }}>
       {/* Raw Materials — categories */}
-      <div style={{ minWidth: 165, maxWidth: 195, flexShrink: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-          <p style={{ fontSize: 6, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: 0, fontFamily: "'Geist Mono', monospace" }}>RAW MATERIALS · 63</p>
-          {expandedCategories.size > 0 && (
-            <button onClick={() => setExpandedCategories(new Set())} style={{ background: "transparent", border: "none", cursor: "pointer", fontSize: 6, color: "#555", fontFamily: "'Geist Mono', monospace" }}>collapse all</button>
-          )}
-        </div>
-        <div style={{ maxHeight: "calc(100vh - 280px)", overflowY: "auto", paddingRight: 4 }}>
-          {Object.keys(categories).map(ck => <CategoryGroup key={ck} catKey={ck} />)}
-        </div>
-      </div>
+      <GroupedColumn
+        label="RAW MATERIALS"
+        totalCount={63}
+        groups={categories}
+        expandedGroup={expandedRawCat}
+        setExpandedGroup={setExpandedRawCat}
+      />
 
       {/* Intermediates — subgroups */}
-      <SubgroupColumn subgroups={intSubgroups} layerLabel="INTERMEDIATES" nodeCount={56} />
+      <GroupedColumn
+        label="INTERMEDIATES"
+        totalCount={56}
+        groups={intSubgroups}
+        expandedGroup={expandedIntGroup}
+        setExpandedGroup={setExpandedIntGroup}
+      />
 
-      {/* Components — subgroups aligned to subsystems */}
-      <SubgroupColumn subgroups={compSubgroups} layerLabel="COMPONENTS" nodeCount={58} />
+      {/* Components — subgroups */}
+      <GroupedColumn
+        label="COMPONENTS"
+        totalCount={58}
+        groups={compSubgroups}
+        expandedGroup={expandedCompGroup}
+        setExpandedGroup={setExpandedCompGroup}
+      />
 
       {/* Subsystems */}
       <SimpleColumn layer={chain.layers[3]} />
 
       {/* End Use */}
       <SimpleColumn layer={chain.layers[4]} />
-
-      {/* SVG connection lines */}
-      <svg style={{ position: "absolute", top: 0, left: 0, width: svgSize.w || "100%", height: svgSize.h || "100%", pointerEvents: "none", overflow: "visible" }}>
-        {lines.map((line, i) => {
-          const inChain = activeChain ? (activeChain.has(line.fromName) && activeChain.has(line.toName)) : false;
-          const lineActive = activeNode != null && (line.fromName === activeNode || line.toName === activeNode);
-          const lineDimmed = activeNode != null && !inChain;
-          return (
-            <path
-              key={i}
-              d={line.d}
-              fill="none"
-              stroke={lineActive ? "rgba(255,255,255,0.4)" : inChain ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.04)"}
-              strokeWidth={lineActive ? "1" : "0.4"}
-              strokeDasharray="3,3"
-              style={{ opacity: lineDimmed ? 0.03 : 1, transition: "opacity 0.15s, stroke 0.15s" }}
-            />
-          );
-        })}
-      </svg>
     </div>
   );
 }
