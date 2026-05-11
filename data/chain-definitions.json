@@ -2933,6 +2933,413 @@
         ]
       }
     },
+    "componentSubgroups": {
+      "processors": {
+        "name": "Processors",
+        "parent_subsystem": "compute",
+        "description": "Silicon doing the work — GPUs, CPUs, and offload processors.",
+        "nodes": [
+          "GPUs / AI Accelerators",
+          "CPUs (Host)",
+          "NICs / DPUs"
+        ]
+      },
+      "compute_memory": {
+        "name": "Compute-Side Memory",
+        "parent_subsystem": "compute",
+        "description": "High-bandwidth memory co-packaged with the accelerator.",
+        "nodes": [
+          "HBM Stacks"
+        ]
+      },
+      "board_integration": {
+        "name": "Board & Integration",
+        "parent_subsystem": "compute",
+        "description": "PCBs hosting the chip assemblies and tying them together electrically.",
+        "nodes": [
+          "Server Boards"
+        ]
+      },
+      "chip_power_delivery": {
+        "name": "Chip Power Delivery",
+        "parent_subsystem": "compute",
+        "description": "Power supplies and voltage regulators feeding the chips on the board.",
+        "nodes": [
+          "PSUs & VRMs"
+        ]
+      },
+      "chip_thermal": {
+        "name": "Chip Thermal",
+        "parent_subsystem": "compute",
+        "description": "Direct-to-chip cooling hardware absorbing GPU and CPU heat.",
+        "nodes": [
+          "Cold Plates"
+        ]
+      },
+      "working_memory": {
+        "name": "Working Memory",
+        "parent_subsystem": "memory_storage",
+        "description": "CPU-attached DRAM in DDR/MRDIMM form factors.",
+        "nodes": [
+          "DRAM Modules"
+        ]
+      },
+      "hot_storage": {
+        "name": "Hot Storage",
+        "parent_subsystem": "memory_storage",
+        "description": "NVMe SSDs and their underlying flash for low-latency persistent storage.",
+        "nodes": [
+          "Enterprise SSDs",
+          "NAND Flash",
+          "SSD Controllers"
+        ]
+      },
+      "cold_storage": {
+        "name": "Cold Storage",
+        "parent_subsystem": "memory_storage",
+        "description": "High-capacity HDDs for archival and nearline tiers.",
+        "nodes": [
+          "Enterprise HDDs"
+        ]
+      },
+      "switching_silicon": {
+        "name": "Switching Silicon",
+        "parent_subsystem": "connectivity",
+        "description": "Custom ASICs forwarding packets at terabit scale.",
+        "nodes": [
+          "Switch ASICs"
+        ]
+      },
+      "switching_boxes": {
+        "name": "Switching Boxes",
+        "parent_subsystem": "connectivity",
+        "description": "Assembled switch chassis with ASIC, optics, and management.",
+        "nodes": [
+          "Network Switches"
+        ]
+      },
+      "optical_io": {
+        "name": "Optical I/O",
+        "parent_subsystem": "connectivity",
+        "description": "Pluggables, co-packaged optics, and photonic ICs converting electrons to light.",
+        "nodes": [
+          "Optical Transceivers",
+          "Co-Packaged Optics",
+          "Photonic ICs"
+        ]
+      },
+      "cabling": {
+        "name": "Cabling",
+        "parent_subsystem": "connectivity",
+        "description": "Fiber and copper carrying signals between racks and across buildings.",
+        "nodes": [
+          "Fiber Optic Cable",
+          "DACs & AECs"
+        ]
+      },
+      "chip_level_cooling": {
+        "name": "Chip-Level Cooling",
+        "parent_subsystem": "cooling",
+        "description": "In-rack manifolds and quick-disconnects feeding each compute tray.",
+        "nodes": [
+          "Manifolds & QDs"
+        ]
+      },
+      "rack_level_cooling": {
+        "name": "Rack-Level Cooling",
+        "parent_subsystem": "cooling",
+        "description": "CDUs circulating coolant between rack manifolds and facility loops.",
+        "nodes": [
+          "Coolant Distribution Units"
+        ]
+      },
+      "heat_rejection": {
+        "name": "Heat Rejection",
+        "parent_subsystem": "cooling",
+        "description": "Chillers, towers, and heat exchangers expelling facility heat to atmosphere.",
+        "nodes": [
+          "Chillers",
+          "Cooling Towers",
+          "Heat Exchangers"
+        ]
+      },
+      "air_handling": {
+        "name": "Air Handling",
+        "parent_subsystem": "cooling",
+        "description": "CRAH and fan-wall units cooling networking and ancillary loads.",
+        "nodes": [
+          "CRAH / Fan Wall Units"
+        ]
+      },
+      "switching_protection": {
+        "name": "Switching & Protection",
+        "parent_subsystem": "power_distribution",
+        "description": "MV switchgear and transfer switches routing and protecting facility power.",
+        "nodes": [
+          "MV Switchgear",
+          "Automatic Transfer Switches"
+        ]
+      },
+      "voltage_conversion": {
+        "name": "Voltage Conversion",
+        "parent_subsystem": "power_distribution",
+        "description": "Step-down transformers dropping medium-voltage feeds to facility utilization voltage.",
+        "nodes": [
+          "Step-Down Transformers"
+        ]
+      },
+      "backup_energy": {
+        "name": "Backup Energy",
+        "parent_subsystem": "power_distribution",
+        "description": "UPS and BESS holding the load through utility disturbances.",
+        "nodes": [
+          "UPS Systems",
+          "BESS"
+        ]
+      },
+      "distribution_paths": {
+        "name": "Distribution Paths",
+        "parent_subsystem": "power_distribution",
+        "description": "Busways, PDUs, and cables delivering power along rack rows to receptacles.",
+        "nodes": [
+          "PDUs & Rack PDUs",
+          "Busways & Busbars",
+          "LV/MV Cable"
+        ]
+      },
+      "last_mile_backup": {
+        "name": "Last-Mile Backup",
+        "parent_subsystem": "power_distribution",
+        "description": "Diesel and gas gensets providing extended-runtime backup behind UPS.",
+        "nodes": [
+          "Backup Generators"
+        ]
+      },
+      "gas_fired": {
+        "name": "Gas-Fired Generation",
+        "parent_subsystem": "power_generation",
+        "description": "Turbines, recip engines, and balance-of-plant burning natural gas onsite.",
+        "nodes": [
+          "Frame Gas Turbines",
+          "Aeroderivative Turbines",
+          "Reciprocating Gas Engines",
+          "Selective Catalytic Reduction",
+          "Heat Recovery Steam Generators"
+        ]
+      },
+      "nuclear": {
+        "name": "Nuclear Generation",
+        "parent_subsystem": "power_generation",
+        "description": "Conventional reactors and emerging SMRs supplying clean baseload.",
+        "nodes": [
+          "Small Modular Reactors",
+          "Conventional Nuclear"
+        ]
+      },
+      "renewable": {
+        "name": "Renewable Generation",
+        "parent_subsystem": "power_generation",
+        "description": "Solar PV, inverters, racking, and wind delivering variable clean power.",
+        "nodes": [
+          "Solar PV Modules",
+          "Solar Inverters",
+          "Solar Racking & Trackers",
+          "Wind Turbines"
+        ]
+      },
+      "long_duration_storage": {
+        "name": "Long-Duration Storage",
+        "parent_subsystem": "power_generation",
+        "description": "Flow batteries and emerging multi-hour storage pairing with renewables.",
+        "nodes": [
+          "Vanadium Redox Flow Batteries"
+        ]
+      },
+      "distributed_generation": {
+        "name": "Distributed Generation",
+        "parent_subsystem": "power_generation",
+        "description": "Fuel cells and other modular onsite generators.",
+        "nodes": [
+          "Fuel Cells"
+        ]
+      },
+      "grid_interface": {
+        "name": "Grid Interface",
+        "parent_subsystem": "power_generation",
+        "description": "Step-up transformers, HV switchgear, and transmission cable connecting plants to load.",
+        "nodes": [
+          "Generator Step-Up Transformers",
+          "HV Switchgear & Breakers",
+          "HV Transmission Cable"
+        ]
+      },
+      "structural_shell": {
+        "name": "Structural Shell",
+        "parent_subsystem": "physical_structure",
+        "description": "Foundations, framing, and steel carrying the building load.",
+        "nodes": [
+          "Structural Steel",
+          "Cold-Formed Steel",
+          "Concrete",
+          "Rebar"
+        ]
+      },
+      "white_space_buildout": {
+        "name": "White-Space Build-Out",
+        "parent_subsystem": "physical_structure",
+        "description": "Raised flooring and interior fitout inside the IT halls.",
+        "nodes": [
+          "Raised Flooring"
+        ]
+      },
+      "life_safety": {
+        "name": "Life Safety",
+        "parent_subsystem": "physical_structure",
+        "description": "Fire suppression and security protecting people and equipment.",
+        "nodes": [
+          "Fire Suppression",
+          "Security Systems"
+        ]
+      },
+      "site": {
+        "name": "Site",
+        "parent_subsystem": "physical_structure",
+        "description": "Land, water rights, and grid interconnect rights underpinning the campus.",
+        "nodes": [
+          "Land & Water Rights"
+        ]
+      }
+    },
+    "intermediateSubgroups": {
+      "patterned_wafers": {
+        "name": "Patterned Wafers",
+        "description": "Lithographically processed wafers exiting the fab as logic, memory, or solar substrates.",
+        "nodes": [
+          "Advanced Logic Wafers",
+          "Mature-Node Logic Wafers",
+          "DRAM Wafers",
+          "NAND Wafers",
+          "Solar Silicon Wafers"
+        ]
+      },
+      "silicon_feedstock": {
+        "name": "Silicon Feedstock",
+        "description": "Quartzite to polysilicon to electronic-grade silicon feeding all wafer production.",
+        "nodes": [
+          "Electronic-Grade Silicon",
+          "Electronic-Grade Polysilicon",
+          "Solar-Grade Polysilicon",
+          "Silicon Metal (Metallurgical Grade)",
+          "High-Purity Quartz",
+          "Trichlorosilane (TCS)"
+        ]
+      },
+      "advanced_packaging": {
+        "name": "Advanced Packaging",
+        "description": "CoWoS assembly, substrates, interposers, and bonding materials integrating chips into modules.",
+        "nodes": [
+          "CoWoS Advanced Packaging",
+          "Silicon Interposer",
+          "TSV Copper",
+          "ABF Substrate",
+          "FR-4 / High-Speed Laminate",
+          "Lead-Free Solder",
+          "Gold Bond Wire",
+          "Underfill Resin"
+        ]
+      },
+      "fab_chemistry": {
+        "name": "Fab Chemistry",
+        "description": "Photoresists, slurries, solvents, and ultra-pure water consumed in semiconductor manufacturing.",
+        "nodes": [
+          "EUV Photoresist",
+          "DUV Photoresist",
+          "CMP Slurries",
+          "Germanium Tetrachloride (GeCl4)",
+          "Ultra-Pure Water",
+          "Semiconductor Specialty Solvents",
+          "Cerium Oxide"
+        ]
+      },
+      "compound_semi_wafers": {
+        "name": "Compound Semiconductor Wafers",
+        "description": "InP, GaAs, and GaN substrates for optical and power-electronics devices.",
+        "nodes": [
+          "InP Wafers",
+          "GaAs Wafers",
+          "GaN Wafers"
+        ]
+      },
+      "specialty_alloys": {
+        "name": "Specialty Alloys & Ceramics",
+        "description": "Superalloys, electrical steel, stainless, magnets, and structural ceramics.",
+        "nodes": [
+          "NdFeB Magnets",
+          "Nickel Single-Crystal Superalloy",
+          "Stainless Steel",
+          "Grain-Oriented Electrical Steel",
+          "YSZ Electrolyte"
+        ]
+      },
+      "battery_intermediates": {
+        "name": "Battery Cells & Precursors",
+        "description": "Lithium and vanadium cell chemistries and the cathode, anode, and electrolyte materials feeding them.",
+        "nodes": [
+          "LFP Battery Cells",
+          "LFP Cathode Active Material",
+          "Lithium Carbonate",
+          "Battery-Grade Graphite",
+          "Battery Electrolyte",
+          "Vanadium Redox Electrolyte",
+          "Vanadium Pentoxide (V2O5)"
+        ]
+      },
+      "nuclear_fuel": {
+        "name": "Nuclear Fuel Forms",
+        "description": "Enriched uranium fuel assemblies and zircaloy cladding for SMRs and conventional reactors.",
+        "nodes": [
+          "HALEU Fuel Assemblies",
+          "LEU Fuel Assemblies",
+          "Zircaloy Cladding"
+        ]
+      },
+      "solar_intermediates": {
+        "name": "Solar Intermediates",
+        "description": "Thin-film semiconductors, conductive pastes, and tempered glass feeding PV module assembly.",
+        "nodes": [
+          "Cadmium Telluride Film",
+          "Silver Conductive Paste",
+          "Solar Glass"
+        ]
+      },
+      "specialty_fluids_gases": {
+        "name": "Specialty Fluids & Gases",
+        "description": "Coolants, refrigerants, clean agents, transformer oil, cable insulation, and switchgear gases.",
+        "nodes": [
+          "Engineered Coolants",
+          "Refrigerants",
+          "Clean Fire-Suppression Agents",
+          "Transformer Oil",
+          "XLPE Insulation Compound",
+          "SF6 / C4-FN Insulating Gas"
+        ]
+      },
+      "polymers": {
+        "name": "Polymers & Composites",
+        "description": "Epoxy resin and fiberglass underpinning PCB laminates, ABF substrate, and turbine blades.",
+        "nodes": [
+          "Epoxy Resin",
+          "Fiberglass"
+        ]
+      },
+      "discrete_passives": {
+        "name": "Discrete Passives",
+        "description": "Tantalum and ceramic capacitors and other discrete board components.",
+        "nodes": [
+          "Tantalum Capacitors"
+        ]
+      }
+    },
     "nodeContext": {}
   }
 }

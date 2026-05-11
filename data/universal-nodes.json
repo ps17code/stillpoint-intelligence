@@ -2647,6 +2647,12 @@
       "power_distribution",
       "power_generation",
       "physical_structure"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Microsoft",
+      "Meta",
+      "CoreWeave"
     ]
   },
   "Compute": {
@@ -2682,6 +2688,12 @@
       "cold_plate_chip",
       "psu_vrm",
       "nic_dpu"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Nvidia",
+      "AMD",
+      "Supermicro"
     ]
   },
   "Memory & Storage": {
@@ -2715,6 +2727,12 @@
       "dram_module",
       "enterprise_ssd",
       "enterprise_hdd"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "SK Hynix",
+      "Samsung",
+      "Micron"
     ]
   },
   "Connectivity": {
@@ -2750,6 +2768,12 @@
       "fiber_optic_cable",
       "dac_aec",
       "nic_dpu"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Nvidia (NVLink)",
+      "Broadcom",
+      "Arista"
     ]
   },
   "Cooling": {
@@ -2786,6 +2810,12 @@
       "cooling_tower",
       "crah_fanwall",
       "heat_exchanger"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Vertiv",
+      "CoolIT",
+      "Boyd"
     ]
   },
   "Power Distribution": {
@@ -2824,6 +2854,12 @@
       "busway_busbar",
       "backup_generator",
       "lv_mv_cable"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Schneider Electric",
+      "Eaton",
+      "Vertiv"
     ]
   },
   "Power Generation": {
@@ -2870,6 +2906,12 @@
       "scr",
       "hrsg",
       "vanadium_redox_flow"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "GE Vernova",
+      "Caterpillar",
+      "Constellation Energy"
     ]
   },
   "Physical Structure": {
@@ -2907,6 +2949,12 @@
       "fire_suppression",
       "security_systems",
       "land_water_rights"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "DPR Construction",
+      "Turner",
+      "Holder"
     ]
   },
   "GPUs / AI Accelerators": {
@@ -2940,6 +2988,12 @@
       "hbm_stack",
       "cowos_package",
       "ndfeb_magnet"
+    ],
+    "ai_subgroup": "processors",
+    "ai_key_players": [
+      "Nvidia",
+      "AMD",
+      "Google (TPU)"
     ]
   },
   "CPUs (Host)": {
@@ -2971,6 +3025,12 @@
     "ai_receives_from": [
       "logic_wafer_advanced",
       "cowos_package"
+    ],
+    "ai_subgroup": "processors",
+    "ai_key_players": [
+      "Nvidia (Grace)",
+      "AMD (EPYC)",
+      "Intel (Xeon)"
     ]
   },
   "Server Boards": {
@@ -3006,6 +3066,12 @@
       "solder_alloy",
       "gold_bond_wire",
       "copper"
+    ],
+    "ai_subgroup": "board_integration",
+    "ai_key_players": [
+      "Foxconn",
+      "Quanta",
+      "Wiwynn"
     ]
   },
   "Cold Plates": {
@@ -3038,6 +3104,12 @@
     "ai_receives_from": [
       "copper",
       "stainless_steel"
+    ],
+    "ai_subgroup": "chip_thermal",
+    "ai_key_players": [
+      "Boyd",
+      "AVC",
+      "CoolIT"
     ]
   },
   "PSUs & VRMs": {
@@ -3072,6 +3144,12 @@
       "logic_wafer_mature",
       "tantalum_capacitor",
       "copper"
+    ],
+    "ai_subgroup": "chip_power_delivery",
+    "ai_key_players": [
+      "Delta Electronics",
+      "Lite-On",
+      "Infineon"
     ]
   },
   "HBM Stacks": {
@@ -3105,6 +3183,12 @@
       "dram_wafer",
       "tsv_copper",
       "cowos_package"
+    ],
+    "ai_subgroup": "compute_memory",
+    "ai_key_players": [
+      "SK Hynix",
+      "Samsung",
+      "Micron"
     ]
   },
   "DRAM Modules": {
@@ -3136,6 +3220,12 @@
     "ai_receives_from": [
       "dram_wafer",
       "copper"
+    ],
+    "ai_subgroup": "working_memory",
+    "ai_key_players": [
+      "Samsung",
+      "SK Hynix",
+      "Micron"
     ]
   },
   "Enterprise SSDs": {
@@ -3167,6 +3257,12 @@
     "ai_receives_from": [
       "nand_flash",
       "ssd_controller"
+    ],
+    "ai_subgroup": "hot_storage",
+    "ai_key_players": [
+      "Samsung",
+      "Kioxia",
+      "Sandisk"
     ]
   },
   "Enterprise HDDs": {
@@ -3200,6 +3296,12 @@
       "helium",
       "aluminum",
       "platinum_pgm"
+    ],
+    "ai_subgroup": "cold_storage",
+    "ai_key_players": [
+      "Seagate",
+      "Western Digital",
+      "Toshiba"
     ]
   },
   "NAND Flash": {
@@ -3233,6 +3335,12 @@
       "krypton",
       "helium",
       "tungsten"
+    ],
+    "ai_subgroup": "hot_storage",
+    "ai_key_players": [
+      "Samsung",
+      "SK Hynix",
+      "Kioxia"
     ]
   },
   "SSD Controllers": {
@@ -3264,6 +3372,12 @@
     "ai_receives_from": [
       "logic_wafer_mature",
       "cowos_package"
+    ],
+    "ai_subgroup": "hot_storage",
+    "ai_key_players": [
+      "Marvell",
+      "Phison",
+      "Silicon Motion"
     ]
   },
   "Switch ASICs": {
@@ -3297,6 +3411,12 @@
       "logic_wafer_advanced",
       "cowos_package",
       "abf_substrate"
+    ],
+    "ai_subgroup": "switching_silicon",
+    "ai_key_players": [
+      "Broadcom",
+      "Nvidia",
+      "Cisco"
     ]
   },
   "Optical Transceivers": {
@@ -3330,6 +3450,12 @@
       "gaas_wafer",
       "logic_wafer_mature",
       "germanium_glass_dopant"
+    ],
+    "ai_subgroup": "optical_io",
+    "ai_key_players": [
+      "Coherent",
+      "Lumentum",
+      "Innolight"
     ]
   },
   "Co-Packaged Optics": {
@@ -3363,6 +3489,12 @@
       "logic_wafer_advanced",
       "cowos_package",
       "switch_asic"
+    ],
+    "ai_subgroup": "optical_io",
+    "ai_key_players": [
+      "Broadcom",
+      "TSMC",
+      "Nvidia"
     ]
   },
   "Photonic ICs": {
@@ -3395,6 +3527,12 @@
     "ai_receives_from": [
       "inp_wafer",
       "logic_wafer_advanced"
+    ],
+    "ai_subgroup": "optical_io",
+    "ai_key_players": [
+      "OpenLight",
+      "Ayar Labs",
+      "Marvell"
     ]
   },
   "Network Switches": {
@@ -3428,6 +3566,12 @@
       "optical_transceiver",
       "fr4_laminate",
       "copper"
+    ],
+    "ai_subgroup": "switching_boxes",
+    "ai_key_players": [
+      "Arista",
+      "Cisco",
+      "Nvidia"
     ]
   },
   "Fiber Optic Cable": {
@@ -3460,6 +3604,12 @@
       "germanium_glass_dopant",
       "high_purity_quartz",
       "aluminum"
+    ],
+    "ai_subgroup": "cabling",
+    "ai_key_players": [
+      "Corning",
+      "Prysmian",
+      "Sumitomo Electric"
     ]
   },
   "DACs & AECs": {
@@ -3491,6 +3641,12 @@
     "ai_receives_from": [
       "copper",
       "logic_wafer_mature"
+    ],
+    "ai_subgroup": "cabling",
+    "ai_key_players": [
+      "Amphenol",
+      "Molex",
+      "TE Connectivity"
     ]
   },
   "NICs / DPUs": {
@@ -3523,6 +3679,12 @@
     "ai_receives_from": [
       "logic_wafer_advanced",
       "cowos_package"
+    ],
+    "ai_subgroup": "processors",
+    "ai_key_players": [
+      "Nvidia",
+      "AMD (Pensando)",
+      "Intel"
     ]
   },
   "Coolant Distribution Units": {
@@ -3555,6 +3717,12 @@
       "stainless_steel",
       "copper",
       "engineered_coolant"
+    ],
+    "ai_subgroup": "rack_level_cooling",
+    "ai_key_players": [
+      "Vertiv",
+      "Boyd",
+      "CoolIT"
     ]
   },
   "Manifolds & QDs": {
@@ -3586,6 +3754,12 @@
     "ai_receives_from": [
       "stainless_steel",
       "copper"
+    ],
+    "ai_subgroup": "chip_level_cooling",
+    "ai_key_players": [
+      "Parker Hannifin",
+      "CPC",
+      "Staubli"
     ]
   },
   "Chillers": {
@@ -3618,6 +3792,12 @@
       "copper",
       "structural_steel",
       "refrigerant"
+    ],
+    "ai_subgroup": "heat_rejection",
+    "ai_key_players": [
+      "Trane",
+      "Carrier",
+      "Johnson Controls"
     ]
   },
   "Cooling Towers": {
@@ -3650,6 +3830,12 @@
       "structural_steel",
       "fiberglass",
       "water"
+    ],
+    "ai_subgroup": "heat_rejection",
+    "ai_key_players": [
+      "SPX",
+      "Baltimore Aircoil",
+      "Evapco"
     ]
   },
   "CRAH / Fan Wall Units": {
@@ -3682,6 +3868,12 @@
       "ndfeb_magnet",
       "structural_steel",
       "copper"
+    ],
+    "ai_subgroup": "air_handling",
+    "ai_key_players": [
+      "Vertiv",
+      "Stulz",
+      "Trane"
     ]
   },
   "Heat Exchangers": {
@@ -3713,6 +3905,12 @@
     "ai_receives_from": [
       "stainless_steel",
       "copper"
+    ],
+    "ai_subgroup": "heat_rejection",
+    "ai_key_players": [
+      "Alfa Laval",
+      "Kelvion",
+      "SWEP"
     ]
   },
   "MV Switchgear": {
@@ -3745,6 +3943,12 @@
       "copper",
       "structural_steel",
       "sf6_alternative"
+    ],
+    "ai_subgroup": "switching_protection",
+    "ai_key_players": [
+      "ABB",
+      "Schneider Electric",
+      "Eaton"
     ]
   },
   "Step-Down Transformers": {
@@ -3777,6 +3981,12 @@
       "goes_steel",
       "copper",
       "transformer_oil"
+    ],
+    "ai_subgroup": "voltage_conversion",
+    "ai_key_players": [
+      "ABB",
+      "Hitachi Energy",
+      "Eaton"
     ]
   },
   "UPS Systems": {
@@ -3809,6 +4019,12 @@
       "lfp_cell",
       "logic_wafer_mature",
       "copper"
+    ],
+    "ai_subgroup": "backup_energy",
+    "ai_key_players": [
+      "Vertiv",
+      "Schneider Electric",
+      "Eaton"
     ]
   },
   "BESS": {
@@ -3841,6 +4057,12 @@
       "lfp_cell",
       "copper",
       "aluminum"
+    ],
+    "ai_subgroup": "backup_energy",
+    "ai_key_players": [
+      "Tesla",
+      "Fluence",
+      "CATL"
     ]
   },
   "Vanadium Redox Flow Batteries": {
@@ -3873,6 +4095,12 @@
       "vanadium_electrolyte",
       "copper",
       "structural_steel"
+    ],
+    "ai_subgroup": "long_duration_storage",
+    "ai_key_players": [
+      "Invinity Energy",
+      "Sumitomo Electric",
+      "VRB Energy"
     ]
   },
   "Automatic Transfer Switches": {
@@ -3904,6 +4132,12 @@
     "ai_receives_from": [
       "copper",
       "structural_steel"
+    ],
+    "ai_subgroup": "switching_protection",
+    "ai_key_players": [
+      "ASCO",
+      "Eaton",
+      "Russelectric"
     ]
   },
   "PDUs & Rack PDUs": {
@@ -3935,6 +4169,12 @@
     "ai_receives_from": [
       "copper",
       "structural_steel"
+    ],
+    "ai_subgroup": "distribution_paths",
+    "ai_key_players": [
+      "Vertiv",
+      "Schneider Electric",
+      "Server Technology"
     ]
   },
   "Busways & Busbars": {
@@ -3966,6 +4206,12 @@
     "ai_receives_from": [
       "copper",
       "aluminum"
+    ],
+    "ai_subgroup": "distribution_paths",
+    "ai_key_players": [
+      "Schneider Electric",
+      "Eaton",
+      "Siemens"
     ]
   },
   "Backup Generators": {
@@ -3999,6 +4245,12 @@
       "copper",
       "diesel_fuel",
       "natural_gas"
+    ],
+    "ai_subgroup": "last_mile_backup",
+    "ai_key_players": [
+      "Caterpillar",
+      "Cummins",
+      "Kohler"
     ]
   },
   "LV/MV Cable": {
@@ -4031,6 +4283,12 @@
       "copper",
       "aluminum",
       "xlpe_compound"
+    ],
+    "ai_subgroup": "distribution_paths",
+    "ai_key_players": [
+      "Prysmian",
+      "Nexans",
+      "Southwire"
     ]
   },
   "Frame Gas Turbines": {
@@ -4063,6 +4321,12 @@
       "nickel_superalloy",
       "structural_steel",
       "natural_gas"
+    ],
+    "ai_subgroup": "gas_fired",
+    "ai_key_players": [
+      "GE Vernova",
+      "Siemens Energy",
+      "Mitsubishi Power"
     ]
   },
   "Aeroderivative Turbines": {
@@ -4095,6 +4359,12 @@
       "nickel_superalloy",
       "structural_steel",
       "natural_gas"
+    ],
+    "ai_subgroup": "gas_fired",
+    "ai_key_players": [
+      "GE Vernova",
+      "Siemens Energy",
+      "Solar Turbines"
     ]
   },
   "Reciprocating Gas Engines": {
@@ -4127,6 +4397,12 @@
       "structural_steel",
       "copper",
       "natural_gas"
+    ],
+    "ai_subgroup": "gas_fired",
+    "ai_key_players": [
+      "Caterpillar",
+      "Wartsila",
+      "INNIO Jenbacher"
     ]
   },
   "Solar PV Modules": {
@@ -4161,6 +4437,12 @@
       "silver_paste",
       "aluminum",
       "solar_glass"
+    ],
+    "ai_subgroup": "renewable",
+    "ai_key_players": [
+      "First Solar",
+      "Trina Solar",
+      "Longi"
     ]
   },
   "Solar Inverters": {
@@ -4194,6 +4476,12 @@
       "gan_wafer",
       "copper",
       "structural_steel"
+    ],
+    "ai_subgroup": "renewable",
+    "ai_key_players": [
+      "Sungrow",
+      "SMA",
+      "Power Electronics"
     ]
   },
   "Solar Racking & Trackers": {
@@ -4225,6 +4513,12 @@
     "ai_receives_from": [
       "structural_steel",
       "aluminum"
+    ],
+    "ai_subgroup": "renewable",
+    "ai_key_players": [
+      "Nextracker",
+      "Array Technologies",
+      "GameChange Solar"
     ]
   },
   "Wind Turbines": {
@@ -4258,6 +4552,12 @@
       "structural_steel",
       "copper",
       "fiberglass"
+    ],
+    "ai_subgroup": "renewable",
+    "ai_key_players": [
+      "Vestas",
+      "GE Vernova",
+      "Siemens Gamesa"
     ]
   },
   "Small Modular Reactors": {
@@ -4290,6 +4590,12 @@
       "haleu_fuel",
       "zircaloy_cladding",
       "structural_steel"
+    ],
+    "ai_subgroup": "nuclear",
+    "ai_key_players": [
+      "Oklo",
+      "X-energy",
+      "Kairos Power"
     ]
   },
   "Conventional Nuclear": {
@@ -4322,6 +4628,12 @@
       "leu_fuel",
       "zircaloy_cladding",
       "structural_steel"
+    ],
+    "ai_subgroup": "nuclear",
+    "ai_key_players": [
+      "Constellation Energy",
+      "Vistra",
+      "Duke Energy"
     ]
   },
   "Fuel Cells": {
@@ -4355,6 +4667,12 @@
       "platinum_pgm",
       "ysz_electrolyte",
       "nickel"
+    ],
+    "ai_subgroup": "distributed_generation",
+    "ai_key_players": [
+      "Bloom Energy",
+      "FuelCell Energy",
+      "Plug Power"
     ]
   },
   "Generator Step-Up Transformers": {
@@ -4387,6 +4705,12 @@
       "goes_steel",
       "copper",
       "transformer_oil"
+    ],
+    "ai_subgroup": "grid_interface",
+    "ai_key_players": [
+      "Hitachi Energy",
+      "GE Vernova",
+      "Hyundai Electric"
     ]
   },
   "HV Switchgear & Breakers": {
@@ -4419,6 +4743,12 @@
       "copper",
       "structural_steel",
       "sf6_alternative"
+    ],
+    "ai_subgroup": "grid_interface",
+    "ai_key_players": [
+      "ABB",
+      "Siemens Energy",
+      "Hitachi Energy"
     ]
   },
   "HV Transmission Cable": {
@@ -4451,6 +4781,12 @@
       "copper",
       "aluminum",
       "xlpe_compound"
+    ],
+    "ai_subgroup": "grid_interface",
+    "ai_key_players": [
+      "Prysmian",
+      "Nexans",
+      "NKT"
     ]
   },
   "Selective Catalytic Reduction": {
@@ -4483,6 +4819,12 @@
       "vanadium_pentoxide",
       "tungsten",
       "platinum_pgm"
+    ],
+    "ai_subgroup": "gas_fired",
+    "ai_key_players": [
+      "Cormetech",
+      "Johnson Matthey",
+      "Haldor Topsoe"
     ]
   },
   "Heat Recovery Steam Generators": {
@@ -4514,6 +4856,12 @@
     "ai_receives_from": [
       "structural_steel",
       "copper"
+    ],
+    "ai_subgroup": "gas_fired",
+    "ai_key_players": [
+      "NEM Energy",
+      "Babcock & Wilcox",
+      "Doosan"
     ]
   },
   "Structural Steel": {
@@ -4567,6 +4915,12 @@
       "iron_ore",
       "scrap_steel",
       "coking_coal"
+    ],
+    "ai_subgroup": "structural_shell",
+    "ai_key_players": [
+      "Nucor",
+      "Cleveland-Cliffs",
+      "ArcelorMittal"
     ]
   },
   "Cold-Formed Steel": {
@@ -4599,6 +4953,12 @@
       "iron_ore",
       "scrap_steel",
       "zinc"
+    ],
+    "ai_subgroup": "structural_shell",
+    "ai_key_players": [
+      "ClarkDietrich",
+      "MarinoWARE",
+      "FrameCAD"
     ]
   },
   "Concrete": {
@@ -4631,6 +4991,12 @@
       "cement",
       "aggregates",
       "water"
+    ],
+    "ai_subgroup": "structural_shell",
+    "ai_key_players": [
+      "Cemex",
+      "Holcim",
+      "Heidelberg Materials"
     ]
   },
   "Rebar": {
@@ -4662,6 +5028,12 @@
     "ai_receives_from": [
       "iron_ore",
       "scrap_steel"
+    ],
+    "ai_subgroup": "structural_shell",
+    "ai_key_players": [
+      "Nucor",
+      "Commercial Metals",
+      "Gerdau"
     ]
   },
   "Raised Flooring": {
@@ -4693,6 +5065,12 @@
     "ai_receives_from": [
       "structural_steel",
       "aluminum"
+    ],
+    "ai_subgroup": "white_space_buildout",
+    "ai_key_players": [
+      "Tate Access Floors",
+      "ASM Modular",
+      "Haworth"
     ]
   },
   "Fire Suppression": {
@@ -4724,6 +5102,12 @@
     "ai_receives_from": [
       "clean_agent",
       "structural_steel"
+    ],
+    "ai_subgroup": "life_safety",
+    "ai_key_players": [
+      "Johnson Controls",
+      "Honeywell",
+      "3M"
     ]
   },
   "Security Systems": {
@@ -4755,6 +5139,12 @@
     "ai_receives_from": [
       "logic_wafer_mature",
       "structural_steel"
+    ],
+    "ai_subgroup": "life_safety",
+    "ai_key_players": [
+      "Honeywell",
+      "Genetec",
+      "Axis Communications"
     ]
   },
   "Land & Water Rights": {
@@ -4785,6 +5175,12 @@
     ],
     "ai_receives_from": [
       "water"
+    ],
+    "ai_subgroup": "site",
+    "ai_key_players": [
+      "Crusoe",
+      "Tract",
+      "Stack Infrastructure"
     ]
   },
   "Advanced Logic Wafers": {
@@ -4830,6 +5226,12 @@
       "helium",
       "ultra_pure_water",
       "cmp_slurry"
+    ],
+    "ai_subgroup": "patterned_wafers",
+    "ai_key_players": [
+      "TSMC",
+      "Samsung Foundry",
+      "Intel Foundry"
     ]
   },
   "Mature-Node Logic Wafers": {
@@ -4869,6 +5271,12 @@
       "duv_photoresist",
       "argon",
       "ultra_pure_water"
+    ],
+    "ai_subgroup": "patterned_wafers",
+    "ai_key_players": [
+      "TSMC",
+      "GlobalFoundries",
+      "UMC"
     ]
   },
   "DRAM Wafers": {
@@ -4905,6 +5313,12 @@
       "argon",
       "helium",
       "ultra_pure_water"
+    ],
+    "ai_subgroup": "patterned_wafers",
+    "ai_key_players": [
+      "SK Hynix",
+      "Samsung",
+      "Micron"
     ]
   },
   "NAND Wafers": {
@@ -4938,6 +5352,12 @@
       "krypton",
       "duv_photoresist",
       "tungsten"
+    ],
+    "ai_subgroup": "patterned_wafers",
+    "ai_key_players": [
+      "Samsung",
+      "SK Hynix",
+      "Kioxia"
     ]
   },
   "Solar Silicon Wafers": {
@@ -4969,6 +5389,12 @@
     "ai_receives_from": [
       "solar_grade_polysilicon",
       "silver_paste"
+    ],
+    "ai_subgroup": "patterned_wafers",
+    "ai_key_players": [
+      "Longi",
+      "Tongwei",
+      "Zhonghuan"
     ]
   },
   "Electronic-Grade Silicon": {
@@ -5003,6 +5429,12 @@
     "ai_receives_from": [
       "electronic_grade_polysilicon",
       "high_purity_quartz"
+    ],
+    "ai_subgroup": "silicon_feedstock",
+    "ai_key_players": [
+      "Shin-Etsu",
+      "SUMCO",
+      "SK Siltron"
     ]
   },
   "Electronic-Grade Polysilicon": {
@@ -5034,6 +5466,12 @@
     "ai_receives_from": [
       "silicon_metal",
       "trichlorosilane"
+    ],
+    "ai_subgroup": "silicon_feedstock",
+    "ai_key_players": [
+      "Wacker",
+      "Hemlock",
+      "Tokuyama"
     ]
   },
   "Solar-Grade Polysilicon": {
@@ -5065,6 +5503,12 @@
     "ai_receives_from": [
       "silicon_metal",
       "trichlorosilane"
+    ],
+    "ai_subgroup": "silicon_feedstock",
+    "ai_key_players": [
+      "GCL",
+      "Tongwei",
+      "Daqo"
     ]
   },
   "Silicon Metal (Metallurgical Grade)": {
@@ -5098,6 +5542,12 @@
     "ai_receives_from": [
       "metallurgical_quartz",
       "coking_coal"
+    ],
+    "ai_subgroup": "silicon_feedstock",
+    "ai_key_players": [
+      "Ferroglobe",
+      "Elkem",
+      "Wacker"
     ]
   },
   "High-Purity Quartz": {
@@ -5130,6 +5580,12 @@
     ],
     "ai_receives_from": [
       "quartz_ore"
+    ],
+    "ai_subgroup": "silicon_feedstock",
+    "ai_key_players": [
+      "Sibelco",
+      "The Quartz Corp",
+      "Norwegian Crystallites"
     ]
   },
   "CoWoS Advanced Packaging": {
@@ -5170,6 +5626,12 @@
       "tsv_copper",
       "solder_alloy",
       "underfill_resin"
+    ],
+    "ai_subgroup": "advanced_packaging",
+    "ai_key_players": [
+      "TSMC",
+      "ASE",
+      "Amkor"
     ]
   },
   "Silicon Interposer": {
@@ -5201,6 +5663,12 @@
     "ai_receives_from": [
       "electronic_grade_silicon",
       "tsv_copper"
+    ],
+    "ai_subgroup": "advanced_packaging",
+    "ai_key_players": [
+      "TSMC",
+      "UMC",
+      "ASE"
     ]
   },
   "TSV Copper": {
@@ -5234,6 +5702,12 @@
     "ai_receives_from": [
       "copper",
       "ultra_pure_water"
+    ],
+    "ai_subgroup": "advanced_packaging",
+    "ai_key_players": [
+      "Lam Research (equipment)",
+      "Applied Materials (equipment)",
+      "Atotech (chemistry)"
     ]
   },
   "ABF Substrate": {
@@ -5267,6 +5741,12 @@
     "ai_receives_from": [
       "epoxy_resin",
       "copper"
+    ],
+    "ai_subgroup": "advanced_packaging",
+    "ai_key_players": [
+      "Ajinomoto (film)",
+      "Unimicron",
+      "Ibiden"
     ]
   },
   "FR-4 / High-Speed Laminate": {
@@ -5300,6 +5780,12 @@
       "epoxy_resin",
       "fiberglass",
       "copper"
+    ],
+    "ai_subgroup": "advanced_packaging",
+    "ai_key_players": [
+      "Isola",
+      "Panasonic",
+      "Rogers"
     ]
   },
   "EUV Photoresist": {
@@ -5331,6 +5817,12 @@
     "ai_receives_from": [
       "tin",
       "specialty_solvents"
+    ],
+    "ai_subgroup": "fab_chemistry",
+    "ai_key_players": [
+      "JSR",
+      "Tokyo Ohka Kogyo",
+      "Shin-Etsu"
     ]
   },
   "DUV Photoresist": {
@@ -5364,6 +5856,12 @@
     ],
     "ai_receives_from": [
       "specialty_solvents"
+    ],
+    "ai_subgroup": "fab_chemistry",
+    "ai_key_players": [
+      "JSR",
+      "Tokyo Ohka Kogyo",
+      "Fujifilm"
     ]
   },
   "CMP Slurries": {
@@ -5395,6 +5893,12 @@
     "ai_receives_from": [
       "cerium_oxide",
       "specialty_solvents"
+    ],
+    "ai_subgroup": "fab_chemistry",
+    "ai_key_players": [
+      "CMC Materials",
+      "Versum/Merck",
+      "Fujimi"
     ]
   },
   "NdFeB Magnets": {
@@ -5433,6 +5937,12 @@
       "terbium",
       "iron_ore",
       "boron"
+    ],
+    "ai_subgroup": "specialty_alloys",
+    "ai_key_players": [
+      "Hitachi Metals/Proterial",
+      "TDK",
+      "VAC"
     ]
   },
   "InP Wafers": {
@@ -5466,6 +5976,12 @@
     "ai_receives_from": [
       "indium",
       "phosphorus"
+    ],
+    "ai_subgroup": "compound_semi_wafers",
+    "ai_key_players": [
+      "Sumitomo Electric",
+      "AXT",
+      "JX Nippon"
     ]
   },
   "GaAs Wafers": {
@@ -5497,6 +6013,12 @@
     "ai_receives_from": [
       "gallium",
       "arsenic"
+    ],
+    "ai_subgroup": "compound_semi_wafers",
+    "ai_key_players": [
+      "AXT",
+      "Freiberger",
+      "Sumitomo Electric"
     ]
   },
   "GaN Wafers": {
@@ -5530,6 +6052,12 @@
       "gallium",
       "ammonia",
       "silicon_metal"
+    ],
+    "ai_subgroup": "compound_semi_wafers",
+    "ai_key_players": [
+      "Sumitomo Electric",
+      "Coherent",
+      "Nichia"
     ]
   },
   "Germanium Tetrachloride (GeCl4)": {
@@ -5562,6 +6090,12 @@
     "ai_receives_from": [
       "germanium",
       "chlorine"
+    ],
+    "ai_subgroup": "fab_chemistry",
+    "ai_key_players": [
+      "Umicore",
+      "5N Plus",
+      "Yunnan Lincang"
     ]
   },
   "Nickel Single-Crystal Superalloy": {
@@ -5599,6 +6133,12 @@
       "tantalum",
       "hafnium",
       "chromium"
+    ],
+    "ai_subgroup": "specialty_alloys",
+    "ai_key_players": [
+      "Precision Castparts",
+      "ATI",
+      "Haynes International"
     ]
   },
   "Stainless Steel": {
@@ -5635,6 +6175,12 @@
       "iron_ore",
       "chromium",
       "molybdenum"
+    ],
+    "ai_subgroup": "specialty_alloys",
+    "ai_key_players": [
+      "Outokumpu",
+      "Acerinox",
+      "POSCO"
     ]
   },
   "Grain-Oriented Electrical Steel": {
@@ -5667,6 +6213,12 @@
     "ai_receives_from": [
       "iron_ore",
       "silicon_metal"
+    ],
+    "ai_subgroup": "specialty_alloys",
+    "ai_key_players": [
+      "Cleveland-Cliffs",
+      "Baosteel",
+      "Nippon Steel"
     ]
   },
   "LFP Battery Cells": {
@@ -5703,6 +6255,12 @@
       "electrolyte",
       "copper",
       "aluminum"
+    ],
+    "ai_subgroup": "battery_intermediates",
+    "ai_key_players": [
+      "CATL",
+      "BYD",
+      "EVE Energy"
     ]
   },
   "LFP Cathode Active Material": {
@@ -5735,6 +6293,12 @@
       "lithium_carbonate",
       "iron_phosphate",
       "phosphoric_acid"
+    ],
+    "ai_subgroup": "battery_intermediates",
+    "ai_key_players": [
+      "Hunan Yuneng",
+      "Dynanonic",
+      "Shenzhen Dynanonic"
     ]
   },
   "Lithium Carbonate": {
@@ -5766,6 +6330,12 @@
     ],
     "ai_receives_from": [
       "lithium"
+    ],
+    "ai_subgroup": "battery_intermediates",
+    "ai_key_players": [
+      "Albemarle",
+      "SQM",
+      "Ganfeng"
     ]
   },
   "Battery-Grade Graphite": {
@@ -5797,6 +6367,12 @@
     "ai_receives_from": [
       "natural_graphite",
       "petroleum_coke"
+    ],
+    "ai_subgroup": "battery_intermediates",
+    "ai_key_players": [
+      "BTR",
+      "Shanshan",
+      "Syrah Resources"
     ]
   },
   "Battery Electrolyte": {
@@ -5829,6 +6405,12 @@
       "lithium",
       "fluorspar",
       "specialty_solvents"
+    ],
+    "ai_subgroup": "battery_intermediates",
+    "ai_key_players": [
+      "Capchem",
+      "Mitsubishi Chemical",
+      "Tinci Materials"
     ]
   },
   "Vanadium Redox Electrolyte": {
@@ -5860,6 +6442,12 @@
     "ai_receives_from": [
       "vanadium_pentoxide",
       "sulfuric_acid"
+    ],
+    "ai_subgroup": "battery_intermediates",
+    "ai_key_players": [
+      "US Vanadium",
+      "Largo",
+      "Bushveld Minerals"
     ]
   },
   "Vanadium Pentoxide (V2O5)": {
@@ -5891,6 +6479,12 @@
     ],
     "ai_receives_from": [
       "vanadium"
+    ],
+    "ai_subgroup": "battery_intermediates",
+    "ai_key_players": [
+      "Largo",
+      "Bushveld Minerals",
+      "Glencore"
     ]
   },
   "Cadmium Telluride Film": {
@@ -5922,6 +6516,12 @@
     "ai_receives_from": [
       "tellurium",
       "cadmium"
+    ],
+    "ai_subgroup": "solar_intermediates",
+    "ai_key_players": [
+      "First Solar",
+      "5N Plus",
+      "Toxco"
     ]
   },
   "Silver Conductive Paste": {
@@ -5953,6 +6553,12 @@
     ],
     "ai_receives_from": [
       "silver"
+    ],
+    "ai_subgroup": "solar_intermediates",
+    "ai_key_players": [
+      "Heraeus",
+      "DuPont",
+      "Targray"
     ]
   },
   "Solar Glass": {
@@ -5984,6 +6590,12 @@
     "ai_receives_from": [
       "high_purity_quartz",
       "soda_ash"
+    ],
+    "ai_subgroup": "solar_intermediates",
+    "ai_key_players": [
+      "Xinyi Solar",
+      "Flat Glass Group",
+      "Borosil"
     ]
   },
   "HALEU Fuel Assemblies": {
@@ -6015,6 +6627,12 @@
     "ai_receives_from": [
       "uranium",
       "zircaloy_cladding"
+    ],
+    "ai_subgroup": "nuclear_fuel",
+    "ai_key_players": [
+      "Centrus Energy",
+      "Tenex",
+      "X-energy"
     ]
   },
   "LEU Fuel Assemblies": {
@@ -6046,6 +6664,12 @@
     "ai_receives_from": [
       "uranium",
       "zircaloy_cladding"
+    ],
+    "ai_subgroup": "nuclear_fuel",
+    "ai_key_players": [
+      "Westinghouse",
+      "Framatome",
+      "Orano"
     ]
   },
   "Zircaloy Cladding": {
@@ -6081,6 +6705,12 @@
       "zirconium",
       "tin",
       "hafnium"
+    ],
+    "ai_subgroup": "nuclear_fuel",
+    "ai_key_players": [
+      "Westinghouse",
+      "Framatome",
+      "ATI"
     ]
   },
   "Tantalum Capacitors": {
@@ -6112,6 +6742,12 @@
     ],
     "ai_receives_from": [
       "tantalum"
+    ],
+    "ai_subgroup": "discrete_passives",
+    "ai_key_players": [
+      "Kemet/Yageo",
+      "AVX",
+      "Vishay"
     ]
   },
   "Lead-Free Solder": {
@@ -6145,6 +6781,12 @@
       "tin",
       "silver",
       "copper"
+    ],
+    "ai_subgroup": "advanced_packaging",
+    "ai_key_players": [
+      "Indium Corporation",
+      "Senju Metal",
+      "Alpha"
     ]
   },
   "Gold Bond Wire": {
@@ -6176,6 +6818,12 @@
     ],
     "ai_receives_from": [
       "gold"
+    ],
+    "ai_subgroup": "advanced_packaging",
+    "ai_key_players": [
+      "Heraeus",
+      "Tanaka",
+      "Sumitomo Metal Mining"
     ]
   },
   "YSZ Electrolyte": {
@@ -6207,6 +6855,12 @@
     "ai_receives_from": [
       "yttrium",
       "zirconium"
+    ],
+    "ai_subgroup": "specialty_alloys",
+    "ai_key_players": [
+      "Bloom Energy (internal)",
+      "Tosoh",
+      "Saint-Gobain"
     ]
   },
   "Engineered Coolants": {
@@ -6239,6 +6893,12 @@
     "ai_receives_from": [
       "ethylene_glycol",
       "fluorochemicals"
+    ],
+    "ai_subgroup": "specialty_fluids_gases",
+    "ai_key_players": [
+      "3M",
+      "Solvay",
+      "Castrol"
     ]
   },
   "Refrigerants": {
@@ -6270,6 +6930,12 @@
     "ai_receives_from": [
       "fluorspar",
       "fluorochemicals"
+    ],
+    "ai_subgroup": "specialty_fluids_gases",
+    "ai_key_players": [
+      "Honeywell",
+      "Chemours",
+      "Daikin"
     ]
   },
   "Clean Fire-Suppression Agents": {
@@ -6300,6 +6966,12 @@
     ],
     "ai_receives_from": [
       "fluorochemicals"
+    ],
+    "ai_subgroup": "specialty_fluids_gases",
+    "ai_key_players": [
+      "3M",
+      "Honeywell",
+      "Chemours"
     ]
   },
   "Transformer Oil": {
@@ -6331,6 +7003,12 @@
     ],
     "ai_receives_from": [
       "crude_oil"
+    ],
+    "ai_subgroup": "specialty_fluids_gases",
+    "ai_key_players": [
+      "Nynas",
+      "Ergon",
+      "Cargill"
     ]
   },
   "XLPE Insulation Compound": {
@@ -6362,6 +7040,12 @@
     ],
     "ai_receives_from": [
       "ethylene"
+    ],
+    "ai_subgroup": "specialty_fluids_gases",
+    "ai_key_players": [
+      "Borealis",
+      "Dow",
+      "LyondellBasell"
     ]
   },
   "SF6 / C4-FN Insulating Gas": {
@@ -6393,6 +7077,12 @@
     ],
     "ai_receives_from": [
       "fluorochemicals"
+    ],
+    "ai_subgroup": "specialty_fluids_gases",
+    "ai_key_players": [
+      "3M",
+      "Solvay",
+      "Honeywell"
     ]
   },
   "Underfill Resin": {
@@ -6423,6 +7113,12 @@
     ],
     "ai_receives_from": [
       "epoxy_resin"
+    ],
+    "ai_subgroup": "advanced_packaging",
+    "ai_key_players": [
+      "Henkel",
+      "Namics",
+      "Hitachi Chemical/Resonac"
     ]
   },
   "Epoxy Resin": {
@@ -6456,6 +7152,12 @@
     "ai_receives_from": [
       "epichlorohydrin",
       "bpa"
+    ],
+    "ai_subgroup": "polymers",
+    "ai_key_players": [
+      "Hexion",
+      "Olin",
+      "Kukdo Chemical"
     ]
   },
   "Fiberglass": {
@@ -6489,6 +7191,12 @@
     "ai_receives_from": [
       "high_purity_quartz",
       "boron"
+    ],
+    "ai_subgroup": "polymers",
+    "ai_key_players": [
+      "Owens Corning",
+      "Jushi",
+      "Saint-Gobain"
     ]
   },
   "Trichlorosilane (TCS)": {
@@ -6521,6 +7229,12 @@
     "ai_receives_from": [
       "silicon_metal",
       "chlorine"
+    ],
+    "ai_subgroup": "silicon_feedstock",
+    "ai_key_players": [
+      "Wacker",
+      "Tokuyama",
+      "OCI"
     ]
   },
   "Ultra-Pure Water": {
@@ -6554,6 +7268,12 @@
     ],
     "ai_receives_from": [
       "water"
+    ],
+    "ai_subgroup": "fab_chemistry",
+    "ai_key_players": [
+      "Veolia",
+      "Ovivo",
+      "Suez"
     ]
   },
   "Semiconductor Specialty Solvents": {
@@ -6588,6 +7308,12 @@
     "ai_receives_from": [
       "crude_oil",
       "natural_gas"
+    ],
+    "ai_subgroup": "fab_chemistry",
+    "ai_key_players": [
+      "BASF",
+      "Merck KGaA",
+      "Sumitomo Chemical"
     ]
   },
   "Cerium Oxide": {
@@ -6618,6 +7344,12 @@
     ],
     "ai_receives_from": [
       "cerium"
+    ],
+    "ai_subgroup": "fab_chemistry",
+    "ai_key_players": [
+      "Lynas",
+      "Solvay",
+      "Shenghe"
     ]
   },
   "Germanium": {
@@ -6646,7 +7378,13 @@
     "ai_feeds_into": [
       "germanium_glass_dopant"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Yunnan Chihong",
+      "Umicore",
+      "5N Plus"
+    ]
   },
   "Gallium": {
     "id": "gallium",
@@ -6675,7 +7413,13 @@
       "gan_wafer",
       "gaas_wafer"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "AXT",
+      "5N Plus",
+      "Dowa"
+    ]
   },
   "Indium": {
     "id": "indium",
@@ -6703,7 +7447,13 @@
     "ai_feeds_into": [
       "inp_wafer"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Korea Zinc",
+      "Nyrstar",
+      "Teck Resources"
+    ]
   },
   "Tantalum": {
     "id": "tantalum",
@@ -6732,7 +7482,13 @@
       "tantalum_capacitor",
       "nickel_superalloy"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Global Advanced Metals",
+      "AMG",
+      "Ulba"
+    ]
   },
   "Tungsten": {
     "id": "tungsten",
@@ -6763,7 +7519,13 @@
       "nickel_superalloy",
       "scr"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Almonty Industries",
+      "Sandvik",
+      "China Minmetals"
+    ]
   },
   "Cobalt": {
     "id": "cobalt",
@@ -6791,7 +7553,13 @@
     "ai_feeds_into": [
       "nickel_superalloy"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Glencore",
+      "CMOC",
+      "Eurasian Resources"
+    ]
   },
   "Rhenium": {
     "id": "rhenium",
@@ -6819,7 +7587,13 @@
     "ai_feeds_into": [
       "nickel_superalloy"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Molymet",
+      "KGHM",
+      "Freeport-McMoRan"
+    ]
   },
   "Hafnium": {
     "id": "hafnium",
@@ -6849,7 +7623,13 @@
       "nickel_superalloy",
       "zircaloy_cladding"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Framatome",
+      "ATI",
+      "Nuclear Fuel Industries"
+    ]
   },
   "Molybdenum": {
     "id": "molybdenum",
@@ -6877,7 +7657,13 @@
     "ai_feeds_into": [
       "stainless_steel"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Freeport-McMoRan",
+      "Codelco",
+      "Antofagasta"
+    ]
   },
   "Chromium": {
     "id": "chromium",
@@ -6906,7 +7692,13 @@
       "stainless_steel",
       "nickel_superalloy"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Glencore",
+      "Eurasian Resources",
+      "Tharisa"
+    ]
   },
   "Nickel": {
     "id": "nickel",
@@ -6936,7 +7728,13 @@
       "stainless_steel",
       "fuel_cell"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Nornickel",
+      "Vale",
+      "BHP"
+    ]
   },
   "Neodymium": {
     "id": "neodymium",
@@ -6964,7 +7762,13 @@
     "ai_feeds_into": [
       "ndfeb_magnet"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "MP Materials",
+      "Lynas",
+      "Shenghe"
+    ]
   },
   "Praseodymium": {
     "id": "praseodymium",
@@ -6992,7 +7796,13 @@
     "ai_feeds_into": [
       "ndfeb_magnet"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "MP Materials",
+      "Lynas",
+      "Shenghe"
+    ]
   },
   "Dysprosium": {
     "id": "dysprosium",
@@ -7020,7 +7830,13 @@
     "ai_feeds_into": [
       "ndfeb_magnet"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Shenghe",
+      "China Northern Rare Earth",
+      "Lynas"
+    ]
   },
   "Terbium": {
     "id": "terbium",
@@ -7048,7 +7864,13 @@
     "ai_feeds_into": [
       "ndfeb_magnet"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Shenghe",
+      "China Northern Rare Earth",
+      "Northern Minerals"
+    ]
   },
   "Cerium": {
     "id": "cerium",
@@ -7076,7 +7898,13 @@
     "ai_feeds_into": [
       "cerium_oxide"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Lynas",
+      "MP Materials",
+      "Shenghe"
+    ]
   },
   "Yttrium": {
     "id": "yttrium",
@@ -7104,7 +7932,13 @@
     "ai_feeds_into": [
       "ysz_electrolyte"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Lynas",
+      "MP Materials",
+      "Shenghe"
+    ]
   },
   "Helium": {
     "id": "helium",
@@ -7135,7 +7969,13 @@
       "nand_flash",
       "enterprise_hdd"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Air Liquide",
+      "Linde",
+      "Air Products"
+    ]
   },
   "Neon": {
     "id": "neon",
@@ -7163,7 +8003,13 @@
     "ai_feeds_into": [
       "logic_wafer_advanced"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Air Liquide",
+      "Linde",
+      "Iceblick"
+    ]
   },
   "Krypton": {
     "id": "krypton",
@@ -7193,7 +8039,13 @@
       "dram_wafer",
       "logic_wafer_advanced"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Air Liquide",
+      "Linde",
+      "Messer"
+    ]
   },
   "Xenon": {
     "id": "xenon",
@@ -7221,7 +8073,13 @@
     "ai_feeds_into": [
       "logic_wafer_advanced"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Air Liquide",
+      "Linde",
+      "Messer"
+    ]
   },
   "Argon": {
     "id": "argon",
@@ -7250,7 +8108,13 @@
       "logic_wafer_mature",
       "dram_wafer"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Air Liquide",
+      "Linde",
+      "Air Products"
+    ]
   },
   "Ammonia": {
     "id": "ammonia",
@@ -7278,7 +8142,13 @@
     "ai_feeds_into": [
       "gan_wafer"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Yara",
+      "CF Industries",
+      "Nutrien"
+    ]
   },
   "Chlorine": {
     "id": "chlorine",
@@ -7307,7 +8177,13 @@
       "germanium_glass_dopant",
       "trichlorosilane"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Olin",
+      "Westlake",
+      "Dow"
+    ]
   },
   "Fluorspar": {
     "id": "fluorspar",
@@ -7336,7 +8212,13 @@
       "fluorochemicals",
       "electrolyte"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Masan Resources",
+      "Mexichem",
+      "Minersa"
+    ]
   },
   "Fluorochemicals": {
     "id": "fluorochemicals",
@@ -7369,6 +8251,12 @@
     ],
     "ai_receives_from": [
       "fluorspar"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Honeywell",
+      "Daikin",
+      "Solvay"
     ]
   },
   "Uranium": {
@@ -7398,7 +8286,13 @@
       "haleu_fuel",
       "leu_fuel"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Cameco",
+      "Kazatomprom",
+      "Orano"
+    ]
   },
   "Zirconium": {
     "id": "zirconium",
@@ -7427,7 +8321,13 @@
       "zircaloy_cladding",
       "ysz_electrolyte"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Westinghouse",
+      "Framatome",
+      "ATI"
+    ]
   },
   "Tellurium": {
     "id": "tellurium",
@@ -7455,7 +8355,13 @@
     "ai_feeds_into": [
       "cdte_film"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "First Solar",
+      "5N Plus",
+      "Asarco"
+    ]
   },
   "Cadmium": {
     "id": "cadmium",
@@ -7483,7 +8389,13 @@
     "ai_feeds_into": [
       "cdte_film"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Korea Zinc",
+      "Nyrstar",
+      "Teck Resources"
+    ]
   },
   "Vanadium": {
     "id": "vanadium",
@@ -7511,7 +8423,13 @@
     "ai_feeds_into": [
       "vanadium_pentoxide"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Largo",
+      "Bushveld Minerals",
+      "Glencore"
+    ]
   },
   "Silver": {
     "id": "silver",
@@ -7540,7 +8458,13 @@
       "silver_paste",
       "solder_alloy"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Fresnillo",
+      "Pan American Silver",
+      "Hochschild"
+    ]
   },
   "Platinum Group Metals": {
     "id": "platinum_pgm",
@@ -7570,7 +8494,13 @@
       "scr",
       "enterprise_hdd"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Anglo American Platinum",
+      "Sibanye-Stillwater",
+      "Impala"
+    ]
   },
   "Lithium": {
     "id": "lithium",
@@ -7599,7 +8529,13 @@
       "lithium_carbonate",
       "electrolyte"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Albemarle",
+      "SQM",
+      "Ganfeng"
+    ]
   },
   "Natural Graphite": {
     "id": "natural_graphite",
@@ -7627,7 +8563,13 @@
     "ai_feeds_into": [
       "graphite_anode"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Syrah Resources",
+      "Nouveau Monde",
+      "South Star"
+    ]
   },
   "Petroleum Coke": {
     "id": "petroleum_coke",
@@ -7657,6 +8599,12 @@
     ],
     "ai_receives_from": [
       "crude_oil"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "BP",
+      "Marathon Petroleum",
+      "Phillips 66"
     ]
   },
   "Iron Phosphate": {
@@ -7685,7 +8633,13 @@
     "ai_feeds_into": [
       "iron_phosphate_cam"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Hunan Yuneng",
+      "Dynanonic",
+      "Aleees"
+    ]
   },
   "Phosphoric Acid": {
     "id": "phosphoric_acid",
@@ -7713,7 +8667,13 @@
     "ai_feeds_into": [
       "iron_phosphate_cam"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "OCP",
+      "Mosaic",
+      "Nutrien"
+    ]
   },
   "Boron": {
     "id": "boron",
@@ -7742,7 +8702,13 @@
       "ndfeb_magnet",
       "fiberglass"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Rio Tinto (US Borax)",
+      "Eti Maden",
+      "5E Advanced Materials"
+    ]
   },
   "Arsenic": {
     "id": "arsenic",
@@ -7770,7 +8736,13 @@
     "ai_feeds_into": [
       "gaas_wafer"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Codelco",
+      "Glencore",
+      "Sumitomo"
+    ]
   },
   "Phosphorus": {
     "id": "phosphorus",
@@ -7798,7 +8770,13 @@
     "ai_feeds_into": [
       "inp_wafer"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Mosaic",
+      "OCP",
+      "Yuntianhua"
+    ]
   },
   "Sulfuric Acid": {
     "id": "sulfuric_acid",
@@ -7826,7 +8804,13 @@
     "ai_feeds_into": [
       "vanadium_electrolyte"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Nutrien",
+      "PVS Chemicals",
+      "Mosaic"
+    ]
   },
   "Ethylene": {
     "id": "ethylene",
@@ -7857,6 +8841,12 @@
     "ai_receives_from": [
       "crude_oil",
       "natural_gas"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Dow",
+      "ExxonMobil Chemical",
+      "LyondellBasell"
     ]
   },
   "Ethylene Glycol": {
@@ -7887,6 +8877,12 @@
     ],
     "ai_receives_from": [
       "ethylene"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Dow",
+      "SABIC",
+      "MEGlobal"
     ]
   },
   "Epichlorohydrin": {
@@ -7915,7 +8911,13 @@
     "ai_feeds_into": [
       "epoxy_resin"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Olin",
+      "Solvay",
+      "Hexion"
+    ]
   },
   "Bisphenol A": {
     "id": "bpa",
@@ -7945,6 +8947,12 @@
     ],
     "ai_receives_from": [
       "crude_oil"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Covestro",
+      "Hexion",
+      "SABIC"
     ]
   },
   "Soda Ash": {
@@ -7973,7 +8981,13 @@
     "ai_feeds_into": [
       "solar_glass"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Solvay",
+      "Genesis Energy",
+      "Tata Chemicals"
+    ]
   },
   "Tin": {
     "id": "tin",
@@ -8003,7 +9017,13 @@
       "euv_photoresist",
       "zircaloy_cladding"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Yunnan Tin",
+      "Minsur",
+      "PT Timah"
+    ]
   },
   "Gold": {
     "id": "gold",
@@ -8031,7 +9051,13 @@
     "ai_feeds_into": [
       "gold_bond_wire"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Newmont",
+      "Barrick",
+      "Agnico Eagle"
+    ]
   },
   "Copper": {
     "id": "copper",
@@ -8092,7 +9118,13 @@
       "fr4_laminate",
       "solder_alloy"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Codelco",
+      "Freeport-McMoRan",
+      "BHP"
+    ]
   },
   "Aluminum": {
     "id": "aluminum",
@@ -8129,7 +9161,13 @@
       "enterprise_hdd",
       "hv_transmission_cable"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Alcoa",
+      "Rio Tinto",
+      "Norsk Hydro"
+    ]
   },
   "Metallurgical-Grade Quartz": {
     "id": "metallurgical_quartz",
@@ -8157,7 +9195,13 @@
     "ai_feeds_into": [
       "silicon_metal"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Sibelco",
+      "Elkem",
+      "Russian Mining"
+    ]
   },
   "Quartz Ore": {
     "id": "quartz_ore",
@@ -8185,7 +9229,13 @@
     "ai_feeds_into": [
       "high_purity_quartz"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Sibelco",
+      "The Quartz Corp",
+      "Norwegian Crystallites"
+    ]
   },
   "Iron Ore": {
     "id": "iron_ore",
@@ -8218,7 +9268,13 @@
       "goes_steel",
       "ndfeb_magnet"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Vale",
+      "Rio Tinto",
+      "BHP"
+    ]
   },
   "Scrap Steel": {
     "id": "scrap_steel",
@@ -8248,7 +9304,13 @@
       "cold_formed_steel",
       "rebar"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Sims Metal",
+      "Schnitzer",
+      "Nucor"
+    ]
   },
   "Coking Coal": {
     "id": "coking_coal",
@@ -8277,7 +9339,13 @@
       "structural_steel",
       "silicon_metal"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "BHP",
+      "Teck Resources",
+      "Glencore"
+    ]
   },
   "Zinc": {
     "id": "zinc",
@@ -8305,7 +9373,13 @@
     "ai_feeds_into": [
       "cold_formed_steel"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Glencore",
+      "Korea Zinc",
+      "Nyrstar"
+    ]
   },
   "Cement": {
     "id": "cement",
@@ -8333,7 +9407,13 @@
     "ai_feeds_into": [
       "concrete"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Holcim",
+      "Cemex",
+      "Heidelberg Materials"
+    ]
   },
   "Aggregates": {
     "id": "aggregates",
@@ -8361,7 +9441,13 @@
     "ai_feeds_into": [
       "concrete"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Vulcan Materials",
+      "Martin Marietta",
+      "Heidelberg Materials"
+    ]
   },
   "Water": {
     "id": "water",
@@ -8392,7 +9478,13 @@
       "ultra_pure_water",
       "land_water_rights"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Local utilities",
+      "Veolia",
+      "American Water"
+    ]
   },
   "Natural Gas": {
     "id": "natural_gas",
@@ -8426,7 +9518,13 @@
       "specialty_solvents",
       "ethylene"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "EQT",
+      "Coterra",
+      "ExxonMobil"
+    ]
   },
   "Crude Oil": {
     "id": "crude_oil",
@@ -8459,7 +9557,13 @@
       "petroleum_coke",
       "bpa"
     ],
-    "ai_receives_from": []
+    "ai_receives_from": [],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "Saudi Aramco",
+      "ExxonMobil",
+      "Chevron"
+    ]
   },
   "Diesel Fuel": {
     "id": "diesel_fuel",
@@ -8489,6 +9593,12 @@
     ],
     "ai_receives_from": [
       "crude_oil"
+    ],
+    "ai_subgroup": null,
+    "ai_key_players": [
+      "ExxonMobil",
+      "Chevron",
+      "Shell"
     ]
   }
 }

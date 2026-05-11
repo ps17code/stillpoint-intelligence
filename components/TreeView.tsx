@@ -2429,9 +2429,10 @@ export default function TreeView() {
           const layerData: { layer: string; items: string[]; globeLayer?: string }[] = (() => {
             if (effectiveVertical === "ai") {
               return [
-                { layer: "Raw Materials", items: ["Germanium", "Gallium", "Helium", "Silica", "Copper", "Silicon"], globeLayer: "raw-material" },
-                { layer: "Components", items: ["Fiber optic cable", "Optical transceivers", "Network switches", "GPUs", "HBM memory", "Server boards", "Power transformers"], globeLayer: "component" },
-                { layer: "Subsystems", items: ["Connectivity", "Compute", "Power", "Cooling"], globeLayer: "subsystem" },
+                { layer: "Raw Materials", items: ["Germanium", "Gallium", "Indium", "Copper", "Silicon", "Lithium", "Cobalt", "Nickel", "Rare Earths", "Helium", "Neon"], globeLayer: "raw-material" },
+                { layer: "Intermediates", items: ["Advanced Logic Wafers", "GaN Wafers", "GeCl₄", "NdFeB Magnets", "LFP Cells", "ABF Substrate", "CoWoS Package"], globeLayer: "component" },
+                { layer: "Components", items: ["GPUs / AI Accelerators", "Fiber Optic Cable", "Optical Transceivers", "Network Switches", "HBM Stacks", "Server Boards", "Power Transformers"], globeLayer: "component" },
+                { layer: "Subsystems", items: ["Compute", "Memory & Storage", "Connectivity", "Cooling", "Power Distribution", "Power Generation", "Physical Structure"], globeLayer: "subsystem" },
                 { layer: "End Use", items: ["AI Datacenter"], globeLayer: "end-use" },
               ];
             }
