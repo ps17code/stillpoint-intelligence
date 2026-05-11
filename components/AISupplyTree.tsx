@@ -88,6 +88,19 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     return m;
   }, [categories, intSubgroups, compSubgroups]);
 
+  // Downstream and upstream maps for BFS
+  const { downstreamMap, upstreamMap } = useMemo(() => {
+    const down = new Map<string, Set<string>>();
+    const up = new Map<string, Set<string>>();
+    chain.edges.forEach(e => {
+      if (!down.has(e.from)) down.set(e.from, new Set());
+      down.get(e.from)!.add(e.to);
+      if (!up.has(e.to)) up.set(e.to, new Set());
+      up.get(e.to)!.add(e.from);
+    });
+    return { downstreamMap: down, upstreamMap: up };
+  }, []);
+
   // Only compute visible edges when a sub-node is selected
   const visibleEdges = useMemo(() => {
     if (!selectedNode) return [];
@@ -171,18 +184,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     return () => cancelAnimationFrame(raf);
   }, [measureAndDraw, expandedRawCat, expandedIntGroup, expandedCompGroup, selectedNode]);
 
-  // Downstream and upstream maps for BFS
-  const { downstreamMap, upstreamMap } = useMemo(() => {
-    const down = new Map<string, Set<string>>();
-    const up = new Map<string, Set<string>>();
-    chain.edges.forEach(e => {
-      if (!down.has(e.from)) down.set(e.from, new Set());
-      down.get(e.from)!.add(e.to);
-      if (!up.has(e.to)) up.set(e.to, new Set());
-      up.get(e.to)!.add(e.from);
-    });
-    return { downstreamMap: down, upstreamMap: up };
-  }, []);
+  // (downstreamMap and upstreamMap moved above visibleEdges)
 
   // All reachable nodes from selection (sub-node or group) via BFS
   const reachableNodes = useMemo(() => {
