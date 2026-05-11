@@ -333,7 +333,11 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     columnGroupKeys: string[];
   }) {
     const subsystemOrder = ["compute", "memory_storage", "connectivity", "cooling", "power_distribution", "power_generation", "physical_structure"];
-    const sortedKeys = columnGroupKeys.sort((a, b) => {
+    const sortedKeys = [...columnGroupKeys].sort((a, b) => {
+      // Highlighted groups first when a node is selected
+      const ha = highlightedGroups.has(a) ? 0 : 1;
+      const hb = highlightedGroups.has(b) ? 0 : 1;
+      if (ha !== hb) return ha - hb;
       const pa = groups[a]?.parent_subsystem;
       const pb = groups[b]?.parent_subsystem;
       if (pa && pb) { const ia = subsystemOrder.indexOf(pa); const ib = subsystemOrder.indexOf(pb); if (ia !== ib) return ia - ib; }
@@ -368,7 +372,11 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
           {expandedGroup ? (
             <>
               <p style={{ fontSize: 8, color: "#706a60", margin: "0 0 4px 0", fontWeight: 500, fontFamily: "'EB Garamond', Georgia, serif" }}>{groups[expandedGroup]?.name}</p>
-              {groups[expandedGroup]?.nodes.map((n, i) => (
+              {[...(groups[expandedGroup]?.nodes ?? [])].sort((a, b) => {
+                const ca = connectedSubNodes.has(a) ? 0 : 1;
+                const cb = connectedSubNodes.has(b) ? 0 : 1;
+                return ca - cb;
+              }).map((n, i) => (
                 <NCard key={n} name={n} bright animate={animatingGroup === expandedGroup} animIndex={i} />
               ))}
             </>
@@ -394,13 +402,18 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     );
   }
 
-  // Simple column
+  // Simple column — connected nodes sorted to top
   function SimpleColumn({ layer }: { layer: { key: string; label: string; nodes: string[] } }) {
+    const sorted = [...layer.nodes].sort((a, b) => {
+      const ca = reachableNodes.has(a) ? 0 : 1;
+      const cb = reachableNodes.has(b) ? 0 : 1;
+      return ca - cb;
+    });
     return (
       <div style={{ minWidth: 140, maxWidth: 170, flexShrink: 0 }}>
         <p style={{ fontSize: 6, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{layer.label} · {layer.nodes.length}</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-          {layer.nodes.map(n => <NCard key={n} name={n} />)}
+          {sorted.map(n => <NCard key={n} name={n} />)}
         </div>
       </div>
     );
