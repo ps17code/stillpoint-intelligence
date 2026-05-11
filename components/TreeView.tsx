@@ -3334,7 +3334,7 @@ export default function TreeView() {
               // Show group description if a group is selected on AI tree
               if (selectedGroup && currentVertical?.id === "ai" && currentLevel === "subsystems") {
                 return (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 12 }}>
                     <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{selectedGroup.name}</p>
                     {selectedGroup.overview && (
                       <div>
@@ -3414,23 +3414,6 @@ export default function TreeView() {
                           ))}
                         </div>
                       </div>
-                      <button
-                        onClick={() => {
-                          const target = navMap[input.id];
-                          if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); }
-                        }}
-                        style={{
-                          background: "transparent", border: `1px solid ${templateAccent ?? "#706a60"}`,
-                          borderRadius: 4, padding: "8px 14px", cursor: "pointer",
-                          fontSize: 10, color: templateAccent ?? "#706a60",
-                          fontFamily: "'Geist Mono', monospace", transition: "background 0.15s",
-                          width: "100%",
-                        }}
-                        onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
-                      >
-                        View {input.label} supply tree &rarr;
-                      </button>
                     </div>
                   );
                 }
