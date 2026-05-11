@@ -76,14 +76,54 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
   // The currently expanded group key (across all columns)
   const activeGroupKey = expandedRawCat ?? expandedIntGroup ?? expandedCompGroup ?? null;
 
+  // Node → group key mapping
+  const nodeToGroup = useMemo(() => {
+    const m = new Map<string, string>();
+    Object.entries(categories).forEach(([k, g]) => g.nodes.forEach(n => m.set(n, k)));
+    Object.entries(intSubgroups).forEach(([k, g]) => g.nodes.forEach(n => m.set(n, k)));
+    Object.entries(compSubgroups).forEach(([k, g]) => g.nodes.forEach(n => m.set(n, k)));
+    return m;
+  }, [categories, intSubgroups, compSubgroups]);
+
+  // Node → connected nodes (direct edges)
+  const nodeAdj = useMemo(() => {
+    const m = new Map<string, Set<string>>();
+    chain.edges.forEach(e => {
+      if (!m.has(e.from)) m.set(e.from, new Set());
+      if (!m.has(e.to)) m.set(e.to, new Set());
+      m.get(e.from)!.add(e.to);
+      m.get(e.to)!.add(e.from);
+    });
+    return m;
+  }, []);
+
   // Build group-to-group links
   const groupLinks = useMemo(() => buildGroupLinks(categories, intSubgroups, compSubgroups, chain.edges), [categories, intSubgroups, compSubgroups]);
 
-  // Set of highlighted group keys (groups linked to the active expanded group)
+  // Highlighted groups: from expanded group OR from selected sub-node
   const highlightedGroups = useMemo(() => {
-    if (!activeGroupKey) return new Set<string>();
-    return groupLinks.get(activeGroupKey) ?? new Set<string>();
-  }, [activeGroupKey, groupLinks]);
+    // If a sub-node is selected, highlight groups containing its connected nodes
+    if (selectedNode) {
+      const connected = nodeAdj.get(selectedNode) ?? new Set<string>();
+      const groups = new Set<string>();
+      connected.forEach(n => {
+        const g = nodeToGroup.get(n);
+        if (g) groups.add(g);
+      });
+      return groups;
+    }
+    // If a group is expanded, highlight linked groups
+    if (activeGroupKey) {
+      return groupLinks.get(activeGroupKey) ?? new Set<string>();
+    }
+    return new Set<string>();
+  }, [selectedNode, activeGroupKey, nodeAdj, nodeToGroup, groupLinks]);
+
+  // Connected sub-nodes: when a sub-node is selected and a highlighted group is expanded, which specific nodes to highlight
+  const connectedSubNodes = useMemo(() => {
+    if (!selectedNode) return new Set<string>();
+    return nodeAdj.get(selectedNode) ?? new Set<string>();
+  }, [selectedNode, nodeAdj]);
 
   function getGroupStatus(nodes: string[]): string {
     const statuses = nodes.map(n => uNodes[n]?.status ?? "tbd");
@@ -98,8 +138,9 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     const node = uNodes[name];
     const statusColor = STATUS_COLORS[node?.status ?? "tbd"] ?? "#444";
     const isSelected = selectedNode === name;
-    const bg = isSelected ? "rgb(88, 86, 84)" : bright ? "rgb(40, 37, 34)" : "rgb(34, 31, 29)";
-    const border = isSelected ? "rgb(100, 98, 96)" : bright ? "rgb(50, 46, 42)" : "rgb(42, 39, 37)";
+    const isConnected = selectedNode != null && connectedSubNodes.has(name);
+    const bg = isSelected ? "rgb(88, 86, 84)" : isConnected ? "rgb(55, 52, 48)" : bright ? "rgb(40, 37, 34)" : "rgb(34, 31, 29)";
+    const border = isSelected ? "rgb(100, 98, 96)" : isConnected ? "rgb(75, 70, 65)" : bright ? "rgb(50, 46, 42)" : "rgb(42, 39, 37)";
 
     return (
       <div
@@ -118,7 +159,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
         onMouseLeave={e => { if (!isSelected) { e.currentTarget.style.background = bg; e.currentTarget.style.borderColor = border; } }}
       >
         <div style={{ position: "absolute", left: 3, top: "50%", transform: "translateY(-50%)", width: 4, height: 4, borderRadius: "50%", background: statusColor }} />
-        <p style={{ fontSize: 10, fontWeight: 600, color: isSelected ? "#fff" : bright ? "#f0ece4" : "#ece8e1", margin: 0, lineHeight: 1.2, whiteSpace: "nowrap", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</p>
+        <p style={{ fontSize: 10, fontWeight: 600, color: isSelected ? "#fff" : isConnected ? "#f0ece4" : bright ? "#f0ece4" : "#ece8e1", margin: 0, lineHeight: 1.2, whiteSpace: "nowrap", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</p>
       </div>
     );
   }
@@ -136,7 +177,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
           borderRadius: 3, cursor: "pointer",
           display: "flex", alignItems: "center", justifyContent: "space-between",
           transition: "background 0.2s, border-color 0.2s, opacity 0.2s",
-          opacity: activeGroupKey && !highlighted && activeGroupKey !== groupKey ? 0.4 : 1,
+          opacity: (activeGroupKey && !highlighted && activeGroupKey !== groupKey) || (selectedNode && !highlighted) ? 0.35 : 1,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
