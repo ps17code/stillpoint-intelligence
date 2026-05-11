@@ -7384,7 +7384,15 @@
       "Yunnan Chihong",
       "Umicore",
       "5N Plus"
-    ]
+    ],
+    "ai_summary": {
+      "what_it_is": "A silvery-grey metalloid whose value comes from its ability to dope fiber-optic glass and form the active layer in IR optics and SiGe transistors.",
+      "where_it_comes_from": "Recovered almost entirely as a byproduct of zinc smelting and coal fly ash, never mined directly. China produces ~60% of global supply, with smaller volumes from Belgium (Umicore), Canada (Teck Resources), and the US (5N Plus).",
+      "what_its_used_for": "In AI infrastructure, germanium is converted to germanium tetrachloride (GeCl4), which dopes the cores of fiber optic cables to control refractive index. Smaller volumes go into IR optics, satellite solar cells, and SiGe high-frequency transistors.",
+      "supply_situation": "China banned exports to the US in December 2024, then suspended the ban in November 2025 through November 2026 — but US imports from China have been zero since the original July 2023 export controls took effect. Western-accessible supply is structurally tight at ~80 t/yr.",
+      "pricing_scale": "A small market in absolute terms — global production around 220 t/yr — but it gates much larger downstream chains. Prices have roughly doubled since 2022 and remain elevated despite the November 2025 ban suspension.",
+      "why_it_matters": "AI datacenter fiber demand is scaling exponentially as cluster sizes grow, and the ban-suspend-ban cycle has shown how quickly access can be cut. The combination of byproduct supply, single-region concentration, and a step-function demand curve makes germanium one of the cleanest chokepoint setups in the chain."
+    }
   },
   "Gallium": {
     "id": "gallium",
@@ -7419,7 +7427,15 @@
       "AXT",
       "5N Plus",
       "Dowa"
-    ]
+    ],
+    "ai_summary": {
+      "what_it_is": "A soft metal that liquefies near room temperature, whose strategic value comes from its role in two compound semiconductors: gallium arsenide (GaAs) for lasers and RF chips, and gallium nitride (GaN) for high-efficiency power switching.",
+      "where_it_comes_from": "Almost exclusively a byproduct of bauxite refining for aluminum production. China produces ~98% of primary gallium globally, with negligible Western primary output. Recycling provides modest secondary supply, mostly in Japan and Europe.",
+      "what_its_used_for": "In AI infrastructure, gallium feeds two distinct chains: GaAs wafers underlie short-reach optical transceiver lasers, and GaN wafers underlie the power transistors in PSUs, VRMs, and solar inverters.",
+      "supply_situation": "Under Chinese export licensing since August 2023 and outright US export ban from December 2024 to November 2025. China expanded its January 2025 restrictions to include the extraction technologies used to separate gallium from bauxite — meaning even non-Chinese producers face technology-transfer risk. The November 2025 suspension is temporary.",
+      "pricing_scale": "Roughly 600 t/yr of refined gallium produced globally, supporting downstream markets in the hundreds of billions. Prices spiked sharply on the 2023 licensing and remain elevated.",
+      "why_it_matters": "GaN power chips are displacing silicon in datacenter power delivery as efficiency demands rise, while GaAs lasers anchor short-reach optics. Both chains are growing fast at exactly the moment China is tightening control over the upstream metal and the separation technology that makes Western production possible."
+    }
   },
   "Indium": {
     "id": "indium",
@@ -7453,7 +7469,15 @@
       "Korea Zinc",
       "Nyrstar",
       "Teck Resources"
-    ]
+    ],
+    "ai_summary": {
+      "what_it_is": "A soft, silvery metal whose value comes from one job — alloyed with phosphorus, it forms the substrate underlying nearly every high-speed laser and photodiode in modern optical communications.",
+      "where_it_comes_from": "Almost never mined directly. Recovered as a byproduct of zinc refining, meaning supply scales with zinc demand rather than its own. China produces ~60% of global supply; Korea Zinc, Nyrstar, and Teck Resources lead the rest.",
+      "what_its_used_for": "In AI infrastructure, indium feeds into indium phosphide (InP) wafers — the foundation of every optical transceiver above ~10 Gbps. Smaller volumes go into transparent conductive films for displays and solar panels.",
+      "supply_situation": "Tight by structure. Annual global production is only ~900 tonnes, byproduct economics block independent scaling, and indium was added to China's October 2025 export control list before the broader November suspension. The Critical Minerals Institute added indium to its 2026 watchlist.",
+      "pricing_scale": "A ~$200-300M annual metal market enabling tens of billions in downstream products. Prices have ranged $200-700/kg over the past decade with persistent upward pressure.",
+      "why_it_matters": "Optical transceiver demand is scaling exponentially with AI cluster buildouts, and each upgrade (400G → 800G → 1.6T) increases indium content per device. Co-packaged optics, the next-generation architecture, uses even more InP per device."
+    }
   },
   "Tantalum": {
     "id": "tantalum",
@@ -7488,7 +7512,15 @@
       "Global Advanced Metals",
       "AMG",
       "Ulba"
-    ]
+    ],
+    "ai_summary": {
+      "what_it_is": "A dense, corrosion-resistant transition metal whose value comes from its use in highly reliable capacitors — every server board, switch, and PSU uses many of them — and in high-temperature alloys for turbine blades.",
+      "where_it_comes_from": "Primarily from artisanal mining in DRC and Rwanda (together ~50% of supply), with byproduct production from Australian lithium mines (Greenbushes, Wodgina) supplying most of the remaining Western volume. Brazil and Nigeria provide modest additional output.",
+      "what_its_used_for": "In AI infrastructure, tantalum's primary use is tantalum capacitors on server boards and power components — these are irreplaceable for the high-reliability, high-density energy storage that AI compute requires. Secondary use in nickel superalloys for gas turbine blades.",
+      "supply_situation": "The April 2024 M23 capture of the Rubaya mine in DRC and the May 2025 mine collapse have tightened African supply, with Chinese imports of Rwandan concentrate up 82% from 2023 to 2025. The conflict-mineral status and concentration risk are intensifying.",
+      "pricing_scale": "Global production ~1,700 t/yr of concentrate with ~1,250 t/yr of refined metal. Spot prices have surged in 2025-26 on the combination of supply disruption and AI-driven capacitor demand.",
+      "why_it_matters": "AI datacenter buildout has become a major incremental demand driver — tantalum-polymer capacitors on AI server boards are consumed in the billions of units annually. The DRC supply situation is deteriorating just as demand is structurally accelerating."
+    }
   },
   "Tungsten": {
     "id": "tungsten",
@@ -7525,7 +7557,15 @@
       "Almonty Industries",
       "Sandvik",
       "China Minmetals"
-    ]
+    ],
+    "ai_summary": {
+      "what_it_is": "The metal with the highest melting point of any element (3,422°C), used in wear-resistant tooling, chip BEOL interconnects, and nickel-superalloy alloying for turbine blades.",
+      "where_it_comes_from": "China produces ~83% of global mined tungsten and controls ~75% of refining capacity (ammonium paratungstate, the key intermediate). Vietnam, Russia, Austria, and emerging producers in South Korea, Kazakhstan, and Portugal account for the rest.",
+      "what_its_used_for": "In AI infrastructure, tungsten is used as the plug metal in semiconductor BEOL interconnects on every logic chip below 5nm, and as an alloying element in turbine blades for onsite gas power generation. Smaller use in NAND flash high-aspect-ratio etch.",
+      "supply_situation": "China cut its 2025 mining quota to 58,000 tonnes of 65% WO3 concentrate, tightening upstream feed. China imposed tungsten export controls in 2025 as part of the broader critical minerals strategy. The European APT benchmark hit a 12-year high in mid-2025. Tungsten was elevated to the Critical Minerals Institute's top 5 watchlist for 2026.",
+      "pricing_scale": "Global mine production ~81,000 t/yr in 2024, with China consuming more than half of refined output domestically. The exportable surplus is shrinking even as global demand grows.",
+      "why_it_matters": "Tungsten sits inside both the most strategically watched AI components (advanced logic chips) and the most strategically constrained datacenter power infrastructure (gas turbine blades). Recycling provides ~30% of supply and is expanding, but new primary capacity has long construction timelines."
+    }
   },
   "Cobalt": {
     "id": "cobalt",
@@ -7593,7 +7633,15 @@
       "Molymet",
       "KGHM",
       "Freeport-McMoRan"
-    ]
+    ],
+    "ai_summary": {
+      "what_it_is": "One of the rarest elements in the Earth's crust, prized for an extremely high melting point (~3,180°C) and unique alloying behavior in nickel superalloys. Has no substitutes in single-crystal turbine blade applications.",
+      "where_it_comes_from": "Almost entirely a byproduct of molybdenum production, itself a byproduct of copper mining. Chile produces ~50% of global supply; Molymet (Chile), KGHM (Poland), and Freeport-McMoRan are the largest refiners. The US reinstated rhenium to its critical minerals list in 2025 and explicitly included it in the 2025 bilateral mining agreement with Chile.",
+      "what_its_used_for": "In AI infrastructure, rhenium's role is narrow but critical: it's the key alloying element in single-crystal nickel superalloys for the highest-temperature hot-section blades in gas turbines — both the frame turbines and the aeroderivatives being deployed for onsite datacenter power.",
+      "supply_situation": "Production is structurally tiny — roughly 50 tonnes globally per year — and constrained by its byproduct economics behind molybdenum and copper. Cannot scale independently.",
+      "pricing_scale": "A genuinely small market (perhaps $200M annually) that gates much larger downstream industries. Prices have been volatile but persistently elevated.",
+      "why_it_matters": "Gas turbine delivery times stretching into 2029 are not just a manufacturing problem — they're partly a rhenium-and-superalloy problem. Every gigawatt of onsite gas power for AI datacenters depends on a metallurgical chain that bottlenecks at a metal with no substitute and no path to rapid supply expansion."
+    }
   },
   "Hafnium": {
     "id": "hafnium",
@@ -7629,7 +7677,15 @@
       "Framatome",
       "ATI",
       "Nuclear Fuel Industries"
-    ]
+    ],
+    "ai_summary": {
+      "what_it_is": "A transition metal almost always found with zirconium — chemically very similar but with very different uses. Hafnium's strategic value comes from its high-temperature stability and its role as the high-k gate dielectric in advanced-node logic chips.",
+      "where_it_comes_from": "Produced almost entirely as a byproduct of nuclear-grade zirconium separation. Framatome (France), ATI (US), and Nuclear Fuel Industries (Japan) are the dominant producers, with smaller output from Russia and China.",
+      "what_its_used_for": "In AI infrastructure, hafnium oxide is the gate dielectric in every advanced-node logic chip — its high dielectric constant lets transistors continue scaling below 30nm. Smaller volumes go into nickel superalloys for turbines and zircaloy stabilization in nuclear fuel cladding.",
+      "supply_situation": "Tight by structure. Hafnium supply is mechanically linked to nuclear-grade zirconium demand, which is growing as SMR programs ramp. Any expansion of zirconium capacity automatically increases hafnium availability, but the inverse is also true — periods of low nuclear activity have historically left hafnium scarce.",
+      "pricing_scale": "A small but high-margin market — perhaps 70-80 t/yr of refined hafnium globally — with prices in the $1,000+/kg range.",
+      "why_it_matters": "Two largely independent demand vectors are converging: advanced AI chips need more hafnium oxide per wafer as nodes shrink, and SMR deployment for AI power is increasing nuclear-grade zirconium production (which produces hafnium as a byproduct). The unusual structure means hafnium might actually loosen as the nuclear chain scales."
+    }
   },
   "Molybdenum": {
     "id": "molybdenum",
@@ -7663,7 +7719,15 @@
       "Freeport-McMoRan",
       "Codelco",
       "Antofagasta"
-    ]
+    ],
+    "ai_summary": {
+      "what_it_is": "A high-melting-point transition metal used primarily as an alloying element in stainless steel, structural steels, and superalloys. Less of a chokepoint than other specialty metals but with strategic supply linkages.",
+      "where_it_comes_from": "Produced both as a primary metal and as a byproduct of copper mining. Chile, China, the US, and Peru are the largest producers. Freeport-McMoRan, Codelco, and Antofagasta dominate Western supply.",
+      "what_its_used_for": "In AI infrastructure, molybdenum is the alloying element that makes 316-grade stainless steel resistant to corrosion in cooling loops, CDU heat exchangers, and chiller systems. Also alloyed into nickel superalloys and the high-strength structural steels used in datacenter construction.",
+      "supply_situation": "Reasonably diversified by specialty-metal standards, but the byproduct linkage to copper means molybdenum supply tracks copper market dynamics. Rhenium is itself a byproduct of molybdenum, so molybdenum demand has compounding effects upstream.",
+      "pricing_scale": "Global mine production ~250,000 t/yr — much larger than other specialty metals — with prices typically $20-50/kg.",
+      "why_it_matters": "Less acute than the other specialty metals, but molybdenum sits at the intersection of three growing datacenter demand vectors — stainless cooling systems, structural steel grades, and turbine superalloys. Its role as the upstream source of rhenium makes molybdenum production levels a leading indicator for the more constrained rhenium supply."
+    }
   },
   "Chromium": {
     "id": "chromium",
