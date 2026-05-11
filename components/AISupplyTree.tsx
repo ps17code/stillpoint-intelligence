@@ -98,8 +98,17 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     return { downstreamMap: down, upstreamMap: up };
   }, []);
 
-  // BFS: get all reachable nodes (upstream + downstream) from a set of start nodes
-  function getFullChain(startNodes: string[]): Set<string> {
+  // All reachable nodes from selection (sub-node or group) via BFS
+  const reachableNodes = useMemo(() => {
+    let startNodes: string[] = [];
+    if (selectedNode) {
+      startNodes = [selectedNode];
+    } else if (activeGroupKey) {
+      const allGroups = { ...categories, ...intSubgroups, ...compSubgroups };
+      startNodes = allGroups[activeGroupKey]?.nodes ?? [];
+    }
+    if (startNodes.length === 0) return new Set<string>();
+
     const visited = new Set<string>();
     const queue = [...startNodes];
     startNodes.forEach(n => visited.add(n));
@@ -109,22 +118,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
       (upstreamMap.get(curr) ?? new Set()).forEach(n => { if (!visited.has(n)) { visited.add(n); queue.push(n); } });
     }
     return visited;
-  }
-
-  // All reachable nodes from selection (sub-node or group)
-  const reachableNodes = useMemo(() => {
-    if (selectedNode) {
-      return getFullChain([selectedNode]);
-    }
-    if (activeGroupKey) {
-      // Get all member nodes of the expanded group
-      const allGroups = { ...categories, ...intSubgroups, ...compSubgroups };
-      const members = allGroups[activeGroupKey]?.nodes ?? [];
-      return getFullChain(members);
-    }
-    return new Set<string>();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedNode, activeGroupKey]);
+  }, [selectedNode, activeGroupKey, downstreamMap, upstreamMap, categories, intSubgroups, compSubgroups]);
 
   // Highlighted groups: groups containing any reachable node
   const highlightedGroups = useMemo(() => {
