@@ -28,13 +28,17 @@ const STATUS_COLORS: Record<string, string> = {
 interface AISupplyTreeProps {
   onNodeClick?: (name: string) => void;
   onGroupClick?: (groupKey: string, groupName: string, overview: string, activity: string) => void;
+  onNavigateToInput?: (name: string) => void;
 }
 
-export default function AISupplyTree({ onNodeClick, onGroupClick }: AISupplyTreeProps) {
+const INPUT_NODES = new Set(["Germanium", "Gallium", "Fiber Optic Cable"]);
+
+export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToInput }: AISupplyTreeProps) {
   // Each column tracks which group is expanded (null = show all groups collapsed)
   const [expandedRawCat, setExpandedRawCat] = useState<string | null>(null);
   const [expandedIntGroup, setExpandedIntGroup] = useState<string | null>(null);
   const [expandedCompGroup, setExpandedCompGroup] = useState<string | null>(null);
+  const [selectedNode, setSelectedNode] = useState<string | null>(null);
 
   const categories = chain.rawMaterialCategories ?? {};
   const compSubgroups = chain.componentSubgroups ?? {};
@@ -52,12 +56,13 @@ export default function AISupplyTree({ onNodeClick, onGroupClick }: AISupplyTree
   function NCard({ name, bright }: { name: string; bright?: boolean }) {
     const node = uNodes[name];
     const statusColor = STATUS_COLORS[node?.status ?? "tbd"] ?? "#444";
-    const bg = bright ? "rgb(40, 37, 34)" : "rgb(34, 31, 29)";
-    const border = bright ? "rgb(50, 46, 42)" : "rgb(42, 39, 37)";
+    const isSelected = selectedNode === name;
+    const bg = isSelected ? "rgb(88, 86, 84)" : bright ? "rgb(40, 37, 34)" : "rgb(34, 31, 29)";
+    const border = isSelected ? "rgb(100, 98, 96)" : bright ? "rgb(50, 46, 42)" : "rgb(42, 39, 37)";
 
     return (
       <div
-        onClick={() => onNodeClick?.(name)}
+        onClick={() => { setSelectedNode(prev => prev === name ? null : name); onNodeClick?.(name); }}
         style={{
           padding: "4px 6px 4px 12px",
           background: bg,
@@ -67,11 +72,11 @@ export default function AISupplyTree({ onNodeClick, onGroupClick }: AISupplyTree
           transition: "background 0.15s, border-color 0.15s",
           position: "relative" as const,
         }}
-        onMouseEnter={e => { e.currentTarget.style.background = "rgb(48, 44, 40)"; e.currentTarget.style.borderColor = "rgb(60, 56, 52)"; }}
-        onMouseLeave={e => { e.currentTarget.style.background = bg; e.currentTarget.style.borderColor = border; }}
+        onMouseEnter={e => { if (!isSelected) { e.currentTarget.style.background = "rgb(48, 44, 40)"; e.currentTarget.style.borderColor = "rgb(60, 56, 52)"; } }}
+        onMouseLeave={e => { if (!isSelected) { e.currentTarget.style.background = bg; e.currentTarget.style.borderColor = border; } }}
       >
         <div style={{ position: "absolute", left: 3, top: "50%", transform: "translateY(-50%)", width: 4, height: 4, borderRadius: "50%", background: statusColor }} />
-        <p style={{ fontSize: 10, fontWeight: 600, color: bright ? "#f0ece4" : "#ece8e1", margin: 0, lineHeight: 1.2, whiteSpace: "nowrap", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</p>
+        <p style={{ fontSize: 10, fontWeight: 600, color: isSelected ? "#fff" : bright ? "#f0ece4" : "#ece8e1", margin: 0, lineHeight: 1.2, whiteSpace: "nowrap", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</p>
       </div>
     );
   }
@@ -93,7 +98,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick }: AISupplyTree
       >
         <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
           <div style={{ width: 4, height: 4, borderRadius: "50%", background: statusColor, flexShrink: 0 }} />
-          <span style={{ fontSize: 8, fontWeight: 600, color: "#d0c8bc" }}>{name}</span>
+          <span style={{ fontSize: 10, fontWeight: 600, color: "#d0c8bc" }}>{name}</span>
           <span style={{ fontSize: 6, color: "#555", fontFamily: "'Geist Mono', monospace" }}>· {count}</span>
         </div>
         <span style={{ fontSize: 7, color: "#555", transform: isExpanded ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}>›</span>
@@ -143,10 +148,14 @@ export default function AISupplyTree({ onNodeClick, onGroupClick }: AISupplyTree
         </div>
         <div style={{ maxHeight: "calc(100vh - 280px)", overflowY: "auto", paddingRight: 4, display: "flex", flexDirection: "column", gap: 2 }}>
           {expandedGroup ? (
-            // Expanded: show only this group's nodes
+            // Expanded: show only this group's nodes with fade-up animation
             <>
               <p style={{ fontSize: 7, color: "#706a60", margin: "0 0 4px 0", fontWeight: 500 }}>{groups[expandedGroup]?.name}</p>
-              {groups[expandedGroup]?.nodes.map(n => <NCard key={n} name={n} bright />)}
+              {groups[expandedGroup]?.nodes.map((n, i) => (
+                <div key={n} style={{ animation: `subNodeFadeUp 250ms ease-out ${i * 30}ms both` }}>
+                  <NCard name={n} bright />
+                </div>
+              ))}
             </>
           ) : (
             // Collapsed: show all groups as headers
@@ -183,39 +192,70 @@ export default function AISupplyTree({ onNodeClick, onGroupClick }: AISupplyTree
   }
 
   return (
-    <div style={{ display: "flex", gap: 16, padding: "12px 0", overflow: "auto", minWidth: 0 }}>
-      {/* Raw Materials — categories */}
-      <GroupedColumn
-        label="RAW MATERIALS"
-        totalCount={63}
-        groups={categories}
-        expandedGroup={expandedRawCat}
-        setExpandedGroup={setExpandedRawCat}
-      />
+    <div style={{ position: "relative", minHeight: 0 }}>
+      <div style={{ display: "flex", gap: 16, padding: "12px 0", overflow: "auto", minWidth: 0 }}>
+        {/* Raw Materials — categories */}
+        <GroupedColumn
+          label="RAW MATERIALS"
+          totalCount={63}
+          groups={categories}
+          expandedGroup={expandedRawCat}
+          setExpandedGroup={setExpandedRawCat}
+        />
 
-      {/* Intermediates — subgroups */}
-      <GroupedColumn
-        label="INTERMEDIATES"
-        totalCount={56}
-        groups={intSubgroups}
-        expandedGroup={expandedIntGroup}
-        setExpandedGroup={setExpandedIntGroup}
-      />
+        {/* Intermediates — subgroups */}
+        <GroupedColumn
+          label="INTERMEDIATES"
+          totalCount={56}
+          groups={intSubgroups}
+          expandedGroup={expandedIntGroup}
+          setExpandedGroup={setExpandedIntGroup}
+        />
 
-      {/* Components — subgroups */}
-      <GroupedColumn
-        label="COMPONENTS"
-        totalCount={58}
-        groups={compSubgroups}
-        expandedGroup={expandedCompGroup}
-        setExpandedGroup={setExpandedCompGroup}
-      />
+        {/* Components — subgroups */}
+        <GroupedColumn
+          label="COMPONENTS"
+          totalCount={58}
+          groups={compSubgroups}
+          expandedGroup={expandedCompGroup}
+          setExpandedGroup={setExpandedCompGroup}
+        />
 
-      {/* Subsystems */}
-      <SimpleColumn layer={chain.layers[3]} />
+        {/* Subsystems */}
+        <SimpleColumn layer={chain.layers[3]} />
 
-      {/* End Use */}
-      <SimpleColumn layer={chain.layers[4]} />
+        {/* End Use */}
+        <SimpleColumn layer={chain.layers[4]} />
+      </div>
+
+      {/* Navigate button — bottom right when an input node is selected */}
+      {selectedNode && INPUT_NODES.has(selectedNode) && (
+        <div style={{ position: "absolute", bottom: 8, right: 8, zIndex: 10 }}>
+          <button
+            onClick={() => onNavigateToInput?.(selectedNode)}
+            style={{
+              background: "rgb(60, 58, 56)", border: "1px solid rgb(80, 78, 76)",
+              borderRadius: 6, padding: "8px 16px", cursor: "pointer",
+              fontSize: 10, color: "#ece8e1", fontFamily: "'Geist Mono', monospace",
+              display: "flex", alignItems: "center", gap: 6,
+              transition: "background 0.15s",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = "rgb(75, 73, 71)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "rgb(60, 58, 56)"; }}
+          >
+            View {selectedNode} supply tree <span style={{ color: "#a09888" }}>&rarr;</span>
+          </button>
+        </div>
+      )}
+
+      {/* Transition animations */}
+      <style>{`
+        @keyframes subNodeFadeUp {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }

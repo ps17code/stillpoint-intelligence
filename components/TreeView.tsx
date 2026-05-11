@@ -2186,6 +2186,15 @@ export default function TreeView() {
             setSelectedTreeNode(null);
             setRightTab("summary");
           }}
+          onNavigateToInput={(name) => {
+            const navMap: Record<string, PathEntry[]> = {
+              "Germanium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
+              "Gallium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "gallium", name: "Gallium" }],
+              "Fiber Optic Cable": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
+            };
+            const target = navMap[name];
+            if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); }
+          }}
         />;
       }
 
