@@ -7599,6 +7599,14 @@
       "Glencore",
       "CMOC",
       "Eurasian Resources"
+    ],
+    "ai_summary": [
+      "Transition metal used in lithium-ion battery cathodes (NMC chemistry), superalloys for gas turbines, and cemented carbides for cutting tools.",
+      "~70% of global mine production comes from the DRC, with most refined output processed in China.",
+      "Global production is roughly 190,000 t/yr, with artisanal mining in the DRC raising persistent ethical sourcing concerns.",
+      "In AI datacenters, cobalt appears in NMC battery backup systems, turbine superalloys for onsite gas power, and cutting tools for construction.",
+      "LFP batteries (cobalt-free) are displacing NMC for stationary storage, which may reduce datacenter cobalt exposure over time.",
+      "Cobalt's AI infrastructure role is shrinking as LFP gains share in BESS, but it remains embedded in turbine alloys and legacy backup systems."
     ]
   },
   "Rhenium": {
@@ -7762,6 +7770,14 @@
       "Glencore",
       "Eurasian Resources",
       "Tharisa"
+    ],
+    "ai_summary": [
+      "Metal whose primary value is corrosion resistance — the defining element in stainless steel (minimum 10.5% Cr content by definition).",
+      "Global ferrochrome production is roughly 17 million t/yr, with South Africa (~45%) and Kazakhstan as leading producers.",
+      "316-grade stainless steel, which requires 16–18% chromium, is the standard material for datacenter cooling piping, heat exchangers, and manifolds.",
+      "Also alloyed into nickel-based superalloys for gas turbine hot-section components used in datacenter power generation.",
+      "Supply is geographically concentrated but generally adequate — South African ferrochrome output is periodically constrained by electricity load-shedding.",
+      "Chromium is a structural enabler of datacenter thermal and power infrastructure — constrained not by geology but by South African grid reliability."
     ]
   },
   "Nickel": {
@@ -7798,6 +7814,14 @@
       "Nornickel",
       "Vale",
       "BHP"
+    ],
+    "ai_summary": [
+      "Versatile metal used in stainless steel, battery cathodes (NMC), and the nickel-based superalloys that withstand turbine operating temperatures.",
+      "Global mine production is roughly 3.3 million t/yr, with Indonesia (~50%), Philippines, Russia, and New Caledonia as top producers.",
+      "Indonesia's massive laterite nickel expansion has shifted global supply, with Chinese-financed HPAL and RKEF plants dominating new capacity.",
+      "In AI datacenters, nickel appears in stainless steel cooling systems, NMC battery backup, and the Inconel/Waspaloy superalloys inside gas turbines.",
+      "Class 1 nickel (battery and alloy grade) trades at a premium to ferronickel (stainless grade) — the two markets have partially decoupled.",
+      "Nickel is embedded across power, thermal, and structural layers of the datacenter — not a single chokepoint but a pervasive dependency."
     ]
   },
   "Neodymium": {
@@ -7832,6 +7856,14 @@
       "MP Materials",
       "Lynas",
       "Shenghe"
+    ],
+    "ai_summary": [
+      "Silver-gray rare earth that, alloyed with iron and boron, forms the strongest permanent magnets commercially available.",
+      "China controls ~85% of global NdFeB magnet production and refines roughly 60% of the world's neodymium oxide.",
+      "Global NdFeB magnet output was around 220,000 tonnes in 2024, with demand forecast to grow ~8% annually driven by EVs and AI infrastructure.",
+      "China imposed export controls on rare earth processing technology in late 2023, then tightened further in 2025 with licensing requirements on magnet-grade exports.",
+      "Every HDD spindle motor and datacenter cooling fan contains an NdFeB magnet — each GPU server rack requires dozens across storage and thermal management.",
+      "AI datacenter build-out and EV demand are compounding on the same magnet supply — neodymium sits at the intersection of the decade's two largest hardware scaling curves."
     ]
   },
   "Praseodymium": {
@@ -7866,6 +7898,14 @@
       "MP Materials",
       "Lynas",
       "Shenghe"
+    ],
+    "ai_summary": [
+      "Light rare earth almost always sold as didymium (NdPr oxide, ~75% Nd / 25% Pr), because the two elements are commercially inseparable without prohibitive cost.",
+      "China controls ~85–90% of global NdPr oxide output; prices traded in the $50–70/kg range through 2024–2025 after collapsing from a 2022 peak near $130/kg.",
+      "Substitutes for neodymium atom-for-atom in NdFeB sintered magnets powering EV motors, industrial robots, and datacenter cooling and storage systems.",
+      "MP Materials (Mountain Pass, California) and Lynas Rare Earths (Mount Weld, Australia) are the only large-scale non-Chinese NdPr producers.",
+      "China extended licensing requirements on magnet-grade NdPr exports in mid-2025, pressuring non-Chinese magnet supply chains serving defense and EV sectors.",
+      "NdPr has no drop-in substitute in high-performance permanent magnets — as AI and defense programs both demand domestically sourced magnets, supply outside China becomes a structural chokepoint."
     ]
   },
   "Dysprosium": {
@@ -7900,6 +7940,14 @@
       "Shenghe",
       "China Northern Rare Earth",
       "Lynas"
+    ],
+    "ai_summary": [
+      "Heavy rare earth added at 1–6% by weight to NdFeB magnets to prevent demagnetization above 80°C — structurally irreplaceable in high-performance motors.",
+      "Global production runs roughly 1,500–2,000 t/yr, with China controlling ~90% of output from ionic adsorption clay deposits in southern provinces and Myanmar.",
+      "Unlike light rare earths from hard-rock mines, dysprosium occurs only in trace concentrations in ionic clay ores — supply is structurally inelastic.",
+      "Myanmar, which supplied 50–70% of the ionic clay ore feeding Chinese separation plants, saw armed-conflict-driven border closures in 2024–2025 that spiked prices above $250/kg.",
+      "In AI infrastructure, dysprosium-bearing magnets sit in HDD motors, cooling fans, and the wind turbines increasingly used to power or offset datacenter loads.",
+      "China's 2023–2025 export controls on separation technology close off the fastest route to non-Chinese refining — any magnet-dependent AI supply chain carries a concentrated single point of failure."
     ]
   },
   "Terbium": {
@@ -7934,6 +7982,14 @@
       "Shenghe",
       "China Northern Rare Earth",
       "Northern Minerals"
+    ],
+    "ai_summary": [
+      "Heavy rare earth added in small quantities (0.1–0.3 wt%) to NdFeB magnets to raise coercivity, allowing full performance above 150°C.",
+      "Global production is roughly 300–400 t/yr — one of the scarcest commercially traded rare earths by absolute volume.",
+      "China controls ~85–90% of supply, sourced from the same ionic clay deposits in Jiangxi and Fujian that produce dysprosium.",
+      "Co-extracted with dysprosium from identical ore bodies — any supply disruption to one element simultaneously constrains the other.",
+      "Spot prices have historically ranged $700–2,000/kg, spiking during China's 2010–2011 export quota crisis and again during 2022–2023 trade restriction signaling.",
+      "Terbium sits at the narrowest bottleneck in the magnet supply chain — low volume, zero Western primary production, and no substitute."
     ]
   },
   "Cerium": {
@@ -7968,6 +8024,14 @@
       "Lynas",
       "MP Materials",
       "Shenghe"
+    ],
+    "ai_summary": [
+      "Most abundant rare earth element, extracted as a co-product of bastnäsite and monazite ore processing in China, Australia, and the US.",
+      "Global cerium oxide production runs 40,000–60,000 t/yr, with China accounting for ~85–90% of refined output.",
+      "Cerium oxide is the dominant abrasive in CMP slurries — the polishing process repeated dozens of times per wafer at every advanced semiconductor fab.",
+      "CMP demand tied to AI chips is rising because HBM stacking and dense interconnect layers require more polishing steps per wafer.",
+      "Cerium carbonate spot prices remain in the $1–2/kg range, far below dysprosium (~$300/kg) or terbium (~$700/kg), reflecting abundance.",
+      "Despite low unit prices, cerium is a consumable at every advanced fab — any export restriction or purity disruption would propagate directly into wafer yield."
     ]
   },
   "Yttrium": {
@@ -8002,6 +8066,14 @@
       "Lynas",
       "MP Materials",
       "Shenghe"
+    ],
+    "ai_summary": [
+      "Rare earth element whose primary AI-infrastructure role is stabilizing the YSZ ceramic electrolyte inside solid oxide fuel cells (SOFCs).",
+      "China produces roughly 60–70% of global yttrium oxide, with total production around 8,000–10,000 t/yr.",
+      "Also used in LED phosphors, laser crystals, and high-temperature ceramics, but the SOFC application carries the AI thesis.",
+      "Bloom Energy deploys solid oxide fuel cells for onsite datacenter power — each system uses yttria-stabilized zirconia electrolyte stacks.",
+      "Yttrium prices sit in the $3–5/kg oxide range, low by rare earth standards but structurally tied to Chinese supply decisions.",
+      "If SOFCs scale as an onsite power solution for AI datacenters that can't wait for grid upgrades, yttrium demand inflects from a niche into a structural input."
     ]
   },
   "Helium": {
@@ -8039,6 +8111,14 @@
       "Air Liquide",
       "Linde",
       "Air Products"
+    ],
+    "ai_summary": [
+      "Noble gas with the lowest boiling point of any element — used for cryogenic cooling, fiber draw tower purge, and leak detection in semiconductor fabs.",
+      "Global production is roughly 160 million cubic meters per year, with the US (~30%), Qatar (~30%), and Algeria (~10%) as top sources.",
+      "Helium cannot be synthesized — it is extracted from natural gas fields where it accumulated over billions of years of radioactive decay.",
+      "The US Federal Helium Reserve in Amarillo, Texas was fully privatized in 2023, removing the strategic buffer that had stabilized supply for decades.",
+      "Fiber optic cable drawing consumes helium as the cooling gas — every strand-km of fiber requires ~0.5 liters, with no substitute.",
+      "Three independent AI infrastructure inputs — fiber drawing, chip fab cooling, and HDD manufacturing — all compete for the same non-renewable helium supply."
     ]
   },
   "Neon": {
@@ -8073,6 +8153,14 @@
       "Air Liquide",
       "Linde",
       "Iceblick"
+    ],
+    "ai_summary": [
+      "Noble gas used as the primary medium in excimer lasers that pattern the most advanced semiconductor chips.",
+      "Prior to 2022, Ukraine supplied roughly 50% of global semiconductor-grade neon, purified from air-separation byproducts of steel mills in Odesa and Mariupol.",
+      "Russia's invasion of Ukraine disrupted neon supply, triggering emergency diversification to US, Chinese, and South Korean purification capacity.",
+      "DUV lithography — the workhorse patterning technology for mature-node chips powering power supplies, controllers, and sensors in AI datacenters — consumes neon in every exposure.",
+      "Prices spiked 10–20x during the initial 2022 disruption before partially normalizing as new capacity came online.",
+      "The Ukraine-sourced supply chain has permanently restructured, but the gas remains a single-point sensitivity for any fab running DUV steppers."
     ]
   },
   "Krypton": {
@@ -8109,6 +8197,14 @@
       "Air Liquide",
       "Linde",
       "Messer"
+    ],
+    "ai_summary": [
+      "Noble gas used in semiconductor fabs for ion implantation and as an etch gas in advanced memory manufacturing.",
+      "Co-produced with neon during cryogenic air separation — supply tracks steel industry oxygen demand rather than semiconductor demand.",
+      "Global production is modest at roughly 40–50 tonnes per year, with Russia and Ukraine historically supplying a significant share.",
+      "Used in DRAM and NAND flash manufacturing processes that produce the memory chips stacked in HBM modules for AI accelerators.",
+      "Prices surged alongside neon during the 2022 Ukraine supply shock and have partially normalized as alternative purification sources scaled.",
+      "Krypton's co-production economics mean it cannot scale independently — supply is gated by air separation volumes driven by the steel industry."
     ]
   },
   "Xenon": {
@@ -8143,6 +8239,14 @@
       "Air Liquide",
       "Linde",
       "Messer"
+    ],
+    "ai_summary": [
+      "Heaviest stable noble gas, used in semiconductor fabs for ion implantation, plasma etching, and satellite electric propulsion.",
+      "Global production is roughly 40–50 tonnes per year — one of the scarcest industrial gases by volume.",
+      "Co-produced with krypton during air separation, making it structurally supply-linked to steel production and neon purification capacity.",
+      "In chip manufacturing, xenon is used in selective etching steps for advanced logic and 3D NAND — processes central to AI chip and storage production.",
+      "Prices remain elevated relative to pre-2022 levels following the Ukraine-driven noble gas supply restructuring.",
+      "Xenon's extreme scarcity and co-production constraints make it a quiet but real bottleneck for any sustained expansion of advanced chip and memory fab capacity."
     ]
   },
   "Argon": {
@@ -8178,6 +8282,14 @@
       "Air Liquide",
       "Linde",
       "Air Products"
+    ],
+    "ai_summary": [
+      "Noble gas produced in large volumes as a byproduct of cryogenic air separation — the same plants that produce industrial oxygen and nitrogen.",
+      "Global production is roughly 700,000 tonnes per year, making it orders of magnitude more abundant than neon, krypton, or xenon.",
+      "Used as an inert shielding gas in semiconductor fabs during sputtering, CVD, and crystal growth processes.",
+      "Also consumed in steelmaking (argon-oxygen decarburization) and welding — both relevant to datacenter structural construction.",
+      "Supply is generally adequate and tracks industrial gas demand, with Air Liquide, Linde, and Air Products as dominant producers.",
+      "Argon is the least constrained noble gas in the AI supply chain — a commodity input rather than a chokepoint."
     ]
   },
   "Ammonia": {
@@ -8212,6 +8324,14 @@
       "Yara",
       "CF Industries",
       "Nutrien"
+    ],
+    "ai_summary": [
+      "Synthesized from nitrogen and hydrogen via the Haber-Bosch process — one of the most energy-intensive industrial chemical processes.",
+      "Global production exceeds 180 million t/yr, primarily for fertilizer, but increasingly explored as a hydrogen carrier and clean fuel.",
+      "In AI infrastructure, ammonia-based cooling systems are used in large-scale datacenter heat rejection and industrial chillers.",
+      "Green ammonia (produced from renewable hydrogen) is being developed as a zero-carbon fuel for backup generators and fuel cells.",
+      "Production is geographically distributed — China, Russia, India, and the US are the largest producers.",
+      "Ammonia's AI-infrastructure role is secondary but growing as datacenter operators explore alternatives to diesel backup and natural gas cooling."
     ]
   },
   "Chlorine": {
@@ -8247,6 +8367,14 @@
       "Olin",
       "Westlake",
       "Dow"
+    ],
+    "ai_summary": [
+      "Produced by electrolysis of brine (salt water), always co-produced with sodium hydroxide (caustic soda) in a fixed ratio.",
+      "Global production exceeds 75 million t/yr, with the chlor-alkali industry concentrated in China, the US, and Europe.",
+      "In AI infrastructure, chlorine is the feedstock for germanium tetrachloride (GeCl₄), the compound that dopes fiber optic cable cores.",
+      "Also feeds into PVC production for cable insulation and jacketing used throughout datacenter wiring.",
+      "Supply is generally adequate but tracks caustic soda demand — chlorine is sometimes the unwanted co-product, creating price volatility.",
+      "Chlorine sits upstream of the fiber optic chokepoint — every kilometer of fiber cable traces back to chlorine chemistry."
     ]
   },
   "Fluorspar": {
@@ -8282,6 +8410,14 @@
       "Masan Resources",
       "Mexichem",
       "Minersa"
+    ],
+    "ai_summary": [
+      "Calcium fluoride mineral mined primarily in China (~60%), Mexico, and South Africa — the primary source of fluorine for industrial chemistry.",
+      "Global mine production is roughly 8 million t/yr, feeding hydrofluoric acid production for refrigerants, fluoropolymers, and semiconductor etchants.",
+      "Fluorine-derived etchants (NF₃, SF₆, CF₄) are consumed in every semiconductor fab for chamber cleaning and plasma etching.",
+      "China classified fluorspar as a strategic mineral and has periodically restricted exports, creating price spikes in downstream fluorochemicals.",
+      "Acid-grade fluorspar (>97% CaF₂) commands a premium and is the bottleneck grade for semiconductor and refrigerant applications.",
+      "Fluorspar is three steps upstream of the chip fab — but every advanced logic and memory wafer requires fluorine chemistry that traces back to this mineral."
     ]
   },
   "Fluorochemicals": {
@@ -8321,6 +8457,14 @@
       "Honeywell",
       "Daikin",
       "Solvay"
+    ],
+    "ai_summary": [
+      "Family of fluorine-based compounds including refrigerants (R-134a, R-410A), fluoropolymers (PTFE, PVDF), and semiconductor etch gases (NF₃, SF₆).",
+      "Production is concentrated in China (~60% of global fluorochemical capacity), with Chemours, Honeywell, and Daikin as major Western producers.",
+      "Semiconductor fabs consume NF₃ for chamber cleaning and various fluorinated gases for plasma etching — volumes scale directly with wafer starts.",
+      "Datacenter cooling systems use fluorinated refrigerants — the HFC-to-HFO transition mandated by the Kigali Amendment is reshaping supply chains.",
+      "Immersion cooling for AI GPU racks increasingly uses engineered fluorinated fluids (3M Novec, Solvay Galden) whose supply is limited.",
+      "The fluorochemical chain is tightening from both ends — semiconductor demand scaling up while regulatory phase-outs constrain legacy products."
     ]
   },
   "Uranium": {
@@ -8356,6 +8500,14 @@
       "Cameco",
       "Kazatomprom",
       "Orano"
+    ],
+    "ai_summary": [
+      "Radioactive metal whose controlled fission generates heat for steam turbines — the only commercially proven zero-carbon baseload power source.",
+      "Global mine production is roughly 60,000 t/yr of U₃O₈, led by Kazakhstan (~45%), Canada, Namibia, and Australia.",
+      "Spot U₃O₈ prices rose from ~$50/lb in early 2023 to above $100/lb by early 2025, driven by utility restocking and AI datacenter power demand.",
+      "Microsoft, Google, and Amazon have all signed nuclear power agreements for datacenter supply since mid-2024.",
+      "Small modular reactors (SMRs) are being designed specifically for behind-the-meter datacenter power at 50–300 MW scale.",
+      "Every gigawatt of new nuclear capacity committed to AI datacenters locks in decades of uranium fuel demand — the restart cycle has begun and the supply chain isn't ready."
     ]
   },
   "Zirconium": {
@@ -8391,6 +8543,14 @@
       "Westinghouse",
       "Framatome",
       "ATI"
+    ],
+    "ai_summary": [
+      "Corrosion-resistant metal used primarily as fuel-rod cladding in nuclear reactors — the structural tube that holds uranium fuel pellets inside the core.",
+      "Global production of zircon sand is roughly 1.2 million t/yr, with Australia and South Africa as leading producers.",
+      "Nuclear-grade zirconium requires complete separation from hafnium, a chemically near-identical element — only a handful of facilities worldwide perform this separation.",
+      "Westinghouse, Framatome, and TVEL are the dominant producers of nuclear-grade zirconium alloy cladding (Zircaloy).",
+      "The hafnium removed during zirconium purification is itself a high-value byproduct used as the gate dielectric in every advanced logic chip.",
+      "SMR deployment for AI datacenter power would increase zirconium cladding demand — and simultaneously loosen hafnium supply as a structural side effect."
     ]
   },
   "Tellurium": {
@@ -8425,6 +8585,14 @@
       "First Solar",
       "5N Plus",
       "Asarco"
+    ],
+    "ai_summary": [
+      "Rare metalloid recovered primarily as a byproduct of copper refining — one of the scarcest elements used in any commercial energy technology.",
+      "Global production is roughly 500–600 t/yr, with China, Japan, and Canada as leading producers.",
+      "Almost entirely consumed by First Solar for cadmium telluride (CdTe) thin-film solar panels — the dominant non-silicon solar technology.",
+      "First Solar sources tellurium through long-term contracts with copper refiners and operates the only large-scale CdTe recycling program.",
+      "CdTe panels are increasingly deployed for onsite and grid-scale solar powering AI datacenters, particularly in the US Southwest.",
+      "Tellurium supply is gated three layers down the byproduct chain behind copper — it cannot scale independently of copper refining economics."
     ]
   },
   "Cadmium": {
@@ -8459,6 +8627,14 @@
       "Korea Zinc",
       "Nyrstar",
       "Teck Resources"
+    ],
+    "ai_summary": [
+      "Toxic metal recovered as a byproduct of zinc smelting, with global production around 23,000 t/yr.",
+      "Primarily consumed in nickel-cadmium batteries and cadmium telluride solar cells — the two applications that justify its continued production.",
+      "First Solar's CdTe thin-film technology pairs cadmium with tellurium in a semiconductor compound that converts sunlight to electricity.",
+      "Strict regulations on cadmium handling (EU RoHS, REACH) create compliance overhead but also barriers to entry for competitors.",
+      "Supply is adequate and tracks zinc smelting volumes — cadmium is occasionally an unwanted byproduct, depressing prices.",
+      "Cadmium's role in AI infrastructure is indirect but clear — it enables CdTe solar panels that increasingly power the datacenters driving AI compute demand."
     ]
   },
   "Vanadium": {
@@ -8493,6 +8669,14 @@
       "Largo",
       "Bushveld Minerals",
       "Glencore"
+    ],
+    "ai_summary": [
+      "Transition metal used in high-strength steel alloys and as the electrolyte in vanadium redox flow batteries (VRFBs).",
+      "Global production is roughly 100,000 t/yr, led by China (~55%), Russia, and South Africa — primarily from vanadiferous titanomagnetite ores.",
+      "VRFBs offer near-unlimited cycle life and 4–8 hour discharge duration — characteristics well-suited to datacenter grid-scale storage.",
+      "Unlike lithium-ion, the vanadium electrolyte in a flow battery does not degrade — it can be reused indefinitely, reducing long-term storage cost.",
+      "Vanadium pentoxide prices are volatile, historically swinging $5–30/lb based on steel demand cycles and Chinese production policy.",
+      "If flow batteries gain share in long-duration datacenter storage, vanadium shifts from a steel additive to a strategic energy storage metal."
     ]
   },
   "Silver": {
@@ -8528,6 +8712,14 @@
       "Fresnillo",
       "Pan American Silver",
       "Hochschild"
+    ],
+    "ai_summary": [
+      "Precious metal with the highest electrical and thermal conductivity of any element — used in conductive pastes, contacts, and solders.",
+      "Global mine production is roughly 26,000 t/yr, with Mexico, China, and Peru as leading producers.",
+      "Silver paste is the primary conductor printed onto solar cells — each GW of solar PV capacity consumes roughly 10–15 tonnes of silver.",
+      "Also used in brazing alloys, electrical contacts, and high-reliability solders throughout datacenter power and connectivity infrastructure.",
+      "Solar PV demand for silver has grown to ~15% of total fabrication demand, adding incremental pressure on a market historically driven by jewelry and investment.",
+      "As AI datacenters drive solar PV deployment for power, silver demand compounds on top of an already supply-constrained market."
     ]
   },
   "Platinum Group Metals": {
@@ -8564,6 +8756,14 @@
       "Anglo American Platinum",
       "Sibanye-Stillwater",
       "Impala"
+    ],
+    "ai_summary": [
+      "Group of six metals (Pt, Pd, Rh, Ru, Ir, Os) with exceptional catalytic properties — South Africa produces ~70% of global platinum and rhodium.",
+      "Total PGM mine production is roughly 400 t/yr across all six elements, concentrated in South Africa's Bushveld Complex and Russia's Norilsk.",
+      "In AI infrastructure, PGMs are used in fuel cell catalysts (Pt for PEM fuel cells), hydrogen production (Ir for PEM electrolyzers), and hard disk platters (Ru).",
+      "Ruthenium is deposited as a magnetic recording layer on every HDD platter — AI training data storage still depends heavily on spinning disk.",
+      "South African mine supply has been declining due to shaft closures, labor disputes, and falling PGM basket prices.",
+      "PGMs sit at the intersection of hydrogen energy, data storage, and fuel cell power — three vectors that all scale with AI datacenter build-out."
     ]
   },
   "Lithium": {
@@ -8599,6 +8799,14 @@
       "Albemarle",
       "SQM",
       "Ganfeng"
+    ],
+    "ai_summary": [
+      "Lightest metal element, used as the charge carrier in lithium-ion batteries that provide backup power and grid-scale storage for AI datacenters.",
+      "Global production roughly 180,000 t LCE in 2024, led by Australia (spodumene hard rock) and Chile (brine evaporation).",
+      "Lithium carbonate prices collapsed from ~$80/kg in late 2022 to ~$10–15/kg by mid-2025, driven by Chinese oversupply and slower EV adoption.",
+      "LFP (lithium iron phosphate) chemistry dominates datacenter battery energy storage systems (BESS) due to lower cost, longer cycle life, and no cobalt or nickel.",
+      "Every GW-scale AI datacenter requires multi-hour battery backup — 4-hour BESS installations of 100+ MWh are becoming standard.",
+      "Lithium is temporarily in surplus, but the AI datacenter BESS buildout adds a new demand vector on top of the EV cycle — the question is timing, not direction."
     ]
   },
   "Natural Graphite": {
@@ -8633,6 +8841,14 @@
       "Syrah Resources",
       "Nouveau Monde",
       "South Star"
+    ],
+    "ai_summary": [
+      "Crystalline carbon mineral used as the anode material in virtually all lithium-ion batteries.",
+      "China produces ~65% of global natural graphite and controls ~90% of spherical graphite processing (the anode-ready form).",
+      "Added to US and EU critical mineral lists; China imposed export licensing on graphite in late 2023.",
+      "LFP batteries used in datacenter BESS installations use graphite anodes — each GWh of storage requires roughly 800–1,000 tonnes of anode-grade graphite.",
+      "Synthetic graphite from petroleum coke is the main alternative, but costs 2–3x more and carries its own petroleum feedstock dependency.",
+      "Graphite is the anode bottleneck that mirrors lithium on the cathode side — Chinese processing dominance is even more extreme."
     ]
   },
   "Petroleum Coke": {
@@ -8669,6 +8885,14 @@
       "BP",
       "Marathon Petroleum",
       "Phillips 66"
+    ],
+    "ai_summary": [
+      "Carbon-rich solid byproduct of oil refining, used as the feedstock for synthetic graphite anodes and as fuel in aluminum smelting.",
+      "Global production is roughly 140 million t/yr, with the US as the largest producer from Gulf Coast refineries.",
+      "Needle coke — the premium grade used for synthetic graphite electrodes and battery anodes — is a much smaller market of ~1–2 million t/yr.",
+      "Synthetic graphite anodes made from petroleum coke are the primary non-Chinese alternative to natural graphite in lithium-ion batteries.",
+      "Phillips 66, Graftech, and Showa Denko are major needle coke producers serving the electrode and battery markets.",
+      "Petroleum coke links the oil refining industry to the battery supply chain — a connection that becomes more relevant as datacenter BESS capacity scales."
     ]
   },
   "Iron Phosphate": {
@@ -8703,6 +8927,14 @@
       "Hunan Yuneng",
       "Dynanonic",
       "Aleees"
+    ],
+    "ai_summary": [
+      "Precursor chemical (FePO₄) reacted with lithium carbonate to produce lithium iron phosphate (LFP) cathode active material.",
+      "China produces ~95% of global iron phosphate and LFP cathode material — the dominant battery chemistry for stationary storage.",
+      "LFP has become the default chemistry for datacenter BESS because it offers superior cycle life, thermal stability, and lower cost per kWh than NMC.",
+      "CATL, BYD, and EVE Energy dominate LFP cell production, with Western capacity (Gotion, FREYR) still in early ramp.",
+      "Iron and phosphorus feedstocks are individually abundant, but the integrated conversion to battery-grade iron phosphate is a Chinese-dominated process.",
+      "Every MWh of LFP battery storage deployed at an AI datacenter traces back to Chinese iron phosphate chemistry — the chokepoint is processing, not raw materials."
     ]
   },
   "Phosphoric Acid": {
@@ -8737,6 +8969,14 @@
       "OCP",
       "Mosaic",
       "Nutrien"
+    ],
+    "ai_summary": [
+      "Produced from phosphate rock by sulfuric acid treatment — the primary industrial source of phosphorus for fertilizer and battery chemistry.",
+      "Global production exceeds 50 million t/yr, led by China, Morocco (OCP Group), and the US.",
+      "Battery-grade phosphoric acid feeds into the LFP cathode precursor chain — higher purity requirements than fertilizer-grade create a supply premium.",
+      "Morocco holds ~70% of global phosphate rock reserves, giving OCP Group structural leverage over long-term phosphorus supply.",
+      "Phosphoric acid is abundant at commodity grade but constrained at battery grade — the purity gap is where the supply chain tightens.",
+      "As datacenter BESS installations grow, battery-grade phosphoric acid becomes another example of a common chemical whose premium grade is scarce."
     ]
   },
   "Boron": {
@@ -8772,6 +9012,14 @@
       "Rio Tinto (US Borax)",
       "Eti Maden",
       "5E Advanced Materials"
+    ],
+    "ai_summary": [
+      "Metalloid element sourced primarily from borate minerals — Turkey holds ~70% of global reserves and is the dominant producer.",
+      "Global boron production is roughly 5 million t/yr of B₂O₃ equivalent, with Eti Maden (Turkish state enterprise) and Rio Tinto Borates as the two major producers.",
+      "In semiconductor fabs, boron is the primary p-type dopant implanted into silicon wafers to create transistor channels.",
+      "Every advanced logic chip and DRAM die in AI hardware has boron atoms implanted at precise concentrations across billions of transistors.",
+      "Boron trifluoride (BF₃) and diborane (B₂H₆) are the standard dopant gases used in ion implantation — consumed at low volumes but irreplaceable.",
+      "Boron is a trace input consumed in microgram quantities per chip, but without it no transistor works — the definition of a structurally embedded dependency."
     ]
   },
   "Arsenic": {
@@ -8806,6 +9054,14 @@
       "Codelco",
       "Glencore",
       "Sumitomo"
+    ],
+    "ai_summary": [
+      "Metalloid element used as the group-V dopant in gallium arsenide (GaAs) compound semiconductor wafers.",
+      "Global production of arsenic trioxide is roughly 35,000 t/yr, with China producing ~50% — primarily as a byproduct of copper and gold smelting.",
+      "High-purity arsenic (6N+) is required for GaAs wafers that form the substrates for laser diodes in optical transceivers.",
+      "Every high-speed transceiver laser connecting GPU racks in an AI datacenter is built on a GaAs substrate containing arsenic.",
+      "Arsenic is toxic and heavily regulated, which limits the number of facilities willing to handle high-purity material at commercial scale.",
+      "Arsenic is the element that makes GaAs lasers possible — small volumes, high purity requirements, and regulatory barriers create quiet but real supply concentration."
     ]
   },
   "Phosphorus": {
@@ -8840,6 +9096,14 @@
       "Mosaic",
       "OCP",
       "Yuntianhua"
+    ],
+    "ai_summary": [
+      "Nonmetal element used in semiconductor doping (n-type) and as the group-V component of indium phosphide (InP) wafers.",
+      "Phosphine (PH₃) gas is the standard n-type dopant in semiconductor ion implantation, complementing boron for p-type.",
+      "InP wafers — the substrate for every high-speed datacenter transceiver laser — contain phosphorus as half the crystal lattice.",
+      "Global phosphate rock production exceeds 220 million t/yr (for fertilizer), but semiconductor-grade phosphorus compounds are a tiny, specialized subset.",
+      "Morocco controls ~70% of phosphate rock reserves, though semiconductor-grade phosphine is produced by specialty gas companies worldwide.",
+      "Phosphorus sits at the intersection of two AI-infrastructure supply chains — doping every chip and forming the substrate of every transceiver laser."
     ]
   },
   "Sulfuric Acid": {
@@ -8874,6 +9138,14 @@
       "Nutrien",
       "PVS Chemicals",
       "Mosaic"
+    ],
+    "ai_summary": [
+      "Most-produced industrial chemical globally at over 260 million t/yr — the baseline reagent for mining, refining, and chemical processing.",
+      "Produced both from sulfur (a petroleum refining byproduct) and from smelter off-gases during copper, nickel, and zinc processing.",
+      "In AI infrastructure, sulfuric acid is consumed upstream in the refining of copper, nickel, cobalt, and lithium — every battery and cable traces back to it.",
+      "Also used in semiconductor wafer cleaning (piranha etch, SPM clean) at fabs producing AI chips.",
+      "Supply is generally adequate and geographically distributed, tracking copper smelting and petroleum refining activity.",
+      "Sulfuric acid is a structural enabler rather than a chokepoint — abundant but so deeply embedded in upstream chemistry that disruptions propagate widely."
     ]
   },
   "Ethylene": {
@@ -8911,6 +9183,14 @@
       "Dow",
       "ExxonMobil Chemical",
       "LyondellBasell"
+    ],
+    "ai_summary": [
+      "Simplest olefin and the world's highest-volume organic chemical — the building block for polyethylene, PVC, and ethylene glycol.",
+      "Global production exceeds 200 million t/yr from steam crackers and ethane crackers, with the US, China, and Saudi Arabia as leading producers.",
+      "In AI infrastructure, ethylene derivatives appear as cable insulation (polyethylene), coolant additives (ethylene glycol), and construction plastics.",
+      "US Gulf Coast ethane crackers benefit from cheap shale gas, giving US-produced polyethylene a structural cost advantage.",
+      "Ethylene is a commodity with deep, liquid markets — supply constraints are rare and typically short-lived.",
+      "Ethylene is a background input to AI infrastructure — structurally present in hundreds of downstream products but not a supply chain chokepoint."
     ]
   },
   "Ethylene Glycol": {
@@ -8947,6 +9227,14 @@
       "Dow",
       "SABIC",
       "MEGlobal"
+    ],
+    "ai_summary": [
+      "Organic chemical produced from ethylene — the primary coolant antifreeze and the feedstock for PET polyester resin.",
+      "Global production is roughly 40 million t/yr, with China and the Middle East as dominant producers.",
+      "In AI datacenters, ethylene glycol is the baseline coolant fluid in chilled water loops and precision air conditioning systems.",
+      "Propylene glycol is the food-safe alternative used in some datacenter cooling systems where environmental regulations require it.",
+      "Supply is adequate and commodity-priced, tracking ethylene markets and Chinese petrochemical capacity.",
+      "Ethylene glycol flows through the cooling loop of nearly every large datacenter — a commodity input consumed in volume but rarely constrained."
     ]
   },
   "Epichlorohydrin": {
@@ -8981,6 +9269,14 @@
       "Olin",
       "Solvay",
       "Hexion"
+    ],
+    "ai_summary": [
+      "Chlorinated organic chemical used as the precursor for epoxy resins — the thermoset polymer binding fiberglass in PCB laminates.",
+      "Global production is roughly 3 million t/yr, with China, the US, and Europe as major producers.",
+      "Every FR-4 PCB laminate in every server board, switch, and networking card in an AI datacenter is made from epichlorohydrin-derived epoxy resin.",
+      "Bio-based epichlorohydrin from glycerol (a biodiesel byproduct) is gaining share, with Solvay as a leading producer.",
+      "Supply is generally adequate but concentrated in a few large chemical producers — Dow, Solvay, and Chinese state enterprises.",
+      "Epichlorohydrin is the chemical ancestor of every printed circuit board — an invisible but structurally embedded input to all electronic hardware."
     ]
   },
   "Bisphenol A": {
@@ -9017,6 +9313,14 @@
       "Covestro",
       "Hexion",
       "SABIC"
+    ],
+    "ai_summary": [
+      "Organic chemical produced from phenol and acetone — the monomer for polycarbonate plastic and a co-reactant in epoxy resins.",
+      "Global production is roughly 10 million t/yr, with China, the US, and South Korea as leading producers.",
+      "In AI infrastructure, BPA-derived polycarbonate is used in LED light covers, cable connectors, and equipment housings.",
+      "Also feeds into epoxy resin chemistry alongside epichlorohydrin — the two compounds together form the basis of all FR-4 PCB laminates.",
+      "Health concerns around BPA exposure have driven substitution in food-contact applications but have not affected industrial electronics uses.",
+      "BPA is a bulk petrochemical input to datacenter hardware — ubiquitous in plastics and laminates, commodity-priced, and not supply-constrained."
     ]
   },
   "Soda Ash": {
@@ -9051,6 +9355,14 @@
       "Solvay",
       "Genesis Energy",
       "Tata Chemicals"
+    ],
+    "ai_summary": [
+      "Sodium carbonate (Na₂CO₃) used in glass manufacturing, lithium carbonate production, and chemical processing.",
+      "Global production is roughly 60 million t/yr, with China, the US (Tata Chemicals/Ciner Wyoming trona deposits), and Turkey as leading producers.",
+      "In AI infrastructure, soda ash feeds into flat glass and solar glass production — the cover glass on every solar panel powering a datacenter.",
+      "Also used as a reagent in lithium carbonate production from brine, linking it to the LFP battery supply chain.",
+      "Natural soda ash (trona-based, from Wyoming) has a lower carbon footprint than synthetic soda ash (Solvay process), giving US producers an advantage.",
+      "Soda ash is a bulk chemical with modest AI-infrastructure linkage — primarily relevant through solar glass and lithium processing rather than direct datacenter use."
     ]
   },
   "Tin": {
@@ -9087,6 +9399,14 @@
       "Yunnan Tin",
       "Minsur",
       "PT Timah"
+    ],
+    "ai_summary": [
+      "Low-melting-point metal used primarily in solder alloys that join electronic components to circuit boards.",
+      "Global mine production is roughly 300,000 t/yr, with China (~30%), Indonesia, Myanmar, and Peru as leading producers.",
+      "Every solder joint on every server board, GPU module, and networking switch in an AI datacenter contains tin-based alloy (typically SAC305: Sn-Ag-Cu).",
+      "Lead-free solder mandates (EU RoHS) shifted the industry to tin-rich alloys, increasing tin intensity per device.",
+      "Myanmar's Wa State mines, which supplied ~10% of global tin concentrate, faced production disruptions in 2023–2024.",
+      "Tin is consumed in billions of solder joints per datacenter — a ubiquitous input whose disruption would halt electronics assembly globally."
     ]
   },
   "Gold": {
@@ -9121,6 +9441,14 @@
       "Newmont",
       "Barrick",
       "Agnico Eagle"
+    ],
+    "ai_summary": [
+      "Precious metal prized for its corrosion resistance and electrical conductivity — used in wire bonding, edge connectors, and high-reliability contacts.",
+      "Global mine production is roughly 3,600 t/yr, with China, Australia, and Russia as leading producers.",
+      "Gold bond wire connects die to package in semiconductor chips — each advanced processor uses small but non-trivial quantities.",
+      "Copper bond wire has replaced gold in many applications, but gold remains standard for high-reliability and automotive-grade packages.",
+      "Gold's role in AI infrastructure is structurally present but small in volume — price sensitivity is low relative to chip value.",
+      "Gold is a commodity input in chip packaging rather than a supply chain chokepoint — ubiquitous, expensive per gram, but consumed in milligrams per device."
     ]
   },
   "Copper": {
@@ -9188,6 +9516,14 @@
       "Codelco",
       "Freeport-McMoRan",
       "BHP"
+    ],
+    "ai_summary": [
+      "The metal with the highest electrical conductivity after silver — used in every wire, cable, busbar, transformer, and PCB trace in a datacenter.",
+      "Global mine production is roughly 22 million t/yr, led by Chile, Peru, DRC, and China.",
+      "A single large AI datacenter consumes an estimated 20,000–30,000 tonnes of copper across power distribution, cabling, and cooling systems.",
+      "Copper prices have traded above $4/lb through 2024–2025, with structural deficits forecast as electrification and AI demand compound.",
+      "Copper also serves as the primary interconnect metal in chip packaging (TSV copper, redistribution layers) and on PCB substrates.",
+      "Copper has 33 downstream connections in the AI infrastructure chain — more than any other raw material — making it the single most systemic input."
     ]
   },
   "Aluminum": {
@@ -9231,6 +9567,14 @@
       "Alcoa",
       "Rio Tinto",
       "Norsk Hydro"
+    ],
+    "ai_summary": [
+      "Light, conductive metal produced by smelting alumina (refined from bauxite) using enormous quantities of electricity.",
+      "Global primary aluminum production is roughly 70 million t/yr, with China producing ~60% — the most energy-intensive major metal to produce.",
+      "In AI datacenters, aluminum is used in heat sinks, server chassis, cable trays, structural framing, and the conductors in some transformer designs.",
+      "Aluminum smelting consumes ~15 MWh per tonne — the industry is itself a major electricity consumer, competing with datacenters for power.",
+      "Bauxite is globally abundant, but smelting capacity is concentrated where cheap power exists — a structural parallel to datacenter siting economics.",
+      "Aluminum is a bulk structural and thermal input — abundant by weight but linked to the same power availability constraints that shape datacenter geography."
     ]
   },
   "Metallurgical-Grade Quartz": {
@@ -9265,6 +9609,14 @@
       "Sibelco",
       "Elkem",
       "Russian Mining"
+    ],
+    "ai_summary": [
+      "High-purity quartzite ore (>99% SiO₂) that serves as the starting feedstock for producing metallurgical-grade silicon in submerged arc furnaces.",
+      "Major quartzite sources include Spruce Pine (North Carolina), Mauritania, Spain, and Norway — not all quartz deposits meet the purity threshold.",
+      "Spruce Pine is the world's dominant source of ultra-high-purity quartz, supplying the upstream feedstock for both semiconductor and solar silicon chains.",
+      "A January 2025 landslide near Spruce Pine temporarily disrupted access, highlighting the geographic concentration risk in quartz supply.",
+      "The quartz-to-silicon pipeline has multiple purification stages — metallurgical grade (98–99%), solar grade (6N), electronic grade (9–11N).",
+      "All silicon-based technology — every chip, every solar cell, every fiber optic strand — traces back to a quartzite mine, and the highest-purity mines are few."
     ]
   },
   "Quartz Ore": {
@@ -9299,6 +9651,14 @@
       "Sibelco",
       "The Quartz Corp",
       "Norwegian Crystallites"
+    ],
+    "ai_summary": [
+      "Raw silica mineral (SiO₂) mined from quartzite, sandstone, and vein deposits — the most abundant mineral on Earth's surface.",
+      "Global production of industrial silica sand exceeds 300 million t/yr, with the US, China, and the Netherlands as major producers.",
+      "Most silica sand goes to glass, foundry, and construction uses — only a tiny fraction meets the purity requirements for metallurgical or semiconductor applications.",
+      "The purity gradient from commodity sand (~95% SiO₂) to semiconductor-grade quartz (>99.99%) spans five orders of magnitude in impurity tolerance.",
+      "Commodity-grade silica is not supply-constrained; the constraint is at the high-purity end where only a handful of deposits qualify.",
+      "Quartz ore is the geological starting point of the entire silicon chain — abundant in bulk but scarce at the purity levels that matter for chips and solar."
     ]
   },
   "Iron Ore": {
@@ -9338,6 +9698,14 @@
       "Vale",
       "Rio Tinto",
       "BHP"
+    ],
+    "ai_summary": [
+      "Oxide mineral (Fe₂O₃/Fe₃O₄) smelted with coke in blast furnaces to produce pig iron, which is refined into steel.",
+      "Global production is roughly 2.5 billion t/yr, led by Australia (~35%), Brazil (~15%), and China (domestic low-grade).",
+      "Every AI datacenter building is a steel structure — the structural frames, reinforcing bar, and floor plates all trace back to iron ore.",
+      "Iron ore prices have traded in the $90–130/t range through 2024–2025, driven primarily by Chinese steel demand cycles.",
+      "Vale, BHP, Rio Tinto, and Fortescue control the seaborne iron ore market — the most concentrated bulk commodity trade in the world.",
+      "Iron ore is a bulk commodity input to datacenter construction — critical by volume but not a supply chain chokepoint."
     ]
   },
   "Scrap Steel": {
@@ -9374,6 +9742,14 @@
       "Sims Metal",
       "Schnitzer",
       "Nucor"
+    ],
+    "ai_summary": [
+      "Recycled steel collected from demolished structures, end-of-life vehicles, and manufacturing offcuts — the primary feedstock for electric arc furnace (EAF) steelmaking.",
+      "Global scrap steel trade is roughly 100 million t/yr, with the US as the world's largest scrap exporter.",
+      "EAF steelmaking (scrap-based) produces ~30% of global steel and has a ~75% lower carbon footprint than blast furnace steelmaking.",
+      "Structural steel for datacenter construction increasingly sources from EAF mills to meet corporate sustainability commitments.",
+      "Nucor and Steel Dynamics dominate US EAF steelmaking — the companies most likely to supply domestic datacenter structural steel.",
+      "Scrap steel is the circular-economy input to datacenter construction — abundant, lower-carbon, and increasingly preferred by hyperscaler procurement teams."
     ]
   },
   "Coking Coal": {
@@ -9409,6 +9785,14 @@
       "BHP",
       "Teck Resources",
       "Glencore"
+    ],
+    "ai_summary": [
+      "Metallurgical coal heated in the absence of air to produce coke — the carbon-rich fuel and reducing agent used in blast furnace steelmaking.",
+      "Global production is roughly 1.1 billion t/yr, with China, Australia, and the US as leading producers.",
+      "Each tonne of blast furnace steel requires roughly 0.6 tonnes of coking coal — a direct physical input that cannot be substituted at scale.",
+      "Australia dominates the seaborne coking coal market, with BHP, Glencore, and Anglo American as major exporters.",
+      "Coking coal is not consumed in EAF steelmaking, which uses scrap — the coal dependency exists only in the blast furnace route.",
+      "Coking coal's role in AI infrastructure is one step removed — it makes the steel that frames the buildings, relevant only where blast furnace steel is sourced."
     ]
   },
   "Zinc": {
@@ -9443,6 +9827,14 @@
       "Glencore",
       "Korea Zinc",
       "Nyrstar"
+    ],
+    "ai_summary": [
+      "Base metal used primarily for galvanizing steel against corrosion — the protective coating on structural steel in virtually every building.",
+      "Global mine production is roughly 13 million t/yr, led by China, Australia, and Peru.",
+      "In AI infrastructure, zinc appears as galvanized coatings on datacenter structural steel, roofing, and cable trays.",
+      "Zinc smelting is also the upstream source of germanium and indium byproducts — the same smelters that galvanize steel produce fiber optic feedstock.",
+      "Zinc prices have been range-bound at $1.00–1.30/lb through 2024–2025, with smelter treatment charges compressing refiner margins.",
+      "Zinc's AI infrastructure thesis is indirect but real — it is the host metal whose smelting byproducts include two of the most supply-constrained trace elements in the chain."
     ]
   },
   "Cement": {
@@ -9477,6 +9869,14 @@
       "Holcim",
       "Cemex",
       "Heidelberg Materials"
+    ],
+    "ai_summary": [
+      "Powdered calcium silicate produced by heating limestone and clay in rotary kilns at ~1,450°C — the binder in all concrete.",
+      "Global production exceeds 4 billion t/yr, with China producing ~55% — the most-produced manufactured material on Earth.",
+      "Every AI datacenter foundation, slab, and structural element uses reinforced concrete — a typical 100 MW facility requires 50,000–100,000 cubic yards.",
+      "Cement production generates ~8% of global CO₂ emissions, making it a focus of hyperscaler Scope 3 accounting.",
+      "Low-carbon cement alternatives (CarbonCure, Solidia, Holcim ECOPact) are gaining traction in datacenter construction specifications.",
+      "Cement is a bulk commodity that every datacenter sits on — not a supply constraint but an emissions hotspot that sustainability-focused operators increasingly manage."
     ]
   },
   "Aggregates": {
@@ -9511,6 +9911,14 @@
       "Vulcan Materials",
       "Martin Marietta",
       "Heidelberg Materials"
+    ],
+    "ai_summary": [
+      "Crushed stone, gravel, and sand mixed with cement to form concrete — the filler material in every concrete pour.",
+      "Global production exceeds 40 billion tonnes per year, making aggregates the most extracted natural resource on Earth.",
+      "A 100 MW datacenter construction typically consumes 100,000–200,000 tonnes of aggregates for foundations, floors, and access roads.",
+      "Supply is locally sourced due to high weight-to-value ratio — transportation costs dominate economics, not material scarcity.",
+      "Sand shortages have emerged in some coastal and riverine regions, but aggregate supply for inland datacenter construction is generally adequate.",
+      "Aggregates are the most voluminous input in the entire AI infrastructure chain — structurally present in vast quantities but not a meaningful constraint."
     ]
   },
   "Water": {
@@ -9548,6 +9956,14 @@
       "Local utilities",
       "Veolia",
       "American Water"
+    ],
+    "ai_summary": [
+      "The universal solvent and coolant — consumed in enormous quantities at every stage of the AI infrastructure supply chain.",
+      "A 100 MW air-cooled datacenter can consume 1–5 million gallons of water per day for evaporative cooling, depending on climate.",
+      "Ultra-pure water (UPW, 18.2 MΩ·cm resistivity) is consumed at every semiconductor fab — roughly 2,000–5,000 gallons per wafer.",
+      "Water scarcity is reshaping datacenter siting decisions — desert locations with cheap power now face community opposition over water consumption.",
+      "Liquid cooling (direct-to-chip) reduces evaporative water consumption by 80–90% compared to air cooling with wet economizers.",
+      "Water is the most fundamental constraint on datacenter geography that isn't electricity — the resource that determines where AI can physically be built."
     ]
   },
   "Natural Gas": {
@@ -9588,6 +10004,14 @@
       "EQT",
       "Coterra",
       "ExxonMobil"
+    ],
+    "ai_summary": [
+      "Fossil fuel burned in gas turbines for electricity generation and used as feedstock for hydrogen, ammonia, and petrochemical production.",
+      "Global production exceeds 4 trillion cubic meters per year, with the US, Russia, and Qatar as top producers.",
+      "Natural gas turbines are the dominant onsite power solution for AI datacenters that cannot wait for grid interconnection or nuclear permitting.",
+      "Combined-cycle gas turbine (CCGT) plants can deliver 500+ MW to a single datacenter campus within 18–24 months of groundbreaking.",
+      "Henry Hub prices have traded $2–4/MMBtu through 2024–2025, making gas the cheapest dispatchable power source for US datacenters.",
+      "Gas is the bridge fuel powering the first wave of GW-scale AI datacenters — the question is how long the bridge needs to be before nuclear and renewables catch up."
     ]
   },
   "Crude Oil": {
@@ -9627,6 +10051,14 @@
       "Saudi Aramco",
       "ExxonMobil",
       "Chevron"
+    ],
+    "ai_summary": [
+      "Primary fossil fuel refined into diesel, jet fuel, lubricants, and the petrochemical feedstocks used in plastics, resins, and synthetic materials.",
+      "Global production is roughly 100 million barrels per day, with the US, Saudi Arabia, and Russia as the top three producers.",
+      "In AI infrastructure, crude oil derivatives appear as diesel for backup generators, lubricants for cooling systems, and feedstock for all synthetic polymers.",
+      "Every datacenter maintains diesel fuel reserves for backup power — typically 24–72 hours of fuel at full load.",
+      "Crude oil prices have traded in the $70–90/bbl range through 2024–2025 (Brent), with OPEC+ managing supply.",
+      "Crude oil's datacenter role is structural but declining — as battery backup and gas turbines replace diesel generators, the direct linkage weakens."
     ]
   },
   "Diesel Fuel": {
@@ -9663,6 +10095,14 @@
       "ExxonMobil",
       "Chevron",
       "Shell"
+    ],
+    "ai_summary": [
+      "Middle distillate fuel refined from crude oil — the standard fuel for datacenter backup generators worldwide.",
+      "Global diesel consumption is roughly 28 million barrels per day, with the US, China, and India as top consumers.",
+      "Every Tier III and Tier IV datacenter maintains diesel generators sized to carry full facility load during grid outages.",
+      "A 100 MW datacenter typically stores 500,000–1,000,000 gallons of diesel onsite for 24–72 hours of backup runtime.",
+      "Battery energy storage systems (BESS) are beginning to displace diesel for short-duration backup, but diesel remains the standard for extended outages.",
+      "Diesel is the last-resort power source for AI infrastructure — being gradually displaced by BESS and gas turbines but still universally deployed."
     ]
   }
 }

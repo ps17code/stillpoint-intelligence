@@ -3368,18 +3368,34 @@ export default function TreeView() {
 
               // Sub-node with ai_summary selected on AI tree
               if (selectedTreeNode && currentVertical?.id === "ai" && currentLevel === "subsystems") {
-                const uNode = universalNodes[selectedTreeNode] as unknown as { ai_summary?: Record<string, string> } | undefined;
+                const uNode = universalNodes[selectedTreeNode] as unknown as { ai_summary?: string[] | Record<string, string> } | undefined;
                 if (uNode?.ai_summary) {
+                  // Handle both formats: string[] (bullet array) and Record<string,string> (object)
+                  const bullets = Array.isArray(uNode.ai_summary) ? uNode.ai_summary : null;
+                  if (bullets) {
+                    return (
+                      <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
+                        <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0", fontFamily: "'Instrument Serif', serif" }}>{selectedTreeNode}</p>
+                        {bullets.map((bullet, i) => (
+                          <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                            <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
+                            <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  }
+                  // Fallback: old object format
+                  const obj = uNode.ai_summary as Record<string, string>;
                   const sectionsRaw = [
-                    ["What It Is", uNode.ai_summary.what_it_is ?? ""],
-                    ["Where It Comes From", uNode.ai_summary.where_it_comes_from ?? ""],
-                    ["What It's Used For", uNode.ai_summary.what_its_used_for ?? ""],
-                    ["Supply Situation", uNode.ai_summary.supply_situation ?? ""],
-                    ["Pricing & Scale", uNode.ai_summary.pricing_scale ?? ""],
-                    ["Why It Matters", uNode.ai_summary.why_it_matters ?? ""],
+                    ["What It Is", obj.what_it_is ?? ""],
+                    ["Where It Comes From", obj.where_it_comes_from ?? ""],
+                    ["What It's Used For", obj.what_its_used_for ?? ""],
+                    ["Supply Situation", obj.supply_situation ?? ""],
+                    ["Pricing & Scale", obj.pricing_scale ?? ""],
+                    ["Why It Matters", obj.why_it_matters ?? ""],
                   ] as [string, string][];
                   const sections = sectionsRaw.filter(([, v]) => v.length > 0);
-
                   return (
                     <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 10 }}>
                       <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{selectedTreeNode}</p>
