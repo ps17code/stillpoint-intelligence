@@ -27,7 +27,7 @@ const STATUS_COLORS: Record<string, string> = {
 
 interface AISupplyTreeProps {
   onNodeClick?: (name: string) => void;
-  onGroupClick?: (groupKey: string, groupName: string, longDescription: string) => void;
+  onGroupClick?: (groupKey: string, groupName: string, overview: string, activity: string) => void;
 }
 
 export default function AISupplyTree({ onNodeClick, onGroupClick }: AISupplyTreeProps) {
@@ -112,7 +112,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick }: AISupplyTree
   }: {
     label: string;
     totalCount: number;
-    groups: Record<string, { name: string; description?: string; long_description?: string; nodes: string[]; parent_subsystem?: string }>;
+    groups: Record<string, { name: string; description?: string; overview?: string; activity?: string; nodes: string[]; parent_subsystem?: string }>;
     expandedGroup: string | null;
     setExpandedGroup: (g: string | null) => void;
   }) {
@@ -161,7 +161,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick }: AISupplyTree
                   count={g.nodes.length}
                   status={getGroupStatus(g.nodes)}
                   isExpanded={false}
-                  onClick={() => { setExpandedGroup(gk); onGroupClick?.(gk, g.name, g.long_description ?? g.description ?? ""); }}
+                  onClick={() => { setExpandedGroup(gk); onGroupClick?.(gk, g.name, g.overview ?? "", g.activity ?? ""); }}
                 />
               );
             })

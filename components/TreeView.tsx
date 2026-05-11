@@ -1706,7 +1706,7 @@ export default function TreeView() {
   const [rightTab, setRightTab] = useState("summary");
   const [selectedTreeNode, setSelectedTreeNode] = useState<string | null>(null);
   const [selectedBriefId, setSelectedBriefId] = useState<string | null>(null);
-  const [selectedGroup, setSelectedGroup] = useState<{ key: string; name: string; description: string } | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<{ key: string; name: string; overview: string; activity: string } | null>(null);
   const [selectedAnalysisIdx, setSelectedAnalysisIdx] = useState(0);
   const [globeFilterLayer, setGlobeFilterLayer] = useState<string | null>(null);
   const [hoveredGlobeNode, setHoveredGlobeNode] = useState<{ name: string; type: string; location: string } | null>(null);
@@ -2186,8 +2186,8 @@ export default function TreeView() {
               setRightTab("nodes");
             }
           }}
-          onGroupClick={(key, name, desc) => {
-            setSelectedGroup({ key, name, description: desc });
+          onGroupClick={(key, name, overview, activity) => {
+            setSelectedGroup({ key, name, overview, activity });
             setSelectedTreeNode(null);
             setRightTab("summary");
           }}
@@ -3330,9 +3330,20 @@ export default function TreeView() {
               // Show group description if a group is selected on AI tree
               if (selectedGroup && currentVertical?.id === "ai" && currentLevel === "subsystems") {
                 return (
-                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
-                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 6px 0", fontFamily: "'Instrument Serif', serif" }}>{selectedGroup.name}</p>
-                    <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", lineHeight: 1.6, margin: 0 }}>{selectedGroup.description}</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{selectedGroup.name}</p>
+                    {selectedGroup.overview && (
+                      <div>
+                        <p style={{ fontSize: 10, color: templateAccent ?? "#706a60", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const, fontFamily: "'Geist Mono', monospace" }}>Overview</p>
+                        <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", lineHeight: 1.6, margin: 0 }}>{selectedGroup.overview}</p>
+                      </div>
+                    )}
+                    {selectedGroup.activity && (
+                      <div>
+                        <p style={{ fontSize: 10, color: templateAccent ?? "#706a60", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const, fontFamily: "'Geist Mono', monospace" }}>Where The Activity Is</p>
+                        <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", lineHeight: 1.6, margin: 0 }}>{selectedGroup.activity}</p>
+                      </div>
+                    )}
                   </div>
                 );
               }
