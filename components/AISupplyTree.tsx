@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import universalNodesJson from "@/data/universal-nodes.json";
 import chainDefsJson from "@/data/chain-definitions.json";
 
@@ -66,8 +66,11 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
   const [expandedIntGroup, setExpandedIntGroup] = useState<string | null>(null);
   const [expandedCompGroup, setExpandedCompGroup] = useState<string | null>(null);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
-  // Track which group was just expanded (for animation) — only animate on first expand
   const [animatingGroup, setAnimatingGroup] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const [lines, setLines] = useState<{ d: string; fromName: string; toName: string }[]>([]);
+  const [svgSize, setSvgSize] = useState({ w: 0, h: 0 });
 
   const categories = chain.rawMaterialCategories ?? {};
   const compSubgroups = chain.componentSubgroups ?? {};
@@ -84,6 +87,71 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     Object.entries(compSubgroups).forEach(([k, g]) => g.nodes.forEach(n => m.set(n, k)));
     return m;
   }, [categories, intSubgroups, compSubgroups]);
+
+  // Compute visible edges based on which groups are expanded
+  // When collapsed: group-to-group edges (deduplicated)
+  // When expanded: node-level edges for that group's members
+  const visibleEdges = useMemo(() => {
+    const expandedGroups = new Set<string>();
+    if (expandedRawCat) expandedGroups.add(expandedRawCat);
+    if (expandedIntGroup) expandedGroups.add(expandedIntGroup);
+    if (expandedCompGroup) expandedGroups.add(expandedCompGroup);
+
+    const edgeSet = new Set<string>();
+    const result: { from: string; to: string }[] = [];
+
+    chain.edges.forEach(e => {
+      const gFrom = nodeToGroup.get(e.from);
+      const gTo = nodeToGroup.get(e.to);
+
+      // Resolve: if the group is expanded, use the node name; otherwise use the group key
+      const resolvedFrom = (gFrom && expandedGroups.has(gFrom)) ? e.from : (gFrom ?? e.from);
+      const resolvedTo = (gTo && expandedGroups.has(gTo)) ? e.to : (gTo ?? e.to);
+
+      const key = `${resolvedFrom}→${resolvedTo}`;
+      if (!edgeSet.has(key) && resolvedFrom !== resolvedTo) {
+        edgeSet.add(key);
+        result.push({ from: resolvedFrom, to: resolvedTo });
+      }
+    });
+
+    return result;
+  }, [nodeToGroup, expandedRawCat, expandedIntGroup, expandedCompGroup]);
+
+  // Measure card positions and draw bezier connections
+  const measureAndDraw = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const containerRect = container.getBoundingClientRect();
+    const newLines: { d: string; fromName: string; toName: string }[] = [];
+
+    visibleEdges.forEach(edge => {
+      const fromEl = cardRefs.current.get(edge.from);
+      const toEl = cardRefs.current.get(edge.to);
+      if (!fromEl || !toEl) return;
+      const fromRect = fromEl.getBoundingClientRect();
+      const toRect = toEl.getBoundingClientRect();
+      // Only draw left-to-right connections
+      if (toRect.left <= fromRect.right) return;
+      const fromX = fromRect.right - containerRect.left;
+      const fromY = fromRect.top + fromRect.height / 2 - containerRect.top;
+      const toX = toRect.left - containerRect.left;
+      const toY = toRect.top + toRect.height / 2 - containerRect.top;
+      const midX = (fromX + toX) / 2;
+      newLines.push({ d: `M ${fromX},${fromY} C ${midX},${fromY} ${midX},${toY} ${toX},${toY}`, fromName: edge.from, toName: edge.to });
+    });
+
+    setSvgSize({ w: container.scrollWidth, h: container.scrollHeight });
+    setLines(newLines);
+  }, [visibleEdges]);
+
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => {
+      // Small delay to let DOM settle after expand/collapse
+      setTimeout(measureAndDraw, 50);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [measureAndDraw, expandedRawCat, expandedIntGroup, expandedCompGroup, selectedNode]);
 
   // Downstream and upstream maps for BFS
   const { downstreamMap, upstreamMap } = useMemo(() => {
@@ -157,6 +225,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
 
     return (
       <div
+        ref={el => { if (el) cardRefs.current.set(name, el); }}
         onClick={() => { setSelectedNode(prev => prev === name ? null : name); onNodeClick?.(name); }}
         style={{
           padding: "4px 6px 4px 12px",
@@ -182,6 +251,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     const statusColor = STATUS_COLORS[status] ?? "#444";
     return (
       <div
+        ref={el => { if (el) cardRefs.current.set(groupKey, el); }}
         onClick={onClick}
         style={{
           padding: "5px 8px",
@@ -287,7 +357,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
   }
 
   return (
-    <div style={{ position: "relative", minHeight: 0 }}>
+    <div ref={containerRef} style={{ position: "relative", minHeight: 0 }}>
       <div style={{ display: "flex", gap: 16, padding: "12px 0", overflow: "auto", minWidth: 0 }}>
         <GroupedColumn label="RAW MATERIALS" totalCount={63} groups={categories} expandedGroup={expandedRawCat} setExpandedGroup={setExpandedRawCat} columnGroupKeys={Object.keys(categories)} />
         <GroupedColumn label="INTERMEDIATES" totalCount={56} groups={intSubgroups} expandedGroup={expandedIntGroup} setExpandedGroup={setExpandedIntGroup} columnGroupKeys={Object.keys(intSubgroups)} />
@@ -295,6 +365,26 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
         <SimpleColumn layer={chain.layers[3]} />
         <SimpleColumn layer={chain.layers[4]} />
       </div>
+
+      {/* SVG connection lines */}
+      <svg style={{ position: "absolute", top: 0, left: 0, width: svgSize.w || "100%", height: svgSize.h || "100%", pointerEvents: "none", overflow: "visible" }}>
+        {lines.map((line, i) => {
+          const isInChain = reachableNodes.size > 0 && reachableNodes.has(line.fromName) && reachableNodes.has(line.toName);
+          const isDirectEdge = selectedNode && (line.fromName === selectedNode || line.toName === selectedNode);
+          const isDimmed = reachableNodes.size > 0 && !isInChain;
+          return (
+            <path
+              key={i}
+              d={line.d}
+              fill="none"
+              stroke={isDirectEdge ? "rgba(255,255,255,0.35)" : isInChain ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.04)"}
+              strokeWidth={isDirectEdge ? "1" : "0.5"}
+              strokeDasharray="3,3"
+              style={{ opacity: isDimmed ? 0.03 : 1, transition: "opacity 0.2s, stroke 0.2s" }}
+            />
+          );
+        })}
+      </svg>
 
       {/* Navigate button — bottom right when an input node is selected */}
       {selectedNode && INPUT_NODES.has(selectedNode) && (
