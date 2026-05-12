@@ -2800,8 +2800,8 @@ export default function TreeView() {
                 </div>
               );
             })()}
-            {/* Tabs */}
-            <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}` }}>
+            {/* Tabs — hidden on AI infra vertical tree */}
+            <div style={{ display: currentVertical?.id === "ai" && currentLevel === "subsystems" ? "none" : "flex", gap: 0, borderBottom: `1px solid ${borderColor}` }}>
               {["Supply Tree", "Map", "Dependencies", "Analysis", "Investment Ideas"].map((tab, ti) => {
                 const tabId = tab.toLowerCase().replace(/\s+/g, "-");
                 const isActive = activeTab === tabId;
@@ -3187,7 +3187,7 @@ export default function TreeView() {
                 </div>
               );
             })()}
-            <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 10 }}>
+            <div style={{ display: currentVertical?.id === "ai" && currentLevel === "subsystems" ? "none" : "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 10 }}>
               {["Summary", "Layers", "Nodes"].map((tab, ti) => {
                 const tabId = tab.toLowerCase();
                 const isActive = rightTab === tabId;
