@@ -2169,17 +2169,9 @@ export default function TreeView() {
       if (currentVertical?.id === "ai") {
         return <AISupplyTree
           onNodeClick={(name) => {
-            // For inputs with supply trees, show exec summary instead of navigating
-            const inputIds: Record<string, string> = { "Germanium": "germanium", "Gallium": "gallium", "Fiber Optic Cable": "fiber" };
-            if (inputIds[name]) {
-              setSelectedTreeNode(name);
-              setSelectedGroup(null);
-              setRightTab("summary");
-            } else {
-              setSelectedTreeNode(name);
-              setSelectedGroup(null);
-              setRightTab("nodes");
-            }
+            setSelectedTreeNode(name);
+            setSelectedGroup(null);
+            setRightTab("summary");
           }}
           onGroupClick={(key, name, overview, activity) => {
             setSelectedGroup({ key, name, overview, activity });
