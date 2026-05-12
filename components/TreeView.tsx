@@ -3400,27 +3400,30 @@ export default function TreeView() {
               };
 
               // Helper: render sub-node summary bullets
-              const renderSubNodeSummary = (nodeName: string) => {
+              // chainStatusColor: when rendered inside a featured chain, use the chain's status color for takeaway border
+              const renderSubNodeSummary = (nodeName: string, opts?: { chainMode?: boolean; chainStatusColor?: string }) => {
                 const uNode = universalNodes[nodeName] as unknown as { ai_summary?: string[] | Record<string, string> } | undefined;
                 if (!uNode?.ai_summary) return null;
                 const bullets = Array.isArray(uNode.ai_summary) ? uNode.ai_summary : null;
                 if (!bullets) return null;
+                const isChainMode = opts?.chainMode;
+                const takeawayColor = opts?.chainStatusColor ?? templateAccent ?? "#706a60";
                 return (
-                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
-                    <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0", fontFamily: "'Instrument Serif', serif" }}>{nodeName}</p>
+                  <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
+                    <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>{nodeName}</p>
                     {bullets.map((bullet, i) => {
                       const isLast = i === bullets.length - 1;
                       if (isLast) {
                         return (
-                          <div key={i} style={{ borderLeft: `2px solid ${templateAccent ?? "#706a60"}`, paddingLeft: 10, marginTop: 4 }}>
-                            <p style={{ fontSize: 12, color: templateAccent ?? "#a09888", lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>{bullet}</p>
+                          <div key={i} style={{ borderLeft: `2px solid ${takeawayColor}`, paddingLeft: 10, marginTop: 4 }}>
+                            <p style={{ fontSize: 11, color: takeawayColor, lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>{bullet}</p>
                           </div>
                         );
                       }
                       return (
                         <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
                           <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
-                          <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
+                          <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
                         </div>
                       );
                     })}
@@ -3440,7 +3443,7 @@ export default function TreeView() {
                       </div>
                       {renderFeaturedChainCard(chain)}
                       {/* Sub-node summary below the card */}
-                      {selectedTreeNode && renderSubNodeSummary(selectedTreeNode)}
+                      {selectedTreeNode && renderSubNodeSummary(selectedTreeNode, { chainMode: true, chainStatusColor: (STATUS_PILL[chain.status] ?? STATUS_PILL.structural).color })}
                     </div>
                   );
                 }
