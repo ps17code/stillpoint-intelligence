@@ -3407,7 +3407,6 @@ export default function TreeView() {
                 const bullets = Array.isArray(uNode.ai_summary) ? uNode.ai_summary : null;
                 if (!bullets) return null;
                 const isChainMode = opts?.chainMode;
-                const takeawayColor = opts?.chainStatusColor ?? templateAccent ?? "#706a60";
                 return (
                   <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
                     <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>{nodeName}</p>
@@ -3415,8 +3414,8 @@ export default function TreeView() {
                       const isLast = i === bullets.length - 1;
                       if (isLast) {
                         return (
-                          <div key={i} style={{ borderLeft: `2px solid ${takeawayColor}`, paddingLeft: 10, marginTop: 4 }}>
-                            <p style={{ fontSize: 11, color: takeawayColor, lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>{bullet}</p>
+                          <div key={i} style={{ borderLeft: "2px solid #fff", paddingLeft: 10, marginTop: 4 }}>
+                            <p style={{ fontSize: 11, color: "#fff", lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>{bullet}</p>
                           </div>
                         );
                       }
@@ -3511,20 +3510,20 @@ export default function TreeView() {
                   if (bullets) {
                     return (
                       <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
-                        <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0", fontFamily: "'Instrument Serif', serif" }}>{selectedTreeNode}</p>
+                        <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>{selectedTreeNode}</p>
                         {bullets.map((bullet, i) => {
                           const isLast = i === bullets.length - 1;
                           if (isLast) {
                             return (
-                              <div key={i} style={{ borderLeft: `2px solid ${templateAccent ?? "#706a60"}`, paddingLeft: 10, marginTop: 4 }}>
-                                <p style={{ fontSize: 12, color: templateAccent ?? "#a09888", lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>{bullet}</p>
+                              <div key={i} style={{ borderLeft: "2px solid #fff", paddingLeft: 10, marginTop: 4 }}>
+                                <p style={{ fontSize: 11, color: "#fff", lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>{bullet}</p>
                               </div>
                             );
                           }
                           return (
                             <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
                               <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
-                              <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
+                              <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
                             </div>
                           );
                         })}
