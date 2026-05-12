@@ -350,6 +350,8 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
       if (expandedGroup === gk) {
         setExpandedGroup(null);
         setAnimatingGroup(null);
+        setSelectedNode(null);
+        onGroupClick?.("", "", "", "");
       } else {
         setExpandedGroup(gk);
         setAnimatingGroup(gk);
@@ -365,7 +367,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
             {label} · {expandedGroup ? groups[expandedGroup]?.nodes.length ?? 0 : totalCount}
           </p>
           {expandedGroup && (
-            <button onClick={() => { setExpandedGroup(null); setAnimatingGroup(null); }} style={{ background: "transparent", border: "none", cursor: "pointer", fontSize: 6, color: "#555", fontFamily: "'Geist Mono', monospace" }}>← back</button>
+            <button onClick={() => { setExpandedGroup(null); setAnimatingGroup(null); setSelectedNode(null); onGroupClick?.("", "", "", ""); }} style={{ background: "transparent", border: "none", cursor: "pointer", fontSize: 6, color: "#555", fontFamily: "'Geist Mono', monospace" }}>← back</button>
           )}
         </div>
         <div style={{ maxHeight: "calc(100vh - 280px)", overflowY: "auto", paddingRight: 4, display: "flex", flexDirection: "column", gap: 2 }}>

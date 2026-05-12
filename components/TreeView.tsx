@@ -2174,9 +2174,14 @@ export default function TreeView() {
             setRightTab("summary");
           }}
           onGroupClick={(key, name, overview, activity) => {
-            setSelectedGroup({ key, name, overview, activity });
-            setSelectedTreeNode(null);
-            setRightTab("summary");
+            if (!key) {
+              setSelectedGroup(null);
+              setSelectedTreeNode(null);
+            } else {
+              setSelectedGroup({ key, name, overview, activity });
+              setSelectedTreeNode(null);
+              setRightTab("summary");
+            }
           }}
           onNavigateToInput={(name) => {
             const navMap: Record<string, PathEntry[]> = {
