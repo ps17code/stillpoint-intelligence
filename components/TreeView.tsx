@@ -2169,9 +2169,14 @@ export default function TreeView() {
       if (currentVertical?.id === "ai") {
         return <AISupplyTree
           onNodeClick={(name) => {
-            setSelectedTreeNode(name);
-            setSelectedGroup(null);
-            setRightTab("summary");
+            if (!name) {
+              // Deselected — revert to group summary
+              setSelectedTreeNode(null);
+            } else {
+              // Select node but keep selectedGroup so we can revert to it
+              setSelectedTreeNode(name);
+              setRightTab("summary");
+            }
           }}
           onGroupClick={(key, name, overview, activity) => {
             if (!key) {
@@ -3334,8 +3339,8 @@ export default function TreeView() {
             })()}
 
             {rightTab === "summary" && centerView === "tree" && (() => {
-              // Show group description if a group is selected on AI tree
-              if (selectedGroup && currentVertical?.id === "ai" && currentLevel === "subsystems") {
+              // Show group description if a group is selected on AI tree (and no sub-node is selected)
+              if (selectedGroup && !selectedTreeNode && currentVertical?.id === "ai" && currentLevel === "subsystems") {
                 return (
                   <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 12 }}>
                     <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{selectedGroup.name}</p>

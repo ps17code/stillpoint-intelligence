@@ -276,7 +276,17 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     return (
       <div
         ref={el => { if (el) cardRefs.current.set(name, el); }}
-        onClick={() => { setSelectedNode(prev => prev === name ? null : name); onNodeClick?.(name); }}
+        onClick={() => {
+          setSelectedNode(prev => {
+            if (prev === name) {
+              // Deselecting — revert to group summary
+              onNodeClick?.("");
+              return null;
+            }
+            onNodeClick?.(name);
+            return name;
+          });
+        }}
         style={{
           padding: "4px 6px 4px 12px",
           background: bg,
