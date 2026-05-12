@@ -3364,31 +3364,32 @@ export default function TreeView() {
                 return (
                   <div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
-                      <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#c8a85a", textTransform: "uppercase" as const, margin: 0, fontFamily: "'Geist Mono', monospace" }}>Featured Chains</p>
+                      <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#fff", textTransform: "uppercase" as const, margin: 0, fontFamily: "'Geist Mono', monospace" }}>Featured Chains</p>
                     </div>
                     {featuredChains.map((chain, ci) => {
                       const pill = STATUS_PILL[chain.status] ?? STATUS_PILL.structural;
+                      const titleColor = pill.color + "bf"; // 75% opacity hex
                       return (
                         <div key={chain.id}>
                           {ci > 0 && <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />}
                           <div
                             onClick={() => { setSelectedFeaturedChain(chain.id); setSelectedGroup(null); setSelectedTreeNode(null); }}
-                            style={{ cursor: "pointer", padding: "8px 0", borderRadius: 4, transition: "background 0.15s" }}
-                            onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                            style={{ cursor: "pointer", padding: "8px 10px", borderRadius: 4, transition: "background 0.15s", background: "rgba(255, 255, 255, 0.02)" }}
+                            onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = "rgba(255, 255, 255, 0.02)"; }}
                           >
                             {/* Title + status pill */}
-                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
-                              <p style={{ fontSize: 15, color: warmWhite, fontWeight: 400, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{chain.title}</p>
-                              <span style={{ fontSize: 8, letterSpacing: "0.06em", textTransform: "uppercase" as const, color: pill.color, background: pill.bg, border: `0.5px solid ${pill.color}`, padding: "2px 7px", borderRadius: 3, fontFamily: "'Geist Mono', monospace", flexShrink: 0 }}>{chain.status}</span>
+                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}>
+                              <p style={{ fontSize: 10, color: titleColor, fontWeight: 500, margin: 0, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" as const, letterSpacing: "0.03em" }}>{chain.title}</p>
+                              <span style={{ fontSize: 7, letterSpacing: "0.06em", textTransform: "uppercase" as const, color: pill.color, background: pill.bg, border: `0.5px solid ${pill.color}`, padding: "2px 5px", borderRadius: 3, fontFamily: "'Geist Mono', monospace", flexShrink: 0 }}>{chain.status}</span>
                             </div>
                             {/* Teaser */}
-                            <p style={{ fontSize: 12, color: bodyText, lineHeight: 1.55, margin: "0 0 8px 0" }}>{chain.teaser}</p>
+                            <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.55, margin: "0 0 8px 0" }}>{chain.teaser}</p>
                             {/* Chain link line */}
-                            <div style={{ display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 0, flexWrap: "wrap" }}>
                               {chain.display_chain.map((nodeName, ni) => (
                                 <React.Fragment key={ni}>
-                                  {ni > 0 && <span style={{ fontSize: 9, color: "#3a3835" }}>→</span>}
+                                  {ni > 0 && <span style={{ fontSize: 9, color: "#3a3835", margin: "0 3px" }}>→</span>}
                                   <span style={{ fontSize: 11, color: ni === chain.chokepoint_display_index ? "#c8a85a" : "#706a60", fontWeight: ni === chain.chokepoint_display_index ? 600 : 400, fontFamily: "'Geist Mono', monospace" }}>{nodeName}</span>
                                 </React.Fragment>
                               ))}
