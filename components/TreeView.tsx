@@ -2183,17 +2183,26 @@ export default function TreeView() {
         return <AISupplyTree
           highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : undefined}
           onNodeClick={(name) => {
-            if (selectedFeaturedChain) setSelectedFeaturedChain(null);
+            // If in featured chain mode, keep the chain active — just update the selected node
+            if (selectedFeaturedChain) {
+              if (!name) {
+                setSelectedTreeNode(null);
+              } else {
+                setSelectedTreeNode(name);
+                setRightTab("summary");
+              }
+              return;
+            }
+            // Default mode
             if (!name) {
-              // Deselected — revert to group summary
               setSelectedTreeNode(null);
             } else {
-              // Select node but keep selectedGroup so we can revert to it
               setSelectedTreeNode(name);
               setRightTab("summary");
             }
           }}
           onGroupClick={(key, name, overview, activity) => {
+            if (selectedFeaturedChain) return; // Don't handle group clicks in chain mode
             if (!key) {
               setSelectedGroup(null);
               setSelectedTreeNode(null);
