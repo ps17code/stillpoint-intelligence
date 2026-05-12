@@ -2994,6 +2994,13 @@
       "Nvidia",
       "AMD",
       "Google (TPU)"
+    ],
+    "ai_summary": [
+      "Massively parallel processors that crunch the matrix math behind AI training and inference — the single most valuable and supply-constrained component in the chain.",
+      "Each GPU die is fabricated on an advanced logic wafer (3–5nm), bonded to HBM memory stacks via CoWoS packaging, and mounted on an ABF substrate — four upstream bottlenecks converge in one device.",
+      "Nvidia holds ~80% of the AI accelerator market; AMD and Intel compete but trail significantly in software ecosystem and datacenter adoption.",
+      "Nvidia shipped an estimated 2+ million Blackwell-class GPUs in 2025, with 2026 production projected at 4–5 million units — demand still exceeds supply.",
+      "GPUs are the demand signal that drives the entire AI infrastructure supply chain — when Nvidia's order book grows, every upstream node in this tree feels it."
     ]
   },
   "CPUs (Host)": {
@@ -3031,6 +3038,13 @@
       "Nvidia (Grace)",
       "AMD (EPYC)",
       "Intel (Xeon)"
+    ],
+    "ai_summary": [
+      "General-purpose processors that handle operating systems, data movement, and orchestration tasks alongside GPUs — every AI server needs a host CPU even though GPUs do the AI math.",
+      "Fabricated on advanced logic wafers and packaged using similar substrate and interconnect technology as GPUs, though typically less complex.",
+      "Intel and AMD split the server CPU market, with AMD gaining share through its EPYC line; Arm-based alternatives (Ampere, AWS Graviton) are growing in cloud workloads.",
+      "CPU supply is less constrained than GPUs because host processors don't require HBM or CoWoS packaging — the bottleneck is downstream, not here.",
+      "CPUs are a necessary companion to every GPU — each AI server rack typically runs a 2:1 to 8:1 GPU-to-CPU ratio depending on workload."
     ]
   },
   "Server Boards": {
@@ -3072,6 +3086,13 @@
       "Foxconn",
       "Quanta",
       "Wiwynn"
+    ],
+    "ai_summary": [
+      "Multi-layer PCBs that connect CPU, memory, storage, and networking components into a functioning server — the wiring backbone of every compute node.",
+      "Built from FR-4 or high-speed laminate with 20–30 copper layers, populated with thousands of components attached by lead-free solder — tantalum capacitors, VRMs, and connectors.",
+      "Supermicro, Foxconn, Quanta, and Wiwynn are major server board ODMs — production is concentrated in Taiwan and China.",
+      "AI server boards are larger and more complex than standard boards due to GPU module footprints, higher power delivery requirements, and additional PCIe lanes.",
+      "Server boards are the physical integration point where upstream silicon, packaging, and passive components converge into a working server."
     ]
   },
   "Cold Plates": {
@@ -3110,6 +3131,13 @@
       "Boyd",
       "AVC",
       "CoolIT"
+    ],
+    "ai_summary": [
+      "Metal blocks (typically copper or aluminum) with internal microchannels that press against chip surfaces to transfer heat into circulating liquid coolant.",
+      "Liquid enters at ~25°C, absorbs heat from the chip through the plate's microchannel structure, and exits at ~45–55°C — far more efficient than air cooling.",
+      "Boyd Corporation, Cooler Master, and Aavid (now Boyd) supply cold plates to server OEMs — designs are customized to each GPU module's thermal map.",
+      "Direct-to-chip liquid cooling using cold plates is becoming mandatory for AI GPUs above ~500W TDP — Nvidia's Blackwell GB200 requires liquid cooling.",
+      "Cold plates are the thermal interface between a $30,000+ GPU and the cooling loop that keeps it running — failure means immediate throttling or shutdown."
     ]
   },
   "PSUs & VRMs": {
@@ -3150,6 +3178,13 @@
       "Delta Electronics",
       "Lite-On",
       "Infineon"
+    ],
+    "ai_summary": [
+      "Power supply units convert facility AC power to the DC voltages servers need; voltage regulator modules (VRMs) step down further to the precise voltages each chip requires.",
+      "Built from mature-node silicon (MOSFETs, GaN transistors), magnetic components, and capacitors — increasingly using GaN power devices for higher efficiency.",
+      "Delta, Lite-On, and Murata are major PSU suppliers; VRM design is often integrated into the server board by the ODM.",
+      "AI server racks draw 40–120 kW — pushing PSU designs from 2–3 kW units to 5–10 kW units, with 54V bus architectures replacing traditional 12V.",
+      "Power delivery is scaling faster than almost any other datacenter subsystem — each GPU generation draws more watts, compounding demand for higher-capacity PSUs."
     ]
   },
   "HBM Stacks": {
@@ -3189,6 +3224,13 @@
       "SK Hynix",
       "Samsung",
       "Micron"
+    ],
+    "ai_summary": [
+      "Tower of DRAM wafer dies bonded together with through-silicon vias and mounted next to the GPU on a silicon interposer — the memory that feeds AI processors at terabyte-per-second bandwidth.",
+      "Built by stacking 8–16 DRAM dies using TSV copper connections, then integrating the stack into a CoWoS package alongside the GPU — three upstream bottlenecks in one component.",
+      "SK Hynix holds ~60% of HBM revenue, Samsung ~30%, and Micron ~10% — SK Hynix's production is booked out through 2026 with ~20% price hikes for HBM3E.",
+      "Each Nvidia Blackwell GPU requires 6–8 HBM stacks; a single AI server rack can contain 50+ stacks worth $50,000+ in memory alone.",
+      "HBM is the component that makes large AI models possible — without terabyte-per-second bandwidth, GPUs sit idle waiting for data."
     ]
   },
   "DRAM Modules": {
@@ -3226,6 +3268,13 @@
       "Samsung",
       "SK Hynix",
       "Micron"
+    ],
+    "ai_summary": [
+      "Standard DDR memory sticks plugged into server motherboards for general-purpose system memory — separate from the HBM used by GPUs.",
+      "Built from the same DRAM wafers as HBM but without the advanced stacking and TSV packaging — simpler to produce and lower cost per bit.",
+      "Samsung, SK Hynix, and Micron produce all DRAM modules — the same three-company oligopoly as HBM.",
+      "Each AI server typically has 512 GB to 2 TB of DDR5 system memory for the host CPU, in addition to HBM on the GPUs.",
+      "DRAM supply is tightening as HBM production absorbs wafer capacity that previously served commodity DRAM — Samsung warns shortages could last through 2027."
     ]
   },
   "Enterprise SSDs": {
@@ -3263,6 +3312,13 @@
       "Samsung",
       "Kioxia",
       "Sandisk"
+    ],
+    "ai_summary": [
+      "Solid-state storage drives using NAND flash memory for high-speed data access — the primary hot storage tier in AI datacenters for training data and model checkpoints.",
+      "Built from NAND wafers, an SSD controller chip (mature-node logic), DRAM cache, and a PCB — packaged in standard 2.5-inch or M.2 form factors.",
+      "Samsung, Micron, SK Hynix (Solidigm/Intel legacy), Kioxia, and Western Digital supply enterprise SSDs — a competitive market with adequate supply.",
+      "AI training jobs generate massive checkpoint files and read enormous datasets — each GPU server typically has 4–16 NVMe SSDs for local storage.",
+      "Enterprise SSD supply is generally adequate — the constraint is more often NAND wafer supply and controller chip availability than finished drive production."
     ]
   },
   "Enterprise HDDs": {
@@ -3302,6 +3358,13 @@
       "Seagate",
       "Western Digital",
       "Toshiba"
+    ],
+    "ai_summary": [
+      "Spinning-platter magnetic storage drives using multiple disks coated with a thin magnetic recording layer — still the dominant cold storage medium for bulk data.",
+      "Each platter is coated with a ruthenium (PGM) magnetic layer, spun by an NdFeB magnet motor, and read by a head flying nanometers above the surface.",
+      "Seagate and Western Digital are the only remaining HDD manufacturers — a duopoly controlling all production.",
+      "AI datacenters use HDDs for cold storage tiers — training data archives, compliance records, and infrequently accessed datasets that don't justify SSD cost.",
+      "HDD shipments are declining as SSDs gain share, but the total data storage requirement of AI is growing fast enough to sustain HDD demand for years."
     ]
   },
   "NAND Flash": {
@@ -3341,6 +3404,13 @@
       "Samsung",
       "SK Hynix",
       "Kioxia"
+    ],
+    "ai_summary": [
+      "Non-volatile memory chips with vertically stacked storage cells — the raw flash dies that are assembled into SSDs, SD cards, and embedded storage.",
+      "Manufactured by etching 200+ layer 3D structures into silicon wafers using DUV lithography — each cell stores 3–4 bits of data (TLC/QLC).",
+      "Samsung, SK Hynix, Micron, Kioxia, and Western Digital share the market — production is concentrated in South Korea, Japan, and the US.",
+      "Flash dies are the capacity component inside every enterprise SSD — AI datacenter storage demand scales with training dataset and checkpoint sizes.",
+      "NAND supply is less constrained than DRAM because 3D stacking adds capacity without leading-edge lithography — but AI storage demand is growing fast."
     ]
   },
   "SSD Controllers": {
@@ -3378,6 +3448,13 @@
       "Marvell",
       "Phison",
       "Silicon Motion"
+    ],
+    "ai_summary": [
+      "Specialized chips that manage data flow between the server and NAND flash dies — handling wear leveling, error correction, encryption, and NVMe protocol.",
+      "Fabricated on mature-node wafers (12–28nm) and packaged with standard substrates — less complex than GPUs but essential to SSD performance and reliability.",
+      "Marvell, Phison, Silicon Motion, and Samsung (in-house) are leading SSD controller suppliers.",
+      "Each enterprise SSD contains one controller chip — an AI server with 16 SSDs needs 16 controllers, creating meaningful aggregate volume.",
+      "SSD controllers are a mature-node silicon demand driver that competes for wafer capacity with power management, analog, and automotive chips."
     ]
   },
   "Switch ASICs": {
@@ -3417,6 +3494,13 @@
       "Broadcom",
       "Nvidia",
       "Cisco"
+    ],
+    "ai_summary": [
+      "Custom silicon chips that route network packets between ports at terabit-per-second speeds — the processing engine inside every datacenter network switch.",
+      "Fabricated on advanced logic wafers (5–7nm) for the highest-performance designs, with CoWoS or similar advanced packaging for some next-gen architectures.",
+      "Broadcom (Memory line) dominates with ~75% market share; Nvidia (Spectrum), Intel (Tofino), and Cisco (Silicon One) compete.",
+      "AI GPU clusters require non-blocking, ultra-low-latency switching fabrics — each cluster of 10,000+ GPUs needs hundreds of high-radix switches.",
+      "Switch ASICs are the traffic controllers of AI networking — every byte of training data and model gradient flows through these chips."
     ]
   },
   "Optical Transceivers": {
@@ -3456,6 +3540,13 @@
       "Coherent",
       "Lumentum",
       "Innolight"
+    ],
+    "ai_summary": [
+      "Modules that convert electrical signals to light and back — plugged into switches and servers to send data over fiber optic cable at 400G, 800G, or 1.6T speeds.",
+      "Inside each transceiver are InP or GaAs laser diodes, photodetectors, driver ICs, and a DSP chip — all packaged into a small pluggable module.",
+      "The AI transceiver market grew 57% to $26B in 2026; McKinsey projects 800G production will fall 40–60% short of demand through 2027.",
+      "Each AI GPU rack requires dozens of transceivers — a 10,000-GPU cluster can consume 50,000+ modules at 800G speeds.",
+      "Optical transceivers are the bandwidth bottleneck between compute and network — InP laser supply is the constraint behind the constraint."
     ]
   },
   "Co-Packaged Optics": {
@@ -3495,6 +3586,13 @@
       "Broadcom",
       "TSMC",
       "Nvidia"
+    ],
+    "ai_summary": [
+      "Optical engines integrated directly into the switch ASIC package rather than plugged in externally — eliminating the electrical bottleneck between chip and fiber.",
+      "Combines silicon photonics, InP lasers, and advanced packaging onto a single substrate — a convergence of semiconductor and optical manufacturing.",
+      "Broadcom, Nvidia, and Ayar Labs are developing CPO architectures — early deployments expected in 2026–2027 AI cluster builds.",
+      "CPO reduces power consumption per bit by 30–50% compared to pluggable transceivers — meaningful at the scale of a 100,000-GPU cluster.",
+      "Co-packaged optics is the next-generation interconnect architecture for AI clusters — when it arrives at scale, it reshapes both networking and packaging supply chains."
     ]
   },
   "Photonic ICs": {
@@ -3533,6 +3631,13 @@
       "OpenLight",
       "Ayar Labs",
       "Marvell"
+    ],
+    "ai_summary": [
+      "Silicon chips that guide, modulate, and detect light on a semiconductor substrate — the optical equivalent of an electronic integrated circuit.",
+      "Fabricated in silicon photonics fabs using 300mm wafers and modified CMOS processes — GlobalFoundries and TSMC offer silicon photonics foundry services.",
+      "Used inside advanced optical transceivers and co-packaged optics modules to replace discrete optical components with integrated waveguides.",
+      "Each 1.6T transceiver generation uses more silicon photonics content as the industry moves from discrete lasers to integrated optical engines.",
+      "Photonic ICs are the technology bridge between electronics and optics — still early in adoption but growing fast as AI bandwidth demands outrun electrical interconnects."
     ]
   },
   "Network Switches": {
@@ -3572,6 +3677,13 @@
       "Arista",
       "Cisco",
       "Nvidia"
+    ],
+    "ai_summary": [
+      "Box-level networking equipment containing switch ASICs, transceivers, power supplies, and cooling — the physical nodes that route data through datacenter networks.",
+      "Assembled from upstream switch ASICs (Broadcom/Nvidia), optical transceivers, FR-4 PCBs, and standard power/cooling components.",
+      "Arista, Cisco, and white-box ODMs (Edgecore, Celestica) supply datacenter switches — Arista leads in hyperscale AI cluster deployments.",
+      "A 10,000-GPU AI cluster requires hundreds of leaf and spine switches in a non-blocking fat-tree topology — each switch carries 32–64 high-speed ports.",
+      "Network switches are the assembled product where silicon, optics, and packaging converge — supply tracks the AI GPU buildout with a slight lag."
     ]
   },
   "Fiber Optic Cable": {
@@ -3610,6 +3722,13 @@
       "Corning",
       "Prysmian",
       "Sumitomo Electric"
+    ],
+    "ai_summary": [
+      "Glass strands that carry data as pulses of light — the physical layer connecting every server, switch, and building in a datacenter campus.",
+      "Germanium-doped silica preforms are drawn into hair-thin fibers, coated with UV polymer, and bundled into cables — upstream constraints include GeCl₄, helium, and preform equipment.",
+      "Corning controls ~40% of Western fiber capacity; fiber prices surged 70%+ since late 2025 with lead times stretching to nearly a year for smaller customers.",
+      "AI-optimized datacenters consume 5–10x more fiber than conventional facilities; Nvidia Blackwell racks require 16x more fiber than traditional cloud switches.",
+      "Fiber is the physical bandwidth layer that everything else depends on — the shortage is real, structural, and getting worse as AI datacenter construction accelerates."
     ]
   },
   "DACs & AECs": {
@@ -3647,6 +3766,13 @@
       "Amphenol",
       "Molex",
       "TE Connectivity"
+    ],
+    "ai_summary": [
+      "Direct attach copper cables and active electrical cables — short-reach connections (<5m) between adjacent switches and servers using copper instead of fiber.",
+      "DACs are passive copper twinax cables; AECs add a small active chip at each end to boost signal integrity over slightly longer distances.",
+      "Cheaper than optical transceivers for short-reach connections — each 400G DAC costs $100–200 versus $500–1,000 for an optical transceiver.",
+      "Used within racks and between adjacent racks where distances are short enough for copper — AI clusters use a mix of DACs (short) and optics (long).",
+      "DACs reduce the optical transceiver count in dense GPU clusters — a cost optimization that matters when a cluster needs tens of thousands of links."
     ]
   },
   "NICs / DPUs": {
@@ -3685,6 +3811,13 @@
       "Nvidia",
       "AMD (Pensando)",
       "Intel"
+    ],
+    "ai_summary": [
+      "Network interface cards and data processing units that offload networking, security, and storage tasks from the host CPU so it doesn't get bogged down.",
+      "Built on mature-node logic wafers and packaged with standard substrates — less advanced fabrication than GPUs but essential for system efficiency.",
+      "Nvidia (ConnectX/BlueField), Broadcom, and Intel/Marvell are the main suppliers — Nvidia's DPUs are increasingly bundled with GPU server platforms.",
+      "Each AI server typically has 1–2 NICs/DPUs; large GPU clusters require hundreds per rack for RDMA networking at 400G–800G speeds.",
+      "DPUs are becoming the third processor in every AI server alongside GPU and CPU — a growing silicon demand vector that competes for fab capacity."
     ]
   },
   "Coolant Distribution Units": {
@@ -3723,6 +3856,13 @@
       "Vertiv",
       "Boyd",
       "CoolIT"
+    ],
+    "ai_summary": [
+      "Rack-mounted or row-level units that regulate temperature, pressure, and flow rate of liquid coolant distributed to server cold plates — the control layer of liquid cooling.",
+      "Takes facility chilled water or coolant from a central plant and distributes it at precise temperature and flow rates to individual server racks.",
+      "Vertiv, CoolIT, and Motivair are leading CDU suppliers — the market is scaling rapidly as liquid cooling becomes mandatory for AI GPU racks.",
+      "Each AI rack drawing 40–120 kW requires a CDU — datacenter operators are retrofitting existing facilities and designing new ones around liquid cooling from day one.",
+      "CDUs are the control interface between facility cooling infrastructure and the servers — the component that makes precision liquid cooling manageable at datacenter scale."
     ]
   },
   "Manifolds & QDs": {
@@ -3760,6 +3900,13 @@
       "Parker Hannifin",
       "CPC",
       "Staubli"
+    ],
+    "ai_summary": [
+      "Plumbing manifolds and quick-disconnect fittings that connect liquid cooling loops to individual servers — allowing hot-swap of servers without draining the cooling system.",
+      "Quick disconnects use dripless valve mechanisms that seal when disconnected, preventing coolant leaks during server maintenance — a mechanical precision component.",
+      "CPC (Colder Products), Staubli, and Parker supply QD fittings; manifold designs are typically custom to the rack architecture.",
+      "Every liquid-cooled server in an AI rack connects through QD fittings — a 72-GPU rack might have 70+ individual quick-disconnect connections.",
+      "Manifolds and QDs are the mechanical interface that makes liquid cooling practical for server maintenance — without dripless disconnects, every swap risks a coolant spill."
     ]
   },
   "Chillers": {
@@ -3798,6 +3945,13 @@
       "Trane",
       "Carrier",
       "Johnson Controls"
+    ],
+    "ai_summary": [
+      "Refrigeration units that remove heat from datacenter coolant loops and reject it to the outdoor environment — the thermal workhorse of every large facility.",
+      "Use refrigerant compression-expansion cycles to transfer heat from ~10–15°C chilled water supply to outdoor ambient — consuming significant electricity in the process.",
+      "Trane (Ingersoll Rand), Carrier (now part of Honeywell), Johnson Controls, and Daikin are leading chiller manufacturers.",
+      "A 100 MW datacenter typically requires 30–50 MW of chiller capacity — cooling is the largest non-IT power consumer in traditional air-cooled facilities.",
+      "Chiller efficiency (measured in kW/ton) directly affects datacenter PUE — every improvement in chiller COP reduces the total facility power draw."
     ]
   },
   "Cooling Towers": {
@@ -3836,6 +3990,13 @@
       "SPX",
       "Baltimore Aircoil",
       "Evapco"
+    ],
+    "ai_summary": [
+      "Outdoor heat rejection systems that evaporate water to cool the warm condenser water returning from chillers — the final thermal link between datacenter heat and the atmosphere.",
+      "Warm water from the chiller condenser is sprayed over fill media while fans draw air through — evaporation cools the water, which recirculates back to the chiller.",
+      "SPX Cooling, BAC, and Evapco are major cooling tower manufacturers — designs range from small rooftop units to large field-erected towers.",
+      "A 100 MW datacenter can evaporate 1–5 million gallons of water per day through its cooling towers, depending on climate and cooling architecture.",
+      "Cooling towers are where datacenter energy consumption meets water consumption — the tradeoff between water use and energy efficiency is a siting-level decision."
     ]
   },
   "CRAH / Fan Wall Units": {
@@ -3874,6 +4035,13 @@
       "Vertiv",
       "Stulz",
       "Trane"
+    ],
+    "ai_summary": [
+      "Computer room air handlers that blow conditioned air through raised floors or overhead ducts to cool server racks — the traditional cooling delivery method for air-cooled datacenters.",
+      "Contain fans driven by NdFeB magnet motors, cooling coils fed by chilled water, and filters — each unit handles 50–200 kW of heat removal.",
+      "Vertiv (Liebert), Schneider Electric (APC), and Stulz are leading CRAH manufacturers.",
+      "AI datacenters are transitioning away from air-cooled CRAHs toward liquid cooling, but most existing facilities and lower-density zones still rely on them.",
+      "Fan wall designs (multiple smaller fans vs. one large fan) improve redundancy and efficiency — the design evolution reflects the industry's shift toward higher rack densities."
     ]
   },
   "Heat Exchangers": {
@@ -3911,6 +4079,13 @@
       "Alfa Laval",
       "Kelvion",
       "SWEP"
+    ],
+    "ai_summary": [
+      "Metal devices that transfer heat between two fluid streams without mixing them — used throughout datacenter cooling systems to isolate loops and manage temperatures.",
+      "Plate, shell-and-tube, and microchannel designs are used depending on application — stainless steel and copper-nickel alloys are common construction materials.",
+      "Alfa Laval, Kelvion, and GEA are leading heat exchanger manufacturers — commodity equipment with well-established supply chains.",
+      "Datacenters use heat exchangers between chilled water loops, between coolant circuits and building water, and in free-cooling economizer systems.",
+      "Heat exchangers are thermal infrastructure plumbing — widely available, not constrained, but essential to every cooling architecture."
     ]
   },
   "MV Switchgear": {
@@ -3949,6 +4124,13 @@
       "ABB",
       "Schneider Electric",
       "Eaton"
+    ],
+    "ai_summary": [
+      "Medium-voltage (5–35 kV) switching equipment that connects the utility feed to a datacenter's internal distribution system — the first point of electrical control inside the facility.",
+      "Contains circuit breakers, bus bars, instrument transformers, and protective relaying — housed in metal-enclosed compartments rated for arc-flash containment.",
+      "Eaton, Schneider Electric, ABB (now Hitachi Energy), and Siemens are leading switchgear manufacturers.",
+      "Each datacenter utility feed requires MV switchgear; a 100+ MW campus may have multiple switchgear lineups for redundancy and segmentation.",
+      "MV switchgear lead times have stretched to 40–60 weeks, tracking the same transformer and electrical equipment delivery bottleneck constraining datacenter energization."
     ]
   },
   "Step-Down Transformers": {
@@ -3987,6 +4169,13 @@
       "ABB",
       "Hitachi Energy",
       "Eaton"
+    ],
+    "ai_summary": [
+      "Power transformers that reduce high-voltage utility supply (69–230 kV) to the medium voltage (13–35 kV) used inside datacenter distribution systems.",
+      "Core is made from grain-oriented electrical steel (GOES), wound with copper or aluminum conductors, and immersed in insulating transformer oil.",
+      "ABB/Hitachi Energy, Siemens, and Virginia Transformer are major suppliers — lead times have stretched to 2–3 years driven by GOES shortages and surging orders.",
+      "Every datacenter substation requires step-down transformers — a 100 MW facility typically needs 3–6 large transformers for the main feeds.",
+      "Transformer delivery is one of the most binding physical constraints on datacenter energization — the GOES steel shortage flows directly into datacenter timelines."
     ]
   },
   "UPS Systems": {
@@ -4025,6 +4214,13 @@
       "Vertiv",
       "Schneider Electric",
       "Eaton"
+    ],
+    "ai_summary": [
+      "Uninterruptible power supply units that provide instant battery-backed power during the gap between utility failure and generator startup — typically 10–30 seconds of ride-through.",
+      "Contain battery banks (lithium-ion or VRLA), power electronics (inverters/rectifiers built from mature-node silicon), and control systems.",
+      "Vertiv, Schneider Electric (APC), and Eaton dominate the datacenter UPS market — large 500+ kW systems are standard for AI deployments.",
+      "Every AI server rack is fed through a UPS to prevent data loss and hardware damage during power transitions.",
+      "UPS systems are transitioning from lead-acid to lithium-ion batteries, reducing footprint and improving efficiency — but adding another lithium demand vector."
     ]
   },
   "BESS": {
@@ -4063,6 +4259,13 @@
       "Tesla",
       "Fluence",
       "CATL"
+    ],
+    "ai_summary": [
+      "Battery energy storage systems — containerized banks of LFP cells that provide minutes-to-hours of backup power and grid services for datacenters.",
+      "Built from LFP battery cells stacked into modules, connected to inverters and thermal management, and packaged in shipping containers for deployment.",
+      "CATL, BYD, Tesla (Megapack), and Sungrow are leading BESS integrators — Chinese cell dominance extends through the assembled system.",
+      "Hyperscalers are deploying 100+ MWh BESS installations at datacenter campuses — replacing diesel generators for short-duration backup and providing grid arbitrage.",
+      "BESS is the enabling technology for datacenters in grid-constrained locations — it smooths intermittent renewables and provides power during outages without diesel."
     ]
   },
   "Vanadium Redox Flow Batteries": {
@@ -4101,6 +4304,13 @@
       "Invinity Energy",
       "Sumitomo Electric",
       "VRB Energy"
+    ],
+    "ai_summary": [
+      "Long-duration energy storage systems where energy is stored in liquid vanadium electrolyte pumped through electrode stacks — discharge duration scales with tank size, not stack size.",
+      "Unlike lithium-ion, the vanadium electrolyte doesn't degrade over charge cycles — the system can cycle daily for 25+ years without capacity fade.",
+      "Invinity Energy Systems, Rongke Power, and CellCube are leading VRFB manufacturers — still a small market compared to lithium-ion BESS.",
+      "VRFBs are suited for 4–12 hour discharge applications at datacenter campuses — smoothing solar intermittency and providing longer backup than lithium-ion.",
+      "Flow batteries trade power density for longevity — if long-duration storage becomes standard at datacenter sites, VRFBs offer a cost-competitive alternative to lithium-ion degradation."
     ]
   },
   "Automatic Transfer Switches": {
@@ -4138,6 +4348,13 @@
       "ASCO",
       "Eaton",
       "Russelectric"
+    ],
+    "ai_summary": [
+      "Electrical switches that detect utility power loss and automatically transfer load to backup generators or battery systems within seconds — the failover mechanism for datacenter power.",
+      "Monitor incoming utility voltage and frequency continuously; when parameters fall outside tolerance, the ATS transfers load to the backup source in 10–30 seconds.",
+      "ASCO (Schneider Electric), Eaton, and Generac supply ATS equipment — standard industrial products with well-established supply chains.",
+      "Every Tier III and Tier IV datacenter has multiple ATS units providing automatic failover between utility feeds and backup generators.",
+      "ATS equipment is standard electrical infrastructure — not supply-constrained and not a chokepoint, but structurally required in every datacenter."
     ]
   },
   "PDUs & Rack PDUs": {
@@ -4175,6 +4392,13 @@
       "Vertiv",
       "Schneider Electric",
       "Server Technology"
+    ],
+    "ai_summary": [
+      "Power distribution units that step down facility-level power to rack-level voltages and route it to individual servers with metering and switching capability.",
+      "Floor PDUs transform medium-voltage to rack-level; rack PDUs distribute power to individual server power supplies with per-outlet monitoring.",
+      "Vertiv, Schneider Electric, and Server Technology (now Legrand) supply rack PDUs — standard equipment with short lead times.",
+      "Each AI server rack has 1–2 rack PDUs; large GPU racks running 40–120 kW require high-amperage PDU designs with busbar distribution.",
+      "Rack PDUs are commodity electrical distribution — supply is adequate and not a bottleneck."
     ]
   },
   "Busways & Busbars": {
@@ -4212,6 +4436,13 @@
       "Schneider Electric",
       "Eaton",
       "Siemens"
+    ],
+    "ai_summary": [
+      "Prefabricated copper or aluminum conductors enclosed in insulated housings — used to distribute power from floor PDUs to rack rows without running individual cable bundles.",
+      "Copper busbar is the preferred conductor for high-density AI deployments due to lower resistance and smaller cross-section at high currents.",
+      "Starline, Schneider Electric, and ABB supply overhead busway systems — increasingly specified for AI datacenter designs where rack power exceeds 30 kW.",
+      "Busway replaces cable trays in high-density zones, reducing installation time and improving serviceability — each tap-off box feeds a rack PDU.",
+      "Busways are a design choice that scales with rack power density — as AI pushes racks above 50 kW, busway distribution becomes the preferred topology."
     ]
   },
   "Backup Generators": {
@@ -4251,6 +4482,13 @@
       "Caterpillar",
       "Cummins",
       "Kohler"
+    ],
+    "ai_summary": [
+      "Diesel or natural gas reciprocating engine generator sets that provide emergency power during extended utility outages — the last-resort power source for every datacenter.",
+      "Typically Caterpillar or Cummins diesel gensets rated 2–3 MW each, starting automatically via ATS when utility power fails.",
+      "Lead times for large diesel gensets stretched to 30–50 weeks in 2024–2025 as datacenter orders competed with grid resilience and disaster recovery demand.",
+      "Tier III datacenters require N+1 generator redundancy; a 100 MW facility typically has 40–60 generators with 24–72 hours of diesel fuel onsite.",
+      "Diesel generators are being supplemented by BESS and gas turbines for new AI datacenters, but remain the universal backup standard in existing facilities."
     ]
   },
   "LV/MV Cable": {
@@ -4289,6 +4527,13 @@
       "Prysmian",
       "Nexans",
       "Southwire"
+    ],
+    "ai_summary": [
+      "Low-voltage and medium-voltage copper or aluminum cables with XLPE insulation — the physical power delivery paths connecting substations to server racks.",
+      "Copper cable is preferred for high-current AI rack feeds; aluminum is used for longer distribution runs where weight and cost matter more than current density.",
+      "Prysmian, Nexans, Southwire, and Belden supply datacenter power cable — standard industrial products with generally adequate supply.",
+      "A 100 MW datacenter may contain hundreds of kilometers of power cable across MV feeders, LV distribution, and rack-level wiring.",
+      "Cable supply is generally adequate — the constraint is more often conduit space, installation labor, and the upstream copper/aluminum material than the cable itself."
     ]
   },
   "Frame Gas Turbines": {
@@ -4327,6 +4572,13 @@
       "GE Vernova",
       "Siemens Energy",
       "Mitsubishi Power"
+    ],
+    "ai_summary": [
+      "Large industrial gas turbines (50–500+ MW) that burn natural gas to generate electricity — the fastest path to GW-scale onsite power for AI datacenter campuses.",
+      "Contain nickel superalloy turbine blades (using rhenium, hafnium, tungsten), GOES transformer steel, and complex combustion systems.",
+      "GE Vernova, Siemens Energy, and Mitsubishi Power are the three dominant frame turbine manufacturers globally.",
+      "Combined-cycle gas turbine plants can deliver 500+ MW within 18–24 months — faster than nuclear, more reliable than renewables alone.",
+      "Frame gas turbines are the bridge power technology for the first wave of GW-scale AI datacenters — the question is whether gas remains the default or transitions to nuclear."
     ]
   },
   "Aeroderivative Turbines": {
@@ -4365,6 +4617,13 @@
       "GE Vernova",
       "Siemens Energy",
       "Solar Turbines"
+    ],
+    "ai_summary": [
+      "Gas turbines adapted from aircraft jet engines — lighter, faster-starting, and more flexible than frame turbines but typically smaller (20–100 MW).",
+      "Derived from proven aero engine designs (GE LM2500, Rolls-Royce MT30), adapted with industrial generators and control systems for power generation.",
+      "GE Vernova, Siemens Energy, and Rolls-Royce Power Systems supply aeroderivative units — fewer manufacturers than frame turbines.",
+      "Start in minutes rather than hours, making them suited for peaking power, grid balancing, and rapid deployment at datacenter sites.",
+      "Aeroderivative turbines fill the gap between battery backup (minutes) and frame turbine baseload (months to build) — flexible power for phased datacenter growth."
     ]
   },
   "Reciprocating Gas Engines": {
@@ -4403,6 +4662,13 @@
       "Caterpillar",
       "Wartsila",
       "INNIO Jenbacher"
+    ],
+    "ai_summary": [
+      "Internal combustion engines running on natural gas that generate 1–20 MW each — typically deployed in clusters for distributed datacenter power.",
+      "Simpler than gas turbines, with higher electrical efficiency at partial loads — well-suited for modular datacenter deployments that scale incrementally.",
+      "Caterpillar (MaK), Wärtsilä, and Jenbacher (Innio) are leading manufacturers — established industrial products with 20–30 week lead times.",
+      "Some datacenter operators deploy recip engine plants for onsite generation, particularly in locations where gas pipeline access is available but grid capacity isn't.",
+      "Reciprocating engines are the low-complexity option for onsite datacenter power — less efficient than combined-cycle turbines but faster to deploy and easier to scale."
     ]
   },
   "Solar PV Modules": {
@@ -4443,6 +4709,13 @@
       "First Solar",
       "Trina Solar",
       "Longi"
+    ],
+    "ai_summary": [
+      "Flat panels containing silicon solar cells that convert sunlight to DC electricity — the most widely deployed renewable power technology for datacenter supply.",
+      "Built from solar silicon wafers, silver conductive paste, tempered solar glass, EVA encapsulant, and aluminum frames — China produces ~80% of global modules.",
+      "Module prices have fallen below $0.10/W in 2025 — so cheap that the installation labor and balance-of-system costs now dominate total solar project economics.",
+      "Hyperscalers are signing multi-GW solar PPAs to power AI datacenters — each GW of solar requires ~2 million panels across ~5,000 acres.",
+      "Solar modules are abundant and cheap, but the land, interconnection, and grid capacity required to deploy them at datacenter scale are the real constraints."
     ]
   },
   "Solar Inverters": {
@@ -4482,6 +4755,13 @@
       "Sungrow",
       "SMA",
       "Power Electronics"
+    ],
+    "ai_summary": [
+      "Power electronics that convert DC output from solar panels into grid-compatible AC electricity — the electrical interface between solar array and datacenter.",
+      "Contain GaN or SiC power transistors, magnetics, and digital control systems — efficiency exceeds 98% in modern string and central inverter designs.",
+      "Huawei, Sungrow, SMA, and Enphase are leading inverter suppliers — Huawei faces trade restrictions in some Western markets.",
+      "Each MW of solar capacity requires inverter capacity to match — a 100 MW solar farm needs ~100 MW of inverter capacity.",
+      "Inverters are a mature, competitive market with adequate supply — the constraint on solar-powered datacenters is interconnection and grid capacity, not inverter availability."
     ]
   },
   "Solar Racking & Trackers": {
@@ -4519,6 +4799,13 @@
       "Nextracker",
       "Array Technologies",
       "GameChange Solar"
+    ],
+    "ai_summary": [
+      "Steel and aluminum structures that hold solar panels at the correct angle to the sun — fixed-tilt racks for rooftop and single-axis trackers for ground-mount utility-scale.",
+      "Single-axis trackers (Nextracker, Array Technologies) follow the sun east-to-west, boosting energy yield by 15–25% versus fixed-tilt installations.",
+      "Built from galvanized steel, aluminum extrusions, and electric motors (with NdFeB magnets in the tracker drives) — structural steel is the dominant material input.",
+      "A 100 MW ground-mount solar farm requires ~2,000–3,000 tonnes of steel racking or tracker structure.",
+      "Racking and trackers are commodity structural products — supply is adequate and not a meaningful constraint on solar deployment for datacenters."
     ]
   },
   "Wind Turbines": {
@@ -4558,6 +4845,13 @@
       "Vestas",
       "GE Vernova",
       "Siemens Gamesa"
+    ],
+    "ai_summary": [
+      "Multi-MW generators with 80–170m rotor diameters that convert wind energy to electricity — used in onshore and offshore wind farms that supply datacenter power via PPA.",
+      "Contain NdFeB permanent magnets in direct-drive generators (or gearboxes in geared designs), fiberglass blades, steel towers, and copper wiring.",
+      "Vestas, Siemens Gamesa, GE Vernova, and Goldwind are leading turbine manufacturers — the industry has been in margin compression since 2022.",
+      "Several hyperscalers have signed wind PPAs to power AI datacenters, particularly in the US Midwest and Northern Europe where wind resources are strong.",
+      "Wind turbine supply is adequate but the NdFeB magnets inside direct-drive generators tie turbine delivery to the same Chinese rare earth export controls affecting other parts of the chain."
     ]
   },
   "Small Modular Reactors": {
@@ -4596,6 +4890,13 @@
       "Oklo",
       "X-energy",
       "Kairos Power"
+    ],
+    "ai_summary": [
+      "Factory-fabricated nuclear reactors producing 50–300 MW of electricity — designed for faster permitting, lower capital cost, and modular deployment near AI datacenter loads.",
+      "Designs from X-energy (Xe-100, pebble bed), Kairos Power (KP-FHR, molten salt), TerraPower (Natrium, sodium-cooled), and NuScale (VOYGR, light water) are furthest along.",
+      "Most SMR designs require HALEU fuel (5–20% enriched uranium) that doesn't exist at commercial scale outside Russia — the binding fuel supply constraint.",
+      "Microsoft, Google, and Amazon have all announced SMR partnerships for datacenter power, but no commercial SMR operates in the US as of 2026.",
+      "SMRs are the long-term clean baseload power solution for AI datacenters — the question is whether fuel supply, permitting, and construction timelines align with the pace of AI demand."
     ]
   },
   "Conventional Nuclear": {
@@ -4634,6 +4935,13 @@
       "Constellation Energy",
       "Vistra",
       "Duke Energy"
+    ],
+    "ai_summary": [
+      "Existing light-water reactor fleet (~440 units globally, ~93 in the US) generating ~370 GW of zero-carbon baseload electricity — the only proven large-scale clean power source.",
+      "Uses LEU fuel (3–5% enriched), cooled and moderated by water, with zircaloy-clad fuel assemblies and a containment structure — mature, well-understood technology.",
+      "Constellation Energy, NextEra, and EDF operate the largest Western nuclear fleets — Microsoft's Three Mile Island restart made datacenter nuclear procurement mainstream.",
+      "Nuclear plants offer 90%+ capacity factors and zero carbon — the most reliable power source for 24/7 AI workloads.",
+      "The nuclear fleet restart for AI power is already underway — the constraint is reactor availability and grid proximity, not technology or fuel supply."
     ]
   },
   "Fuel Cells": {
@@ -4673,6 +4981,13 @@
       "Bloom Energy",
       "FuelCell Energy",
       "Plug Power"
+    ],
+    "ai_summary": [
+      "Electrochemical devices that convert fuel (natural gas, hydrogen, biogas) directly to electricity without combustion — achieving 40–60% electrical efficiency.",
+      "Solid oxide fuel cells (Bloom Energy) run at ~1,000°C using a YSZ electrolyte; PEM fuel cells run at ~80°C using a platinum catalyst membrane.",
+      "Bloom Energy is the leading SOFC supplier for datacenter applications, with installations at Apple, Google, and Equinix facilities.",
+      "Fuel cells provide onsite power with lower emissions than gas turbines and can run on hydrogen when available — a bridge to fully clean power.",
+      "Fuel cells offer datacenter operators power without grid dependency — relevant for sites where grid interconnection is years away but gas pipeline access exists."
     ]
   },
   "Generator Step-Up Transformers": {
@@ -4711,6 +5026,13 @@
       "Hitachi Energy",
       "GE Vernova",
       "Hyundai Electric"
+    ],
+    "ai_summary": [
+      "Large power transformers that increase generator output voltage from 11–25 kV to the 69–345 kV level needed for transmission — required at every onsite power plant.",
+      "Same GOES core, copper windings, and transformer oil construction as step-down transformers — subject to the same 2–3 year lead times.",
+      "ABB/Hitachi Energy, Siemens, and GE Vernova supply GSUs — the same manufacturers facing the global transformer delivery bottleneck.",
+      "Every gas turbine, nuclear plant, or large solar farm supplying a datacenter needs a GSU to feed power into the transmission grid.",
+      "GSU transformers are part of the same GOES-constrained delivery pipeline as step-down transformers — another transformer bottleneck in the datacenter power chain."
     ]
   },
   "HV Switchgear & Breakers": {
@@ -4749,6 +5071,13 @@
       "ABB",
       "Siemens Energy",
       "Hitachi Energy"
+    ],
+    "ai_summary": [
+      "High-voltage (69–345 kV) switching and protection equipment at the grid interface — circuit breakers, disconnect switches, and bus configurations that control power flow.",
+      "Contains SF₆ or C4-FN insulating gas, copper bus conductors, and protective relay systems — large, heavy equipment fabricated by a few global manufacturers.",
+      "ABB/Hitachi Energy, Siemens, and GE Vernova supply HV switchgear — lead times of 40–80 weeks, tracking the broader electrical equipment delivery bottleneck.",
+      "Each utility interconnection point and onsite power plant at a datacenter campus requires HV switchgear for protection and isolation.",
+      "HV switchgear delivery is another electrical equipment lead-time constraint — part of the same equipment delivery challenge as transformers and MV gear."
     ]
   },
   "HV Transmission Cable": {
@@ -4787,6 +5116,13 @@
       "Prysmian",
       "Nexans",
       "NKT"
+    ],
+    "ai_summary": [
+      "High-voltage (69–345 kV) cable using XLPE insulation and copper or aluminum conductors — used for underground transmission connecting substations to datacenters.",
+      "Underground transmission avoids the permitting challenges of overhead lines but costs 5–10x more per kilometer.",
+      "Prysmian, Nexans, and Southwire manufacture HV cable — lead times of 30–50 weeks for custom long-run orders.",
+      "Datacenters in urban or suburban locations often require underground HV transmission because overhead lines face siting opposition.",
+      "HV cable is a specialized product with adequate manufacturing capacity — the constraint is more often right-of-way permitting than cable supply."
     ]
   },
   "Selective Catalytic Reduction": {
@@ -4825,6 +5161,13 @@
       "Cormetech",
       "Johnson Matthey",
       "Haldor Topsoe"
+    ],
+    "ai_summary": [
+      "Exhaust treatment system that injects urea solution into gas turbine or engine exhaust to reduce nitrogen oxide (NOx) emissions to regulatory limits.",
+      "Contains a catalyst bed (vanadium or zeolite-based) and an aqueous urea injection system — required for air quality permitting in most US jurisdictions.",
+      "Johnson Matthey, BASF, and Cummins Emission Solutions supply SCR systems — standard industrial air quality equipment.",
+      "Every gas turbine and many reciprocating engines at a datacenter power plant require SCR to meet local emissions standards.",
+      "SCR is a permitting prerequisite rather than a supply constraint — without it, gas-fired datacenter power plants can't get air quality permits."
     ]
   },
   "Heat Recovery Steam Generators": {
@@ -4862,6 +5205,13 @@
       "NEM Energy",
       "Babcock & Wilcox",
       "Doosan"
+    ],
+    "ai_summary": [
+      "Boilers that capture waste heat from gas turbine exhaust (~500–600°C) to generate steam that drives a secondary steam turbine — the 'combined cycle' that boosts plant efficiency from ~38% to ~60%.",
+      "Contains finned tube bundles, steam drums, and economizers — large pressure vessels fabricated by specialty boiler manufacturers.",
+      "Nooter/Eriksen, Vogt (now Babcock & Wilcox), and CMI Energy are leading HRSG manufacturers — lead times of 18–24 months.",
+      "The efficiency gain from adding an HRSG (combined cycle) reduces fuel cost per MWh by ~35% — meaningful for a GW-scale datacenter running 24/7.",
+      "HRSGs are what make gas-fired datacenter power economic at scale — the combined-cycle efficiency premium justifies the additional capital and construction time."
     ]
   },
   "Structural Steel": {
@@ -4921,6 +5271,13 @@
       "Nucor",
       "Cleveland-Cliffs",
       "ArcelorMittal"
+    ],
+    "ai_summary": [
+      "Hot-rolled steel beams, columns, and plates that form the primary load-bearing frame of datacenter buildings — the skeleton everything else hangs on.",
+      "Produced from iron ore in blast furnaces or from scrap steel in electric arc furnaces — EAF steel is increasingly preferred for lower carbon footprint.",
+      "Nucor, Steel Dynamics, and ArcelorMittal are major structural steel suppliers — US EAF capacity is growing.",
+      "A 100 MW datacenter building requires roughly 5,000–15,000 tonnes of structural steel depending on design and height.",
+      "Structural steel supply is generally adequate — the constraint on datacenter construction is more often labor, permitting, and power availability than steel."
     ]
   },
   "Cold-Formed Steel": {
@@ -4959,6 +5316,13 @@
       "ClarkDietrich",
       "MarinoWARE",
       "FrameCAD"
+    ],
+    "ai_summary": [
+      "Thin-gauge steel bent and shaped at room temperature into studs, joists, and framing members — used for interior walls, mezzanines, and equipment supports in datacenters.",
+      "Made from galvanized steel coil (zinc-coated for corrosion resistance) cut and formed by roll-forming machines — a commodity construction product.",
+      "ClarkDietrich, Steel Technologies, and Nucor Building Systems supply cold-formed steel — widely available with short lead times.",
+      "Interior partitioning, cable tray supports, and equipment mounting in datacenters all use cold-formed steel framing.",
+      "Cold-formed steel is a bulk construction input — abundant, inexpensive, and not a supply chain constraint."
     ]
   },
   "Concrete": {
@@ -4997,6 +5361,13 @@
       "Cemex",
       "Holcim",
       "Heidelberg Materials"
+    ],
+    "ai_summary": [
+      "Mixture of cement, aggregates, and water that hardens into the foundations, floors, and structural elements of every datacenter building.",
+      "Cement production generates ~8% of global CO₂ emissions — hyperscaler Scope 3 reporting is pushing adoption of low-carbon concrete mixes.",
+      "A 100 MW datacenter requires 50,000–100,000 cubic yards of concrete — foundations, server floor slabs, and cooling tower basins are the major pours.",
+      "Low-carbon alternatives (CarbonCure, Solidia, Holcim ECOPact) inject captured CO₂ or use supplementary cementitious materials to reduce embodied carbon.",
+      "Concrete is the literal foundation of every datacenter — not constrained by supply but increasingly constrained by sustainability requirements."
     ]
   },
   "Rebar": {
@@ -5034,6 +5405,13 @@
       "Nucor",
       "Commercial Metals",
       "Gerdau"
+    ],
+    "ai_summary": [
+      "Reinforcing steel bars embedded in concrete to provide tensile strength — every concrete foundation, slab, and structural element in a datacenter contains rebar.",
+      "Produced from scrap steel in EAF mini-mills — the same domestic steel recycling loop that feeds structural steel production.",
+      "Nucor, CMC, and Gerdau are major US rebar producers — a commodity product with adequate supply and short lead times.",
+      "A large datacenter foundation pour can require thousands of tonnes of rebar, with epoxy-coated rebar specified for corrosion protection in below-grade applications.",
+      "Rebar is a commodity construction input — structurally essential but not a meaningful supply chain constraint."
     ]
   },
   "Raised Flooring": {
@@ -5071,6 +5449,13 @@
       "Tate Access Floors",
       "ASM Modular",
       "Haworth"
+    ],
+    "ai_summary": [
+      "Modular floor tile system elevated 12–36 inches above the structural slab — creating a plenum for cable routing, air distribution, and coolant piping.",
+      "Tiles are typically steel-clad with cementitious fill, mounted on adjustable steel pedestals — the system allows flexible layout changes as IT loads evolve.",
+      "Tate (Kingspan), Haworth, and MERO supply raised floor systems — standard datacenter construction products with adequate availability.",
+      "Traditional air-cooled datacenters use the raised floor plenum for cold-air supply; liquid-cooled facilities use it primarily for cable and pipe management.",
+      "Raised flooring is being reconsidered as AI racks shift to overhead liquid cooling — some new builds eliminate the raised floor entirely."
     ]
   },
   "Fire Suppression": {
@@ -5108,6 +5493,13 @@
       "Johnson Controls",
       "Honeywell",
       "3M"
+    ],
+    "ai_summary": [
+      "Gaseous and sprinkler-based systems that detect and extinguish fires in datacenter white space, electrical rooms, and generator enclosures without damaging equipment.",
+      "Clean agent systems (FM-200, inert gas blends) protect IT space; pre-action sprinklers protect lower-risk areas — both required for Tier III/IV compliance.",
+      "Johnson Controls (Tyco), Siemens, and Kidde (Carrier) are leading fire suppression suppliers.",
+      "The transition away from PFAS-based clean agents (Novec 1230) is adding cost and complexity — inert gas systems (IG-541, Argonite) are the primary replacement.",
+      "Fire suppression is a regulatory and insurance requirement — not a supply bottleneck but subject to the same PFAS-transition challenges as other fluorochemical products."
     ]
   },
   "Security Systems": {
@@ -5145,6 +5537,13 @@
       "Honeywell",
       "Genetec",
       "Axis Communications"
+    ],
+    "ai_summary": [
+      "Cameras, access control, intrusion detection, and monitoring systems that protect datacenter physical perimeter and interior spaces.",
+      "Built from mature-node semiconductors, IP networking equipment, and software — standard commercial security technology deployed at higher density.",
+      "Honeywell, Bosch, and Axis Communications supply datacenter-grade physical security systems.",
+      "Hyperscale datacenters operate at government-grade physical security levels — mantraps, biometric access, 24/7 guard force, and continuous video monitoring.",
+      "Security systems are a required operational element — commodity technology not constrained by supply."
     ]
   },
   "Land & Water Rights": {
@@ -5181,6 +5580,13 @@
       "Crusoe",
       "Tract",
       "Stack Infrastructure"
+    ],
+    "ai_summary": [
+      "The physical land parcel and the legal right to use water at a datacenter site — the most fundamental non-technical input that determines where a datacenter can exist.",
+      "AI datacenter campus sites typically require 50–500+ acres with proximity to high-voltage transmission, fiber routes, and water supply.",
+      "Competition for datacenter-suitable land has driven site acquisition to rural areas in Virginia, Texas, Iowa, and the US Southeast.",
+      "Water rights are becoming a binding constraint in arid regions — a 100 MW air-cooled datacenter can consume 1–5 million gallons/day.",
+      "Land and water are the two inputs that cannot be manufactured, shipped, or substituted — they set the absolute physical boundary on where AI infrastructure can be built."
     ]
   },
   "Advanced Logic Wafers": {
@@ -5232,6 +5638,13 @@
       "TSMC",
       "Samsung Foundry",
       "Intel Foundry"
+    ],
+    "ai_summary": [
+      "Silicon wafers that have been through an advanced chip fab (5nm or below) carrying GPU, CPU, or networking chip designs — hundreds of process steps turn a blank disc into a wafer of uncut dies.",
+      "Upstream inputs include electronic-grade silicon for the wafer itself, EUV and DUV photoresists for patterning, tungsten for interconnect plugs, hafnium for gate dielectrics, and multiple noble gases for etching and implantation.",
+      "Only TSMC, Samsung, and Intel can fabricate advanced logic at 5nm and below — TSMC holds ~60% of advanced node revenue.",
+      "Lead times for advanced wafer starts are 3–4 months, with capacity sold out through 2026 for AI-related designs.",
+      "Every AI accelerator, host CPU, switch ASIC, and networking chip starts as a pattern on one of these wafers."
     ]
   },
   "Mature-Node Logic Wafers": {
@@ -5277,6 +5690,13 @@
       "TSMC",
       "GlobalFoundries",
       "UMC"
+    ],
+    "ai_summary": [
+      "Silicon wafers fabricated at older process nodes (28nm and above) carrying designs for power management, controllers, sensors, and analog chips — simpler to make but essential to every system.",
+      "Use the same silicon feedstock and DUV photoresists as advanced wafers but skip EUV lithography, which keeps cost per wafer much lower.",
+      "Produced by dozens of fabs worldwide including TSMC, UMC, GlobalFoundries, and Chinese foundries — far less concentrated than advanced nodes.",
+      "AI datacenters consume mature-node chips in power supplies, UPS controllers, SSD controllers, sensor arrays, and security systems — dozens per server rack.",
+      "Mature nodes are the invisible majority of the chip supply chain — less glamorous than leading-edge but structurally irreplaceable in every subsystem."
     ]
   },
   "DRAM Wafers": {
@@ -5319,6 +5739,13 @@
       "SK Hynix",
       "Samsung",
       "Micron"
+    ],
+    "ai_summary": [
+      "Silicon wafers patterned with dynamic random-access memory circuits — the working memory that GPUs read and write during AI training and inference.",
+      "Upstream inputs include electronic-grade silicon, DUV photoresists, krypton and argon for etching, and ultra-pure water for cleaning between process steps.",
+      "Samsung, SK Hynix, and Micron produce virtually all DRAM wafers globally — a three-player oligopoly.",
+      "HBM (high-bandwidth memory) stacks are built by bonding and stacking these DRAM wafers with through-silicon vias, then packaging them alongside GPUs.",
+      "Samsung and SK Hynix warn AI-driven memory shortages could last through 2027 as HBM demand absorbs wafer capacity that previously served commodity DRAM."
     ]
   },
   "NAND Wafers": {
@@ -5358,6 +5785,13 @@
       "Samsung",
       "SK Hynix",
       "Kioxia"
+    ],
+    "ai_summary": [
+      "Silicon wafers with vertically stacked memory cells (200+ layers) that store data persistently — the flash memory inside every SSD in an AI datacenter.",
+      "Uses similar silicon and DUV chemistry as DRAM but with a radically different 3D structure where cells are stacked vertically rather than shrunk horizontally.",
+      "Samsung, SK Hynix, Micron, Kioxia, and Western Digital share the market — more diversified than DRAM but still concentrated in East Asia.",
+      "Every AI training job produces checkpoints and datasets stored on enterprise SSDs built from NAND flash — storage demand scales with model size.",
+      "NAND supply is currently less constrained than DRAM because 3D stacking adds capacity without requiring leading-edge lithography."
     ]
   },
   "Solar Silicon Wafers": {
@@ -5395,6 +5829,13 @@
       "Longi",
       "Tongwei",
       "Zhonghuan"
+    ],
+    "ai_summary": [
+      "Thin slices of solar-grade polysilicon crystallized into ingots and wire-sawn into wafers — the light-absorbing substrate inside most solar panels.",
+      "Upstream polysilicon is purified from metallurgical silicon using the Siemens process, then crystallized and sliced — China controls ~95% of wafer production.",
+      "LONGi, TCL Zhonghuan, and other Chinese manufacturers dominate global solar wafer output at prices that have pushed most non-Chinese producers out.",
+      "Solar panels made from these wafers are being deployed at GW scale to power AI datacenters, particularly in the US Southwest.",
+      "Solar wafer supply is abundant and cheap — the constraint in solar-powered datacenters is inverters, grid interconnection, and land, not the wafers themselves."
     ]
   },
   "Electronic-Grade Silicon": {
@@ -5435,6 +5876,13 @@
       "Shin-Etsu",
       "SUMCO",
       "SK Siltron"
+    ],
+    "ai_summary": [
+      "Ultra-high-purity silicon (9–11 nines, 99.999999999%) grown into single-crystal ingots and sliced into the wafers that become chips — the foundation of all semiconductor manufacturing.",
+      "Starts as metallurgical-grade silicon from quartz, gets converted to trichlorosilane gas, purified through distillation, and deposited as polysilicon before crystal growth.",
+      "Shin-Etsu, SUMCO, Siltronic, SK Siltron, and GlobalWafers produce virtually all 300mm electronic-grade wafers — a five-company oligopoly.",
+      "Every chip in an AI datacenter — GPUs, CPUs, DRAM, NAND, power ICs, controllers — starts as a slice of this material.",
+      "Wafer supply is tight but expanding — the constraint is more often in downstream fab capacity than in raw wafer availability."
     ]
   },
   "Electronic-Grade Polysilicon": {
@@ -5472,6 +5920,13 @@
       "Wacker",
       "Hemlock",
       "Tokuyama"
+    ],
+    "ai_summary": [
+      "Hyper-pure polycrystalline silicon (9N+) produced by the Siemens process — the feedstock melted and crystallized into the single-crystal ingots that become chip wafers.",
+      "Made by reacting metallurgical silicon with hydrochloric acid to form trichlorosilane, then distilling it to extreme purity and depositing it as solid polysilicon rods.",
+      "Wacker, Hemlock, Tokuyama, and OCI dominate electronic-grade polysilicon — distinct from the solar-grade market where Chinese producers lead.",
+      "Electronic grade requires 100–1,000x higher purity than solar grade — the quality gap creates a separate, smaller, higher-margin market.",
+      "Supply is adequate for current chip demand but any large-scale shift in solar wafer purity requirements could compete for the same purification capacity."
     ]
   },
   "Solar-Grade Polysilicon": {
@@ -5509,6 +5964,13 @@
       "GCL",
       "Tongwei",
       "Daqo"
+    ],
+    "ai_summary": [
+      "Purified silicon (6N, 99.9999%) used as the feedstock for solar wafer production — lower purity than electronic grade but produced in vastly larger volumes.",
+      "Chinese producers (Tongwei, Daqo, GCL, Xinte) dominate with ~90% of global capacity, driving prices down to $6–8/kg from peaks above $30/kg in 2022.",
+      "Produced by the same Siemens process as electronic grade, but with less stringent distillation — or by the lower-cost fluidized bed reactor (FBR) method.",
+      "Feeds into the solar panel chain that powers AI datacenters — each GW of solar capacity requires roughly 3,000–4,000 tonnes of polysilicon.",
+      "Massive Chinese overcapacity has crashed prices and pushed Western producers (Wacker, Hemlock) to focus on the higher-margin electronic grade."
     ]
   },
   "Silicon Metal (Metallurgical Grade)": {
@@ -5548,6 +6010,13 @@
       "Ferroglobe",
       "Elkem",
       "Wacker"
+    ],
+    "ai_summary": [
+      "Crude silicon (98–99% pure) produced by reducing quartz with carbon in submerged arc furnaces — the first industrial step from rock to silicon.",
+      "Major producers include Elkem (Norway), Ferroglobe (US/Spain), and Chinese smelters — production is energy-intensive at ~11 MWh per tonne.",
+      "Feeds into both the semiconductor chain (via trichlorosilane purification to polysilicon) and the aluminum alloy chain (as a casting additive).",
+      "Global production is roughly 3.5 million t/yr, with China producing ~70% — a large market by specialty metal standards.",
+      "Metallurgical silicon is the common ancestor of every chip and every solar cell — abundant but energy-intensive to produce."
     ]
   },
   "High-Purity Quartz": {
@@ -5586,6 +6055,13 @@
       "Sibelco",
       "The Quartz Corp",
       "Norwegian Crystallites"
+    ],
+    "ai_summary": [
+      "Quartzite ore refined to >99.99% SiO₂ purity — the crucible and tube material used in semiconductor crystal growth and the feedstock for fused quartz optics.",
+      "Spruce Pine, North Carolina is the world's dominant source of the highest-purity quartz, supplying crucibles for silicon crystal pulling at every major wafer fab.",
+      "A January 2025 landslide near Spruce Pine temporarily disrupted access, highlighting extreme geographic concentration in a material the entire chip industry depends on.",
+      "Unimin/Covia (now Sibelco) and The Quartz Corp are the primary processors — the entire semiconductor-grade quartz supply chain runs through a small number of facilities.",
+      "High-purity quartz is the geological chokepoint beneath the silicon chain — every wafer fab depends on crucibles made from a handful of quartzite deposits."
     ]
   },
   "CoWoS Advanced Packaging": {
@@ -5632,6 +6108,13 @@
       "TSMC",
       "ASE",
       "Amkor"
+    ],
+    "ai_summary": [
+      "A way of assembling AI chips where the GPU die and memory stacks are mounted side by side on a thin silicon sheet, then wired together with thousands of microscopic copper connections — the step that turns separate chips into a working AI processor.",
+      "The silicon interposer underneath carries the copper wiring between GPU and memory, the ABF substrate connects the package to the server board, and underfill resin locks it all in place — three upstream inputs, each with its own supply constraints.",
+      "Only TSMC can do this at scale — they're expanding from ~35,000 wafers/month in late 2024 to a projected 130,000 by end of 2026, and it's still sold out.",
+      "Nvidia has booked over 60% of all CoWoS capacity through 2027; Google reportedly cut its TPU target from 4 million to 3 million units because it couldn't get enough.",
+      "The constraint on AI chip supply isn't designing faster chips — it's physically assembling them, and CoWoS is where that bottleneck sits."
     ]
   },
   "Silicon Interposer": {
@@ -5669,6 +6152,13 @@
       "TSMC",
       "UMC",
       "ASE"
+    ],
+    "ai_summary": [
+      "A thin silicon wafer etched with thousands of microscopic copper channels (through-silicon vias) that sits between the chip dies and the substrate — the wiring layer that lets GPU and HBM talk to each other.",
+      "Made using standard semiconductor fab equipment but at older process nodes — the interposer itself doesn't need advanced lithography, just precise copper plating and etching.",
+      "TSMC produces most silicon interposers in-house as part of its CoWoS packaging line — interposer supply is effectively gated by CoWoS capacity.",
+      "As AI chips grow larger (reticle-limited designs like Nvidia's Blackwell use multi-die configurations), interposer size grows proportionally, consuming more wafer area per package.",
+      "Silicon interposers are the physical bridge that makes chiplet-based AI processors possible — without them, GPU and memory can't communicate at terabyte-per-second bandwidth."
     ]
   },
   "TSV Copper": {
@@ -5708,6 +6198,13 @@
       "Lam Research (equipment)",
       "Applied Materials (equipment)",
       "Atotech (chemistry)"
+    ],
+    "ai_summary": [
+      "Ultra-pure copper electroplated into vertical holes drilled through silicon wafers — the conductive fills inside through-silicon vias that connect chip layers in 3D packages.",
+      "Starts with standard copper cathode but must be deposited with sub-micron uniformity inside high-aspect-ratio holes — a specialized electrochemistry process.",
+      "Used in both silicon interposers (for CoWoS) and HBM stacks (connecting stacked DRAM dies) — two of the tightest bottlenecks in AI chip packaging.",
+      "TSV copper plating is performed by TSMC, ASE, and Amkor as part of their packaging operations — capacity scales with advanced packaging investment.",
+      "A specialized form of a common metal — the constraint isn't copper supply but the precision with which it must be deposited inside microscopic holes."
     ]
   },
   "ABF Substrate": {
@@ -5747,6 +6244,13 @@
       "Ajinomoto (film)",
       "Unimicron",
       "Ibiden"
+    ],
+    "ai_summary": [
+      "A build-up film made by Ajinomoto (the Japanese food company) that forms the high-density wiring layers connecting chip packages to server boards — the bridge between silicon and PCB.",
+      "Ajinomoto holds ~95% market share in ABF film; the material is laminated onto substrates by companies like Ibiden, Shinko, and Unimicron who build the finished package substrates.",
+      "Supply-demand turned tight in late 2025, with the shortfall projected to reach 10% in H2 2026 and widen to 42% by 2028 as AI chip packaging demand compounds.",
+      "Every GPU, CPU, and networking ASIC in an AI datacenter sits on an ABF substrate — there is no alternative material at the required wiring density.",
+      "A food-science company's specialty chemical is the quiet chokepoint beneath every AI chip — Ajinomoto's capacity decisions ripple through the entire semiconductor industry."
     ]
   },
   "FR-4 / High-Speed Laminate": {
@@ -5786,6 +6290,13 @@
       "Isola",
       "Panasonic",
       "Rogers"
+    ],
+    "ai_summary": [
+      "Fiberglass cloth impregnated with epoxy resin, pressed into flat sheets, and clad with copper foil — the base material of every printed circuit board in a datacenter.",
+      "Upstream inputs are epichlorohydrin (for epoxy), fiberglass woven from silica, and copper foil — all commodity chemicals assembled into a precision composite.",
+      "Standard FR-4 handles most applications; high-speed laminates (Megtron, Panasonic) are required for server boards running above 25 Gbps per lane.",
+      "Every server board, switch line card, power supply, and networking card in a datacenter is built on FR-4 or its high-speed variants.",
+      "PCB laminate is one of the most structurally ubiquitous inputs in electronics — not constrained in commodity grades but tightening at high-speed specifications."
     ]
   },
   "EUV Photoresist": {
@@ -5823,6 +6334,13 @@
       "JSR",
       "Tokyo Ohka Kogyo",
       "Shin-Etsu"
+    ],
+    "ai_summary": [
+      "Light-sensitive polymer coating applied to silicon wafers before exposure to extreme ultraviolet (13.5nm) light — the material that captures chip patterns at the smallest dimensions.",
+      "Japanese companies JSR, TOK, and Shin-Etsu Chemical hold ~90% of the EUV photoresist market — production requires atomic-level purity control.",
+      "JSR is building a new factory in Taiwan to supply TSMC directly; TOK is investing $130M in a South Korea plant — both targeting capacity by 2028–2030.",
+      "Every advanced AI chip (5nm and below) requires EUV lithography, and each exposure layer consumes a fresh coating of EUV photoresist.",
+      "EUV photoresist is the chemical that makes sub-5nm chips possible — a Japanese-dominated supply chain feeding the world's most advanced fabs."
     ]
   },
   "DUV Photoresist": {
@@ -5862,6 +6380,13 @@
       "JSR",
       "Tokyo Ohka Kogyo",
       "Fujifilm"
+    ],
+    "ai_summary": [
+      "Light-sensitive polymer for deep ultraviolet (193nm/248nm) lithography — the workhorse patterning chemistry used for mature-node and non-critical layers on advanced chips.",
+      "Same Japanese suppliers (JSR, TOK, Shin-Etsu) dominate, but the market is larger and more diversified than EUV resist.",
+      "Used on every wafer at every fab worldwide — advanced chips use DUV for non-critical layers even when EUV handles the finest features.",
+      "Consumes neon gas in the excimer laser source — the 2022 Ukraine supply shock demonstrated the neon-DUV dependency.",
+      "DUV photoresist is the volume backbone of chip patterning — less exotic than EUV but consumed in far greater quantities across more process steps."
     ]
   },
   "CMP Slurries": {
@@ -5899,6 +6424,13 @@
       "CMC Materials",
       "Versum/Merck",
       "Fujimi"
+    ],
+    "ai_summary": [
+      "Abrasive liquid mixtures used to polish wafer surfaces flat between deposition steps — the process that keeps each layer of a chip planar enough for the next layer to be built on top.",
+      "Cerium oxide is the primary abrasive for oxide polishing; silica and alumina slurries handle metal and barrier layers — each step uses a different formulation.",
+      "Cabot Microelectronics (now CMC Materials, acquired by Entegris), Fujimi, and Hitachi Chemical are leading suppliers.",
+      "Advanced AI chips require more CMP steps per wafer because 3D structures (HBM, CFET) and tighter tolerances demand more frequent planarization.",
+      "CMP slurry is a consumable at every fab — demand scales directly with wafer starts and chip complexity."
     ]
   },
   "NdFeB Magnets": {
@@ -5943,6 +6475,13 @@
       "Hitachi Metals/Proterial",
       "TDK",
       "VAC"
+    ],
+    "ai_summary": [
+      "Sintered neodymium-iron-boron permanent magnets — the strongest commercial magnets, used in every motor, fan, and hard drive actuator in a datacenter.",
+      "Made by powder metallurgy: rare earth alloy is melted, milled to micron-sized powder, pressed in a magnetic field, and sintered at ~1,000°C — a complex, multi-step process.",
+      "China produces ~85% of global NdFeB magnets; April 2025 export controls on dysprosium and terbium — the additives that make high-temp grades work — disrupted Western supply chains.",
+      "AI datacenters consume NdFeB magnets in HDD spindle motors, cooling fan motors, wind turbine generators, and precision servo actuators for robotics.",
+      "European NdFeB magnet prices reached 6x Chinese domestic levels after the April 2025 controls — the widest spread in the magnet market's history."
     ]
   },
   "InP Wafers": {
@@ -5982,6 +6521,13 @@
       "Sumitomo Electric",
       "AXT",
       "JX Nippon"
+    ],
+    "ai_summary": [
+      "Crystalline indium phosphide wafers that form the substrate for high-speed laser diodes and photodetectors — the semiconductor material inside every optical transceiver in an AI datacenter.",
+      "Grown by the vertical gradient freeze method from high-purity indium and phosphorus — crystal growth is slow and yield-sensitive, limiting throughput.",
+      "Sumitomo Electric, AXT, and JX Nippon Mining produce most InP substrates — a small market (~$300M/yr) enabling tens of billions in downstream optical products.",
+      "Each transceiver generation (400G → 800G → 1.6T) uses more InP per device as laser arrays grow more complex — demand is scaling faster than wafer supply.",
+      "InP wafers are the substrate bottleneck for optical transceivers — McKinsey projects 800G transceivers will fall 40–60% short of demand through 2027."
     ]
   },
   "GaAs Wafers": {
@@ -6019,6 +6565,13 @@
       "AXT",
       "Freiberger",
       "Sumitomo Electric"
+    ],
+    "ai_summary": [
+      "Crystalline gallium arsenide substrates used for laser diodes, RF amplifiers, and LED chips — the compound semiconductor that converts electricity to light.",
+      "Grown from high-purity gallium and arsenic using Czochralski or vertical Bridgman methods — toxic arsine gas handling limits the number of qualified manufacturers.",
+      "Sumitomo Electric, AXT, and Freiberger Compound Materials are leading substrate producers — a market dominated by a handful of specialized crystal growers.",
+      "In AI datacenters, GaAs lasers sit inside every optical transceiver converting electrical signals to light pulses for rack-to-rack communication.",
+      "GaAs competes with InP at longer wavelengths and is being partially displaced by silicon photonics, but remains the standard for many transceiver designs."
     ]
   },
   "GaN Wafers": {
@@ -6058,6 +6611,13 @@
       "Sumitomo Electric",
       "Coherent",
       "Nichia"
+    ],
+    "ai_summary": [
+      "Crystalline gallium nitride substrates used for high-power, high-frequency transistors — the material behind the power chips converting voltage in datacenter power supplies.",
+      "GaN-on-silicon wafers (cheaper, larger) are displacing GaN-on-SiC for most power applications; true bulk GaN substrates remain expensive and small.",
+      "GaN power devices are more efficient than silicon MOSFETs at the voltages used in datacenter PSUs (48V bus, 800V EV charging), reducing waste heat.",
+      "Wolfspeed, Infineon, and GaN Systems (now Infineon) are major GaN device makers; upstream wafer supply depends on gallium from Chinese bauxite refining.",
+      "GaN power chips are scaling into AI datacenter power delivery — every efficiency point gained at the power supply reduces the cooling load downstream."
     ]
   },
   "Germanium Tetrachloride (GeCl4)": {
@@ -6096,6 +6656,13 @@
       "Umicore",
       "5N Plus",
       "Yunnan Lincang"
+    ],
+    "ai_summary": [
+      "Volatile liquid compound of germanium and chlorine — vaporized inside a preform deposition chamber to dope the glass core of fiber optic cables, controlling the refractive index that guides light.",
+      "Upstream germanium is refined from zinc smelting byproducts and converted to GeCl₄ at 8N purity — only Umicore in Belgium can do this at commercial scale outside China and Russia.",
+      "China's export ban on germanium to the US (late 2024, suspended late 2025) demonstrated how a single policy decision can shut off the fiber optic supply chain.",
+      "Every kilometer of standard single-mode fiber optic cable requires ~0.12 grams of germanium delivered as GeCl₄.",
+      "GeCl₄ is the molecular bottleneck between germanium supply and fiber optic cable production — the chokepoint where mineral scarcity converts to infrastructure constraint."
     ]
   },
   "Nickel Single-Crystal Superalloy": {
@@ -6139,6 +6706,13 @@
       "Precision Castparts",
       "ATI",
       "Haynes International"
+    ],
+    "ai_summary": [
+      "Nickel-based alloy grown as a single crystal to eliminate grain boundaries — the material that withstands 1,400°C+ gas turbine inlet temperatures without creeping or cracking.",
+      "Alloyed with chromium, cobalt, tungsten, rhenium, hafnium, and aluminum in precise ratios — each element serves a specific metallurgical function in the crystal structure.",
+      "Cast as single crystals in directionally solidified investment casting furnaces — Precision Castparts (Berkshire Hathaway), Howmet, and Rolls-Royce are leading casters.",
+      "Every gas turbine blade in the hot section of a frame or aeroderivative turbine powering an AI datacenter is made from this alloy.",
+      "Single-crystal superalloys sit at the intersection of seven upstream metals — rhenium, hafnium, tungsten, cobalt, chromium, nickel, and aluminum — making turbine blades one of the most material-intensive components in the chain."
     ]
   },
   "Stainless Steel": {
@@ -6181,6 +6755,13 @@
       "Outokumpu",
       "Acerinox",
       "POSCO"
+    ],
+    "ai_summary": [
+      "Iron-chromium alloy (minimum 10.5% Cr) with corrosion resistance — the standard material for datacenter cooling piping, heat exchangers, and chemical-resistant structures.",
+      "316-grade stainless (16–18% chromium, 10–14% nickel, 2–3% molybdenum) is the workhorse specification for datacenter thermal systems.",
+      "Global stainless steel production exceeds 60 million t/yr, with China producing ~55% — supply is generally adequate.",
+      "Every chilled water loop, coolant distribution system, and heat exchanger in a datacenter uses stainless steel piping and fittings.",
+      "Stainless steel is a bulk infrastructure material — widely available but consuming meaningful quantities of nickel, chromium, and molybdenum per datacenter."
     ]
   },
   "Grain-Oriented Electrical Steel": {
@@ -6219,6 +6800,13 @@
       "Cleveland-Cliffs",
       "Baosteel",
       "Nippon Steel"
+    ],
+    "ai_summary": [
+      "Silicon steel sheet with aligned crystal grains that channel magnetic flux efficiently — the core material inside every power transformer in the grid and datacenter.",
+      "Produced by a complex rolling and annealing process that aligns iron crystals along the rolling direction — only ~15 mills worldwide can make GOES to transformer specification.",
+      "Nippon Steel, POSCO, JFE, and Baosteel dominate production — US capacity is limited, driving transformer lead times to 2–3 years.",
+      "Every step-down transformer, generator step-up transformer, and distribution transformer in a datacenter power chain contains a GOES core.",
+      "Transformer delivery delays are one of the most binding constraints on AI datacenter energization timelines — and GOES supply is the material bottleneck behind those delays."
     ]
   },
   "LFP Battery Cells": {
@@ -6261,6 +6849,13 @@
       "CATL",
       "BYD",
       "EVE Energy"
+    ],
+    "ai_summary": [
+      "Lithium iron phosphate cells — the rechargeable battery chemistry dominating datacenter energy storage because of superior cycle life, thermal stability, and lower cost per kWh than NMC.",
+      "Cathode is made from iron phosphate and lithium carbonate upstream; anode is graphite; electrolyte is a lithium salt dissolved in organic solvent.",
+      "CATL, BYD, and EVE Energy produce ~80% of global LFP cells — Chinese dominance in cell manufacturing is even more extreme than in raw materials.",
+      "LFP now holds ~90% of the BESS market globally; datacenter installations typically deploy 2–4 hour systems at 100+ MWh scale.",
+      "LFP cells are ~40% cheaper than NMC in 2025 and cycle 3–4x longer — the economics have made them the default for every new datacenter battery installation."
     ]
   },
   "LFP Cathode Active Material": {
@@ -6299,6 +6894,13 @@
       "Hunan Yuneng",
       "Dynanonic",
       "Shenzhen Dynanonic"
+    ],
+    "ai_summary": [
+      "Lithium iron phosphate powder (LiFePO₄) — the cathode material that stores and releases lithium ions inside every LFP battery cell.",
+      "Made by reacting iron phosphate precursor with lithium carbonate at high temperature — a process requiring precise stoichiometry and particle size control.",
+      "China produces ~95% of global LFP cathode material — even Western cell manufacturers (Gotion, FREYR) source cathode from Chinese precursor suppliers.",
+      "Iron and phosphorus feedstocks are individually abundant; the constraint is the integrated processing chain that converts them to battery-grade LFP powder.",
+      "LFP cathode is where Chinese processing dominance is most extreme in the battery chain — the chokepoint is chemistry, not geology."
     ]
   },
   "Lithium Carbonate": {
@@ -6336,6 +6938,13 @@
       "Albemarle",
       "SQM",
       "Ganfeng"
+    ],
+    "ai_summary": [
+      "White powder (Li₂CO₃) that provides the lithium for LFP and NMC cathode synthesis — the most traded form of battery-grade lithium.",
+      "Extracted from Chilean/Argentinian brine evaporation or Australian spodumene hard-rock mining, then refined to battery grade (>99.5% purity).",
+      "Prices collapsed from ~$80/kg in late 2022 to ~$10–15/kg by mid-2025, driven by Chinese refining overcapacity and slower-than-expected EV adoption.",
+      "Every MWh of LFP battery storage at an AI datacenter requires roughly 100–150 kg of lithium carbonate equivalent.",
+      "Lithium is in temporary surplus, but the compounding demand from EVs and datacenter BESS means the current price trough is likely cyclical, not structural."
     ]
   },
   "Battery-Grade Graphite": {
@@ -6373,6 +6982,13 @@
       "BTR",
       "Shanshan",
       "Syrah Resources"
+    ],
+    "ai_summary": [
+      "Spherical graphite processed from natural flake graphite or synthesized from petroleum coke — the anode material in virtually all lithium-ion batteries.",
+      "China controls ~90% of spherical graphite processing — the shaping, coating, and purification steps that convert raw flake into battery-ready material.",
+      "Each GWh of LFP battery storage requires roughly 800–1,000 tonnes of anode graphite — volumes scale directly with datacenter BESS deployment.",
+      "China imposed export licensing on graphite in late 2023; US and EU have added graphite to critical mineral lists and are funding domestic processing capacity.",
+      "Graphite is the anode chokepoint that mirrors lithium on the cathode side — Chinese processing dominance is even more concentrated."
     ]
   },
   "Battery Electrolyte": {
@@ -6411,6 +7027,13 @@
       "Capchem",
       "Mitsubishi Chemical",
       "Tinci Materials"
+    ],
+    "ai_summary": [
+      "Lithium salt (typically LiPF₆) dissolved in organic carbonates — the ion-conducting liquid inside every lithium-ion battery cell.",
+      "Production requires high-purity lithium hexafluorophosphate synthesis, which uses hydrofluoric acid and lithium carbonate as feedstocks — a hazardous chemical process.",
+      "Chinese suppliers (Tinci Materials, Do-Fluoride) dominate global electrolyte production — non-Chinese capacity is limited.",
+      "Electrolyte quality directly affects cell performance, safety, and cycle life — contamination at parts-per-million levels can cause premature failure.",
+      "Electrolyte is the liquid that makes lithium-ion chemistry work — less discussed than cathode or anode but equally essential and equally China-dependent."
     ]
   },
   "Vanadium Redox Electrolyte": {
@@ -6448,6 +7071,13 @@
       "US Vanadium",
       "Largo",
       "Bushveld Minerals"
+    ],
+    "ai_summary": [
+      "Vanadium dissolved in sulfuric acid at two oxidation states — the energy-storing liquid that flows through vanadium redox flow battery (VRFB) stacks.",
+      "Made by dissolving vanadium pentoxide (V₂O₅) in sulfuric acid — the electrolyte doesn't degrade over time, which is the core advantage of flow batteries.",
+      "Invinity Energy Systems, Rongke Power, and CellCube are leading VRFB manufacturers using this electrolyte chemistry.",
+      "VRFBs offer 4–8 hour discharge with near-unlimited cycle life — well-suited to long-duration datacenter grid storage where lithium-ion degrades too fast.",
+      "The vanadium electrolyte can be reused indefinitely and retains ~95% of its value at end-of-system-life — a different economics model than consumable lithium-ion cells."
     ]
   },
   "Vanadium Pentoxide (V2O5)": {
@@ -6485,6 +7115,13 @@
       "Largo",
       "Bushveld Minerals",
       "Glencore"
+    ],
+    "ai_summary": [
+      "Vanadium oxide powder that serves as the feedstock for vanadium redox flow battery electrolyte and as a microalloying additive in high-strength steel.",
+      "Produced from vanadiferous titanomagnetite ores (China, Russia, South Africa) or as a byproduct of oil refining and uranium processing.",
+      "Global production is roughly 100,000 t/yr, with vanadium pentoxide prices historically volatile at $5–30/lb depending on steel demand cycles.",
+      "Each 4-hour, 10 MWh vanadium flow battery requires roughly 30–40 tonnes of V₂O₅ — large deployments need significant vanadium procurement.",
+      "V₂O₅ prices are currently driven by steel demand, but flow battery adoption at scale would create a new structural demand driver independent of the steel cycle."
     ]
   },
   "Cadmium Telluride Film": {
@@ -6522,6 +7159,13 @@
       "First Solar",
       "5N Plus",
       "Toxco"
+    ],
+    "ai_summary": [
+      "Thin semiconductor layer deposited on glass to form the light-absorbing element of CdTe solar panels — First Solar's proprietary technology.",
+      "Made by co-depositing cadmium and tellurium in a vacuum chamber at temperatures around 500°C — First Solar is the only large-scale manufacturer.",
+      "Tellurium supply (~500–600 t/yr globally) is the binding constraint — it's a byproduct of copper refining and cannot scale independently.",
+      "CdTe panels are increasingly deployed for datacenter solar arrays in the US, where First Solar benefits from domestic manufacturing tax credits.",
+      "CdTe film is a vertically integrated product where one company (First Solar) controls the technology, manufacturing, and upstream tellurium sourcing."
     ]
   },
   "Silver Conductive Paste": {
@@ -6559,6 +7203,13 @@
       "Heraeus",
       "DuPont",
       "Targray"
+    ],
+    "ai_summary": [
+      "Silver powder suspended in glass frit and organic binders — screen-printed onto solar cells to form the electrical contacts that collect generated current.",
+      "Each GW of crystalline silicon solar capacity requires roughly 10–15 tonnes of silver — paste accounts for ~15% of global silver fabrication demand.",
+      "DuPont (now part of Heraeus), Heraeus, and Samsung SDI are leading paste producers — the silver intensity per cell is declining but not fast enough to offset volume growth.",
+      "Silver paste is consumed on every solar cell powering AI datacenters — the interface between photovoltaic physics and usable electricity.",
+      "Silver demand from solar is compounding on top of an already supply-constrained market — AI datacenter solar deployment adds another demand vector."
     ]
   },
   "Solar Glass": {
@@ -6596,6 +7247,13 @@
       "Xinyi Solar",
       "Flat Glass Group",
       "Borosil"
+    ],
+    "ai_summary": [
+      "Low-iron tempered glass with anti-reflective coating — the front cover protecting solar cells from weather while maximizing light transmission.",
+      "Made from silica sand, soda ash, and limestone melted at ~1,500°C and rolled into sheets — low-iron formulations transmit ~91% of incident light versus ~83% for standard glass.",
+      "Xinyi Solar, Flat Glass Group, and other Chinese manufacturers dominate with ~80% of global solar glass capacity.",
+      "Each GW of solar PV capacity requires roughly 60,000–80,000 tonnes of solar glass — a bulk material consumed at enormous scale.",
+      "Solar glass is abundant and cheap but heavy — the logistics of shipping it from Chinese factories to global solar installation sites drive meaningful cost."
     ]
   },
   "HALEU Fuel Assemblies": {
@@ -6633,6 +7291,13 @@
       "Centrus Energy",
       "Tenex",
       "X-energy"
+    ],
+    "ai_summary": [
+      "Uranium fuel enriched to 5–20% U-235 and packaged into fuel rods — the higher enrichment lets reactor cores be smaller and run longer between refueling, which is why most small modular reactor designs need it.",
+      "Takes mined uranium and zirconium cladding tubes from upstream — the uranium is enriched in centrifuge cascades using export-controlled equipment, then loaded into zirconium alloy tubes that hold the fuel inside the reactor core.",
+      "Only Russia and China have commercial-scale HALEU enrichment today; the sole US source is a Centrus Energy demonstration plant in Ohio that has produced about 900 kg total through mid-2025.",
+      "The US banned Russian uranium imports in 2024 and committed $2.7 billion in January 2026 to build domestic capacity — but meaningful production is years away.",
+      "Every SMR being proposed for behind-the-meter AI datacenter power — by Microsoft, Google, Amazon — needs this fuel, and it essentially doesn't exist yet at Western commercial scale."
     ]
   },
   "LEU Fuel Assemblies": {
@@ -6670,6 +7335,13 @@
       "Westinghouse",
       "Framatome",
       "Orano"
+    ],
+    "ai_summary": [
+      "Uranium fuel enriched to 3–5% U-235 — the standard fuel for existing light-water reactors that make up the global fleet of ~440 operating nuclear plants.",
+      "Enrichment is performed by Urenco (EU/UK), Orano (France), CNNC (China), and formerly Tenex (Russia, now restricted) using gas centrifuge cascades.",
+      "Existing nuclear plants are being extended and restarted specifically to power AI datacenters — Microsoft's Three Mile Island restart and Constellation's portfolio are leading examples.",
+      "LEU fuel supply chains are mature and diversified compared to HALEU — the constraint on conventional nuclear for datacenters is reactor permitting and grid access, not fuel.",
+      "LEU fuel is the near-term nuclear power pathway for AI datacenters — available today in operating reactors while HALEU-fueled SMRs remain years from deployment."
     ]
   },
   "Zircaloy Cladding": {
@@ -6711,6 +7383,13 @@
       "Westinghouse",
       "Framatome",
       "ATI"
+    ],
+    "ai_summary": [
+      "Zirconium alloy tubing that encases nuclear fuel pellets inside reactor cores — the structural barrier between fuel and coolant, designed to withstand years of neutron bombardment.",
+      "Made from nuclear-grade zirconium that has been completely separated from hafnium (a neutron absorber) — only Westinghouse, Framatome, and TVEL perform this separation at scale.",
+      "Zircaloy must withstand temperatures above 1,200°C in accident scenarios while remaining transparent to neutrons during normal operation — a demanding materials specification.",
+      "Every nuclear fuel assembly — LEU or HALEU — requires zircaloy cladding tubes, making it a universal input to all nuclear power generation.",
+      "Zircaloy production is the bottleneck between zirconium supply and nuclear fuel fabrication — and the hafnium removed during purification feeds directly into chip manufacturing."
     ]
   },
   "Tantalum Capacitors": {
@@ -6748,6 +7427,13 @@
       "Kemet/Yageo",
       "AVX",
       "Vishay"
+    ],
+    "ai_summary": [
+      "Miniature capacitors using a tantalum metal anode, tantalum pentoxide dielectric, and manganese dioxide or conductive polymer cathode — valued for high capacitance density in small packages.",
+      "Tantalum powder is pressed and sintered into a porous pellet, anodized to grow a thin oxide dielectric, then encapsulated — a process requiring tightly controlled tantalum purity.",
+      "KEMET (now Yageo), AVX (now Kyocera AVX), and Vishay are the dominant manufacturers — ~50% of tantalum supply traces to artisanal DRC/Rwanda mining.",
+      "Every server board in an AI datacenter contains dozens of tantalum capacitors for power filtering and decoupling near processors and memory.",
+      "Tantalum capacitors link conflict-mineral supply chains directly to AI datacenter hardware — the DRC mine disruptions of 2024–2025 tightened supply of the components on every board."
     ]
   },
   "Lead-Free Solder": {
@@ -6787,6 +7473,13 @@
       "Indium Corporation",
       "Senju Metal",
       "Alpha"
+    ],
+    "ai_summary": [
+      "Tin-silver-copper alloy (typically SAC305) used to attach components to circuit boards — the material in every solder joint in every piece of electronic hardware.",
+      "Tin provides the base (~96.5%), silver adds strength (~3%), and copper prevents copper dissolution from the board pads (~0.5%) — mandated lead-free by RoHS since 2006.",
+      "Solder paste and preforms are supplied by Indium Corporation, Alpha (MacDermid), Senju, and others — a fragmented market with adequate supply.",
+      "Each AI server has thousands of solder joints; each GPU module has hundreds — a typical datacenter rack contains millions of individual connections.",
+      "Solder is consumed in vast quantities but rarely constrained — the upstream tin supply is the more relevant bottleneck."
     ]
   },
   "Gold Bond Wire": {
@@ -6824,6 +7517,13 @@
       "Heraeus",
       "Tanaka",
       "Sumitomo Metal Mining"
+    ],
+    "ai_summary": [
+      "Ultra-thin gold wire (15–50 µm diameter) used to connect chip die pads to package leads — the traditional interconnect method for wire-bonded semiconductors.",
+      "Drawn from 4N+ gold (99.99% pure) into spools of wire that automated bonders loop between chip and leadframe at rates of 10–15 bonds per second.",
+      "Copper bond wire has replaced gold in most cost-sensitive packages, but gold remains standard for automotive, military, and high-reliability applications.",
+      "In AI datacenters, gold wire appears primarily in power management ICs, sensors, and discrete components rather than in the GPUs themselves.",
+      "Gold wire is a legacy interconnect being displaced by copper — still present but shrinking in share across the semiconductor industry."
     ]
   },
   "YSZ Electrolyte": {
@@ -6861,6 +7561,13 @@
       "Bloom Energy (internal)",
       "Tosoh",
       "Saint-Gobain"
+    ],
+    "ai_summary": [
+      "Yttria-stabilized zirconia ceramic — the solid electrolyte membrane at the heart of solid oxide fuel cells (SOFCs) that converts fuel to electricity at ~60% efficiency.",
+      "Made by mixing zirconium oxide with ~8% yttrium oxide, pressing into thin sheets, and sintering at 1,400°C+ to form a dense, ion-conducting ceramic.",
+      "Bloom Energy is the leading commercial SOFC manufacturer deploying these electrolyte stacks for onsite datacenter power generation.",
+      "YSZ electrolyte enables fuel cells that can run on natural gas, hydrogen, or biogas — flexible fuel inputs for sites where grid power isn't available fast enough.",
+      "If SOFCs scale as behind-the-meter datacenter power, YSZ ceramics shift from a niche material to a structural input in the AI power chain."
     ]
   },
   "Engineered Coolants": {
@@ -6899,6 +7606,13 @@
       "3M",
       "Solvay",
       "Castrol"
+    ],
+    "ai_summary": [
+      "Specialized dielectric fluids (fluorinated or hydrocarbon-based) circulated through direct-to-chip and immersion cooling systems to remove heat from AI processors.",
+      "3M Novec (discontinued 2025), Solvay Galden, and engineered mineral oils are the primary fluid chemistries — each with different thermal, safety, and environmental profiles.",
+      "3M's exit from PFAS-based fluids (Novec) removed the most widely deployed immersion coolant from the market, forcing rapid qualification of alternatives.",
+      "Liquid cooling is becoming mandatory for AI GPU racks running at 40–120 kW — air cooling alone cannot dissipate the heat density of Blackwell-class systems.",
+      "The engineered coolant market is in rapid transition as PFAS regulation eliminates established products while AI heat loads demand more liquid cooling, not less."
     ]
   },
   "Refrigerants": {
@@ -6936,6 +7650,13 @@
       "Honeywell",
       "Chemours",
       "Daikin"
+    ],
+    "ai_summary": [
+      "Chemical compounds cycled through compression-expansion loops to move heat from datacenter interiors to outdoor rejection — the working fluid in every chiller and CRAC unit.",
+      "Traditional HFCs (R-134a, R-410A) are being phased down under the Kigali Amendment; lower-GWP HFOs (R-1234yf, R-1234ze) and natural refrigerants (CO₂, propane) are replacing them.",
+      "Chemours, Honeywell, and Daikin are leading refrigerant producers — the HFC-to-HFO transition has created temporary supply tightness in some formulations.",
+      "Every datacenter chiller plant, precision cooling unit, and heat pump operates on a refrigerant charge — the choice of refrigerant affects efficiency, cost, and regulatory compliance.",
+      "The refrigerant transition is adding cost and complexity to datacenter cooling just as AI heat loads are scaling — a convergence of regulatory pressure and physical demand."
     ]
   },
   "Clean Fire-Suppression Agents": {
@@ -6972,6 +7693,13 @@
       "3M",
       "Honeywell",
       "Chemours"
+    ],
+    "ai_summary": [
+      "Gaseous agents (FM-200, Novec 1230, inert gas blends) deployed in datacenter white space to extinguish fires without damaging electronic equipment or leaving residue.",
+      "Novec 1230 (3M) was the preferred agent but is being phased out with 3M's PFAS exit — FK-5-1-12 alternatives and inert gas systems (IG-541, Argonite) are replacing it.",
+      "Every datacenter white space, electrical room, and generator enclosure requires a clean fire-suppression system — Tier III and IV standards mandate automatic suppression.",
+      "The transition away from PFAS-based suppressants is creating qualification delays and cost increases for new datacenter builds.",
+      "Clean suppression agents are a regulatory-driven supply chain transition happening in parallel with the datacenter buildout — the old standard product is disappearing."
     ]
   },
   "Transformer Oil": {
@@ -7009,6 +7737,13 @@
       "Nynas",
       "Ergon",
       "Cargill"
+    ],
+    "ai_summary": [
+      "Mineral oil or synthetic ester fluid that insulates and cools power transformers — filling the tank of every step-down and distribution transformer in a datacenter power chain.",
+      "Mineral oil (naphthenic-based) is the traditional choice; synthetic esters (Midel, Envirotemp) are gaining share for fire safety and environmental advantages.",
+      "Nynas, Ergon, and Cargill (Envirotemp) are major suppliers — transformer oil is a commodity but availability can tighten when transformer deliveries surge.",
+      "Every transformer between the utility feed and the server rack contains hundreds to thousands of gallons of insulating oil.",
+      "Transformer oil is a bulk consumable that scales with the transformer delivery pipeline — currently tracking the same 2–3 year lead-time bottleneck as the transformers themselves."
     ]
   },
   "XLPE Insulation Compound": {
@@ -7046,6 +7781,13 @@
       "Borealis",
       "Dow",
       "LyondellBasell"
+    ],
+    "ai_summary": [
+      "Cross-linked polyethylene — the polymer extruded around copper or aluminum conductors to form the insulating jacket on medium-voltage and high-voltage power cables.",
+      "Produced by cross-linking polyethylene pellets using peroxide catalysts during the cable extrusion process — the cross-linking makes it thermally stable up to 90°C continuous operation.",
+      "Borealis, Dow, and Chinese compound makers supply the base resin; cable manufacturers (Nexans, Prysmian, Southwire) perform the extrusion and cross-linking.",
+      "Every medium-voltage feeder and high-voltage transmission cable connecting a datacenter to the grid uses XLPE insulation.",
+      "XLPE compound supply is generally adequate — the constraint in datacenter power cabling is more often cable manufacturing capacity and installation labor than raw insulation material."
     ]
   },
   "SF6 / C4-FN Insulating Gas": {
@@ -7083,6 +7825,13 @@
       "3M",
       "Solvay",
       "Honeywell"
+    ],
+    "ai_summary": [
+      "Sulfur hexafluoride (SF₆) is the traditional insulating gas in high-voltage switchgear — the most potent greenhouse gas regulated under the Kyoto Protocol (23,500x CO₂ GWP).",
+      "C4-FN (3M Novec 4710, now Hitachi's alternative blends) offers ~99% lower GWP while maintaining similar dielectric performance — the leading SF₆ replacement.",
+      "Every HV switchgear assembly at a datacenter substation contains insulating gas — either SF₆ in legacy equipment or C4-FN in new installations.",
+      "EU F-gas regulation is phasing down SF₆ in new equipment; US utilities and hyperscalers are voluntarily transitioning to reduce Scope 3 emissions.",
+      "The SF₆-to-C4-FN transition adds cost to datacenter HV infrastructure but is increasingly mandated — another PFAS-adjacent supply chain reshuffling."
     ]
   },
   "Underfill Resin": {
@@ -7119,6 +7868,13 @@
       "Henkel",
       "Namics",
       "Hitachi Chemical/Resonac"
+    ],
+    "ai_summary": [
+      "Epoxy-based liquid dispensed between a flip-chip die and its substrate, then cured to a solid — it mechanically locks the chip in place and protects the solder bumps from thermal stress.",
+      "Applied after the chip is mounted and reflowed — flows by capillary action into the gap between die and substrate, filling every void.",
+      "Namics, Henkel, and Hitachi Chemical are leading suppliers — the material must match the thermal expansion coefficients of silicon and substrate to prevent cracking.",
+      "Every flip-chip package in an AI datacenter — GPUs, CPUs, ASICs — uses underfill to survive the thermal cycling of power-on/power-off loads.",
+      "Underfill is a small-volume specialty chemical that's invisible inside the package but essential to long-term chip reliability."
     ]
   },
   "Epoxy Resin": {
@@ -7158,6 +7914,13 @@
       "Hexion",
       "Olin",
       "Kukdo Chemical"
+    ],
+    "ai_summary": [
+      "Thermoset polymer made from epichlorohydrin and bisphenol A — the binder that holds fiberglass together in PCB laminates and provides structural rigidity.",
+      "Cured by mixing with a hardener (amine or anhydride) and heating — once set, epoxy cannot be remelted, giving PCBs their permanent shape.",
+      "Dow, Huntsman, and Hexion are major epoxy producers — supply is commodity-scale and generally adequate.",
+      "Every printed circuit board in a datacenter is built on an epoxy-fiberglass composite — the material that gives boards their characteristic green color and structural stiffness.",
+      "Epoxy resin is a bulk petrochemical derivative consumed in vast quantities across electronics manufacturing — structurally ubiquitous but not supply-constrained."
     ]
   },
   "Fiberglass": {
@@ -7197,6 +7960,13 @@
       "Owens Corning",
       "Jushi",
       "Saint-Gobain"
+    ],
+    "ai_summary": [
+      "Woven fabric of spun glass filaments — the reinforcement material laminated with epoxy resin to form the structural core of all FR-4 printed circuit boards.",
+      "Made by melting silica sand and extruding it through bushings into ultra-thin filaments, then weaving them into standardized cloth grades (E-glass, T-glass).",
+      "High-end T-glass (thin-thread glass) required for high-speed AI server boards is in tight supply — standard E-glass is abundant.",
+      "Every server board, switch card, and power supply PCB in a datacenter contains multiple layers of fiberglass-reinforced laminate.",
+      "T-glass supply is a quiet constraint on high-speed PCB production — the gap between commodity fiberglass and server-grade glass cloth is where the shortage sits."
     ]
   },
   "Trichlorosilane (TCS)": {
@@ -7235,6 +8005,13 @@
       "Wacker",
       "Tokuyama",
       "OCI"
+    ],
+    "ai_summary": [
+      "Chlorosilane gas (HSiCl₃) produced by reacting metallurgical silicon with hydrochloric acid — the intermediate chemical that carries silicon through purification to polysilicon.",
+      "Distilled repeatedly to remove impurities down to parts-per-trillion levels before being decomposed back into solid polysilicon in Siemens reactors.",
+      "The same molecule serves both solar and electronic polysilicon production — the purity of distillation determines which grade comes out.",
+      "Major producers include Wacker, Hemlock, OCI, and Chinese chemical plants — production capacity tracks polysilicon demand.",
+      "TCS is the chemical workhorse of silicon purification — invisible to end users but consumed in enormous volumes to feed both the chip and solar supply chains."
     ]
   },
   "Ultra-Pure Water": {
@@ -7274,6 +8051,13 @@
       "Veolia",
       "Ovivo",
       "Suez"
+    ],
+    "ai_summary": [
+      "Water purified to 18.2 MΩ·cm resistivity (essentially zero dissolved ions) — consumed in vast quantities at every semiconductor fab for rinsing wafers between process steps.",
+      "Produced from municipal water through reverse osmosis, deionization, UV treatment, and ultrafiltration — a multi-stage purification train running continuously.",
+      "Each 300mm wafer requires roughly 2,000–5,000 gallons of UPW; a large fab consumes millions of gallons per day.",
+      "Veolia, Evoqua (now Xylem), and Ovivo supply the purification systems — the water itself comes from local sources, making fab siting depend on water availability.",
+      "UPW is the most voluminous consumable in chip manufacturing — abundant as a feedstock but requiring enormous infrastructure to purify to semiconductor grade."
     ]
   },
   "Semiconductor Specialty Solvents": {
@@ -7314,6 +8098,13 @@
       "BASF",
       "Merck KGaA",
       "Sumitomo Chemical"
+    ],
+    "ai_summary": [
+      "High-purity organic solvents (PGMEA, NMP, IPA, acetone) used to develop photoresist, clean wafers, and strip coatings during chip fabrication.",
+      "Purity requirements are extreme — parts-per-trillion metallic contamination levels, requiring dedicated distillation facilities separate from industrial chemical production.",
+      "Major suppliers include Honeywell, BASF, and KMG Chemicals (now CMC Materials) — a specialized segment of the broader chemical industry.",
+      "Consumed at every fab in every process step that involves photoresist application, development, or removal — volumes scale with wafer starts.",
+      "Specialty solvents are a quiet consumable in chip manufacturing — unglamorous but structurally essential to yield at every process node."
     ]
   },
   "Cerium Oxide": {
@@ -7350,6 +8141,13 @@
       "Lynas",
       "Solvay",
       "Shenghe"
+    ],
+    "ai_summary": [
+      "Fine powder of cerium dioxide (CeO₂) used as the primary abrasive in CMP slurries for polishing semiconductor wafer surfaces — the most common rare earth compound in chip manufacturing.",
+      "Produced by calcining cerium carbonate or cerium hydroxide precipitated from rare earth separation — China refines ~85% of global cerium output.",
+      "Particle size distribution must be tightly controlled — oversized particles scratch the wafer, undersized particles don't polish, and either outcome kills yield.",
+      "Every advanced chip goes through multiple CMP steps using cerium-based slurries — demand scales with wafer complexity and AI chip production volumes.",
+      "Cerium oxide is cheap (~$2/kg) and abundant by rare earth standards, but its semiconductor-grade form requires purity that only a few processors can consistently deliver."
     ]
   },
   "Germanium": {
