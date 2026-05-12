@@ -2800,7 +2800,10 @@ export default function TreeView() {
                 </div>
               );
             })()}
-            {/* Tabs — hidden on AI infra vertical tree */}
+            {/* Tabs — hidden on AI infra vertical tree, but keep divider */}
+            {currentVertical?.id === "ai" && currentLevel === "subsystems" && (
+              <div style={{ height: 1, background: borderColor }} />
+            )}
             <div style={{ display: currentVertical?.id === "ai" && currentLevel === "subsystems" ? "none" : "flex", gap: 0, borderBottom: `1px solid ${borderColor}` }}>
               {["Supply Tree", "Map", "Dependencies", "Analysis", "Investment Ideas"].map((tab, ti) => {
                 const tabId = tab.toLowerCase().replace(/\s+/g, "-");
@@ -3139,13 +3142,13 @@ export default function TreeView() {
           overflow: "hidden",
         }}>
           {/* Top section — price chart (tree) or geo summary / node detail (globe) + tabs */}
-          <div style={{ flexShrink: 0, padding: "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+          <div style={{ flexShrink: 0, padding: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? "8px 12px 0" : "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
             {centerView === "tree" && (
               <>
                 {lastEntry && INPUT_PRICE_HISTORY[lastEntry.id] && (
                   <PriceChart inputId={lastEntry.id} accent={templateAccent ?? "#706a60"} name={templateTitle} />
                 )}
-                {!lastEntry || !INPUT_PRICE_HISTORY[lastEntry.id] ? <div style={{ height: 130 }} /> : null}
+                {!lastEntry || !INPUT_PRICE_HISTORY[lastEntry.id] ? <div style={{ height: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 0 : 130 }} /> : null}
               </>
             )}
             {centerView === "globe" && (() => {
@@ -3187,6 +3190,9 @@ export default function TreeView() {
                 </div>
               );
             })()}
+            {currentVertical?.id === "ai" && currentLevel === "subsystems" && (
+              <div style={{ height: 1, background: borderColor, marginBottom: 10 }} />
+            )}
             <div style={{ display: currentVertical?.id === "ai" && currentLevel === "subsystems" ? "none" : "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 10 }}>
               {["Summary", "Layers", "Nodes"].map((tab, ti) => {
                 const tabId = tab.toLowerCase();
