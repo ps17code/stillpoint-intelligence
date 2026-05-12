@@ -1,0 +1,16 @@
+{
+  "ai_infrastructure": [
+    {
+      "id": "germanium_chokepoint",
+      "title": "The germanium chokepoint",
+      "status": "acute",
+      "teaser": "Every fiber in every AI datacenter depends on a metal China just banned and unbanned.",
+      "chain_nodes": ["germanium", "germanium_glass_dopant", "fiber_optic_cable", "connectivity", "ai_datacenter"],
+      "chokepoint_node_id": "germanium",
+      "display_chain": ["Germanium", "GeCl₄", "Fiber optic cable", "Connectivity", "AI datacenter"],
+      "chokepoint_display_index": 0,
+      "deep_analysis_page": "/ai-infrastructure/chains/germanium",
+      "navigate_path": ["ai", "germanium"]
+    }
+  ]
+}

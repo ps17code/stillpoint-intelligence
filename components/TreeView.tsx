@@ -5,6 +5,7 @@ import AISupplyTree from "@/components/AISupplyTree";
 import Globe from "@/components/Globe";
 import type { GlobeHandle } from "@/components/Globe";
 import NodeMap from "@/components/NodeMap";
+import featuredChainsJson from "@/data/featured-chains.json";
 import {
   computeCompSvgWidth,
   buildRawGeometry,
@@ -1707,6 +1708,18 @@ export default function TreeView() {
   const [selectedTreeNode, setSelectedTreeNode] = useState<string | null>(null);
   const [selectedBriefId, setSelectedBriefId] = useState<string | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<{ key: string; name: string; overview: string; activity: string } | null>(null);
+  const [selectedFeaturedChain, setSelectedFeaturedChain] = useState<string | null>(null);
+
+  // Featured chains data
+  type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; navigate_path: string[] };
+  const featuredChains = ((featuredChainsJson as Record<string, unknown>).ai_infrastructure ?? []) as FeaturedChain[];
+  const activeFeaturedChain = featuredChains.find(c => c.id === selectedFeaturedChain);
+  const featuredChainNodeSet = useMemo(() => {
+    if (!activeFeaturedChain) return new Set<string>();
+    // Map chain node IDs to display names for tree highlighting
+    const idToName: Record<string, string> = { germanium: "Germanium", germanium_glass_dopant: "Germanium Tetrachloride (GeCl4)", fiber_optic_cable: "Fiber Optic Cable", connectivity: "Connectivity", ai_datacenter: "AI Datacenter" };
+    return new Set(activeFeaturedChain.chain_nodes.map(id => idToName[id] ?? id));
+  }, [activeFeaturedChain]);
   const [selectedAnalysisIdx, setSelectedAnalysisIdx] = useState(0);
   const [globeFilterLayer, setGlobeFilterLayer] = useState<string | null>(null);
   const [hoveredGlobeNode, setHoveredGlobeNode] = useState<{ name: string; type: string; location: string } | null>(null);
@@ -2168,7 +2181,9 @@ export default function TreeView() {
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         return <AISupplyTree
+          highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : undefined}
           onNodeClick={(name) => {
+            if (selectedFeaturedChain) setSelectedFeaturedChain(null);
             if (!name) {
               // Deselected — revert to group summary
               setSelectedTreeNode(null);
@@ -3339,6 +3354,91 @@ export default function TreeView() {
             })()}
 
             {rightTab === "summary" && centerView === "tree" && (() => {
+              // Featured chains — default state when nothing selected on AI tree
+              if (!selectedGroup && !selectedTreeNode && currentVertical?.id === "ai" && currentLevel === "subsystems" && !selectedFeaturedChain) {
+                const STATUS_PILL: Record<string, { color: string; bg: string }> = {
+                  acute: { color: "#c87a4a", bg: "rgba(200, 122, 74, 0.12)" },
+                  structural: { color: "#c8a85a", bg: "rgba(200, 168, 90, 0.12)" },
+                  emerging: { color: "#6a9ab8", bg: "rgba(106, 154, 184, 0.12)" },
+                };
+                return (
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
+                      <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#c8a85a", textTransform: "uppercase" as const, margin: 0, fontFamily: "'Geist Mono', monospace" }}>Featured Chains</p>
+                    </div>
+                    {featuredChains.map((chain, ci) => {
+                      const pill = STATUS_PILL[chain.status] ?? STATUS_PILL.structural;
+                      return (
+                        <div key={chain.id}>
+                          {ci > 0 && <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />}
+                          <div
+                            onClick={() => { setSelectedFeaturedChain(chain.id); setSelectedGroup(null); setSelectedTreeNode(null); }}
+                            style={{ cursor: "pointer", padding: "8px 0", borderRadius: 4, transition: "background 0.15s" }}
+                            onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                          >
+                            {/* Title + status pill */}
+                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
+                              <p style={{ fontSize: 15, color: warmWhite, fontWeight: 400, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{chain.title}</p>
+                              <span style={{ fontSize: 8, letterSpacing: "0.06em", textTransform: "uppercase" as const, color: pill.color, background: pill.bg, border: `0.5px solid ${pill.color}`, padding: "2px 7px", borderRadius: 3, fontFamily: "'Geist Mono', monospace", flexShrink: 0 }}>{chain.status}</span>
+                            </div>
+                            {/* Teaser */}
+                            <p style={{ fontSize: 12, color: bodyText, lineHeight: 1.55, margin: "0 0 8px 0" }}>{chain.teaser}</p>
+                            {/* Chain link line */}
+                            <div style={{ display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
+                              {chain.display_chain.map((nodeName, ni) => (
+                                <React.Fragment key={ni}>
+                                  {ni > 0 && <span style={{ fontSize: 9, color: "#3a3835" }}>→</span>}
+                                  <span style={{ fontSize: 11, color: ni === chain.chokepoint_display_index ? "#c8a85a" : "#706a60", fontWeight: ni === chain.chokepoint_display_index ? 600 : 400, fontFamily: "'Geist Mono', monospace" }}>{nodeName}</span>
+                                </React.Fragment>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              }
+
+              // Featured chain detail — navigate to germanium chain
+              if (selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems") {
+                const chain = featuredChains.find(c => c.id === selectedFeaturedChain);
+                if (chain) {
+                  return (
+                    <div>
+                      <button
+                        onClick={() => setSelectedFeaturedChain(null)}
+                        style={{ background: "transparent", border: "none", cursor: "pointer", color: "#706a60", fontSize: 9, fontFamily: "'Geist Mono', monospace", padding: "0 0 10px 0", display: "flex", alignItems: "center", gap: 4 }}
+                      >
+                        &larr; Back to featured chains
+                      </button>
+                      <p style={{ fontSize: 15, color: warmWhite, fontWeight: 400, margin: "0 0 6px 0", fontFamily: "'Instrument Serif', serif" }}>{chain.title}</p>
+                      <p style={{ fontSize: 12, color: bodyText, lineHeight: 1.55, margin: "0 0 12px 0" }}>{chain.teaser}</p>
+                      <button
+                        onClick={() => {
+                          const navMap: Record<string, PathEntry[]> = {
+                            germanium_chokepoint: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
+                          };
+                          const target = navMap[chain.id];
+                          if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); setSelectedFeaturedChain(null); }
+                        }}
+                        style={{
+                          background: "rgb(50, 44, 28)", border: "1px solid rgb(140, 120, 60)",
+                          borderRadius: 4, padding: "8px 14px", cursor: "pointer",
+                          fontSize: 10, color: "#c8a85a", fontFamily: "'Geist Mono', monospace",
+                          transition: "background 0.15s", width: "100%",
+                        }}
+                        onMouseEnter={e => { e.currentTarget.style.background = "rgb(60, 52, 32)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "rgb(50, 44, 28)"; }}
+                      >
+                        Explore the germanium supply chain &rarr;
+                      </button>
+                    </div>
+                  );
+                }
+              }
+
               // Show group description if a group is selected on AI tree (and no sub-node is selected)
               if (selectedGroup && !selectedTreeNode && currentVertical?.id === "ai" && currentLevel === "subsystems") {
                 return (

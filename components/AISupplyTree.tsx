@@ -31,6 +31,8 @@ interface AISupplyTreeProps {
   onNodeClick?: (name: string) => void;
   onGroupClick?: (groupKey: string, groupName: string, overview: string, activity: string) => void;
   onNavigateToInput?: (name: string) => void;
+  /** Set of node names to highlight as a featured chain (gold) */
+  highlightedChainNodes?: Set<string>;
 }
 
 // Build a map: group key → set of group keys in other columns that have linked sub-nodes
@@ -61,7 +63,7 @@ function buildGroupLinks(
   return links;
 }
 
-export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToInput }: AISupplyTreeProps) {
+export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToInput, highlightedChainNodes }: AISupplyTreeProps) {
   const [expandedRawCat, setExpandedRawCat] = useState<string | null>(null);
   const [expandedIntGroup, setExpandedIntGroup] = useState<string | null>(null);
   const [expandedCompGroup, setExpandedCompGroup] = useState<string | null>(null);
@@ -270,8 +272,11 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     const statusColor = STATUS_COLORS[node?.status ?? "tbd"] ?? "#444";
     const isSelected = selectedNode === name;
     const isConnected = selectedNode != null && connectedSubNodes.has(name);
-    const bg = isSelected ? "rgb(88, 86, 84)" : isConnected ? "rgb(55, 52, 48)" : bright ? "rgb(40, 37, 34)" : "rgb(34, 31, 29)";
-    const border = isSelected ? "rgb(100, 98, 96)" : isConnected ? "rgb(75, 70, 65)" : bright ? "rgb(50, 46, 42)" : "rgb(42, 39, 37)";
+    const isChainNode = highlightedChainNodes?.has(name);
+    const chainActive = highlightedChainNodes && highlightedChainNodes.size > 0;
+    const chainDimmed = chainActive && !isChainNode && !isSelected;
+    const bg = isSelected ? "rgb(88, 86, 84)" : isChainNode ? "rgb(50, 44, 28)" : isConnected ? "rgb(55, 52, 48)" : bright ? "rgb(40, 37, 34)" : "rgb(34, 31, 29)";
+    const border = isSelected ? "rgb(100, 98, 96)" : isChainNode ? "rgb(140, 120, 60)" : isConnected ? "rgb(75, 70, 65)" : bright ? "rgb(50, 46, 42)" : "rgb(42, 39, 37)";
 
     return (
       <div
@@ -293,15 +298,16 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
           border: `1px solid ${border}`,
           borderRadius: 3,
           cursor: "pointer",
-          transition: "background 0.15s, border-color 0.15s",
+          transition: "background 0.15s, border-color 0.15s, opacity 0.2s",
           position: "relative" as const,
+          opacity: chainDimmed ? 0.1 : 1,
           ...(animate ? { animation: `subNodeFadeUp 400ms ease-out ${(animIndex ?? 0) * 40}ms both` } : {}),
         }}
-        onMouseEnter={e => { if (!isSelected) { e.currentTarget.style.background = "rgb(48, 44, 40)"; e.currentTarget.style.borderColor = "rgb(60, 56, 52)"; } }}
-        onMouseLeave={e => { if (!isSelected) { e.currentTarget.style.background = bg; e.currentTarget.style.borderColor = border; } }}
+        onMouseEnter={e => { if (!isSelected && !isChainNode) { e.currentTarget.style.background = "rgb(48, 44, 40)"; e.currentTarget.style.borderColor = "rgb(60, 56, 52)"; } }}
+        onMouseLeave={e => { if (!isSelected && !isChainNode) { e.currentTarget.style.background = bg; e.currentTarget.style.borderColor = border; } }}
       >
-        <div style={{ position: "absolute", left: 3, top: "50%", transform: "translateY(-50%)", width: 4, height: 4, borderRadius: "50%", background: statusColor }} />
-        <p style={{ fontSize: 10, fontWeight: 600, color: isSelected ? "#fff" : isConnected ? "#f0ece4" : bright ? "#f0ece4" : "#ece8e1", margin: 0, lineHeight: 1.2, whiteSpace: "nowrap", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</p>
+        <div style={{ position: "absolute", left: 3, top: "50%", transform: "translateY(-50%)", width: 4, height: 4, borderRadius: "50%", background: isChainNode ? "#c8a85a" : statusColor }} />
+        <p style={{ fontSize: 10, fontWeight: 600, color: isChainNode ? "#c8a85a" : isSelected ? "#fff" : isConnected ? "#f0ece4" : bright ? "#f0ece4" : "#ece8e1", margin: 0, lineHeight: 1.2, whiteSpace: "nowrap", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</p>
       </div>
     );
   }
@@ -320,7 +326,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
           borderRadius: 3, cursor: "pointer",
           display: "flex", alignItems: "center", justifyContent: "space-between",
           transition: "background 0.2s, border-color 0.2s, opacity 0.2s",
-          opacity: (activeGroupKey && !highlighted && activeGroupKey !== groupKey) || (selectedNode && !highlighted) ? 0.35 : 1,
+          opacity: (highlightedChainNodes && highlightedChainNodes.size > 0 && !highlighted) ? 0.1 : (activeGroupKey && !highlighted && activeGroupKey !== groupKey) || (selectedNode && !highlighted) ? 0.35 : 1,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
