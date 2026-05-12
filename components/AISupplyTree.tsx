@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useMemo, useRef, useEffect, useCallback } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
 import universalNodesJson from "@/data/universal-nodes.json";
 import chainDefsJson from "@/data/chain-definitions.json";
 
@@ -77,6 +78,28 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
   const categories = chain.rawMaterialCategories ?? {};
   const compSubgroups = chain.componentSubgroups ?? {};
   const intSubgroups = chain.intermediateSubgroups ?? {};
+
+  // Auto-expand groups containing featured chain nodes
+  useEffect(() => {
+    if (!highlightedChainNodes || highlightedChainNodes.size === 0) {
+      // Chain deselected — collapse back
+      setExpandedRawCat(null);
+      setExpandedIntGroup(null);
+      setExpandedCompGroup(null);
+      setAnimatingGroup(null);
+      return;
+    }
+    // Find which group in each column contains a chain node and expand it
+    for (const [k, g] of Object.entries(categories)) {
+      if (g.nodes.some(n => highlightedChainNodes.has(n))) { setExpandedRawCat(k); setAnimatingGroup(k); break; }
+    }
+    for (const [k, g] of Object.entries(intSubgroups)) {
+      if (g.nodes.some(n => highlightedChainNodes.has(n))) { setExpandedIntGroup(k); break; }
+    }
+    for (const [k, g] of Object.entries(compSubgroups)) {
+      if (g.nodes.some(n => highlightedChainNodes.has(n))) { setExpandedCompGroup(k); break; }
+    }
+  }, [highlightedChainNodes]);
 
   // The currently expanded group key (across all columns)
   const activeGroupKey = expandedRawCat ?? expandedIntGroup ?? expandedCompGroup ?? null;
