@@ -3148,7 +3148,7 @@ export default function TreeView() {
                 {lastEntry && INPUT_PRICE_HISTORY[lastEntry.id] && (
                   <PriceChart inputId={lastEntry.id} accent={templateAccent ?? "#706a60"} name={templateTitle} />
                 )}
-                {!lastEntry || !INPUT_PRICE_HISTORY[lastEntry.id] ? <div style={{ height: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 0 : 130 }} /> : null}
+                {!lastEntry || !INPUT_PRICE_HISTORY[lastEntry.id] ? <div style={{ height: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 123 : 130 }} /> : null}
               </>
             )}
             {centerView === "globe" && (() => {
