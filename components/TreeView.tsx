@@ -3354,51 +3354,103 @@ export default function TreeView() {
             })()}
 
             {rightTab === "summary" && centerView === "tree" && (() => {
-              // Featured chains — default state when nothing selected on AI tree
-              if (!selectedGroup && !selectedTreeNode && currentVertical?.id === "ai" && currentLevel === "subsystems") {
-                const STATUS_PILL: Record<string, { color: string; bg: string }> = {
-                  acute: { color: "#c87a4a", bg: "rgba(200, 122, 74, 0.12)" },
-                  structural: { color: "#c8a85a", bg: "rgba(200, 168, 90, 0.12)" },
-                  emerging: { color: "#6a9ab8", bg: "rgba(106, 154, 184, 0.12)" },
-                };
+              const isAITree = currentVertical?.id === "ai" && currentLevel === "subsystems";
+              const STATUS_PILL: Record<string, { color: string; bg: string }> = {
+                acute: { color: "#c87a4a", bg: "rgba(200, 122, 74, 0.12)" },
+                structural: { color: "#c8a85a", bg: "rgba(200, 168, 90, 0.12)" },
+                emerging: { color: "#6a9ab8", bg: "rgba(106, 154, 184, 0.12)" },
+              };
+
+              // Helper: render featured chain card
+              const renderFeaturedChainCard = (chain: FeaturedChain) => {
+                const pill = STATUS_PILL[chain.status] ?? STATUS_PILL.structural;
+                const titleColor = pill.color + "bf";
+                return (
+                  <div
+                    onClick={() => { setSelectedFeaturedChain(prev => prev === chain.id ? null : chain.id); setSelectedGroup(null); setSelectedTreeNode(null); }}
+                    style={{ cursor: "pointer", padding: "8px 10px", borderRadius: 4, transition: "background 0.15s", background: selectedFeaturedChain === chain.id ? "rgba(255, 255, 255, 0.06)" : "rgba(255, 255, 255, 0.02)" }}
+                    onMouseEnter={e => { e.currentTarget.style.background = selectedFeaturedChain === chain.id ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.05)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = selectedFeaturedChain === chain.id ? "rgba(255, 255, 255, 0.06)" : "rgba(255, 255, 255, 0.02)"; }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}>
+                      <p style={{ fontSize: 10, color: titleColor, fontWeight: 500, margin: 0, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" as const, letterSpacing: "0.03em" }}>{chain.title}</p>
+                      <span style={{ fontSize: 7, letterSpacing: "0.06em", textTransform: "uppercase" as const, color: pill.color, background: pill.bg, border: `0.5px solid ${pill.color}`, padding: "2px 5px", borderRadius: 3, fontFamily: "'Geist Mono', monospace", flexShrink: 0 }}>{chain.status}</span>
+                    </div>
+                    <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.55, margin: "0 0 8px 0" }}>{chain.teaser}</p>
+                    <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "0 0 8px 0" }} />
+                    <div style={{ display: "flex", alignItems: "center", gap: 0, flexWrap: "wrap" }}>
+                      {chain.display_chain.map((nodeName, ni) => (
+                        <React.Fragment key={ni}>
+                          {ni > 0 && <span style={{ fontSize: 9, color: "#3a3835", margin: "0 3px" }}>→</span>}
+                          <span style={{ fontSize: 10, color: ni === chain.highlight_display_index ? "rgb(208, 208, 208)" : "#706a60", fontWeight: 400 }}>{nodeName}</span>
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
+                );
+              };
+
+              // Helper: render sub-node summary bullets
+              const renderSubNodeSummary = (nodeName: string) => {
+                const uNode = universalNodes[nodeName] as unknown as { ai_summary?: string[] | Record<string, string> } | undefined;
+                if (!uNode?.ai_summary) return null;
+                const bullets = Array.isArray(uNode.ai_summary) ? uNode.ai_summary : null;
+                if (!bullets) return null;
+                return (
+                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
+                    <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: "0 0 4px 0", fontFamily: "'Instrument Serif', serif" }}>{nodeName}</p>
+                    {bullets.map((bullet, i) => {
+                      const isLast = i === bullets.length - 1;
+                      if (isLast) {
+                        return (
+                          <div key={i} style={{ borderLeft: `2px solid ${templateAccent ?? "#706a60"}`, paddingLeft: 10, marginTop: 4 }}>
+                            <p style={{ fontSize: 12, color: templateAccent ?? "#a09888", lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>{bullet}</p>
+                          </div>
+                        );
+                      }
+                      return (
+                        <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
+                          <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              };
+
+              // ── PATH 1: Featured chain mode ──
+              // Chain is selected — show featured card + sub-node summary below it
+              if (selectedFeaturedChain && isAITree) {
+                const chain = featuredChains.find(c => c.id === selectedFeaturedChain);
+                if (chain) {
+                  return (
+                    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 0 }}>
+                        <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#fff", textTransform: "uppercase" as const, margin: 0, fontFamily: "'Geist Mono', monospace" }}>Featured Chain</p>
+                      </div>
+                      {renderFeaturedChainCard(chain)}
+                      {/* Sub-node summary below the card */}
+                      {selectedTreeNode && renderSubNodeSummary(selectedTreeNode)}
+                    </div>
+                  );
+                }
+              }
+
+              // ── PATH 2: Default tree mode ──
+              // No featured chain — show featured chains list when nothing selected
+              if (!selectedGroup && !selectedTreeNode && isAITree) {
                 return (
                   <div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
                       <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#fff", textTransform: "uppercase" as const, margin: 0, fontFamily: "'Geist Mono', monospace" }}>Featured Chains</p>
                     </div>
-                    {featuredChains.map((chain, ci) => {
-                      const pill = STATUS_PILL[chain.status] ?? STATUS_PILL.structural;
-                      const titleColor = pill.color + "bf"; // 75% opacity hex
-                      return (
-                        <div key={chain.id}>
-                          {ci > 0 && <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />}
-                          <div
-                            onClick={() => { setSelectedFeaturedChain(prev => prev === chain.id ? null : chain.id); setSelectedGroup(null); setSelectedTreeNode(null); }}
-                            style={{ cursor: "pointer", padding: "8px 10px", borderRadius: 4, transition: "background 0.15s", background: selectedFeaturedChain === chain.id ? "rgba(255, 255, 255, 0.06)" : "rgba(255, 255, 255, 0.02)" }}
-                            onMouseEnter={e => { e.currentTarget.style.background = selectedFeaturedChain === chain.id ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.05)"; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = selectedFeaturedChain === chain.id ? "rgba(255, 255, 255, 0.06)" : "rgba(255, 255, 255, 0.02)"; }}
-                          >
-                            {/* Title + status pill */}
-                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}>
-                              <p style={{ fontSize: 10, color: titleColor, fontWeight: 500, margin: 0, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" as const, letterSpacing: "0.03em" }}>{chain.title}</p>
-                              <span style={{ fontSize: 7, letterSpacing: "0.06em", textTransform: "uppercase" as const, color: pill.color, background: pill.bg, border: `0.5px solid ${pill.color}`, padding: "2px 5px", borderRadius: 3, fontFamily: "'Geist Mono', monospace", flexShrink: 0 }}>{chain.status}</span>
-                            </div>
-                            {/* Teaser */}
-                            <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.55, margin: "0 0 8px 0" }}>{chain.teaser}</p>
-                            {/* Divider + Chain link line */}
-                            <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "0 0 8px 0" }} />
-                            <div style={{ display: "flex", alignItems: "center", gap: 0, flexWrap: "wrap" }}>
-                              {chain.display_chain.map((nodeName, ni) => (
-                                <React.Fragment key={ni}>
-                                  {ni > 0 && <span style={{ fontSize: 9, color: "#3a3835", margin: "0 3px" }}>→</span>}
-                                  <span style={{ fontSize: 10, color: ni === chain.highlight_display_index ? "rgb(208, 208, 208)" : "#706a60", fontWeight: 400 }}>{nodeName}</span>
-                                </React.Fragment>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                    {featuredChains.map((chain, ci) => (
+                      <div key={chain.id}>
+                        {ci > 0 && <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />}
+                        {renderFeaturedChainCard(chain)}
+                      </div>
+                    ))}
                   </div>
                 );
               }
