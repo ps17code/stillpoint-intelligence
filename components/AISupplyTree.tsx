@@ -275,8 +275,8 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     const isChainNode = highlightedChainNodes?.has(name);
     const chainActive = highlightedChainNodes && highlightedChainNodes.size > 0;
     const chainDimmed = chainActive && !isChainNode && !isSelected;
-    const bg = isSelected ? "rgb(88, 86, 84)" : isChainNode ? "rgb(50, 44, 28)" : isConnected ? "rgb(55, 52, 48)" : bright ? "rgb(40, 37, 34)" : "rgb(34, 31, 29)";
-    const border = isSelected ? "rgb(100, 98, 96)" : isChainNode ? "rgb(140, 120, 60)" : isConnected ? "rgb(75, 70, 65)" : bright ? "rgb(50, 46, 42)" : "rgb(42, 39, 37)";
+    const bg = isSelected ? "rgb(88, 86, 84)" : isChainNode ? "rgb(48, 36, 28)" : isConnected ? "rgb(55, 52, 48)" : bright ? "rgb(40, 37, 34)" : "rgb(34, 31, 29)";
+    const border = isSelected ? "rgb(100, 98, 96)" : isChainNode ? "rgb(140, 90, 50)" : isConnected ? "rgb(75, 70, 65)" : bright ? "rgb(50, 46, 42)" : "rgb(42, 39, 37)";
 
     return (
       <div
@@ -306,32 +306,39 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
         onMouseEnter={e => { if (!isSelected && !isChainNode) { e.currentTarget.style.background = "rgb(48, 44, 40)"; e.currentTarget.style.borderColor = "rgb(60, 56, 52)"; } }}
         onMouseLeave={e => { if (!isSelected && !isChainNode) { e.currentTarget.style.background = bg; e.currentTarget.style.borderColor = border; } }}
       >
-        <div style={{ position: "absolute", left: 3, top: "50%", transform: "translateY(-50%)", width: 4, height: 4, borderRadius: "50%", background: isChainNode ? "#c8a85a" : statusColor }} />
-        <p style={{ fontSize: 10, fontWeight: 600, color: isChainNode ? "#c8a85a" : isSelected ? "#fff" : isConnected ? "#f0ece4" : bright ? "#f0ece4" : "#ece8e1", margin: 0, lineHeight: 1.2, whiteSpace: "nowrap", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</p>
+        <div style={{ position: "absolute", left: 3, top: "50%", transform: "translateY(-50%)", width: 4, height: 4, borderRadius: "50%", background: isChainNode ? "#c87a4a" : statusColor }} />
+        <p style={{ fontSize: 10, fontWeight: 600, color: isChainNode ? "#c87a4a" : isSelected ? "#fff" : isConnected ? "#f0ece4" : bright ? "#f0ece4" : "#ece8e1", margin: 0, lineHeight: 1.2, whiteSpace: "nowrap", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</p>
       </div>
     );
   }
 
   // Group header
-  function GroupHeader({ groupKey, name, count, status, highlighted, onClick }: { groupKey: string; name: string; count: number; status: string; highlighted: boolean; onClick: () => void }) {
+  // Check if a group contains any chain-highlighted node
+  function groupHasChainNode(groupNodes: string[]): boolean {
+    if (!highlightedChainNodes || highlightedChainNodes.size === 0) return false;
+    return groupNodes.some(n => highlightedChainNodes.has(n));
+  }
+
+  function GroupHeader({ groupKey, name, count, status, highlighted, chainHighlighted, onClick }: { groupKey: string; name: string; count: number; status: string; highlighted: boolean; chainHighlighted: boolean; onClick: () => void }) {
     const statusColor = STATUS_COLORS[status] ?? "#444";
+    const chainActive = highlightedChainNodes && highlightedChainNodes.size > 0;
     return (
       <div
         ref={el => { if (el) cardRefs.current.set(groupKey, el); }}
         onClick={onClick}
         style={{
           padding: "5px 8px",
-          background: highlighted ? "rgb(42, 38, 35)" : "rgb(30, 28, 27)",
-          border: highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(42, 39, 37)",
+          background: chainHighlighted ? "rgb(50, 44, 28)" : highlighted ? "rgb(42, 38, 35)" : "rgb(30, 28, 27)",
+          border: chainHighlighted ? "1px solid rgb(140, 120, 60)" : highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(42, 39, 37)",
           borderRadius: 3, cursor: "pointer",
           display: "flex", alignItems: "center", justifyContent: "space-between",
           transition: "background 0.2s, border-color 0.2s, opacity 0.2s",
-          opacity: (highlightedChainNodes && highlightedChainNodes.size > 0 && !highlighted) ? 0.1 : (activeGroupKey && !highlighted && activeGroupKey !== groupKey) || (selectedNode && !highlighted) ? 0.35 : 1,
+          opacity: (chainActive && !chainHighlighted) ? 0.1 : (activeGroupKey && !highlighted && activeGroupKey !== groupKey) || (selectedNode && !highlighted) ? 0.35 : 1,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-          <div style={{ width: 4, height: 4, borderRadius: "50%", background: statusColor, flexShrink: 0 }} />
-          <span style={{ fontSize: 10, fontWeight: 600, color: highlighted ? "#ece8e1" : "#d0c8bc", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</span>
+          <div style={{ width: 4, height: 4, borderRadius: "50%", background: chainHighlighted ? "#c87a4a" : statusColor, flexShrink: 0 }} />
+          <span style={{ fontSize: 10, fontWeight: 600, color: chainHighlighted ? "#c87a4a" : highlighted ? "#ece8e1" : "#d0c8bc", fontFamily: "'EB Garamond', Georgia, serif" }}>{name}</span>
           <span style={{ fontSize: 6, color: "#555", fontFamily: "'Geist Mono', monospace" }}>· {count}</span>
         </div>
         <span style={{ fontSize: 7, color: "#555" }}>›</span>
@@ -410,6 +417,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
                   count={g.nodes.length}
                   status={getGroupStatus(g.nodes)}
                   highlighted={highlightedGroups.has(gk)}
+                  chainHighlighted={groupHasChainNode(g.nodes)}
                   onClick={() => handleGroupClick(gk)}
                 />
               );
