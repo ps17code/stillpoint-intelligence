@@ -3385,12 +3385,13 @@ export default function TreeView() {
                             </div>
                             {/* Teaser */}
                             <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.55, margin: "0 0 8px 0" }}>{chain.teaser}</p>
-                            {/* Chain link line */}
+                            {/* Divider + Chain link line */}
+                            <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "0 0 8px 0" }} />
                             <div style={{ display: "flex", alignItems: "center", gap: 0, flexWrap: "wrap" }}>
                               {chain.display_chain.map((nodeName, ni) => (
                                 <React.Fragment key={ni}>
                                   {ni > 0 && <span style={{ fontSize: 9, color: "#3a3835", margin: "0 3px" }}>→</span>}
-                                  <span style={{ fontSize: 11, color: ni === chain.highlight_display_index ? "rgb(208, 208, 208)" : "#706a60", fontWeight: 400, fontFamily: "'Geist Mono', monospace" }}>{nodeName}</span>
+                                  <span style={{ fontSize: 10, color: ni === chain.highlight_display_index ? "rgb(208, 208, 208)" : "#706a60", fontWeight: 400 }}>{nodeName}</span>
                                 </React.Fragment>
                               ))}
                             </div>
