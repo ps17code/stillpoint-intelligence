@@ -2,6 +2,7 @@
 import React, { useState, useMemo, useCallback, useRef } from "react";
 import HorizontalTree from "@/components/HorizontalTree";
 import AISupplyTree from "@/components/AISupplyTree";
+import ChainAnalysis from "@/components/ChainAnalysis";
 import Globe from "@/components/Globe";
 import type { GlobeHandle } from "@/components/Globe";
 import NodeMap from "@/components/NodeMap";
@@ -2180,48 +2181,35 @@ export default function TreeView() {
 
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
-        return <AISupplyTree
-          highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : undefined}
-          onNodeClick={(name) => {
-            // If in featured chain mode, keep the chain active — just update the selected node
-            if (selectedFeaturedChain) {
-              if (!name) {
-                setSelectedTreeNode(null);
-              } else {
-                setSelectedTreeNode(name);
-                setRightTab("summary");
-              }
-              return;
-            }
-            // Default mode
-            if (!name) {
-              setSelectedTreeNode(null);
-            } else {
-              setSelectedTreeNode(name);
-              setRightTab("summary");
-            }
-          }}
-          onGroupClick={(key, name, overview, activity) => {
-            if (selectedFeaturedChain) return; // Don't handle group clicks in chain mode
-            if (!key) {
-              setSelectedGroup(null);
-              setSelectedTreeNode(null);
-            } else {
-              setSelectedGroup({ key, name, overview, activity });
-              setSelectedTreeNode(null);
-              setRightTab("summary");
-            }
-          }}
-          onNavigateToInput={(name) => {
-            const navMap: Record<string, PathEntry[]> = {
-              "Germanium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
-              "Gallium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "gallium", name: "Gallium" }],
-              "Fiber Optic Cable": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
-            };
-            const target = navMap[name];
-            if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); }
-          }}
-        />;
+        return (
+          <>
+            <AISupplyTree
+              highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : undefined}
+              onNodeClick={(name) => {
+                if (selectedFeaturedChain) {
+                  if (!name) { setSelectedTreeNode(null); } else { setSelectedTreeNode(name); setRightTab("summary"); }
+                  return;
+                }
+                if (!name) { setSelectedTreeNode(null); } else { setSelectedTreeNode(name); setRightTab("summary"); }
+              }}
+              onGroupClick={(key, name, overview, activity) => {
+                if (selectedFeaturedChain) return;
+                if (!key) { setSelectedGroup(null); setSelectedTreeNode(null); }
+                else { setSelectedGroup({ key, name, overview, activity }); setSelectedTreeNode(null); setRightTab("summary"); }
+              }}
+              onNavigateToInput={(name) => {
+                const navMap: Record<string, PathEntry[]> = {
+                  "Germanium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
+                  "Gallium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "gallium", name: "Gallium" }],
+                  "Fiber Optic Cable": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
+                };
+                const target = navMap[name];
+                if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); }
+              }}
+            />
+            {selectedFeaturedChain === "germanium_chokepoint" && <ChainAnalysis />}
+          </>
+        );
       }
 
       const nodes = getSubsystems().map(s => ({
