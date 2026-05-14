@@ -3463,7 +3463,7 @@ export default function TreeView() {
                             <>
                               <div>
                                 <p style={{ fontSize: 7, color: "#4a4540", margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Price</p>
-                                <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{metrics.price} <span style={{ fontSize: 8, color: amber }}>{metrics.change}</span></p>
+                                <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{metrics.price} <span style={{ fontSize: 8, color: "#c87a4a" }}>{metrics.change}</span></p>
                               </div>
                               <div>
                                 <p style={{ fontSize: 7, color: "#4a4540", margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Supply</p>
