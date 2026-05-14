@@ -6,16 +6,17 @@ const amberBg = "rgba(200, 122, 74, 0.06)";
 const warmWhite = "#ece8e1";
 const muted = "#706a60";
 const dimmer = "#4a4540";
+const numColor = "rgb(160, 152, 136)";
 const border = "rgba(255,255,255,0.04)";
 
 export default function ChainAnalysis() {
   return (
-    <div style={{ padding: 15, background: "rgb(26, 27, 26)", borderRadius: 10, marginBottom: 20 }}>
-      <div style={{ display: "grid", gridTemplateColumns: ".7fr 1fr", gap: 20 }}>
+    <div style={{ position: "absolute", bottom: 20, left: 30, right: 30, padding: 15, background: "rgb(26, 27, 26)", borderRadius: 10 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
 
         {/* ── COLUMN 1: SUPPLY/DEMAND TABLE ── */}
         <div>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 8, marginBottom: 15 }}>
             <h3 style={{ fontSize: 16, color: warmWhite, fontWeight: 400, margin: 0, fontFamily: "'Instrument Serif', serif" }}>
               Germanium → GeCl₄ → Fiber
             </h3>
@@ -37,15 +38,15 @@ export default function ChainAnalysis() {
               </thead>
               <tbody>
                 {[
-                  { name: "Germanium", supply: "220 t/yr", demand: "450–500 t/yr", gap: "–230 t/yr", severe: true },
-                  { name: "GeCl₄", supply: "500 t/yr", demand: "900–1,100 t/yr", gap: "–500 t/yr", severe: true },
-                  { name: "Fiber", supply: "7B km/yr", demand: "12–15B km/yr", gap: "–6B km/yr", severe: false },
+                  { name: "Germanium", supply: "220 t/yr", demand: "450–500 t/yr", gap: "–230 t/yr" },
+                  { name: "GeCl₄", supply: "500 t/yr", demand: "900–1,100 t/yr", gap: "–500 t/yr" },
+                  { name: "Fiber", supply: "7B km/yr", demand: "12–15B km/yr", gap: "–6B km/yr" },
                 ].map((row, i) => (
                   <tr key={i}>
                     <td style={{ padding: "8px 8px 8px 0", fontSize: 10, color: warmWhite, fontWeight: 500, borderBottom: `1px solid ${border}` }}>{row.name}</td>
-                    <td style={{ padding: "8px", fontSize: 10, color: muted, textAlign: "right", fontFamily: "'Geist Mono', monospace", borderBottom: `1px solid ${border}` }}>{row.supply}</td>
-                    <td style={{ padding: "8px", fontSize: 10, color: row.severe ? amber : muted, textAlign: "right", fontFamily: "'Geist Mono', monospace", fontWeight: row.severe ? 500 : 400, borderBottom: `1px solid ${border}` }}>{row.demand}</td>
-                    <td style={{ padding: "8px 0 8px 8px", fontSize: 10, color: row.severe ? amber : "rgba(255,255,255,0.5)", textAlign: "right", fontFamily: "'Geist Mono', monospace", fontWeight: 500, borderBottom: `1px solid ${border}` }}>{row.gap}</td>
+                    <td style={{ padding: "8px", fontSize: 10, color: numColor, textAlign: "right", fontFamily: "'Geist Mono', monospace", borderBottom: `1px solid ${border}` }}>{row.supply}</td>
+                    <td style={{ padding: "8px", fontSize: 10, color: numColor, textAlign: "right", fontFamily: "'Geist Mono', monospace", borderBottom: `1px solid ${border}` }}>{row.demand}</td>
+                    <td style={{ padding: "8px 0 8px 8px", fontSize: 10, color: amber, textAlign: "right", fontFamily: "'Geist Mono', monospace", fontWeight: 500, borderBottom: `1px solid ${border}` }}>{row.gap}</td>
                   </tr>
                 ))}
               </tbody>
@@ -55,7 +56,7 @@ export default function ChainAnalysis() {
 
         {/* ── COLUMN 2: CONSTRAINT ANALYSIS ── */}
         <div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 5, marginTop: 8 }}>
             {/* Card 1: Germanium */}
             <div style={{ background: "rgb(36, 36, 36)", borderRadius: 4, padding: 8 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
