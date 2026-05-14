@@ -437,7 +437,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
               {/* Check if a drilldown node is in this group */}
               {drilldownNode && (groups[expandedGroup]?.nodes ?? []).includes(drilldownNode) ? (
                 <>
-                  <NCard name={drilldownNode} bright />
+                  <NCard name={drilldownNode} />
                   <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "4px 0" }} />
                   {(CHAIN_NODE_COMPANIES[drilldownNode] ?? []).map((company, ci) => (
                     <div key={company} style={{ animation: `subNodeFadeUp 400ms ease-out ${ci * 40}ms both` }}>
@@ -453,7 +453,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
                     const cb = connectedSubNodes.has(b) ? 0 : 1;
                     return ca - cb;
                   }).map((n, i) => (
-                    <NCard key={n} name={n} bright animate={animatingGroup === expandedGroup} animIndex={i} />
+                    <NCard key={n} name={n} animate={animatingGroup === expandedGroup} animIndex={i} />
                   ))}
                 </>
               )}
