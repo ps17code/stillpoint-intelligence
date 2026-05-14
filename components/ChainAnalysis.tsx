@@ -11,7 +11,7 @@ const border = "rgba(255,255,255,0.04)";
 
 export default function ChainAnalysis() {
   return (
-    <div style={{ position: "absolute", bottom: 20, left: 30, right: 30, padding: 15, background: "rgb(26, 27, 26)", borderRadius: 10 }}>
+    <div style={{ padding: 15, background: "rgb(26, 27, 26)", borderRadius: 10 }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
 
         {/* ── COLUMN 1: SUPPLY/DEMAND TABLE ── */}

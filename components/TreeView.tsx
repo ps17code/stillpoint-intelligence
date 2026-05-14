@@ -2207,7 +2207,6 @@ export default function TreeView() {
                 if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); }
               }}
             />
-            {selectedFeaturedChain === "germanium_chokepoint" && <ChainAnalysis />}
           </>
         );
       }
@@ -2858,7 +2857,6 @@ export default function TreeView() {
             ...((activeTab === "investment-ideas" || activeTab === "analysis" || (currentVertical?.id === "ai" && currentLevel === "subsystems")) ? { flex: 1, minHeight: 0 } : { height: 450 }),
             overflowY: "auto", overflowX: "hidden",
             padding: "0 30px",
-            position: "relative" as const,
           }}>
             <div
               key={animKey}
@@ -3073,6 +3071,13 @@ export default function TreeView() {
               )}
             </div>
           </div>
+
+          {/* Chain Analysis section — shown when featured chain is selected on AI tree */}
+          {selectedFeaturedChain === "germanium_chokepoint" && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
+            <div style={{ flexShrink: 0, padding: "0 30px 20px" }}>
+              <ChainAnalysis />
+            </div>
+          )}
 
           {/* Bottom section — key takeaways (hidden on investment ideas tab) */}
           <div style={{
