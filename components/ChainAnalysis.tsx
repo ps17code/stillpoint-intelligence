@@ -101,10 +101,8 @@ export default function ChainAnalysis() {
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 {[
-                  "Recovered primarily as a zinc smelting byproduct",
-                  "Supply cannot rapidly respond to price signals",
-                  "China controls majority refining capacity",
-                  "New supply requires long-cycle upstream investment",
+                  "Byproduct of zinc and coal mining — only a few deposits globally host commercially recoverable concentrations.",
+                  "Expansion requires major capex in zinc-smelter recovery infrastructure with multi-year build timelines.",
                 ].map((b, i) => (
                   <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
                     <span style={{ width: 2, height: 2, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 5 }} />
@@ -127,10 +125,8 @@ export default function ChainAnalysis() {
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 {[
-                  "Ultra-high purity requirements (8N+)",
-                  "Very limited Western production base",
-                  "Qualification cycles are long and vendor-specific",
-                  "Difficult tacit manufacturing expertise",
+                  "8N+ purity refining with complex chemistry and multi-year customer qualification cycles.",
+                  "Umicore (Belgium) is the only commercial-scale Western supplier serving the fiber market.",
                 ].map((b, i) => (
                   <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
                     <span style={{ width: 2, height: 2, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 5 }} />
@@ -153,9 +149,8 @@ export default function ChainAnalysis() {
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 {[
-                  "Capacity currently overbooked through 2027",
-                  "Expansion projects underway at Corning, Prysmian, YOFC",
-                  "High capex but scalable over 18–24 month cycles",
+                  "Preform manufacturing has an 18–24 month expansion cycle and current capacity is fully booked.",
+                  "New capacity coming, but AI demand grows faster — AI clusters use up to 36× more fiber than CPU racks.",
                 ].map((b, i) => (
                   <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
                     <span style={{ width: 2, height: 2, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 5 }} />
