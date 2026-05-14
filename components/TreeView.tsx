@@ -2396,6 +2396,11 @@ export default function TreeView() {
 
   /* ── derive title/subtitle/analysisHref for unified template ── */
   const templateTitle = (() => {
+    // Override with featured chain title when selected
+    if (selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems") {
+      const fc = featuredChains.find(c => c.id === selectedFeaturedChain);
+      if (fc) return fc.title;
+    }
     if (path.length === 0) return "Explore emerging frontiers.";
     if (!lastEntry) return "";
     if (lastEntry.type === "vertical") {
@@ -2408,6 +2413,11 @@ export default function TreeView() {
   })();
 
   const templateSubtitle = (() => {
+    // Override with featured chain teaser when selected
+    if (selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems") {
+      const fc = featuredChains.find(c => c.id === selectedFeaturedChain);
+      if (fc) return fc.teaser;
+    }
     if (path.length === 0) return "Trace value chains from raw material to end use \u2014 every node, every bottleneck, every player.";
     if (!lastEntry) return "";
     if (lastEntry.type === "vertical") return VERTICALS_DATA.find(v => v.id === lastEntry.id)?.description ?? "";
@@ -3448,41 +3458,19 @@ export default function TreeView() {
               };
 
               // ── PATH 1: Featured chain mode ──
-              // Chain is selected — show featured card + sub-node summary below it
+              // Chain is selected — header is swapped, show sub-node summary in right panel
               if (selectedFeaturedChain && isAITree) {
-                const chain = featuredChains.find(c => c.id === selectedFeaturedChain);
-                if (chain) {
+                if (selectedTreeNode) {
                   return (
                     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 0 }}>
-                        <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#fff", textTransform: "uppercase" as const, margin: 0, fontFamily: "'Geist Mono', monospace" }}>Featured Chain</p>
-                      </div>
-                      {renderFeaturedChainCard(chain)}
-                      {/* Sub-node summary or key takeaways below the card */}
-                      {selectedTreeNode ? (
-                        renderSubNodeSummary(selectedTreeNode, { chainMode: true, chainStatusColor: (STATUS_PILL[chain.status] ?? STATUS_PILL.structural).color })
-                      ) : (
-                        <>
-                          <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
-                            <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>Key Takeaways</p>
-                            {CHAIN_TAKEAWAYS.map((t, i) => (
-                              <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                                <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
-                                <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{t}</p>
-                              </div>
-                            ))}
-                          </div>
-                          {renderKeyPlayersCard([
-                            { name: "Umicore", layer: "GeCl₄ Refining" },
-                            { name: "Yunnan Chihong", layer: "Germanium Mining" },
-                            { name: "Corning", layer: "Fiber Manufacturing" },
-                            { name: "5N Plus", layer: "Germanium Refining" },
-                          ], true)}
-                        </>
-                      )}
+                      {renderSubNodeSummary(selectedTreeNode, { chainMode: true, chainStatusColor: (STATUS_PILL[activeFeaturedChain?.status ?? "structural"] ?? STATUS_PILL.structural).color })}
                     </div>
                   );
                 }
+                // No node selected — show prompt to select a node
+                return (
+                  <p style={{ fontSize: 10, color: "#555", padding: "20px 0" }}>Select a highlighted node to view its summary.</p>
+                );
               }
 
               // ── PATH 2: Default tree mode ──
