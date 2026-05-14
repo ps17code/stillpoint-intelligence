@@ -3402,20 +3402,20 @@ export default function TreeView() {
                 if (players.length === 0) return null;
                 return (
                   <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
-                    <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>Key Players</p>
+                    <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Key Players</p>
                     {players.map(p => {
                       const domain = PLAYER_DOMAINS[p.name];
                       return (
-                        <div key={p.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "3px 0" }}>
-                          <div style={{ width: 14, height: 14, borderRadius: 3, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        <div key={p.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "4px 0" }}>
+                          <div style={{ width: 16, height: 16, borderRadius: 3, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                             {domain ? (
-                              <img src={`https://logo.clearbit.com/${domain}`} alt="" style={{ width: 10, height: 10, borderRadius: 2 }} onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                              <img src={`https://logo.clearbit.com/${domain}`} alt="" style={{ width: 12, height: 12, borderRadius: 2 }} onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
                             ) : (
-                              <span style={{ fontSize: 7, color: "#555" }}>{p.name.charAt(0)}</span>
+                              <span style={{ fontSize: 8, color: "#706a60" }}>{p.name.charAt(0)}</span>
                             )}
                           </div>
-                          <span style={{ fontSize: 10, color: "rgb(160, 152, 136)" }}>{p.name}</span>
-                          <span style={{ fontSize: 8, color: "#4a4540", fontFamily: "'Geist Mono', monospace" }}>— {p.layer}</span>
+                          <span style={{ fontSize: 11, color: "rgb(160, 152, 136)" }}>{p.name}</span>
+                          <span style={{ fontSize: 9, color: "#706a60" }}>— {p.layer}</span>
                         </div>
                       );
                     })}
