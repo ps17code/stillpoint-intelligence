@@ -2182,7 +2182,7 @@ export default function TreeView() {
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         return (
-          <>
+          <div style={{ padding: 15, border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5 }}>
             <p style={{ fontSize: 8, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 4px 0", fontFamily: "'Geist Mono', monospace" }}>Supply Tree</p>
             <AISupplyTree
               highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : undefined}
@@ -2208,7 +2208,7 @@ export default function TreeView() {
                 if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); }
               }}
             />
-          </>
+          </div>
         );
       }
 
@@ -2785,7 +2785,7 @@ export default function TreeView() {
             {(() => {
               const metrics = lastEntry ? INPUT_METRICS[lastEntry.id] : null;
               return (
-                <div style={{ display: "grid", gridTemplateColumns: metrics ? ".9fr 1fr" : "1fr", gap: 24, marginBottom: 14 }}>
+                <div style={{ display: "grid", gridTemplateColumns: metrics ? ".9fr 1fr" : "1fr", gap: 24, marginBottom: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 60 : 14 }}>
                   {/* Left column — title + description */}
                   <div>
                     <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
@@ -2832,10 +2832,7 @@ export default function TreeView() {
                 </div>
               );
             })()}
-            {/* Tabs — hidden on AI infra vertical tree, but keep divider */}
-            {currentVertical?.id === "ai" && currentLevel === "subsystems" && (
-              <div style={{ height: 1, background: borderColor }} />
-            )}
+            {/* Tabs — hidden on AI infra vertical tree */}
             <div style={{ display: currentVertical?.id === "ai" && currentLevel === "subsystems" ? "none" : "flex", gap: 0, borderBottom: `1px solid ${borderColor}` }}>
               {["Supply Tree", "Map", "Dependencies", "Analysis", "Investment Ideas"].map((tab, ti) => {
                 const tabId = tab.toLowerCase().replace(/\s+/g, "-");
