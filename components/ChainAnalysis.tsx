@@ -142,8 +142,8 @@ export default function ChainAnalysis() {
 /** Key takeaways for the featured chain — rendered in the right panel (without last point) */
 export const CHAIN_TAKEAWAYS = [
   "The chokepoint is GeCl₄ refining, not germanium ore. Umicore's Belgian facility is the only commercial-scale Western supplier — a single point of failure between mineral supply and AI fiber demand.",
-  "Capital cannot close the gap on AI's timeline. Every layer of the chain — recovery, refining, preform manufacturing — has multi-year expansion cycles, and demand is growing faster than capacity can be added.",
-  "China holds asymmetric escalation leverage. It controls 60%+ of both germanium and GeCl₄ supply and has already shown willingness to weaponize that position through targeted export controls.",
+  "Capital cannot close the gap on AI's timeline. Recovery, refining, and preform manufacturing all have multi-year expansion cycles, and demand is growing faster than capacity can be added.",
+  "China holds asymmetric escalation leverage. Controls 60%+ of both germanium and GeCl₄ supply and has weaponized that position through targeted export controls.",
 ];
 
 /** Key players for the featured chain */
