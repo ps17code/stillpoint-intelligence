@@ -452,9 +452,13 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
                     const ca = connectedSubNodes.has(a) ? 0 : 1;
                     const cb = connectedSubNodes.has(b) ? 0 : 1;
                     return ca - cb;
-                  }).map((n, i) => (
-                    <NCard key={n} name={n} animate={animatingGroup === expandedGroup} animIndex={i} />
-                  ))}
+                  }).map((n, i) => {
+                    const isChain = highlightedChainNodes?.has(n);
+                    const chainOn = highlightedChainNodes && highlightedChainNodes.size > 0;
+                    // Don't animate non-chain nodes when chain is active — animation overrides dimmed opacity
+                    const shouldAnimate = animatingGroup === expandedGroup && (!chainOn || isChain);
+                    return <NCard key={n} name={n} animate={shouldAnimate} animIndex={i} />;
+                  })}
                 </>
               )}
             </>
