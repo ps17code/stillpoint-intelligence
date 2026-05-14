@@ -2,7 +2,7 @@
 import React, { useState, useMemo, useCallback, useRef } from "react";
 import HorizontalTree from "@/components/HorizontalTree";
 import AISupplyTree from "@/components/AISupplyTree";
-import ChainAnalysis from "@/components/ChainAnalysis";
+import ChainAnalysis, { CHAIN_TAKEAWAYS } from "@/components/ChainAnalysis";
 import Globe from "@/components/Globe";
 import type { GlobeHandle } from "@/components/Globe";
 import NodeMap from "@/components/NodeMap";
@@ -3429,8 +3429,30 @@ export default function TreeView() {
                         <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#fff", textTransform: "uppercase" as const, margin: 0, fontFamily: "'Geist Mono', monospace" }}>Featured Chain</p>
                       </div>
                       {renderFeaturedChainCard(chain)}
-                      {/* Sub-node summary below the card */}
-                      {selectedTreeNode && renderSubNodeSummary(selectedTreeNode, { chainMode: true, chainStatusColor: (STATUS_PILL[chain.status] ?? STATUS_PILL.structural).color })}
+                      {/* Sub-node summary or key takeaways below the card */}
+                      {selectedTreeNode ? (
+                        renderSubNodeSummary(selectedTreeNode, { chainMode: true, chainStatusColor: (STATUS_PILL[chain.status] ?? STATUS_PILL.structural).color })
+                      ) : (
+                        <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
+                          <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>Key Takeaways</p>
+                          {CHAIN_TAKEAWAYS.map((t, i) => {
+                            const isLast = i === CHAIN_TAKEAWAYS.length - 1;
+                            if (isLast) {
+                              return (
+                                <div key={i} style={{ borderLeft: "2px solid #fff", paddingLeft: 10, marginTop: 4 }}>
+                                  <p style={{ fontSize: 11, color: "#fff", lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>{t}</p>
+                                </div>
+                              );
+                            }
+                            return (
+                              <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                                <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
+                                <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{t}</p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
                   );
                 }
