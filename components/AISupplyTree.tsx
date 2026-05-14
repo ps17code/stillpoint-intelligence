@@ -309,7 +309,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     const isConnected = selectedNode != null && connectedSubNodes.has(name);
     const isChainNode = highlightedChainNodes?.has(name);
     const chainActive = highlightedChainNodes && highlightedChainNodes.size > 0;
-    const chainDimmed = chainActive && !isChainNode && !isSelected;
+    const chainDimmed = chainActive && !isChainNode && !isSelected && !bright;
     const bg = isSelected ? "rgb(88, 86, 84)" : isChainNode ? "rgb(48, 36, 28)" : isConnected ? "rgb(55, 52, 48)" : bright ? "rgb(40, 37, 34)" : "rgb(34, 31, 29)";
     const border = isSelected ? "rgb(100, 98, 96)" : isChainNode ? "rgb(140, 90, 50)" : isConnected ? "rgb(75, 70, 65)" : bright ? "rgb(50, 46, 42)" : "rgb(42, 39, 37)";
 
