@@ -64,12 +64,23 @@ function buildGroupLinks(
   return links;
 }
 
+// Company nodes shown when a chain-highlighted node is drilled into
+const CHAIN_NODE_COMPANIES: Record<string, string[]> = {
+  "Germanium": ["Yunnan Chihong", "STL / Gécamines", "Umicore"],
+  "Germanium Tetrachloride (GeCl4)": ["Umicore", "Yunnan Chihong", "5N Plus"],
+  "Fiber Optic Cable": ["Corning", "Prysmian", "YOFC"],
+  "Connectivity": ["Arista", "Cisco", "Broadcom"],
+  "AI Datacenter": ["Microsoft", "Google", "Amazon"],
+};
+
 export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToInput, highlightedChainNodes }: AISupplyTreeProps) {
   const [expandedRawCat, setExpandedRawCat] = useState<string | null>(null);
   const [expandedIntGroup, setExpandedIntGroup] = useState<string | null>(null);
   const [expandedCompGroup, setExpandedCompGroup] = useState<string | null>(null);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [animatingGroup, setAnimatingGroup] = useState<string | null>(null);
+  // When a chain-highlighted node is clicked, drill down to show company nodes
+  const [drilldownNode, setDrilldownNode] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
   const [lines, setLines] = useState<{ d: string; fromName: string; toName: string }[]>([]);
@@ -87,6 +98,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
       setExpandedIntGroup(null);
       setExpandedCompGroup(null);
       setAnimatingGroup(null);
+      setDrilldownNode(null);
       return;
     }
     // Find which group in each column contains a chain node and expand it
@@ -305,9 +317,12 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
       <div
         ref={el => { if (el) cardRefs.current.set(name, el); }}
         onClick={() => {
+          // If this is a chain-highlighted node, toggle drilldown
+          if (isChainNode && CHAIN_NODE_COMPANIES[name]) {
+            setDrilldownNode(prev => prev === name ? null : name);
+          }
           setSelectedNode(prev => {
             if (prev === name) {
-              // Deselecting — revert to group summary
               onNodeClick?.("");
               return null;
             }
@@ -419,14 +434,29 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
         <div style={{ maxHeight: "calc(100vh - 280px)", overflowY: "auto", paddingRight: 4, display: "flex", flexDirection: "column", gap: 2 }}>
           {expandedGroup ? (
             <>
-              <p style={{ fontSize: 8, color: "#706a60", margin: "0 0 4px 0", fontWeight: 500, fontFamily: "'EB Garamond', Georgia, serif" }}>{groups[expandedGroup]?.name}</p>
-              {[...(groups[expandedGroup]?.nodes ?? [])].sort((a, b) => {
-                const ca = connectedSubNodes.has(a) ? 0 : 1;
-                const cb = connectedSubNodes.has(b) ? 0 : 1;
-                return ca - cb;
-              }).map((n, i) => (
-                <NCard key={n} name={n} bright animate={animatingGroup === expandedGroup} animIndex={i} />
-              ))}
+              {/* Check if a drilldown node is in this group */}
+              {drilldownNode && (groups[expandedGroup]?.nodes ?? []).includes(drilldownNode) ? (
+                <>
+                  <NCard name={drilldownNode} bright />
+                  <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "4px 0" }} />
+                  {(CHAIN_NODE_COMPANIES[drilldownNode] ?? []).map((company, ci) => (
+                    <div key={company} style={{ animation: `subNodeFadeUp 400ms ease-out ${ci * 40}ms both` }}>
+                      <NCard name={company} bright />
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <>
+                  <p style={{ fontSize: 8, color: "#706a60", margin: "0 0 4px 0", fontWeight: 500, fontFamily: "'EB Garamond', Georgia, serif" }}>{groups[expandedGroup]?.name}</p>
+                  {[...(groups[expandedGroup]?.nodes ?? [])].sort((a, b) => {
+                    const ca = connectedSubNodes.has(a) ? 0 : 1;
+                    const cb = connectedSubNodes.has(b) ? 0 : 1;
+                    return ca - cb;
+                  }).map((n, i) => (
+                    <NCard key={n} name={n} bright animate={animatingGroup === expandedGroup} animIndex={i} />
+                  ))}
+                </>
+              )}
             </>
           ) : (
             sortedKeys.map(gk => {
@@ -451,8 +481,11 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
     );
   }
 
-  // Simple column — connected nodes sorted to top
+  // Simple column — connected nodes sorted to top, with drilldown support
   function SimpleColumn({ layer }: { layer: { key: string; label: string; nodes: string[] } }) {
+    // Check if a drilldown node is in this column
+    const drilldownInColumn = drilldownNode && layer.nodes.includes(drilldownNode);
+
     const sorted = [...layer.nodes].sort((a, b) => {
       const ca = reachableNodes.has(a) ? 0 : 1;
       const cb = reachableNodes.has(b) ? 0 : 1;
@@ -462,7 +495,19 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
       <div style={{ minWidth: 140, maxWidth: 170, flexShrink: 0 }}>
         <p style={{ fontSize: 6, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{layer.label} · {layer.nodes.length}</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-          {sorted.map(n => <NCard key={n} name={n} />)}
+          {drilldownInColumn ? (
+            <>
+              <NCard name={drilldownNode!} />
+              <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "2px 0" }} />
+              {(CHAIN_NODE_COMPANIES[drilldownNode!] ?? []).map((company, ci) => (
+                <div key={company} style={{ animation: `subNodeFadeUp 400ms ease-out ${ci * 40}ms both` }}>
+                  <NCard name={company} bright />
+                </div>
+              ))}
+            </>
+          ) : (
+            sorted.map(n => <NCard key={n} name={n} />)
+          )}
         </div>
       </div>
     );
@@ -495,27 +540,6 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
             );
           })}
         </svg>
-      )}
-
-      {/* Navigate button — bottom right when an input node is selected */}
-      {selectedNode && INPUT_NODES.has(selectedNode) && (
-        <div style={{ position: "absolute", bottom: 8, right: 8, zIndex: 10 }}>
-          <button
-            onClick={() => onNavigateToInput?.(selectedNode)}
-            style={{
-              background: "rgb(60, 58, 56)", border: "1px solid rgb(80, 78, 76)",
-              borderRadius: 6, padding: "8px 16px", cursor: "pointer",
-              fontSize: 10, color: "#ece8e1", fontFamily: "'Geist Mono', monospace",
-              display: "flex", alignItems: "center", gap: 6,
-              transition: "background 0.15s",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = "rgb(75, 73, 71)"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = "rgb(60, 58, 56)"; }}
-          >
-            View {selectedNode} supply tree <span style={{ color: "#a09888" }}>&rarr;</span>
-          </button>
-        </div>
       )}
 
       <style>{`
