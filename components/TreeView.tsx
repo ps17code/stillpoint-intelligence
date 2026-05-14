@@ -3434,17 +3434,50 @@ export default function TreeView() {
               };
 
               const renderSubNodeSummary = (nodeName: string, opts?: { chainMode?: boolean; chainStatusColor?: string }) => {
-                const uNode = universalNodes[nodeName] as unknown as { ai_summary?: string[] | Record<string, string>; ai_key_players?: string[] } | undefined;
+                const uNode = universalNodes[nodeName] as unknown as { ai_summary?: string[] | Record<string, string>; ai_key_players?: string[]; quantity_pill?: string; stats?: [string, string][] } | undefined;
                 if (!uNode?.ai_summary) return null;
                 const allBullets = Array.isArray(uNode.ai_summary) ? uNode.ai_summary : null;
                 if (!allBullets) return null;
                 const isChainMode = opts?.chainMode;
                 const bullets = allBullets.slice(0, -1);
                 const keyPlayers = (uNode.ai_key_players ?? []).slice(0, 4).map(p => ({ name: p, layer: (universalNodes[nodeName] as unknown as { layer?: string })?.layer ?? "" }));
+
+                // Pull price + supply metrics from known inputs or node stats
+                const inputPriceMap: Record<string, { price: string; change: string; supply: string }> = {
+                  "Germanium": { price: "$8,500/kg", change: "+166%", supply: "~230 t/yr" },
+                  "Gallium": { price: "$2,269/kg", change: "+177%", supply: "~320 t/yr" },
+                  "Fiber Optic Cable": { price: "48 RMB/km", change: "+140%", supply: "~720M km/yr" },
+                  "Germanium Tetrachloride (GeCl4)": { price: "~$300/kg", change: "+200%", supply: "~500 t/yr" },
+                };
+                const metrics = inputPriceMap[nodeName];
+                const qtyPill = uNode.quantity_pill;
+
                 return (
                   <>
                     <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
-                      <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>{nodeName}</p>
+                      <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 2px 0" }}>{nodeName}</p>
+                      {/* Metrics row */}
+                      {(metrics || qtyPill) && (
+                        <div style={{ display: "flex", gap: 12, marginBottom: 4 }}>
+                          {metrics ? (
+                            <>
+                              <div>
+                                <p style={{ fontSize: 7, color: "#4a4540", margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Price</p>
+                                <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{metrics.price} <span style={{ fontSize: 8, color: amber }}>{metrics.change}</span></p>
+                              </div>
+                              <div>
+                                <p style={{ fontSize: 7, color: "#4a4540", margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Supply</p>
+                                <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{metrics.supply}</p>
+                              </div>
+                            </>
+                          ) : qtyPill ? (
+                            <div>
+                              <p style={{ fontSize: 7, color: "#4a4540", margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Output</p>
+                              <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{qtyPill}</p>
+                            </div>
+                          ) : null}
+                        </div>
+                      )}
                       {bullets.map((bullet, i) => (
                         <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
                           <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />

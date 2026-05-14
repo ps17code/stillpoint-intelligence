@@ -41,7 +41,6 @@ export default function ChainAnalysis() {
                 borderBottom: isActive ? `1.5px solid ${warmWhite}` : "1.5px solid transparent",
                 transition: "color 0.15s, border-color 0.15s",
                 marginBottom: -1,
-                fontFamily: "'Geist Mono', monospace",
                 letterSpacing: "0.02em",
               }}
               onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = muted; }}
@@ -61,17 +60,17 @@ export default function ChainAnalysis() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
             {/* Column 1: Header + Table */}
             <div>
-              <p style={{ fontSize: 13, color: warmWhite, fontWeight: 400, margin: "0 0 6px 0", fontFamily: "'Instrument Serif', serif" }}>
+              <p style={{ fontSize: 13, color: warmWhite, fontWeight: 400, margin: "10px 0 10px 0" }}>
                 How much supply do we need and why can't we fill the gap?
               </p>
-              <p style={{ fontSize: 11, color: muted, lineHeight: 1.6, margin: "0 0 16px 0" }}>
+              <p style={{ fontSize: 11, color: muted, lineHeight: 1.6, margin: "0 0 20px 0" }}>
                 All three layers face structural deficits by 2030 — germanium and GeCl₄ are severely constrained, fiber is tight but expandable.
               </p>
 
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                   <tr>
-                    {["", "Supply 2030E", "Demand 2030E", "Gap"].map((h, i) => (
+                    {["Layer", "Supply 2030E", "Demand 2030E", "Gap"].map((h, i) => (
                       <th key={i} style={{ textAlign: i === 0 ? "left" : "right", padding: i === 0 ? "0 8px 8px 0" : "0 8px 8px", fontSize: 7, letterSpacing: "0.08em", color: dimmer, fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", borderBottom: `1px solid ${border}` }}>{h}</th>
                     ))}
                   </tr>
