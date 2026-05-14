@@ -55,7 +55,7 @@ export default function ChainAnalysis() {
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr>
-                  {["", "Supply 2030E", "Demand 2030E", "Gap", "Elasticity"].map((h, i) => (
+                  {["", "Supply 2030E", "Demand 2030E", "Gap"].map((h, i) => (
                     <th key={i} style={{ textAlign: i === 0 ? "left" : "right", padding: i === 0 ? "0 8px 8px 0" : "0 8px 8px", fontSize: 7, letterSpacing: "0.08em", color: dimmer, fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", borderBottom: `1px solid ${border}` }}>{h}</th>
                   ))}
                 </tr>
@@ -70,8 +70,7 @@ export default function ChainAnalysis() {
                     <td style={{ padding: "8px 8px 8px 0", fontSize: 10, color: warmWhite, fontWeight: 500, borderBottom: `1px solid ${border}` }}>{row.name}</td>
                     <td style={{ padding: "8px", fontSize: 10, color: muted, textAlign: "right", fontFamily: "'Geist Mono', monospace", borderBottom: `1px solid ${border}` }}>{row.supply}</td>
                     <td style={{ padding: "8px", fontSize: 10, color: row.severe ? amber : muted, textAlign: "right", fontFamily: "'Geist Mono', monospace", fontWeight: row.severe ? 500 : 400, borderBottom: `1px solid ${border}` }}>{row.demand}</td>
-                    <td style={{ padding: "8px", fontSize: 10, color: row.severe ? amber : "rgba(255,255,255,0.5)", textAlign: "right", fontFamily: "'Geist Mono', monospace", fontWeight: 500, borderBottom: `1px solid ${border}` }}>{row.gap}</td>
-                    <td style={{ padding: "8px 0 8px 8px", borderBottom: `1px solid ${border}` }}><ElasticityCell level={row.elasticity} /></td>
+                    <td style={{ padding: "8px 0 8px 8px", fontSize: 10, color: row.severe ? amber : "rgba(255,255,255,0.5)", textAlign: "right", fontFamily: "'Geist Mono', monospace", fontWeight: 500, borderBottom: `1px solid ${border}` }}>{row.gap}</td>
                   </tr>
                 ))}
               </tbody>
@@ -83,7 +82,7 @@ export default function ChainAnalysis() {
         <div>
           <p style={{ fontSize: 8, letterSpacing: "0.12em", color: dimmer, textTransform: "uppercase", margin: "0 0 16px 0", fontFamily: "'Geist Mono', monospace" }}>Constraint Analysis</p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             {/* Card 1: Germanium */}
             <div style={{ background: cardBg, borderRadius: 4, padding: 12 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
@@ -154,10 +153,10 @@ export default function ChainAnalysis() {
               "China holds asymmetric escalation leverage. It controls 60%+ of both germanium and GeCl₄ supply and has already shown willingness to weaponize that position through targeted export controls.",
               "The investable thesis is unusually clean. Umicore is the pure-play on the chokepoint, with 5N Plus and the major fiber manufacturers as secondary positions on the same constraint.",
             ].map((insight, i) => (
-              <div key={i} style={{ padding: "14px 0", borderBottom: i < 3 ? `1px solid ${border}` : "none" }}>
+              <div key={i} style={{ paddingTop: 10, borderBottom: i < 3 ? `1px solid ${border}` : "none", paddingBottom: i < 3 ? 10 : 0 }}>
                 <div style={{ display: "flex", gap: 10, alignItems: "baseline" }}>
                   <span style={{ fontSize: 10, color: dimmer, fontFamily: "'Geist Mono', monospace", flexShrink: 0, minWidth: 14 }}>{String(i + 1).padStart(2, "0")}</span>
-                  <p style={{ fontSize: 11, color: i === 3 ? warmWhite : "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0, fontWeight: i === 3 ? 500 : 400 }}>{insight}</p>
+                  <p style={{ fontSize: 10, color: i === 3 ? warmWhite : "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0, fontWeight: i === 3 ? 500 : 400 }}>{insight}</p>
                 </div>
               </div>
             ))}
