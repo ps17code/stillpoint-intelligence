@@ -2,7 +2,7 @@
 import React, { useState, useMemo, useCallback, useRef } from "react";
 import HorizontalTree from "@/components/HorizontalTree";
 import AISupplyTree from "@/components/AISupplyTree";
-import ChainAnalysis, { CHAIN_TAKEAWAYS } from "@/components/ChainAnalysis";
+import ChainAnalysis, { CHAIN_TAKEAWAYS, CHAIN_KEY_PLAYERS } from "@/components/ChainAnalysis";
 import Globe from "@/components/Globe";
 import type { GlobeHandle } from "@/components/Globe";
 import NodeMap from "@/components/NodeMap";
@@ -3396,31 +3396,45 @@ export default function TreeView() {
               // Helper: render sub-node summary bullets
               // chainStatusColor: when rendered inside a featured chain, use the chain's status color for takeaway border
               const renderSubNodeSummary = (nodeName: string, opts?: { chainMode?: boolean; chainStatusColor?: string }) => {
-                const uNode = universalNodes[nodeName] as unknown as { ai_summary?: string[] | Record<string, string> } | undefined;
+                const uNode = universalNodes[nodeName] as unknown as { ai_summary?: string[] | Record<string, string>; ai_key_players?: string[] } | undefined;
                 if (!uNode?.ai_summary) return null;
-                const bullets = Array.isArray(uNode.ai_summary) ? uNode.ai_summary : null;
-                if (!bullets) return null;
+                const allBullets = Array.isArray(uNode.ai_summary) ? uNode.ai_summary : null;
+                if (!allBullets) return null;
                 const isChainMode = opts?.chainMode;
-                const takeawayColor = opts?.chainStatusColor ?? "#fff";
+                // Remove last bullet (was the takeaway)
+                const bullets = allBullets.slice(0, -1);
+                const keyPlayers = uNode.ai_key_players ?? [];
                 return (
                   <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
                     <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>{nodeName}</p>
-                    {bullets.map((bullet, i) => {
-                      const isLast = i === bullets.length - 1;
-                      if (isLast) {
-                        return (
-                          <div key={i} style={{ borderLeft: `2px solid ${takeawayColor}`, paddingLeft: 10, marginTop: 4 }}>
-                            <p style={{ fontSize: 11, color: takeawayColor, lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>{bullet}</p>
-                          </div>
-                        );
-                      }
-                      return (
-                        <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
-                          <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
-                        </div>
-                      );
-                    })}
+                    {bullets.map((bullet, i) => (
+                      <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                        <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
+                        <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
+                      </div>
+                    ))}
+                    {/* Key Players */}
+                    {keyPlayers.length > 0 && (
+                      <div style={{ marginTop: 4, paddingTop: 6, borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+                        <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 4px 0", fontFamily: "'Geist Mono', monospace" }}>Key Players</p>
+                        {keyPlayers.slice(0, 4).map(player => {
+                          const DOMAINS: Record<string, string> = { "Umicore": "umicore.com", "5N Plus": "5nplus.com", "Corning": "corning.com", "Prysmian": "prysmian.com", "YOFC": "yofc.com", "Yunnan Chihong": "", "Dowa": "dowa.co.jp", "AXT": "axt.com", "Korea Zinc": "koreazinc.co.kr", "Nyrstar": "nyrstar.com", "Teck Resources": "teck.com", "MP Materials": "mpmaterials.com", "Lynas": "lynasrareearths.com", "Shenghe": "", "Bloom Energy": "bloomenergy.com", "TSMC": "tsmc.com", "Samsung": "samsung.com", "SK Hynix": "skhynix.com", "Nvidia": "nvidia.com", "Broadcom": "broadcom.com", "Ajinomoto": "ajinomoto.com" };
+                          const domain = DOMAINS[player];
+                          return (
+                            <div key={player} style={{ display: "flex", alignItems: "center", gap: 6, padding: "3px 0" }}>
+                              <div style={{ width: 14, height: 14, borderRadius: 3, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                                {domain ? (
+                                  <img src={`https://logo.clearbit.com/${domain}`} alt="" style={{ width: 10, height: 10, borderRadius: 2 }} onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                                ) : (
+                                  <span style={{ fontSize: 7, color: "#555" }}>{player.charAt(0)}</span>
+                                )}
+                              </div>
+                              <span style={{ fontSize: 10, color: "rgb(160, 152, 136)" }}>{player}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 );
               };
@@ -3442,23 +3456,32 @@ export default function TreeView() {
                       ) : (
                         <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
                           <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>Key Takeaways</p>
-                          {CHAIN_TAKEAWAYS.map((t, i) => {
-                            const isLast = i === CHAIN_TAKEAWAYS.length - 1;
-                            const statusColor = (STATUS_PILL[chain.status] ?? STATUS_PILL.structural).color;
-                            if (isLast) {
+                          {CHAIN_TAKEAWAYS.map((t, i) => (
+                            <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                              <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
+                              <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{t}</p>
+                            </div>
+                          ))}
+                          {/* Key Players */}
+                          <div style={{ marginTop: 4, paddingTop: 6, borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+                            <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 4px 0", fontFamily: "'Geist Mono', monospace" }}>Key Players</p>
+                            {CHAIN_KEY_PLAYERS.map(player => {
+                              const DOMAINS: Record<string, string> = { "Umicore": "umicore.com", "5N Plus": "5nplus.com", "Corning": "corning.com", "Yunnan Chihong": "" };
+                              const domain = DOMAINS[player];
                               return (
-                                <div key={i} style={{ borderLeft: `2px solid ${statusColor}`, paddingLeft: 10, marginTop: 4 }}>
-                                  <p style={{ fontSize: 11, color: statusColor, lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>{t}</p>
+                                <div key={player} style={{ display: "flex", alignItems: "center", gap: 6, padding: "3px 0" }}>
+                                  <div style={{ width: 14, height: 14, borderRadius: 3, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                                    {domain ? (
+                                      <img src={`https://logo.clearbit.com/${domain}`} alt="" style={{ width: 10, height: 10, borderRadius: 2 }} onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                                    ) : (
+                                      <span style={{ fontSize: 7, color: "#555" }}>{player.charAt(0)}</span>
+                                    )}
+                                  </div>
+                                  <span style={{ fontSize: 10, color: "rgb(160, 152, 136)" }}>{player}</span>
                                 </div>
                               );
-                            }
-                            return (
-                              <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                                <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
-                                <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{t}</p>
-                              </div>
-                            );
-                          })}
+                            })}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -3521,32 +3544,12 @@ export default function TreeView() {
 
               // Sub-node with ai_summary selected on AI tree
               if (selectedTreeNode && currentVertical?.id === "ai" && currentLevel === "subsystems") {
-                const uNode = universalNodes[selectedTreeNode] as unknown as { ai_summary?: string[] | Record<string, string> } | undefined;
+                const uNode = universalNodes[selectedTreeNode] as unknown as { ai_summary?: string[] | Record<string, string>; ai_key_players?: string[] } | undefined;
                 if (uNode?.ai_summary) {
-                  // Handle both formats: string[] (bullet array) and Record<string,string> (object)
-                  const bullets = Array.isArray(uNode.ai_summary) ? uNode.ai_summary : null;
-                  if (bullets) {
-                    return (
-                      <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
-                        <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>{selectedTreeNode}</p>
-                        {bullets.map((bullet, i) => {
-                          const isLast = i === bullets.length - 1;
-                          if (isLast) {
-                            return (
-                              <div key={i} style={{ borderLeft: "2px solid #fff", paddingLeft: 10, marginTop: 4 }}>
-                                <p style={{ fontSize: 11, color: "#fff", lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>{bullet}</p>
-                              </div>
-                            );
-                          }
-                          return (
-                            <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                              <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
-                              <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    );
+                  const allBullets = Array.isArray(uNode.ai_summary) ? uNode.ai_summary : null;
+                  if (allBullets) {
+                    // Use renderSubNodeSummary for consistency (removes last bullet, adds key players)
+                    return renderSubNodeSummary(selectedTreeNode) ?? null;
                   }
                   // Fallback: old object format
                   const obj = uNode.ai_summary as Record<string, string>;
