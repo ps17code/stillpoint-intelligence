@@ -2183,6 +2183,7 @@ export default function TreeView() {
       if (currentVertical?.id === "ai") {
         return (
           <>
+            <p style={{ fontSize: 8, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 4px 0", fontFamily: "'Geist Mono', monospace" }}>Supply Tree</p>
             <AISupplyTree
               highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : undefined}
               onNodeClick={(name) => {
@@ -3084,7 +3085,7 @@ export default function TreeView() {
 
           {/* Chain Analysis section — shown when featured chain is selected on AI tree */}
           {selectedFeaturedChain === "germanium_chokepoint" && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
-            <div style={{ flexShrink: 0, padding: "0 30px 20px" }}>
+            <div style={{ flexShrink: 0, padding: "30px 30px 20px" }}>
               <ChainAnalysis />
             </div>
           )}
