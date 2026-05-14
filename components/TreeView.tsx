@@ -3395,47 +3395,55 @@ export default function TreeView() {
 
               // Helper: render sub-node summary bullets
               // chainStatusColor: when rendered inside a featured chain, use the chain's status color for takeaway border
+              const PLAYER_DOMAINS: Record<string, string> = { "Umicore": "umicore.com", "5N Plus": "5nplus.com", "Corning": "corning.com", "Prysmian": "prysmian.com", "YOFC": "yofc.com", "Yunnan Chihong": "", "Dowa": "dowa.co.jp", "AXT": "axt.com", "Korea Zinc": "koreazinc.co.kr", "Nyrstar": "nyrstar.com", "Teck Resources": "teck.com", "MP Materials": "mpmaterials.com", "Lynas": "lynasrareearths.com", "Shenghe": "", "Bloom Energy": "bloomenergy.com", "TSMC": "tsmc.com", "Samsung": "samsung.com", "SK Hynix": "skhynix.com", "Nvidia": "nvidia.com", "Broadcom": "broadcom.com", "Ajinomoto": "ajinomoto.com" };
+
+              // Render a key players card
+              const renderKeyPlayersCard = (players: { name: string; layer: string }[], isChainMode?: boolean) => {
+                if (players.length === 0) return null;
+                return (
+                  <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                    <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>Key Players</p>
+                    {players.map(p => {
+                      const domain = PLAYER_DOMAINS[p.name];
+                      return (
+                        <div key={p.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "3px 0" }}>
+                          <div style={{ width: 14, height: 14, borderRadius: 3, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                            {domain ? (
+                              <img src={`https://logo.clearbit.com/${domain}`} alt="" style={{ width: 10, height: 10, borderRadius: 2 }} onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                            ) : (
+                              <span style={{ fontSize: 7, color: "#555" }}>{p.name.charAt(0)}</span>
+                            )}
+                          </div>
+                          <span style={{ fontSize: 10, color: "rgb(160, 152, 136)" }}>{p.name}</span>
+                          <span style={{ fontSize: 8, color: "#4a4540", fontFamily: "'Geist Mono', monospace" }}>— {p.layer}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              };
+
               const renderSubNodeSummary = (nodeName: string, opts?: { chainMode?: boolean; chainStatusColor?: string }) => {
                 const uNode = universalNodes[nodeName] as unknown as { ai_summary?: string[] | Record<string, string>; ai_key_players?: string[] } | undefined;
                 if (!uNode?.ai_summary) return null;
                 const allBullets = Array.isArray(uNode.ai_summary) ? uNode.ai_summary : null;
                 if (!allBullets) return null;
                 const isChainMode = opts?.chainMode;
-                // Remove last bullet (was the takeaway)
                 const bullets = allBullets.slice(0, -1);
-                const keyPlayers = uNode.ai_key_players ?? [];
+                const keyPlayers = (uNode.ai_key_players ?? []).slice(0, 4).map(p => ({ name: p, layer: (universalNodes[nodeName] as unknown as { layer?: string })?.layer ?? "" }));
                 return (
-                  <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
-                    <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>{nodeName}</p>
-                    {bullets.map((bullet, i) => (
-                      <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                        <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
-                        <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
-                      </div>
-                    ))}
-                    {/* Key Players */}
-                    {keyPlayers.length > 0 && (
-                      <div style={{ marginTop: 4, paddingTop: 6, borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-                        <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 4px 0", fontFamily: "'Geist Mono', monospace" }}>Key Players</p>
-                        {keyPlayers.slice(0, 4).map(player => {
-                          const DOMAINS: Record<string, string> = { "Umicore": "umicore.com", "5N Plus": "5nplus.com", "Corning": "corning.com", "Prysmian": "prysmian.com", "YOFC": "yofc.com", "Yunnan Chihong": "", "Dowa": "dowa.co.jp", "AXT": "axt.com", "Korea Zinc": "koreazinc.co.kr", "Nyrstar": "nyrstar.com", "Teck Resources": "teck.com", "MP Materials": "mpmaterials.com", "Lynas": "lynasrareearths.com", "Shenghe": "", "Bloom Energy": "bloomenergy.com", "TSMC": "tsmc.com", "Samsung": "samsung.com", "SK Hynix": "skhynix.com", "Nvidia": "nvidia.com", "Broadcom": "broadcom.com", "Ajinomoto": "ajinomoto.com" };
-                          const domain = DOMAINS[player];
-                          return (
-                            <div key={player} style={{ display: "flex", alignItems: "center", gap: 6, padding: "3px 0" }}>
-                              <div style={{ width: 14, height: 14, borderRadius: 3, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                                {domain ? (
-                                  <img src={`https://logo.clearbit.com/${domain}`} alt="" style={{ width: 10, height: 10, borderRadius: 2 }} onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
-                                ) : (
-                                  <span style={{ fontSize: 7, color: "#555" }}>{player.charAt(0)}</span>
-                                )}
-                              </div>
-                              <span style={{ fontSize: 10, color: "rgb(160, 152, 136)" }}>{player}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
+                  <>
+                    <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
+                      <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>{nodeName}</p>
+                      {bullets.map((bullet, i) => (
+                        <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
+                          <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{bullet}</p>
+                        </div>
+                      ))}
+                    </div>
+                    {renderKeyPlayersCard(keyPlayers, isChainMode)}
+                  </>
                 );
               };
 
@@ -3462,27 +3470,13 @@ export default function TreeView() {
                               <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{t}</p>
                             </div>
                           ))}
-                          {/* Key Players */}
-                          <div style={{ marginTop: 4, paddingTop: 6, borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-                            <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "#4a4540", textTransform: "uppercase" as const, margin: "0 0 4px 0", fontFamily: "'Geist Mono', monospace" }}>Key Players</p>
-                            {CHAIN_KEY_PLAYERS.map(player => {
-                              const DOMAINS: Record<string, string> = { "Umicore": "umicore.com", "5N Plus": "5nplus.com", "Corning": "corning.com", "Yunnan Chihong": "" };
-                              const domain = DOMAINS[player];
-                              return (
-                                <div key={player} style={{ display: "flex", alignItems: "center", gap: 6, padding: "3px 0" }}>
-                                  <div style={{ width: 14, height: 14, borderRadius: 3, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                                    {domain ? (
-                                      <img src={`https://logo.clearbit.com/${domain}`} alt="" style={{ width: 10, height: 10, borderRadius: 2 }} onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
-                                    ) : (
-                                      <span style={{ fontSize: 7, color: "#555" }}>{player.charAt(0)}</span>
-                                    )}
-                                  </div>
-                                  <span style={{ fontSize: 10, color: "rgb(160, 152, 136)" }}>{player}</span>
-                                </div>
-                              );
-                            })}
-                          </div>
                         </div>
+                        {renderKeyPlayersCard([
+                          { name: "Umicore", layer: "GeCl₄ Refining" },
+                          { name: "Yunnan Chihong", layer: "Germanium Mining" },
+                          { name: "Corning", layer: "Fiber Manufacturing" },
+                          { name: "5N Plus", layer: "Germanium Refining" },
+                        ], true)}
                       )}
                     </div>
                   );
