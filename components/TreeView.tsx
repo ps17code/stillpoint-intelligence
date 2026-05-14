@@ -3434,50 +3434,93 @@ export default function TreeView() {
               };
 
               const renderSubNodeSummary = (nodeName: string, opts?: { chainMode?: boolean; chainStatusColor?: string }) => {
-                const uNode = universalNodes[nodeName] as unknown as { ai_summary?: string[] | Record<string, string>; ai_key_players?: string[]; quantity_pill?: string; stats?: [string, string][] } | undefined;
+                const uNode = universalNodes[nodeName] as unknown as { ai_summary?: string[] | Record<string, string>; quantity_pill?: string } | undefined;
                 if (!uNode?.ai_summary) return null;
                 const allBullets = Array.isArray(uNode.ai_summary) ? uNode.ai_summary : null;
                 if (!allBullets) return null;
                 const isChainMode = opts?.chainMode;
                 const bullets = allBullets.slice(0, -1);
-                const keyPlayers = (uNode.ai_key_players ?? []).slice(0, 4).map(p => ({ name: p, layer: (universalNodes[nodeName] as unknown as { layer?: string })?.layer ?? "" }));
 
-                // Pull price + supply metrics from known inputs or node stats
-                const inputPriceMap: Record<string, { price: string; change: string; supply: string }> = {
-                  "Germanium": { price: "$8,500/kg", change: "+166%", supply: "~230 t/yr" },
-                  "Gallium": { price: "$2,269/kg", change: "+177%", supply: "~320 t/yr" },
-                  "Fiber Optic Cable": { price: "48 RMB/km", change: "+140%", supply: "~720M km/yr" },
-                  "Germanium Tetrachloride (GeCl4)": { price: "~$300/kg", change: "+200%", supply: "~500 t/yr" },
+                const inputPriceMap: Record<string, { price: string; change: string; supply: string; inputId: string }> = {
+                  "Germanium": { price: "$8,500/kg", change: "+166%", supply: "~230 t/yr", inputId: "germanium" },
+                  "Gallium": { price: "$2,269/kg", change: "+177%", supply: "~320 t/yr", inputId: "gallium" },
+                  "Fiber Optic Cable": { price: "48 RMB/km", change: "+140%", supply: "~720M km/yr", inputId: "fiber" },
+                  "Germanium Tetrachloride (GeCl4)": { price: "~$300/kg", change: "+200%", supply: "~500 t/yr", inputId: "germanium" },
                 };
                 const metrics = inputPriceMap[nodeName];
                 const qtyPill = uNode.quantity_pill;
+                const priceData = metrics ? INPUT_PRICE_HISTORY[metrics.inputId] : null;
+                const accentColor = opts?.chainStatusColor ?? "#c87a4a";
+
+                // Navigation map for "View X's Page" button
+                const navTargets: Record<string, { label: string; path: PathEntry[] }> = {
+                  "Germanium": { label: "Germanium", path: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }] },
+                  "Gallium": { label: "Gallium", path: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "gallium", name: "Gallium" }] },
+                  "Fiber Optic Cable": { label: "Fiber Optic Cable", path: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }] },
+                };
+                const navTarget = navTargets[nodeName];
 
                 return (
-                  <>
-                    <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
-                      <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 2px 0" }}>{nodeName}</p>
-                      {/* Metrics row */}
-                      {(metrics || qtyPill) && (
-                        <div style={{ display: "flex", gap: 12, marginBottom: 4 }}>
-                          {metrics ? (
-                            <>
-                              <div>
-                                <p style={{ fontSize: 7, color: "#4a4540", margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Price</p>
-                                <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{metrics.price} <span style={{ fontSize: 8, color: "#c87a4a" }}>{metrics.change}</span></p>
-                              </div>
-                              <div>
-                                <p style={{ fontSize: 7, color: "#4a4540", margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Supply</p>
-                                <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{metrics.supply}</p>
-                              </div>
-                            </>
-                          ) : qtyPill ? (
-                            <div>
-                              <p style={{ fontSize: 7, color: "#4a4540", margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Output</p>
-                              <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{qtyPill}</p>
-                            </div>
-                          ) : null}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {/* Node name as external header */}
+                    <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: 0 }}>{nodeName}</p>
+
+                    {/* Price + chart card */}
+                    {metrics && priceData && (
+                      <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
+                          <div>
+                            <span style={{ fontSize: 16, fontWeight: 600, color: warmWhite, fontFamily: "'Geist Mono', monospace" }}>{priceData.currentPrice}</span>
+                            <span style={{ fontSize: 8, color: "#555", marginLeft: 4, fontFamily: "'Geist Mono', monospace" }}>{priceData.unit}</span>
+                          </div>
+                          <span style={{ fontSize: 10, color: accentColor, fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>{priceData.change12m}</span>
                         </div>
-                      )}
+                        {/* Sparkline */}
+                        {(() => {
+                          const W = 200, H = 35, padY = 4;
+                          const min = Math.min(...priceData.points);
+                          const max = Math.max(...priceData.points);
+                          const range = max - min || 1;
+                          const pts = priceData.points.map((v, i) => ({
+                            x: (i / (priceData.points.length - 1)) * W,
+                            y: padY + (1 - (v - min) / range) * (H - padY * 2),
+                          }));
+                          const linePath = pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x},${p.y}`).join(" ");
+                          const areaPath = linePath + ` L ${pts[pts.length - 1].x},${H} L ${pts[0].x},${H} Z`;
+                          return (
+                            <svg width="100%" height={H} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{ display: "block" }}>
+                              <defs>
+                                <linearGradient id="chainPriceGrad" x1="0" y1="0" x2="0" y2="1">
+                                  <stop offset="0%" stopColor={accentColor} stopOpacity="0.2" />
+                                  <stop offset="100%" stopColor={accentColor} stopOpacity="0" />
+                                </linearGradient>
+                              </defs>
+                              <path d={areaPath} fill="url(#chainPriceGrad)" />
+                              <path d={linePath} fill="none" stroke={accentColor} strokeWidth="1.5" />
+                              <circle cx={pts[pts.length - 1].x} cy={pts[pts.length - 1].y} r="2" fill={accentColor} />
+                            </svg>
+                          );
+                        })()}
+                        <div style={{ display: "flex", gap: 16, marginTop: 8 }}>
+                          <div>
+                            <p style={{ fontSize: 7, color: "#4a4540", margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Supply Output</p>
+                            <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{metrics.supply}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Output for non-priced nodes */}
+                    {!metrics && qtyPill && (
+                      <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                        <p style={{ fontSize: 7, color: "#4a4540", margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Output</p>
+                        <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{qtyPill}</p>
+                      </div>
+                    )}
+
+                    {/* Summary card */}
+                    <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
+                      <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 2px 0" }}>Summary</p>
                       {bullets.map((bullet, i) => (
                         <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
                           <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
@@ -3485,8 +3528,30 @@ export default function TreeView() {
                         </div>
                       ))}
                     </div>
-                    {renderKeyPlayersCard(keyPlayers, isChainMode)}
-                  </>
+
+                    {/* Navigate button */}
+                    {navTarget && (
+                      <button
+                        onClick={() => {
+                          setPath(navTarget.path);
+                          setAnimKey(k => k + 1);
+                          setSelectedTreeNode(null);
+                          setSelectedGroup(null);
+                          setSelectedFeaturedChain(null);
+                        }}
+                        style={{
+                          background: "transparent", border: "1px solid rgba(255,255,255,0.1)",
+                          borderRadius: 4, padding: "8px 14px", cursor: "pointer",
+                          fontSize: 10, color: muted, transition: "border-color 0.15s, color 0.15s",
+                          width: "100%",
+                        }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.color = warmWhite; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = muted; }}
+                      >
+                        View {navTarget.label}&apos;s Page →
+                      </button>
+                    )}
+                  </div>
                 );
               };
 
@@ -3512,12 +3577,6 @@ export default function TreeView() {
                         </div>
                       ))}
                     </div>
-                    {renderKeyPlayersCard([
-                      { name: "Umicore", layer: "GeCl₄ Refining" },
-                      { name: "Yunnan Chihong", layer: "Germanium Mining" },
-                      { name: "Corning", layer: "Fiber Manufacturing" },
-                      { name: "5N Plus", layer: "Germanium Refining" },
-                    ], true)}
                   </div>
                 );
               }

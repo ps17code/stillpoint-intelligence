@@ -14,14 +14,21 @@ const PLAYER_DOMAINS: Record<string, string> = {
   "Umicore": "umicore.com", "5N Plus": "5nplus.com", "Corning": "corning.com",
   "Prysmian": "prysmian.com", "YOFC": "yofc.com", "Yunnan Chihong": "",
   "Teck Resources": "teck.com", "STL / Gécamines": "stl.tech", "PPM Pure Metals": "",
-  "Shin-Etsu": "shinetsu.co.jp", "Sumitomo Electric": "sumitomoelectric.com", "Fujikura": "fujikura.co.jp",
+  "Shin-Etsu": "shinetsu.co.jp", "Sumitomo Electric": "sumitomoelectric.com",
+};
+
+const COUNTRY_FLAGS: Record<string, string> = {
+  "Umicore": "be", "5N Plus": "ca", "Corning": "us", "Prysmian": "it",
+  "YOFC": "cn", "Yunnan Chihong": "cn", "Teck Resources": "ca",
+  "STL / Gécamines": "cd", "PPM Pure Metals": "de",
+  "Shin-Etsu": "jp", "Sumitomo Electric": "jp",
 };
 
 export default function ChainAnalysis() {
   const [activeTab, setActiveTab] = useState<"supply-demand" | "key-players">("supply-demand");
 
   return (
-    <div style={{ background: "rgb(26, 27, 26)", borderRadius: 5, overflow: "hidden" }}>
+    <div style={{ background: "rgb(26, 27, 26)", borderRadius: 5, overflow: "hidden", minHeight: 280 }}>
       {/* Tabs */}
       <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${border}`, padding: "0 15px" }}>
         {([
@@ -52,13 +59,10 @@ export default function ChainAnalysis() {
         })}
       </div>
 
-      {/* Tab content */}
       <div style={{ padding: 15 }}>
-
         {/* ── TAB 1: SUPPLY DEMAND ANALYSIS ── */}
         {activeTab === "supply-demand" && (
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-            {/* Column 1: Header + Table */}
             <div>
               <p style={{ fontSize: 13, color: warmWhite, fontWeight: 400, margin: "10px 0 10px 0" }}>
                 How much supply do we need and why can't we fill the gap?
@@ -66,7 +70,6 @@ export default function ChainAnalysis() {
               <p style={{ fontSize: 11, color: muted, lineHeight: 1.6, margin: "0 0 20px 0" }}>
                 All three layers face structural deficits by 2030 — germanium and GeCl₄ are severely constrained, fiber is tight but expandable.
               </p>
-
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                   <tr>
@@ -91,8 +94,6 @@ export default function ChainAnalysis() {
                 </tbody>
               </table>
             </div>
-
-            {/* Column 2: Constraint Cards */}
             <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
               {[
                 { name: "Germanium", tag: "Structural Bottleneck", tagColor: amber, bullets: [
@@ -129,7 +130,7 @@ export default function ChainAnalysis() {
 
         {/* ── TAB 2: KEY PLAYERS ── */}
         {activeTab === "key-players" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
             {[
               { layer: "Germanium", players: [
                 { name: "Yunnan Chihong", desc: "Largest single primary germanium producer globally. Shanghai-listed, state-affiliated." },
@@ -149,22 +150,14 @@ export default function ChainAnalysis() {
             ].map((group, gi) => (
               <div key={gi}>
                 <p style={{ fontSize: 8, letterSpacing: "0.08em", color: dimmer, textTransform: "uppercase", margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>{group.layer}</p>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                   {group.players.map((player, pi) => {
-                    const domain = PLAYER_DOMAINS[player.name];
+                    const flag = COUNTRY_FLAGS[player.name];
                     return (
-                      <div key={pi} style={{ background: "rgb(36, 36, 36)", borderRadius: 4, padding: "10px 12px" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                          <div style={{ width: 18, height: 18, borderRadius: 3, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                            {domain ? (
-                              <img src={`https://logo.clearbit.com/${domain}`} alt="" style={{ width: 14, height: 14, borderRadius: 2 }} onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
-                            ) : (
-                              <span style={{ fontSize: 9, color: muted }}>{player.name.charAt(0)}</span>
-                            )}
-                          </div>
-                          <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{player.name}</span>
-                        </div>
-                        <p style={{ fontSize: 10, color: numColor, lineHeight: 1.5, margin: 0 }}>{player.desc}</p>
+                      <div key={pi} style={{ display: "flex", alignItems: "center", gap: 8, padding: "5px 8px", background: "rgb(36, 36, 36)", borderRadius: 4 }}>
+                        {flag && <img src={`https://flagcdn.com/16x12/${flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />}
+                        <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500, flexShrink: 0, minWidth: 110 }}>{player.name}</span>
+                        <p style={{ fontSize: 10, color: numColor, margin: 0, lineHeight: 1.4 }}>{player.desc}</p>
                       </div>
                     );
                   })}
