@@ -1710,6 +1710,7 @@ export default function TreeView() {
   const [selectedBriefId, setSelectedBriefId] = useState<string | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<{ key: string; name: string; overview: string; activity: string } | null>(null);
   const [selectedFeaturedChain, setSelectedFeaturedChain] = useState<string | null>(null);
+  const [chainTreeTab, setChainTreeTab] = useState<"overview" | "supply-tree">("overview");
 
   // Featured chains data
   type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; highlight_display_index?: number; navigate_path: string[] };
@@ -2181,33 +2182,119 @@ export default function TreeView() {
 
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
+        const chainSteps = [
+          { name: "Germanium", desc: "A rare metalloid extracted as a byproduct of zinc mining. China controls 60%+ of global supply and has imposed export restrictions." },
+          { name: "GeCl₄", desc: "Germanium tetrachloride — the ultra-pure chemical precursor deposited into glass preforms. Umicore's Belgian plant is the only Western refiner at scale." },
+          { name: "Fiber Preform", desc: "A cylindrical glass rod doped with GeCl₄ that serves as the master template. Each preform yields hundreds of kilometers of optical fiber." },
+          { name: "Fiber Optic Cable", desc: "Hair-thin glass strands drawn from preforms, bundled and sheathed. Carries data at light speed across AI datacenter clusters." },
+          { name: "Connectivity", desc: "The networking layer — switches, transceivers, and structured cabling that connects GPU racks inside hyperscale datacenters." },
+        ];
+
         return (
-          <div style={{ padding: 15, border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5 }}>
-            <p style={{ fontSize: 8, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 4px 0", fontFamily: "'Geist Mono', monospace" }}>Supply Tree</p>
-            <AISupplyTree
-              highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : undefined}
-              onNodeClick={(name) => {
-                if (selectedFeaturedChain) {
-                  if (!name) { setSelectedTreeNode(null); } else { setSelectedTreeNode(name); setRightTab("summary"); }
-                  return;
-                }
-                if (!name) { setSelectedTreeNode(null); } else { setSelectedTreeNode(name); setRightTab("summary"); }
-              }}
-              onGroupClick={(key, name, overview, activity) => {
-                if (selectedFeaturedChain) return;
-                if (!key) { setSelectedGroup(null); setSelectedTreeNode(null); }
-                else { setSelectedGroup({ key, name, overview, activity }); setSelectedTreeNode(null); setRightTab("summary"); }
-              }}
-              onNavigateToInput={(name) => {
-                const navMap: Record<string, PathEntry[]> = {
-                  "Germanium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
-                  "Gallium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "gallium", name: "Gallium" }],
-                  "Fiber Optic Cable": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
-                };
-                const target = navMap[name];
-                if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); }
-              }}
-            />
+          <div style={{ border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden" }}>
+            {/* Tabs */}
+            <div style={{ display: "flex", gap: 0, borderBottom: "1px solid rgba(255,255,255,0.04)", padding: "0 15px" }}>
+              {([
+                { id: "overview" as const, label: "Overview" },
+                { id: "supply-tree" as const, label: "Supply Tree" },
+              ]).map((tab, ti) => {
+                const isActive = chainTreeTab === tab.id;
+                return (
+                  <div
+                    key={tab.id}
+                    onClick={() => setChainTreeTab(tab.id)}
+                    style={{
+                      padding: ti === 0 ? "10px 14px 10px 0" : "10px 14px",
+                      fontSize: 9,
+                      color: isActive ? "#ece8e1" : "#555",
+                      cursor: "pointer",
+                      borderBottom: isActive ? "1.5px solid #ece8e1" : "1.5px solid transparent",
+                      transition: "color 0.15s, border-color 0.15s",
+                      marginBottom: -1,
+                      letterSpacing: "0.02em",
+                    }}
+                    onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "#706a60"; }}
+                    onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "#555"; }}
+                  >
+                    {tab.label}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div style={{ padding: 15 }}>
+              {/* Overview tab */}
+              {chainTreeTab === "overview" && (
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
+                  {chainSteps.map((step, i) => (
+                    <div key={step.name} style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+                      {/* Arrow connector between cards */}
+                      {i > 0 && (
+                        <div style={{ position: "absolute", left: -8, top: "50%", transform: "translateY(-50%)", color: "#4a4540", fontSize: 10 }}>›</div>
+                      )}
+                      <div style={{
+                        background: "rgb(26, 27, 26)",
+                        border: "1px solid rgba(255,255,255,0.04)",
+                        borderRadius: 4,
+                        padding: 12,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 8,
+                        height: "100%",
+                      }}>
+                        {/* Step number */}
+                        <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", margin: 0, fontFamily: "'Geist Mono', monospace" }}>STEP {i + 1}</p>
+                        {/* Name */}
+                        <p style={{ fontSize: 13, fontWeight: 500, color: "#ece8e1", margin: 0, fontFamily: "'EB Garamond', Georgia, serif" }}>{step.name}</p>
+                        {/* Illustration placeholder */}
+                        <div style={{
+                          width: "100%",
+                          height: 80,
+                          borderRadius: 3,
+                          background: "rgba(255,255,255,0.02)",
+                          border: "1px dashed rgba(255,255,255,0.06)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}>
+                          <span style={{ fontSize: 7, color: "#4a4540", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.05em" }}>ILLUSTRATION</span>
+                        </div>
+                        {/* Description */}
+                        <p style={{ fontSize: 10, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Supply Tree tab */}
+              {chainTreeTab === "supply-tree" && (
+                <AISupplyTree
+                  highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : undefined}
+                  onNodeClick={(name) => {
+                    if (selectedFeaturedChain) {
+                      if (!name) { setSelectedTreeNode(null); } else { setSelectedTreeNode(name); setRightTab("summary"); }
+                      return;
+                    }
+                    if (!name) { setSelectedTreeNode(null); } else { setSelectedTreeNode(name); setRightTab("summary"); }
+                  }}
+                  onGroupClick={(key, name, overview, activity) => {
+                    if (selectedFeaturedChain) return;
+                    if (!key) { setSelectedGroup(null); setSelectedTreeNode(null); }
+                    else { setSelectedGroup({ key, name, overview, activity }); setSelectedTreeNode(null); setRightTab("summary"); }
+                  }}
+                  onNavigateToInput={(name) => {
+                    const navMap: Record<string, PathEntry[]> = {
+                      "Germanium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
+                      "Gallium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "gallium", name: "Gallium" }],
+                      "Fiber Optic Cable": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
+                    };
+                    const target = navMap[name];
+                    if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); }
+                  }}
+                />
+              )}
+            </div>
           </div>
         );
       }
