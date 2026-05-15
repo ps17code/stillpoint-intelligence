@@ -519,7 +519,7 @@ export default function AISupplyTree({ onNodeClick, onGroupClick, onNavigateToIn
 
   return (
     <div ref={containerRef} style={{ position: "relative", minHeight: 0 }}>
-      <div style={{ display: "flex", gap: 30, padding: "12px 0", overflow: "auto", minWidth: 0 }}>
+      <div style={{ display: "flex", gap: 30, padding: 0, overflow: "auto", minWidth: 0 }}>
         <GroupedColumn label="RAW MATERIALS" totalCount={63} groups={categories} expandedGroup={expandedRawCat} setExpandedGroup={setExpandedRawCat} columnGroupKeys={Object.keys(categories)} />
         <GroupedColumn label="INTERMEDIATES" totalCount={56} groups={intSubgroups} expandedGroup={expandedIntGroup} setExpandedGroup={setExpandedIntGroup} columnGroupKeys={Object.keys(intSubgroups)} />
         <GroupedColumn label="COMPONENTS" totalCount={58} groups={compSubgroups} expandedGroup={expandedCompGroup} setExpandedGroup={setExpandedCompGroup} columnGroupKeys={Object.keys(compSubgroups)} />

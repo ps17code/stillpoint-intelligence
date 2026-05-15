@@ -3282,7 +3282,7 @@ export default function TreeView() {
           overflow: "hidden",
         }}>
           {/* Top section — price chart (tree) or geo summary / node detail (globe) + tabs */}
-          <div style={{ flexShrink: 0, padding: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? "8px 12px 0" : "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+          <div style={{ flexShrink: 0, height: 145, padding: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? "8px 12px 0" : "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
             {centerView === "tree" && (
               <>
                 {lastEntry && INPUT_PRICE_HISTORY[lastEntry.id] && (
