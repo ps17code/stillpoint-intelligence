@@ -3660,126 +3660,51 @@ export default function TreeView() {
               // ── Chain step panel data ──
               type ChainStepData = {
                 name: string; layer: string; whyItMatters: string;
-                supply: { value: string; breakdown: { region: string; share: string }[] };
-                demand: { value: string; breakdown: { source: string; share: string }[] };
-                gap: { value: string; note: string };
+                supply: string; demand: string; gap: string;
                 whyCantScale: string[];
-                expansionEfforts: { text: string; timeline: string }[];
-                companies: { name: string; share: string }[];
-                takeaway: string;
+                navLabel?: string; navPath?: PathEntry[];
               };
               const CHAIN_STEP_PANELS: Record<string, ChainStepData> = {
                 "Germanium": {
                   name: "Germanium", layer: "Raw Material",
                   whyItMatters: "Germanium is one of the only materials that seamlessly blends into existing silicon technology to both manipulate light and move electricity at ultra-high speeds. Without it, fiber optic cable cannot guide light.",
-                  supply: { value: "~230 t/yr", breakdown: [
-                    { region: "China", share: "~120t (52%)" }, { region: "Recycled (global)", share: "~90t (39%)" },
-                    { region: "Russia", share: "~11t (5%)" }, { region: "North America", share: "~6t (3%)" }, { region: "Europe", share: "~3t (1%)" },
-                  ]},
-                  demand: { value: "~286t by 2027", breakdown: [
-                    { source: "Fiber optics", share: "~87t (38%)" }, { source: "IR defense optics", share: "~55t (24%)" },
-                    { source: "Satellite solar", share: "~35t (15%)" }, { source: "SiGe semiconductors", share: "~25t (11%)" },
-                    { source: "PET catalyst & other", share: "~28t (12%)" },
-                  ]},
-                  gap: { value: "~56t", note: "24% shortfall. At $8,500/kg, this represents ~$475M of germanium that doesn't exist." },
+                  supply: "~230 t/yr", demand: "~286t by 2027", gap: "~56t",
                   whyCantScale: [
                     "Germanium is never the primary product of any mine — it's a byproduct of zinc smelting. Output is set by zinc economics, not germanium demand.",
                     "Even at $8,500/kg, germanium revenue is a rounding error in a zinc smelter's P&L. No one will increase zinc throughput for the germanium alone.",
                     "Recycling is already near theoretical maximum. Umicore recovers >50% of input from recycled sources.",
                   ],
-                  expansionEfforts: [
-                    { text: "DRC / Big Hill tailings — 700+ tonnes of germanium in century-old slag, exclusive Umicore offtake. First exports Oct 2024.", timeline: "Ramping through 2027" },
-                    { text: "5N Plus — $14.4M DoD grant for Utah refinery. Decision on broader facility in Nov 2026. Would add ~15-20t/yr.", timeline: "Decision Nov 2026" },
-                  ],
-                  companies: [
-                    { name: "Yunnan Chihong", share: "~25%" }, { name: "Umicore", share: "~20%" },
-                    { name: "Chinese state refiners", share: "~35%" }, { name: "Teck Resources", share: "~5%" },
-                    { name: "5N Plus", share: "~3%" }, { name: "Others", share: "~12%" },
-                  ],
-                  takeaway: "83% of primary germanium is Chinese. The western accessible supply covers only ~26t of the 56t shortfall. Every expansion project adds feedstock, but all western material still routes through Umicore for refining.",
+                  navLabel: "Germanium", navPath: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
                 },
                 "Germanium Tetrachloride (GeCl4)": {
                   name: "GeCl₄", layer: "Intermediate / Precursor",
                   whyItMatters: "This is the hidden chokepoint. Raw germanium cannot be used in fiber — it must first be converted to ultra-pure GeCl₄ (8N purity). Only one commercial-scale western facility does this conversion.",
-                  supply: { value: "~500 t/yr", breakdown: [
-                    { region: "China", share: "~300t (60%)" }, { region: "Belgium (Umicore)", share: "~120t (24%)" },
-                    { region: "Russia", share: "~50t (10%)" }, { region: "Other", share: "~30t (6%)" },
-                  ]},
-                  demand: { value: "~650t by 2027", breakdown: [
-                    { source: "Fiber optic preforms", share: "~520t (80%)" }, { source: "IR optics (GeO₂)", share: "~80t (12%)" },
-                    { source: "SiGe / other", share: "~50t (8%)" },
-                  ]},
-                  gap: { value: "~150t", note: "Umicore's Olen, Belgium facility processes ~40-50t Ge/yr into GeCl₄. A single point of failure for the entire western fiber supply." },
+                  supply: "~500 t/yr", demand: "~650t by 2027", gap: "~150t",
                   whyCantScale: [
                     "8N+ purity refining requires proprietary techniques to remove arsenic and trace contaminants to parts-per-billion levels.",
                     "Multi-year customer qualification cycles — fiber makers won't switch GeCl₄ suppliers without 12-24 months of testing.",
                     "Umicore's Olen plant is the only western facility. No second source exists at commercial scale.",
                   ],
-                  expansionEfforts: [
-                    { text: "5N Plus evaluating fiber-grade GeCl₄ production at Utah facility under DoD funding. Pre-commercial stage.", timeline: "2027-2028 if approved" },
-                    { text: "Umicore expanding Olen capacity incrementally, but constrained by site footprint and environmental permits.", timeline: "Ongoing" },
-                  ],
-                  companies: [
-                    { name: "Umicore", share: ">50% (western)" }, { name: "Chinese state plants", share: "~60% (global)" },
-                    { name: "JSC Germanium (Russia)", share: "~10%" }, { name: "5N Plus", share: "Pre-commercial" },
-                  ],
-                  takeaway: "The real bottleneck isn't germanium ore — it's the conversion to fiber-grade GeCl₄. Umicore's single Belgian facility is the structural chokepoint between mineral supply and AI fiber demand.",
                 },
                 "Fiber Optic Cable": {
                   name: "Fiber Optic Cable", layer: "Component",
                   whyItMatters: "Fiber is the physical layer that connects everything inside AI datacenters. GPU racks, storage arrays, switches, and buildings are all linked by fiber. AI clusters use up to 36x more fiber than traditional CPU server racks.",
-                  supply: { value: "720M km/yr", breakdown: [
-                    { region: "China (YOFC, etc.)", share: "~310M km (43%)" }, { region: "North America (Corning)", share: "~220M km (31%)" },
-                    { region: "Europe (Prysmian)", share: "~100M km (14%)" }, { region: "Japan (Sumitomo, Shin-Etsu)", share: "~55M km (7%)" },
-                    { region: "India (STL)", share: "~35M km (5%)" },
-                  ]},
-                  demand: { value: "~850M km by 2027", breakdown: [
-                    { source: "AI datacenters", share: "~255M km (30%)" }, { source: "Telecom FTTH", share: "~340M km (40%)" },
-                    { source: "BEAD / rural broadband", share: "~85M km (10%)" }, { source: "Subsea cables", share: "~50M km (6%)" },
-                    { source: "Enterprise & other", share: "~120M km (14%)" },
-                  ]},
-                  gap: { value: "130M km", note: "18% shortfall. Requires ~16t additional germanium from a supply already fully allocated. New preform capacity won't arrive until end of 2027." },
+                  supply: "720M km/yr", demand: "~850M km by 2027", gap: "130M km",
                   whyCantScale: [
                     "Preform manufacturing has an 18-24 month expansion cycle. Lines are at full utilization globally.",
                     "One equipment supplier — Rosendahl Nextrom (Austria) — has 18-24 month order backlogs for preform deposition systems.",
                     "Corning stopped selling bare glass fiber to other cable makers in late 2025, structurally tightening downstream supply.",
                   ],
-                  expansionEfforts: [
-                    { text: "Corning expanding US preform capacity under $6B Meta supply agreement. New lines coming online in phases.", timeline: "2026-2027" },
-                    { text: "Prysmian adding 27th plant. YOFC expanding Chinese capacity. STL building new India facility.", timeline: "2027-2028" },
-                  ],
-                  companies: [
-                    { name: "Corning", share: "~40%" }, { name: "YOFC", share: "~18%" },
-                    { name: "Prysmian", share: "~12%" }, { name: "Sumitomo Electric", share: "~8%" },
-                    { name: "Shin-Etsu", share: "~6%" }, { name: "STL (India)", share: "~5%" },
-                  ],
-                  takeaway: "Fiber demand is growing faster than capacity can be added. AI datacenters consume 36x more fiber per rack than traditional servers, and the 130M km gap cannot close before 2027.",
+                  navLabel: "Fiber Optic Cable", navPath: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
                 },
                 "Connectivity": {
                   name: "AI Datacenter Connectivity", layer: "Subsystem",
                   whyItMatters: "Connectivity is where the fiber shows up in the real world. Inside every AI datacenter, fiber links GPU racks to switches to storage to other buildings. The networking layer determines how fast data moves between chips.",
-                  supply: { value: "~$48B/yr", breakdown: [
-                    { region: "North America", share: "~$22B (46%)" }, { region: "Asia-Pacific", share: "~$15B (31%)" },
-                    { region: "Europe", share: "~$8B (17%)" }, { region: "Rest of world", share: "~$3B (6%)" },
-                  ]},
-                  demand: { value: "~$72B by 2027", breakdown: [
-                    { source: "AI datacenter networking", share: "~$32B (44%)" }, { source: "Cloud / hyperscale", share: "~$20B (28%)" },
-                    { source: "Telecom infrastructure", share: "~$12B (17%)" }, { source: "Enterprise", share: "~$8B (11%)" },
-                  ]},
-                  gap: { value: "~$24B", note: "Driven by AI datacenter buildout. Each GW of AI capacity requires ~6.5M strand-km of fiber plus switching, transceivers, and structured cabling." },
+                  supply: "~$48B/yr", demand: "~$72B by 2027", gap: "~$24B",
                   whyCantScale: [
                     "800G and 1.6T optical transceivers face silicon photonics yield issues at leading edge.",
-                    "Network switch capacity (Broadcom Memory, Cisco Silicon One) has 40+ week lead times.",
+                    "Network switch capacity (Broadcom Tomahawk, Cisco Silicon One) has 40+ week lead times.",
                   ],
-                  expansionEfforts: [
-                    { text: "Broadcom ramping Tomahawk 5 (51.2T) switch silicon. Cisco expanding Silicon One production.", timeline: "2026-2027" },
-                    { text: "Coherent, Lumentum expanding 800G transceiver capacity. 1.6T transceivers sampling.", timeline: "Volume 2027" },
-                  ],
-                  companies: [
-                    { name: "Arista Networks", share: "~30% (AI switching)" }, { name: "Cisco", share: "~25%" },
-                    { name: "Broadcom", share: "~35% (switch silicon)" }, { name: "Nvidia (Spectrum-X)", share: "~10%" },
-                  ],
-                  takeaway: "AI datacenters need 36x more networking per rack than traditional servers. The connectivity layer is where germanium scarcity, fiber shortages, and transceiver lead times converge into real bottlenecks.",
                 },
               };
 
@@ -3791,8 +3716,6 @@ export default function TreeView() {
                 const sectionTitle = { fontSize: 11 as const, color: "rgb(219, 219, 218)" as const, fontWeight: 500 as const, margin: "0 0 6px 0" as const };
                 const bulletDot = { width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0 as const, marginTop: 6 };
                 const bulletText = { fontSize: 10 as const, color: "rgb(160, 152, 136)" as const, lineHeight: 1.5 as const, margin: 0 as const };
-                const tblCell = { fontSize: 9 as const, color: "rgb(160, 152, 136)" as const, padding: "3px 0" as const, fontFamily: "'Geist Mono', monospace" as const };
-                const tblVal = { ...tblCell, textAlign: "right" as const, color: "#ece8e1" };
 
                 return (
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -3809,51 +3732,20 @@ export default function TreeView() {
                     </div>
 
                     {/* Supply / Demand / Gap */}
-                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 10 }}>
+                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 8 }}>
                       <p style={sectionTitle}>Supply &amp; Demand</p>
-                      {/* Supply */}
-                      <div>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
-                          <p style={{ ...labelStyle, margin: 0 }}>SUPPLY</p>
-                          <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.supply.value}</p>
-                        </div>
-                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                          <tbody>
-                            {data.supply.breakdown.map(r => (
-                              <tr key={r.region}>
-                                <td style={tblCell}>{r.region}</td>
-                                <td style={tblVal}>{r.share}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                        <p style={{ ...labelStyle, margin: 0 }}>SUPPLY</p>
+                        <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.supply}</p>
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                        <p style={{ ...labelStyle, margin: 0 }}>DEMAND</p>
+                        <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.demand}</p>
                       </div>
                       <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)" }} />
-                      {/* Demand */}
-                      <div>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
-                          <p style={{ ...labelStyle, margin: 0 }}>DEMAND</p>
-                          <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.demand.value}</p>
-                        </div>
-                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                          <tbody>
-                            {data.demand.breakdown.map(r => (
-                              <tr key={r.source}>
-                                <td style={tblCell}>{r.source}</td>
-                                <td style={tblVal}>{r.share}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                      <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)" }} />
-                      {/* Gap */}
-                      <div>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 2 }}>
-                          <p style={{ ...labelStyle, margin: 0 }}>GAP</p>
-                          <p style={{ fontSize: 11, color: "#c87a4a", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.gap.value}</p>
-                        </div>
-                        <p style={{ fontSize: 9, color: "rgb(140, 130, 116)", lineHeight: 1.4, margin: 0 }}>{data.gap.note}</p>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                        <p style={{ ...labelStyle, margin: 0 }}>GAP</p>
+                        <p style={{ fontSize: 11, color: "#c87a4a", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.gap}</p>
                       </div>
                     </div>
 
@@ -3868,40 +3760,28 @@ export default function TreeView() {
                       ))}
                     </div>
 
-                    {/* Current Expansion Efforts */}
-                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
-                      <p style={sectionTitle}>Current Expansion Efforts</p>
-                      {data.expansionEfforts.map((e, i) => (
-                        <div key={i} style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                          <div style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                            <span style={bulletDot} />
-                            <p style={bulletText}>{e.text}</p>
-                          </div>
-                          <p style={{ fontSize: 8, color: "#c87a4a", margin: "0 0 0 9px", fontFamily: "'Geist Mono', monospace" }}>{e.timeline}</p>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Company Concentration */}
-                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px" }}>
-                      <p style={sectionTitle}>Supply Concentration</p>
-                      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                        <tbody>
-                          {data.companies.map(c => (
-                            <tr key={c.name}>
-                              <td style={{ ...tblCell, fontFamily: "'EB Garamond', Georgia, serif", color: "#ece8e1", fontSize: 10 }}>{c.name}</td>
-                              <td style={tblVal}>{c.share}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-
-                    {/* Takeaway */}
-                    <div style={{ background: "rgba(200, 122, 74, 0.06)", border: "0.5px solid rgba(200, 122, 74, 0.2)", borderRadius: 6, padding: "10px 12px" }}>
-                      <p style={{ fontSize: 7, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "#c87a4a", margin: "0 0 4px 0", fontFamily: "'Geist Mono', monospace" }}>Takeaway</p>
-                      <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{data.takeaway}</p>
-                    </div>
+                    {/* Navigate button */}
+                    {data.navPath && (
+                      <button
+                        onClick={() => {
+                          setPath(data.navPath!);
+                          setAnimKey(k => k + 1);
+                          setSelectedTreeNode(null);
+                          setSelectedGroup(null);
+                          setSelectedFeaturedChain(null);
+                        }}
+                        style={{
+                          background: "transparent", border: "1px solid rgba(255,255,255,0.1)",
+                          borderRadius: 4, padding: "8px 14px", cursor: "pointer",
+                          fontSize: 10, color: muted, transition: "border-color 0.15s, color 0.15s",
+                          width: "100%",
+                        }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.color = warmWhite; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = muted; }}
+                      >
+                        View {data.navLabel}&apos;s Page &rarr;
+                      </button>
+                    )}
                   </div>
                 );
               };
