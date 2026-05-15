@@ -2183,11 +2183,11 @@ export default function TreeView() {
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         const chainSteps = [
-          { name: "Germanium", img: "/chain-steps/germanium.png", desc: "A rare metal recovered from zinc mining and coal ash. Hard to scale and concentrated in China." },
-          { name: "GeCl₄", img: "/chain-steps/gecl4.png", desc: "Germanium purified into a chemical used to make the glass core of optical fiber." },
-          { name: "Fiber Preform", img: "/chain-steps/fiber-preform.png", desc: "A glass rod infused with GeCl₄ that serves as the template for drawing optical fiber." },
-          { name: "Fiber Optic Cable", img: "/chain-steps/fiber-optic-cable.png", desc: "Thin glass strands drawn from preforms and bundled into cables that carry data as light." },
-          { name: "AI Datacenter Connectivity", img: "/chain-steps/ai-connectivity.png", desc: "The fiber network linking GPUs, switches, and storage inside AI datacenters." },
+          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium.png", desc: "Starts as a small byproduct metal recovered from zinc and coal. Hard to scale because nobody mines it directly." },
+          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4.png", desc: "This is the hidden step. Germanium has to become ultra-pure GeCl₄ before it can be used in fiber." },
+          { name: "Fiber Preform", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform.png", desc: "GeCl₄ gets deposited into glass rods that become the template for optical fiber." },
+          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-optic-cable.png", desc: "The preform gets drawn into long strands of low-loss fiber for high-bandwidth data movement." },
+          { name: "AI Datacenter Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity.png", desc: "This is where it shows up: fiber linking GPUs, switches, storage, and buildings across AI clusters." },
         ];
 
         return (
@@ -2227,20 +2227,21 @@ export default function TreeView() {
               {chainTreeTab === "overview" && (
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
                   {chainSteps.map((step, i) => (
-                    <div key={step.name} style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-                      {/* Arrow connector between cards */}
-                      {i > 0 && (
-                        <div style={{ position: "absolute", left: -8, top: "50%", transform: "translateY(-50%)", color: "#4a4540", fontSize: 10 }}>›</div>
-                      )}
+                    <div
+                      key={step.name}
+                      onClick={() => { setSelectedTreeNode(step.nodeId); setRightTab("summary"); }}
+                      style={{ display: "flex", flexDirection: "column", gap: 0, cursor: "pointer" }}
+                    >
                       <div style={{
-                        background: "rgb(26, 27, 26)",
-                        border: "1px solid rgba(255,255,255,0.04)",
+                        background: selectedTreeNode === step.nodeId ? "rgb(36, 33, 28)" : "rgb(26, 27, 26)",
+                        border: selectedTreeNode === step.nodeId ? "1px solid rgba(200, 122, 74, 0.3)" : "1px solid rgba(255,255,255,0.04)",
                         borderRadius: 4,
                         padding: 12,
                         display: "flex",
                         flexDirection: "column",
                         gap: 8,
                         height: "100%",
+                        transition: "background 0.15s, border-color 0.15s",
                       }}>
                         {/* Step number */}
                         <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", margin: 0, fontFamily: "'Geist Mono', monospace" }}>STEP {i + 1}</p>
@@ -2897,6 +2898,22 @@ export default function TreeView() {
                     <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
                       {templateSubtitle}
                     </p>
+                    {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
+                      <div style={{ display: "flex", alignItems: "center", gap: 0, marginTop: 10 }}>
+                        <div style={{
+                          display: "inline-flex", alignItems: "center", gap: 0,
+                          background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
+                          borderRadius: 20, padding: "4px 12px",
+                        }}>
+                          {["Germanium", "GeCl₄", "Fiber Optics", "Connectivity", "AI Data Center"].map((node, ni, arr) => (
+                            <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
+                              <span style={{ fontSize: 9, color: "#a09888", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{node}</span>
+                              {ni < arr.length - 1 && <span style={{ fontSize: 8, color: "#4a4540", margin: "0 6px" }}>→</span>}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                   {/* Right column — metrics row */}
                   {metrics && (
@@ -3169,7 +3186,7 @@ export default function TreeView() {
 
           {/* Chain Analysis section — shown when featured chain is selected on AI tree */}
           {selectedFeaturedChain === "germanium_chokepoint" && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
-            <div style={{ flexShrink: 0, padding: "30px 30px 20px" }}>
+            <div style={{ flexShrink: 0, padding: "0 30px 20px" }}>
               <ChainAnalysis />
             </div>
           )}
