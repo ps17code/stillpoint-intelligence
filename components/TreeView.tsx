@@ -2183,11 +2183,11 @@ export default function TreeView() {
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         const chainSteps = [
-          { name: "Germanium", desc: "A rare metalloid extracted as a byproduct of zinc mining. China controls 60%+ of global supply and has imposed export restrictions." },
-          { name: "GeCl₄", desc: "Germanium tetrachloride — the ultra-pure chemical precursor deposited into glass preforms. Umicore's Belgian plant is the only Western refiner at scale." },
-          { name: "Fiber Preform", desc: "A cylindrical glass rod doped with GeCl₄ that serves as the master template. Each preform yields hundreds of kilometers of optical fiber." },
-          { name: "Fiber Optic Cable", desc: "Hair-thin glass strands drawn from preforms, bundled and sheathed. Carries data at light speed across AI datacenter clusters." },
-          { name: "Connectivity", desc: "The networking layer — switches, transceivers, and structured cabling that connects GPU racks inside hyperscale datacenters." },
+          { name: "Germanium", img: "/chain-steps/germanium.png", desc: "Recovered as a byproduct of zinc smelting and coal fly ash, with limited ability to scale quickly." },
+          { name: "Germanium Tetrachloride / GeCl₄", img: "/chain-steps/gecl4.png", desc: "Refined into an ultra-high-purity chemical precursor used to dope optical fiber preforms." },
+          { name: "Fiber Preform", img: "/chain-steps/fiber-preform.png", desc: "GeCl₄ is deposited into high-purity glass rods that become the core material for optical fiber." },
+          { name: "Fiber Optic Cable", img: "/chain-steps/fiber-optic-cable.png", desc: "Preforms are drawn into ultra-low-loss fiber and assembled into cables for high-bandwidth transmission." },
+          { name: "AI Datacenter Connectivity", img: "/chain-steps/ai-connectivity.png", desc: "Fiber networks connect GPUs, switches, storage, and facilities across high-density AI compute infrastructure." },
         ];
 
         return (
@@ -2246,18 +2246,17 @@ export default function TreeView() {
                         <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", margin: 0, fontFamily: "'Geist Mono', monospace" }}>STEP {i + 1}</p>
                         {/* Name */}
                         <p style={{ fontSize: 13, fontWeight: 500, color: "#ece8e1", margin: 0, fontFamily: "'EB Garamond', Georgia, serif" }}>{step.name}</p>
-                        {/* Illustration placeholder */}
+                        {/* Illustration */}
                         <div style={{
                           width: "100%",
-                          height: 80,
+                          height: 100,
                           borderRadius: 3,
-                          background: "rgba(255,255,255,0.02)",
-                          border: "1px dashed rgba(255,255,255,0.06)",
+                          overflow: "hidden",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                         }}>
-                          <span style={{ fontSize: 7, color: "#4a4540", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.05em" }}>ILLUSTRATION</span>
+                          <img src={step.img} alt={step.name} style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", opacity: 0.85, filter: "invert(1) brightness(0.7)" }} />
                         </div>
                         {/* Description */}
                         <p style={{ fontSize: 10, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
