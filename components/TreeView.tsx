@@ -2183,11 +2183,11 @@ export default function TreeView() {
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         const chainSteps = [
-          { name: "Germanium", img: "/chain-steps/germanium.png", desc: "Recovered as a byproduct of zinc smelting and coal fly ash, with limited ability to scale quickly." },
-          { name: "Germanium Tetrachloride / GeCl₄", img: "/chain-steps/gecl4.png", desc: "Refined into an ultra-high-purity chemical precursor used to dope optical fiber preforms." },
-          { name: "Fiber Preform", img: "/chain-steps/fiber-preform.png", desc: "GeCl₄ is deposited into high-purity glass rods that become the core material for optical fiber." },
-          { name: "Fiber Optic Cable", img: "/chain-steps/fiber-optic-cable.png", desc: "Preforms are drawn into ultra-low-loss fiber and assembled into cables for high-bandwidth transmission." },
-          { name: "AI Datacenter Connectivity", img: "/chain-steps/ai-connectivity.png", desc: "Fiber networks connect GPUs, switches, storage, and facilities across high-density AI compute infrastructure." },
+          { name: "Germanium", img: "/chain-steps/germanium.png", desc: "A rare metal recovered from zinc mining and coal ash. Hard to scale and concentrated in China." },
+          { name: "GeCl₄", img: "/chain-steps/gecl4.png", desc: "Germanium purified into a chemical used to make the glass core of optical fiber." },
+          { name: "Fiber Preform", img: "/chain-steps/fiber-preform.png", desc: "A glass rod infused with GeCl₄ that serves as the template for drawing optical fiber." },
+          { name: "Fiber Optic Cable", img: "/chain-steps/fiber-optic-cable.png", desc: "Thin glass strands drawn from preforms and bundled into cables that carry data as light." },
+          { name: "AI Datacenter Connectivity", img: "/chain-steps/ai-connectivity.png", desc: "The fiber network linking GPUs, switches, and storage inside AI datacenters." },
         ];
 
         return (
@@ -2249,14 +2249,15 @@ export default function TreeView() {
                         {/* Illustration */}
                         <div style={{
                           width: "100%",
-                          height: 100,
+                          height: 90,
                           borderRadius: 3,
                           overflow: "hidden",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
+                          background: "rgb(36, 36, 36)",
                         }}>
-                          <img src={step.img} alt={step.name} style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", opacity: 0.85, filter: "invert(1) brightness(0.7)" }} />
+                          <img src={step.img} alt={step.name} style={{ maxWidth: "80%", maxHeight: "80%", objectFit: "contain", opacity: 0.85, filter: "invert(1) brightness(0.7)" }} />
                         </div>
                         {/* Description */}
                         <p style={{ fontSize: 10, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
