@@ -3732,21 +3732,17 @@ export default function TreeView() {
                     </div>
 
                     {/* Supply / Demand / Gap */}
-                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 8 }}>
-                      <p style={sectionTitle}>Supply &amp; Demand</p>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <p style={{ ...labelStyle, margin: 0 }}>SUPPLY</p>
-                        <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.supply}</p>
-                      </div>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <p style={{ ...labelStyle, margin: 0 }}>DEMAND</p>
-                        <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.demand}</p>
-                      </div>
-                      <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)" }} />
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <p style={{ ...labelStyle, margin: 0 }}>GAP</p>
-                        <p style={{ fontSize: 11, color: "#c87a4a", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.gap}</p>
-                      </div>
+                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px", display: "flex", alignItems: "flex-start" }}>
+                      {[
+                        { label: "SUPPLY", value: data.supply },
+                        { label: "DEMAND", value: data.demand },
+                        { label: "GAP", value: data.gap, accent: true },
+                      ].map((item, i, arr) => (
+                        <div key={item.label} style={{ flex: 1, display: "flex", flexDirection: "column", gap: 3, paddingRight: i < arr.length - 1 ? 12 : 0, marginRight: i < arr.length - 1 ? 12 : 0, borderRight: i < arr.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none" }}>
+                          <p style={{ ...labelStyle, margin: 0 }}>{item.label}</p>
+                          <p style={{ fontSize: 11, color: item.accent ? "#c87a4a" : "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{item.value}</p>
+                        </div>
+                      ))}
                     </div>
 
                     {/* Why Supply Can't Scale */}
