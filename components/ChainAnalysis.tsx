@@ -12,6 +12,7 @@ const mono = "'Geist Mono', monospace";
 export default function ChainAnalysis() {
   return (
     <div style={{ background: "rgb(26, 27, 26)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
+      <p style={{ fontSize: 7, letterSpacing: "0.1em", color: dimmer, textTransform: "uppercase", margin: "0 0 10px 0", fontFamily: mono }}>Chain Summary</p>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr 1fr", gap: 14 }}>
         {/* Column 1: How much fiber do AI data centers need */}
         <div>
@@ -59,7 +60,7 @@ export default function ChainAnalysis() {
         {/* Column 2: Can each layer scale? */}
         <div>
           <p style={{ fontSize: 11, color: warmWhite, fontWeight: 400, margin: "0 0 10px 0", fontFamily: "'Instrument Serif', serif" }}>Can each layer scale?</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             {[
               {
                 layer: "Germanium", tag: null,
@@ -84,7 +85,7 @@ export default function ChainAnalysis() {
               },
             ].map((row, i) => (
               <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 0, background: "rgb(30, 30, 30)", border: row.tag ? `1px solid rgba(200, 122, 74, 0.25)` : `1px solid ${border}`, borderRadius: 4, overflow: "hidden" }}>
-                <div style={{ padding: "10px 12px" }}>
+                <div style={{ padding: 8 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
                     <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: 0 }}>{row.layer}</p>
                     {row.tag && (
@@ -93,7 +94,7 @@ export default function ChainAnalysis() {
                   </div>
                   <p style={{ fontSize: 9, color: numColor, lineHeight: 1.5, margin: 0 }}>{row.desc}</p>
                 </div>
-                <div style={{ borderLeft: `1px solid ${border}`, padding: "8px 12px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 4, minWidth: 140 }}>
+                <div style={{ borderLeft: `1px solid ${border}`, padding: 8, display: "flex", flexDirection: "column", justifyContent: "center", gap: 4, minWidth: 140 }}>
                   {[
                     { label: "Expandability", value: row.expandability, color: row.expandColor },
                     { label: "Time", value: row.time, color: row.timeColor },
@@ -131,10 +132,17 @@ export default function ChainAnalysis() {
             </div>
           </div>
 
-          <div style={{ background: amberBg, border: "0.5px solid rgba(200, 122, 74, 0.2)", borderRadius: 4, padding: "8px 10px", display: "flex", alignItems: "center", gap: 8 }}>
-            <p style={{ fontSize: 7, letterSpacing: "0.08em", color: amber, textTransform: "uppercase", margin: 0, fontFamily: mono, flexShrink: 0 }}>Key Player</p>
-            <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: 0 }}>Umicore</p>
-            <p style={{ fontSize: 8, color: numColor, margin: 0 }}>Sole Western GeCl₄ refiner at scale</p>
+          <div style={{ background: amberBg, border: "0.5px solid rgba(200, 122, 74, 0.2)", borderRadius: 4, padding: "8px 10px" }}>
+            <p style={{ fontSize: 7, letterSpacing: "0.08em", color: amber, textTransform: "uppercase", margin: "0 0 6px 0", fontFamily: mono }}>Key Players</p>
+            {[
+              { name: "Umicore", flag: "be", desc: "Sole Western GeCl₄ refiner" },
+            ].map((p, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, padding: i > 0 ? "4px 0 0 0" : 0 }}>
+                <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{p.name}</span>
+                <span style={{ fontSize: 8, color: numColor }}>· {p.desc}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
