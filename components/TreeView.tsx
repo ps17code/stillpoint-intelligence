@@ -2895,7 +2895,7 @@ export default function TreeView() {
                         >Full analysis &rarr;</a>
                       )}
                     </div>
-                    <p style={{ fontSize: 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
+                    <p style={{ fontSize: (selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems") ? 12 : 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
                       {templateSubtitle}
                     </p>
                     {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (

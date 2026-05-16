@@ -2,9 +2,9 @@
   "ai_infrastructure": [
     {
       "id": "germanium_chokepoint",
-      "title": "The germanium chokepoint",
+      "title": "The GeCl₄ Chokepoint",
       "status": "acute",
-      "teaser": "Every fiber in every AI datacenter depends on a chemical form of germanium refined almost entirely in China.",
+      "teaser": "Every kilometer of fiber in every AI datacenter depends on a chemical form of germanium refined almost entirely in China with exception of one Western supplier.",
       "highlight_display_index": 1,
       "chain_nodes": ["germanium", "germanium_glass_dopant", "fiber_optic_cable", "connectivity", "ai_datacenter"],
       "chokepoint_node_id": "germanium",
