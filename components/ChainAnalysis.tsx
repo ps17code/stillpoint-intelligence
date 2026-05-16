@@ -12,11 +12,48 @@ const mono = "'Geist Mono', monospace";
 export default function ChainAnalysis() {
   return (
     <div style={{ background: "rgb(26, 27, 26)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
-      <p style={{ fontSize: 7, letterSpacing: "0.1em", color: dimmer, textTransform: "uppercase", margin: "0 0 10px 0", fontFamily: mono }}>Chain Summary</p>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr 1fr", gap: 14 }}>
-        {/* Column 1: How much fiber do AI data centers need */}
+      <p style={{ fontSize: 11, letterSpacing: "0.1em", color: amber, textTransform: "uppercase", margin: "0 0 10px 0", fontFamily: mono }}>Chain Summary</p>
+      <div style={{ display: "grid", gridTemplateColumns: "0.8fr 0px 1fr 1.6fr", gap: 14 }}>
+        {/* Column 1: Key Takeaway */}
         <div>
-          <p style={{ fontSize: 11, color: warmWhite, fontWeight: 400, margin: "0 0 10px 0", fontFamily: "'Instrument Serif', serif" }}>How much fiber do AI data centers need</p>
+          <p style={{ fontSize: 10, color: warmWhite, fontWeight: 400, margin: "0 0 10px 0" }}>Key Takeaway</p>
+
+          <div style={{ background: "rgb(30, 30, 30)", border: `1px solid ${border}`, borderRadius: 4, padding: "10px 12px", marginBottom: 8 }}>
+            <p style={{ fontSize: 7, letterSpacing: "0.1em", color: amber, textTransform: "uppercase", margin: "0 0 3px 0", fontFamily: mono }}>Primary Chokepoint</p>
+            <p style={{ fontSize: 16, color: warmWhite, fontWeight: 400, margin: "0 0 8px 0", fontFamily: "'Instrument Serif', serif" }}>GeCl₄</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+              {[
+                "Every fiber expansion path still requires GeCl₄",
+                "Trusted Western supply is highly concentrated",
+                "Capacity expands slower than AI demand",
+              ].map((b, i) => (
+                <div key={i} style={{ display: "flex", gap: 5, alignItems: "baseline" }}>
+                  <span style={{ width: 3, height: 3, borderRadius: "50%", background: amber, flexShrink: 0, marginTop: 4 }} />
+                  <p style={{ fontSize: 9, color: numColor, lineHeight: 1.4, margin: 0 }}>{b}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ background: amberBg, border: "0.5px solid rgba(200, 122, 74, 0.2)", borderRadius: 4, padding: "8px 10px" }}>
+            <p style={{ fontSize: 7, letterSpacing: "0.08em", color: amber, textTransform: "uppercase", margin: "0 0 6px 0", fontFamily: mono }}>Key Players</p>
+            {[
+              { name: "Umicore", flag: "be" },
+            ].map((p, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, padding: i > 0 ? "4px 0 0 0" : 0 }}>
+                <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{p.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div style={{ width: 1, background: "rgba(255,255,255,0.06)", alignSelf: "stretch" }} />
+
+        {/* Column 2: Demand */}
+        <div>
+          <p style={{ fontSize: 10, color: warmWhite, fontWeight: 400, margin: "0 0 10px 0" }}>How much fiber does an AI data center use?</p>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 0, background: "rgb(30, 30, 30)", border: `1px solid ${border}`, borderRadius: 4, marginBottom: 14 }}>
             {[
               { value: "20 GW", sub: "new 2027 AI DC capacity" },
@@ -25,12 +62,12 @@ export default function ChainAnalysis() {
             ].map((s, i, arr) => (
               <div key={i} style={{ padding: "8px 10px", borderRight: i < arr.length - 1 ? `1px solid ${border}` : "none" }}>
                 <p style={{ fontSize: 13, color: warmWhite, fontWeight: 600, margin: "0 0 2px 0", fontFamily: mono }}>{s.value}</p>
-                <p style={{ fontSize: 6, color: dimmer, margin: 0, fontFamily: mono, letterSpacing: "0.02em" }}>{s.sub}</p>
+                <p style={{ fontSize: 6, color: numColor, margin: 0, fontFamily: mono, letterSpacing: "0.02em" }}>{s.sub}</p>
               </div>
             ))}
           </div>
 
-          <p style={{ fontSize: 11, color: warmWhite, fontWeight: 400, margin: "0 0 8px 0", fontFamily: "'Instrument Serif', serif" }}>Supply table</p>
+          <p style={{ fontSize: 10, color: warmWhite, fontWeight: 400, margin: "0 0 8px 0" }}>How much supply is needed?</p>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr>
@@ -57,9 +94,9 @@ export default function ChainAnalysis() {
           <p style={{ fontSize: 7, color: dimmer, margin: "6px 0 0 0", lineHeight: 1.3 }}>Note: Estimates reflect global supply–demand balance for commercial fiber.</p>
         </div>
 
-        {/* Column 2: Can each layer scale? */}
+        {/* Column 3: Can each layer scale? */}
         <div>
-          <p style={{ fontSize: 11, color: warmWhite, fontWeight: 400, margin: "0 0 10px 0", fontFamily: "'Instrument Serif', serif" }}>Can each layer scale?</p>
+          <p style={{ fontSize: 10, color: warmWhite, fontWeight: 400, margin: "0 0 10px 0" }}>Can each layer scale?</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             {[
               {
@@ -106,41 +143,6 @@ export default function ChainAnalysis() {
                     </div>
                   ))}
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Column 3: Key Takeaway */}
-        <div>
-          <p style={{ fontSize: 11, color: warmWhite, fontWeight: 400, margin: "0 0 10px 0", fontFamily: "'Instrument Serif', serif" }}>Key Takeaway</p>
-
-          <div style={{ background: "rgb(30, 30, 30)", border: `1px solid ${border}`, borderRadius: 4, padding: "10px 12px", marginBottom: 8 }}>
-            <p style={{ fontSize: 7, letterSpacing: "0.1em", color: amber, textTransform: "uppercase", margin: "0 0 3px 0", fontFamily: mono }}>Primary Chokepoint</p>
-            <p style={{ fontSize: 16, color: warmWhite, fontWeight: 400, margin: "0 0 8px 0", fontFamily: "'Instrument Serif', serif" }}>GeCl₄</p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-              {[
-                "Every fiber expansion path still requires GeCl₄",
-                "Trusted Western supply is highly concentrated",
-                "Capacity expands slower than AI demand",
-              ].map((b, i) => (
-                <div key={i} style={{ display: "flex", gap: 5, alignItems: "baseline" }}>
-                  <span style={{ width: 3, height: 3, borderRadius: "50%", background: amber, flexShrink: 0, marginTop: 4 }} />
-                  <p style={{ fontSize: 9, color: numColor, lineHeight: 1.4, margin: 0 }}>{b}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div style={{ background: amberBg, border: "0.5px solid rgba(200, 122, 74, 0.2)", borderRadius: 4, padding: "8px 10px" }}>
-            <p style={{ fontSize: 7, letterSpacing: "0.08em", color: amber, textTransform: "uppercase", margin: "0 0 6px 0", fontFamily: mono }}>Key Players</p>
-            {[
-              { name: "Umicore", flag: "be", desc: "Sole Western GeCl₄ refiner" },
-            ].map((p, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, padding: i > 0 ? "4px 0 0 0" : 0 }}>
-                <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{p.name}</span>
-                <span style={{ fontSize: 8, color: numColor }}>· {p.desc}</span>
               </div>
             ))}
           </div>
