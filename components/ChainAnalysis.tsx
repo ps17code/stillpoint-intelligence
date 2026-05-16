@@ -63,21 +63,21 @@ export default function ChainAnalysis() {
             {[
               {
                 layer: "Germanium", tag: null,
-                desc: "Only 8 deposits globally where germanium concentration is high enough to extract as a byproduct. Increasing recovery requires major capex and multi-year project timelines.",
+                desc: "Mostly byproduct supply; recovery expands slowly through major capex and multi-year project timelines.",
                 expandability: "Low", expandColor: numColor,
                 time: "3–7 yrs", timeColor: numColor,
                 concentration: "High", concColor: numColor,
               },
               {
                 layer: "GeCl₄", tag: "PRIMARY CHOKEPOINT",
-                desc: "Limited by germanium feedstock and fewer than 5 suppliers globally who can achieve the required ultra-purity. Only one Western supplier at commercial scale.",
+                desc: "Qualified purification bottleneck; few suppliers can meet ultra-purity, with limited Western commercial capacity.",
                 expandability: "Very Low", expandColor: amber,
                 time: "2–5 yrs", timeColor: amber,
                 concentration: "Very High", concColor: amber,
               },
               {
                 layer: "Fiber Manufacturing", tag: null,
-                desc: "Capacity is tight but can expand with capex, equipment orders, and new production lines.",
+                desc: "Capacity is tight, but expands through capex, equipment orders, and new production lines.",
                 expandability: "Medium", expandColor: numColor,
                 time: "12–24 mo", timeColor: numColor,
                 concentration: "Medium", concColor: numColor,
