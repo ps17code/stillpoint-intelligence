@@ -2225,46 +2225,60 @@ export default function TreeView() {
             <div style={{ padding: 15 }}>
               {/* Overview tab */}
               {chainTreeTab === "overview" && (
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
-                  {chainSteps.map((step, i) => (
-                    <div
-                      key={step.name}
-                      onClick={() => { setSelectedTreeNode(step.nodeId); setRightTab("summary"); }}
-                      style={{ display: "flex", flexDirection: "column", gap: 0, cursor: "pointer" }}
-                    >
-                      <div style={{
-                        background: selectedTreeNode === step.nodeId ? "rgb(36, 33, 28)" : "rgb(26, 27, 26)",
-                        border: selectedTreeNode === step.nodeId ? "1px solid rgba(200, 122, 74, 0.3)" : "1px solid rgba(255,255,255,0.04)",
-                        borderRadius: 4,
-                        padding: 12,
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 8,
-                        height: "100%",
-                        transition: "background 0.15s, border-color 0.15s",
-                      }}>
-                        {/* Step number */}
-                        <p style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", margin: 0, fontFamily: "'Geist Mono', monospace" }}>STEP {i + 1}</p>
-                        {/* Name */}
-                        <p style={{ fontSize: 13, fontWeight: 500, color: "#ece8e1", margin: 0, fontFamily: "'EB Garamond', Georgia, serif" }}>{step.name}</p>
-                        {/* Illustration */}
-                        <div style={{
-                          width: "100%",
-                          height: 90,
-                          borderRadius: 3,
-                          overflow: "hidden",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          background: "rgb(36, 36, 36)",
-                        }}>
-                          <img src={step.img} alt={step.name} style={{ maxWidth: "80%", maxHeight: "80%", objectFit: "contain", opacity: 0.85, filter: "invert(1) brightness(0.7)" }} />
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 0 }}>
+                  {chainSteps.map((step, i) => {
+                    const isSelected = selectedTreeNode === step.nodeId;
+                    const dotColor = "#c87a4a";
+                    return (
+                      <div
+                        key={step.name}
+                        onClick={() => { setSelectedTreeNode(step.nodeId); setRightTab("summary"); }}
+                        style={{ cursor: "pointer", display: "flex", flexDirection: "column" }}
+                      >
+                        {/* Step header with connecting line */}
+                        <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
+                          {/* Dot */}
+                          <span style={{ width: 6, height: 6, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
+                          {/* Step label */}
+                          <span style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", margin: "0 6px", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap", flexShrink: 0 }}>STEP {i + 1}</span>
+                          {/* Trailing line (not on last) */}
+                          {i < chainSteps.length - 1 && (
+                            <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
+                          )}
                         </div>
-                        {/* Description */}
-                        <p style={{ fontSize: 10, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                        {/* Card body */}
+                        <div style={{
+                          background: isSelected ? "rgb(36, 33, 28)" : "transparent",
+                          borderRadius: 4,
+                          padding: "8px 10px 10px",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 8,
+                          flex: 1,
+                          transition: "background 0.15s",
+                          marginRight: i < chainSteps.length - 1 ? 8 : 0,
+                        }}>
+                          {/* Name */}
+                          <p style={{ fontSize: 13, fontWeight: 500, color: "#ece8e1", margin: 0, fontFamily: "'EB Garamond', Georgia, serif" }}>{step.name}</p>
+                          {/* Illustration */}
+                          <div style={{
+                            width: "100%",
+                            height: 90,
+                            borderRadius: 3,
+                            overflow: "hidden",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            background: "rgb(36, 36, 36)",
+                          }}>
+                            <img src={step.img} alt={step.name} style={{ maxWidth: "80%", maxHeight: "80%", objectFit: "contain", opacity: 0.85, filter: "invert(1) brightness(0.7)" }} />
+                          </div>
+                          {/* Description */}
+                          <p style={{ fontSize: 10, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
 
