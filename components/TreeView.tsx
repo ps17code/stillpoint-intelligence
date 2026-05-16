@@ -2183,11 +2183,11 @@ export default function TreeView() {
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         const chainSteps = [
-          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium.png", desc: "Starts as a small byproduct metal recovered from zinc and coal. Hard to scale because nobody mines it directly." },
-          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4.png", desc: "This is the hidden step. Germanium has to become ultra-pure GeCl₄ before it can be used in fiber." },
-          { name: "Fiber Preform", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform.png", desc: "GeCl₄ gets deposited into glass rods that become the template for optical fiber." },
-          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-optic-cable.png", desc: "The preform gets drawn into long strands of low-loss fiber for high-bandwidth data movement." },
-          { name: "AI Datacenter Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity.png", desc: "This is where it shows up: fiber linking GPUs, switches, storage, and buildings across AI clusters." },
+          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.png", desc: "Starts as a small byproduct metal recovered from zinc and coal. Hard to scale because nobody mines it directly." },
+          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.png", desc: "This is the hidden step. Germanium has to become ultra-pure GeCl₄ before it can be used in fiber." },
+          { name: "Fiber Preform", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.png", desc: "GeCl₄ gets deposited into glass rods that become the template for optical fiber." },
+          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-optic-cable-v2.png", desc: "The preform gets drawn into long strands of low-loss fiber for high-bandwidth data movement." },
+          { name: "AI Datacenter Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.png", desc: "This is where it shows up: fiber linking GPUs, switches, storage, and buildings across AI clusters." },
         ];
 
         return (
@@ -2249,13 +2249,9 @@ export default function TreeView() {
                           height: 90,
                           borderRadius: 3,
                           overflow: "hidden",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          background: "rgb(36, 36, 36)",
                           marginBottom: 8,
                         }}>
-                          <img src={step.img} alt={step.name} style={{ maxWidth: "80%", maxHeight: "80%", objectFit: "contain", opacity: 0.85, filter: "invert(1) brightness(0.7)" }} />
+                          <img src={step.img} alt={step.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
                         </div>
                         {/* Description */}
                         <p style={{ fontSize: 10, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
