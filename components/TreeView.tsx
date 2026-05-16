@@ -2233,49 +2233,32 @@ export default function TreeView() {
                       <div
                         key={step.name}
                         onClick={() => { setSelectedTreeNode(step.nodeId); setRightTab("summary"); }}
-                        style={{ cursor: "pointer", display: "flex", flexDirection: "column" }}
+                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? "rgb(36, 33, 28)" : "rgb(26, 27, 26)", padding: "10px 10px 12px", transition: "background 0.15s" }}
                       >
-                        {/* Step header with connecting line */}
+                        {/* Name row with dot and connecting line */}
                         <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
-                          {/* Dot */}
-                          <span style={{ width: 6, height: 6, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
-                          {/* Step label */}
-                          <span style={{ fontSize: 7, letterSpacing: "0.1em", color: "#4a4540", margin: "0 6px", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap", flexShrink: 0 }}>STEP {i + 1}</span>
-                          {/* Trailing line (not on last) */}
+                          <span style={{ width: 5, height: 5, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
+                          <p style={{ fontSize: 13, fontWeight: 500, color: "#ece8e1", margin: "0 0 0 6px", fontFamily: "'EB Garamond', Georgia, serif", whiteSpace: "nowrap", flexShrink: 0 }}>{step.name}</p>
                           {i < chainSteps.length - 1 && (
-                            <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
+                            <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)", marginLeft: 8 }} />
                           )}
                         </div>
-                        {/* Card body */}
+                        {/* Illustration */}
                         <div style={{
-                          background: isSelected ? "rgb(36, 33, 28)" : "transparent",
-                          borderRadius: 4,
-                          padding: "8px 10px 10px",
+                          width: "100%",
+                          height: 90,
+                          borderRadius: 3,
+                          overflow: "hidden",
                           display: "flex",
-                          flexDirection: "column",
-                          gap: 8,
-                          flex: 1,
-                          transition: "background 0.15s",
-                          marginRight: i < chainSteps.length - 1 ? 8 : 0,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          background: "rgb(36, 36, 36)",
+                          marginBottom: 8,
                         }}>
-                          {/* Name */}
-                          <p style={{ fontSize: 13, fontWeight: 500, color: "#ece8e1", margin: 0, fontFamily: "'EB Garamond', Georgia, serif" }}>{step.name}</p>
-                          {/* Illustration */}
-                          <div style={{
-                            width: "100%",
-                            height: 90,
-                            borderRadius: 3,
-                            overflow: "hidden",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            background: "rgb(36, 36, 36)",
-                          }}>
-                            <img src={step.img} alt={step.name} style={{ maxWidth: "80%", maxHeight: "80%", objectFit: "contain", opacity: 0.85, filter: "invert(1) brightness(0.7)" }} />
-                          </div>
-                          {/* Description */}
-                          <p style={{ fontSize: 10, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                          <img src={step.img} alt={step.name} style={{ maxWidth: "80%", maxHeight: "80%", objectFit: "contain", opacity: 0.85, filter: "invert(1) brightness(0.7)" }} />
                         </div>
+                        {/* Description */}
+                        <p style={{ fontSize: 10, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
                       </div>
                     );
                   })}
