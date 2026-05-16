@@ -12,12 +12,10 @@ const mono = "'Geist Mono', monospace";
 export default function ChainAnalysis() {
   return (
     <div style={{ background: "rgb(26, 27, 26)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
-      <p style={{ fontSize: 11, letterSpacing: "0.1em", color: amber, textTransform: "uppercase", margin: "0 0 10px 0", fontFamily: mono }}>Chain Summary</p>
+      <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 10px 0" }}>Chain Summary</p>
       <div style={{ display: "grid", gridTemplateColumns: "0.8fr 0px 1fr 1.6fr", gap: 14 }}>
         {/* Column 1: Key Takeaway */}
         <div>
-          <p style={{ fontSize: 10, color: warmWhite, fontWeight: 400, margin: "0 0 10px 0" }}>Key Takeaway</p>
-
           <div style={{ background: "rgb(30, 30, 30)", border: `1px solid ${border}`, borderRadius: 4, padding: "10px 12px", marginBottom: 8 }}>
             <p style={{ fontSize: 7, letterSpacing: "0.1em", color: amber, textTransform: "uppercase", margin: "0 0 3px 0", fontFamily: mono }}>Primary Chokepoint</p>
             <p style={{ fontSize: 16, color: warmWhite, fontWeight: 400, margin: "0 0 8px 0", fontFamily: "'Instrument Serif', serif" }}>GeCl₄</p>
@@ -38,11 +36,14 @@ export default function ChainAnalysis() {
           <div style={{ background: amberBg, border: "0.5px solid rgba(200, 122, 74, 0.2)", borderRadius: 4, padding: "8px 10px" }}>
             <p style={{ fontSize: 7, letterSpacing: "0.08em", color: amber, textTransform: "uppercase", margin: "0 0 6px 0", fontFamily: mono }}>Key Players</p>
             {[
-              { name: "Umicore", flag: "be" },
+              { name: "Umicore", flag: "be", desc: "Only Western refiner producing fiber-grade GeCl₄ at commercial scale" },
             ].map((p, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, padding: i > 0 ? "4px 0 0 0" : 0 }}>
-                <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{p.name}</span>
+              <div key={i} style={{ padding: i > 0 ? "6px 0 0 0" : 0 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                  <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{p.name}</span>
+                </div>
+                <p style={{ fontSize: 8, color: numColor, lineHeight: 1.4, margin: "3px 0 0 18px" }}>{p.desc}</p>
               </div>
             ))}
           </div>
@@ -61,7 +62,7 @@ export default function ChainAnalysis() {
               { value: "120M KM", sub: "for 20 GW" },
             ].map((s, i, arr) => (
               <div key={i} style={{ padding: "8px 10px", borderRight: i < arr.length - 1 ? `1px solid ${border}` : "none" }}>
-                <p style={{ fontSize: 13, color: warmWhite, fontWeight: 600, margin: "0 0 2px 0", fontFamily: mono }}>{s.value}</p>
+                <p style={{ fontSize: 11, color: warmWhite, fontWeight: 600, margin: "0 0 2px 0", fontFamily: mono }}>{s.value}</p>
                 <p style={{ fontSize: 6, color: numColor, margin: 0, fontFamily: mono, letterSpacing: "0.02em" }}>{s.sub}</p>
               </div>
             ))}
@@ -78,9 +79,9 @@ export default function ChainAnalysis() {
             </thead>
             <tbody>
               {[
-                { layer: "Germanium", demand: "450–500 t/yr", supply: "220 t/yr", gap: "–230 t/yr" },
-                { layer: "GeCl₄", demand: "900–1,100 t/yr", supply: "500 t/yr", gap: "–500 t/yr" },
-                { layer: "Fiber", demand: "12–15B km/yr", supply: "7B km/yr", gap: "–6B km/yr" },
+                { layer: "Germanium", demand: "450 t/yr", supply: "220 t/yr", gap: "–230 t/yr" },
+                { layer: "GeCl₄", demand: "1,000 t/yr", supply: "500 t/yr", gap: "–500 t/yr" },
+                { layer: "Fiber", demand: "13B km/yr", supply: "7B km/yr", gap: "–6B km/yr" },
               ].map((row, i) => (
                 <tr key={i}>
                   <td style={{ padding: "7px 4px 7px 0", fontSize: 9, color: warmWhite, fontWeight: 500, borderBottom: `1px solid ${border}` }}>{row.layer}</td>

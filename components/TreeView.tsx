@@ -2195,7 +2195,7 @@ export default function TreeView() {
             {/* Tabs */}
             <div style={{ display: "flex", gap: 0, borderBottom: "1px solid rgba(255,255,255,0.04)", padding: "0 15px" }}>
               {([
-                { id: "overview" as const, label: "Overview" },
+                { id: "overview" as const, label: "Value Chain" },
                 { id: "supply-tree" as const, label: "Supply Tree" },
               ]).map((tab, ti) => {
                 const isActive = chainTreeTab === tab.id;
