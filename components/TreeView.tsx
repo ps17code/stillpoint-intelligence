@@ -2191,7 +2191,7 @@ export default function TreeView() {
         ];
 
         return (
-          <div style={{ border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden" }}>
+          <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden" }}>
             {/* Tabs */}
             <div style={{ display: "flex", gap: 0, borderBottom: "1px solid rgba(255,255,255,0.04)", padding: "0 15px" }}>
               {([
@@ -2233,7 +2233,7 @@ export default function TreeView() {
                       <div
                         key={step.name}
                         onClick={() => { setSelectedTreeNode(step.nodeId); setRightTab("summary"); }}
-                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? "rgb(36, 33, 28)" : "rgb(26, 27, 26)", padding: "10px 10px 12px", transition: "background 0.15s" }}
+                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? "rgb(36, 33, 28)" : "transparent", padding: i === 0 ? "10px 10px 12px 0" : "10px 10px 12px", transition: "background 0.15s" }}
                       >
                         {/* Name row with dot and connecting line */}
                         <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>

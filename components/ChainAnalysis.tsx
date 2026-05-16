@@ -11,8 +11,9 @@ const mono = "'Geist Mono', monospace";
 
 export default function ChainAnalysis() {
   return (
-    <div style={{ background: "rgb(26, 27, 26)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
-      <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 10px 0" }}>Chain Summary</p>
+    <div style={{ border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
+      <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 4px 0" }}>Chain Summary</p>
+      <p style={{ fontSize: 10, color: numColor, lineHeight: 1.5, margin: "0 0 12px 0" }}>AI datacenter fiber demand is growing faster than the supply chain can respond, and while fiber manufacturing can expand with capex, the real bottleneck is GeCl₄ purification because every fiber expansion path still requires qualified GeCl₄ from a highly concentrated Western supply base led by Umicore.</p>
       <div style={{ display: "grid", gridTemplateColumns: "0.8fr 0px 1fr 1.6fr", gap: 14 }}>
         {/* Column 1: Key Takeaway */}
         <div>
