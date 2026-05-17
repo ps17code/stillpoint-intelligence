@@ -3657,7 +3657,10 @@ export default function TreeView() {
               // ── Chain step panel data ──
               type ChainStepData = {
                 name: string; layer: string; whyItMatters: string;
-                supply: string; demand: string; gap: string;
+                supply: { total: string; breakdown: { source: string; share: string }[] };
+                demand: { total: string; breakdown: { segment: string; share: string }[] };
+                gap: string;
+                keyPlayers: { name: string; share: string; flag: string }[];
                 whyCantScale: string[];
                 navLabel?: string; navPath?: PathEntry[];
               };
@@ -3665,39 +3668,91 @@ export default function TreeView() {
                 "Germanium": {
                   name: "Germanium", layer: "Raw Material",
                   whyItMatters: "Germanium is one of the only materials that seamlessly blends into existing silicon technology to both manipulate light and move electricity at ultra-high speeds. Without it, fiber optic cable cannot guide light.",
-                  supply: "~230 t/yr", demand: "~286t by 2027", gap: "~56t",
+                  supply: { total: "~230 t/yr", breakdown: [
+                    { source: "China", share: "~120t" }, { source: "Recycled (global)", share: "~90t" },
+                    { source: "Russia", share: "~11t" }, { source: "North America", share: "~6t" },
+                  ]},
+                  demand: { total: "~286t by 2027", breakdown: [
+                    { segment: "Fiber optics", share: "~87t" }, { segment: "IR defense optics", share: "~55t" },
+                    { segment: "Satellite solar", share: "~35t" }, { segment: "SiGe / other", share: "~53t" },
+                  ]},
+                  gap: "~56t",
+                  keyPlayers: [
+                    { name: "Yunnan Chihong", share: "~25%", flag: "cn" },
+                    { name: "Umicore", share: "~20%", flag: "be" },
+                    { name: "Teck Resources", share: "~5%", flag: "ca" },
+                  ],
                   whyCantScale: [
-                    "Germanium is never the primary product of any mine — it's a byproduct of zinc smelting. Output is set by zinc economics, not germanium demand.",
-                    "Even at $8,500/kg, germanium revenue is a rounding error in a zinc smelter's P&L. No one will increase zinc throughput for the germanium alone.",
-                    "Recycling is already near theoretical maximum. Umicore recovers >50% of input from recycled sources.",
+                    "Germanium is never the primary product of any mine — it's a byproduct of zinc smelting.",
+                    "Even at $8,500/kg, germanium revenue is a rounding error in a zinc smelter's P&L.",
+                    "Recycling is already near theoretical maximum.",
                   ],
                   navLabel: "Germanium", navPath: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
                 },
                 "Germanium Tetrachloride (GeCl4)": {
                   name: "GeCl₄", layer: "Intermediate / Precursor",
                   whyItMatters: "This is the hidden chokepoint. Raw germanium cannot be used in fiber — it must first be converted to ultra-pure GeCl₄ (8N purity). Only one commercial-scale western facility does this conversion.",
-                  supply: "~500 t/yr", demand: "~650t by 2027", gap: "~150t",
+                  supply: { total: "~500 t/yr", breakdown: [
+                    { source: "China", share: "~300t" }, { source: "Belgium (Umicore)", share: "~120t" },
+                    { source: "Russia", share: "~50t" }, { source: "Other", share: "~30t" },
+                  ]},
+                  demand: { total: "~650t by 2027", breakdown: [
+                    { segment: "Fiber optic preforms", share: "~520t" }, { segment: "IR optics (GeO₂)", share: "~80t" },
+                    { segment: "SiGe / other", share: "~50t" },
+                  ]},
+                  gap: "~150t",
+                  keyPlayers: [
+                    { name: "Umicore", share: ">50% (west)", flag: "be" },
+                    { name: "Chinese state plants", share: "~60% (global)", flag: "cn" },
+                    { name: "5N Plus", share: "Pre-commercial", flag: "ca" },
+                  ],
                   whyCantScale: [
-                    "8N+ purity refining requires proprietary techniques to remove arsenic and trace contaminants to parts-per-billion levels.",
-                    "Multi-year customer qualification cycles — fiber makers won't switch GeCl₄ suppliers without 12-24 months of testing.",
-                    "Umicore's Olen plant is the only western facility. No second source exists at commercial scale.",
+                    "8N+ purity refining requires proprietary techniques to remove contaminants to parts-per-billion levels.",
+                    "Multi-year customer qualification cycles — fiber makers won't switch suppliers without 12-24 months of testing.",
+                    "Umicore's Olen plant is the only western facility at commercial scale.",
                   ],
                 },
                 "Fiber Optic Cable": {
                   name: "Fiber Optic Cable", layer: "Component",
                   whyItMatters: "Fiber is the physical layer that connects everything inside AI datacenters. GPU racks, storage arrays, switches, and buildings are all linked by fiber. AI clusters use up to 36x more fiber than traditional CPU server racks.",
-                  supply: "720M km/yr", demand: "~850M km by 2027", gap: "130M km",
+                  supply: { total: "720M km/yr", breakdown: [
+                    { source: "China (YOFC, etc.)", share: "~310M km" }, { source: "North America (Corning)", share: "~220M km" },
+                    { source: "Europe (Prysmian)", share: "~100M km" }, { source: "Japan / India", share: "~90M km" },
+                  ]},
+                  demand: { total: "~850M km by 2027", breakdown: [
+                    { segment: "AI datacenters", share: "~255M km" }, { segment: "Telecom FTTH", share: "~340M km" },
+                    { segment: "BEAD / rural broadband", share: "~85M km" }, { segment: "Subsea & enterprise", share: "~170M km" },
+                  ]},
+                  gap: "130M km",
+                  keyPlayers: [
+                    { name: "Corning", share: "~40%", flag: "us" },
+                    { name: "YOFC", share: "~18%", flag: "cn" },
+                    { name: "Prysmian", share: "~12%", flag: "it" },
+                  ],
                   whyCantScale: [
                     "Preform manufacturing has an 18-24 month expansion cycle. Lines are at full utilization globally.",
-                    "One equipment supplier — Rosendahl Nextrom (Austria) — has 18-24 month order backlogs for preform deposition systems.",
-                    "Corning stopped selling bare glass fiber to other cable makers in late 2025, structurally tightening downstream supply.",
+                    "One equipment supplier — Rosendahl Nextrom (Austria) — has 18-24 month order backlogs.",
+                    "Corning stopped selling bare glass fiber to other cable makers in late 2025.",
                   ],
                   navLabel: "Fiber Optic Cable", navPath: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
                 },
                 "Connectivity": {
                   name: "AI Datacenter Connectivity", layer: "Subsystem",
                   whyItMatters: "Connectivity is where the fiber shows up in the real world. Inside every AI datacenter, fiber links GPU racks to switches to storage to other buildings. The networking layer determines how fast data moves between chips.",
-                  supply: "~$48B/yr", demand: "~$72B by 2027", gap: "~$24B",
+                  supply: { total: "~$48B/yr", breakdown: [
+                    { source: "North America", share: "~$22B" }, { source: "Asia-Pacific", share: "~$15B" },
+                    { source: "Europe", share: "~$8B" }, { source: "Rest of world", share: "~$3B" },
+                  ]},
+                  demand: { total: "~$72B by 2027", breakdown: [
+                    { segment: "AI datacenter networking", share: "~$32B" }, { segment: "Cloud / hyperscale", share: "~$20B" },
+                    { segment: "Telecom infrastructure", share: "~$12B" }, { segment: "Enterprise", share: "~$8B" },
+                  ]},
+                  gap: "~$24B",
+                  keyPlayers: [
+                    { name: "Arista Networks", share: "~30%", flag: "us" },
+                    { name: "Cisco", share: "~25%", flag: "us" },
+                    { name: "Broadcom", share: "~35% (silicon)", flag: "us" },
+                  ],
                   whyCantScale: [
                     "800G and 1.6T optical transceivers face silicon photonics yield issues at leading edge.",
                     "Network switch capacity (Broadcom Tomahawk, Cisco Silicon One) has 40+ week lead times.",
@@ -3713,6 +3768,8 @@ export default function TreeView() {
                 const sectionTitle = { fontSize: 11 as const, color: "rgb(219, 219, 218)" as const, fontWeight: 500 as const, margin: "0 0 6px 0" as const };
                 const bulletDot = { width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0 as const, marginTop: 6 };
                 const bulletText = { fontSize: 10 as const, color: "rgb(160, 152, 136)" as const, lineHeight: 1.5 as const, margin: 0 as const };
+                const tblRow = { fontSize: 9 as const, color: "rgb(160, 152, 136)" as const, padding: "3px 0" as const, fontFamily: "'Geist Mono', monospace" as const };
+                const tblVal = { ...tblRow, textAlign: "right" as const, color: "#ece8e1" };
 
                 return (
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -3728,22 +3785,65 @@ export default function TreeView() {
                       <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{data.whyItMatters}</p>
                     </div>
 
-                    {/* Supply / Demand / Gap */}
-                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 8 }}>
-                      <p style={sectionTitle}>Supply &amp; Demand</p>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <p style={{ ...labelStyle, margin: 0 }}>SUPPLY</p>
-                        <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.supply}</p>
+                    {/* Supply */}
+                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
+                        <p style={sectionTitle}>Supply</p>
+                        <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.supply.total}</p>
                       </div>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <p style={{ ...labelStyle, margin: 0 }}>DEMAND</p>
-                        <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.demand}</p>
+                      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                        <tbody>
+                          {data.supply.breakdown.map(r => (
+                            <tr key={r.source}>
+                              <td style={tblRow}>{r.source}</td>
+                              <td style={tblVal}>{r.share}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Demand */}
+                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
+                        <p style={sectionTitle}>Demand</p>
+                        <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.demand.total}</p>
                       </div>
-                      <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)" }} />
+                      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                        <tbody>
+                          {data.demand.breakdown.map(r => (
+                            <tr key={r.segment}>
+                              <td style={tblRow}>{r.segment}</td>
+                              <td style={tblVal}>{r.share}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "6px 0" }} />
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                         <p style={{ ...labelStyle, margin: 0 }}>GAP</p>
                         <p style={{ fontSize: 11, color: "#c87a4a", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.gap}</p>
                       </div>
+                    </div>
+
+                    {/* Key Players */}
+                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px" }}>
+                      <p style={sectionTitle}>Key Players</p>
+                      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                        <tbody>
+                          {data.keyPlayers.map(p => (
+                            <tr key={p.name}>
+                              <td style={{ padding: "3px 0", fontSize: 10 }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                  <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                                  <span style={{ color: "#ece8e1", fontWeight: 500 }}>{p.name}</span>
+                                </div>
+                              </td>
+                              <td style={{ padding: "3px 0", fontSize: 9, color: "rgb(160, 152, 136)", textAlign: "right", fontFamily: "'Geist Mono', monospace" }}>{p.share}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
 
                     {/* Why Supply Can't Scale */}
