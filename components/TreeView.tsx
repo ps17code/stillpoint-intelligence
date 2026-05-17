@@ -3771,84 +3771,85 @@ export default function TreeView() {
                 const tblRow = { fontSize: 9 as const, color: "rgb(160, 152, 136)" as const, padding: "3px 0" as const, fontFamily: "'Geist Mono', monospace" as const };
                 const tblVal = { ...tblRow, textAlign: "right" as const, color: "#ece8e1" };
 
+                const divider = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
+
                 return (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  <div style={{ background: cardBg, borderRadius: 6, padding: "12px 12px" }}>
                     {/* Header */}
-                    <div>
-                      <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: "0 0 2px 0", fontFamily: "'EB Garamond', Georgia, serif" }}>{data.name}</p>
-                      <p style={{ ...labelStyle, margin: 0 }}>{data.layer}</p>
-                    </div>
+                    <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: "0 0 2px 0", fontFamily: "'EB Garamond', Georgia, serif" }}>{data.name}</p>
+                    <p style={{ ...labelStyle, margin: 0 }}>{data.layer}</p>
+
+                    {divider}
 
                     {/* Why It Matters */}
-                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px" }}>
-                      <p style={sectionTitle}>Why It Matters</p>
-                      <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{data.whyItMatters}</p>
-                    </div>
+                    <p style={sectionTitle}>Why It Matters</p>
+                    <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{data.whyItMatters}</p>
+
+                    {divider}
 
                     {/* Supply */}
-                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
-                        <p style={sectionTitle}>Supply</p>
-                        <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.supply.total}</p>
-                      </div>
-                      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                        <tbody>
-                          {data.supply.breakdown.map(r => (
-                            <tr key={r.source}>
-                              <td style={tblRow}>{r.source}</td>
-                              <td style={tblVal}>{r.share}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
+                      <p style={sectionTitle}>Supply</p>
+                      <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.supply.total}</p>
                     </div>
+                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                      <tbody>
+                        {data.supply.breakdown.map(r => (
+                          <tr key={r.source}>
+                            <td style={tblRow}>{r.source}</td>
+                            <td style={tblVal}>{r.share}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+
+                    {divider}
 
                     {/* Demand */}
-                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
-                        <p style={sectionTitle}>Demand</p>
-                        <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.demand.total}</p>
-                      </div>
-                      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                        <tbody>
-                          {data.demand.breakdown.map(r => (
-                            <tr key={r.segment}>
-                              <td style={tblRow}>{r.segment}</td>
-                              <td style={tblVal}>{r.share}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                      <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "6px 0" }} />
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <p style={{ ...labelStyle, margin: 0 }}>GAP</p>
-                        <p style={{ fontSize: 11, color: "#c87a4a", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.gap}</p>
-                      </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
+                      <p style={sectionTitle}>Demand</p>
+                      <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.demand.total}</p>
                     </div>
+                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                      <tbody>
+                        {data.demand.breakdown.map(r => (
+                          <tr key={r.segment}>
+                            <td style={tblRow}>{r.segment}</td>
+                            <td style={tblVal}>{r.share}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: 6 }}>
+                      <p style={{ ...labelStyle, margin: 0 }}>GAP</p>
+                      <p style={{ fontSize: 11, color: "#c87a4a", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.gap}</p>
+                    </div>
+
+                    {divider}
 
                     {/* Key Players */}
-                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px" }}>
-                      <p style={sectionTitle}>Key Players</p>
-                      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                        <tbody>
-                          {data.keyPlayers.map(p => (
-                            <tr key={p.name}>
-                              <td style={{ padding: "3px 0", fontSize: 10 }}>
-                                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                  <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                                  <span style={{ color: "#ece8e1", fontWeight: 500 }}>{p.name}</span>
-                                </div>
-                              </td>
-                              <td style={{ padding: "3px 0", fontSize: 9, color: "rgb(160, 152, 136)", textAlign: "right", fontFamily: "'Geist Mono', monospace" }}>{p.share}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+                    <p style={sectionTitle}>Key Players</p>
+                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                      <tbody>
+                        {data.keyPlayers.map(p => (
+                          <tr key={p.name}>
+                            <td style={{ padding: "3px 0", fontSize: 10 }}>
+                              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                                <span style={{ color: "#ece8e1", fontWeight: 500 }}>{p.name}</span>
+                              </div>
+                            </td>
+                            <td style={{ padding: "3px 0", fontSize: 9, color: "rgb(160, 152, 136)", textAlign: "right", fontFamily: "'Geist Mono', monospace" }}>{p.share}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+
+                    {divider}
 
                     {/* Why Supply Can't Scale */}
-                    <div style={{ background: cardBg, borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
-                      <p style={sectionTitle}>Why Supply Can&apos;t Scale</p>
+                    <p style={sectionTitle}>Why Supply Can&apos;t Scale</p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                       {data.whyCantScale.map((b, i) => (
                         <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
                           <span style={bulletDot} />
@@ -3859,25 +3860,28 @@ export default function TreeView() {
 
                     {/* Navigate button */}
                     {data.navPath && (
-                      <button
-                        onClick={() => {
-                          setPath(data.navPath!);
-                          setAnimKey(k => k + 1);
-                          setSelectedTreeNode(null);
-                          setSelectedGroup(null);
-                          setSelectedFeaturedChain(null);
-                        }}
-                        style={{
-                          background: "transparent", border: "1px solid rgba(255,255,255,0.1)",
-                          borderRadius: 4, padding: "8px 14px", cursor: "pointer",
-                          fontSize: 10, color: muted, transition: "border-color 0.15s, color 0.15s",
-                          width: "100%",
-                        }}
-                        onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.color = warmWhite; }}
-                        onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = muted; }}
-                      >
-                        View {data.navLabel}&apos;s Page &rarr;
-                      </button>
+                      <>
+                        {divider}
+                        <button
+                          onClick={() => {
+                            setPath(data.navPath!);
+                            setAnimKey(k => k + 1);
+                            setSelectedTreeNode(null);
+                            setSelectedGroup(null);
+                            setSelectedFeaturedChain(null);
+                          }}
+                          style={{
+                            background: "rgb(36, 36, 36)", border: "none",
+                            borderRadius: 4, padding: "8px 14px", cursor: "pointer",
+                            fontSize: 10, color: "#fff", transition: "opacity 0.15s",
+                            width: "100%",
+                          }}
+                          onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
+                          onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                        >
+                          View {data.navLabel}&apos;s Page &rarr;
+                        </button>
+                      </>
                     )}
                   </div>
                 );
