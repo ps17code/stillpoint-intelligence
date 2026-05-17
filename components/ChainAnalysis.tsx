@@ -2,47 +2,51 @@
 import React from "react";
 
 const amber = "#c87a4a";
-const amberBg = "rgba(200, 122, 74, 0.06)";
 const warmWhite = "#ece8e1";
 const dimmer = "#4a4540";
 const numColor = "rgb(160, 152, 136)";
 const border = "rgba(255,255,255,0.04)";
 const mono = "'Geist Mono', monospace";
+const cardBg = "rgb(30, 30, 30)";
+const headerBg = "rgb(38, 38, 38)";
 
 export default function ChainAnalysis() {
   return (
     <div style={{ border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
-      <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 12px 0" }}>Chain Summary</p>
-      <div style={{ display: "grid", gridTemplateColumns: "0.7fr 2fr 0.9fr", gap: 14 }}>
+      <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 14px 0" }}>Chain Summary</p>
 
-        {/* Column 1: What's the Demand */}
-        <div style={{ background: "rgb(30, 30, 30)", border: `1px solid ${border}`, borderRadius: 4, padding: "10px 12px" }}>
-          <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 12px 0", fontFamily: "'Instrument Serif', serif" }}>What&apos;s the Demand</p>
+      <div style={{ display: "grid", gridTemplateColumns: "0.65fr 2fr 0.85fr", gap: 12 }}>
 
-          <p style={{ fontSize: 9, color: numColor, margin: "0 0 2px 0" }}>1 GW AI Data Center</p>
-          <p style={{ fontSize: 14, color: amber, fontWeight: 600, margin: "0 0 10px 0", fontFamily: mono }}>9M KM FIBER</p>
+        {/* Card 1: What's the Demand */}
+        <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 4, padding: "12px 14px", display: "flex", flexDirection: "column" }}>
+          <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 16px 0", fontFamily: "'Instrument Serif', serif", fontStyle: "italic" }}>What&apos;s the Demand</p>
 
-          <div style={{ height: 1, background: border, margin: "0 0 10px 0" }} />
+          <p style={{ fontSize: 9, color: numColor, margin: "0 0 2px 0", fontFamily: mono }}>1 GW AI Data Center</p>
+          <p style={{ fontSize: 15, color: amber, fontWeight: 700, margin: "0 0 14px 0", fontFamily: mono }}>9M KM FIBER</p>
 
-          <p style={{ fontSize: 9, color: numColor, margin: "0 0 2px 0" }}>20 GW Annual Demand</p>
-          <p style={{ fontSize: 14, color: warmWhite, fontWeight: 600, margin: "0 0 10px 0", fontFamily: mono }}>120M KM FIBER</p>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 0 14px 0" }} />
 
-          <div style={{ height: 1, background: border, margin: "0 0 10px 0" }} />
+          <p style={{ fontSize: 9, color: numColor, margin: "0 0 2px 0", fontFamily: mono }}>20 GW Annual Demand</p>
+          <p style={{ fontSize: 15, color: warmWhite, fontWeight: 700, margin: "0 0 14px 0", fontFamily: mono }}>120M KM FIBER</p>
 
-          <p style={{ fontSize: 9, color: numColor, margin: "0 0 6px 0" }}>Upstream Requirements</p>
-          <p style={{ fontSize: 11, color: warmWhite, fontWeight: 600, margin: "0 0 2px 0", fontFamily: mono }}>50T GeCl₄</p>
-          <p style={{ fontSize: 11, color: warmWhite, fontWeight: 600, margin: 0, fontFamily: mono }}>50T Germanium</p>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 0 14px 0" }} />
+
+          <p style={{ fontSize: 9, color: numColor, margin: "0 0 8px 0", fontFamily: mono }}>Upstream Requirements</p>
+          <p style={{ fontSize: 12, color: warmWhite, fontWeight: 700, margin: "0 0 3px 0", fontFamily: mono }}>50T GeCl₄</p>
+          <p style={{ fontSize: 12, color: warmWhite, fontWeight: 700, margin: 0, fontFamily: mono }}>50T Germanium</p>
         </div>
 
-        {/* Column 2: Can Supply Respond */}
-        <div style={{ background: "rgb(30, 30, 30)", border: `1px solid ${border}`, borderRadius: 4, padding: "10px 12px" }}>
-          <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 10px 0", fontFamily: "'Instrument Serif', serif" }}>Can Supply Respond</p>
+        {/* Card 2: Can Supply Respond */}
+        <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 4, overflow: "hidden", display: "flex", flexDirection: "column" }}>
+          <div style={{ padding: "12px 14px 10px" }}>
+            <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif", fontStyle: "italic" }}>Can Supply Respond</p>
+          </div>
 
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
-              <tr>
+              <tr style={{ background: headerBg }}>
                 {["Layers", "Supply / Gap", "Constraints", "Summary"].map((h, i) => (
-                  <th key={i} style={{ textAlign: "left", padding: "0 8px 8px 0", fontSize: 7, letterSpacing: "0.06em", color: dimmer, fontWeight: 500, fontFamily: mono, textTransform: "uppercase", borderBottom: `1px solid ${border}` }}>{h}</th>
+                  <th key={i} style={{ textAlign: "left", padding: "8px 10px", fontSize: 7, letterSpacing: "0.08em", color: dimmer, fontWeight: 500, fontFamily: mono, textTransform: "uppercase" }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -61,7 +65,6 @@ export default function ChainAnalysis() {
                   expandability: "Very Low", expandColor: amber,
                   time: "2–5 yrs", timeColor: amber,
                   concentration: "Very High", concColor: amber,
-                  tag: "PRIMARY CHOKEPOINT",
                 },
                 {
                   layer: "Germanium", supply: "220 t/yr", gap: "230 t",
@@ -71,29 +74,22 @@ export default function ChainAnalysis() {
                   concentration: "High", concColor: numColor,
                 },
               ].map((row, i) => (
-                <tr key={i} style={{ borderBottom: i < 2 ? `1px solid ${border}` : "none" }}>
-                  <td style={{ padding: "10px 8px 10px 0", fontSize: 11, color: warmWhite, fontWeight: 500, verticalAlign: "top", whiteSpace: "nowrap" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      {row.layer}
-                      {(row as { tag?: string }).tag && (
-                        <span style={{ fontSize: 5, letterSpacing: "0.06em", textTransform: "uppercase" as const, color: amber, background: amberBg, border: "0.5px solid rgba(200,122,74,0.3)", padding: "1px 4px", borderRadius: 2, fontFamily: mono }}>{(row as { tag?: string }).tag}</span>
-                      )}
-                    </div>
-                  </td>
-                  <td style={{ padding: "10px 8px 10px 0", verticalAlign: "top", whiteSpace: "nowrap" }}>
-                    <p style={{ fontSize: 9, color: numColor, margin: "0 0 1px 0", fontFamily: mono }}>Supply: {row.supply}</p>
+                <tr key={i} style={{ borderTop: `1px solid ${border}` }}>
+                  <td style={{ padding: "14px 10px", fontSize: 13, color: warmWhite, fontWeight: 500, verticalAlign: "middle", whiteSpace: "nowrap" }}>{row.layer}</td>
+                  <td style={{ padding: "14px 10px", verticalAlign: "middle", whiteSpace: "nowrap" }}>
+                    <p style={{ fontSize: 9, color: numColor, margin: "0 0 2px 0", fontFamily: mono }}>Supply: {row.supply}</p>
                     <p style={{ fontSize: 9, color: amber, margin: 0, fontFamily: mono, fontWeight: 500 }}>Gap: {row.gap}</p>
                   </td>
-                  <td style={{ padding: "10px 8px 10px 0", verticalAlign: "top" }}>
+                  <td style={{ padding: "14px 10px", verticalAlign: "middle" }}>
                     <p style={{ fontSize: 9, color: numColor, lineHeight: 1.5, margin: 0 }}>{row.constraints}</p>
                   </td>
-                  <td style={{ padding: "10px 0 10px 0", verticalAlign: "top", minWidth: 120 }}>
+                  <td style={{ padding: "14px 10px", verticalAlign: "middle", minWidth: 130 }}>
                     {[
                       { label: "Expandability", value: row.expandability, color: row.expandColor },
                       { label: "Time", value: row.time, color: row.timeColor },
                       { label: "Concentration", value: row.concentration, color: row.concColor },
                     ].map(m => (
-                      <div key={m.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8, marginBottom: 2 }}>
+                      <div key={m.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8, marginBottom: 1 }}>
                         <span style={{ fontSize: 8, color: dimmer }}>{m.label}</span>
                         <span style={{ fontSize: 9, color: m.color, fontFamily: mono, fontWeight: 500 }}>{m.value}</span>
                       </div>
@@ -105,41 +101,35 @@ export default function ChainAnalysis() {
           </table>
         </div>
 
-        {/* Column 3: Where's the Chokepoint */}
-        <div>
-          <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 10px 0", fontFamily: "'Instrument Serif', serif" }}>Where&apos;s the Chokepoint</p>
+        {/* Card 3: Where's the Chokepoint */}
+        <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 4, padding: "12px 14px", display: "flex", flexDirection: "column" }}>
+          <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 14px 0", fontFamily: "'Instrument Serif', serif", fontStyle: "italic" }}>Where&apos;s the Chokepoint</p>
 
-          <div style={{ background: "rgb(30, 30, 30)", border: `1px solid ${border}`, borderRadius: 4, padding: "10px 12px", marginBottom: 8 }}>
-            <p style={{ fontSize: 7, letterSpacing: "0.1em", color: amber, textTransform: "uppercase", margin: "0 0 3px 0", fontFamily: mono }}>Primary Chokepoint</p>
-            <p style={{ fontSize: 20, color: warmWhite, fontWeight: 400, margin: "0 0 10px 0", fontFamily: "'Instrument Serif', serif" }}>GeCl₄</p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              {[
-                "Every fiber expansion path still requires GeCl₄",
-                "Trusted Western supply is highly concentrated",
-                "Capacity expands slower than AI demand",
-              ].map((b, i) => (
-                <div key={i} style={{ display: "flex", gap: 5, alignItems: "baseline" }}>
-                  <span style={{ width: 3, height: 3, borderRadius: "50%", background: amber, flexShrink: 0, marginTop: 4 }} />
-                  <p style={{ fontSize: 9, color: numColor, lineHeight: 1.4, margin: 0 }}>{b}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          <p style={{ fontSize: 7, letterSpacing: "0.1em", color: amber, textTransform: "uppercase", margin: "0 0 4px 0", fontFamily: mono }}>Primary Chokepoint</p>
+          <p style={{ fontSize: 22, color: warmWhite, fontWeight: 400, margin: "0 0 12px 0", fontFamily: "'Instrument Serif', serif" }}>GeCl₄</p>
 
-          <div style={{ background: amberBg, border: "0.5px solid rgba(200, 122, 74, 0.2)", borderRadius: 4, padding: "8px 10px" }}>
-            <p style={{ fontSize: 7, letterSpacing: "0.08em", color: amber, textTransform: "uppercase", margin: "0 0 6px 0", fontFamily: mono }}>Key Players</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 5, marginBottom: 16 }}>
             {[
-              { name: "Umicore", flag: "be", desc: "Only Western refiner producing fiber-grade GeCl₄ at commercial scale" },
-            ].map((p, i) => (
-              <div key={i} style={{ padding: i > 0 ? "6px 0 0 0" : 0 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                  <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{p.name}</span>
-                </div>
-                <p style={{ fontSize: 8, color: numColor, lineHeight: 1.4, margin: "3px 0 0 18px" }}>{p.desc}</p>
+              "Every fiber expansion path still requires GeCl₄",
+              "Trusted Western supply is highly concentrated",
+              "Capacity expands slower than AI demand",
+            ].map((b, i) => (
+              <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                <span style={{ width: 4, height: 4, borderRadius: "50%", background: amber, flexShrink: 0, marginTop: 4 }} />
+                <p style={{ fontSize: 9, color: numColor, lineHeight: 1.4, margin: 0 }}>{b}</p>
               </div>
             ))}
           </div>
+
+          <p style={{ fontSize: 7, letterSpacing: "0.08em", color: amber, textTransform: "uppercase", margin: "0 0 8px 0", fontFamily: mono }}>Key Players</p>
+          {[
+            { name: "Umicore", flag: "be" },
+          ].map((p, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 14, height: 10, borderRadius: 1, opacity: 0.8, flexShrink: 0 }} />
+              <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{p.name}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
