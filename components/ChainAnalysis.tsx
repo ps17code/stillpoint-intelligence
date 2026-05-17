@@ -13,7 +13,7 @@ const titleStyle = { fontSize: 12, color: warmWhite, fontWeight: 500 as const, m
 
 export default function ChainAnalysis() {
   return (
-    <div style={{ border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
+    <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
       <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 14px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: mono }}>Chain Summary</p>
 
       <div style={{ display: "grid", gridTemplateColumns: "0.6fr 2fr 0.85fr", gap: 12 }}>

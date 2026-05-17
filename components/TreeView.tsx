@@ -2191,6 +2191,7 @@ export default function TreeView() {
         ];
 
         return (
+          <>
           <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden" }}>
             {/* Header row: title + toggle */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 15px" }}>
@@ -2220,6 +2221,7 @@ export default function TreeView() {
                 })}
               </div>
             </div>
+            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
 
             <div style={{ padding: "0 15px 15px" }}>
               {/* Diagram view */}
@@ -2293,6 +2295,12 @@ export default function TreeView() {
               )}
             </div>
           </div>
+          {selectedFeaturedChain === "germanium_chokepoint" && (
+            <div style={{ marginTop: 20 }}>
+              <ChainAnalysis />
+            </div>
+          )}
+          </>
         );
       }
 
@@ -3178,12 +3186,7 @@ export default function TreeView() {
             </div>
           </div>
 
-          {/* Chain Analysis section — shown when featured chain is selected on AI tree */}
-          {selectedFeaturedChain === "germanium_chokepoint" && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
-            <div style={{ flexShrink: 0, padding: "10px 30px" }}>
-              <ChainAnalysis />
-            </div>
-          )}
+          {/* Chain Analysis moved inside value chain panel */}
 
           {/* Bottom section — key takeaways (hidden on investment ideas tab) */}
           <div style={{
