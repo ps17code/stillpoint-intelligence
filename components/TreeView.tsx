@@ -2255,7 +2255,7 @@ export default function TreeView() {
                       <div
                         key={step.name}
                         onClick={() => { if (nodeId) { setSelectedTreeNode(nodeId); setRightTab("summary"); } else { setSelectedSubsystem(step.name); } }}
-                        style={{ cursor: nodeId ? "pointer" : "default", display: "flex", flexDirection: "column", background: isSelected ? "rgb(36, 33, 28)" : "transparent", padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s" }}
+                        style={{ cursor: nodeId ? "pointer" : "default", display: "flex", flexDirection: "column", background: isSelected ? "rgb(37, 37, 37)" : "transparent", borderRadius: isSelected ? 5 : 0, padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s" }}
                       >
                         {/* Name row with dot and connecting line */}
                         <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
