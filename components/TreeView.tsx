@@ -3279,7 +3279,7 @@ export default function TreeView() {
           overflow: "hidden",
         }}>
           {/* Top section — price chart (tree) or geo summary / node detail (globe) + tabs */}
-          <div style={{ flexShrink: 0, height: 145, padding: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? "8px 12px 0" : "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+          <div style={{ flexShrink: 0, height: 105, padding: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? "8px 12px 0" : "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
             {centerView === "tree" && (
               <>
                 {lastEntry && INPUT_PRICE_HISTORY[lastEntry.id] && (
@@ -3657,7 +3657,7 @@ export default function TreeView() {
               // ── Chain step panel data ──
               type ChainStepData = {
                 name: string; layer: string; whyItMatters: string;
-                supply: { total: string; breakdown: { source: string; share: string }[] };
+                supply: { total: string; breakdown: { source: string; share: string; pct: number }[] };
                 demand: { total: string; breakdown: { segment: string; share: string }[] };
                 gap: string;
                 keyPlayers: { name: string; share: string; flag: string }[];
@@ -3669,8 +3669,8 @@ export default function TreeView() {
                   name: "Germanium", layer: "Raw Material",
                   whyItMatters: "Germanium is one of the only materials that seamlessly blends into existing silicon technology to both manipulate light and move electricity at ultra-high speeds. Without it, fiber optic cable cannot guide light.",
                   supply: { total: "~230 t/yr", breakdown: [
-                    { source: "China", share: "~120t" }, { source: "Recycled (global)", share: "~90t" },
-                    { source: "Russia", share: "~11t" }, { source: "North America", share: "~6t" },
+                    { source: "China", share: "~120t", pct: 52 }, { source: "Recycled (global)", share: "~90t", pct: 39 },
+                    { source: "Russia", share: "~11t", pct: 5 }, { source: "North America", share: "~6t", pct: 4 },
                   ]},
                   demand: { total: "~286t by 2027", breakdown: [
                     { segment: "Fiber optics", share: "~87t" }, { segment: "IR defense optics", share: "~55t" },
@@ -3693,8 +3693,8 @@ export default function TreeView() {
                   name: "GeCl₄", layer: "Intermediate / Precursor",
                   whyItMatters: "This is the hidden chokepoint. Raw germanium cannot be used in fiber — it must first be converted to ultra-pure GeCl₄ (8N purity). Only one commercial-scale western facility does this conversion.",
                   supply: { total: "~500 t/yr", breakdown: [
-                    { source: "China", share: "~300t" }, { source: "Belgium (Umicore)", share: "~120t" },
-                    { source: "Russia", share: "~50t" }, { source: "Other", share: "~30t" },
+                    { source: "China", share: "~300t", pct: 60 }, { source: "Belgium (Umicore)", share: "~120t", pct: 24 },
+                    { source: "Russia", share: "~50t", pct: 10 }, { source: "Other", share: "~30t", pct: 6 },
                   ]},
                   demand: { total: "~650t by 2027", breakdown: [
                     { segment: "Fiber optic preforms", share: "~520t" }, { segment: "IR optics (GeO₂)", share: "~80t" },
@@ -3716,8 +3716,8 @@ export default function TreeView() {
                   name: "Fiber Optic Cable", layer: "Component",
                   whyItMatters: "Fiber is the physical layer that connects everything inside AI datacenters. GPU racks, storage arrays, switches, and buildings are all linked by fiber. AI clusters use up to 36x more fiber than traditional CPU server racks.",
                   supply: { total: "720M km/yr", breakdown: [
-                    { source: "China (YOFC, etc.)", share: "~310M km" }, { source: "North America (Corning)", share: "~220M km" },
-                    { source: "Europe (Prysmian)", share: "~100M km" }, { source: "Japan / India", share: "~90M km" },
+                    { source: "China (YOFC)", share: "~310M km", pct: 43 }, { source: "N. America (Corning)", share: "~220M km", pct: 31 },
+                    { source: "Europe (Prysmian)", share: "~100M km", pct: 14 }, { source: "Japan / India", share: "~90M km", pct: 12 },
                   ]},
                   demand: { total: "~850M km by 2027", breakdown: [
                     { segment: "AI datacenters", share: "~255M km" }, { segment: "Telecom FTTH", share: "~340M km" },
@@ -3740,8 +3740,8 @@ export default function TreeView() {
                   name: "AI Datacenter Connectivity", layer: "Subsystem",
                   whyItMatters: "Connectivity is where the fiber shows up in the real world. Inside every AI datacenter, fiber links GPU racks to switches to storage to other buildings. The networking layer determines how fast data moves between chips.",
                   supply: { total: "~$48B/yr", breakdown: [
-                    { source: "North America", share: "~$22B" }, { source: "Asia-Pacific", share: "~$15B" },
-                    { source: "Europe", share: "~$8B" }, { source: "Rest of world", share: "~$3B" },
+                    { source: "North America", share: "~$22B", pct: 46 }, { source: "Asia-Pacific", share: "~$15B", pct: 31 },
+                    { source: "Europe", share: "~$8B", pct: 17 }, { source: "Rest of world", share: "~$3B", pct: 6 },
                   ]},
                   demand: { total: "~$72B by 2027", breakdown: [
                     { segment: "AI datacenter networking", share: "~$32B" }, { segment: "Cloud / hyperscale", share: "~$20B" },
@@ -3788,20 +3788,46 @@ export default function TreeView() {
                     {divider}
 
                     {/* Supply */}
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
                       <p style={sectionTitle}>Supply</p>
                       <p style={{ fontSize: 11, color: "#ece8e1", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.supply.total}</p>
                     </div>
-                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                      <tbody>
-                        {data.supply.breakdown.map(r => (
-                          <tr key={r.source}>
-                            <td style={tblRow}>{r.source}</td>
-                            <td style={tblVal}>{r.share}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                    {/* Pie chart + legend */}
+                    {(() => {
+                      const pieColors = ["#c87a4a", "#706a60", "#4a4540", "#3a3835"];
+                      const R = 36, cx = 44, cy = 44, stroke = 14;
+                      const circ = 2 * Math.PI * R;
+                      let offset = 0;
+                      return (
+                        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                          <svg width={88} height={88} viewBox="0 0 88 88" style={{ flexShrink: 0 }}>
+                            {data.supply.breakdown.map((s, si) => {
+                              const pct = s.pct / 100;
+                              const dashLen = pct * circ;
+                              const dashOff = -offset;
+                              offset += dashLen;
+                              return (
+                                <circle key={si} cx={cx} cy={cy} r={R} fill="none"
+                                  stroke={pieColors[si % pieColors.length]} strokeWidth={stroke}
+                                  strokeDasharray={`${dashLen} ${circ - dashLen}`}
+                                  strokeDashoffset={dashOff}
+                                  transform={`rotate(-90 ${cx} ${cy})`}
+                                />
+                              );
+                            })}
+                          </svg>
+                          <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
+                            {data.supply.breakdown.map((s, si) => (
+                              <div key={s.source} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                <span style={{ width: 6, height: 6, borderRadius: 1, background: pieColors[si % pieColors.length], flexShrink: 0 }} />
+                                <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", flex: 1 }}>{s.source}</span>
+                                <span style={{ fontSize: 8, color: "#ece8e1", fontFamily: "'Geist Mono', monospace" }}>{s.pct}%</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })()}
 
                     {divider}
 
@@ -3844,19 +3870,6 @@ export default function TreeView() {
                         ))}
                       </tbody>
                     </table>
-
-                    {divider}
-
-                    {/* Why Supply Can't Scale */}
-                    <p style={sectionTitle}>Why Supply Can&apos;t Scale</p>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                      {data.whyCantScale.map((b, i) => (
-                        <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                          <span style={bulletDot} />
-                          <p style={bulletText}>{b}</p>
-                        </div>
-                      ))}
-                    </div>
 
                     {/* Navigate button */}
                     {data.navPath && (
