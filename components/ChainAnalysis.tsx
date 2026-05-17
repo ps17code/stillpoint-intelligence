@@ -14,7 +14,7 @@ const titleStyle = { fontSize: 12, color: warmWhite, fontWeight: 500 as const, m
 export default function ChainAnalysis() {
   return (
     <div style={{ border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
-      <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 14px 0" }}>Chain Summary</p>
+      <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 14px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: mono }}>Chain Summary</p>
 
       <div style={{ display: "grid", gridTemplateColumns: "0.6fr 2fr 0.85fr", gap: 12 }}>
 
@@ -45,11 +45,11 @@ export default function ChainAnalysis() {
             <thead>
               <tr style={{ background: headerBg }}>
                 {["Layers", "Supply / Gap", "Constraints", "Summary"].map((h, i) => (
-                  <th key={i} style={{ textAlign: "left", padding: "8px 10px", fontSize: 7, letterSpacing: "0.08em", color: dimmer, fontWeight: 500, fontFamily: mono, textTransform: "uppercase" }}>{h}</th>
+                  <th key={i} style={{ textAlign: "left", padding: "8px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: mono, textTransform: "uppercase" }}>{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{ background: "rgba(23, 22, 22, 1)" }}>
               {[
                 {
                   layer: "Fiber", supply: "7B km/yr", gap: "6B km",

@@ -3183,7 +3183,7 @@ export default function TreeView() {
 
           {/* Chain Analysis section — shown when featured chain is selected on AI tree */}
           {selectedFeaturedChain === "germanium_chokepoint" && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
-            <div style={{ flexShrink: 0, padding: "0 30px 20px" }}>
+            <div style={{ flexShrink: 0, padding: "10px 30px" }}>
               <ChainAnalysis />
             </div>
           )}
