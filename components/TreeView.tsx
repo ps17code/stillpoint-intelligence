@@ -2199,6 +2199,16 @@ export default function TreeView() {
           { name: "AI Datacenter Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "This is where it shows up: fiber linking GPUs, switches, storage, and buildings across AI clusters." },
         ];
 
+        const subsystemSteps = [
+          { name: "Compute", img: "/subsystems/compute.jpg", desc: "Processes AI workloads using GPUs, accelerators, and server boards assembled into high-density rack systems." },
+          { name: "Connectivity", img: "/subsystems/connectivity.jpg", desc: "Moves data between chips, racks, and buildings using fiber optic cable, transceivers, and network switches." },
+          { name: "Cooling", img: "/subsystems/cooling.jpg", desc: "Removes heat from servers using chilled water loops, cooling towers, and liquid-to-chip thermal systems." },
+          { name: "Power", img: "/subsystems/power.jpg", desc: "Delivers electricity from the grid through transformers, switchgear, and UPS systems to every rack." },
+          { name: "Physical Structure", img: "/subsystems/physical-structure.jpg", desc: "Houses all equipment inside steel-framed, climate-controlled buildings built on reinforced concrete foundations." },
+        ];
+
+        const diagramSteps = selectedFeaturedChain ? chainSteps : subsystemSteps;
+
         return (
           <>
           <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden" }}>
@@ -2235,21 +2245,22 @@ export default function TreeView() {
             <div style={{ padding: "0 15px 10px" }}>
               {/* Diagram view */}
               {chainTreeTab === "diagram" && (
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 0 }}>
-                  {chainSteps.map((step, i) => {
-                    const isSelected = selectedTreeNode === step.nodeId;
+                <div style={{ display: "grid", gridTemplateColumns: `repeat(${diagramSteps.length}, 1fr)`, gap: 0 }}>
+                  {diagramSteps.map((step, i) => {
+                    const nodeId = (step as { nodeId?: string }).nodeId;
+                    const isSelected = nodeId ? selectedTreeNode === nodeId : false;
                     const dotColor = "#c87a4a";
                     return (
                       <div
                         key={step.name}
-                        onClick={() => { setSelectedTreeNode(step.nodeId); setRightTab("summary"); }}
-                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? "rgb(36, 33, 28)" : "transparent", padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s" }}
+                        onClick={() => { if (nodeId) { setSelectedTreeNode(nodeId); setRightTab("summary"); } }}
+                        style={{ cursor: nodeId ? "pointer" : "default", display: "flex", flexDirection: "column", background: isSelected ? "rgb(36, 33, 28)" : "transparent", padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s" }}
                       >
                         {/* Name row with dot and connecting line */}
                         <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
                           <span style={{ width: 5, height: 5, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
                           <p style={{ fontSize: 13, fontWeight: 500, color: "#ece8e1", margin: "0 0 0 6px", fontFamily: "'EB Garamond', Georgia, serif", whiteSpace: "nowrap", flexShrink: 0 }}>{step.name}</p>
-                          {i < chainSteps.length - 1 && (
+                          {i < diagramSteps.length - 1 && (
                             <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)", marginLeft: 8 }} />
                           )}
                         </div>
