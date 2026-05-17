@@ -9,38 +9,37 @@ const border = "rgba(255,255,255,0.04)";
 const mono = "'Geist Mono', monospace";
 const cardBg = "rgb(30, 30, 30)";
 const headerBg = "rgb(38, 38, 38)";
+const titleStyle = { fontSize: 12, color: warmWhite, fontWeight: 500 as const, margin: "0 0 15px 0" as const, fontFamily: "'Instrument Serif', serif" };
 
 export default function ChainAnalysis() {
   return (
     <div style={{ border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
       <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 14px 0" }}>Chain Summary</p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "0.65fr 2fr 0.85fr", gap: 12 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "0.6fr 2fr 0.85fr", gap: 12 }}>
 
         {/* Card 1: What's the Demand */}
         <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 4, padding: "12px 14px", display: "flex", flexDirection: "column" }}>
-          <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 16px 0", fontFamily: "'Instrument Serif', serif", fontStyle: "italic" }}>What&apos;s the Demand</p>
+          <p style={titleStyle}>What&apos;s the Demand</p>
 
           <p style={{ fontSize: 9, color: numColor, margin: "0 0 2px 0", fontFamily: mono }}>1 GW AI Data Center</p>
-          <p style={{ fontSize: 15, color: amber, fontWeight: 700, margin: "0 0 14px 0", fontFamily: mono }}>9M KM FIBER</p>
+          <p style={{ fontSize: 12, color: amber, fontWeight: 500, margin: "0 0 12px 0", fontFamily: mono }}>9M KM FIBER</p>
 
-          <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 0 14px 0" }} />
+          <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 0 12px 0" }} />
 
           <p style={{ fontSize: 9, color: numColor, margin: "0 0 2px 0", fontFamily: mono }}>20 GW Annual Demand</p>
-          <p style={{ fontSize: 15, color: warmWhite, fontWeight: 700, margin: "0 0 14px 0", fontFamily: mono }}>120M KM FIBER</p>
+          <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 12px 0", fontFamily: mono }}>120M KM FIBER</p>
 
-          <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 0 14px 0" }} />
+          <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 0 12px 0" }} />
 
-          <p style={{ fontSize: 9, color: numColor, margin: "0 0 8px 0", fontFamily: mono }}>Upstream Requirements</p>
-          <p style={{ fontSize: 12, color: warmWhite, fontWeight: 700, margin: "0 0 3px 0", fontFamily: mono }}>50T GeCl₄</p>
-          <p style={{ fontSize: 12, color: warmWhite, fontWeight: 700, margin: 0, fontFamily: mono }}>50T Germanium</p>
+          <p style={{ fontSize: 9, color: numColor, margin: "0 0 6px 0", fontFamily: mono }}>Upstream Requirements</p>
+          <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0", fontFamily: mono }}>50T GeCl₄</p>
+          <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: mono }}>50T Germanium</p>
         </div>
 
         {/* Card 2: Can Supply Respond */}
-        <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 4, overflow: "hidden", display: "flex", flexDirection: "column" }}>
-          <div style={{ padding: "12px 14px 10px" }}>
-            <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif", fontStyle: "italic" }}>Can Supply Respond</p>
-          </div>
+        <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 4, overflow: "hidden", display: "flex", flexDirection: "column", padding: 10 }}>
+          <p style={{ ...titleStyle, margin: "2px 4px 15px 4px" }}>Can Supply Respond</p>
 
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
@@ -75,15 +74,15 @@ export default function ChainAnalysis() {
                 },
               ].map((row, i) => (
                 <tr key={i} style={{ borderTop: `1px solid ${border}` }}>
-                  <td style={{ padding: "14px 10px", fontSize: 13, color: warmWhite, fontWeight: 500, verticalAlign: "middle", whiteSpace: "nowrap" }}>{row.layer}</td>
-                  <td style={{ padding: "14px 10px", verticalAlign: "middle", whiteSpace: "nowrap" }}>
+                  <td style={{ padding: "10px 10px", fontSize: 12, color: warmWhite, fontWeight: 500, verticalAlign: "middle", whiteSpace: "nowrap" }}>{row.layer}</td>
+                  <td style={{ padding: "10px 10px", verticalAlign: "middle", whiteSpace: "nowrap" }}>
                     <p style={{ fontSize: 9, color: numColor, margin: "0 0 2px 0", fontFamily: mono }}>Supply: {row.supply}</p>
                     <p style={{ fontSize: 9, color: amber, margin: 0, fontFamily: mono, fontWeight: 500 }}>Gap: {row.gap}</p>
                   </td>
-                  <td style={{ padding: "14px 10px", verticalAlign: "middle" }}>
+                  <td style={{ padding: "10px 10px", verticalAlign: "middle" }}>
                     <p style={{ fontSize: 9, color: numColor, lineHeight: 1.5, margin: 0 }}>{row.constraints}</p>
                   </td>
-                  <td style={{ padding: "14px 10px", verticalAlign: "middle", minWidth: 130 }}>
+                  <td style={{ padding: "10px 10px", verticalAlign: "middle", minWidth: 130 }}>
                     {[
                       { label: "Expandability", value: row.expandability, color: row.expandColor },
                       { label: "Time", value: row.time, color: row.timeColor },
@@ -103,7 +102,7 @@ export default function ChainAnalysis() {
 
         {/* Card 3: Where's the Chokepoint */}
         <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 4, padding: "12px 14px", display: "flex", flexDirection: "column" }}>
-          <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 14px 0", fontFamily: "'Instrument Serif', serif", fontStyle: "italic" }}>Where&apos;s the Chokepoint</p>
+          <p style={titleStyle}>Where&apos;s the Chokepoint</p>
 
           <p style={{ fontSize: 7, letterSpacing: "0.1em", color: amber, textTransform: "uppercase", margin: "0 0 4px 0", fontFamily: mono }}>Primary Chokepoint</p>
           <p style={{ fontSize: 22, color: warmWhite, fontWeight: 400, margin: "0 0 12px 0", fontFamily: "'Instrument Serif', serif" }}>GeCl₄</p>
