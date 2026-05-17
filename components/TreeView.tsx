@@ -2458,7 +2458,7 @@ export default function TreeView() {
             const sTitle = { fontSize: 10 as const, color: warmWhite as string, margin: "0 0 10px 0" as const, textTransform: "uppercase" as const, letterSpacing: "0.08em" as const, fontWeight: 500 as const, fontFamily: "'Geist Mono', monospace" as const };
 
             return (
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr 0.8fr", gap: 14, marginTop: 20 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "0.8fr 1fr 0.8fr", gap: 14, marginTop: 20 }}>
                 {/* Stillpoint Signals */}
                 <div>
                   <p style={sTitle}>Stillpoint Signals</p>
