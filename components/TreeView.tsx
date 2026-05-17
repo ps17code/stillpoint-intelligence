@@ -2319,12 +2319,19 @@ export default function TreeView() {
           {/* Subsystem sections — shown when no chain is selected */}
           {!selectedFeaturedChain && selectedSubsystem && (() => {
             const subsystemData: Record<string, {
+              metrics: { signals: number; rawMaterials: number; intermediates: number; components: number };
               signals: { id: string; title: string; status: string; teaser: string }[];
               companies: { name: string; node: string; flag: string }[];
-              explore: { label: string; desc: string; action: () => void }[];
+              explore: { label: string; desc: string; icon: string; action: () => void }[];
             }> = {
               "Compute": {
-                signals: [],
+                metrics: { signals: 6, rawMaterials: 14, intermediates: 18, components: 12 },
+                signals: [
+                  { id: "hbm_concentration", title: "HBM Memory Concentration", status: "acute", teaser: "SK Hynix and Samsung control >95% of HBM production, with 18-month lead times at full allocation." },
+                  { id: "tsmc_dependency", title: "TSMC Advanced Node Dependency", status: "structural", teaser: "All leading AI accelerators fabricated at a single company on a single island." },
+                  { id: "cobalt_interconnect", title: "Cobalt Interconnect Bottleneck", status: "emerging", teaser: "Sub-3nm chips require cobalt wiring, concentrating supply through a narrow DRC-to-refiner pipeline." },
+                  { id: "gpu_power_wall", title: "GPU Power Wall", status: "tightening", teaser: "Next-gen GPUs approaching 1000W TDP, straining power delivery and cooling at rack level." },
+                ],
                 companies: [
                   { name: "Nvidia", node: "GPU Accelerators", flag: "us" },
                   { name: "AMD", node: "GPU Accelerators", flag: "us" },
@@ -2338,12 +2345,17 @@ export default function TreeView() {
                   { name: "Super Micro", node: "Server Assembly", flag: "us" },
                 ],
                 explore: [
-                  { label: "View Compute Supply Tree", desc: "Explore the full supply chain from chips to racks", action: () => { setChainTreeTab("tree"); } },
+                  { label: "View Compute Supply Tree", desc: "Explore the full supply chain from chips to racks", icon: "tree", action: () => { setChainTreeTab("tree"); } },
+                  { label: "Map Geographic Exposure", desc: "See where compute supply is concentrated", icon: "globe", action: () => {} },
                 ],
               },
               "Connectivity": {
+                metrics: { signals: 5, rawMaterials: 8, intermediates: 12, components: 7 },
                 signals: [
                   { id: "germanium_chokepoint", title: "The GeCl₄ Chokepoint", status: "acute", teaser: "Every kilometer of fiber depends on GeCl₄ refined almost entirely in China with one Western supplier." },
+                  { id: "transceiver_shortage", title: "800G Transceiver Shortage", status: "tightening", teaser: "Silicon photonics yield issues limiting 800G production as AI clusters demand 36x more optical links." },
+                  { id: "helium_supply", title: "Helium Cooling Supply Risk", status: "emerging", teaser: "Helium used in fiber drawing is a non-renewable byproduct of natural gas with declining US reserves." },
+                  { id: "rosendahl_monopoly", title: "Preform Equipment Monopoly", status: "structural", teaser: "Rosendahl Nextrom is the sole supplier of fiber preform deposition equipment with 18-24 month backlogs." },
                 ],
                 companies: [
                   { name: "Corning", node: "Fiber Optic Cable", flag: "us" },
@@ -2358,13 +2370,19 @@ export default function TreeView() {
                   { name: "Sumitomo Electric", node: "Fiber Optic Cable", flag: "jp" },
                 ],
                 explore: [
-                  { label: "Open GeCl₄ Chokepoint Brief", desc: "Deep analysis of the germanium-to-fiber bottleneck", action: () => { setSelectedFeaturedChain("germanium_chokepoint"); setSelectedTreeNode("Germanium"); setRightTab("summary"); } },
-                  { label: "View Connectivity Supply Tree", desc: "Explore the full connectivity supply chain", action: () => { setChainTreeTab("tree"); } },
-                  { label: "Map Geographic Exposure", desc: "See where connectivity supply is concentrated", action: () => {} },
+                  { label: "Open GeCl₄ Chokepoint Brief", desc: "Deep analysis of the germanium-to-fiber bottleneck", icon: "doc", action: () => { setSelectedFeaturedChain("germanium_chokepoint"); setSelectedTreeNode("Germanium"); setRightTab("summary"); } },
+                  { label: "View Connectivity Supply Tree", desc: "Explore the full connectivity supply chain", icon: "tree", action: () => { setChainTreeTab("tree"); } },
+                  { label: "Map Geographic Exposure", desc: "See where connectivity supply is concentrated", icon: "globe", action: () => {} },
                 ],
               },
               "Cooling": {
-                signals: [],
+                metrics: { signals: 4, rawMaterials: 6, intermediates: 8, components: 9 },
+                signals: [
+                  { id: "liquid_cooling_shift", title: "Air-to-Liquid Cooling Transition", status: "structural", teaser: "AI GPU power density forces shift from air to liquid cooling, but cold plate and CDU supply can't keep up." },
+                  { id: "coolant_supply", title: "Dielectric Coolant Supply", status: "emerging", teaser: "Immersion cooling requires specialty fluorinated fluids with limited global production capacity." },
+                  { id: "water_consumption", title: "Water Consumption Pressure", status: "tightening", teaser: "Evaporative cooling towers consume millions of gallons per facility, facing regulatory pushback in water-scarce regions." },
+                  { id: "cold_plate_capacity", title: "Cold Plate Manufacturing Bottleneck", status: "tightening", teaser: "Three suppliers dominate direct-to-chip cold plates as demand scales with every new GPU generation." },
+                ],
                 companies: [
                   { name: "Vertiv", node: "Cooling Systems", flag: "us" },
                   { name: "Schneider Electric", node: "Cooling Distribution", flag: "fr" },
@@ -2378,11 +2396,18 @@ export default function TreeView() {
                   { name: "ZutaCore", node: "Immersion Cooling", flag: "il" },
                 ],
                 explore: [
-                  { label: "View Cooling Supply Tree", desc: "Explore cooling components from cold plates to towers", action: () => { setChainTreeTab("tree"); } },
+                  { label: "View Cooling Supply Tree", desc: "Explore cooling components from cold plates to towers", icon: "tree", action: () => { setChainTreeTab("tree"); } },
+                  { label: "Map Geographic Exposure", desc: "See where cooling supply is concentrated", icon: "globe", action: () => {} },
                 ],
               },
               "Power": {
-                signals: [],
+                metrics: { signals: 5, rawMaterials: 10, intermediates: 14, components: 11 },
+                signals: [
+                  { id: "transformer_backlog", title: "Power Transformer Backlog", status: "acute", teaser: "Large power transformers have 2-4 year lead times globally, gating new datacenter grid connections." },
+                  { id: "grid_capacity", title: "Grid Capacity Constraints", status: "structural", teaser: "US grid interconnection queue exceeds 2,600 GW with average wait times of 5+ years." },
+                  { id: "nuclear_renaissance", title: "Nuclear for AI Power", status: "emerging", teaser: "Hyperscalers signing nuclear PPAs as the only carbon-free baseload option at GW scale." },
+                  { id: "busbar_copper", title: "Copper Busbar Demand Surge", status: "tightening", teaser: "AI datacenters use 3-5x more copper per MW than traditional facilities, straining refined copper supply." },
+                ],
                 companies: [
                   { name: "Eaton", node: "Power Distribution", flag: "us" },
                   { name: "Schneider Electric", node: "UPS Systems", flag: "fr" },
@@ -2396,11 +2421,18 @@ export default function TreeView() {
                   { name: "Constellation Energy", node: "Nuclear Power", flag: "us" },
                 ],
                 explore: [
-                  { label: "View Power Supply Tree", desc: "Trace power from grid to rack", action: () => { setChainTreeTab("tree"); } },
+                  { label: "View Power Supply Tree", desc: "Trace power from grid to rack", icon: "tree", action: () => { setChainTreeTab("tree"); } },
+                  { label: "Map Geographic Exposure", desc: "See where power supply is concentrated", icon: "globe", action: () => {} },
                 ],
               },
               "Physical Structure": {
-                signals: [],
+                metrics: { signals: 4, rawMaterials: 7, intermediates: 5, components: 8 },
+                signals: [
+                  { id: "construction_timeline", title: "Construction Timeline Compression", status: "structural", teaser: "Hyperscalers demanding 12-month build cycles vs. traditional 24-36 months, straining labor and materials." },
+                  { id: "steel_pricing", title: "Structural Steel Price Volatility", status: "tightening", teaser: "Datacenter steel demand competing with infrastructure spending, driving price and lead time uncertainty." },
+                  { id: "modular_shift", title: "Modular Datacenter Adoption", status: "emerging", teaser: "Pre-fabricated modular designs reducing construction time but requiring new supply chain relationships." },
+                  { id: "permitting_delays", title: "Permitting and Zoning Delays", status: "structural", teaser: "Local opposition and environmental reviews adding 6-18 months to new facility timelines." },
+                ],
                 companies: [
                   { name: "Equinix", node: "Datacenter Facilities", flag: "us" },
                   { name: "Digital Realty", node: "Datacenter Facilities", flag: "us" },
@@ -2414,7 +2446,8 @@ export default function TreeView() {
                   { name: "Panduit", node: "Cable Management", flag: "us" },
                 ],
                 explore: [
-                  { label: "View Structure Supply Tree", desc: "Explore physical datacenter components", action: () => { setChainTreeTab("tree"); } },
+                  { label: "View Structure Supply Tree", desc: "Explore physical datacenter components", icon: "tree", action: () => { setChainTreeTab("tree"); } },
+                  { label: "Map Geographic Exposure", desc: "See where construction supply is concentrated", icon: "globe", action: () => {} },
                 ],
               },
             };
@@ -2457,9 +2490,9 @@ export default function TreeView() {
                 {/* Key Companies */}
                 <div>
                   <p style={sTitle}>Key Companies</p>
-                  <div style={{ background: cardBg, borderRadius: 5, overflow: "hidden" }}>
+                  <div style={{ background: cardBg, borderRadius: 5, overflow: "hidden", maxHeight: 290, overflowY: "auto" }}>
                     <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                      <thead>
+                      <thead style={{ position: "sticky", top: 0, zIndex: 1 }}>
                         <tr style={{ background: "rgb(38, 38, 38)" }}>
                           <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
                           <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Supply Chain Node</th>
@@ -2485,19 +2518,47 @@ export default function TreeView() {
                 {/* Explore Further */}
                 <div>
                   <p style={sTitle}>Explore Further</p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    {sub.explore.map(e => (
-                      <div
-                        key={e.label}
-                        onClick={e.action}
-                        style={{ background: cardBg, borderRadius: 5, padding: "10px 12px", cursor: "pointer", border: "1px solid rgba(255,255,255,0.04)", transition: "border-color 0.15s" }}
-                        onMouseEnter={ev => { ev.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
-                        onMouseLeave={ev => { ev.currentTarget.style.borderColor = "rgba(255,255,255,0.04)"; }}
-                      >
-                        <p style={{ fontSize: 10, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{e.label}</p>
-                        <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{e.desc}</p>
+
+                  {/* Metrics card */}
+                  <div style={{ background: cardBg, borderRadius: 5, padding: "8px 0", marginBottom: 8, display: "flex" }}>
+                    {[
+                      { label: "Signals", value: sub.metrics.signals },
+                      { label: "Raw Materials", value: sub.metrics.rawMaterials },
+                      { label: "Intermediates", value: sub.metrics.intermediates },
+                      { label: "Components", value: sub.metrics.components },
+                    ].map((m, mi, arr) => (
+                      <div key={m.label} style={{ flex: 1, textAlign: "center", borderRight: mi < arr.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none", padding: "0 6px" }}>
+                        <p style={{ fontSize: 12, color: warmWhite, fontWeight: 600, margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace" }}>{m.value}</p>
+                        <p style={{ fontSize: 6, color: dimText, margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em" }}>{m.label}</p>
                       </div>
                     ))}
+                  </div>
+
+                  {/* Action cards */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    {sub.explore.map(e => {
+                      const iconMap: Record<string, React.ReactNode> = {
+                        tree: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><line x1="8" y1="2" x2="8" y2="14" /><line x1="8" y1="6" x2="13" y2="3" /><line x1="8" y1="10" x2="13" y2="13" /></svg>,
+                        globe: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="8" cy="8" r="6.5" /><ellipse cx="8" cy="8" rx="3" ry="6.5" /><line x1="1.5" y1="8" x2="14.5" y2="8" /></svg>,
+                        doc: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"><rect x="3" y="1.5" width="10" height="13" rx="1.5" /><line x1="5.5" y1="5" x2="10.5" y2="5" /><line x1="5.5" y1="7.5" x2="10.5" y2="7.5" /><line x1="5.5" y1="10" x2="8.5" y2="10" /></svg>,
+                      };
+                      return (
+                        <div
+                          key={e.label}
+                          onClick={e.action}
+                          style={{ background: cardBg, borderRadius: 5, padding: "10px 12px", cursor: "pointer", border: "1px solid rgba(255,255,255,0.04)", transition: "border-color 0.15s", display: "flex", alignItems: "center", gap: 10 }}
+                          onMouseEnter={ev => { ev.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
+                          onMouseLeave={ev => { ev.currentTarget.style.borderColor = "rgba(255,255,255,0.04)"; }}
+                        >
+                          <span style={{ color: "#555", flexShrink: 0 }}>{iconMap[e.icon] ?? null}</span>
+                          <div style={{ flex: 1 }}>
+                            <p style={{ fontSize: 10, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0" }}>{e.label}</p>
+                            <p style={{ fontSize: 8, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{e.desc}</p>
+                          </div>
+                          <span style={{ color: "#555", fontSize: 10, flexShrink: 0 }}>›</span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
