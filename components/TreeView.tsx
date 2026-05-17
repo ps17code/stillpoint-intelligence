@@ -1803,13 +1803,22 @@ export default function TreeView() {
 
   /* ── render: breadcrumb ── */
   function renderBreadcrumb() {
-    const labels = ["All verticals", ...path.map(p => p.name)];
+    const baseLabels = ["All verticals", ...path.map(p => p.name)];
+    // Append chain breadcrumb when a featured chain is selected
+    const chainTitle = selectedFeaturedChain && activeFeaturedChain ? activeFeaturedChain.title : null;
+    const labels = chainTitle ? [...baseLabels, "Chains", chainTitle] : baseLabels;
 
     return (
       <div style={{ marginBottom: 16, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", minHeight: 14 }}>
         {labels.map((label, i) => {
           const isLast = i === labels.length - 1;
           const clickHandler = () => {
+            if (chainTitle && i >= baseLabels.length) {
+              // Clicking "Chains" or chain title — deselect the chain
+              setSelectedFeaturedChain(null);
+              setSelectedTreeNode(null);
+              return;
+            }
             if (i === 0) goHome();
             else popToIndex(i - 1);
           };
