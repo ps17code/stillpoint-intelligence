@@ -2221,9 +2221,9 @@ export default function TreeView() {
                 })}
               </div>
             </div>
-            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
+            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px 15px" }} />
 
-            <div style={{ padding: "0 15px 15px" }}>
+            <div style={{ padding: "0 15px 10px" }}>
               {/* Diagram view */}
               {chainTreeTab === "diagram" && (
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 0 }}>

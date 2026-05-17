@@ -16,10 +16,10 @@ export default function ChainAnalysis() {
     <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
       <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 14px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: mono }}>Chain Summary</p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "0.6fr 2fr 0.85fr", gap: 12 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "0.6fr 2fr 0.85fr", gap: 0 }}>
 
         {/* Card 1: What's the Demand */}
-        <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 4, padding: "12px 14px", display: "flex", flexDirection: "column" }}>
+        <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 0, padding: "12px 14px", display: "flex", flexDirection: "column" }}>
           <p style={titleStyle}>What&apos;s the Demand</p>
 
           <p style={{ fontSize: 9, color: numColor, margin: "0 0 2px 0", fontFamily: mono }}>1 GW AI Data Center</p>
@@ -38,8 +38,7 @@ export default function ChainAnalysis() {
         </div>
 
         {/* Card 2: Can Supply Respond */}
-        <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 4, overflow: "hidden", display: "flex", flexDirection: "column", padding: 10 }}>
-          <p style={{ ...titleStyle, margin: "2px 4px 15px 4px" }}>Can Supply Respond</p>
+        <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 0, overflow: "hidden", display: "flex", flexDirection: "column", padding: 10 }}>
 
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
@@ -101,9 +100,7 @@ export default function ChainAnalysis() {
         </div>
 
         {/* Card 3: Where's the Chokepoint */}
-        <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 4, padding: "12px 14px", display: "flex", flexDirection: "column" }}>
-          <p style={titleStyle}>Where&apos;s the Chokepoint</p>
-
+        <div style={{ background: cardBg, border: `1px solid ${border}`, borderRadius: 0, padding: "12px 14px", display: "flex", flexDirection: "column" }}>
           <p style={{ fontSize: 7, letterSpacing: "0.1em", color: amber, textTransform: "uppercase", margin: "0 0 4px 0", fontFamily: mono }}>Primary Chokepoint</p>
           <p style={{ fontSize: 22, color: warmWhite, fontWeight: 400, margin: "0 0 12px 0", fontFamily: "'Instrument Serif', serif" }}>GeCl₄</p>
 
