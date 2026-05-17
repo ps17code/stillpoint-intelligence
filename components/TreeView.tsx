@@ -1710,7 +1710,7 @@ export default function TreeView() {
   const [selectedBriefId, setSelectedBriefId] = useState<string | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<{ key: string; name: string; overview: string; activity: string } | null>(null);
   const [selectedFeaturedChain, setSelectedFeaturedChain] = useState<string | null>(null);
-  const [chainTreeTab, setChainTreeTab] = useState<"overview" | "supply-tree">("overview");
+  const [chainTreeTab, setChainTreeTab] = useState<"diagram" | "tree">("diagram");
 
   // Featured chains data
   type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; highlight_display_index?: number; navigate_path: string[] };
@@ -2192,39 +2192,38 @@ export default function TreeView() {
 
         return (
           <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden" }}>
-            {/* Tabs */}
-            <div style={{ display: "flex", gap: 0, borderBottom: "1px solid rgba(255,255,255,0.04)", padding: "0 15px" }}>
-              {([
-                { id: "overview" as const, label: "Value Chain" },
-                { id: "supply-tree" as const, label: "Supply Tree" },
-              ]).map((tab, ti) => {
-                const isActive = chainTreeTab === tab.id;
-                return (
-                  <div
-                    key={tab.id}
-                    onClick={() => setChainTreeTab(tab.id)}
-                    style={{
-                      padding: ti === 0 ? "10px 14px 10px 0" : "10px 14px",
-                      fontSize: 9,
-                      color: isActive ? "#ece8e1" : "#555",
-                      cursor: "pointer",
-                      borderBottom: isActive ? "1.5px solid #ece8e1" : "1.5px solid transparent",
-                      transition: "color 0.15s, border-color 0.15s",
-                      marginBottom: -1,
-                      letterSpacing: "0.02em",
-                    }}
-                    onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "#706a60"; }}
-                    onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "#555"; }}
-                  >
-                    {tab.label}
-                  </div>
-                );
-              })}
+            {/* Header row: title + toggle */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 15px" }}>
+              <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Value Chain</p>
+              <div style={{ display: "flex", alignItems: "center", background: "rgba(255,255,255,0.04)", borderRadius: 4, padding: 2 }}>
+                {([
+                  { id: "diagram" as const, label: "Diagram" },
+                  { id: "tree" as const, label: "Tree" },
+                ]).map(opt => {
+                  const isActive = chainTreeTab === opt.id;
+                  return (
+                    <button
+                      key={opt.id}
+                      onClick={() => setChainTreeTab(opt.id)}
+                      style={{
+                        fontSize: 8, fontFamily: "'Geist Mono', monospace",
+                        color: isActive ? warmWhite : "#555",
+                        background: isActive ? "rgba(255,255,255,0.08)" : "transparent",
+                        border: "none", borderRadius: 3,
+                        padding: "4px 10px", cursor: "pointer",
+                        transition: "color 0.15s, background 0.15s",
+                      }}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            <div style={{ padding: 15 }}>
-              {/* Overview tab */}
-              {chainTreeTab === "overview" && (
+            <div style={{ padding: "0 15px 15px" }}>
+              {/* Diagram view */}
+              {chainTreeTab === "diagram" && (
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 0 }}>
                   {chainSteps.map((step, i) => {
                     const isSelected = selectedTreeNode === step.nodeId;
@@ -2265,8 +2264,8 @@ export default function TreeView() {
                 </div>
               )}
 
-              {/* Supply Tree tab */}
-              {chainTreeTab === "supply-tree" && (
+              {/* Tree view */}
+              {chainTreeTab === "tree" && (
                 <AISupplyTree
                   highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : undefined}
                   onNodeClick={(name) => {
@@ -2881,6 +2880,20 @@ export default function TreeView() {
                       }}>
                         {templateTitle}
                       </h1>
+                      {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
+                        <div style={{
+                          display: "inline-flex", alignItems: "center", gap: 0,
+                          background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
+                          borderRadius: 20, padding: "4px 12px",
+                        }}>
+                          {["Germanium", "GeCl₄", "Fiber Optics", "Connectivity", "AI Data Center"].map((node, ni, arr) => (
+                            <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
+                              <span style={{ fontSize: 9, color: "#a09888", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{node}</span>
+                              {ni < arr.length - 1 && <span style={{ fontSize: 8, color: "#4a4540", margin: "0 6px" }}>→</span>}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                       {templateAnalysisHref && (
                         <a href={templateAnalysisHref} style={{
                           fontSize: 10, color: "#fff", padding: "6px 14px",
@@ -2895,22 +2908,6 @@ export default function TreeView() {
                     <p style={{ fontSize: (selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems") ? 12 : 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
                       {templateSubtitle}
                     </p>
-                    {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
-                      <div style={{ display: "flex", alignItems: "center", gap: 0, marginTop: 10 }}>
-                        <div style={{
-                          display: "inline-flex", alignItems: "center", gap: 0,
-                          background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
-                          borderRadius: 20, padding: "4px 12px",
-                        }}>
-                          {["Germanium", "GeCl₄", "Fiber Optics", "Connectivity", "AI Data Center"].map((node, ni, arr) => (
-                            <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
-                              <span style={{ fontSize: 9, color: "#a09888", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{node}</span>
-                              {ni < arr.length - 1 && <span style={{ fontSize: 8, color: "#4a4540", margin: "0 6px" }}>→</span>}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </div>
                   {/* Right column — metrics row */}
                   {metrics && (
