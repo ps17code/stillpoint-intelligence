@@ -1711,6 +1711,7 @@ export default function TreeView() {
   const [selectedGroup, setSelectedGroup] = useState<{ key: string; name: string; overview: string; activity: string } | null>(null);
   const [selectedFeaturedChain, setSelectedFeaturedChain] = useState<string | null>(null);
   const [chainTreeTab, setChainTreeTab] = useState<"diagram" | "tree">("diagram");
+  const [selectedSubsystem, setSelectedSubsystem] = useState<string | null>("Compute");
 
   // Featured chains data
   type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; highlight_display_index?: number; navigate_path: string[] };
@@ -2248,12 +2249,12 @@ export default function TreeView() {
                 <div style={{ display: "grid", gridTemplateColumns: `repeat(${diagramSteps.length}, 1fr)`, gap: 0 }}>
                   {diagramSteps.map((step, i) => {
                     const nodeId = (step as { nodeId?: string }).nodeId;
-                    const isSelected = nodeId ? selectedTreeNode === nodeId : false;
+                    const isSelected = nodeId ? selectedTreeNode === nodeId : selectedSubsystem === step.name;
                     const dotColor = "#c87a4a";
                     return (
                       <div
                         key={step.name}
-                        onClick={() => { if (nodeId) { setSelectedTreeNode(nodeId); setRightTab("summary"); } }}
+                        onClick={() => { if (nodeId) { setSelectedTreeNode(nodeId); setRightTab("summary"); } else { setSelectedSubsystem(step.name); } }}
                         style={{ cursor: nodeId ? "pointer" : "default", display: "flex", flexDirection: "column", background: isSelected ? "rgb(36, 33, 28)" : "transparent", padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s" }}
                       >
                         {/* Name row with dot and connecting line */}
@@ -2315,6 +2316,194 @@ export default function TreeView() {
               )}
             </div>
           </div>
+          {/* Subsystem sections — shown when no chain is selected */}
+          {!selectedFeaturedChain && selectedSubsystem && (() => {
+            const subsystemData: Record<string, {
+              signals: { id: string; title: string; status: string; teaser: string }[];
+              companies: { name: string; node: string; flag: string }[];
+              explore: { label: string; desc: string; action: () => void }[];
+            }> = {
+              "Compute": {
+                signals: [],
+                companies: [
+                  { name: "Nvidia", node: "GPU Accelerators", flag: "us" },
+                  { name: "AMD", node: "GPU Accelerators", flag: "us" },
+                  { name: "TSMC", node: "Wafer Fabrication", flag: "tw" },
+                  { name: "Samsung", node: "HBM Memory", flag: "kr" },
+                  { name: "SK Hynix", node: "HBM Memory", flag: "kr" },
+                  { name: "Micron", node: "DRAM", flag: "us" },
+                  { name: "Intel", node: "Server CPUs", flag: "us" },
+                  { name: "Broadcom", node: "Custom ASICs", flag: "us" },
+                  { name: "ASML", node: "Lithography Equipment", flag: "nl" },
+                  { name: "Super Micro", node: "Server Assembly", flag: "us" },
+                ],
+                explore: [
+                  { label: "View Compute Supply Tree", desc: "Explore the full supply chain from chips to racks", action: () => { setChainTreeTab("tree"); } },
+                ],
+              },
+              "Connectivity": {
+                signals: [
+                  { id: "germanium_chokepoint", title: "The GeCl₄ Chokepoint", status: "acute", teaser: "Every kilometer of fiber depends on GeCl₄ refined almost entirely in China with one Western supplier." },
+                ],
+                companies: [
+                  { name: "Corning", node: "Fiber Optic Cable", flag: "us" },
+                  { name: "Prysmian", node: "Fiber Optic Cable", flag: "it" },
+                  { name: "YOFC", node: "Fiber Optic Cable", flag: "cn" },
+                  { name: "Arista Networks", node: "Network Switches", flag: "us" },
+                  { name: "Cisco", node: "Network Switches", flag: "us" },
+                  { name: "Broadcom", node: "Switch ASICs", flag: "us" },
+                  { name: "Coherent", node: "Optical Transceivers", flag: "us" },
+                  { name: "Lumentum", node: "Optical Transceivers", flag: "us" },
+                  { name: "Umicore", node: "GeCl₄ Refining", flag: "be" },
+                  { name: "Sumitomo Electric", node: "Fiber Optic Cable", flag: "jp" },
+                ],
+                explore: [
+                  { label: "Open GeCl₄ Chokepoint Brief", desc: "Deep analysis of the germanium-to-fiber bottleneck", action: () => { setSelectedFeaturedChain("germanium_chokepoint"); setSelectedTreeNode("Germanium"); setRightTab("summary"); } },
+                  { label: "View Connectivity Supply Tree", desc: "Explore the full connectivity supply chain", action: () => { setChainTreeTab("tree"); } },
+                  { label: "Map Geographic Exposure", desc: "See where connectivity supply is concentrated", action: () => {} },
+                ],
+              },
+              "Cooling": {
+                signals: [],
+                companies: [
+                  { name: "Vertiv", node: "Cooling Systems", flag: "us" },
+                  { name: "Schneider Electric", node: "Cooling Distribution", flag: "fr" },
+                  { name: "CoolIT Systems", node: "Liquid Cooling", flag: "ca" },
+                  { name: "Boyd Corporation", node: "Cold Plates", flag: "us" },
+                  { name: "Nventec", node: "Thermal Solutions", flag: "tw" },
+                  { name: "Asetek", node: "Liquid Cooling", flag: "dk" },
+                  { name: "Munters", node: "Evaporative Cooling", flag: "se" },
+                  { name: "Johnson Controls", node: "HVAC Systems", flag: "us" },
+                  { name: "Carrier", node: "Chillers", flag: "us" },
+                  { name: "ZutaCore", node: "Immersion Cooling", flag: "il" },
+                ],
+                explore: [
+                  { label: "View Cooling Supply Tree", desc: "Explore cooling components from cold plates to towers", action: () => { setChainTreeTab("tree"); } },
+                ],
+              },
+              "Power": {
+                signals: [],
+                companies: [
+                  { name: "Eaton", node: "Power Distribution", flag: "us" },
+                  { name: "Schneider Electric", node: "UPS Systems", flag: "fr" },
+                  { name: "Vertiv", node: "UPS Systems", flag: "us" },
+                  { name: "ABB", node: "Transformers", flag: "ch" },
+                  { name: "Siemens Energy", node: "Switchgear", flag: "de" },
+                  { name: "Cummins", node: "Backup Generators", flag: "us" },
+                  { name: "Caterpillar", node: "Backup Generators", flag: "us" },
+                  { name: "GE Vernova", node: "Gas Turbines", flag: "us" },
+                  { name: "Bloom Energy", node: "Fuel Cells", flag: "us" },
+                  { name: "Constellation Energy", node: "Nuclear Power", flag: "us" },
+                ],
+                explore: [
+                  { label: "View Power Supply Tree", desc: "Trace power from grid to rack", action: () => { setChainTreeTab("tree"); } },
+                ],
+              },
+              "Physical Structure": {
+                signals: [],
+                companies: [
+                  { name: "Equinix", node: "Datacenter Facilities", flag: "us" },
+                  { name: "Digital Realty", node: "Datacenter Facilities", flag: "us" },
+                  { name: "QTS Realty", node: "Datacenter Facilities", flag: "us" },
+                  { name: "Vantage Data Centers", node: "Datacenter Facilities", flag: "us" },
+                  { name: "EdgeConneX", node: "Datacenter Facilities", flag: "us" },
+                  { name: "Compass Datacenters", node: "Modular Construction", flag: "us" },
+                  { name: "Nucor", node: "Structural Steel", flag: "us" },
+                  { name: "Legrand", node: "Rack Infrastructure", flag: "fr" },
+                  { name: "Rittal", node: "Server Cabinets", flag: "de" },
+                  { name: "Panduit", node: "Cable Management", flag: "us" },
+                ],
+                explore: [
+                  { label: "View Structure Supply Tree", desc: "Explore physical datacenter components", action: () => { setChainTreeTab("tree"); } },
+                ],
+              },
+            };
+
+            const sub = subsystemData[selectedSubsystem];
+            if (!sub) return null;
+            const cardBg = "rgba(255, 255, 255, 0.02)";
+            const sTitle = { fontSize: 10 as const, color: warmWhite as string, margin: "0 0 10px 0" as const, textTransform: "uppercase" as const, letterSpacing: "0.08em" as const, fontWeight: 500 as const, fontFamily: "'Geist Mono', monospace" as const };
+
+            return (
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr 0.8fr", gap: 14, marginTop: 20 }}>
+                {/* Stillpoint Signals */}
+                <div>
+                  <p style={sTitle}>Stillpoint Signals</p>
+                  {sub.signals.length === 0 ? (
+                    <div style={{ background: cardBg, borderRadius: 5, padding: "14px 12px" }}>
+                      <p style={{ fontSize: 10, color: dimText, margin: 0 }}>No signals identified for {selectedSubsystem} yet.</p>
+                    </div>
+                  ) : (
+                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                      {sub.signals.map(s => (
+                        <div
+                          key={s.id}
+                          onClick={() => { setSelectedFeaturedChain(s.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
+                          style={{ background: cardBg, borderRadius: 5, padding: "10px 12px", cursor: "pointer", border: "1px solid rgba(200,122,74,0.15)", transition: "border-color 0.15s" }}
+                          onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(200,122,74,0.4)"; }}
+                          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(200,122,74,0.15)"; }}
+                        >
+                          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
+                            <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: 0 }}>{s.title}</p>
+                          </div>
+                          <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{s.teaser}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Key Companies */}
+                <div>
+                  <p style={sTitle}>Key Companies</p>
+                  <div style={{ background: cardBg, borderRadius: 5, overflow: "hidden" }}>
+                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                      <thead>
+                        <tr style={{ background: "rgb(38, 38, 38)" }}>
+                          <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
+                          <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Supply Chain Node</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sub.companies.map((c, ci) => (
+                          <tr key={c.name} style={{ borderTop: ci > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
+                            <td style={{ padding: "7px 10px", fontSize: 10 }}>
+                              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                                <span style={{ color: warmWhite, fontWeight: 500 }}>{c.name}</span>
+                              </div>
+                            </td>
+                            <td style={{ padding: "7px 10px", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{c.node}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Explore Further */}
+                <div>
+                  <p style={sTitle}>Explore Further</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    {sub.explore.map(e => (
+                      <div
+                        key={e.label}
+                        onClick={e.action}
+                        style={{ background: cardBg, borderRadius: 5, padding: "10px 12px", cursor: "pointer", border: "1px solid rgba(255,255,255,0.04)", transition: "border-color 0.15s" }}
+                        onMouseEnter={ev => { ev.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
+                        onMouseLeave={ev => { ev.currentTarget.style.borderColor = "rgba(255,255,255,0.04)"; }}
+                      >
+                        <p style={{ fontSize: 10, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{e.label}</p>
+                        <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{e.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
           {selectedFeaturedChain === "germanium_chokepoint" && (
             <div style={{ marginTop: 20 }}>
               <ChainAnalysis />
