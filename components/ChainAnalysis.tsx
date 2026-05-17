@@ -119,11 +119,14 @@ export default function ChainAnalysis() {
 
           <p style={{ fontSize: 7, letterSpacing: "0.08em", color: amber, textTransform: "uppercase", margin: "0 0 8px 0", fontFamily: mono }}>Key Players</p>
           {[
-            { name: "Umicore", flag: "be" },
+            { name: "Umicore", flag: "be", desc: "Only Western company refining germanium into fiber-grade GeCl₄ at commercial scale. Single point of failure for non-Chinese fiber supply." },
           ].map((p, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 14, height: 10, borderRadius: 1, opacity: 0.8, flexShrink: 0 }} />
-              <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{p.name}</span>
+            <div key={i}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 14, height: 10, borderRadius: 1, opacity: 0.8, flexShrink: 0 }} />
+                <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{p.name}</span>
+              </div>
+              <p style={{ fontSize: 8, color: numColor, lineHeight: 1.4, margin: "3px 0 0 20px" }}>{p.desc}</p>
             </div>
           ))}
         </div>

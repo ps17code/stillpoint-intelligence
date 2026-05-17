@@ -2234,7 +2234,7 @@ export default function TreeView() {
                       <div
                         key={step.name}
                         onClick={() => { setSelectedTreeNode(step.nodeId); setRightTab("summary"); }}
-                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? "rgb(36, 33, 28)" : "transparent", padding: i === 0 ? "10px 10px 12px 0" : "10px 10px 12px", transition: "background 0.15s" }}
+                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? "rgb(36, 33, 28)" : "transparent", padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s" }}
                       >
                         {/* Name row with dot and connecting line */}
                         <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
@@ -2259,7 +2259,7 @@ export default function TreeView() {
                           <img src={step.img} alt={step.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
                         </div>
                         {/* Description */}
-                        <p style={{ fontSize: 10, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                        <p style={{ fontSize: 10, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
                       </div>
                     );
                   })}
@@ -3479,7 +3479,7 @@ export default function TreeView() {
                 const titleColor = pill.color + "bf";
                 return (
                   <div
-                    onClick={() => { setSelectedFeaturedChain(prev => prev === chain.id ? null : chain.id); setSelectedGroup(null); setSelectedTreeNode(null); }}
+                    onClick={() => { const wasSelected = selectedFeaturedChain === chain.id; setSelectedFeaturedChain(wasSelected ? null : chain.id); setSelectedGroup(null); setSelectedTreeNode(wasSelected ? null : "Germanium"); if (!wasSelected) setRightTab("summary"); }}
                     style={{ cursor: "pointer", padding: "8px 10px", borderRadius: 4, transition: "background 0.15s", background: selectedFeaturedChain === chain.id ? "rgba(255, 255, 255, 0.06)" : "rgba(255, 255, 255, 0.02)" }}
                     onMouseEnter={e => { e.currentTarget.style.background = selectedFeaturedChain === chain.id ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.05)"; }}
                     onMouseLeave={e => { e.currentTarget.style.background = selectedFeaturedChain === chain.id ? "rgba(255, 255, 255, 0.06)" : "rgba(255, 255, 255, 0.02)"; }}
