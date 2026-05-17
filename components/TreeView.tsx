@@ -2347,6 +2347,7 @@ export default function TreeView() {
                 explore: [
                   { label: "View Compute Supply Tree", desc: "Explore the full supply chain from chips to racks", icon: "tree", action: () => { setChainTreeTab("tree"); } },
                   { label: "Map Geographic Exposure", desc: "See where compute supply is concentrated", icon: "globe", action: () => {} },
+                  { label: "See Company Universe", desc: "Browse all companies in this subsystem", icon: "companies", action: () => {} },
                 ],
               },
               "Connectivity": {
@@ -2373,6 +2374,7 @@ export default function TreeView() {
                   { label: "Open GeCl₄ Chokepoint Brief", desc: "Deep analysis of the germanium-to-fiber bottleneck", icon: "doc", action: () => { setSelectedFeaturedChain("germanium_chokepoint"); setSelectedTreeNode("Germanium"); setRightTab("summary"); } },
                   { label: "View Connectivity Supply Tree", desc: "Explore the full connectivity supply chain", icon: "tree", action: () => { setChainTreeTab("tree"); } },
                   { label: "Map Geographic Exposure", desc: "See where connectivity supply is concentrated", icon: "globe", action: () => {} },
+                  { label: "See Company Universe", desc: "Browse all companies in this subsystem", icon: "companies", action: () => {} },
                 ],
               },
               "Cooling": {
@@ -2398,6 +2400,7 @@ export default function TreeView() {
                 explore: [
                   { label: "View Cooling Supply Tree", desc: "Explore cooling components from cold plates to towers", icon: "tree", action: () => { setChainTreeTab("tree"); } },
                   { label: "Map Geographic Exposure", desc: "See where cooling supply is concentrated", icon: "globe", action: () => {} },
+                  { label: "See Company Universe", desc: "Browse all companies in this subsystem", icon: "companies", action: () => {} },
                 ],
               },
               "Power": {
@@ -2423,6 +2426,7 @@ export default function TreeView() {
                 explore: [
                   { label: "View Power Supply Tree", desc: "Trace power from grid to rack", icon: "tree", action: () => { setChainTreeTab("tree"); } },
                   { label: "Map Geographic Exposure", desc: "See where power supply is concentrated", icon: "globe", action: () => {} },
+                  { label: "See Company Universe", desc: "Browse all companies in this subsystem", icon: "companies", action: () => {} },
                 ],
               },
               "Physical Structure": {
@@ -2448,6 +2452,7 @@ export default function TreeView() {
                 explore: [
                   { label: "View Structure Supply Tree", desc: "Explore physical datacenter components", icon: "tree", action: () => { setChainTreeTab("tree"); } },
                   { label: "Map Geographic Exposure", desc: "See where construction supply is concentrated", icon: "globe", action: () => {} },
+                  { label: "See Company Universe", desc: "Browse all companies in this subsystem", icon: "companies", action: () => {} },
                 ],
               },
             };
@@ -2541,6 +2546,7 @@ export default function TreeView() {
                         tree: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><line x1="8" y1="2" x2="8" y2="14" /><line x1="8" y1="6" x2="13" y2="3" /><line x1="8" y1="10" x2="13" y2="13" /></svg>,
                         globe: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="8" cy="8" r="6.5" /><ellipse cx="8" cy="8" rx="3" ry="6.5" /><line x1="1.5" y1="8" x2="14.5" y2="8" /></svg>,
                         doc: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"><rect x="3" y="1.5" width="10" height="13" rx="1.5" /><line x1="5.5" y1="5" x2="10.5" y2="5" /><line x1="5.5" y1="7.5" x2="10.5" y2="7.5" /><line x1="5.5" y1="10" x2="8.5" y2="10" /></svg>,
+                        companies: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"><circle cx="5" cy="5" r="2.5" /><circle cx="11" cy="5" r="2.5" /><circle cx="8" cy="11.5" r="2.5" /></svg>,
                       };
                       return (
                         <div
