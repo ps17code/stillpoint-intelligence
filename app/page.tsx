@@ -9,6 +9,8 @@ import AnatomyView from "@/components/AnatomyView";
 import TreeView from "@/components/TreeView";
 import GlobePanel from "@/components/GlobePanel";
 import StillpointLoadingLanding from "@/components/StillpointLoadingLanding";
+import VerticalLandingPage from "@/components/VerticalLandingPage";
+import type { VerticalId } from "@/components/VerticalLandingPage";
 
 const R = 1;
 
@@ -270,6 +272,7 @@ export default function HomePage() {
   const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [appLoading,    setAppLoading]    = useState(true);
+  const [selectedVertical, setSelectedVertical] = useState<VerticalId | null>(null);
   const [selectedL2,    setSelectedL2]    = useState<Map<string, string>>(new Map());
   const [openDropdown,  setOpenDropdown]  = useState<string | null>(null);
   const [activeL3,      setActiveL3]      = useState<{ parentId: string; nodeType: string } | null>(null);
@@ -626,6 +629,10 @@ export default function HomePage() {
 
   if (appLoading) {
     return <StillpointLoadingLanding onComplete={() => setAppLoading(false)} />;
+  }
+
+  if (!selectedVertical) {
+    return <VerticalLandingPage onSelect={(id) => setSelectedVertical(id)} />;
   }
 
   return (
