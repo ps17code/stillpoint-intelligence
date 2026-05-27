@@ -1712,7 +1712,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
   const [selectedGroup, setSelectedGroup] = useState<{ key: string; name: string; overview: string; activity: string } | null>(null);
   const [selectedFeaturedChain, setSelectedFeaturedChain] = useState<string | null>(null);
   const [chainTreeTab, setChainTreeTab] = useState<"diagram" | "tree">("diagram");
-  const [selectedSubsystem, setSelectedSubsystem] = useState<string | null>("Compute");
+  const [selectedSubsystem, setSelectedSubsystem] = useState<string | null>(null);
 
   // Featured chains data
   type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; highlight_display_index?: number; navigate_path: string[] };
@@ -2463,32 +2463,72 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
             const cardBg = "rgba(255, 255, 255, 0.02)";
             const sTitle = { fontSize: 10 as const, color: warmWhite as string, margin: "0 0 10px 0" as const, textTransform: "uppercase" as const, letterSpacing: "0.08em" as const, fontWeight: 500 as const, fontFamily: "'Geist Mono', monospace" as const };
 
+            // Featured signal for this subsystem (first signal)
+            const featuredSignal = sub.signals[0];
+            const otherSignals = sub.signals.slice(1);
+
+            // Chain path pills for GeCl₄ chokepoint
+            const chainPills = selectedSubsystem === "Connectivity" && featuredSignal?.id === "germanium_chokepoint"
+              ? ["Germanium", "GeCl₄", "Fiber Optic", "Connectivity", "AI Datacenter"]
+              : null;
+
             return (
-              <div style={{ display: "grid", gridTemplateColumns: "0.8fr 1fr 0.8fr", gap: 14, marginTop: 20 }}>
-                {/* Stillpoint Signals */}
+              <>
+              {/* Summary bar — full width horizontal metrics */}
+              <div style={{ marginTop: 20, background: cardBg, borderRadius: 5, padding: "8px 0", display: "flex", border: "1px solid rgba(255,255,255,0.04)" }}>
+                {[
+                  { label: "Signals", value: sub.metrics.signals },
+                  { label: "Raw Materials", value: sub.metrics.rawMaterials },
+                  { label: "Intermediates", value: sub.metrics.intermediates },
+                  { label: "Components", value: sub.metrics.components },
+                ].map((m, mi, arr) => (
+                  <div key={m.label} style={{ flex: 1, textAlign: "center", borderRight: mi < arr.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none", padding: "0 6px" }}>
+                    <p style={{ fontSize: 12, color: warmWhite, fontWeight: 600, margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace" }}>{m.value}</p>
+                    <p style={{ fontSize: 6, color: dimText, margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em" }}>{m.label}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Three-column layout */}
+              <div style={{ display: "grid", gridTemplateColumns: "0.8fr 1fr 0.8fr", gap: 14, marginTop: 14 }}>
+                {/* Featured Signal */}
                 <div>
-                  <p style={sTitle}>Stillpoint Signals</p>
-                  {sub.signals.length === 0 ? (
-                    <div style={{ background: cardBg, borderRadius: 5, padding: "14px 12px" }}>
-                      <p style={{ fontSize: 10, color: dimText, margin: 0 }}>No signals identified for {selectedSubsystem} yet.</p>
+                  <p style={sTitle}>Featured Signal</p>
+                  {featuredSignal ? (
+                    <div style={{ background: cardBg, borderRadius: 5, padding: "14px 14px", border: "1px solid rgba(200,122,74,0.15)" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+                        <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
+                        <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: 0 }}>{featuredSignal.title}</p>
+                      </div>
+                      {chainPills && (
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 10 }}>
+                          {chainPills.map((pill, pi) => (
+                            <span key={pill} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                              <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{pill}</span>
+                              {pi < chainPills.length - 1 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)" }}>→</span>}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 12px 0" }}>{featuredSignal.teaser}</p>
+                      <button
+                        onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
+                        style={{
+                          fontSize: 9, fontFamily: "'Geist Mono', monospace",
+                          color: warmWhite, background: "rgba(200,122,74,0.12)",
+                          border: "1px solid rgba(200,122,74,0.25)", borderRadius: 4,
+                          padding: "6px 12px", cursor: "pointer",
+                          transition: "background 0.15s, border-color 0.15s",
+                        }}
+                        onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.2)"; e.currentTarget.style.borderColor = "rgba(200,122,74,0.4)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,122,74,0.12)"; e.currentTarget.style.borderColor = "rgba(200,122,74,0.25)"; }}
+                      >
+                        Open signal brief and analysis
+                      </button>
                     </div>
                   ) : (
-                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                      {sub.signals.map(s => (
-                        <div
-                          key={s.id}
-                          onClick={() => { setSelectedFeaturedChain(s.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
-                          style={{ background: cardBg, borderRadius: 5, padding: "10px 12px", cursor: "pointer", border: "1px solid rgba(200,122,74,0.15)", transition: "border-color 0.15s" }}
-                          onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(200,122,74,0.4)"; }}
-                          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(200,122,74,0.15)"; }}
-                        >
-                          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
-                            <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: 0 }}>{s.title}</p>
-                          </div>
-                          <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{s.teaser}</p>
-                        </div>
-                      ))}
+                    <div style={{ background: cardBg, borderRadius: 5, padding: "14px 12px" }}>
+                      <p style={{ fontSize: 10, color: dimText, margin: 0 }}>No featured signal for {selectedSubsystem} yet.</p>
                     </div>
                   )}
                 </div>
@@ -2521,54 +2561,35 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                   </div>
                 </div>
 
-                {/* Explore Further */}
+                {/* Signals */}
                 <div>
-                  <p style={sTitle}>Explore Further</p>
-
-                  {/* Metrics card */}
-                  <div style={{ background: cardBg, borderRadius: 5, padding: "8px 0", marginBottom: 8, display: "flex" }}>
-                    {[
-                      { label: "Signals", value: sub.metrics.signals },
-                      { label: "Raw Materials", value: sub.metrics.rawMaterials },
-                      { label: "Intermediates", value: sub.metrics.intermediates },
-                      { label: "Components", value: sub.metrics.components },
-                    ].map((m, mi, arr) => (
-                      <div key={m.label} style={{ flex: 1, textAlign: "center", borderRight: mi < arr.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none", padding: "0 6px" }}>
-                        <p style={{ fontSize: 12, color: warmWhite, fontWeight: 600, margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace" }}>{m.value}</p>
-                        <p style={{ fontSize: 6, color: dimText, margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em" }}>{m.label}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Action cards */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    {sub.explore.map(e => {
-                      const iconMap: Record<string, React.ReactNode> = {
-                        tree: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><line x1="8" y1="2" x2="8" y2="14" /><line x1="8" y1="6" x2="13" y2="3" /><line x1="8" y1="10" x2="13" y2="13" /></svg>,
-                        globe: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="8" cy="8" r="6.5" /><ellipse cx="8" cy="8" rx="3" ry="6.5" /><line x1="1.5" y1="8" x2="14.5" y2="8" /></svg>,
-                        doc: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"><rect x="3" y="1.5" width="10" height="13" rx="1.5" /><line x1="5.5" y1="5" x2="10.5" y2="5" /><line x1="5.5" y1="7.5" x2="10.5" y2="7.5" /><line x1="5.5" y1="10" x2="8.5" y2="10" /></svg>,
-                        companies: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"><circle cx="5" cy="5" r="2.5" /><circle cx="11" cy="5" r="2.5" /><circle cx="8" cy="11.5" r="2.5" /></svg>,
-                      };
-                      return (
+                  <p style={sTitle}>Signals</p>
+                  {otherSignals.length === 0 && !featuredSignal ? (
+                    <div style={{ background: cardBg, borderRadius: 5, padding: "14px 12px" }}>
+                      <p style={{ fontSize: 10, color: dimText, margin: 0 }}>No additional signals for {selectedSubsystem} yet.</p>
+                    </div>
+                  ) : (
+                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                      {otherSignals.map(s => (
                         <div
-                          key={e.label}
-                          onClick={e.action}
-                          style={{ background: cardBg, borderRadius: 5, padding: "10px 12px", cursor: "pointer", border: "1px solid rgba(255,255,255,0.04)", transition: "border-color 0.15s", display: "flex", alignItems: "center", gap: 10 }}
-                          onMouseEnter={ev => { ev.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
-                          onMouseLeave={ev => { ev.currentTarget.style.borderColor = "rgba(255,255,255,0.04)"; }}
+                          key={s.id}
+                          onClick={() => { setSelectedFeaturedChain(s.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
+                          style={{ background: cardBg, borderRadius: 5, padding: "10px 12px", cursor: "pointer", border: "1px solid rgba(200,122,74,0.15)", transition: "border-color 0.15s" }}
+                          onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(200,122,74,0.4)"; }}
+                          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(200,122,74,0.15)"; }}
                         >
-                          <span style={{ color: "#555", flexShrink: 0 }}>{iconMap[e.icon] ?? null}</span>
-                          <div style={{ flex: 1 }}>
-                            <p style={{ fontSize: 10, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0" }}>{e.label}</p>
-                            <p style={{ fontSize: 8, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{e.desc}</p>
+                          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
+                            <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: 0 }}>{s.title}</p>
                           </div>
-                          <span style={{ color: "#555", fontSize: 10, flexShrink: 0 }}>›</span>
+                          <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{s.teaser}</p>
                         </div>
-                      );
-                    })}
-                  </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
+              </>
             );
           })()}
 
