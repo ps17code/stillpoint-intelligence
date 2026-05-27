@@ -24,10 +24,8 @@ function VerticalCard({ label, img, onClick }: { label: string; img: string; onC
       onClick={onClick}
       className="group flex flex-col overflow-hidden rounded-[10px] border border-white/[0.06] bg-[#111113] transition-all duration-300 hover:-translate-y-[2px] hover:border-white/[0.15] focus:outline-none"
     >
-      <div className="p-3">
-        <img src={img} alt={label} className="w-full h-auto block rounded-[6px] brightness-[1.2] transition-all duration-300 group-hover:brightness-[1.4]" />
-      </div>
-      <div className="px-4 pb-3">
+      <img src={img} alt={label} className="w-full h-auto block brightness-[1.2] transition-all duration-300 group-hover:brightness-[1.4]" />
+      <div className="px-4 pt-1 pb-2">
         <span
           className="text-[11px] font-[300] uppercase tracking-[0.08em] text-white/50 transition-colors duration-300 group-hover:text-white/80"
           style={{ fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif" }}
