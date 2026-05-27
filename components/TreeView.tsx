@@ -4205,21 +4205,8 @@ export default function TreeView() {
               }
 
               // ── PATH 2: Default tree mode ──
-              // No featured chain — show featured chains list when nothing selected
               if (!selectedGroup && !selectedTreeNode && isAITree) {
-                return (
-                  <div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
-                      <p style={{ fontSize: 9, letterSpacing: "0.1em", color: "#fff", textTransform: "uppercase" as const, margin: 0, fontFamily: "'Geist Mono', monospace" }}>Featured Chains</p>
-                    </div>
-                    {featuredChains.map((chain, ci) => (
-                      <div key={chain.id}>
-                        {ci > 0 && <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />}
-                        {renderFeaturedChainCard(chain)}
-                      </div>
-                    ))}
-                  </div>
-                );
+                return null;
               }
 
               // Show group description if a group is selected on AI tree (and no sub-node is selected)
