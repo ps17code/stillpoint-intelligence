@@ -22,7 +22,8 @@ function VerticalCard({ label, img, onClick }: { label: string; img: string; onC
   return (
     <button
       onClick={onClick}
-      className="group flex flex-col overflow-hidden rounded-[10px] border border-white/[0.06] bg-[#111113] transition-all duration-300 hover:-translate-y-[2px] hover:border-white/[0.15] focus:outline-none"
+      className="group flex flex-col overflow-hidden rounded-[10px] border border-white/[0.06] transition-all duration-300 hover:-translate-y-[2px] hover:border-white/[0.15] focus:outline-none"
+      style={{ backgroundColor: "color(srgb 0.1098 0.1098 0.1184)" }}
     >
       <img src={img} alt={label} className="w-full h-auto block brightness-[1.2] transition-all duration-300 group-hover:brightness-[1.4]" />
       <div className="px-4 pt-1 pb-2">
@@ -63,7 +64,7 @@ export default function VerticalLandingPage({ onSelect }: { onSelect?: (id: Vert
       </header>
 
       <section className="relative z-10 flex min-h-[calc(100vh-53px)] items-center justify-center px-8 py-12">
-        <div className="w-full max-w-[880px]">
+        <div className="w-full max-w-[600px]">
           <div className="mb-8 text-center">
             <span
               className="text-[10px] font-[300] uppercase text-white/25"
