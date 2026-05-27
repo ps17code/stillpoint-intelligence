@@ -112,7 +112,6 @@ export default function StillpointLoadingLanding({ onComplete }: { onComplete: (
                     }}
                     style={{
                       transformOrigin: "7.5px 7.5px",
-                      filter: "url(#line-polish)",
                     }}
                   />
                 ))}
