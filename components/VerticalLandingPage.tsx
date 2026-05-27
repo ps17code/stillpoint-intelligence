@@ -22,10 +22,12 @@ function VerticalCard({ label, img, onClick }: { label: string; img: string; onC
   return (
     <button
       onClick={onClick}
-      className="group relative overflow-hidden rounded-[10px] border border-white/[0.06] transition-all duration-300 hover:-translate-y-[2px] hover:border-white/[0.15] focus:outline-none"
+      className="group flex flex-col overflow-hidden rounded-[10px] border border-white/[0.06] bg-[#111113] transition-all duration-300 hover:-translate-y-[2px] hover:border-white/[0.15] focus:outline-none"
     >
-      <img src={img} alt={label} className="w-full h-auto block opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-4 pb-3 pt-8">
+      <div className="p-3">
+        <img src={img} alt={label} className="w-full h-auto block rounded-[6px] brightness-[1.2] transition-all duration-300 group-hover:brightness-[1.4]" />
+      </div>
+      <div className="px-4 pb-3">
         <span
           className="text-[11px] font-[300] uppercase tracking-[0.08em] text-white/50 transition-colors duration-300 group-hover:text-white/80"
           style={{ fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif" }}
@@ -64,7 +66,7 @@ export default function VerticalLandingPage({ onSelect }: { onSelect?: (id: Vert
 
       <section className="relative z-10 flex min-h-[calc(100vh-53px)] items-center justify-center px-8 py-12">
         <div className="w-full max-w-[880px]">
-          <div className="mb-8">
+          <div className="mb-8 text-center">
             <span
               className="text-[10px] font-[300] uppercase text-white/25"
               style={{ fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif", letterSpacing: "0.1em" }}
