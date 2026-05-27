@@ -22,17 +22,17 @@ function VerticalCard({ label, img, onClick }: { label: string; img: string; onC
   return (
     <button
       onClick={onClick}
-      className="group flex flex-col items-center rounded-[10px] border border-white/[0.08] bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-[2px] hover:border-white/[0.15] hover:bg-white/[0.05] focus:outline-none"
+      className="group relative overflow-hidden rounded-[10px] border border-white/[0.06] transition-all duration-300 hover:-translate-y-[2px] hover:border-white/[0.15] focus:outline-none"
     >
-      <div className="flex h-[140px] w-full items-center justify-center">
-        <img src={img} alt={label} className="max-h-[130px] w-auto object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100" />
+      <img src={img} alt={label} className="w-full h-auto block opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-4 pb-3 pt-8">
+        <span
+          className="text-[11px] font-[300] uppercase tracking-[0.08em] text-white/50 transition-colors duration-300 group-hover:text-white/80"
+          style={{ fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif" }}
+        >
+          {label}
+        </span>
       </div>
-      <span
-        className="mt-4 text-[11px] font-[300] uppercase tracking-[0.08em] text-white/40 transition-colors duration-300 group-hover:text-white/70"
-        style={{ fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif" }}
-      >
-        {label}
-      </span>
     </button>
   );
 }
