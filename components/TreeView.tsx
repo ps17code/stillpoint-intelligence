@@ -2202,11 +2202,11 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
         ];
 
         const subsystemSteps = [
-          { name: "Compute", img: "/subsystems/compute.jpg", desc: "Processes AI workloads using GPUs, accelerators, and server boards assembled into high-density rack systems." },
-          { name: "Connectivity", img: "/subsystems/connectivity.jpg", desc: "Moves data between chips, racks, and buildings using fiber optic cable, transceivers, and network switches." },
-          { name: "Cooling", img: "/subsystems/cooling.jpg", desc: "Removes heat from servers using chilled water loops, cooling towers, and liquid-to-chip thermal systems." },
-          { name: "Power", img: "/subsystems/power.jpg", desc: "Delivers electricity from the grid through transformers, switchgear, and UPS systems to every rack." },
-          { name: "Physical Structure", img: "/subsystems/physical-structure.jpg", desc: "Houses all equipment inside steel-framed, climate-controlled buildings built on reinforced concrete foundations." },
+          { name: "Compute", img: "/subsystems/compute.jpg", desc: "GPUs, accelerators, and servers that process AI workloads." },
+          { name: "Connectivity", img: "/subsystems/connectivity.jpg", desc: "Fiber, optics, and switches moving data across AI clusters." },
+          { name: "Cooling", img: "/subsystems/cooling.jpg", desc: "Thermal systems removing heat from dense server racks." },
+          { name: "Power", img: "/subsystems/power.jpg", desc: "Grid, transformer, switchgear, and backup power systems." },
+          { name: "Physical Structure", img: "/subsystems/physical-structure.jpg", desc: "Data center shells, racks, foundations, and controlled environments." },
         ];
 
         const diagramSteps = selectedFeaturedChain ? chainSteps : subsystemSteps;
