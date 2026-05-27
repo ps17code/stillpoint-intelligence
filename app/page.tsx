@@ -271,7 +271,7 @@ export default function HomePage() {
   const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [appLoading,    setAppLoading]    = useState(true);
-  const [selectedVertical, setSelectedVertical] = useState<string | null>(null);
+  const [verticalSelected, setVerticalSelected] = useState(false);
   const [selectedL2,    setSelectedL2]    = useState<Map<string, string>>(new Map());
   const [openDropdown,  setOpenDropdown]  = useState<string | null>(null);
   const [activeL3,      setActiveL3]      = useState<{ parentId: string; nodeType: string } | null>(null);
@@ -630,8 +630,16 @@ export default function HomePage() {
     return <StillpointLoadingLanding onComplete={() => setAppLoading(false)} />;
   }
 
-  if (!selectedVertical) {
-    return <VerticalLandingPage onSelect={(id) => setSelectedVertical(id)} />;
+  if (!verticalSelected) {
+    return (
+      <VerticalLandingPage
+        onSelect={(id) => {
+          if (id === "ai-infrastructure") {
+            setVerticalSelected(true);
+          }
+        }}
+      />
+    );
   }
 
   return (
