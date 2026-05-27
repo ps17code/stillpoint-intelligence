@@ -93,7 +93,7 @@ export default function StillpointLoadingLanding({ onComplete }: { onComplete: (
                     r={arc.r}
                     fill="none"
                     stroke="rgba(255,255,255,0.72)"
-                    strokeWidth="1.5"
+                    strokeWidth="1.05"
                     vectorEffect="non-scaling-stroke"
                     strokeLinecap="butt"
                     initial={{ pathLength: 0, opacity: 0 }}
@@ -118,18 +118,17 @@ export default function StillpointLoadingLanding({ onComplete }: { onComplete: (
                 ))}
 
                 <motion.circle
-                  cx="8.5"
-                  cy="8.5"
+                  cx="5.5"
+                  cy="5.5"
                   r="18"
-                  fill="rgba(255,255,255,0.91)"
-                  filter="url(#soft-glow)"
+                  fill="rgba(255,255,255,0.96)"
                   initial={{ opacity: 0, scale: 0.7 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{
                     duration: 0.82,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  style={{ transformOrigin: "8.5px 8.5px" }}
+                  style={{ transformOrigin: "5.5px 5.5px" }}
                 />
               </g>
             </svg>
