@@ -626,19 +626,22 @@ export default function HomePage() {
   const activeSubKey = activeL3 ? `${activeL3.parentId}/${activeL3.nodeType}` : null;
   const expandedKey  = hoveredSub ?? activeSubKey;
 
-  if (appLoading) {
-    return <StillpointLoadingLanding onComplete={() => setAppLoading(false)} />;
-  }
-
   if (!verticalSelected) {
     return (
-      <VerticalLandingPage
-        onSelect={(id) => {
-          if (id === "ai-infrastructure") {
-            setVerticalSelected(true);
-          }
-        }}
-      />
+      <div className="relative w-screen h-screen overflow-hidden">
+        <VerticalLandingPage
+          onSelect={(id) => {
+            if (id === "ai-infrastructure") {
+              setVerticalSelected(true);
+            }
+          }}
+        />
+        {appLoading && (
+          <div className="absolute inset-0 z-50">
+            <StillpointLoadingLanding onComplete={() => setAppLoading(false)} />
+          </div>
+        )}
+      </div>
     );
   }
 

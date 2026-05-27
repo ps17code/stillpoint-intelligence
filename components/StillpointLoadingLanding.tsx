@@ -21,7 +21,7 @@ export default function StillpointLoadingLanding({ onComplete }: { onComplete: (
 
   // Auto-complete after animation finishes
   useEffect(() => {
-    const timer = setTimeout(onComplete, 10000);
+    const timer = setTimeout(onComplete, 7000);
     return () => clearTimeout(timer);
   }, [onComplete]);
 
