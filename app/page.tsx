@@ -632,6 +632,7 @@ export default function HomePage() {
         <VerticalLandingPage
           onSelect={(id) => {
             if (id === "ai-infrastructure") {
+              setViewMode("tree");
               setVerticalSelected(true);
             }
           }}
