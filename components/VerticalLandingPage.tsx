@@ -18,25 +18,13 @@ const verticals: Vertical[] = [
   { id: "defense", label: "Defense", img: "/verticals/defense.png" },
 ];
 
-function VerticalCard({ label, img, onClick }: { label: string; img: string; onClick?: () => void }) {
+function VerticalCard({ img, onClick }: { label: string; img: string; onClick?: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="group relative flex h-[210px] w-full flex-col items-center justify-center overflow-hidden rounded-[10px] border border-white/[0.06] bg-[#0B0B0C]/90 text-center transition-all duration-300 hover:-translate-y-[2px] hover:border-white/[0.14] hover:bg-[#101012] focus:outline-none"
+      className="group relative w-full overflow-hidden rounded-[10px] transition-all duration-300 hover:-translate-y-[2px] hover:brightness-110 focus:outline-none"
     >
-      <div className="absolute inset-0 rounded-[10px] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.03),transparent_42%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      <div className="relative z-10 flex flex-col items-center gap-4">
-        <img src={img} alt={label} className="h-[120px] w-[120px] object-contain opacity-80 transition-opacity duration-300 group-hover:opacity-95" />
-        <span
-          className="text-[11px] font-[300] uppercase leading-none text-white/50 transition-colors duration-300 group-hover:text-white/70"
-          style={{
-            fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
-            letterSpacing: "0.06em",
-          }}
-        >
-          {label}
-        </span>
-      </div>
+      <img src={img} alt="" className="w-full h-auto block" />
     </button>
   );
 }
