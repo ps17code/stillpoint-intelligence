@@ -1726,7 +1726,7 @@ export default function TreeView() {
   const [selectedAnalysisIdx, setSelectedAnalysisIdx] = useState(0);
   const [globeFilterLayer, setGlobeFilterLayer] = useState<string | null>(null);
   const [hoveredGlobeNode, setHoveredGlobeNode] = useState<{ name: string; type: string; location: string } | null>(null);
-  const [centerView, setCenterView] = useState<"globe" | "tree">("globe");
+  const [centerView, setCenterView] = useState<"globe" | "tree">("tree");
   const [globeNavTarget, setGlobeNavTarget] = useState<string | null>(null);
   const globeRef = useRef<GlobeHandle>(null);
   /* ── accordion expanded index (for verticals level only) ── */
