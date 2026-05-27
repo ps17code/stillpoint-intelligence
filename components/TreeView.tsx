@@ -2206,7 +2206,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
           { name: "Connectivity", img: "/subsystems/connectivity.jpg", desc: "Fiber, optics, and switches moving data across AI clusters." },
           { name: "Cooling", img: "/subsystems/cooling.jpg", desc: "Thermal systems removing heat from dense server racks." },
           { name: "Power", img: "/subsystems/power.jpg", desc: "Grid, transformer, switchgear, and backup power systems." },
-          { name: "Physical Structure", img: "/subsystems/physical-structure.jpg", desc: "Data center shells, racks, foundations, and controlled environments." },
+          { name: "Physical Structure", img: "/subsystems/physical-structure.jpg", desc: "Data center shells, racks, foundations, and materials." },
         ];
 
         const diagramSteps = selectedFeaturedChain ? chainSteps : subsystemSteps;
@@ -2498,33 +2498,27 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                     <div style={{ background: cardBg, borderRadius: 5, padding: "14px 14px", border: "1px solid rgba(200,122,74,0.15)" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
                         <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
-                        <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: 0 }}>{featuredSignal.title}</p>
+                        <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: 0 }}>{featuredSignal.title}</p>
                       </div>
+                      <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 10px 0" }}>{featuredSignal.teaser}</p>
                       {chainPills && (
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 10 }}>
-                          {chainPills.map((pill, pi) => (
-                            <span key={pill} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                              <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{pill}</span>
-                              {pi < chainPills.length - 1 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)" }}>→</span>}
-                            </span>
-                          ))}
+                        <div style={{ marginBottom: 12 }}>
+                          <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "3px 8px", fontFamily: "'Geist Mono', monospace" }}>
+                            {chainPills.join(" → ")}
+                          </span>
                         </div>
                       )}
-                      <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 12px 0" }}>{featuredSignal.teaser}</p>
-                      <button
+                      <span
                         onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
                         style={{
-                          fontSize: 9, fontFamily: "'Geist Mono', monospace",
-                          color: warmWhite, background: "rgba(200,122,74,0.12)",
-                          border: "1px solid rgba(200,122,74,0.25)", borderRadius: 4,
-                          padding: "6px 12px", cursor: "pointer",
-                          transition: "background 0.15s, border-color 0.15s",
+                          fontSize: 10, color: "#c87a4a", cursor: "pointer",
+                          transition: "color 0.15s",
                         }}
-                        onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.2)"; e.currentTarget.style.borderColor = "rgba(200,122,74,0.4)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,122,74,0.12)"; e.currentTarget.style.borderColor = "rgba(200,122,74,0.25)"; }}
+                        onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+                        onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
                       >
-                        Open signal brief and analysis
-                      </button>
+                        Open signal brief and analysis →
+                      </span>
                     </div>
                   ) : (
                     <div style={{ background: cardBg, borderRadius: 5, padding: "14px 12px" }}>
