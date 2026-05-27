@@ -8,6 +8,7 @@ import type { Topology, GeometryCollection } from "topojson-specification";
 import AnatomyView from "@/components/AnatomyView";
 import TreeView from "@/components/TreeView";
 import GlobePanel from "@/components/GlobePanel";
+import StillpointLoadingLanding from "@/components/StillpointLoadingLanding";
 
 const R = 1;
 
@@ -268,6 +269,7 @@ export default function HomePage() {
   const filterRef     = useRef<{ selectedLayers: Set<string>; activeSubType: string | null; activeSubParent: string | null }>({ selectedLayers: new Set(), activeSubType: null, activeSubParent: null });
   const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const [appLoading,    setAppLoading]    = useState(true);
   const [selectedL2,    setSelectedL2]    = useState<Map<string, string>>(new Map());
   const [openDropdown,  setOpenDropdown]  = useState<string | null>(null);
   const [activeL3,      setActiveL3]      = useState<{ parentId: string; nodeType: string } | null>(null);
@@ -621,6 +623,10 @@ export default function HomePage() {
   // Description expansion: hover previews, click is sticky
   const activeSubKey = activeL3 ? `${activeL3.parentId}/${activeL3.nodeType}` : null;
   const expandedKey  = hoveredSub ?? activeSubKey;
+
+  if (appLoading) {
+    return <StillpointLoadingLanding onComplete={() => setAppLoading(false)} />;
+  }
 
   return (
     <div style={{ background: "#161414", width: "100vw", height: "100vh", overflow: "hidden", display: "flex", flexDirection: "column" }}>
