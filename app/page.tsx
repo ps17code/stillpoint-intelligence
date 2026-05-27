@@ -7,6 +7,7 @@ import * as topojson from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
 import AnatomyView from "@/components/AnatomyView";
 import TreeView from "@/components/TreeView";
+import type { PathEntry } from "@/components/TreeView";
 import GlobePanel from "@/components/GlobePanel";
 import StillpointLoadingLanding from "@/components/StillpointLoadingLanding";
 import VerticalLandingPage from "@/components/VerticalLandingPage";
@@ -670,7 +671,7 @@ export default function HomePage() {
         {viewMode === "map" && <GlobePanel activeLayer={panelLayer} activeItem={panelItem} activeVertical={panelVertical} onLayerChange={setPanelLayer} onItemChange={setPanelItem} onVerticalChange={setPanelVertical} />}
         {viewMode === "tree" && (
           <div style={{ width: "100%", height: "100%", overflow: "auto", background: "#111" }}>
-            <TreeView />
+            <TreeView initialPath={[{ type: "vertical", id: "ai", name: "AI Infrastructure" }]} />
           </div>
         )}
 

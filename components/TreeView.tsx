@@ -1290,7 +1290,7 @@ function GalliumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { onN
 /*  Path-based navigation types                */
 /* ═══════════════════════════════════════════ */
 
-type PathEntry = {
+export type PathEntry = {
   type: "vertical" | "subsystem" | "component" | "raw-material";
   id: string;
   name: string;
@@ -1682,9 +1682,10 @@ function AIOverviewTree({ onNodeClick }: { onNodeClick: (id: string, type: "raw-
   );
 }
 
-export default function TreeView() {
+export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } = {}) {
   /* ── unified path state ── */
   const [path, setPath] = useState<PathEntry[]>(() => {
+    if (initialPath && initialPath.length > 0) return initialPath;
     if (typeof window === "undefined") return [];
     const params = new URLSearchParams(window.location.search);
     const treePath = params.get("path");
