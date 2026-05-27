@@ -21,7 +21,7 @@ export default function StillpointLoadingLanding({ onComplete }: { onComplete: (
 
   // Auto-complete after animation finishes
   useEffect(() => {
-    const timer = setTimeout(onComplete, 5200);
+    const timer = setTimeout(onComplete, 10000);
     return () => clearTimeout(timer);
   }, [onComplete]);
 
@@ -178,7 +178,7 @@ export default function StillpointLoadingLanding({ onComplete }: { onComplete: (
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.45, duration: 0.9, ease: "easeOut" }}
-          className="absolute bottom-12 left-1/2 flex -translate-x-1/2 items-center gap-3"
+          className="absolute bottom-12 left-0 right-0 flex items-center justify-center gap-3"
         >
           <div className="h-px w-10 overflow-hidden bg-white/10">
             <motion.div
