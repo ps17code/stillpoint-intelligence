@@ -2255,8 +2255,8 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                     return (
                       <div
                         key={step.name}
-                        onClick={() => { if (nodeId) { setSelectedTreeNode(nodeId); setRightTab("summary"); } else { setSelectedSubsystem(step.name); } }}
-                        style={{ cursor: nodeId ? "pointer" : "default", display: "flex", flexDirection: "column", background: isSelected ? "rgb(37, 37, 37)" : "transparent", borderRadius: isSelected ? 5 : 0, padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s" }}
+                        onClick={() => { if (nodeId) { setSelectedTreeNode(nodeId); setRightTab("summary"); } else { setSelectedSubsystem(selectedSubsystem === step.name ? null : step.name); } }}
+                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? "rgb(37, 37, 37)" : "transparent", borderRadius: isSelected ? 5 : 0, padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s" }}
                       >
                         {/* Name row with dot and connecting line */}
                         <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
@@ -2316,16 +2316,17 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 />
               )}
             </div>
-            {/* Subsystem metrics row — shown when a subsystem is selected */}
-            {!selectedFeaturedChain && selectedSubsystem && (() => {
-              const metricsLookup: Record<string, { rawMaterials: number; intermediates: number; components: number }> = {
-                "Compute": { rawMaterials: 14, intermediates: 18, components: 12 },
-                "Connectivity": { rawMaterials: 8, intermediates: 12, components: 7 },
-                "Cooling": { rawMaterials: 6, intermediates: 8, components: 9 },
-                "Power": { rawMaterials: 10, intermediates: 14, components: 11 },
-                "Physical Structure": { rawMaterials: 7, intermediates: 5, components: 8 },
+            {/* Subsystem metrics row — always shown */}
+            {!selectedFeaturedChain && (() => {
+              const metricsLookup: Record<string, { rawMaterials: number; intermediates: number; components: number; companies: number }> = {
+                "_all": { rawMaterials: 45, intermediates: 57, components: 47, companies: 185 },
+                "Compute": { rawMaterials: 14, intermediates: 18, components: 12, companies: 10 },
+                "Connectivity": { rawMaterials: 8, intermediates: 12, components: 7, companies: 10 },
+                "Cooling": { rawMaterials: 6, intermediates: 8, components: 9, companies: 10 },
+                "Power": { rawMaterials: 10, intermediates: 14, components: 11, companies: 10 },
+                "Physical Structure": { rawMaterials: 7, intermediates: 5, components: 8, companies: 10 },
               };
-              const m = metricsLookup[selectedSubsystem];
+              const m = metricsLookup[selectedSubsystem ?? "_all"];
               if (!m) return null;
               return (
                 <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "10px 15px", display: "flex", alignItems: "center" }}>
@@ -2334,6 +2335,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                     { label: "Raw Materials", value: m.rawMaterials },
                     { label: "Intermediates", value: m.intermediates },
                     { label: "Components", value: m.components },
+                    { label: "Companies", value: m.companies },
                   ].map((metric, mi, arr) => (
                     <div key={metric.label} style={{ display: "flex", alignItems: "center", gap: 5, marginRight: 30, paddingRight: 30, borderRight: mi < arr.length - 1 ? "1px solid rgba(255,255,255,0.1)" : "none" }}>
                       <span style={{ fontSize: 11, color: "rgb(200, 122, 74)", fontWeight: 600 }}>{metric.value}</span>
@@ -2341,22 +2343,24 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                     </div>
                   ))}
                   <div style={{ flex: 1 }} />
-                  <button
-                    onClick={() => { setChainTreeTab("tree"); }}
-                    style={{
-                      display: "flex", alignItems: "center", gap: 6,
-                      fontSize: 9, fontFamily: "'Geist Mono', monospace",
-                      color: warmWhite, background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.08)", borderRadius: 4,
-                      padding: "5px 10px", cursor: "pointer",
-                      transition: "border-color 0.15s, background 0.15s",
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
-                  >
-                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><line x1="8" y1="2" x2="8" y2="14" /><line x1="8" y1="6" x2="13" y2="3" /><line x1="8" y1="10" x2="13" y2="13" /></svg>
-                    View {selectedSubsystem} Supply Tree
-                  </button>
+                  {selectedSubsystem && (
+                    <button
+                      onClick={() => { setChainTreeTab("tree"); }}
+                      style={{
+                        display: "flex", alignItems: "center", gap: 6,
+                        fontSize: 9, fontFamily: "'Geist Mono', monospace",
+                        color: warmWhite, background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.08)", borderRadius: 4,
+                        padding: "5px 10px", cursor: "pointer",
+                        transition: "border-color 0.15s, background 0.15s",
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+                    >
+                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><line x1="8" y1="2" x2="8" y2="14" /><line x1="8" y1="6" x2="13" y2="3" /><line x1="8" y1="10" x2="13" y2="13" /></svg>
+                      View {selectedSubsystem} Supply Tree
+                    </button>
+                  )}
                 </div>
               );
             })()}
