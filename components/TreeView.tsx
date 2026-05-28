@@ -2360,6 +2360,12 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
               );
             })()}
           </div>
+          {/* Hint text — shown when no subsystem is selected */}
+          {!selectedSubsystem && !selectedFeaturedChain && (
+            <p style={{ fontSize: 10, color: dimText, margin: "14px 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em" }}>
+              Select a subsystem to explore its key signals, chokepoints, and supply tree
+            </p>
+          )}
           {/* Subsystem sections — shown when no chain is selected */}
           {!selectedFeaturedChain && selectedSubsystem && (() => {
             const subsystemData: Record<string, {
