@@ -2534,13 +2534,13 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                         {/* Two-column content */}
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
                           {/* Left: signal details */}
-                          <div style={{ padding: 14 }}>
+                          <div style={{ padding: "14px 14px 10px 14px" }}>
                             <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 8px 0" }}>{featuredSignal.title}</p>
-                            <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0" }}>{featuredSignal.teaser}</p>
+                            <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{featuredSignal.teaser}</p>
                             {featuredSignal.whyItMatters && (
                               <>
                               <p style={{ fontSize: 8, color: dimText, margin: "0 0 4px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Why it matters?</p>
-                              <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 12px 0", fontStyle: "italic", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{featuredSignal.whyItMatters}</p>
+                              <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 10px 0", fontStyle: "italic", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{featuredSignal.whyItMatters}</p>
                               </>
                             )}
                             {featuredSignal.affectedNodes && (
@@ -2558,32 +2558,34 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                             )}
                           </div>
                           {/* Right: key companies table */}
-                          <div style={{ padding: "40px 14px 14px 14px" }}>
+                          <div style={{ padding: "40px 14px 10px 14px" }}>
                             {(() => {
                               const relatedNames = new Set(featuredSignal.relatedCompanies ?? []);
                               const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 10);
                               return (
-                                <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
-                                  <thead>
-                                    <tr style={{ background: "rgb(54, 54, 54)" }}>
-                                      <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
-                                      <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Supply Chain Node</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {filtered.map((c, ci) => (
-                                      <tr key={c.name} style={{ borderTop: ci > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
-                                        <td style={{ padding: "7px 10px", fontSize: 10 }}>
-                                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                            <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                                            <span style={{ color: warmWhite, fontWeight: 500 }}>{c.name}</span>
-                                          </div>
-                                        </td>
-                                        <td style={{ padding: "7px 10px", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{c.node}</td>
+                                <div style={{ border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
+                                  <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                                    <thead>
+                                      <tr style={{ background: "rgb(54, 54, 54)" }}>
+                                        <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
+                                        <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Supply Chain Node</th>
                                       </tr>
-                                    ))}
-                                  </tbody>
-                                </table>
+                                    </thead>
+                                    <tbody>
+                                      {filtered.map((c, ci) => (
+                                        <tr key={c.name} style={{ borderTop: ci > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
+                                          <td style={{ padding: "7px 10px", fontSize: 10 }}>
+                                            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                              <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                                              <span style={{ color: warmWhite, fontWeight: 500 }}>{c.name}</span>
+                                            </div>
+                                          </td>
+                                          <td style={{ padding: "7px 10px", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{c.node}</td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
                               );
                             })()}
                           </div>
