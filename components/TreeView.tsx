@@ -2530,74 +2530,78 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                   {/* Featured Signal card */}
                   <div style={{ paddingRight: 14 }}>
                     {featuredSignal ? (
-                      <div style={{ background: cardBg, borderRadius: 5, border: "1px solid rgba(200,122,74,0.15)", display: "grid", gridTemplateColumns: "1fr 1fr", overflow: "hidden" }}>
-                        {/* Left: signal details */}
-                        <div style={{ padding: 14 }}>
-                          <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 8px 0" }}>{featuredSignal.title}</p>
-                          <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0" }}>{featuredSignal.teaser}</p>
-                          {featuredSignal.whyItMatters && (
-                            <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 12px 0", fontStyle: "italic" }}>{featuredSignal.whyItMatters}</p>
-                          )}
-                          {featuredSignal.affectedNodes && (
-                            <>
-                              <p style={{ fontSize: 8, color: dimText, margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Affected Nodes</p>
-                              <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                                {featuredSignal.affectedNodes.map((node, ni) => (
-                                  <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                                    <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{node}</span>
-                                    {ni < featuredSignal.affectedNodes!.length - 1 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)" }}>→</span>}
-                                  </span>
-                                ))}
-                              </div>
-                            </>
-                          )}
-                        </div>
-                        {/* Right: brief link + key companies table */}
-                        <div style={{ padding: 14, display: "flex", flexDirection: "column" }}>
-                          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 8 }}>
-                            <span
-                              onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
-                              style={{
-                                fontSize: 10, color: "#c87a4a", cursor: "pointer",
-                                transition: "color 0.15s",
-                              }}
-                              onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
-                              onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
-                            >
-                              Open signal brief and analysis →
-                            </span>
-                          </div>
-                          {(() => {
-                            const relatedNames = new Set(featuredSignal.relatedCompanies ?? []);
-                            const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 10);
-                            return (
-                              <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
-                                <thead>
-                                  <tr style={{ background: "rgb(38, 38, 38)" }}>
-                                    <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
-                                    <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Supply Chain Node</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {filtered.map((c, ci) => (
-                                    <tr key={c.name} style={{ borderTop: ci > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
-                                      <td style={{ padding: "7px 10px", fontSize: 10 }}>
-                                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                          <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                                          <span style={{ color: warmWhite, fontWeight: 500 }}>{c.name}</span>
-                                        </div>
-                                      </td>
-                                      <td style={{ padding: "7px 10px", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{c.node}</td>
-                                    </tr>
+                      <div style={{ background: "rgb(37, 37, 37)", borderRadius: 5, overflow: "hidden" }}>
+                        {/* Two-column content */}
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+                          {/* Left: signal details */}
+                          <div style={{ padding: 14 }}>
+                            <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 8px 0" }}>{featuredSignal.title}</p>
+                            <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0" }}>{featuredSignal.teaser}</p>
+                            {featuredSignal.whyItMatters && (
+                              <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 12px 0", fontStyle: "italic" }}>{featuredSignal.whyItMatters}</p>
+                            )}
+                            {featuredSignal.affectedNodes && (
+                              <>
+                                <p style={{ fontSize: 8, color: dimText, margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Affected Nodes</p>
+                                <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                                  {featuredSignal.affectedNodes.map((node, ni) => (
+                                    <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                                      <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{node}</span>
+                                      {ni < featuredSignal.affectedNodes!.length - 1 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)" }}>→</span>}
+                                    </span>
                                   ))}
-                                </tbody>
-                              </table>
-                            );
-                          })()}
+                                </div>
+                              </>
+                            )}
+                          </div>
+                          {/* Right: key companies table */}
+                          <div style={{ padding: "27px 14px 14px 14px" }}>
+                            {(() => {
+                              const relatedNames = new Set(featuredSignal.relatedCompanies ?? []);
+                              const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 10);
+                              return (
+                                <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
+                                  <thead>
+                                    <tr style={{ background: "rgb(38, 38, 38)" }}>
+                                      <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
+                                      <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Supply Chain Node</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {filtered.map((c, ci) => (
+                                      <tr key={c.name} style={{ borderTop: ci > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
+                                        <td style={{ padding: "7px 10px", fontSize: 10 }}>
+                                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                            <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                                            <span style={{ color: warmWhite, fontWeight: 500 }}>{c.name}</span>
+                                          </div>
+                                        </td>
+                                        <td style={{ padding: "7px 10px", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{c.node}</td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              );
+                            })()}
+                          </div>
+                        </div>
+                        {/* Open signal brief link — below both columns */}
+                        <div style={{ padding: "0 14px 14px" }}>
+                          <span
+                            onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
+                            style={{
+                              fontSize: 10, color: "#c87a4a", cursor: "pointer",
+                              transition: "color 0.15s",
+                            }}
+                            onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+                            onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+                          >
+                            Open signal brief and analysis →
+                          </span>
                         </div>
                       </div>
                     ) : (
-                      <div style={{ background: cardBg, borderRadius: 5, padding: "14px 12px" }}>
+                      <div style={{ background: "rgb(37, 37, 37)", borderRadius: 5, padding: "14px 12px" }}>
                         <p style={{ fontSize: 10, color: dimText, margin: 0 }}>No featured signal for {selectedSubsystem} yet.</p>
                       </div>
                     )}
