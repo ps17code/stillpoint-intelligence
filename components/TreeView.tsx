@@ -2321,17 +2321,17 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
           {!selectedFeaturedChain && selectedSubsystem && (() => {
             const subsystemData: Record<string, {
               metrics: { signals: number; rawMaterials: number; intermediates: number; components: number };
-              signals: { id: string; title: string; status: string; teaser: string }[];
+              signals: { id: string; title: string; status: string; teaser: string; whyItMatters?: string; affectedNodes?: string[]; relatedCompanies?: string[] }[];
               companies: { name: string; node: string; flag: string }[];
               explore: { label: string; desc: string; icon: string; action: () => void }[];
             }> = {
               "Compute": {
                 metrics: { signals: 6, rawMaterials: 14, intermediates: 18, components: 12 },
                 signals: [
-                  { id: "hbm_concentration", title: "HBM Memory Concentration", status: "acute", teaser: "SK Hynix and Samsung control >95% of HBM production, with 18-month lead times at full allocation." },
-                  { id: "tsmc_dependency", title: "TSMC Advanced Node Dependency", status: "structural", teaser: "All leading AI accelerators fabricated at a single company on a single island." },
-                  { id: "cobalt_interconnect", title: "Cobalt Interconnect Bottleneck", status: "emerging", teaser: "Sub-3nm chips require cobalt wiring, concentrating supply through a narrow DRC-to-refiner pipeline." },
-                  { id: "gpu_power_wall", title: "GPU Power Wall", status: "tightening", teaser: "Next-gen GPUs approaching 1000W TDP, straining power delivery and cooling at rack level." },
+                  { id: "hbm_concentration", title: "HBM Memory Concentration", status: "acute", teaser: "SK Hynix and Samsung control >95% of HBM production, with 18-month lead times at full allocation.", whyItMatters: "HBM (High Bandwidth Memory) is the memory stacked directly on AI accelerators. Without it, GPUs cannot process large AI models — and only two companies in the world can make it.", affectedNodes: ["HBM Memory", "GPU Accelerators", "Server Assembly", "AI Datacenter"], relatedCompanies: ["SK Hynix", "Samsung", "Nvidia", "AMD", "Micron"] },
+                  { id: "tsmc_dependency", title: "TSMC Advanced Node Dependency", status: "structural", teaser: "All leading AI accelerators fabricated at a single company on a single island.", whyItMatters: "TSMC manufactures virtually every cutting-edge AI chip at its fabs in Taiwan. A disruption there would halt global AI hardware production.", affectedNodes: ["Wafer Fabrication", "GPU Accelerators", "Custom ASICs"], relatedCompanies: ["TSMC", "Nvidia", "AMD", "Broadcom", "ASML"] },
+                  { id: "cobalt_interconnect", title: "Cobalt Interconnect Bottleneck", status: "emerging", teaser: "Sub-3nm chips require cobalt wiring, concentrating supply through a narrow DRC-to-refiner pipeline.", whyItMatters: "Cobalt replaces copper as the wiring material inside the most advanced chips. Most of it comes from the DRC, creating a single-country dependency for next-gen semiconductors.", affectedNodes: ["Cobalt Mining", "Cobalt Refining", "Wafer Fabrication"], relatedCompanies: ["TSMC", "Intel", "Samsung"] },
+                  { id: "gpu_power_wall", title: "GPU Power Wall", status: "tightening", teaser: "Next-gen GPUs approaching 1000W TDP, straining power delivery and cooling at rack level.", whyItMatters: "Each new generation of AI GPU draws more power. At 1000W per chip, racks require liquid cooling and upgraded power delivery that most facilities weren't built for.", affectedNodes: ["GPU Accelerators", "Power Distribution", "Cooling Systems"], relatedCompanies: ["Nvidia", "Vertiv", "Eaton", "CoolIT Systems"] },
                 ],
                 companies: [
                   { name: "Nvidia", node: "GPU Accelerators", flag: "us" },
@@ -2354,10 +2354,10 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
               "Connectivity": {
                 metrics: { signals: 5, rawMaterials: 8, intermediates: 12, components: 7 },
                 signals: [
-                  { id: "germanium_chokepoint", title: "The GeCl₄ Chokepoint", status: "acute", teaser: "Every kilometer of fiber depends on GeCl₄ refined almost entirely in China with one Western supplier." },
-                  { id: "transceiver_shortage", title: "800G Transceiver Shortage", status: "tightening", teaser: "Silicon photonics yield issues limiting 800G production as AI clusters demand 36x more optical links." },
-                  { id: "helium_supply", title: "Helium Cooling Supply Risk", status: "emerging", teaser: "Helium used in fiber drawing is a non-renewable byproduct of natural gas with declining US reserves." },
-                  { id: "rosendahl_monopoly", title: "Preform Equipment Monopoly", status: "structural", teaser: "Rosendahl Nextrom is the sole supplier of fiber preform deposition equipment with 18-24 month backlogs." },
+                  { id: "germanium_chokepoint", title: "The GeCl₄ Chokepoint", status: "acute", teaser: "Every kilometer of fiber depends on GeCl₄ refined almost entirely in China with one Western supplier.", whyItMatters: "GeCl₄ (germanium tetrachloride) is the ultra-pure chemical deposited into glass to create the light-guiding core of optical fiber. Without it, no fiber optic cable can be manufactured.", affectedNodes: ["Germanium", "GeCl₄", "Fiber Optic Cable", "Connectivity", "AI Datacenter"], relatedCompanies: ["Umicore", "Corning", "Prysmian", "YOFC", "Coherent"] },
+                  { id: "transceiver_shortage", title: "800G Transceiver Shortage", status: "tightening", teaser: "Silicon photonics yield issues limiting 800G production as AI clusters demand 36x more optical links.", whyItMatters: "Transceivers convert electrical signals to light for fiber optic transmission. The 800G generation is essential for GPU-to-GPU communication in AI clusters.", affectedNodes: ["Optical Transceivers", "Network Switches", "AI Datacenter"], relatedCompanies: ["Coherent", "Lumentum", "Broadcom", "Arista Networks"] },
+                  { id: "helium_supply", title: "Helium Cooling Supply Risk", status: "emerging", teaser: "Helium used in fiber drawing is a non-renewable byproduct of natural gas with declining US reserves.", whyItMatters: "Helium is used to cool the fiber drawing process. It cannot be synthesized — once released, it escapes Earth's atmosphere permanently.", affectedNodes: ["Fiber Optic Cable", "Fiber Preform"], relatedCompanies: ["Corning", "Prysmian", "Sumitomo Electric"] },
+                  { id: "rosendahl_monopoly", title: "Preform Equipment Monopoly", status: "structural", teaser: "Rosendahl Nextrom is the sole supplier of fiber preform deposition equipment with 18-24 month backlogs.", whyItMatters: "Fiber preform deposition machines are the specialized equipment that creates the glass rods from which all optical fiber is drawn. One company makes them all.", affectedNodes: ["Fiber Preform", "Fiber Optic Cable"], relatedCompanies: ["Corning", "Prysmian", "YOFC", "Sumitomo Electric"] },
                 ],
                 companies: [
                   { name: "Corning", node: "Fiber Optic Cable", flag: "us" },
@@ -2381,10 +2381,10 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
               "Cooling": {
                 metrics: { signals: 4, rawMaterials: 6, intermediates: 8, components: 9 },
                 signals: [
-                  { id: "liquid_cooling_shift", title: "Air-to-Liquid Cooling Transition", status: "structural", teaser: "AI GPU power density forces shift from air to liquid cooling, but cold plate and CDU supply can't keep up." },
-                  { id: "coolant_supply", title: "Dielectric Coolant Supply", status: "emerging", teaser: "Immersion cooling requires specialty fluorinated fluids with limited global production capacity." },
-                  { id: "water_consumption", title: "Water Consumption Pressure", status: "tightening", teaser: "Evaporative cooling towers consume millions of gallons per facility, facing regulatory pushback in water-scarce regions." },
-                  { id: "cold_plate_capacity", title: "Cold Plate Manufacturing Bottleneck", status: "tightening", teaser: "Three suppliers dominate direct-to-chip cold plates as demand scales with every new GPU generation." },
+                  { id: "liquid_cooling_shift", title: "Air-to-Liquid Cooling Transition", status: "structural", teaser: "AI GPU power density forces shift from air to liquid cooling, but cold plate and CDU supply can't keep up.", whyItMatters: "Liquid cooling pipes coolant directly to chips, removing far more heat than air. AI racks now exceed what air cooling can handle, making this transition mandatory.", affectedNodes: ["Liquid Cooling", "Cold Plates", "Cooling Distribution"], relatedCompanies: ["CoolIT Systems", "Vertiv", "Boyd Corporation", "Asetek"] },
+                  { id: "coolant_supply", title: "Dielectric Coolant Supply", status: "emerging", teaser: "Immersion cooling requires specialty fluorinated fluids with limited global production capacity.", whyItMatters: "Dielectric coolants are non-conductive fluids that servers can be submerged in for cooling. Only a handful of chemical companies produce them at scale.", affectedNodes: ["Immersion Cooling", "Cooling Systems"], relatedCompanies: ["ZutaCore", "3M", "Vertiv"] },
+                  { id: "water_consumption", title: "Water Consumption Pressure", status: "tightening", teaser: "Evaporative cooling towers consume millions of gallons per facility, facing regulatory pushback in water-scarce regions.", whyItMatters: "Cooling towers evaporate water to reject heat. A single large datacenter can consume as much water as a small city, triggering local opposition.", affectedNodes: ["Evaporative Cooling", "HVAC Systems"], relatedCompanies: ["Munters", "Johnson Controls", "Carrier"] },
+                  { id: "cold_plate_capacity", title: "Cold Plate Manufacturing Bottleneck", status: "tightening", teaser: "Three suppliers dominate direct-to-chip cold plates as demand scales with every new GPU generation.", whyItMatters: "Cold plates are metal blocks with internal channels that sit directly on GPU chips to extract heat. They must be precision-machined to tight tolerances.", affectedNodes: ["Cold Plates", "Liquid Cooling", "Server Assembly"], relatedCompanies: ["Boyd Corporation", "CoolIT Systems", "Nventec"] },
                 ],
                 companies: [
                   { name: "Vertiv", node: "Cooling Systems", flag: "us" },
@@ -2407,10 +2407,10 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
               "Power": {
                 metrics: { signals: 5, rawMaterials: 10, intermediates: 14, components: 11 },
                 signals: [
-                  { id: "transformer_backlog", title: "Power Transformer Backlog", status: "acute", teaser: "Large power transformers have 2-4 year lead times globally, gating new datacenter grid connections." },
-                  { id: "grid_capacity", title: "Grid Capacity Constraints", status: "structural", teaser: "US grid interconnection queue exceeds 2,600 GW with average wait times of 5+ years." },
-                  { id: "nuclear_renaissance", title: "Nuclear for AI Power", status: "emerging", teaser: "Hyperscalers signing nuclear PPAs as the only carbon-free baseload option at GW scale." },
-                  { id: "busbar_copper", title: "Copper Busbar Demand Surge", status: "tightening", teaser: "AI datacenters use 3-5x more copper per MW than traditional facilities, straining refined copper supply." },
+                  { id: "transformer_backlog", title: "Power Transformer Backlog", status: "acute", teaser: "Large power transformers have 2-4 year lead times globally, gating new datacenter grid connections.", whyItMatters: "Power transformers step down high-voltage grid electricity to usable levels. They weigh hundreds of tons, take years to build, and cannot be substituted.", affectedNodes: ["Transformers", "Power Distribution", "Grid Connection"], relatedCompanies: ["ABB", "Siemens Energy", "Eaton", "GE Vernova"] },
+                  { id: "grid_capacity", title: "Grid Capacity Constraints", status: "structural", teaser: "US grid interconnection queue exceeds 2,600 GW with average wait times of 5+ years.", whyItMatters: "Datacenters need grid connections to receive electricity. The queue to connect new facilities now exceeds total US generation capacity.", affectedNodes: ["Grid Connection", "Power Distribution"], relatedCompanies: ["Constellation Energy", "GE Vernova", "Eaton"] },
+                  { id: "nuclear_renaissance", title: "Nuclear for AI Power", status: "emerging", teaser: "Hyperscalers signing nuclear PPAs as the only carbon-free baseload option at GW scale.", whyItMatters: "Nuclear plants provide constant carbon-free power at the GW scale AI datacenters need. Tech companies are now buying entire reactors.", affectedNodes: ["Nuclear Power", "Grid Connection"], relatedCompanies: ["Constellation Energy", "GE Vernova", "Bloom Energy"] },
+                  { id: "busbar_copper", title: "Copper Busbar Demand Surge", status: "tightening", teaser: "AI datacenters use 3-5x more copper per MW than traditional facilities, straining refined copper supply.", whyItMatters: "Busbars are thick copper conductors that distribute power inside datacenters. AI facilities need dramatically more of them per rack.", affectedNodes: ["Copper Busbars", "Power Distribution", "UPS Systems"], relatedCompanies: ["Eaton", "Schneider Electric", "ABB"] },
                 ],
                 companies: [
                   { name: "Eaton", node: "Power Distribution", flag: "us" },
@@ -2433,10 +2433,10 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
               "Physical Structure": {
                 metrics: { signals: 4, rawMaterials: 7, intermediates: 5, components: 8 },
                 signals: [
-                  { id: "construction_timeline", title: "Construction Timeline Compression", status: "structural", teaser: "Hyperscalers demanding 12-month build cycles vs. traditional 24-36 months, straining labor and materials." },
-                  { id: "steel_pricing", title: "Structural Steel Price Volatility", status: "tightening", teaser: "Datacenter steel demand competing with infrastructure spending, driving price and lead time uncertainty." },
-                  { id: "modular_shift", title: "Modular Datacenter Adoption", status: "emerging", teaser: "Pre-fabricated modular designs reducing construction time but requiring new supply chain relationships." },
-                  { id: "permitting_delays", title: "Permitting and Zoning Delays", status: "structural", teaser: "Local opposition and environmental reviews adding 6-18 months to new facility timelines." },
+                  { id: "construction_timeline", title: "Construction Timeline Compression", status: "structural", teaser: "Hyperscalers demanding 12-month build cycles vs. traditional 24-36 months, straining labor and materials.", whyItMatters: "Datacenter construction timelines are being compressed to meet AI demand. Builders face shortages of skilled labor, structural steel, and electrical components.", affectedNodes: ["Datacenter Facilities", "Structural Steel", "Modular Construction"], relatedCompanies: ["Equinix", "Digital Realty", "Compass Datacenters", "Nucor"] },
+                  { id: "steel_pricing", title: "Structural Steel Price Volatility", status: "tightening", teaser: "Datacenter steel demand competing with infrastructure spending, driving price and lead time uncertainty.", whyItMatters: "Structural steel forms the skeleton of every datacenter. Competing demand from infrastructure bills and reshoring is driving prices and lead times up.", affectedNodes: ["Structural Steel", "Datacenter Facilities"], relatedCompanies: ["Nucor", "Equinix", "Digital Realty"] },
+                  { id: "modular_shift", title: "Modular Datacenter Adoption", status: "emerging", teaser: "Pre-fabricated modular designs reducing construction time but requiring new supply chain relationships.", whyItMatters: "Modular datacenters are factory-built units shipped to site and assembled. They cut build time in half but shift supply chain dependencies to new manufacturers.", affectedNodes: ["Modular Construction", "Rack Infrastructure"], relatedCompanies: ["Compass Datacenters", "Vertiv", "Legrand"] },
+                  { id: "permitting_delays", title: "Permitting and Zoning Delays", status: "structural", teaser: "Local opposition and environmental reviews adding 6-18 months to new facility timelines.", whyItMatters: "Communities are pushing back on datacenter noise, water use, and power consumption. Permitting delays can stall billions in planned capacity.", affectedNodes: ["Datacenter Facilities"], relatedCompanies: ["Equinix", "Digital Realty", "QTS Realty", "Vantage Data Centers"] },
                 ],
                 companies: [
                   { name: "Equinix", node: "Datacenter Facilities", flag: "us" },
@@ -2489,24 +2489,30 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 ))}
               </div>
 
-              {/* Three-column layout */}
-              <div style={{ display: "grid", gridTemplateColumns: "0.8fr 1fr 0.8fr", gap: 14, marginTop: 14 }}>
-                {/* Featured Signal */}
+              {/* Two-column layout */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginTop: 14 }}>
+                {/* Featured Signal + Key Companies */}
                 <div>
                   <p style={sTitle}>Featured Signal</p>
                   {featuredSignal ? (
                     <div style={{ background: cardBg, borderRadius: 5, padding: "14px 14px", border: "1px solid rgba(200,122,74,0.15)" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
-                        <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
-                        <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: 0 }}>{featuredSignal.title}</p>
-                      </div>
-                      <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 10px 0" }}>{featuredSignal.teaser}</p>
-                      {chainPills && (
-                        <div style={{ marginBottom: 12 }}>
-                          <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "3px 8px", fontFamily: "'Geist Mono', monospace" }}>
-                            {chainPills.join(" → ")}
-                          </span>
-                        </div>
+                      <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 8px 0" }}>{featuredSignal.title}</p>
+                      <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0" }}>{featuredSignal.teaser}</p>
+                      {featuredSignal.whyItMatters && (
+                        <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 12px 0", fontStyle: "italic" }}>{featuredSignal.whyItMatters}</p>
+                      )}
+                      {featuredSignal.affectedNodes && (
+                        <>
+                          <p style={{ fontSize: 8, color: dimText, margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Affected Nodes</p>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 12 }}>
+                            {featuredSignal.affectedNodes.map((node, ni) => (
+                              <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                                <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{node}</span>
+                                {ni < featuredSignal.affectedNodes!.length - 1 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)" }}>→</span>}
+                              </span>
+                            ))}
+                          </div>
+                        </>
                       )}
                       <span
                         onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
@@ -2519,40 +2525,45 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                       >
                         Open signal brief and analysis →
                       </span>
+
+                      {/* Key Companies related to this signal */}
+                      {(() => {
+                        const relatedNames = new Set(featuredSignal.relatedCompanies ?? []);
+                        const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 10);
+                        if (filtered.length === 0) return null;
+                        return (
+                          <div style={{ marginTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 12 }}>
+                            <p style={{ fontSize: 8, color: dimText, margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Key Companies</p>
+                            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                              <thead>
+                                <tr style={{ background: "rgb(38, 38, 38)" }}>
+                                  <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
+                                  <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Supply Chain Node</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {filtered.map((c, ci) => (
+                                  <tr key={c.name} style={{ borderTop: ci > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
+                                    <td style={{ padding: "7px 10px", fontSize: 10 }}>
+                                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                        <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                                        <span style={{ color: warmWhite, fontWeight: 500 }}>{c.name}</span>
+                                      </div>
+                                    </td>
+                                    <td style={{ padding: "7px 10px", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{c.node}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        );
+                      })()}
                     </div>
                   ) : (
                     <div style={{ background: cardBg, borderRadius: 5, padding: "14px 12px" }}>
                       <p style={{ fontSize: 10, color: dimText, margin: 0 }}>No featured signal for {selectedSubsystem} yet.</p>
                     </div>
                   )}
-                </div>
-
-                {/* Key Companies */}
-                <div>
-                  <p style={sTitle}>Key Companies</p>
-                  <div style={{ background: cardBg, borderRadius: 5, overflow: "hidden", maxHeight: 290, overflowY: "auto" }}>
-                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                      <thead style={{ position: "sticky", top: 0, zIndex: 1 }}>
-                        <tr style={{ background: "rgb(38, 38, 38)" }}>
-                          <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
-                          <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Supply Chain Node</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {sub.companies.map((c, ci) => (
-                          <tr key={c.name} style={{ borderTop: ci > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
-                            <td style={{ padding: "7px 10px", fontSize: 10 }}>
-                              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                                <span style={{ color: warmWhite, fontWeight: 500 }}>{c.name}</span>
-                              </div>
-                            </td>
-                            <td style={{ padding: "7px 10px", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{c.node}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
                 </div>
 
                 {/* Signals */}
