@@ -2316,6 +2316,49 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 />
               )}
             </div>
+            {/* Subsystem metrics row — shown when a subsystem is selected */}
+            {!selectedFeaturedChain && selectedSubsystem && (() => {
+              const metricsLookup: Record<string, { rawMaterials: number; intermediates: number; components: number }> = {
+                "Compute": { rawMaterials: 14, intermediates: 18, components: 12 },
+                "Connectivity": { rawMaterials: 8, intermediates: 12, components: 7 },
+                "Cooling": { rawMaterials: 6, intermediates: 8, components: 9 },
+                "Power": { rawMaterials: 10, intermediates: 14, components: 11 },
+                "Physical Structure": { rawMaterials: 7, intermediates: 5, components: 8 },
+              };
+              const m = metricsLookup[selectedSubsystem];
+              if (!m) return null;
+              return (
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "10px 15px", display: "flex", alignItems: "center" }}>
+                  {[
+                    { label: "Raw Materials", value: m.rawMaterials },
+                    { label: "Intermediates", value: m.intermediates },
+                    { label: "Components", value: m.components },
+                  ].map((metric, mi) => (
+                    <div key={metric.label} style={{ display: "flex", alignItems: "center", gap: 5, marginRight: mi < 2 ? 20 : 0 }}>
+                      <span style={{ fontSize: 13, color: warmWhite, fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>{metric.value}</span>
+                      <span style={{ fontSize: 7, color: dimText, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em" }}>{metric.label}</span>
+                    </div>
+                  ))}
+                  <div style={{ flex: 1 }} />
+                  <button
+                    onClick={() => { setChainTreeTab("tree"); }}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 6,
+                      fontSize: 9, fontFamily: "'Geist Mono', monospace",
+                      color: warmWhite, background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)", borderRadius: 4,
+                      padding: "5px 10px", cursor: "pointer",
+                      transition: "border-color 0.15s, background 0.15s",
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><line x1="8" y1="2" x2="8" y2="14" /><line x1="8" y1="6" x2="13" y2="3" /><line x1="8" y1="10" x2="13" y2="13" /></svg>
+                    View {selectedSubsystem} Supply Tree
+                  </button>
+                </div>
+              );
+            })()}
           </div>
           {/* Subsystem sections — shown when no chain is selected */}
           {!selectedFeaturedChain && selectedSubsystem && (() => {
@@ -2474,21 +2517,6 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
 
             return (
               <>
-              {/* Summary bar — full width horizontal metrics */}
-              <div style={{ marginTop: 20, background: cardBg, borderRadius: 5, padding: "8px 0", display: "flex", border: "1px solid rgba(255,255,255,0.04)" }}>
-                {[
-                  { label: "Signals", value: sub.metrics.signals },
-                  { label: "Raw Materials", value: sub.metrics.rawMaterials },
-                  { label: "Intermediates", value: sub.metrics.intermediates },
-                  { label: "Components", value: sub.metrics.components },
-                ].map((m, mi, arr) => (
-                  <div key={m.label} style={{ flex: 1, textAlign: "center", borderRight: mi < arr.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none", padding: "0 6px" }}>
-                    <p style={{ fontSize: 12, color: warmWhite, fontWeight: 600, margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace" }}>{m.value}</p>
-                    <p style={{ fontSize: 6, color: dimText, margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em" }}>{m.label}</p>
-                  </div>
-                ))}
-              </div>
-
               {/* Two-column layout */}
               <div style={{ display: "grid", gridTemplateColumns: "1.4fr 0.6fr", gap: 14, marginTop: 14 }}>
                 {/* Featured Signal + Key Companies */}
