@@ -2495,45 +2495,46 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 <div>
                   <p style={sTitle}>Featured Signal</p>
                   {featuredSignal ? (
-                    <div style={{ background: cardBg, borderRadius: 5, padding: "14px 14px", border: "1px solid rgba(200,122,74,0.15)" }}>
-                      <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 8px 0" }}>{featuredSignal.title}</p>
-                      <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0" }}>{featuredSignal.teaser}</p>
-                      {featuredSignal.whyItMatters && (
-                        <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 12px 0", fontStyle: "italic" }}>{featuredSignal.whyItMatters}</p>
-                      )}
-                      {featuredSignal.affectedNodes && (
-                        <>
-                          <p style={{ fontSize: 8, color: dimText, margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Affected Nodes</p>
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 12 }}>
-                            {featuredSignal.affectedNodes.map((node, ni) => (
-                              <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                                <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{node}</span>
-                                {ni < featuredSignal.affectedNodes!.length - 1 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)" }}>→</span>}
-                              </span>
-                            ))}
-                          </div>
-                        </>
-                      )}
-                      <span
-                        onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
-                        style={{
-                          fontSize: 10, color: "#c87a4a", cursor: "pointer",
-                          transition: "color 0.15s",
-                        }}
-                        onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
-                        onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
-                      >
-                        Open signal brief and analysis →
-                      </span>
-
-                      {/* Key Companies related to this signal */}
-                      {(() => {
-                        const relatedNames = new Set(featuredSignal.relatedCompanies ?? []);
-                        const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 10);
-                        if (filtered.length === 0) return null;
-                        return (
-                          <div style={{ marginTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 12 }}>
-                            <p style={{ fontSize: 8, color: dimText, margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Key Companies</p>
+                    <div style={{ background: cardBg, borderRadius: 5, border: "1px solid rgba(200,122,74,0.15)", display: "grid", gridTemplateColumns: "1fr 1fr", overflow: "hidden" }}>
+                      {/* Left: signal details */}
+                      <div style={{ padding: "14px 14px" }}>
+                        <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 8px 0" }}>{featuredSignal.title}</p>
+                        <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0" }}>{featuredSignal.teaser}</p>
+                        {featuredSignal.whyItMatters && (
+                          <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 12px 0", fontStyle: "italic" }}>{featuredSignal.whyItMatters}</p>
+                        )}
+                        {featuredSignal.affectedNodes && (
+                          <>
+                            <p style={{ fontSize: 8, color: dimText, margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Affected Nodes</p>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 12 }}>
+                              {featuredSignal.affectedNodes.map((node, ni) => (
+                                <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                                  <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{node}</span>
+                                  {ni < featuredSignal.affectedNodes!.length - 1 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)" }}>→</span>}
+                                </span>
+                              ))}
+                            </div>
+                          </>
+                        )}
+                        <span
+                          onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
+                          style={{
+                            fontSize: 10, color: "#c87a4a", cursor: "pointer",
+                            transition: "color 0.15s",
+                          }}
+                          onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+                          onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+                        >
+                          Open signal brief and analysis →
+                        </span>
+                      </div>
+                      {/* Right: key companies table */}
+                      <div style={{ borderLeft: "1px solid rgba(255,255,255,0.06)" }}>
+                        <p style={{ fontSize: 8, color: dimText, margin: 0, padding: "14px 10px 8px", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Key Companies</p>
+                        {(() => {
+                          const relatedNames = new Set(featuredSignal.relatedCompanies ?? []);
+                          const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 10);
+                          return (
                             <table style={{ width: "100%", borderCollapse: "collapse" }}>
                               <thead>
                                 <tr style={{ background: "rgb(38, 38, 38)" }}>
@@ -2555,9 +2556,9 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                                 ))}
                               </tbody>
                             </table>
-                          </div>
-                        );
-                      })()}
+                          );
+                        })()}
+                      </div>
                     </div>
                   ) : (
                     <div style={{ background: cardBg, borderRadius: 5, padding: "14px 12px" }}>
