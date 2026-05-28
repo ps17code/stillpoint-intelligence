@@ -1713,6 +1713,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
   const [selectedFeaturedChain, setSelectedFeaturedChain] = useState<string | null>(null);
   const [chainTreeTab, setChainTreeTab] = useState<"diagram" | "tree">("diagram");
   const [selectedSubsystem, setSelectedSubsystem] = useState<string | null>(null);
+  const [selectedArchPiece, setSelectedArchPiece] = useState<string | null>(null);
 
   // Featured chains data
   type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; highlight_display_index?: number; navigate_path: string[] };
@@ -2255,7 +2256,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                     return (
                       <div
                         key={step.name}
-                        onClick={() => { if (nodeId) { setSelectedTreeNode(nodeId); setRightTab("summary"); } else { setSelectedSubsystem(selectedSubsystem === step.name ? null : step.name); } }}
+                        onClick={() => { if (nodeId) { setSelectedTreeNode(nodeId); setRightTab("summary"); } else { const next = selectedSubsystem === step.name ? null : step.name; setSelectedSubsystem(next); setSelectedArchPiece(null); } }}
                         style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? "rgb(37, 37, 37)" : "transparent", borderRadius: isSelected ? 5 : 0, padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s" }}
                       >
                         {/* Name row with dot and connecting line */}
@@ -2371,6 +2372,91 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
               Select a subsystem to reveal: Signals / Chokepoints / Companies / Supply Tree
             </p>
           )}
+          {/* Connectivity Architecture — shown when Connectivity is selected */}
+          {!selectedFeaturedChain && selectedSubsystem === "Connectivity" && (() => {
+            const ARCH_PIECES = [
+              { id: "gpu-server", title: "GPU / Server", desc: "Generates and consumes AI workload data.", deps: ["GPU accelerators", "HBM memory", "Server boards"] },
+              { id: "nic", title: "NIC / Interconnect", desc: "Moves data out of the server.", deps: ["SerDes", "PHY chips", "PCB components"] },
+              { id: "transceiver", title: "Optical Transceiver", desc: "Converts electrical signals into optical signals.", deps: ["Lasers", "DSPs", "Silicon photonics"] },
+              { id: "fiber", title: "Fiber Optic Cable", desc: "Carries light across racks, buildings, and campuses.", deps: ["GeCl₄", "Fiber preforms", "Helium draw towers"] },
+              { id: "tor-switch", title: "Top-of-Rack Switch", desc: "Aggregates traffic from servers in a rack.", deps: ["Switch ASICs", "Optical ports", "Power & cooling"] },
+              { id: "spine-switch", title: "Spine / Fabric Switch", desc: "Routes traffic across the cluster fabric.", deps: ["High-radix ASICs", "Optics & cables", "Network OS"] },
+              { id: "campus-link", title: "Campus / Region Link", desc: "Connects buildings, sites, and regions.", deps: ["Long-haul fiber", "Conduit / rights-of-way", "Permitting labor"] },
+            ];
+
+            return (
+              <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 14 }}>
+                <div style={{ padding: "10px 15px" }}>
+                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Connectivity Architecture</p>
+                </div>
+                <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
+
+                {/* Architecture pieces — horizontal connected flow */}
+                <div style={{ padding: "15px 15px 12px", overflowX: "auto" }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 0, minWidth: "fit-content" }}>
+                    {ARCH_PIECES.map((piece, pi) => {
+                      const isActive = selectedArchPiece === piece.id;
+                      return (
+                        <React.Fragment key={piece.id}>
+                          <div
+                            onClick={() => setSelectedArchPiece(selectedArchPiece === piece.id ? null : piece.id)}
+                            style={{
+                              flex: "0 0 auto",
+                              width: 130,
+                              padding: "10px 10px",
+                              borderRadius: 5,
+                              cursor: "pointer",
+                              background: isActive ? "rgb(37, 37, 37)" : "transparent",
+                              border: isActive ? "1px solid rgba(200,122,74,0.25)" : "1px solid transparent",
+                              transition: "background 0.15s, border-color 0.15s",
+                            }}
+                            onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
+                            onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+                          >
+                            {/* Step number */}
+                            <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 6 }}>
+                              <span style={{ fontSize: 8, color: isActive ? "#c87a4a" : "#555", fontFamily: "'Geist Mono', monospace", fontWeight: 600 }}>{String(pi + 1).padStart(2, "0")}</span>
+                            </div>
+                            {/* Title */}
+                            <p style={{ fontSize: 10, color: isActive ? "#ece8e1" : "rgb(180, 175, 165)", fontWeight: 500, margin: "0 0 4px 0", lineHeight: 1.3 }}>{piece.title}</p>
+                            {/* Description */}
+                            <p style={{ fontSize: 8, color: isActive ? "rgb(160, 152, 136)" : "#555", lineHeight: 1.4, margin: "0 0 6px 0" }}>{piece.desc}</p>
+                            {/* Dependencies */}
+                            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                              {piece.deps.map(d => (
+                                <div key={d} style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                                  <span style={{ width: 2, height: 2, borderRadius: "50%", background: isActive ? "#c87a4a" : "#3a3835", flexShrink: 0 }} />
+                                  <span style={{ fontSize: 7, color: isActive ? "rgb(140, 132, 116)" : "#444", fontFamily: "'Geist Mono', monospace" }}>{d}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          {/* Arrow connector */}
+                          {pi < ARCH_PIECES.length - 1 && (
+                            <div style={{ display: "flex", alignItems: "center", padding: "0 2px", alignSelf: "center", marginTop: -10 }}>
+                              <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+                                <path d="M0 5H12M12 5L8 1M12 5L8 9" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+                              </svg>
+                            </div>
+                          )}
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Hint or status */}
+                {!selectedArchPiece && (
+                  <div style={{ padding: "0 15px 12px" }}>
+                    <p style={{ fontSize: 9, color: dimText, margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em", textAlign: "center" }}>
+                      Select an architecture piece to reveal signals, chokepoints, and exposed companies
+                    </p>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+
           {/* Subsystem sections — shown when no chain is selected */}
           {!selectedFeaturedChain && selectedSubsystem && (() => {
             const subsystemData: Record<string, {
@@ -2514,15 +2600,38 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
 
             const sub = subsystemData[selectedSubsystem];
             if (!sub) return null;
+
+            // For Connectivity, gate on architecture piece selection
+            if (selectedSubsystem === "Connectivity" && !selectedArchPiece) return null;
+
             const cardBg = "rgba(255, 255, 255, 0.02)";
             const sTitle = { fontSize: 10 as const, color: warmWhite as string, margin: "0 0 10px 0" as const, textTransform: "uppercase" as const, letterSpacing: "0.08em" as const, fontWeight: 500 as const, fontFamily: "'Geist Mono', monospace" as const };
 
-            // Featured signal for this subsystem (first signal)
-            const featuredSignal = sub.signals[0];
-            const otherSignals = sub.signals.slice(1);
+            // Map architecture pieces to featured signals for Connectivity
+            const archPieceSignalMap: Record<string, string> = {
+              "fiber": "germanium_chokepoint",
+              "transceiver": "transceiver_shortage",
+              "tor-switch": "rosendahl_monopoly",
+              "spine-switch": "rosendahl_monopoly",
+              "campus-link": "helium_supply",
+            };
+
+            // Override featured signal based on arch piece for Connectivity
+            let featuredSignal = sub.signals[0];
+            let otherSignals = sub.signals.slice(1);
+            if (selectedSubsystem === "Connectivity" && selectedArchPiece) {
+              const targetId = archPieceSignalMap[selectedArchPiece];
+              if (targetId) {
+                const idx = sub.signals.findIndex(s => s.id === targetId);
+                if (idx >= 0) {
+                  featuredSignal = sub.signals[idx];
+                  otherSignals = sub.signals.filter((_, i) => i !== idx);
+                }
+              }
+            }
 
             // Chain path pills for GeCl₄ chokepoint
-            const chainPills = selectedSubsystem === "Connectivity" && featuredSignal?.id === "germanium_chokepoint"
+            const chainPills = featuredSignal?.id === "germanium_chokepoint"
               ? ["Germanium", "GeCl₄", "Fiber Optic", "Connectivity", "AI Datacenter"]
               : null;
 
@@ -4303,9 +4412,159 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 );
               }
 
-              // ── PATH 2: Default tree mode — show subsystem detail if selected ──
+              // ── PATH 2: Default tree mode — show subsystem or arch piece detail ──
               if (!selectedGroup && !selectedTreeNode && isAITree) {
                 if (!selectedSubsystem) return null;
+
+                // Show architecture piece detail for Connectivity
+                if (selectedSubsystem === "Connectivity" && selectedArchPiece) {
+                  const ARCH_PIECE_DETAIL: Record<string, {
+                    title: string; layer: string; desc: string;
+                    deps: { name: string; role: string }[];
+                    companies: { name: string; role: string; flag: string }[];
+                  }> = {
+                    "gpu-server": {
+                      title: "GPU / Server", layer: "Data Source",
+                      desc: "The origin point of all data in the connectivity chain. GPU accelerators and server boards generate and consume AI workload traffic at rates exceeding 400 Gbps per port.",
+                      deps: [
+                        { name: "GPU Accelerators", role: "Generate parallel compute traffic" },
+                        { name: "HBM Memory", role: "Feed data to GPU at bandwidth" },
+                        { name: "Server Boards", role: "Host and power accelerators" },
+                      ],
+                      companies: [
+                        { name: "Nvidia", role: "GPU Accelerators", flag: "us" },
+                        { name: "AMD", role: "GPU Accelerators", flag: "us" },
+                        { name: "Super Micro", role: "Server Assembly", flag: "us" },
+                      ],
+                    },
+                    "nic": {
+                      title: "NIC / Interconnect Card", layer: "Server I/O",
+                      desc: "The bridge between the server's internal bus and the external network. Network interface cards serialize GPU data into high-speed electrical signals for handoff to optics.",
+                      deps: [
+                        { name: "SerDes", role: "Serialize data for transmission" },
+                        { name: "PHY Chips", role: "Handle signal integrity" },
+                        { name: "PCB Components", role: "Route high-speed traces" },
+                      ],
+                      companies: [
+                        { name: "Nvidia (Mellanox)", role: "InfiniBand NICs", flag: "us" },
+                        { name: "Broadcom", role: "Ethernet NICs", flag: "us" },
+                        { name: "Intel", role: "Server NICs", flag: "us" },
+                      ],
+                    },
+                    "transceiver": {
+                      title: "Optical Transceiver", layer: "Electro-Optical Conversion",
+                      desc: "Converts electrical signals from the NIC into light pulses for fiber transmission. The 800G generation uses silicon photonics and faces persistent yield challenges.",
+                      deps: [
+                        { name: "Lasers (VCSELs/EELs)", role: "Emit modulated light" },
+                        { name: "DSP Chips", role: "Process signal encoding" },
+                        { name: "Silicon Photonics", role: "Integrate optics on chip" },
+                      ],
+                      companies: [
+                        { name: "Coherent", role: "800G Transceivers", flag: "us" },
+                        { name: "Lumentum", role: "Optical Components", flag: "us" },
+                        { name: "Broadcom", role: "DSP / PHY", flag: "us" },
+                        { name: "InnoLight", role: "800G Modules", flag: "cn" },
+                      ],
+                    },
+                    "fiber": {
+                      title: "Fiber Optic Cable", layer: "Physical Transport",
+                      desc: "The physical medium carrying light between all connected points. Every AI cluster depends on fiber linking GPUs to switches to storage to other buildings. Germanium-doped glass core is the critical enabler.",
+                      deps: [
+                        { name: "GeCl₄", role: "Dope glass for light guidance" },
+                        { name: "Fiber Preforms", role: "Template glass rods for drawing" },
+                        { name: "Helium Draw Towers", role: "Cool fiber during production" },
+                      ],
+                      companies: [
+                        { name: "Corning", role: "Fiber & Preform", flag: "us" },
+                        { name: "Prysmian", role: "Fiber & Cable", flag: "it" },
+                        { name: "YOFC", role: "Fiber & Cable", flag: "cn" },
+                        { name: "Umicore", role: "GeCl₄ Refining", flag: "be" },
+                      ],
+                    },
+                    "tor-switch": {
+                      title: "Top-of-Rack Switch", layer: "Rack Aggregation",
+                      desc: "Sits atop each server rack and aggregates traffic from all servers below it. Routes data upward to the spine layer. Capacity is gated by switch ASIC bandwidth and optical port count.",
+                      deps: [
+                        { name: "Switch ASICs", role: "Route packets at line rate" },
+                        { name: "Optical Ports", role: "Connect to transceivers" },
+                        { name: "Power & Cooling", role: "Sustain high throughput" },
+                      ],
+                      companies: [
+                        { name: "Arista Networks", role: "ToR Switches", flag: "us" },
+                        { name: "Cisco", role: "Network Switches", flag: "us" },
+                        { name: "Broadcom", role: "Switch ASICs", flag: "us" },
+                      ],
+                    },
+                    "spine-switch": {
+                      title: "Spine / Fabric Switch", layer: "Cluster Fabric",
+                      desc: "The backbone of the AI cluster network. Spine switches connect all ToR switches in a non-blocking fabric, enabling any-to-any GPU communication at full bandwidth.",
+                      deps: [
+                        { name: "High-Radix ASICs", role: "Handle 51.2T+ switching" },
+                        { name: "Optics & Cables", role: "Dense optical interconnect" },
+                        { name: "Network OS", role: "Manage fabric routing" },
+                      ],
+                      companies: [
+                        { name: "Arista Networks", role: "Spine Switches", flag: "us" },
+                        { name: "Cisco", role: "Fabric Switches", flag: "us" },
+                        { name: "Broadcom", role: "Tomahawk ASICs", flag: "us" },
+                      ],
+                    },
+                    "campus-link": {
+                      title: "Campus / Region Link", layer: "Inter-Site Transport",
+                      desc: "Long-haul and metro fiber connecting datacenter buildings, campuses, and regions. Permitting, conduit access, and installation labor are the binding constraints at this layer.",
+                      deps: [
+                        { name: "Long-Haul Fiber", role: "Span kilometers between sites" },
+                        { name: "Conduit / Rights-of-Way", role: "Physical path for cables" },
+                        { name: "Permitting Labor", role: "Regulatory and install crews" },
+                      ],
+                      companies: [
+                        { name: "Corning", role: "Long-Haul Fiber", flag: "us" },
+                        { name: "Prysmian", role: "Cable Systems", flag: "it" },
+                        { name: "Lumen Technologies", role: "Fiber Networks", flag: "us" },
+                      ],
+                    },
+                  };
+
+                  const archDetail = ARCH_PIECE_DETAIL[selectedArchPiece];
+                  if (archDetail) {
+                    const cardBgPanel = "rgba(255, 255, 255, 0.02)";
+                    const dividerPanel = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
+                    return (
+                      <div style={{ background: cardBgPanel, borderRadius: 6, padding: "12px 12px" }}>
+                        <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: "0 0 2px 0", fontFamily: "'EB Garamond', Georgia, serif" }}>{archDetail.title}</p>
+                        <p style={{ fontSize: 7, color: "#4a4540", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" }}>{archDetail.layer}</p>
+
+                        {dividerPanel}
+
+                        <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{archDetail.desc}</p>
+
+                        {dividerPanel}
+
+                        <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Key Dependencies</p>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                          {archDetail.deps.map(d => (
+                            <div key={d.name} style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                              <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#c87a4a", flexShrink: 0, marginTop: 5 }} />
+                              <span style={{ fontSize: 10, color: "#ece8e1", fontWeight: 500 }}>{d.name}</span>
+                              <span style={{ fontSize: 9, color: "#706a60" }}>— {d.role}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {dividerPanel}
+
+                        <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Key Players</p>
+                        {archDetail.companies.map(c => (
+                          <div key={c.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "3px 0" }}>
+                            <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                            <span style={{ fontSize: 11, color: "rgb(160, 152, 136)" }}>{c.name}</span>
+                            <span style={{ fontSize: 9, color: "#706a60" }}>— {c.role}</span>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  }
+                }
 
                 const SUBSYSTEM_DETAIL: Record<string, {
                   name: string;
