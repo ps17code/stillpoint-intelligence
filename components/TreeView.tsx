@@ -2367,8 +2367,8 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
           </div>
           {/* Hint text — shown when no subsystem is selected */}
           {!selectedSubsystem && !selectedFeaturedChain && (
-            <p style={{ fontSize: 10, color: dimText, margin: "14px 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em" }}>
-              Select a subsystem to explore its key signals, chokepoints, and supply tree
+            <p style={{ fontSize: 10, color: dimText, margin: "14px 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em", textAlign: "center" }}>
+              Select a subsystem to reveal: Signals / Chokepoints / Companies / Supply Tree
             </p>
           )}
           {/* Subsystem sections — shown when no chain is selected */}
@@ -4303,9 +4303,166 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 );
               }
 
-              // ── PATH 2: Default tree mode ──
+              // ── PATH 2: Default tree mode — show subsystem detail if selected ──
               if (!selectedGroup && !selectedTreeNode && isAITree) {
-                return null;
+                if (!selectedSubsystem) return null;
+
+                const SUBSYSTEM_DETAIL: Record<string, {
+                  name: string;
+                  whyItMatters: string;
+                  pieces: { name: string; role: string }[];
+                  companies: { name: string; piece: string; flag: string }[];
+                }> = {
+                  "Compute": {
+                    name: "Compute",
+                    whyItMatters: "Compute is the engine of AI infrastructure. Every AI model trains and runs on GPU accelerators assembled into dense server racks — the single highest-cost and most supply-constrained layer of the stack.",
+                    pieces: [
+                      { name: "GPU Accelerators", role: "Process parallel AI workloads" },
+                      { name: "HBM Memory", role: "High-bandwidth on-chip memory" },
+                      { name: "Server CPUs", role: "Orchestrate rack-level operations" },
+                      { name: "Wafer Fabrication", role: "Manufacture advanced silicon dies" },
+                      { name: "Custom ASICs", role: "Purpose-built inference chips" },
+                      { name: "Server Assembly", role: "Integrate chips into rack units" },
+                    ],
+                    companies: [
+                      { name: "Nvidia", piece: "GPU Accelerators", flag: "us" },
+                      { name: "AMD", piece: "GPU Accelerators", flag: "us" },
+                      { name: "TSMC", piece: "Wafer Fabrication", flag: "tw" },
+                      { name: "Samsung", piece: "HBM Memory", flag: "kr" },
+                      { name: "SK Hynix", piece: "HBM Memory", flag: "kr" },
+                      { name: "Broadcom", piece: "Custom ASICs", flag: "us" },
+                      { name: "Intel", piece: "Server CPUs", flag: "us" },
+                      { name: "ASML", piece: "Lithography Equipment", flag: "nl" },
+                      { name: "Super Micro", piece: "Server Assembly", flag: "us" },
+                    ],
+                  },
+                  "Connectivity": {
+                    name: "Connectivity",
+                    whyItMatters: "Connectivity is the nervous system of AI infrastructure. Fiber optic cable, transceivers, and network switches move data between GPUs, racks, and buildings — any bottleneck here throttles the entire cluster.",
+                    pieces: [
+                      { name: "Fiber Optic Cable", role: "Carry light-encoded data" },
+                      { name: "Optical Transceivers", role: "Convert electrical to optical signals" },
+                      { name: "Network Switches", role: "Route traffic between nodes" },
+                      { name: "Switch ASICs", role: "Silicon powering switch logic" },
+                      { name: "GeCl₄ Refining", role: "Ultra-pure precursor for fiber" },
+                    ],
+                    companies: [
+                      { name: "Corning", piece: "Fiber Optic Cable", flag: "us" },
+                      { name: "Prysmian", piece: "Fiber Optic Cable", flag: "it" },
+                      { name: "YOFC", piece: "Fiber Optic Cable", flag: "cn" },
+                      { name: "Arista Networks", piece: "Network Switches", flag: "us" },
+                      { name: "Broadcom", piece: "Switch ASICs", flag: "us" },
+                      { name: "Coherent", piece: "Optical Transceivers", flag: "us" },
+                      { name: "Lumentum", piece: "Optical Transceivers", flag: "us" },
+                      { name: "Umicore", piece: "GeCl₄ Refining", flag: "be" },
+                    ],
+                  },
+                  "Cooling": {
+                    name: "Cooling",
+                    whyItMatters: "Cooling removes the enormous heat generated by AI GPU racks. As chip power density rises past 1000W per accelerator, the industry is shifting from air to liquid cooling — and the supply chain isn't ready.",
+                    pieces: [
+                      { name: "Cold Plates", role: "Extract heat directly from chips" },
+                      { name: "Coolant Distribution Units", role: "Circulate liquid to racks" },
+                      { name: "Cooling Towers", role: "Reject heat to atmosphere" },
+                      { name: "Immersion Tanks", role: "Submerge servers in coolant" },
+                      { name: "Chillers", role: "Refrigerate cooling loops" },
+                    ],
+                    companies: [
+                      { name: "Vertiv", piece: "Cooling Systems", flag: "us" },
+                      { name: "CoolIT Systems", piece: "Liquid Cooling", flag: "ca" },
+                      { name: "Boyd Corporation", piece: "Cold Plates", flag: "us" },
+                      { name: "Asetek", piece: "Liquid Cooling", flag: "dk" },
+                      { name: "Schneider Electric", piece: "Cooling Distribution", flag: "fr" },
+                      { name: "ZutaCore", piece: "Immersion Cooling", flag: "il" },
+                      { name: "Munters", piece: "Evaporative Cooling", flag: "se" },
+                    ],
+                  },
+                  "Power": {
+                    name: "Power",
+                    whyItMatters: "Power delivers electricity from the grid to every rack in the datacenter. Transformers, switchgear, UPS systems, and backup generators form a chain with multi-year lead times at nearly every link.",
+                    pieces: [
+                      { name: "Transformers", role: "Step down grid voltage" },
+                      { name: "Switchgear", role: "Distribute and protect circuits" },
+                      { name: "UPS Systems", role: "Buffer against power loss" },
+                      { name: "Backup Generators", role: "Emergency diesel/gas power" },
+                      { name: "Busbars", role: "Conduct power within facility" },
+                    ],
+                    companies: [
+                      { name: "Eaton", piece: "Power Distribution", flag: "us" },
+                      { name: "Schneider Electric", piece: "UPS Systems", flag: "fr" },
+                      { name: "ABB", piece: "Transformers", flag: "ch" },
+                      { name: "Siemens Energy", piece: "Switchgear", flag: "de" },
+                      { name: "Vertiv", piece: "UPS Systems", flag: "us" },
+                      { name: "GE Vernova", piece: "Gas Turbines", flag: "us" },
+                      { name: "Constellation Energy", piece: "Nuclear Power", flag: "us" },
+                    ],
+                  },
+                  "Physical Structure": {
+                    name: "Physical Structure",
+                    whyItMatters: "Physical structure is the foundation — the shells, racks, concrete, and steel that house everything else. Construction timelines are compressing from 36 to 12 months, straining labor and materials.",
+                    pieces: [
+                      { name: "Datacenter Shells", role: "Climate-controlled buildings" },
+                      { name: "Structural Steel", role: "Load-bearing framework" },
+                      { name: "Rack Infrastructure", role: "Mount and organize servers" },
+                      { name: "Modular Units", role: "Pre-fabricated deployable pods" },
+                      { name: "Foundations", role: "Reinforced concrete base" },
+                    ],
+                    companies: [
+                      { name: "Equinix", piece: "Datacenter Facilities", flag: "us" },
+                      { name: "Digital Realty", piece: "Datacenter Facilities", flag: "us" },
+                      { name: "Compass Datacenters", piece: "Modular Construction", flag: "us" },
+                      { name: "Nucor", piece: "Structural Steel", flag: "us" },
+                      { name: "Legrand", piece: "Rack Infrastructure", flag: "fr" },
+                      { name: "Rittal", piece: "Server Cabinets", flag: "de" },
+                    ],
+                  },
+                };
+
+                const detail = SUBSYSTEM_DETAIL[selectedSubsystem];
+                if (!detail) return null;
+
+                const cardBgPanel = "rgba(255, 255, 255, 0.02)";
+                const dividerPanel = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
+
+                return (
+                  <div style={{ background: cardBgPanel, borderRadius: 6, padding: "12px 12px" }}>
+                    {/* Header */}
+                    <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: "0 0 2px 0", fontFamily: "'EB Garamond', Georgia, serif" }}>{detail.name}</p>
+                    <p style={{ fontSize: 7, color: "#4a4540", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" }}>Subsystem</p>
+
+                    {dividerPanel}
+
+                    {/* Why It Matters */}
+                    <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Why It Matters</p>
+                    <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{detail.whyItMatters}</p>
+
+                    {dividerPanel}
+
+                    {/* Pieces */}
+                    <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Components</p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                      {detail.pieces.map(p => (
+                        <div key={p.name} style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#c87a4a", flexShrink: 0, marginTop: 5 }} />
+                          <span style={{ fontSize: 10, color: "#ece8e1", fontWeight: 500 }}>{p.name}</span>
+                          <span style={{ fontSize: 9, color: "#706a60" }}>— {p.role}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {dividerPanel}
+
+                    {/* Key Companies */}
+                    <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Key Players</p>
+                    {detail.companies.map(c => (
+                      <div key={c.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "3px 0" }}>
+                        <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                        <span style={{ fontSize: 11, color: "rgb(160, 152, 136)" }}>{c.name}</span>
+                        <span style={{ fontSize: 9, color: "#706a60" }}>— {c.piece}</span>
+                      </div>
+                    ))}
+                  </div>
+                );
               }
 
               // Show group description if a group is selected on AI tree (and no sub-node is selected)
