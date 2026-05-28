@@ -2490,14 +2490,14 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
               </div>
 
               {/* Two-column layout */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginTop: 14 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1.4fr 0.6fr", gap: 14, marginTop: 14 }}>
                 {/* Featured Signal + Key Companies */}
                 <div>
                   <p style={sTitle}>Featured Signal</p>
                   {featuredSignal ? (
                     <div style={{ background: cardBg, borderRadius: 5, border: "1px solid rgba(200,122,74,0.15)", display: "grid", gridTemplateColumns: "1fr 1fr", overflow: "hidden" }}>
                       {/* Left: signal details */}
-                      <div style={{ padding: "14px 0 14px 14px" }}>
+                      <div style={{ padding: 14 }}>
                         <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 8px 0" }}>{featuredSignal.title}</p>
                         <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0" }}>{featuredSignal.teaser}</p>
                         {featuredSignal.whyItMatters && (
@@ -2506,7 +2506,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                         {featuredSignal.affectedNodes && (
                           <>
                             <p style={{ fontSize: 8, color: dimText, margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Affected Nodes</p>
-                            <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 12 }}>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                               {featuredSignal.affectedNodes.map((node, ni) => (
                                 <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
                                   <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{node}</span>
@@ -2516,21 +2516,22 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                             </div>
                           </>
                         )}
-                        <span
-                          onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
-                          style={{
-                            fontSize: 10, color: "#c87a4a", cursor: "pointer",
-                            transition: "color 0.15s",
-                          }}
-                          onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
-                          onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
-                        >
-                          Open signal brief and analysis →
-                        </span>
                       </div>
-                      {/* Right: key companies table */}
-                      <div style={{ padding: "14px 14px 14px 0" }}>
-                        <p style={{ fontSize: 8, color: dimText, margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Key Companies</p>
+                      {/* Right: brief link + key companies table */}
+                      <div style={{ padding: 14, display: "flex", flexDirection: "column" }}>
+                        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 8 }}>
+                          <span
+                            onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
+                            style={{
+                              fontSize: 10, color: "#c87a4a", cursor: "pointer",
+                              transition: "color 0.15s",
+                            }}
+                            onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+                            onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+                          >
+                            Open signal brief and analysis →
+                          </span>
+                        </div>
                         {(() => {
                           const relatedNames = new Set(featuredSignal.relatedCompanies ?? []);
                           const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 10);
@@ -2575,6 +2576,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                       <p style={{ fontSize: 10, color: dimText, margin: 0 }}>No additional signals for {selectedSubsystem} yet.</p>
                     </div>
                   ) : (
+                    <>
                     <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                       {otherSignals.map(s => (
                         <div
@@ -2592,6 +2594,17 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                         </div>
                       ))}
                     </div>
+                    <div style={{ marginTop: 10 }}>
+                      <span
+                        onClick={() => {}}
+                        style={{ fontSize: 10, color: "#c87a4a", cursor: "pointer", transition: "color 0.15s" }}
+                        onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+                        onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+                      >
+                        See all signals →
+                      </span>
+                    </div>
+                    </>
                   )}
                 </div>
               </div>
