@@ -2497,7 +2497,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                   {featuredSignal ? (
                     <div style={{ background: cardBg, borderRadius: 5, border: "1px solid rgba(200,122,74,0.15)", display: "grid", gridTemplateColumns: "1fr 1fr", overflow: "hidden" }}>
                       {/* Left: signal details */}
-                      <div style={{ padding: "14px 14px" }}>
+                      <div style={{ padding: "14px 0 14px 14px" }}>
                         <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 8px 0" }}>{featuredSignal.title}</p>
                         <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0" }}>{featuredSignal.teaser}</p>
                         {featuredSignal.whyItMatters && (
@@ -2529,13 +2529,13 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                         </span>
                       </div>
                       {/* Right: key companies table */}
-                      <div style={{ borderLeft: "1px solid rgba(255,255,255,0.06)" }}>
-                        <p style={{ fontSize: 8, color: dimText, margin: 0, padding: "14px 10px 8px", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Key Companies</p>
+                      <div style={{ padding: "14px 14px 14px 0" }}>
+                        <p style={{ fontSize: 8, color: dimText, margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Key Companies</p>
                         {(() => {
                           const relatedNames = new Set(featuredSignal.relatedCompanies ?? []);
                           const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 10);
                           return (
-                            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                            <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
                               <thead>
                                 <tr style={{ background: "rgb(38, 38, 38)" }}>
                                   <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
