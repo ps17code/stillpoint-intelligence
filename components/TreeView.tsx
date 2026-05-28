@@ -2517,123 +2517,133 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
 
             return (
               <>
-              {/* Two-column layout */}
-              <div style={{ display: "grid", gridTemplateColumns: "1.4fr 0.6fr", gap: 14, marginTop: 14 }}>
-                {/* Featured Signal + Key Companies */}
-                <div>
-                  <p style={sTitle}>Featured Signal</p>
-                  {featuredSignal ? (
-                    <div style={{ background: cardBg, borderRadius: 5, border: "1px solid rgba(200,122,74,0.15)", display: "grid", gridTemplateColumns: "1fr 1fr", overflow: "hidden" }}>
-                      {/* Left: signal details */}
-                      <div style={{ padding: 14 }}>
-                        <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 8px 0" }}>{featuredSignal.title}</p>
-                        <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0" }}>{featuredSignal.teaser}</p>
-                        {featuredSignal.whyItMatters && (
-                          <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 12px 0", fontStyle: "italic" }}>{featuredSignal.whyItMatters}</p>
-                        )}
-                        {featuredSignal.affectedNodes && (
-                          <>
-                            <p style={{ fontSize: 8, color: dimText, margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Affected Nodes</p>
-                            <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                              {featuredSignal.affectedNodes.map((node, ni) => (
-                                <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                                  <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{node}</span>
-                                  {ni < featuredSignal.affectedNodes!.length - 1 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)" }}>→</span>}
-                                </span>
-                              ))}
-                            </div>
-                          </>
-                        )}
-                      </div>
-                      {/* Right: brief link + key companies table */}
-                      <div style={{ padding: 14, display: "flex", flexDirection: "column" }}>
-                        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 8 }}>
-                          <span
-                            onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
-                            style={{
-                              fontSize: 10, color: "#c87a4a", cursor: "pointer",
-                              transition: "color 0.15s",
-                            }}
-                            onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
-                            onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
-                          >
-                            Open signal brief and analysis →
-                          </span>
-                        </div>
-                        {(() => {
-                          const relatedNames = new Set(featuredSignal.relatedCompanies ?? []);
-                          const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 10);
-                          return (
-                            <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
-                              <thead>
-                                <tr style={{ background: "rgb(38, 38, 38)" }}>
-                                  <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
-                                  <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Supply Chain Node</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {filtered.map((c, ci) => (
-                                  <tr key={c.name} style={{ borderTop: ci > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
-                                    <td style={{ padding: "7px 10px", fontSize: 10 }}>
-                                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                        <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                                        <span style={{ color: warmWhite, fontWeight: 500 }}>{c.name}</span>
-                                      </div>
-                                    </td>
-                                    <td style={{ padding: "7px 10px", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{c.node}</td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          );
-                        })()}
-                      </div>
-                    </div>
-                  ) : (
-                    <div style={{ background: cardBg, borderRadius: 5, padding: "14px 12px" }}>
-                      <p style={{ fontSize: 10, color: dimText, margin: 0 }}>No featured signal for {selectedSubsystem} yet.</p>
-                    </div>
-                  )}
+              {/* Signals section card */}
+              <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 14 }}>
+                {/* Header */}
+                <div style={{ padding: "10px 15px" }}>
+                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Signals</p>
                 </div>
+                <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
 
-                {/* Signals */}
-                <div>
-                  <p style={sTitle}>Signals</p>
-                  {otherSignals.length === 0 && !featuredSignal ? (
-                    <div style={{ background: cardBg, borderRadius: 5, padding: "14px 12px" }}>
-                      <p style={{ fontSize: 10, color: dimText, margin: 0 }}>No additional signals for {selectedSubsystem} yet.</p>
-                    </div>
-                  ) : (
-                    <>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                      {otherSignals.map(s => (
-                        <div
-                          key={s.id}
-                          onClick={() => { setSelectedFeaturedChain(s.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
-                          style={{ background: cardBg, borderRadius: 5, padding: "10px 12px", cursor: "pointer", border: "1px solid rgba(200,122,74,0.15)", transition: "border-color 0.15s" }}
-                          onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(200,122,74,0.4)"; }}
-                          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(200,122,74,0.15)"; }}
-                        >
-                          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
-                            <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: 0 }}>{s.title}</p>
-                          </div>
-                          <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{s.teaser}</p>
+                {/* Two-column content */}
+                <div style={{ display: "grid", gridTemplateColumns: "1.4fr 0.6fr", gap: 0, padding: 15 }}>
+                  {/* Featured Signal card */}
+                  <div style={{ paddingRight: 14 }}>
+                    {featuredSignal ? (
+                      <div style={{ background: cardBg, borderRadius: 5, border: "1px solid rgba(200,122,74,0.15)", display: "grid", gridTemplateColumns: "1fr 1fr", overflow: "hidden" }}>
+                        {/* Left: signal details */}
+                        <div style={{ padding: 14 }}>
+                          <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 8px 0" }}>{featuredSignal.title}</p>
+                          <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0" }}>{featuredSignal.teaser}</p>
+                          {featuredSignal.whyItMatters && (
+                            <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 12px 0", fontStyle: "italic" }}>{featuredSignal.whyItMatters}</p>
+                          )}
+                          {featuredSignal.affectedNodes && (
+                            <>
+                              <p style={{ fontSize: 8, color: dimText, margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Affected Nodes</p>
+                              <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                                {featuredSignal.affectedNodes.map((node, ni) => (
+                                  <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                                    <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{node}</span>
+                                    {ni < featuredSignal.affectedNodes!.length - 1 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)" }}>→</span>}
+                                  </span>
+                                ))}
+                              </div>
+                            </>
+                          )}
                         </div>
-                      ))}
-                    </div>
-                    <div style={{ marginTop: 10 }}>
-                      <span
-                        onClick={() => {}}
-                        style={{ fontSize: 10, color: "#c87a4a", cursor: "pointer", transition: "color 0.15s" }}
-                        onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
-                        onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
-                      >
-                        See all signals →
-                      </span>
-                    </div>
-                    </>
-                  )}
+                        {/* Right: brief link + key companies table */}
+                        <div style={{ padding: 14, display: "flex", flexDirection: "column" }}>
+                          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 8 }}>
+                            <span
+                              onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
+                              style={{
+                                fontSize: 10, color: "#c87a4a", cursor: "pointer",
+                                transition: "color 0.15s",
+                              }}
+                              onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+                              onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+                            >
+                              Open signal brief and analysis →
+                            </span>
+                          </div>
+                          {(() => {
+                            const relatedNames = new Set(featuredSignal.relatedCompanies ?? []);
+                            const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 10);
+                            return (
+                              <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
+                                <thead>
+                                  <tr style={{ background: "rgb(38, 38, 38)" }}>
+                                    <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
+                                    <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Supply Chain Node</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {filtered.map((c, ci) => (
+                                    <tr key={c.name} style={{ borderTop: ci > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
+                                      <td style={{ padding: "7px 10px", fontSize: 10 }}>
+                                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                          <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                                          <span style={{ color: warmWhite, fontWeight: 500 }}>{c.name}</span>
+                                        </div>
+                                      </td>
+                                      <td style={{ padding: "7px 10px", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{c.node}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            );
+                          })()}
+                        </div>
+                      </div>
+                    ) : (
+                      <div style={{ background: cardBg, borderRadius: 5, padding: "14px 12px" }}>
+                        <p style={{ fontSize: 10, color: dimText, margin: 0 }}>No featured signal for {selectedSubsystem} yet.</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Signal list — no card style, dividers between items */}
+                  <div>
+                    {otherSignals.length === 0 && !featuredSignal ? (
+                      <p style={{ fontSize: 10, color: dimText, margin: 0, padding: "10px 0" }}>No additional signals yet.</p>
+                    ) : (
+                      <>
+                      <div>
+                        {otherSignals.map((s, si) => (
+                          <div
+                            key={s.id}
+                            onClick={() => { setSelectedFeaturedChain(s.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
+                            style={{
+                              padding: "10px 0",
+                              cursor: "pointer",
+                              borderTop: si > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                              transition: "opacity 0.15s",
+                            }}
+                            onMouseEnter={e => { e.currentTarget.style.opacity = "0.8"; }}
+                            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                          >
+                            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                              <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
+                              <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: 0 }}>{s.title}</p>
+                            </div>
+                            <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{s.teaser}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <div style={{ marginTop: 6, borderTop: otherSignals.length > 0 ? "1px solid rgba(255,255,255,0.06)" : "none", paddingTop: 10 }}>
+                        <span
+                          onClick={() => {}}
+                          style={{ fontSize: 10, color: "#c87a4a", cursor: "pointer", transition: "color 0.15s" }}
+                          onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+                          onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+                        >
+                          See all signals →
+                        </span>
+                      </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
               </>
