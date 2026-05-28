@@ -2329,14 +2329,15 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
               if (!m) return null;
               return (
                 <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "10px 15px", display: "flex", alignItems: "center" }}>
+                  <span style={{ fontSize: 11, color: "rgb(209, 209, 209)", marginRight: 30, fontWeight: 500 }}>SUMMARY:</span>
                   {[
                     { label: "Raw Materials", value: m.rawMaterials },
                     { label: "Intermediates", value: m.intermediates },
                     { label: "Components", value: m.components },
-                  ].map((metric, mi) => (
-                    <div key={metric.label} style={{ display: "flex", alignItems: "center", gap: 5, marginRight: mi < 2 ? 20 : 0 }}>
-                      <span style={{ fontSize: 13, color: warmWhite, fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>{metric.value}</span>
-                      <span style={{ fontSize: 7, color: dimText, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em" }}>{metric.label}</span>
+                  ].map((metric, mi, arr) => (
+                    <div key={metric.label} style={{ display: "flex", alignItems: "center", gap: 5, marginRight: 30, paddingRight: 30, borderRight: mi < arr.length - 1 ? "1px solid rgba(255,255,255,0.1)" : "none" }}>
+                      <span style={{ fontSize: 11, color: "rgb(200, 122, 74)", fontWeight: 600 }}>{metric.value}</span>
+                      <span style={{ fontSize: 11, color: "rgb(209, 209, 209)" }}>{metric.label}</span>
                     </div>
                   ))}
                   <div style={{ flex: 1 }} />
