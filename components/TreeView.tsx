@@ -1715,6 +1715,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [selectedSubsystem, setSelectedSubsystem] = useState<string | null>(null);
   const [selectedArchPiece, setSelectedArchPiece] = useState<string | null>(null);
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
+  const [opportunityLayerFilter, setOpportunityLayerFilter] = useState<string | null>(null);
 
   // Featured chains data
   type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; highlight_display_index?: number; navigate_path: string[] };
@@ -2745,11 +2746,90 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             </div>
           )}
 
-          {showChainOpportunities && selectedFeaturedChain === "germanium_chokepoint" && (
-            <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", flex: 1, minHeight: 200, animation: "fadeSlideDown 0.4s ease-out 0.15s both" }}>
-              <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chain Opportunities</p>
-            </div>
-          )}
+          {showChainOpportunities && selectedFeaturedChain === "germanium_chokepoint" && (() => {
+            type WtmiIdea = { id: string; name: string; ticker?: string; category: string; line1: string };
+            type WtmiLayer = { label: string; ideas: WtmiIdea[] };
+            const geWtmi = (germaniumInputJson as unknown as { wtmi: { layers: WtmiLayer[] } }).wtmi;
+            const fiberWtmi = (fiberInputJson as unknown as { wtmi: { layers: WtmiLayer[] } }).wtmi;
+
+            // Combine all layers from both inputs
+            const allLayers: { label: string; source: string; ideas: WtmiIdea[] }[] = [
+              ...geWtmi.layers.map(l => ({ label: l.label, source: "Germanium", ideas: l.ideas })),
+              ...fiberWtmi.layers.map(l => ({ label: l.label, source: "Fiber", ideas: l.ideas })),
+            ];
+
+            const layerLabels = allLayers.map(l => l.label);
+            const filteredIdeas = opportunityLayerFilter
+              ? allLayers.filter(l => l.label === opportunityLayerFilter).flatMap(l => l.ideas)
+              : allLayers.flatMap(l => l.ideas);
+
+            return (
+              <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", flex: 1, animation: "fadeSlideDown 0.4s ease-out 0.15s both" }}>
+                <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 12px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chain Opportunities</p>
+
+                {/* Layer filter pills */}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 12 }}>
+                  <span
+                    onClick={() => setOpportunityLayerFilter(null)}
+                    style={{
+                      fontSize: 8, padding: "3px 8px", borderRadius: 3, cursor: "pointer",
+                      background: !opportunityLayerFilter ? "rgba(200,122,74,0.2)" : "rgba(255,255,255,0.04)",
+                      color: !opportunityLayerFilter ? "#c87a4a" : "rgb(160, 152, 136)",
+                      border: !opportunityLayerFilter ? "1px solid rgba(200,122,74,0.3)" : "1px solid transparent",
+                      fontFamily: "'Geist Mono', monospace",
+                      transition: "all 0.15s",
+                    }}
+                  >
+                    All
+                  </span>
+                  {layerLabels.map(label => (
+                    <span
+                      key={label}
+                      onClick={() => setOpportunityLayerFilter(opportunityLayerFilter === label ? null : label)}
+                      style={{
+                        fontSize: 8, padding: "3px 8px", borderRadius: 3, cursor: "pointer",
+                        background: opportunityLayerFilter === label ? "rgba(200,122,74,0.2)" : "rgba(255,255,255,0.04)",
+                        color: opportunityLayerFilter === label ? "#c87a4a" : "rgb(160, 152, 136)",
+                        border: opportunityLayerFilter === label ? "1px solid rgba(200,122,74,0.3)" : "1px solid transparent",
+                        fontFamily: "'Geist Mono', monospace",
+                        transition: "all 0.15s",
+                      }}
+                    >
+                      {label}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Ideas table */}
+                <div style={{ border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
+                  <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                    <thead>
+                      <tr style={{ background: "rgb(38, 38, 38)" }}>
+                        <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
+                        <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Category</th>
+                        <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Thesis</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredIdeas.map((idea, ii) => {
+                        const tickerDisplay = idea.ticker || "(Private)";
+                        return (
+                          <tr key={idea.id + ii} style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+                            <td style={{ padding: "8px 10px", fontSize: 11, verticalAlign: "top", whiteSpace: "nowrap" }}>
+                              <span style={{ color: warmWhite, fontWeight: 500 }}>{idea.name}</span>
+                              <span style={{ fontSize: 8, color: "rgb(120, 112, 100)", marginLeft: 6, fontFamily: "'Geist Mono', monospace" }}>{tickerDisplay}</span>
+                            </td>
+                            <td style={{ padding: "8px 10px", fontSize: 9, color: "#c87a4a", verticalAlign: "top", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{idea.category}</td>
+                            <td style={{ padding: "8px 10px", fontSize: 10, color: "rgb(160, 152, 136)", verticalAlign: "top", lineHeight: 1.5 }}>{idea.line1}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            );
+          })()}
           </>
         );
       }
