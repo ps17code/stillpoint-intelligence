@@ -1719,6 +1719,29 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
   type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; highlight_display_index?: number; navigate_path: string[] };
   const featuredChains = ((featuredChainsJson as Record<string, unknown>).ai_infrastructure ?? []) as FeaturedChain[];
   const activeFeaturedChain = featuredChains.find(c => c.id === selectedFeaturedChain);
+  // Subsystem node set for tree filtering
+  const subsystemNodeSet = useMemo(() => {
+    if (!selectedSubsystem || chainTreeTab !== "tree") return new Set<string>();
+    const subsystemMap: Record<string, string[]> = {
+      "Compute": ["compute"],
+      "Connectivity": ["connectivity"],
+      "Cooling": ["cooling"],
+      "Power": ["power_distribution", "power_generation"],
+      "Physical Structure": ["physical_structure"],
+    };
+    const parentKeys = subsystemMap[selectedSubsystem];
+    if (!parentKeys) return new Set<string>();
+    const ai = chainDefs["ai"] as unknown as { componentSubgroups?: Record<string, { parent_subsystem?: string; nodes: string[] }> };
+    if (!ai?.componentSubgroups) return new Set<string>();
+    const nodes = new Set<string>();
+    Object.values(ai.componentSubgroups).forEach(g => {
+      if (parentKeys.includes(g.parent_subsystem ?? "")) {
+        g.nodes.forEach(n => nodes.add(n));
+      }
+    });
+    return nodes;
+  }, [selectedSubsystem, chainTreeTab]);
+
   const featuredChainNodeSet = useMemo(() => {
     if (!activeFeaturedChain) return new Set<string>();
     // Map chain node IDs to display names for tree highlighting
@@ -2218,30 +2241,25 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
             {/* Header row: title + toggle */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 15px" }}>
               <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Value Chain</p>
-              <div style={{ display: "flex", alignItems: "center", background: "rgba(255,255,255,0.04)", borderRadius: 4, padding: 2 }}>
-                {([
-                  { id: "diagram" as const, label: "Diagram" },
-                  { id: "tree" as const, label: "Tree" },
-                ]).map(opt => {
-                  const isActive = chainTreeTab === opt.id;
-                  return (
-                    <button
-                      key={opt.id}
-                      onClick={() => setChainTreeTab(opt.id)}
-                      style={{
-                        fontSize: 8, fontFamily: "'Geist Mono', monospace",
-                        color: isActive ? warmWhite : "#555",
-                        background: isActive ? "rgba(255,255,255,0.08)" : "transparent",
-                        border: "none", borderRadius: 3,
-                        padding: "4px 10px", cursor: "pointer",
-                        transition: "color 0.15s, background 0.15s",
-                      }}
-                    >
-                      {opt.label}
-                    </button>
-                  );
-                })}
-              </div>
+              <button
+                onClick={() => setChainTreeTab(chainTreeTab === "diagram" ? "tree" : "diagram")}
+                style={{
+                  display: "flex", alignItems: "center", gap: 6,
+                  fontSize: 9, fontFamily: "'Geist Mono', monospace",
+                  color: warmWhite, background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)", borderRadius: 4,
+                  padding: "5px 10px", cursor: "pointer",
+                  transition: "border-color 0.15s, background 0.15s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+              >
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><line x1="8" y1="2" x2="8" y2="14" /><line x1="8" y1="6" x2="13" y2="3" /><line x1="8" y1="10" x2="13" y2="13" /></svg>
+                {chainTreeTab === "diagram"
+                  ? `View ${selectedSubsystem ?? "AI Infrastructure"} Supply Tree`
+                  : `View ${selectedSubsystem ?? "AI Infrastructure"} Diagram`
+                }
+              </button>
             </div>
             <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: (selectedArchPiece && !selectedFeaturedChain) ? "0 15px 10px" : "0 15px 15px" }} />
 
@@ -2294,7 +2312,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
               {/* Tree view */}
               {chainTreeTab === "tree" && (
                 <AISupplyTree
-                  highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : undefined}
+                  highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : subsystemNodeSet.size > 0 ? subsystemNodeSet : undefined}
                   onNodeClick={(name) => {
                     if (selectedFeaturedChain) {
                       if (!name) { setSelectedTreeNode(null); } else { setSelectedTreeNode(name); setRightTab("summary"); }
@@ -2319,54 +2337,6 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 />
               )}
             </div>
-            {/* Subsystem metrics row — hidden when arch piece selected */}
-            {!selectedFeaturedChain && !selectedArchPiece && (() => {
-              const metricsLookup: Record<string, { rawMaterials: number; intermediates: number; components: number; companies: number }> = {
-                "_all": { rawMaterials: 45, intermediates: 57, components: 47, companies: 185 },
-                "Compute": { rawMaterials: 14, intermediates: 18, components: 12, companies: 10 },
-                "Connectivity": { rawMaterials: 8, intermediates: 12, components: 7, companies: 10 },
-                "Cooling": { rawMaterials: 6, intermediates: 8, components: 9, companies: 10 },
-                "Power": { rawMaterials: 10, intermediates: 14, components: 11, companies: 10 },
-                "Physical Structure": { rawMaterials: 7, intermediates: 5, components: 8, companies: 10 },
-              };
-              const m = metricsLookup[selectedSubsystem ?? "_all"];
-              if (!m) return null;
-              return (
-                <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "10px 15px", display: "flex", alignItems: "center" }}>
-                  <span style={{ fontSize: 11, color: "rgb(209, 209, 209)", marginRight: 30, fontWeight: 500 }}>SUMMARY:</span>
-                  {[
-                    { label: "Raw Materials", value: m.rawMaterials },
-                    { label: "Intermediates", value: m.intermediates },
-                    { label: "Components", value: m.components },
-                    { label: "Companies", value: m.companies },
-                  ].map((metric, mi, arr) => (
-                    <div key={metric.label} style={{ display: "flex", alignItems: "center", gap: 5, marginRight: 30, paddingRight: 30, borderRight: mi < arr.length - 1 ? "1px solid rgba(255,255,255,0.1)" : "none" }}>
-                      <span style={{ fontSize: 11, color: "rgb(200, 122, 74)", fontWeight: 600 }}>{metric.value}</span>
-                      <span style={{ fontSize: 11, color: "rgb(209, 209, 209)" }}>{metric.label}</span>
-                    </div>
-                  ))}
-                  <div style={{ flex: 1 }} />
-                  {selectedSubsystem && (
-                    <button
-                      onClick={() => { setChainTreeTab("tree"); }}
-                      style={{
-                        display: "flex", alignItems: "center", gap: 6,
-                        fontSize: 9, fontFamily: "'Geist Mono', monospace",
-                        color: warmWhite, background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.08)", borderRadius: 4,
-                        padding: "5px 10px", cursor: "pointer",
-                        transition: "border-color 0.15s, background 0.15s",
-                      }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
-                    >
-                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><line x1="8" y1="2" x2="8" y2="14" /><line x1="8" y1="6" x2="13" y2="3" /><line x1="8" y1="10" x2="13" y2="13" /></svg>
-                      View {selectedSubsystem} Supply Tree
-                    </button>
-                  )}
-                </div>
-              );
-            })()}
           </div>
           {/* Hint text — shown when no subsystem is selected */}
           {!selectedSubsystem && !selectedFeaturedChain && (
