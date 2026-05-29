@@ -2237,7 +2237,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
 
         return (
           <>
-          <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden" }}>
+          <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", ...(selectedFeaturedChain ? { animation: "fadeSlideDown 0.4s ease-out" } : {}) }}>
             {/* Header row: title + toggle */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 15px" }}>
               <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Value Chain</p>
@@ -2285,22 +2285,22 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                             <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)", marginLeft: 8 }} />
                           )}
                         </div>
-                        {/* Illustration — hidden when arch piece selected */}
-                        {(!selectedArchPiece || selectedFeaturedChain) && (
-                          <div style={{
-                            width: "100%",
-                            height: 90,
-                            borderRadius: 3,
-                            overflow: "hidden",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            background: "rgb(36, 36, 36)",
-                            marginBottom: 8,
-                          }}>
-                            <img src={step.img} alt={step.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
-                          </div>
-                        )}
+                        {/* Illustration — collapses when arch piece selected */}
+                        <div style={{
+                          width: "100%",
+                          maxHeight: (!selectedArchPiece || selectedFeaturedChain) ? 90 : 0,
+                          opacity: (!selectedArchPiece || selectedFeaturedChain) ? 1 : 0,
+                          borderRadius: 3,
+                          overflow: "hidden",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          background: "rgb(36, 36, 36)",
+                          marginBottom: (!selectedArchPiece || selectedFeaturedChain) ? 8 : 0,
+                          transition: "max-height 0.3s ease, opacity 0.2s ease, margin-bottom 0.3s ease",
+                        }}>
+                          <img src={step.img} alt={step.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
+                        </div>
                         {/* Description */}
                         <p style={{ fontSize: 10, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
                       </div>
@@ -2609,7 +2609,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
             return (
               <>
               {/* Signals section card */}
-              <div style={{ animation: "fadeSlideDown 0.3s ease-out", background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10 }}>
+              <div style={{ animation: "fadeSlideDown 0.4s ease-out 0.15s both", background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10 }}>
                 {/* Header */}
                 <div style={{ padding: "10px 15px" }}>
                   <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{selectedArchPiece ? (() => { const ARCH_NAMES: Record<string, string> = { "gpu-server": "GPU / Server", "nic": "NIC / Interconnect", "transceiver": "Optical Transceiver", "fiber": "Fiber Optic Cable", "tor-switch": "Top-of-Rack Switch", "spine-switch": "Spine / Fabric Switch", "campus-link": "Campus / Region Link" }; return (ARCH_NAMES[selectedArchPiece] ?? selectedSubsystem) + " Signals"; })() : "Signals"}</p>
@@ -2733,7 +2733,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
           })()}
 
           {selectedFeaturedChain === "germanium_chokepoint" && (
-            <div style={{ marginTop: 20 }}>
+            <div style={{ marginTop: 20, animation: "fadeSlideDown 0.4s ease-out 0.2s both" }}>
               <ChainAnalysis />
             </div>
           )}
