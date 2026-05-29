@@ -11,13 +11,24 @@ const cardBg = "rgb(30, 30, 30)";
 const headerBg = "rgb(38, 38, 38)";
 const titleStyle = { fontSize: 12, color: warmWhite, fontWeight: 500 as const, margin: "0 0 15px 0" as const, fontFamily: "'Instrument Serif', serif" };
 
-export default function ChainAnalysis({ collapsed, onShowOpportunities }: { collapsed?: boolean; onShowOpportunities?: () => void } = {}) {
-  const collapsedSummary = "AI data centers require ~120M km of fiber annually from ~20 GW of new buildout. Meeting this demand needs far more germanium and GeCl₄ than current supply allows. While fiber capacity can scale with capex investment in new equipment, germanium supply is mostly fixed — and GeCl₄ is the chokepoint, with only one Western company able to refine and supply to the commercial fiber market at scale.";
+export default function ChainAnalysis({ collapsed, onShowOpportunities, onExpand }: { collapsed?: boolean; onShowOpportunities?: () => void; onExpand?: () => void } = {}) {
   if (collapsed) {
     return (
       <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", transition: "all 0.3s ease" }}>
-        <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 10px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: mono }}>Chain Summary</p>
-        <p style={{ fontSize: 11, color: numColor, lineHeight: 1.6, margin: 0 }}>{collapsedSummary}</p>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: mono }}>Chain Summary</p>
+            <span style={{ fontSize: 11, color: numColor }}>Primary Chokepoint: <span style={{ color: amber, fontWeight: 500 }}>GeCl₄</span></span>
+          </div>
+          <span
+            onClick={onExpand}
+            style={{ fontSize: 9, color: "#c87a4a", cursor: "pointer", transition: "color 0.15s", fontFamily: mono }}
+            onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+            onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+          >
+            Expand →
+          </span>
+        </div>
       </div>
     );
   }

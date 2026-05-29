@@ -2741,8 +2741,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           })()}
 
           {selectedFeaturedChain === "germanium_chokepoint" && (
-            <div style={{ marginTop: 20, animation: "fadeSlideDown 0.4s ease-out 0.2s both" }}>
-              <ChainAnalysis collapsed={showChainOpportunities} onShowOpportunities={() => setShowChainOpportunities(true)} />
+            <div style={{ marginTop: 10, animation: "fadeSlideDown 0.4s ease-out 0.2s both" }}>
+              <ChainAnalysis collapsed={showChainOpportunities} onShowOpportunities={() => setShowChainOpportunities(true)} onExpand={() => setShowChainOpportunities(false)} />
             </div>
           )}
 
@@ -2752,19 +2752,37 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             const geWtmi = (germaniumInputJson as unknown as { wtmi: { layers: WtmiLayer[] } }).wtmi;
             const fiberWtmi = (fiberInputJson as unknown as { wtmi: { layers: WtmiLayer[] } }).wtmi;
 
-            // Combine all layers from both inputs
-            const allLayers: { label: string; source: string; ideas: WtmiIdea[] }[] = [
-              ...geWtmi.layers.map(l => ({ label: l.label, source: "Germanium", ideas: l.ideas })),
-              ...fiberWtmi.layers.map(l => ({ label: l.label, source: "Fiber", ideas: l.ideas })),
+            // Combine all ideas with custom filter categories
+            const allIdeas = [
+              ...geWtmi.layers.flatMap(l => l.ideas),
+              ...fiberWtmi.layers.flatMap(l => l.ideas),
             ];
 
-            const layerLabels = allLayers.map(l => l.label);
-            const filteredIdeas = opportunityLayerFilter
-              ? allLayers.filter(l => l.label === opportunityLayerFilter).flatMap(l => l.ideas)
-              : allLayers.flatMap(l => l.ideas);
+            const FILTERS = ["Germanium Supplier", "GeCl₄ Refiner", "Fiber Preform / Cable", "Other"];
+            const filterMap: Record<string, (idea: WtmiIdea) => boolean> = {
+              "Germanium Supplier": (i) => ["yunnan-chihong", "blue-moon-metals"].includes(i.id) || i.category === "Feedstock supplier",
+              "GeCl₄ Refiner": (i) => ["umicore", "5n-plus"].includes(i.id),
+              "Fiber Preform / Cable": (i) => ["corning", "prysmian", "fujikura", "yofc", "rosendahl-nextrom"].includes(i.id),
+              "Other": (i) => {
+                const covered = ["yunnan-chihong", "blue-moon-metals", "umicore", "5n-plus", "corning", "prysmian", "fujikura", "yofc", "rosendahl-nextrom"];
+                const isSupplier = i.category === "Feedstock supplier";
+                return !covered.includes(i.id) && !isSupplier;
+              },
+            };
+
+            const filteredIdeas = opportunityLayerFilter && filterMap[opportunityLayerFilter]
+              ? allIdeas.filter(filterMap[opportunityLayerFilter])
+              : allIdeas;
+
+            // Extract just ticker symbol (no exchange)
+            const cleanTicker = (t?: string) => {
+              if (!t) return "(Private)";
+              const parts = t.split("·")[0].trim();
+              return parts || "(Private)";
+            };
 
             return (
-              <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", flex: 1, animation: "fadeSlideDown 0.4s ease-out 0.15s both" }}>
+              <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", display: "flex", flexDirection: "column", flex: 1, animation: "fadeSlideDown 0.4s ease-out 0.15s both" }}>
                 <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 12px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chain Opportunities</p>
 
                 {/* Layer filter pills */}
@@ -2782,7 +2800,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   >
                     All
                   </span>
-                  {layerLabels.map(label => (
+                  {FILTERS.map(label => (
                     <span
                       key={label}
                       onClick={() => setOpportunityLayerFilter(opportunityLayerFilter === label ? null : label)}
@@ -2800,8 +2818,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   ))}
                 </div>
 
-                {/* Ideas table */}
-                <div style={{ border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
+                {/* Ideas table — scrollable */}
+                <div style={{ border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden", flex: 1, display: "flex", flexDirection: "column" }}>
                   <table style={{ width: "100%", borderCollapse: "collapse" }}>
                     <thead>
                       <tr style={{ background: "rgb(38, 38, 38)" }}>
@@ -2810,22 +2828,26 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Thesis</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {filteredIdeas.map((idea, ii) => {
-                        const tickerDisplay = idea.ticker || "(Private)";
-                        return (
-                          <tr key={idea.id + ii} style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-                            <td style={{ padding: "8px 10px", fontSize: 11, verticalAlign: "top", whiteSpace: "nowrap" }}>
-                              <span style={{ color: warmWhite, fontWeight: 500 }}>{idea.name}</span>
-                              <span style={{ fontSize: 8, color: "rgb(120, 112, 100)", marginLeft: 6, fontFamily: "'Geist Mono', monospace" }}>{tickerDisplay}</span>
-                            </td>
-                            <td style={{ padding: "8px 10px", fontSize: 9, color: "#c87a4a", verticalAlign: "top", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{idea.category}</td>
-                            <td style={{ padding: "8px 10px", fontSize: 10, color: "rgb(160, 152, 136)", verticalAlign: "top", lineHeight: 1.5 }}>{idea.line1}</td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
                   </table>
+                  <div style={{ flex: 1, overflowY: "auto" }}>
+                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                      <tbody>
+                        {filteredIdeas.map((idea, ii) => {
+                          const tickerDisplay = cleanTicker(idea.ticker);
+                          return (
+                            <tr key={idea.id + ii} style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+                              <td style={{ padding: "8px 10px", fontSize: 11, verticalAlign: "top", whiteSpace: "nowrap" }}>
+                                <span style={{ color: warmWhite, fontWeight: 500 }}>{idea.name}</span>
+                                <span style={{ fontSize: 8, color: "rgb(120, 112, 100)", marginLeft: 6, fontFamily: "'Geist Mono', monospace" }}>({tickerDisplay})</span>
+                              </td>
+                              <td style={{ padding: "8px 10px", fontSize: 9, color: "#c87a4a", verticalAlign: "top", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{idea.category}</td>
+                              <td style={{ padding: "8px 10px", fontSize: 10, color: "rgb(160, 152, 136)", verticalAlign: "top", lineHeight: 1.5 }}>{idea.line1}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             );
