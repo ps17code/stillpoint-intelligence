@@ -7,31 +7,54 @@ type Vertical = {
   id: VerticalId;
   label: string;
   img: string;
+  active: boolean;
 };
 
 const verticals: Vertical[] = [
-  { id: "ai-infrastructure", label: "AI Infrastructure", img: "/verticals/ai-infrastructure.png" },
-  { id: "energy-transition", label: "Energy Transition", img: "/verticals/energy-transition.png" },
-  { id: "robotics", label: "Robotics", img: "/verticals/robotics.png" },
-  { id: "uavs", label: "UAVs", img: "/verticals/uavs.png" },
-  { id: "space", label: "Space", img: "/verticals/space.png" },
-  { id: "defense", label: "Defense", img: "/verticals/defense.png" },
+  { id: "ai-infrastructure", label: "AI Infrastructure", img: "/verticals/ai-infrastructure.png", active: true },
+  { id: "energy-transition", label: "Energy Transition", img: "/verticals/energy-transition.png", active: false },
+  { id: "robotics", label: "Robotics", img: "/verticals/robotics.png", active: false },
+  { id: "uavs", label: "UAVs", img: "/verticals/uavs.png", active: false },
+  { id: "space", label: "Space", img: "/verticals/space.png", active: false },
+  { id: "defense", label: "Defense", img: "/verticals/defense.png", active: false },
 ];
 
-function VerticalCard({ label, img, onClick }: { label: string; img: string; onClick?: () => void }) {
+function VerticalCard({ label, img, active, onClick }: { label: string; img: string; active: boolean; onClick?: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="group flex flex-col overflow-hidden rounded-[10px] border border-white/[0.06] transition-all duration-300 hover:-translate-y-[2px] hover:border-white/[0.15] focus:outline-none"
+      className={`group flex flex-col overflow-hidden rounded-[10px] border transition-all duration-300 focus:outline-none ${
+        active
+          ? "border-white/[0.06] hover:-translate-y-[2px] hover:border-white/[0.15]"
+          : "border-white/[0.04] opacity-40 hover:opacity-60"
+      }`}
     >
-      <img src={img} alt={label} className="w-full h-auto block brightness-[1.2] transition-all duration-300 group-hover:brightness-[1.4]" />
-      <div className="px-4 pt-1 pb-2">
+      <img
+        src={img}
+        alt={label}
+        className={`w-full h-auto block transition-all duration-300 ${
+          active
+            ? "brightness-[1.2] group-hover:brightness-[1.4]"
+            : "brightness-[0.7]"
+        }`}
+      />
+      <div className="px-4 pt-1 pb-2 flex items-center gap-[6px]">
         <span
-          className="text-[10px] font-[300] uppercase tracking-[0.08em] text-white/50 transition-colors duration-300 group-hover:text-white/80"
+          className={`text-[10px] font-[300] uppercase tracking-[0.08em] transition-colors duration-300 ${
+            active
+              ? "text-white/50 group-hover:text-white/80"
+              : "text-white/30"
+          }`}
           style={{ fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif" }}
         >
           {label}
         </span>
+        {active && (
+          <span className="relative flex h-[6px] w-[6px]">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+            <span className="relative inline-flex h-[6px] w-[6px] rounded-full bg-green-500" />
+          </span>
+        )}
       </div>
     </button>
   );
@@ -79,6 +102,7 @@ export default function VerticalLandingPage({ onSelect }: { onSelect?: (id: Vert
                 key={v.id}
                 label={v.label}
                 img={v.img}
+                active={v.active}
                 onClick={() => onSelect?.(v.id)}
               />
             ))}
