@@ -2377,13 +2377,13 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
           {/* Connectivity Architecture — shown when Connectivity is selected */}
           {!selectedFeaturedChain && selectedSubsystem === "Connectivity" && (() => {
             const ARCH_PIECES = [
-              { id: "gpu-server", title: "GPU / Server", desc: "Generates and consumes AI workload data.", deps: ["GPU accelerators", "HBM memory", "Server boards"] },
-              { id: "nic", title: "NIC / Interconnect", desc: "Moves data out of the server.", deps: ["SerDes", "PHY chips", "PCB components"] },
-              { id: "transceiver", title: "Optical Transceiver", desc: "Converts electrical signals into optical signals.", deps: ["Lasers", "DSPs", "Silicon photonics"] },
-              { id: "fiber", title: "Fiber Optic Cable", desc: "Carries light across racks, buildings, and campuses.", deps: ["GeCl₄", "Fiber preforms", "Helium draw towers"] },
-              { id: "tor-switch", title: "Top-of-Rack Switch", desc: "Aggregates traffic from servers in a rack.", deps: ["Switch ASICs", "Optical ports", "Power & cooling"] },
-              { id: "spine-switch", title: "Spine / Fabric Switch", desc: "Routes traffic across the cluster fabric.", deps: ["High-radix ASICs", "Optics & cables", "Network OS"] },
-              { id: "campus-link", title: "Campus / Region Link", desc: "Connects buildings, sites, and regions.", deps: ["Long-haul fiber", "Conduit / rights-of-way", "Permitting labor"] },
+              { id: "gpu-server", title: "GPU / Server", desc: "Origin of all AI workload traffic.", deps: ["GPU accelerators", "HBM memory", "Server boards"] },
+              { id: "nic", title: "NIC / Interconnect", desc: "Serializes data off the server bus.", deps: ["SerDes", "PHY chips", "PCB traces"] },
+              { id: "transceiver", title: "Optical Transceiver", desc: "Electrical-to-optical signal conversion.", deps: ["Lasers", "DSPs", "Si photonics"] },
+              { id: "fiber", title: "Fiber Optic Cable", desc: "Light transport across racks and campus.", deps: ["GeCl₄", "Fiber preforms", "Helium towers"] },
+              { id: "tor-switch", title: "Top-of-Rack Switch", desc: "Aggregates server traffic per rack.", deps: ["Switch ASICs", "Optical ports", "Power"] },
+              { id: "spine-switch", title: "Spine / Fabric Switch", desc: "Routes traffic across cluster fabric.", deps: ["High-radix ASICs", "Optics", "Network OS"] },
+              { id: "campus-link", title: "Campus / Region Link", desc: "Connects buildings, sites, regions.", deps: ["Long-haul fiber", "Conduit / ROW", "Install labor"] },
             ];
 
             return (
@@ -2424,12 +2424,9 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                             {/* Description */}
                             <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 6px 0", fontWeight: 300 }}>{piece.desc}</p>
                             {/* Dependencies */}
-                            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                               {piece.deps.map(d => (
-                                <div key={d} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                                  <span style={{ width: 2, height: 2, borderRadius: "50%", background: isActive ? "#c87a4a" : "#3a3835", flexShrink: 0 }} />
-                                  <span style={{ fontSize: 10, color: "rgb(160, 152, 136)", fontWeight: 300 }}>{d}</span>
-                                </div>
+                                <span key={d} style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontWeight: 300 }}>{d}</span>
                               ))}
                             </div>
                           </div>
@@ -2652,7 +2649,12 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                   {/* Featured Signal card */}
                   <div style={{ paddingRight: 14 }}>
                     {featuredSignal ? (
-                      <div style={{ background: "rgb(37, 37, 37)", borderRadius: 5, overflow: "hidden" }}>
+                      <div
+                        onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
+                        style={{ background: "rgb(37, 37, 37)", borderRadius: 5, overflow: "hidden", cursor: "pointer", transition: "background 0.15s" }}
+                        onMouseEnter={e => { e.currentTarget.style.background = "rgb(42, 42, 42)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "rgb(37, 37, 37)"; }}
+                      >
                         {/* Header row: title + chain pill */}
                         <div style={{ padding: "10px 14px 0 14px", marginBottom: 5 }}>
                           <div style={{ display: "flex", alignItems: "center" }}>
@@ -2675,15 +2677,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                               <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 10px 0", fontStyle: "italic", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{featuredSignal.whyItMatters}</p>
                               </>
                             )}
-                            <span
-                              onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
-                              style={{
-                                fontSize: 10, color: "#c87a4a", cursor: "pointer",
-                                transition: "color 0.15s",
-                              }}
-                              onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
-                              onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
-                            >
+                            <span style={{ fontSize: 13, color: "#c87a4a" }}>
                               Open signal brief and analysis →
                             </span>
                           </div>
