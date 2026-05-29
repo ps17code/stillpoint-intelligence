@@ -2283,10 +2283,8 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                             <img src={step.img} alt={step.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
                           </div>
                         )}
-                        {/* Description — hidden when arch piece selected */}
-                        {!selectedArchPiece && (
-                          <p style={{ fontSize: 10, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
-                        )}
+                        {/* Description */}
+                        <p style={{ fontSize: 10, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
                       </div>
                     );
                   })}
@@ -2430,7 +2428,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                               {piece.deps.map(d => (
                                 <div key={d} style={{ display: "flex", alignItems: "center", gap: 4 }}>
                                   <span style={{ width: 2, height: 2, borderRadius: "50%", background: isActive ? "#c87a4a" : "#3a3835", flexShrink: 0 }} />
-                                  <span style={{ fontSize: 8, color: isActive ? "rgb(140, 132, 116)" : "#444", fontWeight: 300 }}>{d}</span>
+                                  <span style={{ fontSize: 10, color: isActive ? "rgb(140, 132, 116)" : "#444", fontWeight: 300 }}>{d}</span>
                                 </div>
                               ))}
                             </div>
@@ -2645,7 +2643,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
               <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 14 }}>
                 {/* Header */}
                 <div style={{ padding: "10px 15px" }}>
-                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Signals</p>
+                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{selectedArchPiece ? (() => { const ARCH_NAMES: Record<string, string> = { "gpu-server": "GPU / Server", "nic": "NIC / Interconnect", "transceiver": "Optical Transceiver", "fiber": "Fiber Optic Cable", "tor-switch": "Top-of-Rack Switch", "spine-switch": "Spine / Fabric Switch", "campus-link": "Campus / Region Link" }; return (ARCH_NAMES[selectedArchPiece] ?? selectedSubsystem) + " Signals"; })() : "Signals"}</p>
                 </div>
                 <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
 
@@ -2656,7 +2654,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                     {featuredSignal ? (
                       <div style={{ background: "rgb(37, 37, 37)", borderRadius: 5, overflow: "hidden" }}>
                         {/* Header row: title + chain pills */}
-                        <div style={{ padding: "14px 14px 0 14px" }}>
+                        <div style={{ padding: "10px 14px 0 14px" }}>
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 0 }}>
                             <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: 0 }}>{featuredSignal.title}</p>
                             {chainPills && (
@@ -2675,13 +2673,24 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
                           {/* Left: signal details */}
                           <div style={{ padding: "8px 14px 10px 14px" }}>
-                            <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{featuredSignal.teaser}</p>
+                            <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as const, overflow: "hidden" }}>{featuredSignal.teaser}</p>
                             {featuredSignal.whyItMatters && (
                               <>
                               <p style={{ fontSize: 8, color: dimText, margin: "0 0 4px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Why it matters?</p>
                               <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 10px 0", fontStyle: "italic", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{featuredSignal.whyItMatters}</p>
                               </>
                             )}
+                            <span
+                              onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
+                              style={{
+                                fontSize: 10, color: "#c87a4a", cursor: "pointer",
+                                transition: "color 0.15s",
+                              }}
+                              onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+                              onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+                            >
+                              Open signal brief and analysis →
+                            </span>
                           </div>
                           {/* Right: key companies table */}
                           <div style={{ padding: "8px 14px 10px 14px" }}>
@@ -2715,20 +2724,6 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                               );
                             })()}
                           </div>
-                        </div>
-                        {/* Open signal brief link — below both columns */}
-                        <div style={{ padding: "0 14px 14px" }}>
-                          <span
-                            onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
-                            style={{
-                              fontSize: 10, color: "#c87a4a", cursor: "pointer",
-                              transition: "color 0.15s",
-                            }}
-                            onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
-                            onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
-                          >
-                            Open signal brief and analysis →
-                          </span>
                         </div>
                       </div>
                     ) : (
@@ -2765,16 +2760,6 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                             <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{s.teaser}</p>
                           </div>
                         ))}
-                      </div>
-                      <div style={{ marginTop: 6, borderTop: otherSignals.length > 0 ? "1px solid rgba(255,255,255,0.06)" : "none", paddingTop: 10 }}>
-                        <span
-                          onClick={() => {}}
-                          style={{ fontSize: 10, color: "#c87a4a", cursor: "pointer", transition: "color 0.15s" }}
-                          onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
-                          onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
-                        >
-                          See all signals →
-                        </span>
                       </div>
                       </>
                     )}
