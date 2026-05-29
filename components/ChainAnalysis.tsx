@@ -110,25 +110,28 @@ export default function ChainAnalysis() {
               "Trusted Western supply is highly concentrated",
               "Capacity expands slower than AI demand",
             ].map((b, i) => (
-              <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                <span style={{ width: 4, height: 4, borderRadius: "50%", background: amber, flexShrink: 0, marginTop: 4 }} />
-                <p style={{ fontSize: 9, color: numColor, lineHeight: 1.4, margin: 0 }}>{b}</p>
+              <div key={i} style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                <span style={{ width: 4, height: 4, borderRadius: "50%", background: amber, flexShrink: 0 }} />
+                <p style={{ fontSize: 11, color: numColor, lineHeight: 1.4, margin: 0 }}>{b}</p>
               </div>
             ))}
           </div>
 
-          <p style={{ fontSize: 7, letterSpacing: "0.08em", color: amber, textTransform: "uppercase", margin: "0 0 8px 0", fontFamily: mono }}>Key Players</p>
-          {[
-            { name: "Umicore", flag: "be", desc: "Only Western company refining germanium into fiber-grade GeCl₄ at commercial scale. Single point of failure for non-Chinese fiber supply." },
-          ].map((p, i) => (
-            <div key={i}>
-              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 14, height: 10, borderRadius: 1, opacity: 0.8, flexShrink: 0 }} />
-                <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{p.name}</span>
-              </div>
-              <p style={{ fontSize: 8, color: numColor, lineHeight: 1.4, margin: "3px 0 0 20px" }}>{p.desc}</p>
-            </div>
-          ))}
+          <button
+            style={{
+              width: "100%",
+              fontSize: 11, fontFamily: mono,
+              color: "#fff", background: "rgba(200, 122, 74, 0.2)",
+              border: `1px solid ${amber}`, borderRadius: 4,
+              padding: "8px 14px", cursor: "pointer",
+              transition: "background 0.15s",
+              fontWeight: 500,
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = "rgba(200, 122, 74, 0.35)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "rgba(200, 122, 74, 0.2)"; }}
+          >
+            Show Chain Opportunities
+          </button>
         </div>
       </div>
     </div>

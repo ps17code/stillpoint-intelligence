@@ -630,14 +630,24 @@ export default function HomePage() {
   if (!verticalSelected) {
     return (
       <div className="relative w-screen h-screen overflow-hidden">
-        <VerticalLandingPage
-          onSelect={(id) => {
-            if (id === "ai-infrastructure") {
-              setViewMode("tree");
-              setVerticalSelected(true);
-            }
-          }}
-        />
+        {/* Preload AI Infrastructure page hidden underneath */}
+        <div style={{ position: "absolute", inset: 0, visibility: "hidden", pointerEvents: "none" }}>
+          <div style={{ background: "#161414", width: "100%", height: "100%", overflow: "hidden" }}>
+            <div style={{ width: "100%", height: "100%", overflow: "auto", background: "#111" }}>
+              <TreeView initialPath={[{ type: "vertical", id: "ai", name: "AI Infrastructure" }]} onGoHome={() => setVerticalSelected(false)} />
+            </div>
+          </div>
+        </div>
+        <div className="absolute inset-0 z-10">
+          <VerticalLandingPage
+            onSelect={(id) => {
+              if (id === "ai-infrastructure") {
+                setViewMode("tree");
+                setVerticalSelected(true);
+              }
+            }}
+          />
+        </div>
         {appLoading && (
           <div className="absolute inset-0 z-50">
             <StillpointLoadingLanding onComplete={() => setAppLoading(false)} />

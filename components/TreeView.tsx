@@ -2362,6 +2362,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             ];
 
             return (
+              <>
               <div style={{ animation: "fadeSlideDown 0.3s ease-out", background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10 }}>
                 <div style={{ padding: "10px 15px" }}>
                   <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Connectivity Architecture</p>
@@ -2419,15 +2420,13 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   </div>
                 </div>
 
-                {/* Hint or status */}
-                {!selectedArchPiece && (
-                  <div style={{ padding: "0 15px 12px" }}>
-                    <p style={{ fontSize: 9, color: dimText, margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em", textAlign: "center" }}>
-                      Select an architecture piece to reveal signals, chokepoints, and exposed companies
-                    </p>
-                  </div>
-                )}
               </div>
+              {!selectedArchPiece && (
+                <p style={{ fontSize: 9, color: dimText, margin: "10px 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em", textAlign: "center" }}>
+                  Select an architecture piece to reveal signals, chokepoints, and exposed companies
+                </p>
+              )}
+              </>
             );
           })()}
 

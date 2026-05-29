@@ -97,14 +97,18 @@ export default function VerticalLandingPage({ onSelect }: { onSelect?: (id: Vert
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {verticals.map((v) => (
-              <VerticalCard
+            {verticals.map((v, i) => (
+              <div
                 key={v.id}
-                label={v.label}
-                img={v.img}
-                active={v.active}
-                onClick={() => onSelect?.(v.id)}
-              />
+                style={{ animation: `fadeSlideUp 0.4s ease-out ${0.1 + i * 0.07}s both` }}
+              >
+                <VerticalCard
+                  label={v.label}
+                  img={v.img}
+                  active={v.active}
+                  onClick={() => onSelect?.(v.id)}
+                />
+              </div>
             ))}
           </div>
         </div>
