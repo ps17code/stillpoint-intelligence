@@ -2345,7 +2345,9 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
             </p>
           )}
           {/* Connectivity Architecture — shown when Connectivity is selected */}
-          {!selectedFeaturedChain && selectedSubsystem === "Connectivity" && (() => {
+          {(() => {
+            const showArch = !selectedFeaturedChain && selectedSubsystem === "Connectivity";
+            if (!showArch) return null;
             const ARCH_PIECES = [
               { id: "gpu-server", title: "GPU / Server", desc: "Generates data from AI workloads.", deps: ["GPU accelerators", "HBM memory", "Server boards"] },
               { id: "nic", title: "NIC / Interconnect", desc: "Moves data out of the server.", deps: ["SerDes", "PHY chips", "PCB traces"] },
@@ -2357,7 +2359,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
             ];
 
             return (
-              <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10 }}>
+              <div style={{ animation: "fadeSlideDown 0.3s ease-out", background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10 }}>
                 <div style={{ padding: "10px 15px" }}>
                   <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Connectivity Architecture</p>
                 </div>
@@ -2607,7 +2609,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
             return (
               <>
               {/* Signals section card */}
-              <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10 }}>
+              <div style={{ animation: "fadeSlideDown 0.3s ease-out", background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10 }}>
                 {/* Header */}
                 <div style={{ padding: "10px 15px" }}>
                   <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{selectedArchPiece ? (() => { const ARCH_NAMES: Record<string, string> = { "gpu-server": "GPU / Server", "nic": "NIC / Interconnect", "transceiver": "Optical Transceiver", "fiber": "Fiber Optic Cable", "tor-switch": "Top-of-Rack Switch", "spine-switch": "Spine / Fabric Switch", "campus-link": "Campus / Region Link" }; return (ARCH_NAMES[selectedArchPiece] ?? selectedSubsystem) + " Signals"; })() : "Signals"}</p>
@@ -4482,22 +4484,20 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                     const dividerPanel = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
                     return (
                       <div style={{ background: cardBgPanel, borderRadius: 6, padding: "12px 12px" }}>
-                        <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: "0 0 2px 0", fontFamily: "'EB Garamond', Georgia, serif" }}>{archDetail.title}</p>
-                        <p style={{ fontSize: 7, color: "#4a4540", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" }}>{archDetail.layer}</p>
+                        <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: "0 0 0 0", fontFamily: "'EB Garamond', Georgia, serif" }}>{archDetail.title}</p>
 
                         {dividerPanel}
 
-                        <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{archDetail.desc}</p>
+                        <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{archDetail.desc}</p>
 
                         {dividerPanel}
 
-                        <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Key Dependencies</p>
+                        <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Key Inputs</p>
                         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                           {archDetail.deps.map(d => (
-                            <div key={d.name} style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                              <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#c87a4a", flexShrink: 0, marginTop: 5 }} />
-                              <span style={{ fontSize: 10, color: "#ece8e1", fontWeight: 500 }}>{d.name}</span>
-                              <span style={{ fontSize: 9, color: "#706a60" }}>— {d.role}</span>
+                            <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                              <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
+                              <span style={{ fontSize: 11, color: "rgb(158, 150, 136)" }}>{d.name}</span>
                             </div>
                           ))}
                         </div>
@@ -4637,25 +4637,23 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 return (
                   <div style={{ background: cardBgPanel, borderRadius: 6, padding: "12px 12px" }}>
                     {/* Header */}
-                    <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: "0 0 2px 0", fontFamily: "'EB Garamond', Georgia, serif" }}>{detail.name}</p>
-                    <p style={{ fontSize: 7, color: "#4a4540", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" }}>Subsystem</p>
+                    <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: 0, fontFamily: "'EB Garamond', Georgia, serif" }}>{detail.name}</p>
 
                     {dividerPanel}
 
                     {/* Why It Matters */}
                     <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Why It Matters</p>
-                    <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{detail.whyItMatters}</p>
+                    <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{detail.whyItMatters}</p>
 
                     {dividerPanel}
 
-                    {/* Pieces */}
-                    <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Components</p>
+                    {/* Key Inputs */}
+                    <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Key Inputs</p>
                     <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                       {detail.pieces.map(p => (
-                        <div key={p.name} style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#c87a4a", flexShrink: 0, marginTop: 5 }} />
-                          <span style={{ fontSize: 10, color: "#ece8e1", fontWeight: 500 }}>{p.name}</span>
-                          <span style={{ fontSize: 9, color: "#706a60" }}>— {p.role}</span>
+                        <div key={p.name} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
+                          <span style={{ fontSize: 11, color: "rgb(158, 150, 136)" }}>{p.name}</span>
                         </div>
                       ))}
                     </div>
