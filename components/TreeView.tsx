@@ -1682,7 +1682,7 @@ function AIOverviewTree({ onNodeClick }: { onNodeClick: (id: string, type: "raw-
   );
 }
 
-export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } = {}) {
+export default function TreeView({ initialPath, onGoHome }: { initialPath?: PathEntry[]; onGoHome?: () => void } = {}) {
   /* ── unified path state ── */
   const [path, setPath] = useState<PathEntry[]>(() => {
     if (initialPath && initialPath.length > 0) return initialPath;
@@ -1774,6 +1774,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
   }
 
   function goHome() {
+    if (onGoHome) { onGoHome(); return; }
     setPath([]);
     setAnimKey(k => k + 1);
 
@@ -2275,7 +2276,9 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                       <div
                         key={step.name}
                         onClick={() => { if (nodeId) { setSelectedTreeNode(nodeId); setRightTab("summary"); } else { const next = selectedSubsystem === step.name ? null : step.name; setSelectedSubsystem(next); setSelectedArchPiece(null); } }}
-                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? "rgb(37, 37, 37)" : "transparent", borderRadius: isSelected ? 5 : 0, padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s" }}
+                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? "rgb(37, 37, 37)" : "transparent", borderRadius: 5, border: isSelected ? "1px solid rgba(200, 122, 74, 0.25)" : "1px solid transparent", padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s, border-color 0.15s" }}
+                        onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
+                        onMouseLeave={e => { if (!isSelected) e.currentTarget.style.background = "transparent"; }}
                       >
                         {/* Name row with dot and connecting line */}
                         <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
@@ -2623,7 +2626,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                     {featuredSignal ? (
                       <div
                         onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
-                        style={{ background: "rgb(37, 37, 37)", borderRadius: 5, overflow: "hidden", cursor: "pointer", transition: "background 0.15s" }}
+                        style={{ background: "rgb(37, 37, 37)", borderRadius: 5, overflow: "hidden", cursor: "pointer", transition: "background 0.15s", border: "1px solid rgba(200, 122, 74, 0.25)" }}
                         onMouseEnter={e => { e.currentTarget.style.background = "rgb(42, 42, 42)"; }}
                         onMouseLeave={e => { e.currentTarget.style.background = "rgb(37, 37, 37)"; }}
                       >
@@ -2708,12 +2711,15 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                             style={{
                               paddingTop: si === 0 ? 8 : 10,
                               paddingBottom: si === otherSignals.length - 1 ? 0 : 10,
+                              paddingLeft: 8,
+                              paddingRight: 8,
                               cursor: "pointer",
                               borderTop: si > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
-                              transition: "opacity 0.15s",
+                              borderRadius: 4,
+                              transition: "background 0.15s",
                             }}
-                            onMouseEnter={e => { e.currentTarget.style.opacity = "0.8"; }}
-                            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                            onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
                           >
                             <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
                               <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />

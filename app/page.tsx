@@ -671,7 +671,7 @@ export default function HomePage() {
         {viewMode === "map" && <GlobePanel activeLayer={panelLayer} activeItem={panelItem} activeVertical={panelVertical} onLayerChange={setPanelLayer} onItemChange={setPanelItem} onVerticalChange={setPanelVertical} />}
         {viewMode === "tree" && (
           <div style={{ width: "100%", height: "100%", overflow: "auto", background: "#111" }}>
-            <TreeView initialPath={[{ type: "vertical", id: "ai", name: "AI Infrastructure" }]} />
+            <TreeView initialPath={[{ type: "vertical", id: "ai", name: "AI Infrastructure" }]} onGoHome={() => setVerticalSelected(false)} />
           </div>
         )}
 
