@@ -2243,7 +2243,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 })}
               </div>
             </div>
-            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: selectedArchPiece ? "0 15px 10px" : "0 15px 15px" }} />
+            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: (selectedArchPiece && !selectedFeaturedChain) ? "0 15px 10px" : "0 15px 15px" }} />
 
             <div style={{ padding: "0 15px 10px" }}>
               {/* Diagram view */}
@@ -2268,7 +2268,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                           )}
                         </div>
                         {/* Illustration — hidden when arch piece selected */}
-                        {!selectedArchPiece && (
+                        {(!selectedArchPiece || selectedFeaturedChain) && (
                           <div style={{
                             width: "100%",
                             height: 90,
