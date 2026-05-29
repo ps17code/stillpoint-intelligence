@@ -2387,14 +2387,14 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
             ];
 
             return (
-              <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 14 }}>
+              <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10 }}>
                 <div style={{ padding: "10px 15px" }}>
                   <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Connectivity Architecture</p>
                 </div>
                 <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
 
                 {/* Architecture pieces — horizontal connected flow */}
-                <div style={{ padding: "15px 15px 12px", overflowX: "auto" }}>
+                <div style={{ padding: "10px 15px 12px", overflowX: "auto" }}>
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 0, minWidth: "fit-content" }}>
                     {ARCH_PIECES.map((piece, pi) => {
                       const isActive = selectedArchPiece === piece.id;
@@ -2640,7 +2640,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
             return (
               <>
               {/* Signals section card */}
-              <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 14 }}>
+              <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10 }}>
                 {/* Header */}
                 <div style={{ padding: "10px 15px" }}>
                   <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{selectedArchPiece ? (() => { const ARCH_NAMES: Record<string, string> = { "gpu-server": "GPU / Server", "nic": "NIC / Interconnect", "transceiver": "Optical Transceiver", "fiber": "Fiber Optic Cable", "tor-switch": "Top-of-Rack Switch", "spine-switch": "Spine / Fabric Switch", "campus-link": "Campus / Region Link" }; return (ARCH_NAMES[selectedArchPiece] ?? selectedSubsystem) + " Signals"; })() : "Signals"}</p>
@@ -2648,7 +2648,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
 
                 {/* Two-column content */}
-                <div style={{ display: "grid", gridTemplateColumns: "1.4fr 0.6fr", gap: 0, padding: 15 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1.4fr 0.6fr", gap: 0, padding: "10px 15px" }}>
                   {/* Featured Signal card */}
                   <div style={{ paddingRight: 14 }}>
                     {featuredSignal ? (
@@ -2745,7 +2745,8 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                             key={s.id}
                             onClick={() => { setSelectedFeaturedChain(s.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
                             style={{
-                              padding: "10px 0",
+                              paddingTop: si === 0 ? 8 : 10,
+                              paddingBottom: si === otherSignals.length - 1 ? 0 : 10,
                               cursor: "pointer",
                               borderTop: si > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
                               transition: "opacity 0.15s",
