@@ -2426,7 +2426,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                             {/* Dependencies */}
                             <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                               {piece.deps.map(d => (
-                                <span key={d} style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontWeight: 300 }}>{d}</span>
+                                <span key={d} style={{ fontSize: 8, color: isActive ? "rgb(254, 174, 0)" : "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontWeight: 300 }}>{d}</span>
                               ))}
                             </div>
                           </div>
