@@ -2377,13 +2377,13 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
           {/* Connectivity Architecture — shown when Connectivity is selected */}
           {!selectedFeaturedChain && selectedSubsystem === "Connectivity" && (() => {
             const ARCH_PIECES = [
-              { id: "gpu-server", title: "GPU / Server", desc: "Origin of all AI workload traffic.", deps: ["GPU accelerators", "HBM memory", "Server boards"] },
-              { id: "nic", title: "NIC / Interconnect", desc: "Serializes data off the server bus.", deps: ["SerDes", "PHY chips", "PCB traces"] },
-              { id: "transceiver", title: "Optical Transceiver", desc: "Electrical-to-optical signal conversion.", deps: ["Lasers", "DSPs", "Si photonics"] },
-              { id: "fiber", title: "Fiber Optic Cable", desc: "Light transport across racks and campus.", deps: ["GeCl₄", "Fiber preforms", "Helium towers"] },
-              { id: "tor-switch", title: "Top-of-Rack Switch", desc: "Aggregates server traffic per rack.", deps: ["Switch ASICs", "Optical ports", "Power"] },
-              { id: "spine-switch", title: "Spine / Fabric Switch", desc: "Routes traffic across cluster fabric.", deps: ["High-radix ASICs", "Optics", "Network OS"] },
-              { id: "campus-link", title: "Campus / Region Link", desc: "Connects buildings, sites, regions.", deps: ["Long-haul fiber", "Conduit / ROW", "Install labor"] },
+              { id: "gpu-server", title: "GPU / Server", desc: "Generates data from AI workloads.", deps: ["GPU accelerators", "HBM memory", "Server boards"] },
+              { id: "nic", title: "NIC / Interconnect", desc: "Moves data out of the server.", deps: ["SerDes", "PHY chips", "PCB traces"] },
+              { id: "transceiver", title: "Optical Transceiver", desc: "Converts electrical into optical signals.", deps: ["Lasers", "DSPs", "Si photonics"] },
+              { id: "fiber", title: "Fiber Optic Cable", desc: "Carries light across the data center.", deps: ["GeCl₄", "Fiber preforms", "Helium towers"] },
+              { id: "tor-switch", title: "Top-of-Rack Switch", desc: "Aggregates traffic from servers in a rack.", deps: ["Switch ASICs", "Optical ports", "Power"] },
+              { id: "spine-switch", title: "Spine / Fabric Switch", desc: "Routes traffic across the cluster fabric.", deps: ["High-radix ASICs", "Optics", "Network OS"] },
+              { id: "campus-link", title: "Campus / Region Link", desc: "Connects buildings, sites, and regions.", deps: ["Long-haul fiber", "Conduit / ROW", "Install labor"] },
             ];
 
             return (
