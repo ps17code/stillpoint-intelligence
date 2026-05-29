@@ -2420,7 +2420,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                               <span style={{ fontSize: 9, color: isActive ? "#c87a4a" : "#555", fontWeight: 400 }}>{String(pi + 1).padStart(2, "0")}</span>
                             </div>
                             {/* Title */}
-                            <p style={{ fontSize: 12, color: isActive ? "#ece8e1" : "rgb(180, 175, 165)", fontWeight: 400, margin: "0 0 4px 0", lineHeight: 1.3 }}>{piece.title}</p>
+                            <p style={{ fontSize: 12, color: isActive ? "rgb(236, 232, 225)" : "rgb(180, 175, 165)", fontWeight: 400, margin: "0 0 4px 0", lineHeight: 1.3 }}>{piece.title}</p>
                             {/* Description */}
                             <p style={{ fontSize: 10, color: isActive ? "rgb(160, 152, 136)" : "#555", lineHeight: 1.4, margin: "0 0 6px 0", fontWeight: 300 }}>{piece.desc}</p>
                             {/* Dependencies */}
@@ -2428,7 +2428,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                               {piece.deps.map(d => (
                                 <div key={d} style={{ display: "flex", alignItems: "center", gap: 4 }}>
                                   <span style={{ width: 2, height: 2, borderRadius: "50%", background: isActive ? "#c87a4a" : "#3a3835", flexShrink: 0 }} />
-                                  <span style={{ fontSize: 10, color: isActive ? "rgb(140, 132, 116)" : "#444", fontWeight: 300 }}>{d}</span>
+                                  <span style={{ fontSize: 10, color: isActive ? "rgb(160, 152, 136)" : "#444", fontWeight: 300 }}>{d}</span>
                                 </div>
                               ))}
                             </div>
@@ -2653,19 +2653,14 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                   <div style={{ paddingRight: 14 }}>
                     {featuredSignal ? (
                       <div style={{ background: "rgb(37, 37, 37)", borderRadius: 5, overflow: "hidden" }}>
-                        {/* Header row: title + chain pills */}
-                        <div style={{ padding: "10px 14px 0 14px" }}>
-                          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 0 }}>
-                            <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: 0 }}>{featuredSignal.title}</p>
+                        {/* Header row: title + chain pill */}
+                        <div style={{ padding: "10px 14px 0 14px", marginBottom: 5 }}>
+                          <div style={{ display: "flex", alignItems: "center" }}>
+                            <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: 0, marginRight: 20, flexShrink: 0 }}>{featuredSignal.title}</p>
                             {chainPills && (
-                              <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                                {chainPills.map((pill, pi) => (
-                                  <span key={pill} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                                    <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{pill}</span>
-                                    {pi < chainPills.length - 1 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)" }}>→</span>}
-                                  </span>
-                                ))}
-                              </div>
+                              <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 8px", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>
+                                {chainPills.join(" → ")}
+                              </span>
                             )}
                           </div>
                         </div>
