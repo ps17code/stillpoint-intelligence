@@ -1714,6 +1714,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [chainTreeTab, setChainTreeTab] = useState<"diagram" | "tree">("diagram");
   const [selectedSubsystem, setSelectedSubsystem] = useState<string | null>(null);
   const [selectedArchPiece, setSelectedArchPiece] = useState<string | null>(null);
+  const [showChainOpportunities, setShowChainOpportunities] = useState(false);
 
   // Featured chains data
   type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; highlight_display_index?: number; navigate_path: string[] };
@@ -1844,6 +1845,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               // Clicking "Chains" or chain title — deselect the chain
               setSelectedFeaturedChain(null);
               setSelectedTreeNode(null);
+              setShowChainOpportunities(false);
               return;
             }
             if (i === 0) goHome();
@@ -2262,7 +2264,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 }
               </button>
             </div>
-            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: (selectedArchPiece && !selectedFeaturedChain) ? "0 15px 10px" : "0 15px 15px" }} />
+            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: ((selectedArchPiece && !selectedFeaturedChain) || showChainOpportunities) ? "0 15px 10px" : "0 15px 15px" }} />
 
             <div style={{ padding: "0 15px 10px" }}>
               {/* Diagram view */}
@@ -2291,15 +2293,15 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         {/* Illustration — collapses when arch piece selected */}
                         <div style={{
                           width: "100%",
-                          maxHeight: (!selectedArchPiece || selectedFeaturedChain) ? 90 : 0,
-                          opacity: (!selectedArchPiece || selectedFeaturedChain) ? 1 : 0,
+                          maxHeight: ((!selectedArchPiece || selectedFeaturedChain) && !showChainOpportunities) ? 90 : 0,
+                          opacity: ((!selectedArchPiece || selectedFeaturedChain) && !showChainOpportunities) ? 1 : 0,
                           borderRadius: 3,
                           overflow: "hidden",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                           background: "rgb(36, 36, 36)",
-                          marginBottom: (!selectedArchPiece || selectedFeaturedChain) ? 8 : 0,
+                          marginBottom: ((!selectedArchPiece || selectedFeaturedChain) && !showChainOpportunities) ? 8 : 0,
                           transition: "max-height 0.3s ease, opacity 0.2s ease, margin-bottom 0.3s ease",
                         }}>
                           <img src={step.img} alt={step.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
@@ -2739,7 +2741,13 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
           {selectedFeaturedChain === "germanium_chokepoint" && (
             <div style={{ marginTop: 20, animation: "fadeSlideDown 0.4s ease-out 0.2s both" }}>
-              <ChainAnalysis />
+              <ChainAnalysis collapsed={showChainOpportunities} onShowOpportunities={() => setShowChainOpportunities(true)} />
+            </div>
+          )}
+
+          {showChainOpportunities && selectedFeaturedChain === "germanium_chokepoint" && (
+            <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", flex: 1, minHeight: 200, animation: "fadeSlideDown 0.4s ease-out 0.15s both" }}>
+              <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chain Opportunities</p>
             </div>
           )}
           </>
