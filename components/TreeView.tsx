@@ -2394,7 +2394,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
 
                 {/* Architecture pieces — horizontal connected flow */}
-                <div style={{ padding: "10px 15px 12px", overflowX: "auto" }}>
+                <div style={{ padding: "10px 15px 0", overflowX: "auto" }}>
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 0, minWidth: "fit-content" }}>
                     {ARCH_PIECES.map((piece, pi) => {
                       const isActive = selectedArchPiece === piece.id;
@@ -2420,15 +2420,15 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                               <span style={{ fontSize: 9, color: isActive ? "#c87a4a" : "#555", fontWeight: 400 }}>{String(pi + 1).padStart(2, "0")}</span>
                             </div>
                             {/* Title */}
-                            <p style={{ fontSize: 12, color: isActive ? "rgb(236, 232, 225)" : "rgb(180, 175, 165)", fontWeight: 400, margin: "0 0 4px 0", lineHeight: 1.3 }}>{piece.title}</p>
+                            <p style={{ fontSize: 12, color: "rgb(236, 232, 225)", fontWeight: 400, margin: "0 0 4px 0", lineHeight: 1.3 }}>{piece.title}</p>
                             {/* Description */}
-                            <p style={{ fontSize: 10, color: isActive ? "rgb(160, 152, 136)" : "#555", lineHeight: 1.4, margin: "0 0 6px 0", fontWeight: 300 }}>{piece.desc}</p>
+                            <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 6px 0", fontWeight: 300 }}>{piece.desc}</p>
                             {/* Dependencies */}
                             <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
                               {piece.deps.map(d => (
                                 <div key={d} style={{ display: "flex", alignItems: "center", gap: 4 }}>
                                   <span style={{ width: 2, height: 2, borderRadius: "50%", background: isActive ? "#c87a4a" : "#3a3835", flexShrink: 0 }} />
-                                  <span style={{ fontSize: 10, color: isActive ? "rgb(160, 152, 136)" : "#444", fontWeight: 300 }}>{d}</span>
+                                  <span style={{ fontSize: 10, color: "rgb(160, 152, 136)", fontWeight: 300 }}>{d}</span>
                                 </div>
                               ))}
                             </div>
