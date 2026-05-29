@@ -2243,7 +2243,7 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 })}
               </div>
             </div>
-            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px 15px" }} />
+            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: selectedArchPiece ? "0 15px 10px" : "0 15px 15px" }} />
 
             <div style={{ padding: "0 15px 10px" }}>
               {/* Diagram view */}
@@ -2267,22 +2267,26 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                             <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)", marginLeft: 8 }} />
                           )}
                         </div>
-                        {/* Illustration */}
-                        <div style={{
-                          width: "100%",
-                          height: 90,
-                          borderRadius: 3,
-                          overflow: "hidden",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          background: "rgb(36, 36, 36)",
-                          marginBottom: 8,
-                        }}>
-                          <img src={step.img} alt={step.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
-                        </div>
-                        {/* Description */}
-                        <p style={{ fontSize: 10, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                        {/* Illustration — hidden when arch piece selected */}
+                        {!selectedArchPiece && (
+                          <div style={{
+                            width: "100%",
+                            height: 90,
+                            borderRadius: 3,
+                            overflow: "hidden",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            background: "rgb(36, 36, 36)",
+                            marginBottom: 8,
+                          }}>
+                            <img src={step.img} alt={step.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
+                          </div>
+                        )}
+                        {/* Description — hidden when arch piece selected */}
+                        {!selectedArchPiece && (
+                          <p style={{ fontSize: 10, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                        )}
                       </div>
                     );
                   })}
@@ -2317,8 +2321,8 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                 />
               )}
             </div>
-            {/* Subsystem metrics row — always shown */}
-            {!selectedFeaturedChain && (() => {
+            {/* Subsystem metrics row — hidden when arch piece selected */}
+            {!selectedFeaturedChain && !selectedArchPiece && (() => {
               const metricsLookup: Record<string, { rawMaterials: number; intermediates: number; components: number; companies: number }> = {
                 "_all": { rawMaterials: 45, intermediates: 57, components: 47, companies: 185 },
                 "Compute": { rawMaterials: 14, intermediates: 18, components: 12, companies: 10 },
@@ -2415,18 +2419,18 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                           >
                             {/* Step number */}
                             <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 6 }}>
-                              <span style={{ fontSize: 8, color: isActive ? "#c87a4a" : "#555", fontFamily: "'Geist Mono', monospace", fontWeight: 600 }}>{String(pi + 1).padStart(2, "0")}</span>
+                              <span style={{ fontSize: 9, color: isActive ? "#c87a4a" : "#555", fontWeight: 400 }}>{String(pi + 1).padStart(2, "0")}</span>
                             </div>
                             {/* Title */}
-                            <p style={{ fontSize: 10, color: isActive ? "#ece8e1" : "rgb(180, 175, 165)", fontWeight: 500, margin: "0 0 4px 0", lineHeight: 1.3 }}>{piece.title}</p>
+                            <p style={{ fontSize: 12, color: isActive ? "#ece8e1" : "rgb(180, 175, 165)", fontWeight: 400, margin: "0 0 4px 0", lineHeight: 1.3 }}>{piece.title}</p>
                             {/* Description */}
-                            <p style={{ fontSize: 8, color: isActive ? "rgb(160, 152, 136)" : "#555", lineHeight: 1.4, margin: "0 0 6px 0" }}>{piece.desc}</p>
+                            <p style={{ fontSize: 10, color: isActive ? "rgb(160, 152, 136)" : "#555", lineHeight: 1.4, margin: "0 0 6px 0", fontWeight: 300 }}>{piece.desc}</p>
                             {/* Dependencies */}
                             <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
                               {piece.deps.map(d => (
                                 <div key={d} style={{ display: "flex", alignItems: "center", gap: 4 }}>
                                   <span style={{ width: 2, height: 2, borderRadius: "50%", background: isActive ? "#c87a4a" : "#3a3835", flexShrink: 0 }} />
-                                  <span style={{ fontSize: 7, color: isActive ? "rgb(140, 132, 116)" : "#444", fontFamily: "'Geist Mono', monospace" }}>{d}</span>
+                                  <span style={{ fontSize: 8, color: isActive ? "rgb(140, 132, 116)" : "#444", fontWeight: 300 }}>{d}</span>
                                 </div>
                               ))}
                             </div>
@@ -2651,11 +2655,26 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                   <div style={{ paddingRight: 14 }}>
                     {featuredSignal ? (
                       <div style={{ background: "rgb(37, 37, 37)", borderRadius: 5, overflow: "hidden" }}>
+                        {/* Header row: title + chain pills */}
+                        <div style={{ padding: "14px 14px 0 14px" }}>
+                          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 0 }}>
+                            <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: 0 }}>{featuredSignal.title}</p>
+                            {chainPills && (
+                              <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                                {chainPills.map((pill, pi) => (
+                                  <span key={pill} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                                    <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{pill}</span>
+                                    {pi < chainPills.length - 1 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)" }}>→</span>}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
                         {/* Two-column content */}
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
                           {/* Left: signal details */}
-                          <div style={{ padding: "14px 14px 10px 14px" }}>
-                            <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: "0 0 8px 0" }}>{featuredSignal.title}</p>
+                          <div style={{ padding: "8px 14px 10px 14px" }}>
                             <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{featuredSignal.teaser}</p>
                             {featuredSignal.whyItMatters && (
                               <>
@@ -2663,25 +2682,12 @@ export default function TreeView({ initialPath }: { initialPath?: PathEntry[] } 
                               <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 10px 0", fontStyle: "italic", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{featuredSignal.whyItMatters}</p>
                               </>
                             )}
-                            {featuredSignal.affectedNodes && (
-                              <>
-                                <p style={{ fontSize: 8, color: dimText, margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Affected Nodes</p>
-                                <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                                  {featuredSignal.affectedNodes.map((node, ni) => (
-                                    <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                                      <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontFamily: "'Geist Mono', monospace" }}>{node}</span>
-                                      {ni < featuredSignal.affectedNodes!.length - 1 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)" }}>→</span>}
-                                    </span>
-                                  ))}
-                                </div>
-                              </>
-                            )}
                           </div>
                           {/* Right: key companies table */}
-                          <div style={{ padding: "40px 14px 10px 14px" }}>
+                          <div style={{ padding: "8px 14px 10px 14px" }}>
                             {(() => {
                               const relatedNames = new Set(featuredSignal.relatedCompanies ?? []);
-                              const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 10);
+                              const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 4);
                               return (
                                 <div style={{ border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
                                   <table style={{ width: "100%", borderCollapse: "collapse" }}>
