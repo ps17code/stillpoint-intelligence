@@ -3164,7 +3164,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
       return sub?.components.find(c => c.id === lastEntry.id)?.detail ?? "";
     }
     if (lastEntry.type === "raw-material") {
-      if (lastEntry.id === "germanium") return "Trace element doped into glass to create the refractive index that allows fiber optic cable to carry light.";
+      if (lastEntry.id === "germanium") return "One of the only materials that seamlessly blends into existing silicon technology to both manipulate light and move electricity at ultra-high speeds. Found as a trace element of zinc and coal, and primarily used in fiber cables as a dopant in fiber glass strands to allow it to carry light fast.";
       if (lastEntry.id === "gallium") return "Byproduct of alumina refining. Forms compound semiconductors for AI datacenter power, 5G, defense radar, and LEDs.";
       return "";
     }
@@ -4022,31 +4022,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             {currentVertical?.id === "ai" && currentLevel === "subsystems" && (
               <div style={{ height: 1, background: borderColor, marginBottom: 10 }} />
             )}
-            <div style={{ display: currentVertical?.id === "ai" && currentLevel === "subsystems" ? "none" : "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 10 }}>
-              {["Summary", "Layers", "Nodes"].map((tab, ti) => {
-                const tabId = tab.toLowerCase();
-                const isActive = rightTab === tabId;
-                return (
-                  <div
-                    key={tabId}
-                    onClick={() => setRightTab(tabId)}
-                    style={{
-                      padding: ti === 0 ? "8px 12px 8px 0" : "8px 12px",
-                      fontSize: 10,
-                      color: isActive ? "#a09888" : "#555",
-                      cursor: "pointer",
-                      borderBottom: isActive ? "1.5px solid #888" : "1.5px solid transparent",
-                      transition: "color 0.15s, border-color 0.15s",
-                      marginBottom: -1,
-                    }}
-                    onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "#706a60"; }}
-                    onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "#555"; }}
-                  >
-                    {tab}
-                  </div>
-                );
-              })}
-            </div>
+            <div style={{ height: 1, background: borderColor, marginBottom: 10 }} />
           </div>
 
           {/* Bottom section — content based on selected tab */}
@@ -4514,12 +4490,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         {divider}
                       </>
                     )}
-
-                    {/* Why It Matters */}
-                    <p style={sectionTitle}>Why It Matters</p>
-                    <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{data.whyItMatters}</p>
-
-                    {divider}
 
                     {/* Supply */}
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
