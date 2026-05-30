@@ -2402,7 +2402,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         <React.Fragment key={piece.id}>
                           <div
                             onClick={() => setSelectedArchPiece(selectedArchPiece === piece.id ? null : piece.id)}
-                            style={{ display: "flex", alignItems: "center", width: 130, cursor: "pointer", flexShrink: 0, paddingLeft: 10 }}
+                            style={{ display: "flex", alignItems: "center", width: 130, cursor: "pointer", flexShrink: 0, paddingLeft: 11, boxSizing: "border-box" }}
                           >
                             {/* Ring with number */}
                             <div style={{
