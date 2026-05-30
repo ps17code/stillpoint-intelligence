@@ -3564,21 +3564,22 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const isInputPage = lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component");
               if (!isInputPage) return null;
               const accent = templateAccent ?? "#706a60";
-              const LAYER_FLOWS: Record<string, { steps: { label: string; desc: string; whyHard: string }[] }> = {
+              type LayerStep = { label: string; desc: string; metricValue: string; metricLabel: string; metricContext: string };
+              const LAYER_FLOWS: Record<string, { steps: LayerStep[] }> = {
                 germanium: { steps: [
-                  { label: "Host Ore Extraction", desc: "Recovered from zinc ores, coal ash, and smelting residues.", whyHard: "Recovery requires circuits most zinc smelters never install. China operates ~83% of primary capacity." },
-                  { label: "High-Purity Refining", desc: "Processed into purified germanium metal or chemical feedstock.", whyHard: "Fiber-grade GeCl₄ requires parts-per-billion purity. Only one western facility — Umicore." },
-                  { label: "End-Product Conversion", desc: "Converted into forms used in fiber optics, IR optics, solar cells, and semiconductors.", whyHard: "Five distinct markets pull on the same ~230t/yr supply." },
+                  { label: "Host Ore Extraction", desc: "Recovered as byproduct from zinc ores, coal ash, and smelting residues.", metricValue: "~140t/yr", metricLabel: "Primary Ge extracted", metricContext: "Only 8 deposits globally with high enough germanium concentration to justify extraction circuits." },
+                  { label: "High-Purity Refining", desc: "Processed into purified germanium metal or chemical feedstock.", metricValue: "~230t/yr", metricLabel: "Refined germanium", metricContext: "Six refineries worldwide. Only one in the west — Umicore in Belgium — produces fiber-grade GeCl₄." },
+                  { label: "End-Product Conversion", desc: "Converted into forms used in fiber optics, IR optics, solar cells, and semiconductors.", metricValue: "5 markets", metricLabel: "Competing end uses", metricContext: "Fiber optics, IR defense optics, satellite solar, SiGe chips, and catalysts all draw from the same fixed supply." },
                 ]},
                 gallium: { steps: [
-                  { label: "Byproduct Source", desc: "Extracted as a trace element during alumina refining from bauxite.", whyHard: "Output determined by aluminum industry, not gallium demand." },
-                  { label: "Primary Production", desc: "Ion-exchange circuits capture gallium from alumina process streams.", whyHard: "Only ~20 refineries globally have recovery installed." },
-                  { label: "High-Purity Refining", desc: "Purified to 99.9999%+ via zone refining and electrolytic processes.", whyHard: "Western refiners depend on Chinese primary feedstock." },
+                  { label: "Byproduct Source", desc: "Extracted as a trace element during alumina refining from bauxite.", metricValue: "~50 ppm", metricLabel: "Gallium in bauxite", metricContext: "Gallium content is uniform across all bauxite. Output is set by aluminum demand, not gallium demand." },
+                  { label: "Primary Production", desc: "Ion-exchange circuits capture gallium from alumina process streams.", metricValue: "~600t/yr", metricLabel: "Primary Ga extracted", metricContext: "Only ~20 of the world's alumina refineries have gallium recovery circuits installed — almost all in China." },
+                  { label: "High-Purity Refining", desc: "Purified to 99.9999%+ via zone refining and electrolytic processes.", metricValue: "~320t/yr", metricLabel: "Refined high-purity Ga", metricContext: "Each additional nine of purity is exponentially harder. Western refiners depend on Chinese primary feedstock." },
                 ]},
                 fiber: { steps: [
-                  { label: "Chemical Conversion", desc: "Germanium converted to GeCl₄ at 8N purity. Silica to SiCl₄. Helium purified.", whyHard: "Only 6 facilities produce fiber-grade GeCl₄. Helium has no substitute." },
-                  { label: "Preform Manufacturing", desc: "GeCl₄ deposited layer by layer inside silica tubes to build glass preform rods.", whyHard: "One equipment supplier — Rosendahl Nextrom. 18-24 month lead times." },
-                  { label: "Fiber Draw & Assembly", desc: "Preforms drawn into strands, coated, bundled, and sheathed into cable.", whyHard: "Preform supply is the constraint. Helium supply is tight." },
+                  { label: "Chemical Conversion", desc: "Germanium converted to GeCl₄ at 8N purity. Silica to SiCl₄. Helium purified.", metricValue: "~220t/yr", metricLabel: "Fiber-grade GeCl₄", metricContext: "Only 6 facilities globally produce fiber-grade GeCl₄. Helium is a non-renewable byproduct with no substitute." },
+                  { label: "Preform Manufacturing", desc: "GeCl₄ deposited layer by layer inside silica tubes to build glass preform rods.", metricValue: "~24kt/yr", metricLabel: "Preform output", metricContext: "One equipment supplier — Rosendahl Nextrom — with 18-24 month order backlogs for new deposition lines." },
+                  { label: "Fiber Draw & Assembly", desc: "Preforms drawn into strands, coated, bundled, and sheathed into cable.", metricValue: "~720M km", metricLabel: "Annual fiber output", metricContext: "Drawing capacity is not the bottleneck — preform supply is. All major lines running at full utilization." },
                 ]},
               };
               const flow = LAYER_FLOWS[lastEntry.id];
@@ -3603,8 +3604,15 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             </div>
                           )}
                         </div>
-                        <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 3px 0" }}>{step.desc}</p>
-                        <p style={{ fontSize: 9, color: "#555", lineHeight: 1.4, margin: 0 }}>{step.whyHard}</p>
+                        <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 0 0" }}>{step.desc}</p>
+                        <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "6px 0" }} />
+                        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 10 }}>
+                          <div>
+                            <p style={{ fontSize: 14, color: warmWhite, fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{step.metricValue}</p>
+                            <p style={{ fontSize: 7, color: "#555", margin: "1px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em" }}>{step.metricLabel}</p>
+                          </div>
+                          <p style={{ fontSize: 11, color: "rgb(140, 132, 116)", lineHeight: 1.4, margin: 0 }}>{step.metricContext}</p>
+                        </div>
                       </div>
                     ))}
                   </div>
