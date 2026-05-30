@@ -3564,85 +3564,53 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const isInputPage = lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component");
               if (!isInputPage) return null;
               const accent = templateAccent ?? "#706a60";
-              const LAYER_FLOWS: Record<string, { steps: { label: string; desc: string; whyHard: string; supply: string }[] }> = {
+              const LAYER_FLOWS: Record<string, { steps: { label: string; desc: string; whyHard: string }[] }> = {
                 germanium: { steps: [
-                  { label: "Host Ore Extraction", desc: "Recovered from zinc ores, coal ash, and smelting residues.", whyHard: "Recovery requires circuits most zinc smelters never install. China operates ~83% of primary capacity.", supply: "~140t/yr" },
-                  { label: "High-Purity Refining", desc: "Processed into purified germanium metal or chemical feedstock.", whyHard: "Fiber-grade GeCl₄ requires parts-per-billion purity. Only one western facility — Umicore.", supply: "~230t/yr" },
-                  { label: "End-Product Conversion", desc: "Converted into forms used in fiber optics, IR optics, solar cells, and semiconductors.", whyHard: "Five distinct markets pull on the same ~230t/yr supply.", supply: "5 markets" },
+                  { label: "Host Ore Extraction", desc: "Recovered from zinc ores, coal ash, and smelting residues.", whyHard: "Recovery requires circuits most zinc smelters never install. China operates ~83% of primary capacity." },
+                  { label: "High-Purity Refining", desc: "Processed into purified germanium metal or chemical feedstock.", whyHard: "Fiber-grade GeCl₄ requires parts-per-billion purity. Only one western facility — Umicore." },
+                  { label: "End-Product Conversion", desc: "Converted into forms used in fiber optics, IR optics, solar cells, and semiconductors.", whyHard: "Five distinct markets pull on the same ~230t/yr supply." },
                 ]},
                 gallium: { steps: [
-                  { label: "Byproduct Source", desc: "Extracted as a trace element during alumina refining from bauxite.", whyHard: "Output determined by aluminum industry, not gallium demand.", supply: "~346Mt/yr" },
-                  { label: "Primary Production", desc: "Ion-exchange circuits capture gallium from alumina process streams.", whyHard: "Only ~20 refineries globally have recovery installed.", supply: "~600t/yr" },
-                  { label: "High-Purity Refining", desc: "Purified to 99.9999%+ via zone refining and electrolytic processes.", whyHard: "Western refiners depend on Chinese primary feedstock.", supply: "~320t/yr" },
+                  { label: "Byproduct Source", desc: "Extracted as a trace element during alumina refining from bauxite.", whyHard: "Output determined by aluminum industry, not gallium demand." },
+                  { label: "Primary Production", desc: "Ion-exchange circuits capture gallium from alumina process streams.", whyHard: "Only ~20 refineries globally have recovery installed." },
+                  { label: "High-Purity Refining", desc: "Purified to 99.9999%+ via zone refining and electrolytic processes.", whyHard: "Western refiners depend on Chinese primary feedstock." },
                 ]},
                 fiber: { steps: [
-                  { label: "Chemical Conversion", desc: "Germanium converted to GeCl₄ at 8N purity. Silica to SiCl₄. Helium purified.", whyHard: "Only 6 facilities produce fiber-grade GeCl₄. Helium has no substitute.", supply: "~220t/yr" },
-                  { label: "Preform Manufacturing", desc: "GeCl₄ deposited layer by layer inside silica tubes to build glass preform rods.", whyHard: "One equipment supplier — Rosendahl Nextrom. 18-24 month lead times.", supply: "~24kt/yr" },
-                  { label: "Fiber Draw & Assembly", desc: "Preforms drawn into strands, coated, bundled, and sheathed into cable.", whyHard: "Preform supply is the constraint. Helium supply is tight.", supply: "~720M km" },
+                  { label: "Chemical Conversion", desc: "Germanium converted to GeCl₄ at 8N purity. Silica to SiCl₄. Helium purified.", whyHard: "Only 6 facilities produce fiber-grade GeCl₄. Helium has no substitute." },
+                  { label: "Preform Manufacturing", desc: "GeCl₄ deposited layer by layer inside silica tubes to build glass preform rods.", whyHard: "One equipment supplier — Rosendahl Nextrom. 18-24 month lead times." },
+                  { label: "Fiber Draw & Assembly", desc: "Preforms drawn into strands, coated, bundled, and sheathed into cable.", whyHard: "Preform supply is the constraint. Helium supply is tight." },
                 ]},
               };
               const flow = LAYER_FLOWS[lastEntry.id];
               if (!flow) return null;
               return (
                 <div style={{ marginBottom: 12 }}>
+                  <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Layers</p>
                   <div style={{ display: "flex", gap: 0 }}>
                     {flow.steps.map((step, si) => (
-                      <div key={step.label} style={{ flex: 1, display: "flex", gap: 10, padding: "8px 12px 8px 0" }}>
-                        {/* Supply value */}
-                        <div style={{ flexShrink: 0, width: 60, display: "flex", alignItems: "flex-start", justifyContent: "flex-end", paddingTop: 2 }}>
-                          <span style={{ fontSize: 14, color: warmWhite, fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{step.supply}</span>
-                        </div>
-                        {/* Step content */}
-                        <div style={{ flex: 1 }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                            <div style={{ width: 16, height: 16, borderRadius: "50%", border: `1.5px solid ${accent}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                              <span style={{ fontSize: 7, color: accent, fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{si + 1}</span>
-                            </div>
-                            <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{step.label}</span>
-                            {si < flow.steps.length - 1 && (
-                              <div style={{ flex: 1, display: "flex", alignItems: "center", marginLeft: 4 }}>
-                                <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
-                                <svg width="6" height="6" viewBox="0 0 6 6" fill="none" style={{ flexShrink: 0 }}>
-                                  <path d="M0 0.5L4 3L0 5.5" stroke="rgba(255,255,255,0.08)" strokeWidth="1" fill="none" />
-                                </svg>
-                              </div>
-                            )}
+                      <div key={step.label} style={{ flex: 1, padding: "4px 12px 4px 0" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                          <div style={{ width: 16, height: 16, borderRadius: "50%", border: `1.5px solid ${accent}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                            <span style={{ fontSize: 7, color: accent, fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{si + 1}</span>
                           </div>
-                          <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 3px 0" }}>{step.desc}</p>
-                          <p style={{ fontSize: 8, color: "#555", lineHeight: 1.4, margin: 0 }}>{step.whyHard}</p>
+                          <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{step.label}</span>
+                          {si < flow.steps.length - 1 && (
+                            <div style={{ flex: 1, display: "flex", alignItems: "center", marginLeft: 4 }}>
+                              <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
+                              <svg width="6" height="6" viewBox="0 0 6 6" fill="none" style={{ flexShrink: 0 }}>
+                                <path d="M0 0.5L4 3L0 5.5" stroke="rgba(255,255,255,0.08)" strokeWidth="1" fill="none" />
+                              </svg>
+                            </div>
+                          )}
                         </div>
+                        <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 3px 0" }}>{step.desc}</p>
+                        <p style={{ fontSize: 9, color: "#555", lineHeight: 1.4, margin: 0 }}>{step.whyHard}</p>
                       </div>
                     ))}
                   </div>
                 </div>
               );
             })()}
-            {/* Tabs — hidden on AI infra vertical tree */}
-            <div style={{ display: currentVertical?.id === "ai" && currentLevel === "subsystems" ? "none" : "flex", gap: 0, borderBottom: `1px solid ${borderColor}` }}>
-              {["Supply Tree", "Map", "Dependencies", "Analysis", "Investment Ideas"].map((tab, ti) => {
-                const tabId = tab.toLowerCase().replace(/\s+/g, "-");
-                const isActive = activeTab === tabId;
-                return (
-                  <div
-                    key={tabId}
-                    onClick={() => setActiveTab(tabId)}
-                    style={{
-                      padding: ti === 0 ? "8px 12px 8px 0" : "8px 12px",
-                      fontSize: 10,
-                      color: isActive ? "#a09888" : "#555",
-                      cursor: "pointer",
-                      borderBottom: isActive ? "1.5px solid #888" : "1.5px solid transparent",
-                      transition: "color 0.15s, border-color 0.15s",
-                      marginBottom: -1,
-                    }}
-                    onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "#706a60"; }}
-                    onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "#555"; }}
-                  >
-                    {tab}
-                  </div>
-                );
-              })}
-            </div>
           </div>
 
           {/* Supply tree area — fixed height normally, flex when investment ideas */}
@@ -3651,6 +3619,35 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             overflowY: "auto", overflowX: "hidden",
             padding: "0 30px",
           }}>
+            <div style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "14px 16px", ...(currentVertical?.id === "ai" && currentLevel === "subsystems" ? { background: "transparent", padding: 0 } : {}) }}>
+              {/* Tabs — hidden on AI infra vertical tree */}
+              {!(currentVertical?.id === "ai" && currentLevel === "subsystems") && (
+                <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 14 }}>
+                  {["Supply Tree", "Map", "Dependencies", "Analysis", "Investment Ideas"].map((tab, ti) => {
+                    const tabId = tab.toLowerCase().replace(/\s+/g, "-");
+                    const isActive = activeTab === tabId;
+                    return (
+                      <div
+                        key={tabId}
+                        onClick={() => setActiveTab(tabId)}
+                        style={{
+                          padding: ti === 0 ? "8px 12px 8px 0" : "8px 12px",
+                          fontSize: 10,
+                          color: isActive ? "#a09888" : "#555",
+                          cursor: "pointer",
+                          borderBottom: isActive ? "1.5px solid #888" : "1.5px solid transparent",
+                          transition: "color 0.15s, border-color 0.15s",
+                          marginBottom: -1,
+                        }}
+                        onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "#706a60"; }}
+                        onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "#555"; }}
+                      >
+                        {tab}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             <div
               key={animKey}
               style={{
@@ -3943,6 +3940,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 </div>
               );
             })()}
+          </div>
           </div>
           </>
           )}
