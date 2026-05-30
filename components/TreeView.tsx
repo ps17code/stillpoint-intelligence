@@ -2373,13 +2373,13 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             const showArch = !selectedFeaturedChain && selectedSubsystem === "Connectivity";
             if (!showArch) return null;
             const ARCH_PIECES = [
-              { id: "gpu-server", title: "GPU / Server", desc: "Generates data from AI workloads.", deps: ["GPU accelerators", "HBM memory", "Server boards"] },
-              { id: "nic", title: "NIC / Interconnect", desc: "Moves data out of the server.", deps: ["SerDes", "PHY chips", "PCB traces"] },
-              { id: "transceiver", title: "Optical Transceiver", desc: "Converts electrical into optical signals.", deps: ["Lasers", "DSPs", "Si photonics"] },
-              { id: "fiber", title: "Fiber Optic Cable", desc: "Carries light across the data center.", deps: ["GeCl₄", "Fiber preforms", "Helium towers"] },
-              { id: "tor-switch", title: "Top-of-Rack Switch", desc: "Aggregates traffic from servers in a rack.", deps: ["Switch ASICs", "Optical ports", "Power"] },
-              { id: "spine-switch", title: "Spine / Fabric Switch", desc: "Routes traffic across the cluster fabric.", deps: ["High-radix ASICs", "Optics", "Network OS"] },
-              { id: "campus-link", title: "Campus / Region Link", desc: "Connects buildings, sites, and regions.", deps: ["Long-haul fiber", "Conduit / ROW", "Install labor"] },
+              { id: "gpu-server", title: "GPU / Server", desc: "Generates data from AI workloads.", deps: ["GPUs", "HBM", "Boards"] },
+              { id: "nic", title: "NIC / Interconnect", desc: "Moves data out of the server.", deps: ["SerDes", "PHY", "PCB"] },
+              { id: "transceiver", title: "Optical Transceiver", desc: "Converts electrical into optical signals.", deps: ["Lasers", "DSPs", "SiPh"] },
+              { id: "fiber", title: "Fiber Optic Cable", desc: "Carries light across the data center.", deps: ["GeCl₄", "Preforms", "Helium"] },
+              { id: "tor-switch", title: "ToR Switch", desc: "Aggregates traffic from servers in a rack.", deps: ["ASICs", "Optics", "Power"] },
+              { id: "spine-switch", title: "Spine Switch", desc: "Routes traffic across the cluster fabric.", deps: ["ASICs", "Optics", "NOS"] },
+              { id: "campus-link", title: "Campus Link", desc: "Connects buildings, sites, and regions.", deps: ["Fiber", "Conduit", "Labor"] },
             ];
 
             return (
@@ -2390,52 +2390,73 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 </div>
                 <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
 
-                {/* Architecture pieces — horizontal connected flow */}
-                <div style={{ padding: "10px 15px 0", overflowX: "auto" }}>
-                  <div style={{ display: "flex", alignItems: "flex-start", gap: 0, minWidth: "fit-content" }}>
+                {/* Architecture pieces — horizontal connected flow with rings */}
+                <div style={{ padding: "12px 15px 8px", overflowX: "auto" }}>
+                  {/* Ring + arrow row */}
+                  <div style={{ display: "flex", alignItems: "center", marginBottom: 10, minWidth: "fit-content" }}>
                     {ARCH_PIECES.map((piece, pi) => {
                       const isActive = selectedArchPiece === piece.id;
+                      const ringColor = isActive ? "#c87a4a" : "rgba(255,255,255,0.15)";
+                      const numColor2 = isActive ? "#c87a4a" : "#555";
                       return (
                         <React.Fragment key={piece.id}>
                           <div
                             onClick={() => setSelectedArchPiece(selectedArchPiece === piece.id ? null : piece.id)}
-                            style={{
-                              flex: "0 0 auto",
-                              width: 130,
-                              padding: "10px 10px",
-                              borderRadius: 5,
-                              cursor: "pointer",
-                              background: isActive ? "rgb(37, 37, 37)" : "transparent",
-                              border: isActive ? "1px solid rgba(200,122,74,0.25)" : "1px solid transparent",
-                              transition: "background 0.15s, border-color 0.15s",
-                            }}
-                            onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
-                            onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+                            style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 130, cursor: "pointer", flexShrink: 0 }}
                           >
-                            {/* Step number */}
-                            <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 6 }}>
-                              <span style={{ fontSize: 9, color: isActive ? "#c87a4a" : "#555", fontWeight: 400 }}>{String(pi + 1).padStart(2, "0")}</span>
-                            </div>
-                            {/* Title */}
-                            <p style={{ fontSize: 12, color: "rgb(236, 232, 225)", fontWeight: 400, margin: "0 0 4px 0", lineHeight: 1.3 }}>{piece.title}</p>
-                            {/* Description */}
-                            <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 6px 0", fontWeight: 300 }}>{piece.desc}</p>
-                            {/* Dependencies */}
-                            <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                              {piece.deps.map(d => (
-                                <span key={d} style={{ fontSize: 8, color: isActive ? "rgb(254, 174, 0)" : "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 6px", fontWeight: 300 }}>{d}</span>
-                              ))}
+                            {/* Ring with number */}
+                            <div style={{
+                              width: 28, height: 28, borderRadius: "50%",
+                              border: `1.5px solid ${ringColor}`,
+                              display: "flex", alignItems: "center", justifyContent: "center",
+                              transition: "border-color 0.15s",
+                              background: isActive ? "rgba(200,122,74,0.08)" : "transparent",
+                            }}>
+                              <span style={{ fontSize: 10, color: numColor2, fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{pi + 1}</span>
                             </div>
                           </div>
-                          {/* Arrow connector */}
+                          {/* Arrow line between rings */}
                           {pi < ARCH_PIECES.length - 1 && (
-                            <div style={{ display: "flex", alignItems: "center", padding: "0 2px", alignSelf: "center", marginTop: -10 }}>
-                              <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
-                                <path d="M0 5H12M12 5L8 1M12 5L8 9" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+                            <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", margin: "0 -14px" }}>
+                              <svg width="28" height="8" viewBox="0 0 28 8" fill="none">
+                                <line x1="0" y1="4" x2="22" y2="4" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+                                <path d="M20 1L24 4L20 7" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
                               </svg>
                             </div>
                           )}
                         </React.Fragment>
+                      );
+                    })}
+                  </div>
+                  {/* Card details row */}
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 0, minWidth: "fit-content" }}>
+                    {ARCH_PIECES.map((piece) => {
+                      const isActive = selectedArchPiece === piece.id;
+                      return (
+                        <div
+                          key={piece.id}
+                          onClick={() => setSelectedArchPiece(selectedArchPiece === piece.id ? null : piece.id)}
+                          style={{
+                            flex: "0 0 auto",
+                            width: 130,
+                            padding: "6px 10px 8px",
+                            borderRadius: 5,
+                            cursor: "pointer",
+                            background: isActive ? "rgb(37, 37, 37)" : "transparent",
+                            border: isActive ? "1px solid rgba(200,122,74,0.25)" : "1px solid transparent",
+                            transition: "background 0.15s, border-color 0.15s",
+                          }}
+                          onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
+                          onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+                        >
+                          <p style={{ fontSize: 11, color: "rgb(236, 232, 225)", fontWeight: 400, margin: "0 0 3px 0", lineHeight: 1.3 }}>{piece.title}</p>
+                          <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.3, margin: "0 0 5px 0", fontWeight: 300 }}>{piece.desc}</p>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
+                            {piece.deps.map(d => (
+                              <span key={d} style={{ fontSize: 7, color: isActive ? "rgb(254, 174, 0)" : "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 5px", fontWeight: 300 }}>{d}</span>
+                            ))}
+                          </div>
+                        </div>
                       );
                     })}
                   </div>
