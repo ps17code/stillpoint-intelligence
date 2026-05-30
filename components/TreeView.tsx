@@ -3623,9 +3623,55 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 paddingBottom: 16,
               }}
             >
-              {activeTab === "supply-tree" && (
-                path.length === 0 ? renderVerticalsContent() : renderContainerContent()
-              )}
+              {activeTab === "supply-tree" && (() => {
+                // Layer cards — shown on input pages above supply tree
+                const isInputPage = lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component");
+                const layerCardData: Record<string, { label: string; content: string; whyHard: string; stat: string; statLabel: string }[]> = {
+                  germanium: [
+                    { label: "HOST ORE EXTRACTION", content: "Germanium-rich residues collect in flue dust and leach solutions during zinc smelting.", whyHard: "Recovery requires circuits most zinc smelters never install. China operates ~83% of primary capacity.", stat: "~140t/yr", statLabel: "primary germanium extracted" },
+                    { label: "REFINING TO HIGH PURITY", content: "Crude oxide is reduced to metal, then zone-refined to 5N+ purity. For fiber, converted to GeCl₄.", whyHard: "Fiber-grade GeCl₄ requires parts-per-billion purity. Only one western facility — Umicore.", stat: "~230t/yr", statLabel: "refined germanium" },
+                    { label: "CONVERSION TO END PRODUCTS", content: "Each end product needs a different form: GeCl₄ for fiber, GeO₂ blanks for IR optics, SiGe substrates.", whyHard: "Five distinct markets pull on the same ~230t/yr supply.", stat: "5 markets", statLabel: "competing for same supply" },
+                  ],
+                  gallium: [
+                    { label: "BYPRODUCT SOURCE", content: "Bauxite is mined and shipped to alumina refineries. Gallium rides along at ~50 ppm.", whyHard: "Output is determined by aluminum industry decisions, not gallium demand.", stat: "~346M t/yr", statLabel: "bauxite mined globally" },
+                    { label: "PRIMARY PRODUCER", content: "Refineries with ion-exchange circuits capture gallium as a byproduct.", whyHard: "Only ~20 alumina refineries globally have gallium recovery installed.", stat: "~600 t/yr", statLabel: "primary gallium extracted" },
+                    { label: "REFINER", content: "Crude gallium is purified to 99.9999%+ via zone refining and electrolytic processes.", whyHard: "Western refiners depend on Chinese primary feedstock.", stat: "~320 t/yr", statLabel: "high-purity refined gallium" },
+                  ],
+                  fiber: [
+                    { label: "CHEMICAL CONVERSION", content: "Germanium is converted to GeCl₄ at 8N purity. Silica to SiCl₄. Helium purified for cooling.", whyHard: "Only 6 facilities produce fiber-grade GeCl₄. Helium has no substitute.", stat: "~220t/yr", statLabel: "fiber-grade GeCl₄" },
+                    { label: "PREFORM MANUFACTURING", content: "GeCl₄ is deposited layer by layer inside a silica tube, building a glass preform rod.", whyHard: "Only one equipment supplier — Rosendahl Nextrom. 18-24 month lead times.", stat: "~24,000t/yr", statLabel: "preform produced" },
+                    { label: "FIBER DRAW & ASSEMBLY", content: "Preforms drawn into strands at 10-20 m/s, coated, bundled, and sheathed into cable.", whyHard: "Preform supply is the constraint. Helium supply is tight.", stat: "~720M km/yr", statLabel: "fiber strand produced" },
+                  ],
+                };
+
+                const cards = isInputPage ? (layerCardData[lastEntry.id] ?? []) : [];
+                const accent = templateAccent ?? "#706a60";
+
+                return (
+                  <>
+                  {cards.length > 0 && (
+                    <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginBottom: 10, padding: "14px 16px" }}>
+                      <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 10px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Layers</p>
+                      <div style={{ display: "grid", gridTemplateColumns: `repeat(${cards.length}, 1fr)`, gap: 8 }}>
+                        {cards.map(card => (
+                          <div key={card.label} style={{ background: "rgb(30, 30, 30)", borderRadius: 5, padding: "10px 12px", border: "1px solid rgba(255,255,255,0.04)" }}>
+                            <p style={{ fontSize: 8, letterSpacing: "0.08em", color: accent, margin: "0 0 6px 0", fontWeight: 500, textTransform: "uppercase" }}>{card.label}</p>
+                            <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 6px 0" }}>{card.content}</p>
+                            <p style={{ fontSize: 7, letterSpacing: "0.06em", color: "#555", margin: "0 0 3px 0", textTransform: "uppercase" }}>WHY IT&apos;S HARD</p>
+                            <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 0 0" }}>{card.whyHard}</p>
+                            <div style={{ marginTop: 6, paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
+                              <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{card.stat}</span>
+                              <span style={{ fontSize: 9, color: "#555", marginLeft: 5 }}>{card.statLabel}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {path.length === 0 ? renderVerticalsContent() : renderContainerContent()}
+                  </>
+                );
+              })()}
               {activeTab === "dependencies" && lastEntry && (
                 <DependenciesTable inputId={lastEntry.id} />
               )}
@@ -3922,7 +3968,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           overflow: "hidden",
         }}>
           {/* Top section — price chart (tree) or geo summary / node detail (globe) + tabs */}
-          <div style={{ flexShrink: 0, height: 105, padding: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? "8px 12px 0" : "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+          <div style={{ flexShrink: 0, height: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 105 : 172, padding: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? "8px 12px 0" : "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
             {centerView === "tree" && (
               <>
                 {lastEntry && INPUT_PRICE_HISTORY[lastEntry.id] && (
@@ -5030,25 +5076,29 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 }
               }
 
-              let bullets: string[] = [];
+              // Try chain step panel design for input pages
               const summaryId = lastEntry?.id;
+              const chainPanelMap: Record<string, string> = { germanium: "Germanium", gallium: "Gallium", fiber: "Fiber Optic Cable" };
+              const chainPanelKey = summaryId ? chainPanelMap[summaryId] : null;
+              if (chainPanelKey) {
+                const panel = renderChainStepPanel(chainPanelKey);
+                if (panel) return panel;
+              }
+
+              let bullets: string[] = [];
               if (summaryId === "germanium") {
                 bullets = [
                   "Trace element recovered as a byproduct of zinc smelting and coal combustion. Cannot be mined directly.",
-                  "Doped into glass to create the refractive index that allows fiber optic cable to carry light. Also used in IR defense optics, satellite solar cells, and SiGe semiconductors.",
-                  "Global supply fixed at ~230t/yr. 83% Chinese under export licensing. One western refiner \u2014 Umicore, Belgium.",
-                  "Price has risen from $1,500/kg to over $8,500/kg in two years. 3.5x premium between western and Chinese markets.",
-                  "Demand accelerating from AI datacenter fiber buildout, defense IR optics, and satellite constellation expansion.",
-                  "No near-term supply relief. Hollow-core fiber, new mine capacity, and DRC feedstock ramp all target 2027-2028.",
+                  "Doped into glass to create the refractive index that allows fiber optic cable to carry light.",
+                  "Global supply fixed at ~230t/yr. 83% Chinese under export licensing. One western refiner \u2014 Umicore.",
+                  "Price has risen from $1,500/kg to over $8,500/kg in two years.",
                 ];
               } else if (summaryId === "gallium") {
                 bullets = [
                   "Trace element recovered as a byproduct of alumina refining from bauxite. Cannot be mined directly.",
-                  "Forms compound semiconductors (GaAs and GaN) for AI datacenter power, 5G amplifiers, LEDs, EV chargers, and defense radar.",
-                  "Global refined production is ~320 t/yr. ~290 t Chinese; ~15-30 t non-Chinese, almost entirely Japan via Dowa.",
-                  "Price has risen from $298/kg to $2,269/kg since 2020. 9x spread between Chinese domestic and western markets.",
-                  "Demand accelerating from GaN power electronics (42% CAGR), defense radar, and AI datacenter 800V architecture.",
-                  "Four western production projects target ~230 t/yr by 2029. None resolves structural dependency before 2028.",
+                  "Forms compound semiconductors (GaAs and GaN) for AI datacenter power, 5G, LEDs, and defense radar.",
+                  "Global refined production is ~320 t/yr. ~290 t Chinese.",
+                  "Price has risen from $298/kg to $2,269/kg since 2020.",
                 ];
               } else if (summaryId === "fiber") {
                 bullets = [
