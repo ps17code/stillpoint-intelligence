@@ -3613,16 +3613,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           </div>
                           <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{step.label}:</span>
                           <span style={{ fontSize: 11, color: accent, fontWeight: 500, marginLeft: 4 }}>{step.value}</span>
-                          {si < flow.steps.length - 1 && (
-                            <div style={{ flex: 1, display: "flex", alignItems: "center", marginLeft: 4 }}>
-                              <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
-                              <svg width="6" height="6" viewBox="0 0 6 6" fill="none" style={{ flexShrink: 0 }}>
-                                <path d="M0 0.5L4 3L0 5.5" stroke="rgba(255,255,255,0.08)" strokeWidth="1" fill="none" />
-                              </svg>
-                            </div>
-                          )}
                         </div>
-                        <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 0 0" }}>{step.desc}</p>
+                        <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "5px 0 0 0" }}>{step.desc}</p>
                         {layersExpanded && (
                           <>
                             <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "6px 0" }} />
@@ -3641,9 +3633,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           <div style={{
             flex: 1, minHeight: 0,
             overflowY: "auto", overflowX: "hidden",
-            padding: "0 30px",
+            padding: "0 30px 20px",
           }}>
-            <div style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "14px 16px", ...(currentVertical?.id === "ai" && currentLevel === "subsystems" ? { background: "transparent", padding: 0 } : {}) }}>
+            <div style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "14px 16px", overflow: "hidden", ...(currentVertical?.id === "ai" && currentLevel === "subsystems" ? { background: "transparent", padding: 0 } : {}) }}>
               {/* Tabs — hidden on AI infra vertical tree */}
               {!(currentVertical?.id === "ai" && currentLevel === "subsystems") && (
                 <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 14 }}>
@@ -4436,7 +4428,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 const sectionTitle = { fontSize: 11 as const, color: "rgb(219, 219, 218)" as const, fontWeight: 500 as const, margin: "0 0 6px 0" as const };
                 const bulletDot = { width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0 as const, marginTop: 6 };
                 const bulletText = { fontSize: 10 as const, color: "rgb(160, 152, 136)" as const, lineHeight: 1.5 as const, margin: 0 as const };
-                const tblRow = { fontSize: 11 as const, color: "rgb(160, 152, 136)" as const, padding: "3px 0" as const, fontFamily: "'Geist Mono', monospace" as const };
+                const tblRow = { fontSize: 11 as const, color: "rgb(160, 152, 136)" as const, padding: "3px 0" as const };
                 const tblVal = { ...tblRow, textAlign: "right" as const, color: "#ece8e1" };
 
                 const divider = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
@@ -4498,7 +4490,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     </div>
                     {/* Pie chart + legend */}
                     {(() => {
-                      const pieColors = ["#c87a4a", "#706a60", "#4a4540", "#3a3835"];
+                      const pieColors = [accentForGap, "#706a60", "#4a4540", "#3a3835"];
                       const R = 36, cx = 44, cy = 44, stroke = 14;
                       const circ = 2 * Math.PI * R;
                       let offset = 0;
@@ -4563,7 +4555,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       <tbody>
                         {data.keyPlayers.map(p => (
                           <tr key={p.name}>
-                            <td style={{ padding: "3px 0", fontSize: 10 }}>
+                            <td style={{ padding: "3px 0", fontSize: 11 }}>
                               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                                 <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
                                 <span style={{ color: "rgb(160, 152, 136)", fontWeight: 500 }}>{p.name}</span>
