@@ -15,7 +15,7 @@ export default function ChainAnalysis({ collapsed, onShowOpportunities, onExpand
   if (collapsed) {
     return (
       <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", transition: "all 0.3s ease" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: mono }}>Chain Summary</p>
           <span
             onClick={onExpand}
@@ -27,7 +27,6 @@ export default function ChainAnalysis({ collapsed, onShowOpportunities, onExpand
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M2 4L5 7L8 4" /></svg>
           </span>
         </div>
-        <span style={{ fontSize: 11, color: numColor }}>Primary Chokepoint: <span style={{ color: amber, fontWeight: 500 }}>GeCl₄</span></span>
       </div>
     );
   }

@@ -2809,7 +2809,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             const selectedBrief = selectedOpportunityBrief ? (geBriefs[selectedOpportunityBrief] ?? fiberBriefs[selectedOpportunityBrief]) : null;
 
             return (
-              <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", display: "flex", flexDirection: "column", maxHeight: selectedBrief ? "none" : 350, animation: "fadeSlideDown 0.4s ease-out 0.15s both" }}>
+              <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", display: "flex", flexDirection: "column", animation: "fadeSlideDown 0.4s ease-out 0.15s both" }}>
                 <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 12px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chain Opportunities</p>
 
                 {/* Layer filter pills */}
@@ -2840,8 +2840,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 </div>
 
                 {/* Ideas table */}
-                <div style={{ border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden", flexShrink: 0 }}>
-                  <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
+                <div style={{ border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden", display: "flex", flexDirection: "column", maxHeight: 400 }}>
+                  <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed", flexShrink: 0 }}>
                     <colgroup>
                       <col style={{ width: "22%" }} />
                       <col style={{ width: "16%" }} />
@@ -2854,29 +2854,38 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         <th style={thStyle}>Thesis</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {filteredIdeas.map((idea, ii) => (
-                        <tr
-                          key={idea.id + ii}
-                          onClick={() => {
-                            const f = getIdeaFilter(idea);
-                            setOpportunityLayerFilter(f);
-                            setSelectedOpportunityBrief(idea.id);
-                          }}
-                          style={{ borderTop: "1px solid rgba(255,255,255,0.04)", cursor: "pointer", transition: "background 0.15s", background: selectedOpportunityBrief === idea.id ? "rgba(200,122,74,0.08)" : "transparent" }}
-                          onMouseEnter={e => { if (selectedOpportunityBrief !== idea.id) e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
-                          onMouseLeave={e => { if (selectedOpportunityBrief !== idea.id) e.currentTarget.style.background = "transparent"; }}
-                        >
-                          <td style={{ padding: "8px 10px", fontSize: 11, verticalAlign: "top" }}>
-                            <span style={{ color: warmWhite, fontWeight: 500 }}>{idea.name}</span>
-                            <span style={{ fontSize: 8, color: "rgb(120, 112, 100)", marginLeft: 6, fontFamily: "'Geist Mono', monospace" }}>({cleanTicker(idea.ticker)})</span>
-                          </td>
-                          <td style={{ padding: "8px 10px", fontSize: 9, color: "#c87a4a", verticalAlign: "top", fontFamily: "'Geist Mono', monospace" }}>{idea.category}</td>
-                          <td style={{ padding: "8px 10px", fontSize: 10, color: "rgb(160, 152, 136)", verticalAlign: "top", lineHeight: 1.5 }}>{idea.line1}</td>
-                        </tr>
-                      ))}
-                    </tbody>
                   </table>
+                  <div style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
+                    <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
+                      <colgroup>
+                        <col style={{ width: "22%" }} />
+                        <col style={{ width: "16%" }} />
+                        <col style={{ width: "62%" }} />
+                      </colgroup>
+                      <tbody>
+                        {filteredIdeas.map((idea, ii) => (
+                          <tr
+                            key={idea.id + ii}
+                            onClick={() => {
+                              const f = getIdeaFilter(idea);
+                              setOpportunityLayerFilter(f);
+                              setSelectedOpportunityBrief(idea.id);
+                            }}
+                            style={{ borderTop: "1px solid rgba(255,255,255,0.04)", cursor: "pointer", transition: "background 0.15s", background: selectedOpportunityBrief === idea.id ? "rgba(200,122,74,0.08)" : "transparent" }}
+                            onMouseEnter={e => { if (selectedOpportunityBrief !== idea.id) e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
+                            onMouseLeave={e => { if (selectedOpportunityBrief !== idea.id) e.currentTarget.style.background = "transparent"; }}
+                          >
+                            <td style={{ padding: "8px 10px", fontSize: 11, verticalAlign: "top" }}>
+                              <span style={{ color: warmWhite, fontWeight: 500 }}>{idea.name}</span>
+                              <span style={{ fontSize: 8, color: "rgb(120, 112, 100)", marginLeft: 6, fontFamily: "'Geist Mono', monospace" }}>({cleanTicker(idea.ticker)})</span>
+                            </td>
+                            <td style={{ padding: "8px 10px", fontSize: 9, color: "#c87a4a", verticalAlign: "top", fontFamily: "'Geist Mono', monospace" }}>{idea.category}</td>
+                            <td style={{ padding: "8px 10px", fontSize: 10, color: "rgb(160, 152, 136)", verticalAlign: "top", lineHeight: 1.5 }}>{idea.line1}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
                 {/* Selected brief — shown below table */}
