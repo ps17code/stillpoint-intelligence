@@ -3622,9 +3622,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             </div>
                           )}
                         </div>
+                        <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 0 0" }}>{step.desc}</p>
                         {layersExpanded && (
                           <>
-                            <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 0 0" }}>{step.desc}</p>
                             <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "6px 0" }} />
                             <p style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.55)", lineHeight: 1.4, margin: 0, fontWeight: 500 }}>{step.context}</p>
                           </>
@@ -4436,7 +4436,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 const sectionTitle = { fontSize: 11 as const, color: "rgb(219, 219, 218)" as const, fontWeight: 500 as const, margin: "0 0 6px 0" as const };
                 const bulletDot = { width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0 as const, marginTop: 6 };
                 const bulletText = { fontSize: 10 as const, color: "rgb(160, 152, 136)" as const, lineHeight: 1.5 as const, margin: 0 as const };
-                const tblRow = { fontSize: 9 as const, color: "rgb(160, 152, 136)" as const, padding: "3px 0" as const, fontFamily: "'Geist Mono', monospace" as const };
+                const tblRow = { fontSize: 11 as const, color: "rgb(160, 152, 136)" as const, padding: "3px 0" as const, fontFamily: "'Geist Mono', monospace" as const };
                 const tblVal = { ...tblRow, textAlign: "right" as const, color: "#ece8e1" };
 
                 const divider = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
@@ -4524,8 +4524,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             {data.supply.breakdown.map((s, si) => (
                               <div key={s.source} style={{ display: "flex", alignItems: "center", gap: 6 }}>
                                 <span style={{ width: 6, height: 6, borderRadius: 1, background: pieColors[si % pieColors.length], flexShrink: 0 }} />
-                                <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", flex: 1 }}>{s.source}</span>
-                                <span style={{ fontSize: 8, color: "#ece8e1", fontFamily: "'Geist Mono', monospace" }}>{s.pct}%</span>
+                                <span style={{ fontSize: 11, color: "rgb(160, 152, 136)", flex: 1 }}>{s.source}</span>
+                                <span style={{ fontSize: 11, color: "#ece8e1", fontFamily: "'Geist Mono', monospace" }}>{s.pct}%</span>
                               </div>
                             ))}
                           </div>
@@ -4551,7 +4551,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       </tbody>
                     </table>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: 6 }}>
-                      <p style={{ fontSize: 10, color: accentForGap, margin: 0, fontWeight: 500 }}>Gap</p>
+                      <p style={{ fontSize: 12, color: accentForGap, margin: 0, fontWeight: 500 }}>Gap</p>
                       <p style={{ fontSize: 11, color: accentForGap, fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.gap}</p>
                     </div>
 
@@ -4566,7 +4566,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             <td style={{ padding: "3px 0", fontSize: 10 }}>
                               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                                 <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                                <span style={{ color: "#ece8e1", fontWeight: 500 }}>{p.name}</span>
+                                <span style={{ color: "rgb(160, 152, 136)", fontWeight: 500 }}>{p.name}</span>
                               </div>
                             </td>
                             <td style={{ padding: "3px 0", fontSize: 9, color: "rgb(160, 152, 136)", textAlign: "right", fontFamily: "'Geist Mono', monospace" }}>{p.share}</td>
@@ -4596,7 +4596,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
                           onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
                         >
-                          View {data.navLabel}&apos;s Page &rarr;
+                          View Opportunities &rarr;
                         </button>
                       </>
                     )}
