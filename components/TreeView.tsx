@@ -2759,7 +2759,14 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           })()}
 
           {selectedFeaturedChain === "germanium_chokepoint" && (
-            <div style={{ marginTop: 10, animation: showChainOpportunities ? undefined : "fadeSlideDown 0.4s ease-out 0.2s both", transition: "margin-top 0.3s ease" }}>
+            <div style={{
+              marginTop: 10,
+              maxHeight: showChainOpportunities ? 48 : 600,
+              opacity: showChainOpportunities ? 1 : 1,
+              overflow: "hidden",
+              transition: "max-height 0.3s ease 0.15s",
+              ...(showChainOpportunities ? {} : { animation: "fadeSlideDown 0.4s ease-out 0.2s both" }),
+            }}>
               <ChainAnalysis collapsed={showChainOpportunities} onShowOpportunities={() => setShowChainOpportunities(true)} onExpand={() => { setShowChainOpportunities(false); setSelectedOpportunityBrief(null); setOpportunityLayerFilter(null); }} />
             </div>
           )}
@@ -2811,7 +2818,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             const selectedBrief = selectedOpportunityBrief ? (geBriefs[selectedOpportunityBrief] ?? fiberBriefs[selectedOpportunityBrief]) : null;
 
             return (
-              <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", display: "flex", flexDirection: "column", animation: "fadeSlideDown 0.4s ease-out 0.25s both" }}>
+              <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", display: "flex", flexDirection: "column", animation: "fadeSlideDown 0.4s ease-out 0.4s both" }}>
                 <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 12px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chain Opportunities</p>
 
                 {/* Layer filter pills */}
