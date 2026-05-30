@@ -2283,7 +2283,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: ((selectedArchPiece && !selectedFeaturedChain)) ? "0 15px 10px" : "0 15px 15px" }} />
             )}
 
-            {!showChainOpportunities && <div style={{ padding: "0 15px 10px" }}>
+            <div style={{ maxHeight: showChainOpportunities ? 0 : 800, opacity: showChainOpportunities ? 0 : 1, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
+            <div style={{ padding: "0 15px 10px" }}>
               {/* Diagram view */}
               {chainTreeTab === "diagram" && (
                 <div style={{ display: "grid", gridTemplateColumns: `repeat(${diagramSteps.length}, 1fr)`, gap: 0 }}>
@@ -2358,7 +2359,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   }}
                 />
               )}
-            </div>}
+            </div>
+            </div>
           </div>
           {/* Hint text — shown when no subsystem is selected */}
           {!selectedSubsystem && !selectedFeaturedChain && (
@@ -2757,8 +2759,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           })()}
 
           {selectedFeaturedChain === "germanium_chokepoint" && (
-            <div style={{ marginTop: 10, animation: "fadeSlideDown 0.4s ease-out 0.2s both" }}>
-              <ChainAnalysis collapsed={showChainOpportunities} onShowOpportunities={() => setShowChainOpportunities(true)} onExpand={() => setShowChainOpportunities(false)} />
+            <div style={{ marginTop: 10, animation: showChainOpportunities ? undefined : "fadeSlideDown 0.4s ease-out 0.2s both", transition: "margin-top 0.3s ease" }}>
+              <ChainAnalysis collapsed={showChainOpportunities} onShowOpportunities={() => setShowChainOpportunities(true)} onExpand={() => { setShowChainOpportunities(false); setSelectedOpportunityBrief(null); setOpportunityLayerFilter(null); }} />
             </div>
           )}
 
@@ -2809,7 +2811,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             const selectedBrief = selectedOpportunityBrief ? (geBriefs[selectedOpportunityBrief] ?? fiberBriefs[selectedOpportunityBrief]) : null;
 
             return (
-              <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", display: "flex", flexDirection: "column", animation: "fadeSlideDown 0.4s ease-out 0.15s both" }}>
+              <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", display: "flex", flexDirection: "column", animation: "fadeSlideDown 0.4s ease-out 0.25s both" }}>
                 <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 12px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chain Opportunities</p>
 
                 {/* Layer filter pills */}
@@ -4519,6 +4521,35 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   </div>
                 );
               };
+
+              // ── PATH 0: Chain Opportunities mode — show summary based on filter ──
+              if (showChainOpportunities && selectedFeaturedChain && isAITree) {
+                const filterToNode: Record<string, string> = {
+                  "Germanium Supplier": "Germanium",
+                  "GeCl₄ Refiner": "Germanium Tetrachloride (GeCl4)",
+                  "Fiber Preform / Cable": "Fiber Optic Cable",
+                };
+                const targetNode = opportunityLayerFilter ? filterToNode[opportunityLayerFilter] : null;
+                if (targetNode) {
+                  const chainPanel = renderChainStepPanel(targetNode);
+                  if (chainPanel) return chainPanel;
+                  return renderSubNodeSummary(targetNode, { chainMode: true, chainStatusColor: "#c87a4a" }) ?? null;
+                }
+                // No filter or "Other" — show key takeaways
+                return (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
+                      <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>Key Takeaways</p>
+                      {CHAIN_TAKEAWAYS.map((t, i) => (
+                        <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
+                          <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{t}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
 
               // ── PATH 1: Featured chain mode ──
               // Chain selected — show key takeaways + key players, or sub-node summary
