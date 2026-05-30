@@ -3164,7 +3164,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
       return sub?.components.find(c => c.id === lastEntry.id)?.detail ?? "";
     }
     if (lastEntry.type === "raw-material") {
-      if (lastEntry.id === "germanium") return "One of the only materials that seamlessly blends into existing silicon technology to both manipulate light and move electricity at ultra-high speeds. Found as a trace element of zinc and coal, and primarily used in fiber cables as a dopant in fiber glass strands to allow it to carry light fast.";
+      if (lastEntry.id === "germanium") return "Found as a trace element of zinc and coal, and primarily used in fiber cables as a dopant in fiber glass strands to allow it to carry light fast.";
       if (lastEntry.id === "gallium") return "Byproduct of alumina refining. Forms compound semiconductors for AI datacenter power, 5G, defense radar, and LEDs.";
       return "";
     }
@@ -3554,7 +3554,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       >Full analysis &rarr;</a>
                     )}
                   </div>
-                  <p style={{ fontSize: (selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems") ? 12 : 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
+                  <p style={{ fontSize: 12, color: bodyText, lineHeight: 1.5, margin: 0 }}>
                     {templateSubtitle}
                   </p>
                 </div>
@@ -3593,9 +3593,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Layers</p>
                     <span
                       onClick={() => setLayersExpanded(!layersExpanded)}
-                      style={{ fontSize: 9, color: "#c87a4a", cursor: "pointer", transition: "color 0.15s", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4 }}
-                      onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
-                      onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+                      style={{ fontSize: 9, color: accent, cursor: "pointer", transition: "color 0.15s", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4 }}
+                      onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+                      onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
                     >
                       {layersExpanded ? "Collapse" : "Expand"}
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ transform: layersExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
