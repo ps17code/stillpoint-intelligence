@@ -3610,7 +3610,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         </div>
                         <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 0 0" }}>{step.desc}</p>
                         <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "6px 0" }} />
-                        <p style={{ fontSize: 11, color: accentFaded, lineHeight: 1.4, margin: 0 }}>{step.context}</p>
+                        <p style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.55)", lineHeight: 1.4, margin: 0, fontWeight: 500 }}>{step.context}</p>
                       </div>
                     ))}
                   </div>
@@ -3870,15 +3870,11 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
           {/* Chain Analysis moved inside value chain panel */}
 
-          {/* Bottom section — key takeaways (hidden on investment ideas tab) */}
+          {/* Bottom section — key takeaways (hidden) */}
           <div style={{
-            height: activeTab === "investment-ideas" || activeTab === "analysis" || (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 0 : 160,
+            height: 0,
             flexShrink: 0,
-            borderTop: activeTab === "investment-ideas" || activeTab === "analysis" || (currentVertical?.id === "ai" && currentLevel === "subsystems") ? "none" : `1px solid ${borderColor}`,
-            padding: activeTab === "investment-ideas" || activeTab === "analysis" || (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 0 : "0 30px",
             overflow: "hidden",
-            overflowY: "auto",
-            display: "flex", alignItems: "center",
           }}>
             {(() => {
               const inputId = lastEntry?.id;
