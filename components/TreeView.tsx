@@ -3518,66 +3518,102 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               </button>
             </div>
             {(() => {
-              const metrics = lastEntry ? INPUT_METRICS[lastEntry.id] : null;
               return (
-                <div style={{ display: "grid", gridTemplateColumns: metrics ? ".9fr 1fr" : "1fr", gap: 24, marginBottom: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 20 : 14 }}>
-                  {/* Left column — title + description */}
-                  <div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
-                      <h1 style={{
-                        fontFamily: "'Instrument Serif', serif",
-                        fontSize: 20,
-                        fontWeight: 400, color: warmWhite, margin: 0,
+                <div style={{ marginBottom: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 20 : 14 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
+                    <h1 style={{
+                      fontFamily: "'Instrument Serif', serif",
+                      fontSize: 20,
+                      fontWeight: 400, color: warmWhite, margin: 0,
+                    }}>
+                      {templateTitle}
+                    </h1>
+                    {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
+                      <div style={{
+                        display: "inline-flex", alignItems: "center", gap: 0,
+                        background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
+                        borderRadius: 20, padding: "4px 12px",
                       }}>
-                        {templateTitle}
-                      </h1>
-                      {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
-                        <div style={{
-                          display: "inline-flex", alignItems: "center", gap: 0,
-                          background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
-                          borderRadius: 20, padding: "4px 12px",
-                        }}>
-                          {["Germanium", "GeCl₄", "Fiber Optics", "Connectivity", "AI Data Center"].map((node, ni, arr) => (
-                            <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
-                              <span style={{ fontSize: 9, color: "#a09888", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{node}</span>
-                              {ni < arr.length - 1 && <span style={{ fontSize: 8, color: "#4a4540", margin: "0 6px" }}>→</span>}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                      {templateAnalysisHref && (
-                        <a href={templateAnalysisHref} style={{
-                          fontSize: 10, color: "#fff", padding: "6px 14px",
-                          background: templateAccent ?? "#706a60", border: "none", borderRadius: 6,
-                          textDecoration: "none", transition: "opacity 0.15s", flexShrink: 0,
-                        }}
-                          onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
-                          onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
-                        >Full analysis &rarr;</a>
-                      )}
-                    </div>
-                    <p style={{ fontSize: (selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems") ? 12 : 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
-                      {templateSubtitle}
-                    </p>
+                        {["Germanium", "GeCl₄", "Fiber Optics", "Connectivity", "AI Data Center"].map((node, ni, arr) => (
+                          <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
+                            <span style={{ fontSize: 9, color: "#a09888", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{node}</span>
+                            {ni < arr.length - 1 && <span style={{ fontSize: 8, color: "#4a4540", margin: "0 6px" }}>→</span>}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    {templateAnalysisHref && (
+                      <a href={templateAnalysisHref} style={{
+                        fontSize: 10, color: "#fff", padding: "6px 14px",
+                        background: templateAccent ?? "#706a60", border: "none", borderRadius: 6,
+                        textDecoration: "none", transition: "opacity 0.15s", flexShrink: 0,
+                      }}
+                        onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
+                        onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                      >Full analysis &rarr;</a>
+                    )}
                   </div>
-                  {/* Right column — metrics row */}
-                  {metrics && (
-                    <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-end", gap: 20 }}>
-                      {[
-                        { label: "Price", value: metrics.price, sub: metrics.priceSub },
-                        { label: "Supply", value: metrics.supply, sub: metrics.supplySub },
-                        { label: "Demand", value: metrics.demand, sub: metrics.demandSub },
-                        { label: "Gap", value: metrics.gap, sub: metrics.gapSub },
-                        { label: "Status", value: metrics.status, sub: metrics.statusSub },
-                      ].map((m, i, arr) => (
-                        <div key={m.label} style={{ textAlign: "right", paddingRight: 10, borderRight: i < arr.length - 1 ? "1px solid rgb(83, 83, 83)" : "none" }}>
-                          <p style={{ fontSize: 7, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: dimmer, margin: "0 0 3px 0", fontFamily: "'Geist Mono', monospace" }}>{m.label}</p>
-                          <p style={{ fontSize: 10, color: m.label === "Status" ? (templateAccent ?? "#a09888") : warmWhite, margin: 0, fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{m.value}</p>
-                          <p style={{ fontSize: 7, color: "#555", margin: "2px 0 0 0", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{m.sub}</p>
+                  <p style={{ fontSize: (selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems") ? 12 : 11, color: bodyText, lineHeight: 1.5, margin: 0 }}>
+                    {templateSubtitle}
+                  </p>
+                </div>
+              );
+            })()}
+            {/* Layer flow steps — shown on input pages above tabs */}
+            {(() => {
+              const isInputPage = lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component");
+              if (!isInputPage) return null;
+              const accent = templateAccent ?? "#706a60";
+              const LAYER_FLOWS: Record<string, { steps: { label: string; desc: string; whyHard: string; supply: string }[] }> = {
+                germanium: { steps: [
+                  { label: "Host Ore Extraction", desc: "Recovered from zinc ores, coal ash, and smelting residues.", whyHard: "Recovery requires circuits most zinc smelters never install. China operates ~83% of primary capacity.", supply: "~140t/yr" },
+                  { label: "High-Purity Refining", desc: "Processed into purified germanium metal or chemical feedstock.", whyHard: "Fiber-grade GeCl₄ requires parts-per-billion purity. Only one western facility — Umicore.", supply: "~230t/yr" },
+                  { label: "End-Product Conversion", desc: "Converted into forms used in fiber optics, IR optics, solar cells, and semiconductors.", whyHard: "Five distinct markets pull on the same ~230t/yr supply.", supply: "5 markets" },
+                ]},
+                gallium: { steps: [
+                  { label: "Byproduct Source", desc: "Extracted as a trace element during alumina refining from bauxite.", whyHard: "Output determined by aluminum industry, not gallium demand.", supply: "~346Mt/yr" },
+                  { label: "Primary Production", desc: "Ion-exchange circuits capture gallium from alumina process streams.", whyHard: "Only ~20 refineries globally have recovery installed.", supply: "~600t/yr" },
+                  { label: "High-Purity Refining", desc: "Purified to 99.9999%+ via zone refining and electrolytic processes.", whyHard: "Western refiners depend on Chinese primary feedstock.", supply: "~320t/yr" },
+                ]},
+                fiber: { steps: [
+                  { label: "Chemical Conversion", desc: "Germanium converted to GeCl₄ at 8N purity. Silica to SiCl₄. Helium purified.", whyHard: "Only 6 facilities produce fiber-grade GeCl₄. Helium has no substitute.", supply: "~220t/yr" },
+                  { label: "Preform Manufacturing", desc: "GeCl₄ deposited layer by layer inside silica tubes to build glass preform rods.", whyHard: "One equipment supplier — Rosendahl Nextrom. 18-24 month lead times.", supply: "~24kt/yr" },
+                  { label: "Fiber Draw & Assembly", desc: "Preforms drawn into strands, coated, bundled, and sheathed into cable.", whyHard: "Preform supply is the constraint. Helium supply is tight.", supply: "~720M km" },
+                ]},
+              };
+              const flow = LAYER_FLOWS[lastEntry.id];
+              if (!flow) return null;
+              return (
+                <div style={{ marginBottom: 12 }}>
+                  <div style={{ display: "flex", gap: 0 }}>
+                    {flow.steps.map((step, si) => (
+                      <div key={step.label} style={{ flex: 1, display: "flex", gap: 10, padding: "8px 12px 8px 0" }}>
+                        {/* Supply value */}
+                        <div style={{ flexShrink: 0, width: 60, display: "flex", alignItems: "flex-start", justifyContent: "flex-end", paddingTop: 2 }}>
+                          <span style={{ fontSize: 14, color: warmWhite, fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{step.supply}</span>
                         </div>
-                      ))}
-                    </div>
-                  )}
+                        {/* Step content */}
+                        <div style={{ flex: 1 }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                            <div style={{ width: 16, height: 16, borderRadius: "50%", border: `1.5px solid ${accent}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                              <span style={{ fontSize: 7, color: accent, fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{si + 1}</span>
+                            </div>
+                            <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>{step.label}</span>
+                            {si < flow.steps.length - 1 && (
+                              <div style={{ flex: 1, display: "flex", alignItems: "center", marginLeft: 4 }}>
+                                <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
+                                <svg width="6" height="6" viewBox="0 0 6 6" fill="none" style={{ flexShrink: 0 }}>
+                                  <path d="M0 0.5L4 3L0 5.5" stroke="rgba(255,255,255,0.08)" strokeWidth="1" fill="none" />
+                                </svg>
+                              </div>
+                            )}
+                          </div>
+                          <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 3px 0" }}>{step.desc}</p>
+                          <p style={{ fontSize: 8, color: "#555", lineHeight: 1.4, margin: 0 }}>{step.whyHard}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               );
             })()}
@@ -3623,55 +3659,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 paddingBottom: 16,
               }}
             >
-              {activeTab === "supply-tree" && (() => {
-                // Layer cards — shown on input pages above supply tree
-                const isInputPage = lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component");
-                const layerCardData: Record<string, { label: string; content: string; whyHard: string; stat: string; statLabel: string }[]> = {
-                  germanium: [
-                    { label: "HOST ORE EXTRACTION", content: "Germanium-rich residues collect in flue dust and leach solutions during zinc smelting.", whyHard: "Recovery requires circuits most zinc smelters never install. China operates ~83% of primary capacity.", stat: "~140t/yr", statLabel: "primary germanium extracted" },
-                    { label: "REFINING TO HIGH PURITY", content: "Crude oxide is reduced to metal, then zone-refined to 5N+ purity. For fiber, converted to GeCl₄.", whyHard: "Fiber-grade GeCl₄ requires parts-per-billion purity. Only one western facility — Umicore.", stat: "~230t/yr", statLabel: "refined germanium" },
-                    { label: "CONVERSION TO END PRODUCTS", content: "Each end product needs a different form: GeCl₄ for fiber, GeO₂ blanks for IR optics, SiGe substrates.", whyHard: "Five distinct markets pull on the same ~230t/yr supply.", stat: "5 markets", statLabel: "competing for same supply" },
-                  ],
-                  gallium: [
-                    { label: "BYPRODUCT SOURCE", content: "Bauxite is mined and shipped to alumina refineries. Gallium rides along at ~50 ppm.", whyHard: "Output is determined by aluminum industry decisions, not gallium demand.", stat: "~346M t/yr", statLabel: "bauxite mined globally" },
-                    { label: "PRIMARY PRODUCER", content: "Refineries with ion-exchange circuits capture gallium as a byproduct.", whyHard: "Only ~20 alumina refineries globally have gallium recovery installed.", stat: "~600 t/yr", statLabel: "primary gallium extracted" },
-                    { label: "REFINER", content: "Crude gallium is purified to 99.9999%+ via zone refining and electrolytic processes.", whyHard: "Western refiners depend on Chinese primary feedstock.", stat: "~320 t/yr", statLabel: "high-purity refined gallium" },
-                  ],
-                  fiber: [
-                    { label: "CHEMICAL CONVERSION", content: "Germanium is converted to GeCl₄ at 8N purity. Silica to SiCl₄. Helium purified for cooling.", whyHard: "Only 6 facilities produce fiber-grade GeCl₄. Helium has no substitute.", stat: "~220t/yr", statLabel: "fiber-grade GeCl₄" },
-                    { label: "PREFORM MANUFACTURING", content: "GeCl₄ is deposited layer by layer inside a silica tube, building a glass preform rod.", whyHard: "Only one equipment supplier — Rosendahl Nextrom. 18-24 month lead times.", stat: "~24,000t/yr", statLabel: "preform produced" },
-                    { label: "FIBER DRAW & ASSEMBLY", content: "Preforms drawn into strands at 10-20 m/s, coated, bundled, and sheathed into cable.", whyHard: "Preform supply is the constraint. Helium supply is tight.", stat: "~720M km/yr", statLabel: "fiber strand produced" },
-                  ],
-                };
-
-                const cards = isInputPage ? (layerCardData[lastEntry.id] ?? []) : [];
-                const accent = templateAccent ?? "#706a60";
-
-                return (
-                  <>
-                  {cards.length > 0 && (
-                    <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginBottom: 10, padding: "14px 16px" }}>
-                      <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 10px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Layers</p>
-                      <div style={{ display: "grid", gridTemplateColumns: `repeat(${cards.length}, 1fr)`, gap: 8 }}>
-                        {cards.map(card => (
-                          <div key={card.label} style={{ background: "rgb(30, 30, 30)", borderRadius: 5, padding: "10px 12px", border: "1px solid rgba(255,255,255,0.04)" }}>
-                            <p style={{ fontSize: 8, letterSpacing: "0.08em", color: accent, margin: "0 0 6px 0", fontWeight: 500, textTransform: "uppercase" }}>{card.label}</p>
-                            <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 6px 0" }}>{card.content}</p>
-                            <p style={{ fontSize: 7, letterSpacing: "0.06em", color: "#555", margin: "0 0 3px 0", textTransform: "uppercase" }}>WHY IT&apos;S HARD</p>
-                            <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 0 0" }}>{card.whyHard}</p>
-                            <div style={{ marginTop: 6, paddingTop: 6, borderTop: "1px solid rgb(45, 41, 39)" }}>
-                              <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{card.stat}</span>
-                              <span style={{ fontSize: 9, color: "#555", marginLeft: 5 }}>{card.statLabel}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {path.length === 0 ? renderVerticalsContent() : renderContainerContent()}
-                  </>
-                );
-              })()}
+              {activeTab === "supply-tree" && (
+                path.length === 0 ? renderVerticalsContent() : renderContainerContent()
+              )}
               {activeTab === "dependencies" && lastEntry && (
                 <DependenciesTable inputId={lastEntry.id} />
               )}
@@ -4464,11 +4454,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
                 return (
                   <div style={{ background: cardBg, borderRadius: 6, padding: "12px 12px" }}>
-                    {/* Header */}
-                    <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: "0 0 2px 0", fontFamily: "'EB Garamond', Georgia, serif" }}>{data.name}</p>
-                    <p style={{ ...labelStyle, margin: 0 }}>{data.layer}</p>
-
-                    {divider}
 
                     {/* Why It Matters */}
                     <p style={sectionTitle}>Why It Matters</p>
