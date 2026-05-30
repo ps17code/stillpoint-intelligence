@@ -2390,53 +2390,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 </div>
                 <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
 
-                {/* Architecture pieces — horizontal connected flow with rings */}
+                {/* Architecture pieces — horizontal connected flow with rings inside cards */}
                 <div style={{ padding: "12px 15px 8px", overflowX: "auto" }}>
-                  {/* Ring + arrow row */}
-                  <div style={{ display: "flex", alignItems: "center", marginBottom: 6, minWidth: "fit-content" }}>
-                    {ARCH_PIECES.map((piece, pi) => {
-                      const isActive = selectedArchPiece === piece.id;
-                      const ringColor = isActive ? "#c87a4a" : "rgba(255,255,255,0.15)";
-                      const numColor2 = isActive ? "#c87a4a" : "#555";
-                      return (
-                        <React.Fragment key={piece.id}>
-                          <div
-                            onClick={() => setSelectedArchPiece(selectedArchPiece === piece.id ? null : piece.id)}
-                            style={{ display: "flex", alignItems: "center", width: 130, cursor: "pointer", flexShrink: 0, paddingLeft: 11, boxSizing: "border-box" }}
-                          >
-                            {/* Ring with number */}
-                            <div style={{
-                              width: 20, height: 20, borderRadius: "50%",
-                              border: `1.5px solid ${ringColor}`,
-                              display: "flex", alignItems: "center", justifyContent: "center",
-                              transition: "border-color 0.15s",
-                              background: isActive ? "rgba(200,122,74,0.08)" : "transparent",
-                              flexShrink: 0,
-                            }}>
-                              <span style={{ fontSize: 8, color: numColor2, fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{pi + 1}</span>
-                            </div>
-                            {/* Arrow extending from ring to edge of card */}
-                            {pi < ARCH_PIECES.length - 1 && (
-                              <div style={{ flex: 1, display: "flex", alignItems: "center", marginLeft: 4 }}>
-                                <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.1)" }} />
-                              </div>
-                            )}
-                          </div>
-                          {/* Arrow head between cards */}
-                          {pi < ARCH_PIECES.length - 1 && (
-                            <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", margin: "0 -1px" }}>
-                              <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-                                <path d="M1 1L5 4L1 7" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
-                              </svg>
-                            </div>
-                          )}
-                        </React.Fragment>
-                      );
-                    })}
-                  </div>
-                  {/* Card details row */}
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 0, minWidth: "fit-content" }}>
-                    {ARCH_PIECES.map((piece) => {
+                    {ARCH_PIECES.map((piece, pi) => {
                       const isActive = selectedArchPiece === piece.id;
                       return (
                         <div
@@ -2445,16 +2402,49 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           style={{
                             flex: "0 0 auto",
                             width: 130,
-                            padding: "6px 10px 8px",
+                            padding: "8px 10px 8px",
                             borderRadius: 5,
                             cursor: "pointer",
                             background: isActive ? "rgb(37, 37, 37)" : "transparent",
                             border: isActive ? "1px solid rgba(200,122,74,0.25)" : "1px solid transparent",
                             transition: "background 0.15s, border-color 0.15s",
                           }}
-                          onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
-                          onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+                          onMouseEnter={e => {
+                            if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                            const ring = e.currentTarget.querySelector("[data-ring]") as HTMLElement;
+                            if (ring && !isActive) ring.style.background = "rgba(255,255,255,0.08)";
+                          }}
+                          onMouseLeave={e => {
+                            if (!isActive) e.currentTarget.style.background = "transparent";
+                            const ring = e.currentTarget.querySelector("[data-ring]") as HTMLElement;
+                            if (ring && !isActive) ring.style.background = "transparent";
+                          }}
                         >
+                          {/* Ring + arrow row */}
+                          <div style={{ display: "flex", alignItems: "center", marginBottom: 6 }}>
+                            <div
+                              data-ring=""
+                              style={{
+                                width: 20, height: 20, borderRadius: "50%",
+                                border: `1.5px solid ${isActive ? "#c87a4a" : "rgba(255,255,255,0.15)"}`,
+                                display: "flex", alignItems: "center", justifyContent: "center",
+                                transition: "border-color 0.15s, background 0.15s",
+                                background: isActive ? "rgba(200,122,74,0.25)" : "transparent",
+                                flexShrink: 0,
+                              }}
+                            >
+                              <span style={{ fontSize: 8, color: isActive ? "#fff" : "#555", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{pi + 1}</span>
+                            </div>
+                            {pi < ARCH_PIECES.length - 1 && (
+                              <div style={{ flex: 1, display: "flex", alignItems: "center", marginLeft: 4, marginRight: -10 }}>
+                                <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.1)" }} />
+                                <svg width="6" height="6" viewBox="0 0 6 6" fill="none" style={{ flexShrink: 0 }}>
+                                  <path d="M0 0.5L4 3L0 5.5" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
+                                </svg>
+                              </div>
+                            )}
+                          </div>
+                          {/* Content */}
                           <p style={{ fontSize: 11, color: "rgb(236, 232, 225)", fontWeight: 400, margin: "0 0 3px 0", lineHeight: 1.3 }}>{piece.title}</p>
                           <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.3, margin: "0 0 5px 0", fontWeight: 300 }}>{piece.desc}</p>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
