@@ -2405,17 +2405,14 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             padding: "8px 10px 8px",
                             borderRadius: 5,
                             cursor: "pointer",
-                            background: isActive ? "rgb(37, 37, 37)" : "transparent",
-                            border: isActive ? "1px solid rgba(200,122,74,0.25)" : "1px solid transparent",
-                            transition: "background 0.15s, border-color 0.15s",
+                            background: "transparent",
+                            border: "1px solid transparent",
                           }}
                           onMouseEnter={e => {
-                            if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.03)";
                             const ring = e.currentTarget.querySelector("[data-ring]") as HTMLElement;
                             if (ring && !isActive) ring.style.background = "rgba(255,255,255,0.08)";
                           }}
                           onMouseLeave={e => {
-                            if (!isActive) e.currentTarget.style.background = "transparent";
                             const ring = e.currentTarget.querySelector("[data-ring]") as HTMLElement;
                             if (ring && !isActive) ring.style.background = "transparent";
                           }}
