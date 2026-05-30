@@ -2393,7 +2393,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 {/* Architecture pieces — horizontal connected flow with rings */}
                 <div style={{ padding: "12px 15px 8px", overflowX: "auto" }}>
                   {/* Ring + arrow row */}
-                  <div style={{ display: "flex", alignItems: "center", marginBottom: 10, minWidth: "fit-content" }}>
+                  <div style={{ display: "flex", alignItems: "center", marginBottom: 6, minWidth: "fit-content" }}>
                     {ARCH_PIECES.map((piece, pi) => {
                       const isActive = selectedArchPiece === piece.id;
                       const ringColor = isActive ? "#c87a4a" : "rgba(255,255,255,0.15)";
@@ -2402,25 +2402,31 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         <React.Fragment key={piece.id}>
                           <div
                             onClick={() => setSelectedArchPiece(selectedArchPiece === piece.id ? null : piece.id)}
-                            style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 130, cursor: "pointer", flexShrink: 0 }}
+                            style={{ display: "flex", alignItems: "center", width: 130, cursor: "pointer", flexShrink: 0, paddingLeft: 10 }}
                           >
                             {/* Ring with number */}
                             <div style={{
-                              width: 28, height: 28, borderRadius: "50%",
+                              width: 20, height: 20, borderRadius: "50%",
                               border: `1.5px solid ${ringColor}`,
                               display: "flex", alignItems: "center", justifyContent: "center",
                               transition: "border-color 0.15s",
                               background: isActive ? "rgba(200,122,74,0.08)" : "transparent",
+                              flexShrink: 0,
                             }}>
-                              <span style={{ fontSize: 10, color: numColor2, fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{pi + 1}</span>
+                              <span style={{ fontSize: 8, color: numColor2, fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{pi + 1}</span>
                             </div>
+                            {/* Arrow extending from ring to edge of card */}
+                            {pi < ARCH_PIECES.length - 1 && (
+                              <div style={{ flex: 1, display: "flex", alignItems: "center", marginLeft: 4 }}>
+                                <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.1)" }} />
+                              </div>
+                            )}
                           </div>
-                          {/* Arrow line between rings */}
+                          {/* Arrow head between cards */}
                           {pi < ARCH_PIECES.length - 1 && (
-                            <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", margin: "0 -14px" }}>
-                              <svg width="28" height="8" viewBox="0 0 28 8" fill="none">
-                                <line x1="0" y1="4" x2="22" y2="4" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-                                <path d="M20 1L24 4L20 7" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
+                            <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", margin: "0 -1px" }}>
+                              <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                                <path d="M1 1L5 4L1 7" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
                               </svg>
                             </div>
                           )}
