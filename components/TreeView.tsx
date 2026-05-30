@@ -4019,6 +4019,51 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
           {/* Bottom section — content based on selected tab */}
           <div style={{ flex: 1, overflowY: "auto", padding: "12px 12px" }}>
+            {/* Stillpoint View — shown on input pages */}
+            {centerView === "tree" && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") && (() => {
+              const STILLPOINT_VIEWS: Record<string, { view: string; signalLabel: string; signalId: string }> = {
+                germanium: {
+                  view: "Germanium's real bottleneck is in its conversion to GeCl₄ before it can be used to make fiber. There's only one company in the west that has the capacity and capability to produce it and it controls one of the only feedstock sources of Ge available to the west.",
+                  signalLabel: "GeCl₄ Chokepoint Signal Brief",
+                  signalId: "germanium_chokepoint",
+                },
+                fiber: {
+                  view: "Fiber capacity can scale with capex — but it's gated by preform supply, which is gated by GeCl₄, which is gated by germanium. The chain's weakest link isn't fiber itself, it's three layers upstream.",
+                  signalLabel: "GeCl₄ Chokepoint Signal Brief",
+                  signalId: "germanium_chokepoint",
+                },
+                gallium: {
+                  view: "Gallium supply is structurally locked to aluminum industry decisions. Western refiners have no primary feedstock independence — every path runs through Chinese alumina plants.",
+                  signalLabel: "",
+                  signalId: "",
+                },
+              };
+              const sv = STILLPOINT_VIEWS[lastEntry.id];
+              if (!sv) return null;
+              const svAccent = templateAccent ?? "#706a60";
+              return (
+                <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px", marginBottom: 10 }}>
+                  <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Stillpoint View</p>
+                  <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{sv.view}</p>
+                  {sv.signalLabel && (
+                    <span
+                      onClick={() => {
+                        setPath([{ type: "vertical", id: "ai", name: "AI Infrastructure" }]);
+                        setAnimKey(k => k + 1);
+                        setSelectedFeaturedChain(sv.signalId);
+                        setSelectedTreeNode("Germanium");
+                        setRightTab("summary");
+                      }}
+                      style={{ fontSize: 10, color: svAccent, cursor: "pointer", transition: "opacity 0.15s", display: "inline-block", marginTop: 8 }}
+                      onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+                      onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                    >
+                      {sv.signalLabel} →
+                    </span>
+                  )}
+                </div>
+              );
+            })()}
             {rightTab === "layers" && (() => {
               let layerCards: { label: string; content: string; whyHard: string; stat: string; statLabel: string }[] = [];
               const accent = templateAccent ?? "#706a60";
