@@ -1717,6 +1717,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
   const [opportunityLayerFilter, setOpportunityLayerFilter] = useState<string | null>(null);
   const [selectedOpportunityBrief, setSelectedOpportunityBrief] = useState<string | null>(null);
+  const [layersExpanded, setLayersExpanded] = useState(false);
 
   // Featured chains data
   type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; highlight_display_index?: number; navigate_path: string[] };
@@ -3588,12 +3589,25 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const accentFaded = accent.startsWith("#") ? accent + "99" : accent.replace(")", ", 0.6)").replace("rgb(", "rgba(");
               return (
                 <div style={{ marginBottom: 12, background: "rgb(27, 27, 27)", borderRadius: 5, padding: "10px 16px" }}>
-                  <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Layers</p>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Layers</p>
+                    <span
+                      onClick={() => setLayersExpanded(!layersExpanded)}
+                      style={{ fontSize: 9, color: "#c87a4a", cursor: "pointer", transition: "color 0.15s", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4 }}
+                      onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+                      onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+                    >
+                      {layersExpanded ? "Collapse" : "Expand"}
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ transform: layersExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                        <path d="M2 4L5 7L8 4" />
+                      </svg>
+                    </span>
+                  </div>
                   <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 0 8px 0" }} />
                   <div style={{ display: "flex", gap: 0 }}>
                     {flow.steps.map((step, si) => (
                       <div key={step.label} style={{ flex: 1, padding: "4px 12px 4px 0" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: layersExpanded ? 4 : 0 }}>
                           <div style={{ width: 16, height: 16, borderRadius: "50%", border: `1.5px solid ${accent}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                             <span style={{ fontSize: 7, color: accent, fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{si + 1}</span>
                           </div>
@@ -3608,9 +3622,13 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             </div>
                           )}
                         </div>
-                        <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 0 0" }}>{step.desc}</p>
-                        <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "6px 0" }} />
-                        <p style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.55)", lineHeight: 1.4, margin: 0, fontWeight: 500 }}>{step.context}</p>
+                        {layersExpanded && (
+                          <>
+                            <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 0 0" }}>{step.desc}</p>
+                            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "6px 0" }} />
+                            <p style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.55)", lineHeight: 1.4, margin: 0, fontWeight: 500 }}>{step.context}</p>
+                          </>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -3621,7 +3639,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
           {/* Supply tree area — fixed height normally, flex when investment ideas */}
           <div style={{
-            ...((activeTab === "investment-ideas" || activeTab === "analysis" || (currentVertical?.id === "ai" && currentLevel === "subsystems")) ? { flex: 1, minHeight: 0 } : { height: 450 }),
+            flex: 1, minHeight: 0,
             overflowY: "auto", overflowX: "hidden",
             padding: "0 30px",
           }}>
@@ -3659,7 +3677,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               style={{
                 animation: "containerOpen 350ms ease-out forwards",
                 position: "relative",
-                paddingBottom: 16,
+                paddingBottom: 0,
               }}
             >
               {activeTab === "supply-tree" && (
@@ -3957,15 +3975,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           display: "flex", flexDirection: "column",
           overflow: "hidden",
         }}>
-          {/* Top section — price chart (tree) or geo summary / node detail (globe) + tabs */}
-          <div style={{ flexShrink: 0, height: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 105 : 172, padding: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? "8px 12px 0" : "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+          {/* Top section — geo summary / node detail (globe) + tabs */}
+          <div style={{ flexShrink: 0, height: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 105 : 40, padding: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? "8px 12px 0" : "16px 12px 0", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
             {centerView === "tree" && (
-              <>
-                {lastEntry && INPUT_PRICE_HISTORY[lastEntry.id] && (
-                  <PriceChart inputId={lastEntry.id} accent={templateAccent ?? "#706a60"} name={templateTitle} />
-                )}
-                {!lastEntry || !INPUT_PRICE_HISTORY[lastEntry.id] ? <div style={{ height: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 105 : 130 }} /> : null}
-              </>
+              <div style={{ height: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 105 : 20 }} />
             )}
             {centerView === "globe" && (() => {
               // If a node is selected, show its detail card from universal data
@@ -4452,8 +4465,55 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
                 const divider = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
 
+                // Market price data
+                const priceKeyMap: Record<string, string> = { "Germanium": "germanium", "Gallium": "gallium", "Fiber Optic Cable": "fiber" };
+                const priceKey = priceKeyMap[nodeId];
+                const priceData = priceKey ? INPUT_PRICE_HISTORY[priceKey] : null;
+                const accentForGap = templateAccent ?? "#c87a4a";
+
                 return (
                   <div style={{ background: cardBg, borderRadius: 6, padding: "12px 12px" }}>
+
+                    {/* Market Price */}
+                    {priceData && (
+                      <>
+                        <p style={sectionTitle}>Market Price</p>
+                        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
+                          <div>
+                            <span style={{ fontSize: 16, fontWeight: 600, color: warmWhite, fontFamily: "'Geist Mono', monospace" }}>{priceData.currentPrice}</span>
+                            <span style={{ fontSize: 8, color: "#555", marginLeft: 4, fontFamily: "'Geist Mono', monospace" }}>{priceData.unit}</span>
+                          </div>
+                          <span style={{ fontSize: 10, color: accentForGap, fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>{priceData.change12m}</span>
+                        </div>
+                        {/* Sparkline */}
+                        {(() => {
+                          const W = 200, H = 35, padY = 4;
+                          const min = Math.min(...priceData.points);
+                          const max = Math.max(...priceData.points);
+                          const range = max - min || 1;
+                          const pts = priceData.points.map((v, i) => ({
+                            x: (i / (priceData.points.length - 1)) * W,
+                            y: padY + (1 - (v - min) / range) * (H - padY * 2),
+                          }));
+                          const linePath = pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x},${p.y}`).join(" ");
+                          const areaPath = linePath + ` L ${pts[pts.length - 1].x},${H} L ${pts[0].x},${H} Z`;
+                          return (
+                            <svg width="100%" height={H} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{ display: "block" }}>
+                              <defs>
+                                <linearGradient id="rpPriceGrad" x1="0" y1="0" x2="0" y2="1">
+                                  <stop offset="0%" stopColor={accentForGap} stopOpacity="0.2" />
+                                  <stop offset="100%" stopColor={accentForGap} stopOpacity="0" />
+                                </linearGradient>
+                              </defs>
+                              <path d={areaPath} fill="url(#rpPriceGrad)" />
+                              <path d={linePath} fill="none" stroke={accentForGap} strokeWidth="1.5" />
+                              <circle cx={pts[pts.length - 1].x} cy={pts[pts.length - 1].y} r="2" fill={accentForGap} />
+                            </svg>
+                          );
+                        })()}
+                        {divider}
+                      </>
+                    )}
 
                     {/* Why It Matters */}
                     <p style={sectionTitle}>Why It Matters</p>
@@ -4521,8 +4581,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       </tbody>
                     </table>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: 6 }}>
-                      <p style={{ ...labelStyle, margin: 0 }}>GAP</p>
-                      <p style={{ fontSize: 11, color: "#c87a4a", fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.gap}</p>
+                      <p style={{ fontSize: 10, color: accentForGap, margin: 0, fontWeight: 500 }}>Gap</p>
+                      <p style={{ fontSize: 11, color: accentForGap, fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{data.gap}</p>
                     </div>
 
                     {divider}
