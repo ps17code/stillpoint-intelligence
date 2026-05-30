@@ -3564,29 +3564,32 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const isInputPage = lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component");
               if (!isInputPage) return null;
               const accent = templateAccent ?? "#706a60";
-              type LayerStep = { label: string; desc: string; metricValue: string; metricLabel: string; metricContext: string };
+              type LayerStep = { label: string; value: string; desc: string; context: string };
               const LAYER_FLOWS: Record<string, { steps: LayerStep[] }> = {
                 germanium: { steps: [
-                  { label: "Host Ore Extraction", desc: "Recovered as byproduct from zinc ores, coal ash, and smelting residues.", metricValue: "~140t/yr", metricLabel: "Primary Ge extracted", metricContext: "Only 8 deposits globally with high enough germanium concentration to justify extraction circuits." },
-                  { label: "High-Purity Refining", desc: "Processed into purified germanium metal or chemical feedstock.", metricValue: "~230t/yr", metricLabel: "Refined germanium", metricContext: "Six refineries worldwide. Only one in the west — Umicore in Belgium — produces fiber-grade GeCl₄." },
-                  { label: "End-Product Conversion", desc: "Converted into forms used in fiber optics, IR optics, solar cells, and semiconductors.", metricValue: "5 markets", metricLabel: "Competing end uses", metricContext: "Fiber optics, IR defense optics, satellite solar, SiGe chips, and catalysts all draw from the same fixed supply." },
+                  { label: "Host Ore Extraction", value: "4,000t Ge Reserves", desc: "Recovered as byproduct from zinc ores, coal ash, and smelting residues.", context: "Only 8 deposits globally with high enough germanium concentration to justify extraction circuits. China operates ~83% of primary capacity." },
+                  { label: "High-Purity Refining", value: "230t/yr Ge Refined", desc: "Processed into purified germanium metal or chemical feedstock.", context: "Six refineries worldwide. Only one in the west — Umicore in Belgium — produces fiber-grade GeCl₄ at commercial scale." },
+                  { label: "End-Product Conversion", value: "286t/yr Demand", desc: "Converted into forms used in fiber optics, IR optics, solar cells, and semiconductors.", context: "Fiber optics, IR defense optics, satellite solar, SiGe chips, and catalysts all draw from the same fixed supply." },
                 ]},
                 gallium: { steps: [
-                  { label: "Byproduct Source", desc: "Extracted as a trace element during alumina refining from bauxite.", metricValue: "~50 ppm", metricLabel: "Gallium in bauxite", metricContext: "Gallium content is uniform across all bauxite. Output is set by aluminum demand, not gallium demand." },
-                  { label: "Primary Production", desc: "Ion-exchange circuits capture gallium from alumina process streams.", metricValue: "~600t/yr", metricLabel: "Primary Ga extracted", metricContext: "Only ~20 of the world's alumina refineries have gallium recovery circuits installed — almost all in China." },
-                  { label: "High-Purity Refining", desc: "Purified to 99.9999%+ via zone refining and electrolytic processes.", metricValue: "~320t/yr", metricLabel: "Refined high-purity Ga", metricContext: "Each additional nine of purity is exponentially harder. Western refiners depend on Chinese primary feedstock." },
+                  { label: "Byproduct Source", value: "50 ppm in Bauxite", desc: "Extracted as a trace element during alumina refining from bauxite.", context: "Gallium content is uniform across all bauxite. Output is set by aluminum demand, not gallium demand." },
+                  { label: "Primary Production", value: "600t/yr Extracted", desc: "Ion-exchange circuits capture gallium from alumina process streams.", context: "Only ~20 of the world's alumina refineries have gallium recovery circuits installed — almost all in China." },
+                  { label: "High-Purity Refining", value: "320t/yr Refined", desc: "Purified to 99.9999%+ via zone refining and electrolytic processes.", context: "Each additional nine of purity is exponentially harder. Western refiners depend on Chinese primary feedstock." },
                 ]},
                 fiber: { steps: [
-                  { label: "Chemical Conversion", desc: "Germanium converted to GeCl₄ at 8N purity. Silica to SiCl₄. Helium purified.", metricValue: "~220t/yr", metricLabel: "Fiber-grade GeCl₄", metricContext: "Only 6 facilities globally produce fiber-grade GeCl₄. Helium is a non-renewable byproduct with no substitute." },
-                  { label: "Preform Manufacturing", desc: "GeCl₄ deposited layer by layer inside silica tubes to build glass preform rods.", metricValue: "~24kt/yr", metricLabel: "Preform output", metricContext: "One equipment supplier — Rosendahl Nextrom — with 18-24 month order backlogs for new deposition lines." },
-                  { label: "Fiber Draw & Assembly", desc: "Preforms drawn into strands, coated, bundled, and sheathed into cable.", metricValue: "~720M km", metricLabel: "Annual fiber output", metricContext: "Drawing capacity is not the bottleneck — preform supply is. All major lines running at full utilization." },
+                  { label: "Chemical Conversion", value: "220t/yr GeCl₄", desc: "Germanium converted to GeCl₄ at 8N purity. Silica to SiCl₄. Helium purified.", context: "Only 6 facilities globally produce fiber-grade GeCl₄. Helium is a non-renewable byproduct with no substitute." },
+                  { label: "Preform Manufacturing", value: "24kt/yr Preform", desc: "GeCl₄ deposited layer by layer inside silica tubes to build glass preform rods.", context: "One equipment supplier — Rosendahl Nextrom — with 18-24 month order backlogs for new deposition lines." },
+                  { label: "Fiber Draw & Assembly", value: "720M km/yr Fiber", desc: "Preforms drawn into strands, coated, bundled, and sheathed into cable.", context: "Drawing capacity is not the bottleneck — preform supply is. All major lines running at full utilization." },
                 ]},
               };
               const flow = LAYER_FLOWS[lastEntry.id];
               if (!flow) return null;
+              // Compute a faded version of the accent color
+              const accentFaded = accent.startsWith("#") ? accent + "99" : accent.replace(")", ", 0.6)").replace("rgb(", "rgba(");
               return (
-                <div style={{ marginBottom: 12 }}>
+                <div style={{ marginBottom: 12, background: "rgb(27, 27, 27)", borderRadius: 5, padding: "10px 16px" }}>
                   <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Layers</p>
+                  <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 0 8px 0" }} />
                   <div style={{ display: "flex", gap: 0 }}>
                     {flow.steps.map((step, si) => (
                       <div key={step.label} style={{ flex: 1, padding: "4px 12px 4px 0" }}>
@@ -3594,7 +3597,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           <div style={{ width: 16, height: 16, borderRadius: "50%", border: `1.5px solid ${accent}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                             <span style={{ fontSize: 7, color: accent, fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{si + 1}</span>
                           </div>
-                          <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{step.label}</span>
+                          <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{step.label}:</span>
+                          <span style={{ fontSize: 11, color: accent, fontWeight: 500, marginLeft: 4 }}>{step.value}</span>
                           {si < flow.steps.length - 1 && (
                             <div style={{ flex: 1, display: "flex", alignItems: "center", marginLeft: 4 }}>
                               <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
@@ -3606,13 +3610,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         </div>
                         <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "0 0 0 0" }}>{step.desc}</p>
                         <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "6px 0" }} />
-                        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 10 }}>
-                          <div>
-                            <p style={{ fontSize: 14, color: warmWhite, fontWeight: 600, margin: 0, fontFamily: "'Geist Mono', monospace" }}>{step.metricValue}</p>
-                            <p style={{ fontSize: 7, color: "#555", margin: "1px 0 0 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.02em" }}>{step.metricLabel}</p>
-                          </div>
-                          <p style={{ fontSize: 11, color: "rgb(140, 132, 116)", lineHeight: 1.4, margin: 0 }}>{step.metricContext}</p>
-                        </div>
+                        <p style={{ fontSize: 11, color: accentFaded, lineHeight: 1.4, margin: 0 }}>{step.context}</p>
                       </div>
                     ))}
                   </div>
