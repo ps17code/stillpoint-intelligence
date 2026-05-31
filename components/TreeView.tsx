@@ -1877,6 +1877,118 @@ function AIOverviewTree({ onNodeClick }: { onNodeClick: (id: string, type: "raw-
   );
 }
 
+/* ── Opportunities Panel Component ── */
+function OpportunitiesPanel({ inputId, accent }: { inputId: string; accent: string }) {
+  const [filter, setFilter] = useState<string | null>(null);
+  const [briefId, setBriefId] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
+
+  const wtmi = INPUT_WTMI[inputId];
+  if (!wtmi) return null;
+
+  const warmW = "#ece8e1";
+  const FILTERS = wtmi.layers.map(l => l.label);
+  const filteredIdeas = filter
+    ? wtmi.layers.filter(l => l.label === filter).flatMap(l => l.ideas)
+    : wtmi.layers.flatMap(l => l.ideas);
+
+  const cleanTicker = (t?: string) => {
+    if (!t) return "Private";
+    return t.split("·")[0].trim() || "Private";
+  };
+
+  const getIdeaLayer = (ideaId: string): string | null => {
+    for (const l of wtmi.layers) { if (l.ideas.some(i => i.id === ideaId)) return l.label; }
+    return null;
+  };
+
+  const selectedBrief = briefId ? wtmi.briefs[briefId] : null;
+  const thS = { textAlign: "left" as const, padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500 as const, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" as const };
+
+  return (
+    <div style={{ margin: "10px 30px 20px", background: "rgb(27, 27, 27)", border: "0.5px solid rgb(36, 36, 36)", borderRadius: 5, padding: "14px 16px", ...(expanded ? { flex: 1, minHeight: 0, overflow: "auto" } : {}) }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <p style={{ fontSize: 10, color: warmW, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Opportunities</p>
+        <span
+          onClick={() => setExpanded(!expanded)}
+          style={{ fontSize: 9, color: accent, cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s", animation: "fadeInDown 0.3s ease" }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+        >
+          {expanded ? "Collapse" : "Expand"}
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ transform: expanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+            <path d="M2 4L5 7L8 4" />
+          </svg>
+        </span>
+      </div>
+
+      <div style={{ maxHeight: expanded ? 2000 : 0, opacity: expanded ? 1 : 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
+        <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />
+
+        {/* Filter pills */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 12 }}>
+          <span onClick={() => { setFilter(null); setBriefId(null); }} style={{ fontSize: 8, padding: "3px 8px", borderRadius: 3, cursor: "pointer", background: !filter ? "rgba(200,122,74,0.2)" : "rgba(255,255,255,0.04)", color: !filter ? "#c87a4a" : "rgb(160, 152, 136)", border: !filter ? "1px solid rgba(200,122,74,0.3)" : "1px solid transparent", fontFamily: "'Geist Mono', monospace", transition: "all 0.15s" }}>All</span>
+          {FILTERS.map(label => (
+            <span key={label} onClick={() => { setFilter(filter === label ? null : label); setBriefId(null); }} style={{ fontSize: 8, padding: "3px 8px", borderRadius: 3, cursor: "pointer", background: filter === label ? "rgba(200,122,74,0.2)" : "rgba(255,255,255,0.04)", color: filter === label ? "#c87a4a" : "rgb(160, 152, 136)", border: filter === label ? "1px solid rgba(200,122,74,0.3)" : "1px solid transparent", fontFamily: "'Geist Mono', monospace", transition: "all 0.15s" }}>{label}</span>
+          ))}
+        </div>
+
+        {/* Table */}
+        <div style={{ border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
+            <colgroup><col style={{ width: "22%" }} /><col style={{ width: "16%" }} /><col style={{ width: "62%" }} /></colgroup>
+            <thead><tr style={{ background: "rgb(38, 38, 38)" }}><th style={thS}>Company</th><th style={thS}>Category</th><th style={thS}>Thesis</th></tr></thead>
+          </table>
+          <div style={{ maxHeight: 260, overflowY: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
+              <colgroup><col style={{ width: "22%" }} /><col style={{ width: "16%" }} /><col style={{ width: "62%" }} /></colgroup>
+              <tbody>
+                {filteredIdeas.map((idea, ii) => (
+                  <tr key={idea.id + ii} onClick={() => { const layer = getIdeaLayer(idea.id); if (layer) setFilter(layer); setBriefId(idea.id); }} style={{ borderTop: "1px solid rgba(255,255,255,0.04)", cursor: "pointer", transition: "background 0.15s", background: briefId === idea.id ? "rgba(200,122,74,0.08)" : "transparent" }} onMouseEnter={e => { if (briefId !== idea.id) e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }} onMouseLeave={e => { if (briefId !== idea.id) e.currentTarget.style.background = "transparent"; }}>
+                    <td style={{ padding: "8px 10px", fontSize: 11, verticalAlign: "top" }}><span style={{ color: warmW, fontWeight: 500 }}>{idea.name}</span><span style={{ fontSize: 8, color: "rgb(120, 112, 100)", marginLeft: 6, fontFamily: "'Geist Mono', monospace" }}>({cleanTicker(idea.ticker)})</span></td>
+                    <td style={{ padding: "8px 10px", fontSize: 9, color: "#c87a4a", verticalAlign: "top", fontFamily: "'Geist Mono', monospace" }}>{idea.category}</td>
+                    <td style={{ padding: "8px 10px", fontSize: 10, color: "rgb(160, 152, 136)", verticalAlign: "top", lineHeight: 1.5 }}>{idea.line1}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Brief */}
+        {selectedBrief && (
+          <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid rgba(255,255,255,0.06)", animation: "fadeSlideDown 0.3s ease-out" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, color: warmW, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{selectedBrief.name}</h3>
+              <span style={{ fontSize: 10, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{selectedBrief.ticker}</span>
+            </div>
+            <p style={{ fontSize: 10, color: "#c87a4a", margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}>{selectedBrief.category}</p>
+            <div style={{ display: "flex", gap: 16, marginBottom: 16, paddingBottom: 12, borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+              {selectedBrief.metrics.map(m => (
+                <div key={m.label}>
+                  <p style={{ fontSize: 9, color: "#555", margin: "0 0 2px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>{m.label}</p>
+                  <p style={{ fontSize: 12, color: warmW, margin: 0, fontWeight: 500 }}>{m.value}</p>
+                </div>
+              ))}
+            </div>
+            {selectedBrief.sections.map((sec, si) => (
+              <div key={si} style={{ marginBottom: 16 }}>
+                <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", fontWeight: 500, margin: "0 0 8px 0" }}>{sec.label}</p>
+                {sec.items.map((item, ii) => (
+                  <div key={ii} style={{ marginBottom: 8 }}>
+                    {item.title && <p style={{ fontSize: 12, color: warmW, fontWeight: 500, margin: "0 0 3px 0" }}>{item.title}</p>}
+                    <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.6, margin: 0 }}>{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function TreeView({ initialPath, onGoHome }: { initialPath?: PathEntry[]; onGoHome?: () => void } = {}) {
   /* ── unified path state ── */
   const [path, setPath] = useState<PathEntry[]>(() => {
@@ -4180,12 +4292,16 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           </div>
 
           {/* Hint below supply tree panel — germanium only, when not expanded */}
-          {activeTab === "supply-tree" && lastEntry?.id === "germanium" && !geTreeExpanded && !oppExpanded && (
+          {activeTab === "supply-tree" && lastEntry?.id === "germanium" && !geTreeExpanded && (
             <p style={{ fontSize: 9, color: "#555", margin: "10px 30px 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
               Click a node to expand
             </p>
           )}
 
+          {/* Opportunities panel */}
+          {activeTab === "supply-tree" && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") && (
+            <OpportunitiesPanel inputId={lastEntry.id === "fiber" ? "fiber" : lastEntry.id} accent={templateAccent ?? "#706a60"} />
+          )}
 
           {/* Bottom section — key takeaways (hidden) */}
           <div style={{
