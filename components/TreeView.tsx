@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useCallback, useRef } from "react";
+import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import HorizontalTree from "@/components/HorizontalTree";
 import AISupplyTree from "@/components/AISupplyTree";
 import ChainAnalysis, { CHAIN_TAKEAWAYS, CHAIN_KEY_PLAYERS } from "@/components/ChainAnalysis";
@@ -1262,7 +1262,7 @@ function buildInlineNodes(chain: ChainDefinition): Record<string, { quantity_pil
   return map;
 }
 
-function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[]; onDownstreamClick?: (id: string) => void }) {
+function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExpansionChange }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[]; onDownstreamClick?: (id: string) => void; onExpansionChange?: (expanded: boolean) => void }) {
   const [layerZoom, setLayerZoom] = useState<Record<string, number>>({});
   const [downstreamExpanded, setDownstreamExpanded] = useState(false);
   const fullChain = chainDefs.germanium;
@@ -1377,7 +1377,8 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
     onNodeClick(name);
   };
 
-  const anyExpanded = Object.values(layerZoom).some(v => v > 0);
+  const anyExpanded = Object.values(layerZoom).some(v => v > 0) || downstreamExpanded;
+  useEffect(() => { onExpansionChange?.(anyExpanded); }, [anyExpanded, onExpansionChange]);
   const allFull = ["deposits", "hostOperations", "refiners", "supplyAggregates"].every(k => (layerZoom[k] ?? 0) >= 2 && !expandedSubGroup[k]);
 
   // Group node names for distinct styling
@@ -1414,11 +1415,6 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
           }
         }}
       />
-      {!anyExpanded && (
-        <p style={{ fontSize: 9, color: "#555", margin: "10px 0 0 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
-          Click a node to expand
-        </p>
-      )}
       {anyExpanded && (
         <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 15 }}>
           <span
@@ -1893,6 +1889,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [opportunityLayerFilter, setOpportunityLayerFilter] = useState<string | null>(null);
   const [selectedOpportunityBrief, setSelectedOpportunityBrief] = useState<string | null>(null);
   const [layersExpanded, setLayersExpanded] = useState(false);
+  const [geTreeExpanded, setGeTreeExpanded] = useState(false);
 
   // Featured chains data
   type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; highlight_display_index?: number; navigate_path: string[] };
@@ -3226,7 +3223,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             };
             const target = dsNav[id];
             if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); }
-          }} />
+          }} onExpansionChange={setGeTreeExpanded} />
         </>
       );
     }
@@ -4053,6 +4050,12 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             </div>
           </div>
 
+          {/* Hint below supply tree panel — germanium only, when not expanded */}
+          {activeTab === "supply-tree" && lastEntry?.id === "germanium" && !geTreeExpanded && (
+            <p style={{ fontSize: 9, color: "#555", margin: "10px 30px 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
+              Click a node to expand
+            </p>
+          )}
 
           {/* Bottom section — key takeaways (hidden) */}
           <div style={{

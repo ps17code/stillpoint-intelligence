@@ -449,18 +449,22 @@ export default function HorizontalTree({
             // For downstream items, render a simpler pill card
             if (col.key === "downstream") {
               const dsItem = downstream?.find((d) => d.name === node.name);
-              const dsClickable = !!onDownstreamClick && !!dsItem;
+              const isGroupDs = groupNodes?.has(node.name) || node.name.startsWith("Downstream Demand");
+              const dsClickable = isGroupDs ? !!onNodeClick : (!!onDownstreamClick && !!dsItem);
               return (
                 <div
                   key={node.name}
                   ref={(el) => {
                     if (el) cardRefs.current.set(node.refKey, el);
                   }}
-                  onClick={() => { if (dsClickable && dsItem) onDownstreamClick(dsItem.id); }}
+                  onClick={() => {
+                    if (isGroupDs && onNodeClick) { onNodeClick(node.name); }
+                    else if (dsClickable && dsItem && onDownstreamClick) { onDownstreamClick(dsItem.id); }
+                  }}
                   style={{
                     padding: "5px 8px",
-                    background: "rgb(36, 32, 29)",
-                    border: "1px solid rgb(45, 41, 39)",
+                    background: isGroupDs ? "rgb(42, 38, 34)" : "rgb(36, 32, 29)",
+                    border: isGroupDs ? "1px solid rgb(60, 55, 48)" : "1px solid rgb(45, 41, 39)",
                     borderRadius: 4,
                     width: "100%",
                     boxSizing: "border-box",
@@ -468,14 +472,14 @@ export default function HorizontalTree({
                     transition: "border-color 0.15s",
                   }}
                   onMouseEnter={e => { if (dsClickable) e.currentTarget.style.borderColor = "rgb(60, 56, 52)"; }}
-                  onMouseLeave={e => { if (dsClickable) e.currentTarget.style.borderColor = "rgb(45, 41, 39)"; }}
+                  onMouseLeave={e => { if (dsClickable) e.currentTarget.style.borderColor = isGroupDs ? "rgb(60, 55, 48)" : "rgb(45, 41, 39)"; }}
                 >
                   <p
                     style={{
                       fontSize: 10,
                       fontWeight: 600,
                       color: "#ece8e1",
-                      margin: 0,
+                      margin: "0 0 4px 0",
                       lineHeight: 1.2,
                       fontFamily: "'EB Garamond', Georgia, serif",
                       whiteSpace: "nowrap",
@@ -486,9 +490,9 @@ export default function HorizontalTree({
                   {dsItem?.pill && (
                     <p
                       style={{
-                        fontSize: 6,
-                        color: "#555",
-                        margin: "2px 0 0 0",
+                        fontSize: 8,
+                        color: "rgba(255, 255, 255, 0.55)",
+                        margin: 0,
                         fontFamily: "'Geist Mono', monospace",
                       }}
                     >
@@ -547,7 +551,7 @@ export default function HorizontalTree({
       >
         {lines.map((line, i) => {
           const lineHighlighted = activeNode != null && (line.fromName === activeNode || line.toName === activeNode);
-          const lineDimmed = activeNode != null && !lineHighlighted;
+          const lineDimmed = false;
           return (
             <g key={i} style={{ opacity: lineDimmed ? 0.15 : 1, transition: "opacity 0.15s" }}>
               <circle
