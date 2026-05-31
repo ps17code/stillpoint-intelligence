@@ -4125,50 +4125,40 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     ))}
                   </div>
                   </div>
-                  {/* Summary row — supply gap, price, takeaway */}
+                  {/* Key Takeaway row */}
                   {layersExpanded && !oppExpanded && lastEntry?.id === "germanium" && (() => {
                     const priceData = INPUT_PRICE_HISTORY.germanium;
                     return (
-                      <div style={{ display: "grid", gridTemplateColumns: "0.8fr 1fr 1.2fr", gap: 10, marginTop: 10, background: "rgb(34, 34, 34)", borderRadius: 5, padding: "10px 12px", border: "0.5px solid rgb(42, 42, 42)" }}>
+                      <div style={{ display: "flex", alignItems: "center", marginTop: 10, background: "rgb(34, 34, 34)", borderRadius: 5, padding: "10px 0", border: "0.5px solid rgb(42, 42, 42)" }}>
+                        {/* Title */}
+                        <div style={{ padding: "0 14px", flexShrink: 0, width: 80 }}>
+                          <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500, lineHeight: 1.3 }}>Key</p>
+                          <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500, lineHeight: 1.3 }}>Takeaway</p>
+                        </div>
+                        <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
                         {/* Supply Gap */}
-                        <div>
-                          <p style={{ fontSize: 8, color: "#555", margin: "0 0 4px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Supply Gap</p>
-                          <p style={{ fontSize: 18, color: accent, fontWeight: 600, margin: "0 0 2px 0", fontFamily: "'Geist Mono', monospace" }}>~56t</p>
-                          <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", margin: 0 }}>286t demand vs 230t supply</p>
+                        <div style={{ padding: "0 14px", flexShrink: 0 }}>
+                          <p style={{ fontSize: 8, color: "#555", margin: 0, textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Supply Gap</p>
+                          <p style={{ fontSize: 12, color: warmWhite, margin: 0, fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>~56t/yr</p>
                         </div>
-                        {/* Price chart */}
-                        <div>
-                          <p style={{ fontSize: 8, color: "#555", margin: "0 0 4px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Market Price</p>
-                          <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 4 }}>
-                            <span style={{ fontSize: 14, fontWeight: 600, color: warmWhite, fontFamily: "'Geist Mono', monospace" }}>{priceData.currentPrice}</span>
-                            <span style={{ fontSize: 8, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{priceData.unit}</span>
-                            <span style={{ fontSize: 9, color: accent, fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>{priceData.change12m}</span>
-                          </div>
-                          {(() => {
-                            const W = 140, H = 24, padY = 2;
-                            const min = Math.min(...priceData.points);
-                            const max = Math.max(...priceData.points);
-                            const range = max - min || 1;
-                            const pts = priceData.points.map((v, i) => ({
-                              x: (i / (priceData.points.length - 1)) * W,
-                              y: padY + (1 - (v - min) / range) * (H - padY * 2),
-                            }));
-                            const linePath = pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x},${p.y}`).join(" ");
-                            const areaPath = linePath + ` L ${pts[pts.length - 1].x},${H} L ${pts[0].x},${H} Z`;
-                            return (
-                              <svg width="100%" height={H} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{ display: "block" }}>
-                                <defs><linearGradient id="scPriceGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={accent} stopOpacity="0.15" /><stop offset="100%" stopColor={accent} stopOpacity="0" /></linearGradient></defs>
-                                <path d={areaPath} fill="url(#scPriceGrad)" />
-                                <path d={linePath} fill="none" stroke={accent} strokeWidth="1.5" />
-                                <circle cx={pts[pts.length - 1].x} cy={pts[pts.length - 1].y} r="2" fill={accent} />
-                              </svg>
-                            );
-                          })()}
+                        <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
+                        {/* Price Signal */}
+                        <div style={{ padding: "0 14px", flexShrink: 0 }}>
+                          <p style={{ fontSize: 8, color: "#555", margin: 0, textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Price Signal</p>
+                          <p style={{ fontSize: 12, color: warmWhite, margin: 0, fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>{priceData.change12m} ({priceData.currentPrice}/{priceData.unit})</p>
                         </div>
-                        {/* Takeaway */}
-                        <div>
-                          <p style={{ fontSize: 8, color: "#555", margin: "0 0 4px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Outlook</p>
-                          <p style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.55)", lineHeight: 1.5, margin: 0, fontWeight: 500 }}>Supply gap will likely persist. New deposits and expansion projects will take 3-5 years to come online and reach scale. Refiners will remain capacity-constrained and will be the market chokepoint, capturing disproportionate value.</p>
+                        <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
+                        {/* Outlook */}
+                        <div style={{ padding: "0 14px", flex: 1, display: "flex", alignItems: "center", gap: 10 }}>
+                          <p style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.55)", lineHeight: 1.4, margin: 0, fontWeight: 500, flex: 1 }}>Supply gap will likely persist. Refiners will remain capacity-constrained and will be the market chokepoint, capturing disproportionate value.</p>
+                          <span
+                            onClick={() => { setOppExpanded(true); setLayersExpanded(false); }}
+                            style={{ fontSize: 8, color: accent, cursor: "pointer", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap", flexShrink: 0, transition: "opacity 0.15s" }}
+                            onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+                            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                          >
+                            View Opportunities →
+                          </span>
                         </div>
                       </div>
                     );
