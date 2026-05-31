@@ -2115,6 +2115,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [oppFilter, setOppFilter] = useState<string | null>(null);
   const [oppBriefId, setOppBriefId] = useState<string | null>(null);
   const [oppExpanded, setOppExpanded] = useState(false);
+  const [supplyTreeCollapsed, setSupplyTreeCollapsed] = useState(false);
   // Auto-collapse supply chain card when tree expands
   useEffect(() => {
     if (geTreeExpanded) setLayersExpanded(false);
@@ -4142,15 +4143,37 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 <>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
                   <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Tree</p>
-                  <span
-                    onClick={() => setActiveTab("map")}
-                    style={{ fontSize: 9, color: templateAccent ?? "#706a60", cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s" }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
-                  >
-                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="8" cy="8" r="6.5" /><ellipse cx="8" cy="8" rx="3" ry="6.5" /><line x1="1.5" y1="8" x2="14.5" y2="8" /></svg>
-                    View Geographic Map
-                  </span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                    <span
+                      onClick={() => setActiveTab(activeTab === "map" ? "supply-tree" : "map")}
+                      style={{ fontSize: 9, color: templateAccent ?? "#706a60", cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s" }}
+                      onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+                      onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                    >
+                      {activeTab === "map" ? (
+                        <>
+                          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><line x1="8" y1="2" x2="8" y2="14" /><line x1="8" y1="6" x2="13" y2="3" /><line x1="8" y1="10" x2="13" y2="13" /></svg>
+                          View Supply Tree
+                        </>
+                      ) : (
+                        <>
+                          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="8" cy="8" r="6.5" /><ellipse cx="8" cy="8" rx="3" ry="6.5" /><line x1="1.5" y1="8" x2="14.5" y2="8" /></svg>
+                          View Geographic Map
+                        </>
+                      )}
+                    </span>
+                    <span
+                      onClick={() => setSupplyTreeCollapsed(!supplyTreeCollapsed)}
+                      style={{ fontSize: 9, color: templateAccent ?? "#706a60", cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s" }}
+                      onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+                      onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                    >
+                      {supplyTreeCollapsed ? "Expand" : "Collapse"}
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ transform: supplyTreeCollapsed ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                        <path d="M2 4L5 7L8 4" />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
                 <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 0 10px 0" }} />
                 </>
@@ -4161,7 +4184,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 animation: "containerOpen 350ms ease-out forwards",
                 position: "relative",
                 paddingBottom: 0,
-                ...(oppExpanded ? { maxHeight: 0, opacity: 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" } : { transition: "max-height 0.3s ease, opacity 0.2s ease" }),
+                ...((oppExpanded || supplyTreeCollapsed) ? { maxHeight: 0, opacity: 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" } : { transition: "max-height 0.3s ease, opacity 0.2s ease" }),
               }}
             >
               {activeTab === "supply-tree" && (
