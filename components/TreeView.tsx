@@ -3933,7 +3933,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           <div style={{
             minHeight: 0,
             overflowY: "auto", overflowX: "hidden",
-            ...(oppExpanded && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") ? { flex: 0, maxHeight: 0, opacity: 0, overflow: "hidden" as const, padding: 0, transition: "all 0.3s ease" } : { flex: 1, padding: "0 30px 20px" }),
+            padding: "0 30px 20px",
+            ...(oppExpanded && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") ? { display: "none" } : { flex: 1 }),
           }}>
             <div style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "0 16px 14px", overflow: "hidden", ...(currentVertical?.id === "ai" && currentLevel === "subsystems" ? { background: "transparent", padding: 0 } : {}) }}>
               {/* Tabs — hidden on AI infra vertical tree */}
