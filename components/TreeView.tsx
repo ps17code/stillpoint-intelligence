@@ -4129,36 +4129,23 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   {layersExpanded && !oppExpanded && lastEntry?.id === "germanium" && (() => {
                     const priceData = INPUT_PRICE_HISTORY.germanium;
                     return (
-                      <div style={{ display: "flex", alignItems: "center", marginTop: 10, background: "rgb(34, 34, 34)", borderRadius: 5, padding: "10px 0", border: "0.5px solid rgb(42, 42, 42)" }}>
-                        {/* Title */}
-                        <div style={{ padding: "0 14px", flexShrink: 0, width: 80 }}>
-                          <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500, lineHeight: 1.3 }}>Key</p>
-                          <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500, lineHeight: 1.3 }}>Takeaway</p>
-                        </div>
-                        <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
-                        {/* Supply Gap */}
+                      <div style={{ display: "flex", alignItems: "center", marginTop: 10, background: "rgb(34, 34, 34)", borderRadius: 5, padding: "8px 0", border: "0.5px solid rgb(42, 42, 42)" }}>
                         <div style={{ padding: "0 14px", flexShrink: 0 }}>
-                          <p style={{ fontSize: 8, color: "#555", margin: 0, textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Supply Gap</p>
-                          <p style={{ fontSize: 12, color: warmWhite, margin: 0, fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>~56t/yr</p>
+                          <span style={{ fontSize: 10, color: warmWhite, fontWeight: 500 }}>Key Takeaway</span>
                         </div>
-                        <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
-                        {/* Price Signal */}
-                        <div style={{ padding: "0 14px", flexShrink: 0 }}>
-                          <p style={{ fontSize: 8, color: "#555", margin: 0, textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Price Signal</p>
-                          <p style={{ fontSize: 12, color: warmWhite, margin: 0, fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>{priceData.change12m} ({priceData.currentPrice}/{priceData.unit})</p>
+                        <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.08)", flexShrink: 0 }} />
+                        <div style={{ padding: "0 14px", flexShrink: 0, display: "flex", alignItems: "center", gap: 6 }}>
+                          <span style={{ fontSize: 10, color: "#706a60" }}>Supply Gap</span>
+                          <span style={{ fontSize: 10, color: warmWhite, fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>~56t/yr</span>
                         </div>
-                        <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
-                        {/* Outlook */}
-                        <div style={{ padding: "0 14px", flex: 1, display: "flex", alignItems: "center", gap: 10 }}>
-                          <p style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.55)", lineHeight: 1.4, margin: 0, fontWeight: 500, flex: 1 }}>Supply gap will likely persist. Refiners will remain capacity-constrained and will be the market chokepoint, capturing disproportionate value.</p>
-                          <span
-                            onClick={() => { setOppExpanded(true); setLayersExpanded(false); }}
-                            style={{ fontSize: 8, color: accent, cursor: "pointer", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap", flexShrink: 0, transition: "opacity 0.15s" }}
-                            onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
-                            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
-                          >
-                            View Opportunities →
-                          </span>
+                        <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.08)", flexShrink: 0 }} />
+                        <div style={{ padding: "0 14px", flexShrink: 0, display: "flex", alignItems: "center", gap: 6 }}>
+                          <span style={{ fontSize: 10, color: "#706a60" }}>Price Signal</span>
+                          <span style={{ fontSize: 10, color: warmWhite, fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>{priceData.change12m} ({priceData.currentPrice}/{priceData.unit})</span>
+                        </div>
+                        <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.08)", flexShrink: 0 }} />
+                        <div style={{ padding: "0 14px", flex: 1 }}>
+                          <span style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.55)", fontWeight: 500 }}>Price already elevated. Gap will likely persist 2-5 years till new supply enters. Refining is chokepoint.</span>
                         </div>
                       </div>
                     );
