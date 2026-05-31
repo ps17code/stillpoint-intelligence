@@ -1878,10 +1878,11 @@ function AIOverviewTree({ onNodeClick }: { onNodeClick: (id: string, type: "raw-
 }
 
 /* ── Opportunities Panel Component ── */
-function OpportunitiesPanel({ inputId, accent }: { inputId: string; accent: string }) {
+function OpportunitiesPanel({ inputId, accent, onExpandChange }: { inputId: string; accent: string; onExpandChange?: (expanded: boolean) => void }) {
   const [filter, setFilter] = useState<string | null>(null);
   const [briefId, setBriefId] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const toggleExpanded = () => { const next = !expanded; setExpanded(next); onExpandChange?.(next); };
 
   const wtmi = INPUT_WTMI[inputId];
   if (!wtmi) return null;
@@ -1906,11 +1907,11 @@ function OpportunitiesPanel({ inputId, accent }: { inputId: string; accent: stri
   const thS = { textAlign: "left" as const, padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500 as const, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" as const };
 
   return (
-    <div style={{ margin: "10px 30px 20px", background: "rgb(27, 27, 27)", border: "0.5px solid rgb(36, 36, 36)", borderRadius: 5, padding: "14px 16px", ...(expanded ? { flex: 1, minHeight: 0, overflow: "auto" } : {}) }}>
+    <div style={{ margin: "10px 0 20px", background: "rgb(27, 27, 27)", border: "0.5px solid rgb(36, 36, 36)", borderRadius: 5, padding: "14px 16px", ...(expanded ? { flex: 1, minHeight: 0, overflow: "auto" } : {}) }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <p style={{ fontSize: 10, color: warmW, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Opportunities</p>
         <span
-          onClick={() => setExpanded(!expanded)}
+          onClick={toggleExpanded}
           style={{ fontSize: 9, color: accent, cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s", animation: "fadeInDown 0.3s ease" }}
           onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
           onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
@@ -3945,6 +3946,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       </svg>
                     </span>
                   </div>
+                  <div style={{ maxHeight: oppExpanded ? 0 : 2000, opacity: oppExpanded ? 0 : 1, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
                     {flow.steps.map((step, si) => (
                       <div key={step.label} style={{ background: "rgb(34, 34, 34)", borderRadius: 5, padding: "10px 12px", border: "0.5px solid rgb(42, 42, 42)" }}>
@@ -4036,6 +4038,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       </div>
                     ))}
                   </div>
+                  </div>
                 </div>
               );
             })()}
@@ -4083,6 +4086,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 animation: "containerOpen 350ms ease-out forwards",
                 position: "relative",
                 paddingBottom: 0,
+                ...(oppExpanded ? { maxHeight: 0, opacity: 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" } : { transition: "max-height 0.3s ease, opacity 0.2s ease" }),
               }}
             >
               {activeTab === "supply-tree" && (
@@ -4300,7 +4304,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
           {/* Opportunities panel */}
           {activeTab === "supply-tree" && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") && (
-            <OpportunitiesPanel inputId={lastEntry.id === "fiber" ? "fiber" : lastEntry.id} accent={templateAccent ?? "#706a60"} />
+            <OpportunitiesPanel inputId={lastEntry.id === "fiber" ? "fiber" : lastEntry.id} accent={templateAccent ?? "#706a60"} onExpandChange={(exp) => { setOppExpanded(exp); if (exp) setLayersExpanded(false); }} />
           )}
 
           {/* Bottom section — key takeaways (hidden) */}
