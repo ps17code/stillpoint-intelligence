@@ -1312,10 +1312,44 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExp
       return { key, label: def.groupedLabel, nodes: def.groupedNodes };
     });
 
+    // Build node-to-visible-representative mapping
+    const visibleNodes = new Set(layers.flatMap(l => l.nodes));
+    const NODE_TO_GROUP: Record<string, string> = {};
+    // Map full nodes to their group representatives
+    const groupMappings: Record<string, string[]> = {
+      "Deposits (8)": fullChain.layers[0].nodes,
+      "Host Operations (7)": fullChain.layers[1].nodes,
+      "Refiners & Recyclers (7)": fullChain.layers[2].nodes,
+      "Global Supply": fullChain.layers[3].nodes,
+      ...Object.fromEntries(Object.entries(SUB_TO_FULL)),
+      "Non-Western Deposits (3)": ["Lincang", "Wulantuga", "Yimin", "Huize", "Spetsugli"],
+      "Western Deposits (5)": ["Yiliang + SYGT", "Big Hill", "Red Dog"],
+      "Non-Western Operators (3)": ["Lincang Xinyuan", "Shengli Coal Group", "Various State Operators", "Yunnan Chihong"],
+      "Western Operators (4)": ["JSC Germanium", "STL / Gécamines", "Teck Resources"],
+      "China Primary Supply": ["China Primary Supply"],
+      "Western Recycled Supply": ["Western Recycled Supply"],
+    };
+    for (const [group, members] of Object.entries(groupMappings)) {
+      if (visibleNodes.has(group)) {
+        for (const m of members) { if (!visibleNodes.has(m)) NODE_TO_GROUP[m] = group; }
+      }
+    }
+    // Also map supply nodes to Global Supply if it's visible
+    if (visibleNodes.has("Global Supply")) {
+      for (const n of fullChain.layers[3].nodes) { if (!visibleNodes.has(n)) NODE_TO_GROUP[n] = "Global Supply"; }
+    }
+
+    const resolveNode = (n: string) => visibleNodes.has(n) ? n : (NODE_TO_GROUP[n] ?? null);
+
+    // Build edges from real chain edges, mapping through visible nodes
+    const edgeSet = new Set<string>();
     const edges: { from: string; to: string }[] = [];
-    for (let li = 0; li < layers.length - 1; li++) {
-      for (const f of layers[li].nodes) {
-        for (const t of layers[li + 1].nodes) { edges.push({ from: f, to: t }); }
+    for (const e of fullChain.edges) {
+      const from = resolveNode(e.from);
+      const to = resolveNode(e.to);
+      if (from && to && from !== to) {
+        const key = `${from}|${to}`;
+        if (!edgeSet.has(key)) { edgeSet.add(key); edges.push({ from, to }); }
       }
     }
 
@@ -1371,6 +1405,11 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExp
       if (current === 1 && SUB_TO_FULL[name]) {
         setLayerZoom(prev => ({ ...prev, [layerKey]: 2 }));
         setExpandedSubGroup(prev => ({ ...prev, [layerKey]: name }));
+        return;
+      }
+      // Sibling sub-group clicked while other sub-group is expanded — expand both (full layer)
+      if (current === 2 && SUB_TO_FULL[name] && expandedSubGroup[layerKey]) {
+        setExpandedSubGroup(prev => { const next = { ...prev }; delete next[layerKey]; return next; });
         return;
       }
     }
