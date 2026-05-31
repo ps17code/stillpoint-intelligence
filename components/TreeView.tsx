@@ -1914,6 +1914,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [selectedOpportunityBrief, setSelectedOpportunityBrief] = useState<string | null>(null);
   const [layersExpanded, setLayersExpanded] = useState(true);
   const [geTreeExpanded, setGeTreeExpanded] = useState(false);
+  const [oppFilter, setOppFilter] = useState<string | null>(null);
+  const [oppBriefId, setOppBriefId] = useState<string | null>(null);
   // Auto-collapse supply chain card when tree expands
   useEffect(() => {
     if (geTreeExpanded) setLayersExpanded(false);
@@ -3981,8 +3983,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 const allIdeas = wtmi.layers.flatMap(l => l.ideas);
                 const FILTERS = wtmi.layers.map(l => l.label);
 
-                const [oppFilter, setOppFilter] = React.useState<string | null>(null);
-                const [oppBriefId, setOppBriefId] = React.useState<string | null>(null);
 
                 const filteredIdeas = oppFilter
                   ? wtmi.layers.filter(l => l.label === oppFilter).flatMap(l => l.ideas)
