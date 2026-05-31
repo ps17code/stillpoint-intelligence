@@ -4018,7 +4018,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
               return (
                 <div style={{ marginBottom: 12, background: "rgb(27, 27, 27)", borderRadius: 5, padding: "10px 12px", border: "0.5px solid rgb(36, 36, 36)" }}>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Chain</p>
                     <span
                       onClick={() => setLayersExpanded(!layersExpanded)}
@@ -4033,7 +4033,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     </span>
                   </div>
                   <div style={{ maxHeight: (oppExpanded || !layersExpanded) ? 0 : 2000, opacity: (oppExpanded || !layersExpanded) ? 0 : 1, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginTop: 10 }}>
                     {flow.steps.map((step, si) => (
                       <div key={step.label} style={{ background: "rgb(34, 34, 34)", borderRadius: 5, padding: "10px 12px", border: "0.5px solid rgb(42, 42, 42)" }}>
                         {/* Step header */}
@@ -4175,7 +4175,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     </span>
                   </div>
                 </div>
-                <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0" }} />
+                {!supplyTreeCollapsed && <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />}
                 </>
               )}
             <div
@@ -4184,7 +4184,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 animation: "containerOpen 350ms ease-out forwards",
                 position: "relative",
                 paddingBottom: 0,
-                marginTop: 10,
                 ...((oppExpanded || supplyTreeCollapsed) ? { maxHeight: 0, opacity: 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" } : { transition: "max-height 0.3s ease, opacity 0.2s ease" }),
               }}
             >
