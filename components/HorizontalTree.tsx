@@ -31,7 +31,7 @@ interface HorizontalTreeProps {
   downstream?: { id: string; name: string; pill: string }[];
   onDownstreamClick?: (id: string) => void;
   /** Inline chain-specific nodes (supply aggregates, output) not in universal data */
-  inlineNodes?: Record<string, { quantity_pill?: string; descriptor_pill?: string; country?: string }>;
+  inlineNodes?: Record<string, { quantity_pill?: string; descriptor_pill?: string; country?: string; flags?: string[] }>;
   /** Accent color for the input (used for idea dots) */
   accentColor?: string;
 }
@@ -82,7 +82,7 @@ function NodeCard({
   onHover?: () => void;
   onLeave?: () => void;
   cardRef?: React.Ref<HTMLDivElement>;
-  inlineNodeData?: { quantity_pill?: string; descriptor_pill?: string; country?: string };
+  inlineNodeData?: { quantity_pill?: string; descriptor_pill?: string; country?: string; flags?: string[] };
   accentColor?: string;
 }) {
   const raw = nodeData as unknown as Record<string, unknown>;
@@ -136,8 +136,16 @@ function NodeCard({
         fontFamily: "'EB Garamond', Georgia, serif",
         whiteSpace: "nowrap",
       }}>{name}</p>
-      {/* Flag + country */}
-      {hasCountry && (
+      {/* Flags row — multiple flags for group nodes */}
+      {inl?.flags && inl.flags.length > 0 && (
+        <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: outputLine ? 4 : 0 }}>
+          {inl.flags.map((f, fi) => (
+            <img key={fi} src={`https://flagcdn.com/16x12/${f}.png`} alt="" style={{ width: 10, height: 7, objectFit: "cover", borderRadius: 1, opacity: 0.7 }} />
+          ))}
+        </div>
+      )}
+      {/* Flag + country — single country */}
+      {!inl?.flags && hasCountry && (
         <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: outputLine ? 4 : 0 }}>
           {countryCode && (
             <img

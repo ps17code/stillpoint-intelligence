@@ -1249,8 +1249,8 @@ function FiberSupplyTree({ onNodeClick, upstream, downstream, onDownstreamClick 
 
 /* ── Germanium supply tree (from chain-definitions) ── */
 /** Build inline node data map from chain definition's supply/output nodes */
-function buildInlineNodes(chain: ChainDefinition): Record<string, { quantity_pill?: string; descriptor_pill?: string; country?: string }> {
-  const map: Record<string, { quantity_pill?: string; descriptor_pill?: string; country?: string }> = {};
+function buildInlineNodes(chain: ChainDefinition): Record<string, { quantity_pill?: string; descriptor_pill?: string; country?: string; flags?: string[] }> {
+  const map: Record<string, { quantity_pill?: string; descriptor_pill?: string; country?: string; flags?: string[] }> = {};
   if (chain.supplyNodes) {
     for (const sn of chain.supplyNodes) {
       map[sn.name] = { quantity_pill: sn.quantity_pill, descriptor_pill: sn.descriptor_pill, country: sn.country };
@@ -1263,108 +1263,152 @@ function buildInlineNodes(chain: ChainDefinition): Record<string, { quantity_pil
 }
 
 function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[]; onDownstreamClick?: (id: string) => void }) {
-  const [zoomLevel, setZoomLevel] = useState(0);
+  // Track which layers are expanded and at which level
+  // 0 = grouped (one node), 1 = sub-groups (Western/Non-Western), 2 = full nodes
+  const [layerZoom, setLayerZoom] = useState<Record<string, number>>({});
   const fullChain = chainDefs.germanium;
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
 
-  // Build chain definition based on zoom level
-  const chain = useMemo(() => {
-    if (zoomLevel >= 2) return fullChain;
+  // Layer definitions at each zoom level
+  const LAYER_DEFS: Record<string, {
+    grouped: { nodes: string[]; label: string };
+    subGroups: { nodes: string[]; label: string };
+    full: { nodes: string[]; label: string };
+  }> = {
+    deposits: {
+      grouped: { nodes: ["Deposits (8)"], label: "" },
+      subGroups: { nodes: ["Non-Western Deposits (3)", "Western Deposits (5)"], label: "DEPOSITS" },
+      full: { nodes: fullChain.layers[0].nodes, label: "DEPOSITS" },
+    },
+    hostOperations: {
+      grouped: { nodes: ["Host Operations (7)"], label: "" },
+      subGroups: { nodes: ["Non-Western Operators (3)", "Western Operators (4)"], label: "HOST OPERATIONS" },
+      full: { nodes: fullChain.layers[1].nodes, label: "HOST OPERATIONS" },
+    },
+    refiners: {
+      grouped: { nodes: ["Refiners (7)"], label: "" },
+      subGroups: { nodes: ["Non-Western Refiners (4)", "Western Refiners (3)"], label: "REFINERS & RECYCLERS" },
+      full: { nodes: fullChain.layers[2].nodes, label: "REFINERS & RECYCLERS" },
+    },
+    supplyAggregates: {
+      grouped: { nodes: ["Supply & Output"], label: "" },
+      subGroups: { nodes: ["China Primary Supply", "Western Recycled Supply"], label: "SUPPLY" },
+      full: { nodes: fullChain.layers[3].nodes, label: "SUPPLY" },
+    },
+  };
 
-    if (zoomLevel === 0) {
-      // Level 0: one grouped node per layer
-      return {
-        ...fullChain,
-        layers: [
-          { key: "deposits", label: "DEPOSITS", nodes: ["Deposits (8)"] },
-          { key: "hostOperations", label: "HOST OPERATIONS", nodes: ["Host Operations (7)"] },
-          { key: "refiners", label: "REFINERS & RECYCLERS", nodes: ["Refiners (7)"] },
-          { key: "supplyAggregates", label: "SUPPLY", nodes: ["Supply & Output"] },
-        ],
-        edges: [
-          { from: "Deposits (8)", to: "Host Operations (7)" },
-          { from: "Host Operations (7)", to: "Refiners (7)" },
-          { from: "Refiners (7)", to: "Supply & Output" },
-        ],
-        supplyNodes: [{ name: "Supply & Output", quantity_pill: "~230t/yr", descriptor_pill: "Global", country: "" }],
-        outputNode: null,
-      } as unknown as ChainDefinition;
+  // Flags for sub-group nodes
+  const SUB_GROUP_FLAGS: Record<string, string[]> = {
+    "Non-Western Deposits (3)": ["cn", "ru"],
+    "Western Deposits (5)": ["cd", "us", "cn"],
+    "Non-Western Operators (3)": ["cn", "ru"],
+    "Western Operators (4)": ["cd", "ca", "cn"],
+    "Non-Western Refiners (4)": ["cn", "ru"],
+    "Western Refiners (3)": ["be", "us", "de"],
+  };
+
+  const chain = useMemo(() => {
+    const layerKeys = ["deposits", "hostOperations", "refiners", "supplyAggregates"];
+    const layers = layerKeys.map(key => {
+      const zoom = layerZoom[key] ?? 0;
+      const def = LAYER_DEFS[key];
+      if (zoom >= 2) return { key, label: def.full.label, nodes: def.full.nodes };
+      if (zoom === 1) return { key, label: def.subGroups.label, nodes: def.subGroups.nodes };
+      return { key, label: def.grouped.label, nodes: def.grouped.nodes };
+    });
+
+    // Build edges based on current zoom levels
+    const edges: { from: string; to: string }[] = [];
+    for (let li = 0; li < layers.length - 1; li++) {
+      const fromNodes = layers[li].nodes;
+      const toNodes = layers[li + 1].nodes;
+      // Simple: connect each from to each to (geometry engine handles layout)
+      for (const f of fromNodes) {
+        for (const t of toNodes) { edges.push({ from: f, to: t }); }
+      }
     }
 
-    // Level 1: sub-groups
+    const allFullyExpanded = layerKeys.every(k => (layerZoom[k] ?? 0) >= 2);
+
     return {
       ...fullChain,
-      layers: [
-        { key: "deposits", label: "DEPOSITS", nodes: ["Chinese Deposits (5)", "Non-Chinese Deposits (3)"] },
-        { key: "hostOperations", label: "HOST OPERATIONS", nodes: ["Chinese Operators (4)", "Non-Chinese Operators (3)"] },
-        { key: "refiners", label: "REFINERS & RECYCLERS", nodes: ["Chinese Refiners (4)", "Western Refiners (3)"] },
-        { key: "supplyAggregates", label: "SUPPLY", nodes: ["China Primary Supply", "Western Recycled Supply"] },
-      ],
-      edges: [
-        { from: "Chinese Deposits (5)", to: "Chinese Operators (4)" },
-        { from: "Non-Chinese Deposits (3)", to: "Non-Chinese Operators (3)" },
-        { from: "Chinese Operators (4)", to: "Chinese Refiners (4)" },
-        { from: "Non-Chinese Operators (3)", to: "Western Refiners (3)" },
-        { from: "Chinese Refiners (4)", to: "China Primary Supply" },
-        { from: "Western Refiners (3)", to: "Western Recycled Supply" },
-      ],
-      supplyNodes: fullChain.supplyNodes,
-      outputNode: fullChain.outputNode,
+      layers,
+      edges,
+      supplyNodes: (layerZoom.supplyAggregates ?? 0) >= 2 ? fullChain.supplyNodes : [{ name: "Supply & Output", quantity_pill: "~230t/yr", descriptor_pill: "Global", country: "" }],
+      outputNode: allFullyExpanded ? fullChain.outputNode : null,
     } as unknown as ChainDefinition;
-  }, [fullChain, zoomLevel]);
+  }, [fullChain, layerZoom]);
 
   const svgW = useMemo(() => computeChainSvgWidth(chain), [chain]);
   const geo = useMemo(() => buildChainGeometry(chain, svgW / 2, 80), [chain, svgW]);
   const inl = useMemo(() => {
     const base = buildInlineNodes(chain);
-    // Add inline data for grouped nodes
-    if (zoomLevel === 0) {
-      base["Deposits (8)"] = { quantity_pill: "8 deposits", descriptor_pill: "Zinc & coal ores" };
-      base["Host Operations (7)"] = { quantity_pill: "~140t/yr", descriptor_pill: "Primary extraction" };
-      base["Refiners (7)"] = { quantity_pill: "~230t/yr", descriptor_pill: "Zone refining" };
-      base["Supply & Output"] = { quantity_pill: "~230t/yr", descriptor_pill: "Global supply" };
-    } else if (zoomLevel === 1) {
-      base["Chinese Deposits (5)"] = { quantity_pill: "5 deposits", descriptor_pill: "Yunnan, Inner Mongolia", country: "CN" };
-      base["Non-Chinese Deposits (3)"] = { quantity_pill: "3 deposits", descriptor_pill: "DRC, Russia, Alaska", country: "" };
-      base["Chinese Operators (4)"] = { quantity_pill: "~120t/yr", descriptor_pill: "State-linked", country: "CN" };
-      base["Non-Chinese Operators (3)"] = { quantity_pill: "~20t/yr", descriptor_pill: "DRC, Canada", country: "" };
-      base["Chinese Refiners (4)"] = { quantity_pill: "~140t/yr", descriptor_pill: "Domestic supply", country: "CN" };
-      base["Western Refiners (3)"] = { quantity_pill: "~90t/yr", descriptor_pill: "Umicore, 5N Plus, PPM", country: "" };
-    }
+    // Grouped nodes
+    base["Deposits (8)"] = { quantity_pill: "4,000t Reserves", descriptor_pill: "Zinc & coal ores" };
+    base["Host Operations (7)"] = { quantity_pill: "~140t/yr", descriptor_pill: "Primary extraction" };
+    base["Refiners (7)"] = { quantity_pill: "~230t/yr", descriptor_pill: "Zone refining" };
+    base["Supply & Output"] = { quantity_pill: "~230t/yr", descriptor_pill: "Global supply" };
+    // Sub-group nodes with flags
+    base["Non-Western Deposits (3)"] = { quantity_pill: "3 deposits", descriptor_pill: "China, Russia", flags: ["cn", "ru"] };
+    base["Western Deposits (5)"] = { quantity_pill: "5 deposits", descriptor_pill: "DRC, USA", flags: ["cd", "us"] };
+    base["Non-Western Operators (3)"] = { quantity_pill: "~120t/yr", descriptor_pill: "State-linked", flags: ["cn", "ru"] };
+    base["Western Operators (4)"] = { quantity_pill: "~20t/yr", descriptor_pill: "DRC, Canada", flags: ["cd", "ca"] };
+    base["Non-Western Refiners (4)"] = { quantity_pill: "~140t/yr", descriptor_pill: "China, Russia", flags: ["cn", "ru"] };
+    base["Western Refiners (3)"] = { quantity_pill: "~90t/yr", descriptor_pill: "Belgium, USA, Germany", flags: ["be", "us", "de"] };
     return base;
-  }, [chain, zoomLevel]);
+  }, [chain]);
+
+  // Map group node names to their layer key
+  const GROUP_TO_LAYER: Record<string, string> = {
+    "Deposits (8)": "deposits",
+    "Host Operations (7)": "hostOperations",
+    "Refiners (7)": "refiners",
+    "Supply & Output": "supplyAggregates",
+    "Non-Western Deposits (3)": "deposits",
+    "Western Deposits (5)": "deposits",
+    "Non-Western Operators (3)": "hostOperations",
+    "Western Operators (4)": "hostOperations",
+    "Non-Western Refiners (4)": "refiners",
+    "Western Refiners (3)": "refiners",
+    "China Primary Supply": "supplyAggregates",
+    "Western Recycled Supply": "supplyAggregates",
+  };
 
   const handleNodeClick = (name: string) => {
-    // If clicking a grouped node, zoom in
-    if (zoomLevel < 2 && (name.includes("(") || name === "Supply & Output")) {
-      setZoomLevel(prev => prev + 1);
-      return;
+    const layerKey = GROUP_TO_LAYER[name];
+    if (layerKey) {
+      const current = layerZoom[layerKey] ?? 0;
+      if (current < 2) {
+        setLayerZoom(prev => ({ ...prev, [layerKey]: current + 1 }));
+        return;
+      }
     }
     onNodeClick(name);
   };
 
-  const warmWhiteLocal = "#ece8e1";
+  const anyExpanded = Object.values(layerZoom).some(v => v > 0);
+  const allFull = ["deposits", "hostOperations", "refiners", "supplyAggregates"].every(k => (layerZoom[k] ?? 0) >= 2);
 
   return (
     <div>
-      {zoomLevel > 0 && (
+      {anyExpanded && (
         <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
           <span
-            onClick={() => setZoomLevel(prev => prev - 1)}
+            onClick={() => setLayerZoom({})}
             style={{ fontSize: 9, color: "#81713c", cursor: "pointer", fontFamily: "'Geist Mono', monospace", transition: "opacity 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
             onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
           >
-            ← Collapse
+            ← Collapse all
           </span>
         </div>
       )}
-      {zoomLevel < 2 && (
-        <p style={{ fontSize: 9, color: "#555", margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
+      <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={handleNodeClick} downstream={allFull ? downstream : undefined} onDownstreamClick={onDownstreamClick} inlineNodes={inl} accentColor="#81713c" />
+      {!allFull && (
+        <p style={{ fontSize: 9, color: "#555", margin: "6px 0 0 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
           Click a node to expand
         </p>
       )}
-      <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={handleNodeClick} downstream={zoomLevel >= 2 ? downstream : undefined} onDownstreamClick={onDownstreamClick} inlineNodes={inl} accentColor="#81713c" />
     </div>
   );
 }
