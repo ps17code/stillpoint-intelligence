@@ -485,7 +485,7 @@ export default function HorizontalTree({
             const isActive = activeNode === node.name;
             const isConnected = activeNode != null && connectedNodes.get(activeNode)?.has(node.name);
             const isHighlighted = isActive || !!isConnected;
-            const isDimmed = activeNode != null && !isHighlighted;
+            const isDimmed = false;
             return (
               <NodeCard
                 key={node.name}
