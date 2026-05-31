@@ -3808,8 +3808,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const dataLabelStyle = { fontSize: 8 as const, color: "#555" as string, margin: "0 0 6px 0" as const, textTransform: "uppercase" as const, letterSpacing: "0.06em" as const, fontFamily: "'Geist Mono', monospace" as const };
               const DATA_HEIGHT = 120;
 
+              const maxDemand = 104; // max usage for demand bar scale
+
               return (
-                <div style={{ marginBottom: 12 }}>
+                <div style={{ marginBottom: 12, background: "rgb(27, 27, 27)", borderRadius: 5, padding: "10px 12px", border: "0.5px solid rgb(36, 36, 36)" }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
                     <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Chain</p>
                     <span
@@ -3889,23 +3891,22 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                               {lastEntry.id === "germanium" && si === 2 && (
                                 <>
                                   <p style={dataLabelStyle}>Downstream Demand</p>
-                                  <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                                    <thead>
-                                      <tr>
-                                        {["Product", "Usage"].map(h => (
-                                          <th key={h} style={{ textAlign: "left", padding: "2px 0", fontSize: 7, color: "#555", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{h}</th>
-                                        ))}
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {geDemandTable.map(r => (
-                                        <tr key={r.product}>
-                                          <td style={{ padding: "2px 0", fontSize: 9, color: warmWhite }}>{r.product}</td>
-                                          <td style={{ padding: "2px 0", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace", textAlign: "right" }}>{r.usage}</td>
-                                        </tr>
-                                      ))}
-                                    </tbody>
-                                  </table>
+                                  <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                                    {geDemandTable.map(r => {
+                                      const usageNum = parseFloat(r.usage.replace(/[^0-9.]/g, "")) || 0;
+                                      return (
+                                        <div key={r.product}>
+                                          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 2 }}>
+                                            <span style={{ fontSize: 9, color: "rgb(160, 152, 136)" }}>{r.product}</span>
+                                            <span style={{ fontSize: 9, color: warmWhite, fontFamily: "'Geist Mono', monospace", flexShrink: 0, marginLeft: 6 }}>{r.usage}</span>
+                                          </div>
+                                          <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2 }}>
+                                            <div style={{ height: "100%", width: `${(usageNum / maxDemand) * 100}%`, background: accent, borderRadius: 2 }} />
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
                                 </>
                               )}
                             </div>
