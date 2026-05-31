@@ -4296,10 +4296,17 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           </div>
 
           {/* Hint below supply tree panel — germanium only, when not expanded */}
-          {activeTab === "supply-tree" && lastEntry?.id === "germanium" && !geTreeExpanded && (
+          {activeTab === "supply-tree" && lastEntry?.id === "germanium" && !geTreeExpanded && !oppExpanded && (
             <p style={{ fontSize: 9, color: "#555", margin: "10px 30px 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
               Click a node to expand
             </p>
+          )}
+
+          {/* Analysis panel */}
+          {activeTab === "supply-tree" && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") && (
+            <div style={{ margin: "10px 0 0", background: "rgb(27, 27, 27)", border: "0.5px solid rgb(36, 36, 36)", borderRadius: 5, padding: "14px 16px" }}>
+              <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Analysis</p>
+            </div>
           )}
 
           {/* Opportunities panel */}
