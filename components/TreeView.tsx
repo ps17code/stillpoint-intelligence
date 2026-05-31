@@ -1270,10 +1270,10 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExp
 
   // Which sub-group nodes map to which full nodes
   const SUB_TO_FULL: Record<string, string[]> = {
-    "Non-Western Deposits (3)": ["Lincang", "Wulantuga", "Yimin", "Huize", "Spetsugli"],
-    "Western Deposits (5)": ["Yiliang + SYGT", "Big Hill", "Red Dog"],
-    "Non-Western Operators (3)": ["Lincang Xinyuan", "Shengli Coal Group", "Various State Operators", "Yunnan Chihong"],
-    "Western Operators (4)": ["JSC Germanium", "STL / Gécamines", "Teck Resources"],
+    "Non-Western Deposits (6)": ["Lincang", "Wulantuga", "Yimin", "Huize", "Yiliang + SYGT", "Spetsugli"],
+    "Western Deposits (2)": ["Big Hill", "Red Dog"],
+    "Non-Western Operators (5)": ["Lincang Xinyuan", "Shengli Coal Group", "Various State Operators", "Yunnan Chihong", "JSC Germanium"],
+    "Western Operators (2)": ["STL / Gécamines", "Teck Resources"],
     "Non-Western Refiners (4)": ["Lincang Xinyuan Refinery", "Smaller Chinese Refiners", "Yunnan Chihong Refinery", "JSC Germanium Refinery"],
     "Western Refiners (3)": ["Umicore", "5N Plus", "PPM Pure Metals"],
   };
@@ -1282,17 +1282,16 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExp
   const [expandedSubGroup, setExpandedSubGroup] = useState<Record<string, string | null>>({});
 
   const chain = useMemo(() => {
-    const layerKeys = ["deposits", "hostOperations", "refiners", "supplyAggregates"];
+    const layerKeys = ["deposits", "hostOperations", "refiners"];
 
     const LAYER_DEFS: Record<string, {
       groupedNodes: string[]; groupedLabel: string;
       subNodes: string[]; subLabel: string;
       fullNodes: string[]; fullLabel: string;
     }> = {
-      deposits: { groupedNodes: ["Deposits (8)"], groupedLabel: "DEPOSITS", subNodes: ["Non-Western Deposits (3)", "Western Deposits (5)"], subLabel: "DEPOSITS", fullNodes: fullChain.layers[0].nodes, fullLabel: "DEPOSITS" },
-      hostOperations: { groupedNodes: ["Host Operations (7)"], groupedLabel: "HOST OPERATIONS", subNodes: ["Non-Western Operators (3)", "Western Operators (4)"], subLabel: "HOST OPERATIONS", fullNodes: fullChain.layers[1].nodes, fullLabel: "HOST OPERATIONS" },
+      deposits: { groupedNodes: ["Deposits (8)"], groupedLabel: "DEPOSITS", subNodes: ["Non-Western Deposits (6)", "Western Deposits (2)"], subLabel: "DEPOSITS", fullNodes: fullChain.layers[0].nodes, fullLabel: "DEPOSITS" },
+      hostOperations: { groupedNodes: ["Host Operations (7)"], groupedLabel: "HOST OPERATIONS", subNodes: ["Non-Western Operators (5)", "Western Operators (2)"], subLabel: "HOST OPERATIONS", fullNodes: fullChain.layers[1].nodes, fullLabel: "HOST OPERATIONS" },
       refiners: { groupedNodes: ["Refiners & Recyclers (7)"], groupedLabel: "REFINERS & RECYCLERS", subNodes: ["Non-Western Refiners (4)", "Western Refiners (3)"], subLabel: "REFINERS & RECYCLERS", fullNodes: fullChain.layers[2].nodes, fullLabel: "REFINERS & RECYCLERS" },
-      supplyAggregates: { groupedNodes: ["Global Supply"], groupedLabel: "SUPPLY", subNodes: ["China Primary Supply", "Western Recycled Supply"], subLabel: "SUPPLY", fullNodes: fullChain.layers[3].nodes, fullLabel: "SUPPLY" },
     };
 
     const layers = layerKeys.map(key => {
@@ -1320,23 +1319,12 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExp
       "Deposits (8)": fullChain.layers[0].nodes,
       "Host Operations (7)": fullChain.layers[1].nodes,
       "Refiners & Recyclers (7)": fullChain.layers[2].nodes,
-      "Global Supply": fullChain.layers[3].nodes,
       ...Object.fromEntries(Object.entries(SUB_TO_FULL)),
-      "Non-Western Deposits (3)": ["Lincang", "Wulantuga", "Yimin", "Huize", "Spetsugli"],
-      "Western Deposits (5)": ["Yiliang + SYGT", "Big Hill", "Red Dog"],
-      "Non-Western Operators (3)": ["Lincang Xinyuan", "Shengli Coal Group", "Various State Operators", "Yunnan Chihong"],
-      "Western Operators (4)": ["JSC Germanium", "STL / Gécamines", "Teck Resources"],
-      "China Primary Supply": ["China Primary Supply"],
-      "Western Recycled Supply": ["Western Recycled Supply"],
     };
     for (const [group, members] of Object.entries(groupMappings)) {
       if (visibleNodes.has(group)) {
         for (const m of members) { if (!visibleNodes.has(m)) NODE_TO_GROUP[m] = group; }
       }
-    }
-    // Also map supply nodes to Global Supply if it's visible
-    if (visibleNodes.has("Global Supply")) {
-      for (const n of fullChain.layers[3].nodes) { if (!visibleNodes.has(n)) NODE_TO_GROUP[n] = "Global Supply"; }
     }
 
     const resolveNode = (n: string) => visibleNodes.has(n) ? n : (NODE_TO_GROUP[n] ?? null);
@@ -1358,7 +1346,7 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExp
       layers,
       edges,
       minor: [],
-      supplyNodes: (layerZoom.supplyAggregates ?? 0) >= 1 ? fullChain.supplyNodes : [{ name: "Global Supply", quantity_pill: "230t/yr Ge sold", descriptor_pill: "Global", country: "" }],
+      supplyNodes: [],
       outputNode: null,
     } as unknown as ChainDefinition;
   }, [fullChain, layerZoom, expandedSubGroup]);
@@ -1370,11 +1358,10 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExp
     base["Deposits (8)"] = { quantity_pill: "4,000t Reserves", descriptor_pill: "Zinc & coal ores" };
     base["Host Operations (7)"] = { quantity_pill: "140t/yr Ge extracted", descriptor_pill: "Primary extraction" };
     base["Refiners & Recyclers (7)"] = { quantity_pill: "230t/yr Ge refined", descriptor_pill: "Zone refining" };
-    base["Global Supply"] = { quantity_pill: "230t/yr Ge sold", descriptor_pill: "Global supply" };
-    base["Non-Western Deposits (3)"] = { quantity_pill: "3 deposits", descriptor_pill: "China, Russia", flags: ["cn", "ru"] };
-    base["Western Deposits (5)"] = { quantity_pill: "5 deposits", descriptor_pill: "DRC, USA", flags: ["cd", "us"] };
-    base["Non-Western Operators (3)"] = { quantity_pill: "~120t/yr", descriptor_pill: "State-linked", flags: ["cn", "ru"] };
-    base["Western Operators (4)"] = { quantity_pill: "~20t/yr", descriptor_pill: "DRC, Canada", flags: ["cd", "ca"] };
+    base["Non-Western Deposits (6)"] = { quantity_pill: "6 deposits", descriptor_pill: "China, Russia", flags: ["cn", "ru"] };
+    base["Western Deposits (2)"] = { quantity_pill: "2 deposits", descriptor_pill: "DRC, USA", flags: ["cd", "us"] };
+    base["Non-Western Operators (5)"] = { quantity_pill: "~120t/yr", descriptor_pill: "China, Russia", flags: ["cn", "ru"] };
+    base["Western Operators (2)"] = { quantity_pill: "~20t/yr", descriptor_pill: "DRC, Canada", flags: ["cd", "ca"] };
     base["Non-Western Refiners (4)"] = { quantity_pill: "~140t/yr", descriptor_pill: "China, Russia", flags: ["cn", "ru"] };
     base["Western Refiners (3)"] = { quantity_pill: "~90t/yr", descriptor_pill: "Belgium, USA, Germany", flags: ["be", "us", "de"] };
     return base;
@@ -1382,11 +1369,10 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExp
 
   const GROUP_TO_LAYER: Record<string, string> = {
     "Deposits (8)": "deposits", "Host Operations (7)": "hostOperations",
-    "Refiners & Recyclers (7)": "refiners", "Global Supply": "supplyAggregates",
-    "Non-Western Deposits (3)": "deposits", "Western Deposits (5)": "deposits",
-    "Non-Western Operators (3)": "hostOperations", "Western Operators (4)": "hostOperations",
+    "Refiners & Recyclers (7)": "refiners",
+    "Non-Western Deposits (6)": "deposits", "Western Deposits (2)": "deposits",
+    "Non-Western Operators (5)": "hostOperations", "Western Operators (2)": "hostOperations",
     "Non-Western Refiners (4)": "refiners", "Western Refiners (3)": "refiners",
-    "China Primary Supply": "supplyAggregates", "Western Recycled Supply": "supplyAggregates",
   };
 
   const handleNodeClick = (name: string) => {
@@ -1418,15 +1404,14 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExp
 
   const anyExpanded = Object.values(layerZoom).some(v => v > 0) || downstreamExpanded;
   useEffect(() => { onExpansionChange?.(anyExpanded); }, [anyExpanded, onExpansionChange]);
-  const allFull = ["deposits", "hostOperations", "refiners", "supplyAggregates"].every(k => (layerZoom[k] ?? 0) >= 2 && !expandedSubGroup[k]);
+  const allFull = ["deposits", "hostOperations", "refiners"].every(k => (layerZoom[k] ?? 0) >= 2 && !expandedSubGroup[k]);
 
   // Group node names for distinct styling
   const GROUP_NODE_NAMES = new Set([
-    "Deposits (8)", "Host Operations (7)", "Refiners & Recyclers (7)", "Global Supply",
-    "Non-Western Deposits (3)", "Western Deposits (5)",
-    "Non-Western Operators (3)", "Western Operators (4)",
+    "Deposits (8)", "Host Operations (7)", "Refiners & Recyclers (7)",
+    "Non-Western Deposits (6)", "Western Deposits (2)",
+    "Non-Western Operators (5)", "Western Operators (2)",
     "Non-Western Refiners (4)", "Western Refiners (3)",
-    "China Primary Supply", "Western Recycled Supply",
     "Downstream Demand",
   ]);
 
@@ -1467,7 +1452,7 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExp
           {!allFull && (
             <span
               onClick={() => {
-                setLayerZoom({ deposits: 2, hostOperations: 2, refiners: 2, supplyAggregates: 2 });
+                setLayerZoom({ deposits: 2, hostOperations: 2, refiners: 2 });
                 setExpandedSubGroup({});
                 setDownstreamExpanded(true);
               }}
@@ -3846,7 +3831,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             overflowY: "auto", overflowX: "hidden",
             padding: "0 30px 20px",
           }}>
-            <div style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "14px 16px", overflow: "hidden", ...(currentVertical?.id === "ai" && currentLevel === "subsystems" ? { background: "transparent", padding: 0 } : {}) }}>
+            <div style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "0 16px 14px", overflow: "hidden", ...(currentVertical?.id === "ai" && currentLevel === "subsystems" ? { background: "transparent", padding: 0 } : {}) }}>
               {/* Tabs — hidden on AI infra vertical tree */}
               {!(currentVertical?.id === "ai" && currentLevel === "subsystems") && (
                 <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 14 }}>

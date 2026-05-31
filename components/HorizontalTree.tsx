@@ -123,9 +123,8 @@ function NodeCard({
         position: "relative" as const,
       }}
     >
-      {/* Investment idea dot — on left edge where connection lines arrive */}
-      {hasIdea && (() => {
-        // Brighten accent color for visibility
+      {/* Investment idea dot — disabled */}
+      {false && hasIdea && (() => {
         const BRIGHT: Record<string, string> = { "#81713c": "#c8a85a", "#6a9ab8": "#8ec4e8", "#7a8a6a": "#a8c890" };
         const dotColor = BRIGHT[accentColor ?? ""] ?? accentColor ?? IDEA_DOT_COLOR;
         return (
@@ -574,11 +573,6 @@ export default function HorizontalTree({
         })}
       </svg>
 
-      {/* Legend — bottom right */}
-      <div style={{ position: "absolute", bottom: 4, right: 4, display: "flex", alignItems: "center", gap: 5, padding: "3px 8px", background: "rgba(17,17,17,0.8)", borderRadius: 4 }}>
-        <div style={{ width: 6, height: 6, borderRadius: "50%", background: accentColor ?? IDEA_DOT_COLOR, flexShrink: 0 }} />
-        <span style={{ fontSize: 7, color: "#706a60", fontFamily: "'Geist Mono', monospace" }}>Investment idea</span>
-      </div>
     </div>
   );
 }
