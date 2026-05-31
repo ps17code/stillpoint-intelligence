@@ -4141,10 +4141,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               {/* Header — hidden on AI infra vertical tree */}
               {!(currentVertical?.id === "ai" && currentLevel === "subsystems") && (
                 <>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Tree</p>
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                    <span
+                    {!supplyTreeCollapsed && <span
                       onClick={() => setActiveTab(activeTab === "map" ? "supply-tree" : "map")}
                       style={{ fontSize: 9, color: templateAccent ?? "#706a60", cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s" }}
                       onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
@@ -4161,7 +4161,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           View Geographic Map
                         </>
                       )}
-                    </span>
+                    </span>}
                     <span
                       onClick={() => setSupplyTreeCollapsed(!supplyTreeCollapsed)}
                       style={{ fontSize: 9, color: templateAccent ?? "#706a60", cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s" }}
@@ -4175,7 +4175,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     </span>
                   </div>
                 </div>
-                <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 0 10px 0" }} />
+                <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0" }} />
                 </>
               )}
             <div
@@ -4184,11 +4184,19 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 animation: "containerOpen 350ms ease-out forwards",
                 position: "relative",
                 paddingBottom: 0,
+                marginTop: 10,
                 ...((oppExpanded || supplyTreeCollapsed) ? { maxHeight: 0, opacity: 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" } : { transition: "max-height 0.3s ease, opacity 0.2s ease" }),
               }}
             >
               {activeTab === "supply-tree" && (
-                path.length === 0 ? renderVerticalsContent() : renderContainerContent()
+                <>
+                  {path.length === 0 ? renderVerticalsContent() : renderContainerContent()}
+                  {lastEntry?.id === "germanium" && !geTreeExpanded && (
+                    <p style={{ fontSize: 9, color: "#555", margin: "20px 0 0 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
+                      Click a node to expand
+                    </p>
+                  )}
+                </>
               )}
               {activeTab === "dependencies" && lastEntry && (
                 <DependenciesTable inputId={lastEntry.id} />
@@ -4393,12 +4401,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             </div>
           </div>
 
-          {/* Hint below supply tree panel — germanium only, when not expanded */}
-          {activeTab === "supply-tree" && lastEntry?.id === "germanium" && !geTreeExpanded && !oppExpanded && (
-            <p style={{ fontSize: 9, color: "#555", margin: "10px 30px 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
-              Click a node to expand
-            </p>
-          )}
 
           {/* Analysis panel */}
           {activeTab === "supply-tree" && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") && (
