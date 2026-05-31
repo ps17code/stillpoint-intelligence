@@ -1263,14 +1263,109 @@ function buildInlineNodes(chain: ChainDefinition): Record<string, { quantity_pil
 }
 
 function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[]; onDownstreamClick?: (id: string) => void }) {
-  const chain = chainDefs.germanium;
+  const [zoomLevel, setZoomLevel] = useState(0);
+  const fullChain = chainDefs.germanium;
+  const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
+
+  // Build chain definition based on zoom level
+  const chain = useMemo(() => {
+    if (zoomLevel >= 2) return fullChain;
+
+    if (zoomLevel === 0) {
+      // Level 0: one grouped node per layer
+      return {
+        ...fullChain,
+        layers: [
+          { key: "deposits", label: "DEPOSITS", nodes: ["Deposits (8)"] },
+          { key: "hostOperations", label: "HOST OPERATIONS", nodes: ["Host Operations (7)"] },
+          { key: "refiners", label: "REFINERS & RECYCLERS", nodes: ["Refiners (7)"] },
+          { key: "supplyAggregates", label: "SUPPLY", nodes: ["Supply & Output"] },
+        ],
+        edges: [
+          { from: "Deposits (8)", to: "Host Operations (7)" },
+          { from: "Host Operations (7)", to: "Refiners (7)" },
+          { from: "Refiners (7)", to: "Supply & Output" },
+        ],
+        supplyNodes: [{ name: "Supply & Output", quantity_pill: "~230t/yr", descriptor_pill: "Global", country: "" }],
+        outputNode: null,
+      } as unknown as ChainDefinition;
+    }
+
+    // Level 1: sub-groups
+    return {
+      ...fullChain,
+      layers: [
+        { key: "deposits", label: "DEPOSITS", nodes: ["Chinese Deposits (5)", "Non-Chinese Deposits (3)"] },
+        { key: "hostOperations", label: "HOST OPERATIONS", nodes: ["Chinese Operators (4)", "Non-Chinese Operators (3)"] },
+        { key: "refiners", label: "REFINERS & RECYCLERS", nodes: ["Chinese Refiners (4)", "Western Refiners (3)"] },
+        { key: "supplyAggregates", label: "SUPPLY", nodes: ["China Primary Supply", "Western Recycled Supply"] },
+      ],
+      edges: [
+        { from: "Chinese Deposits (5)", to: "Chinese Operators (4)" },
+        { from: "Non-Chinese Deposits (3)", to: "Non-Chinese Operators (3)" },
+        { from: "Chinese Operators (4)", to: "Chinese Refiners (4)" },
+        { from: "Non-Chinese Operators (3)", to: "Western Refiners (3)" },
+        { from: "Chinese Refiners (4)", to: "China Primary Supply" },
+        { from: "Western Refiners (3)", to: "Western Recycled Supply" },
+      ],
+      supplyNodes: fullChain.supplyNodes,
+      outputNode: fullChain.outputNode,
+    } as unknown as ChainDefinition;
+  }, [fullChain, zoomLevel]);
+
   const svgW = useMemo(() => computeChainSvgWidth(chain), [chain]);
   const geo = useMemo(() => buildChainGeometry(chain, svgW / 2, 80), [chain, svgW]);
-  const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
-  const inl = useMemo(() => buildInlineNodes(chain), [chain]);
+  const inl = useMemo(() => {
+    const base = buildInlineNodes(chain);
+    // Add inline data for grouped nodes
+    if (zoomLevel === 0) {
+      base["Deposits (8)"] = { quantity_pill: "8 deposits", descriptor_pill: "Zinc & coal ores" };
+      base["Host Operations (7)"] = { quantity_pill: "~140t/yr", descriptor_pill: "Primary extraction" };
+      base["Refiners (7)"] = { quantity_pill: "~230t/yr", descriptor_pill: "Zone refining" };
+      base["Supply & Output"] = { quantity_pill: "~230t/yr", descriptor_pill: "Global supply" };
+    } else if (zoomLevel === 1) {
+      base["Chinese Deposits (5)"] = { quantity_pill: "5 deposits", descriptor_pill: "Yunnan, Inner Mongolia", country: "CN" };
+      base["Non-Chinese Deposits (3)"] = { quantity_pill: "3 deposits", descriptor_pill: "DRC, Russia, Alaska", country: "" };
+      base["Chinese Operators (4)"] = { quantity_pill: "~120t/yr", descriptor_pill: "State-linked", country: "CN" };
+      base["Non-Chinese Operators (3)"] = { quantity_pill: "~20t/yr", descriptor_pill: "DRC, Canada", country: "" };
+      base["Chinese Refiners (4)"] = { quantity_pill: "~140t/yr", descriptor_pill: "Domestic supply", country: "CN" };
+      base["Western Refiners (3)"] = { quantity_pill: "~90t/yr", descriptor_pill: "Umicore, 5N Plus, PPM", country: "" };
+    }
+    return base;
+  }, [chain, zoomLevel]);
+
+  const handleNodeClick = (name: string) => {
+    // If clicking a grouped node, zoom in
+    if (zoomLevel < 2 && (name.includes("(") || name === "Supply & Output")) {
+      setZoomLevel(prev => prev + 1);
+      return;
+    }
+    onNodeClick(name);
+  };
+
+  const warmWhiteLocal = "#ece8e1";
 
   return (
-    <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={onNodeClick} downstream={downstream} onDownstreamClick={onDownstreamClick} inlineNodes={inl} accentColor="#81713c" />
+    <div>
+      {zoomLevel > 0 && (
+        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
+          <span
+            onClick={() => setZoomLevel(prev => prev - 1)}
+            style={{ fontSize: 9, color: "#81713c", cursor: "pointer", fontFamily: "'Geist Mono', monospace", transition: "opacity 0.15s" }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+          >
+            ← Collapse
+          </span>
+        </div>
+      )}
+      {zoomLevel < 2 && (
+        <p style={{ fontSize: 9, color: "#555", margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
+          Click a node to expand
+        </p>
+      )}
+      <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={handleNodeClick} downstream={zoomLevel >= 2 ? downstream : undefined} onDownstreamClick={onDownstreamClick} inlineNodes={inl} accentColor="#81713c" />
+    </div>
   );
 }
 
