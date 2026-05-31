@@ -4031,7 +4031,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       </svg>
                     </span>
                   </div>
-                  <div style={{ maxHeight: oppExpanded ? 0 : 2000, opacity: oppExpanded ? 0 : 1, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
+                  <div style={{ maxHeight: (oppExpanded || !layersExpanded) ? 0 : 2000, opacity: (oppExpanded || !layersExpanded) ? 0 : 1, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
                     {flow.steps.map((step, si) => (
                       <div key={step.label} style={{ background: "rgb(34, 34, 34)", borderRadius: 5, padding: "10px 12px", border: "0.5px solid rgb(42, 42, 42)" }}>
@@ -4136,34 +4136,24 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             overflowY: "auto", overflowX: "hidden",
             padding: "0 30px 20px",
           }}>
-            <div style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "0 16px 14px", overflow: "hidden", ...(currentVertical?.id === "ai" && currentLevel === "subsystems" ? { background: "transparent", padding: 0 } : {}) }}>
-              {/* Tabs — hidden on AI infra vertical tree */}
+            <div style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "14px 16px", overflow: "hidden", ...(currentVertical?.id === "ai" && currentLevel === "subsystems" ? { background: "transparent", padding: 0 } : {}) }}>
+              {/* Header — hidden on AI infra vertical tree */}
               {!(currentVertical?.id === "ai" && currentLevel === "subsystems") && (
-                <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${borderColor}`, marginBottom: 14 }}>
-                  {["Supply Tree", "Map", "Dependencies", "Analysis", "Investment Ideas"].map((tab, ti) => {
-                    const tabId = tab.toLowerCase().replace(/\s+/g, "-");
-                    const isActive = activeTab === tabId;
-                    return (
-                      <div
-                        key={tabId}
-                        onClick={() => setActiveTab(tabId)}
-                        style={{
-                          padding: ti === 0 ? "8px 12px 8px 0" : "8px 12px",
-                          fontSize: 10,
-                          color: isActive ? "#a09888" : "#555",
-                          cursor: "pointer",
-                          borderBottom: isActive ? "1.5px solid #888" : "1.5px solid transparent",
-                          transition: "color 0.15s, border-color 0.15s",
-                          marginBottom: -1,
-                        }}
-                        onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "#706a60"; }}
-                        onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "#555"; }}
-                      >
-                        {tab}
-                      </div>
-                    );
-                  })}
+                <>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Tree</p>
+                  <span
+                    onClick={() => setActiveTab("map")}
+                    style={{ fontSize: 9, color: templateAccent ?? "#706a60", cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s" }}
+                    onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+                    onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="8" cy="8" r="6.5" /><ellipse cx="8" cy="8" rx="3" ry="6.5" /><line x1="1.5" y1="8" x2="14.5" y2="8" /></svg>
+                    View Geographic Map
+                  </span>
                 </div>
+                <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 0 10px 0" }} />
+                </>
               )}
             <div
               key={animKey}
