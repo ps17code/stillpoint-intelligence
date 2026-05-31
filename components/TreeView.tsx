@@ -1299,10 +1299,12 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
       const zoom = layerZoom[key] ?? 0;
       const def = LAYER_DEFS[key];
       if (zoom >= 2) {
-        // Check if only one sub-group is expanded
+        // Check if only one sub-group is expanded — show its full nodes + keep sibling group node
         const expSub = expandedSubGroup[key];
         if (expSub && SUB_TO_FULL[expSub]) {
-          return { key, label: def.fullLabel, nodes: SUB_TO_FULL[expSub] };
+          const siblingNode = def.subNodes.find(n => n !== expSub);
+          const expandedNodes = SUB_TO_FULL[expSub];
+          return { key, label: def.fullLabel, nodes: siblingNode ? [...expandedNodes, siblingNode] : expandedNodes };
         }
         return { key, label: def.fullLabel, nodes: def.fullNodes };
       }
