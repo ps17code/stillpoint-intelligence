@@ -4219,7 +4219,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 animation: "containerOpen 350ms ease-out forwards",
                 position: "relative",
                 paddingBottom: 0,
-                ...((oppExpanded || supplyTreeCollapsed) ? { maxHeight: 0, opacity: 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" } : { transition: "max-height 0.3s ease, opacity 0.2s ease" }),
+                ...(((oppExpanded || supplyTreeCollapsed) && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component")) ? { maxHeight: 0, opacity: 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" } : { transition: "max-height 0.3s ease, opacity 0.2s ease" }),
               }}
             >
               {activeTab === "supply-tree" && (
