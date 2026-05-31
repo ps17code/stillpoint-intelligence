@@ -1892,7 +1892,10 @@ function AnalysisPanel({ inputId, accent }: { inputId: string; accent: string })
   return (
     <div style={{ margin: "10px 0 0", background: "rgb(27, 27, 27)", border: "0.5px solid rgb(36, 36, 36)", borderRadius: 5, padding: "14px 16px" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <p style={{ fontSize: 10, color: warmW, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Analysis</p>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p style={{ fontSize: 10, color: warmW, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Analysis</p>
+          {!expanded && <span style={{ fontSize: 9, color: "#555", marginLeft: 10, fontWeight: 400 }}>Market dynamics, geopolitics, and technology shifts</span>}
+        </div>
         <span
           onClick={() => setExpanded(!expanded)}
           style={{ fontSize: 9, color: accent, cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s", animation: "fadeInDown 0.3s ease" }}
@@ -1994,7 +1997,10 @@ function OpportunitiesPanel({ inputId, accent, onExpandChange }: { inputId: stri
   return (
     <div style={{ margin: "10px 0 20px", background: "rgb(27, 27, 27)", border: "0.5px solid rgb(36, 36, 36)", borderRadius: 5, padding: "14px 16px", ...(expanded ? { flex: 1, minHeight: 0, overflow: "auto" } : {}) }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <p style={{ fontSize: 10, color: warmW, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Opportunities</p>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p style={{ fontSize: 10, color: warmW, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Opportunities</p>
+          {!expanded && <span style={{ fontSize: 9, color: "#555", marginLeft: 10, fontWeight: 400 }}>Ideas, companies, and strategic plays to capture value</span>}
+        </div>
         <span
           onClick={toggleExpanded}
           style={{ fontSize: 9, color: accent, cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s", animation: "fadeInDown 0.3s ease" }}
@@ -2115,7 +2121,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [oppFilter, setOppFilter] = useState<string | null>(null);
   const [oppBriefId, setOppBriefId] = useState<string | null>(null);
   const [oppExpanded, setOppExpanded] = useState(false);
-  const [supplyTreeCollapsed, setSupplyTreeCollapsed] = useState(false);
+  const [supplyTreeCollapsed, setSupplyTreeCollapsed] = useState(true);
   // Auto-collapse supply chain card when tree expands
   useEffect(() => {
     if (geTreeExpanded) setLayersExpanded(false);
@@ -4019,7 +4025,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               return (
                 <div style={{ marginBottom: 12, background: "rgb(27, 27, 27)", borderRadius: 5, padding: "10px 12px", border: "0.5px solid rgb(36, 36, 36)" }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Chain</p>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Chain</p>
+                      {!layersExpanded && <span style={{ fontSize: 9, color: "#555", marginLeft: 10, fontWeight: 400 }}>Supply flow, demand, gap, and constraints</span>}
+                    </div>
                     <span
                       onClick={() => setLayersExpanded(!layersExpanded)}
                       style={{ fontSize: 9, color: accent, cursor: "pointer", transition: "color 0.15s, opacity 0.3s", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, animation: "fadeInDown 0.3s ease" }}
@@ -4136,12 +4145,12 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.08)", flexShrink: 0 }} />
                         <div style={{ padding: "0 14px", flexShrink: 0, display: "flex", alignItems: "center", gap: 6 }}>
                           <span style={{ fontSize: 10, color: "#706a60" }}>Supply Gap</span>
-                          <span style={{ fontSize: 10, color: warmWhite, fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>~56t/yr</span>
+                          <span style={{ fontSize: 10, color: accent, fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>~56t/yr</span>
                         </div>
                         <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.08)", flexShrink: 0 }} />
                         <div style={{ padding: "0 14px", flexShrink: 0, display: "flex", alignItems: "center", gap: 6 }}>
                           <span style={{ fontSize: 10, color: "#706a60" }}>Price Signal</span>
-                          <span style={{ fontSize: 10, color: warmWhite, fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>{priceData.change12m} ({priceData.currentPrice}/{priceData.unit})</span>
+                          <span style={{ fontSize: 10, color: accent, fontWeight: 600, fontFamily: "'Geist Mono', monospace" }}>{priceData.change12m} ({priceData.currentPrice}/{priceData.unit})</span>
                         </div>
                         <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.08)", flexShrink: 0 }} />
                         <div style={{ padding: "0 14px", flex: 1 }}>
@@ -4167,7 +4176,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               {!(currentVertical?.id === "ai" && currentLevel === "subsystems") && (
                 <>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Tree</p>
+                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Asset & Company Map</p>
+                  {supplyTreeCollapsed && <span style={{ fontSize: 9, color: "#555", marginLeft: 10, fontWeight: 400 }}>Key players across value chain layers</span>}
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                     {!supplyTreeCollapsed && <span
                       onClick={() => setActiveTab(activeTab === "map" ? "supply-tree" : "map")}
