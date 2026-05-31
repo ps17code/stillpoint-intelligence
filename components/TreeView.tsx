@@ -3784,9 +3784,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               // Compute a faded version of the accent color
               const accentFaded = accent.startsWith("#") ? accent + "99" : accent.replace(")", ", 0.6)").replace("rgb(", "rgba(");
               // Supporting data for germanium layers
-              const geSupplyBreakdown = [
-                { source: "China", pct: 52 }, { source: "Recycled", pct: 39 },
-                { source: "Russia", pct: 5 }, { source: "N. America", pct: 4 },
+              const geDepositConcentration = [
+                { source: "China", pct: 63 }, { source: "Russia", pct: 12 },
+                { source: "DRC", pct: 13 }, { source: "USA", pct: 12 },
               ];
               const geKeyPlayers = [
                 { name: "Yunnan Chihong", share: "~25%", flag: "cn" },
@@ -3794,12 +3794,13 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 { name: "Teck Resources", share: "~5%", flag: "ca" },
                 { name: "5N Plus", share: "~4%", flag: "ca" },
               ];
+              // Usage with growth applied: 87*1.19=~104, 55*1.18=~65, 35*1.57=~55, 25 stable, 28 stable
               const geDemandTable = [
-                { product: "Fiber optic cable", usage: "~87t/yr", endUses: "AI datacenters, telecom", growth: "+19%" },
-                { product: "IR optics", usage: "~55t/yr", endUses: "Thermal imaging, missiles", growth: "+18%" },
-                { product: "Satellite solar", usage: "~35t/yr", endUses: "LEO constellations", growth: "+57%" },
-                { product: "SiGe semiconductors", usage: "~25t/yr", endUses: "5G RF, radar", growth: "Stable" },
-                { product: "Other", usage: "~28t/yr", endUses: "Catalysts, phosphors", growth: "Stable" },
+                { product: "Fiber optic cable (AI datacenters, telecom)", usage: "~104t/yr" },
+                { product: "IR optics (thermal imaging, missiles)", usage: "~65t/yr" },
+                { product: "Satellite solar (LEO constellations)", usage: "~55t/yr" },
+                { product: "SiGe semiconductors (5G RF, radar)", usage: "~25t/yr" },
+                { product: "Other (catalysts, phosphors)", usage: "~28t/yr" },
               ];
 
               const pieColors = [accent, "#706a60", "#4a4540", "#3a3835"];
@@ -3835,19 +3836,18 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "5px 0 0 0" }}>{step.desc}</p>
                         {layersExpanded && (
                           <>
-                            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "6px 0" }} />
-                            <p style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.55)", lineHeight: 1.4, margin: "0 0 8px 0", fontWeight: 500 }}>{step.context}</p>
+                            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "8px 0" }} />
 
                             {/* Supporting data per column — germanium only */}
                             {lastEntry.id === "germanium" && si === 0 && (
-                              <>
-                                <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Geographic Concentration</p>
+                              <div style={{ minHeight: 110 }}>
+                                <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Deposit Reserves by Country</p>
                                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                                   <svg width={50} height={50} viewBox="0 0 50 50" style={{ flexShrink: 0 }}>
                                     {(() => {
                                       const R = 20, cx = 25, cy = 25, stroke = 8, circ = 2 * Math.PI * R;
                                       let offset = 0;
-                                      return geSupplyBreakdown.map((s, ssi) => {
+                                      return geDepositConcentration.map((s, ssi) => {
                                         const len = (s.pct / 100) * circ;
                                         const el = <circle key={s.source} cx={cx} cy={cy} r={R} fill="none" stroke={pieColors[ssi % pieColors.length]} strokeWidth={stroke} strokeDasharray={`${len} ${circ - len}`} strokeDashoffset={-offset} transform={`rotate(-90 ${cx} ${cy})`} />;
                                         offset += len;
@@ -3856,7 +3856,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                                     })()}
                                   </svg>
                                   <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                                    {geSupplyBreakdown.map((s, ssi) => (
+                                    {geDepositConcentration.map((s, ssi) => (
                                       <div key={s.source} style={{ display: "flex", alignItems: "center", gap: 4 }}>
                                         <span style={{ width: 5, height: 5, borderRadius: 1, background: pieColors[ssi % pieColors.length], flexShrink: 0 }} />
                                         <span style={{ fontSize: 9, color: "rgb(160, 152, 136)" }}>{s.source}</span>
@@ -3865,11 +3865,11 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                                     ))}
                                   </div>
                                 </div>
-                              </>
+                              </div>
                             )}
 
                             {lastEntry.id === "germanium" && si === 1 && (
-                              <>
+                              <div style={{ minHeight: 110 }}>
                                 <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Key Players</p>
                                 {geKeyPlayers.map(p => (
                                   <div key={p.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "2px 0" }}>
@@ -3878,33 +3878,35 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                                     <span style={{ fontSize: 9, color: "#555", fontFamily: "'Geist Mono', monospace", marginLeft: "auto" }}>{p.share}</span>
                                   </div>
                                 ))}
-                              </>
+                              </div>
                             )}
 
                             {lastEntry.id === "germanium" && si === 2 && (
-                              <>
-                                <p style={{ fontSize: 8, color: "#555", margin: "0 0 4px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Downstream Demand</p>
+                              <div style={{ minHeight: 110 }}>
+                                <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Downstream Demand</p>
                                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
                                   <thead>
                                     <tr>
-                                      {["Product", "Usage", "End Uses", "Growth"].map(h => (
+                                      {["Product", "Usage"].map(h => (
                                         <th key={h} style={{ textAlign: "left", padding: "3px 4px", fontSize: 7, color: "#555", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{h}</th>
                                       ))}
                                     </tr>
                                   </thead>
                                   <tbody>
                                     {geDemandTable.map(r => (
-                                      <tr key={r.product} style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+                                      <tr key={r.product}>
                                         <td style={{ padding: "3px 4px", fontSize: 9, color: warmWhite }}>{r.product}</td>
                                         <td style={{ padding: "3px 4px", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{r.usage}</td>
-                                        <td style={{ padding: "3px 4px", fontSize: 9, color: "rgb(160, 152, 136)" }}>{r.endUses}</td>
-                                        <td style={{ padding: "3px 4px", fontSize: 9, color: r.growth.startsWith("+") ? accent : "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{r.growth}</td>
                                       </tr>
                                     ))}
                                   </tbody>
                                 </table>
-                              </>
+                              </div>
                             )}
+
+                            {/* Context moved below data */}
+                            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "8px 0" }} />
+                            <p style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.55)", lineHeight: 1.4, margin: 0, fontWeight: 500 }}>{step.context}</p>
                           </>
                         )}
                       </div>
