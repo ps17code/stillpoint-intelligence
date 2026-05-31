@@ -159,7 +159,7 @@ function NodeCard({
       )}
       {/* Output line */}
       {outputLine && (
-        <p style={{ fontSize: 7, color: "rgba(255,255,255,0.55)", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>{outputLine}</p>
+        <p style={{ fontSize: 8, color: "rgba(255,255,255,0.55)", margin: 0, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>{outputLine}</p>
       )}
     </div>
   );

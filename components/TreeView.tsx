@@ -1263,93 +1263,78 @@ function buildInlineNodes(chain: ChainDefinition): Record<string, { quantity_pil
 }
 
 function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[]; onDownstreamClick?: (id: string) => void }) {
-  // Track which layers are expanded and at which level
-  // 0 = grouped (one node), 1 = sub-groups (Western/Non-Western), 2 = full nodes
   const [layerZoom, setLayerZoom] = useState<Record<string, number>>({});
+  const [downstreamExpanded, setDownstreamExpanded] = useState(false);
   const fullChain = chainDefs.germanium;
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
 
-  // Layer definitions at each zoom level
-  const LAYER_DEFS: Record<string, {
-    grouped: { nodes: string[]; label: string };
-    subGroups: { nodes: string[]; label: string };
-    full: { nodes: string[]; label: string };
-  }> = {
-    deposits: {
-      grouped: { nodes: ["Deposits (8)"], label: "" },
-      subGroups: { nodes: ["Non-Western Deposits (3)", "Western Deposits (5)"], label: "DEPOSITS" },
-      full: { nodes: fullChain.layers[0].nodes, label: "DEPOSITS" },
-    },
-    hostOperations: {
-      grouped: { nodes: ["Host Operations (7)"], label: "" },
-      subGroups: { nodes: ["Non-Western Operators (3)", "Western Operators (4)"], label: "HOST OPERATIONS" },
-      full: { nodes: fullChain.layers[1].nodes, label: "HOST OPERATIONS" },
-    },
-    refiners: {
-      grouped: { nodes: ["Refiners (7)"], label: "" },
-      subGroups: { nodes: ["Non-Western Refiners (4)", "Western Refiners (3)"], label: "REFINERS & RECYCLERS" },
-      full: { nodes: fullChain.layers[2].nodes, label: "REFINERS & RECYCLERS" },
-    },
-    supplyAggregates: {
-      grouped: { nodes: ["Global Supply"], label: "" },
-      subGroups: { nodes: ["China Primary Supply", "Western Recycled Supply"], label: "SUPPLY" },
-      full: { nodes: fullChain.layers[3].nodes, label: "SUPPLY" },
-    },
+  // Which sub-group nodes map to which full nodes
+  const SUB_TO_FULL: Record<string, string[]> = {
+    "Non-Western Deposits (3)": ["Lincang", "Wulantuga", "Yimin", "Huize", "Spetsugli"],
+    "Western Deposits (5)": ["Yiliang + SYGT", "Big Hill", "Red Dog"],
+    "Non-Western Operators (3)": ["Lincang Xinyuan", "Shengli Coal Group", "Various State Operators", "Yunnan Chihong"],
+    "Western Operators (4)": ["JSC Germanium", "STL / Gécamines", "Teck Resources"],
+    "Non-Western Refiners (4)": ["Lincang Xinyuan Refinery", "Smaller Chinese Refiners", "Yunnan Chihong Refinery", "JSC Germanium Refinery"],
+    "Western Refiners (3)": ["Umicore", "5N Plus", "PPM Pure Metals"],
   };
 
-  // Flags for sub-group nodes
-  const SUB_GROUP_FLAGS: Record<string, string[]> = {
-    "Non-Western Deposits (3)": ["cn", "ru"],
-    "Western Deposits (5)": ["cd", "us", "cn"],
-    "Non-Western Operators (3)": ["cn", "ru"],
-    "Western Operators (4)": ["cd", "ca", "cn"],
-    "Non-Western Refiners (4)": ["cn", "ru"],
-    "Western Refiners (3)": ["be", "us", "de"],
-  };
+  // Track which specific sub-group is expanded (null = show both sub-groups)
+  const [expandedSubGroup, setExpandedSubGroup] = useState<Record<string, string | null>>({});
 
   const chain = useMemo(() => {
     const layerKeys = ["deposits", "hostOperations", "refiners", "supplyAggregates"];
+
+    const LAYER_DEFS: Record<string, {
+      groupedNodes: string[]; groupedLabel: string;
+      subNodes: string[]; subLabel: string;
+      fullNodes: string[]; fullLabel: string;
+    }> = {
+      deposits: { groupedNodes: ["Deposits (8)"], groupedLabel: "DEPOSITS", subNodes: ["Non-Western Deposits (3)", "Western Deposits (5)"], subLabel: "DEPOSITS", fullNodes: fullChain.layers[0].nodes, fullLabel: "DEPOSITS" },
+      hostOperations: { groupedNodes: ["Host Operations (7)"], groupedLabel: "HOST OPERATIONS", subNodes: ["Non-Western Operators (3)", "Western Operators (4)"], subLabel: "HOST OPERATIONS", fullNodes: fullChain.layers[1].nodes, fullLabel: "HOST OPERATIONS" },
+      refiners: { groupedNodes: ["Refiners & Recyclers (7)"], groupedLabel: "REFINERS & RECYCLERS", subNodes: ["Non-Western Refiners (4)", "Western Refiners (3)"], subLabel: "REFINERS & RECYCLERS", fullNodes: fullChain.layers[2].nodes, fullLabel: "REFINERS & RECYCLERS" },
+      supplyAggregates: { groupedNodes: ["Global Supply"], groupedLabel: "SUPPLY", subNodes: ["China Primary Supply", "Western Recycled Supply"], subLabel: "SUPPLY", fullNodes: fullChain.layers[3].nodes, fullLabel: "SUPPLY" },
+    };
+
     const layers = layerKeys.map(key => {
       const zoom = layerZoom[key] ?? 0;
       const def = LAYER_DEFS[key];
-      if (zoom >= 2) return { key, label: def.full.label, nodes: def.full.nodes };
-      if (zoom === 1) return { key, label: def.subGroups.label, nodes: def.subGroups.nodes };
-      return { key, label: def.grouped.label, nodes: def.grouped.nodes };
+      if (zoom >= 2) {
+        // Check if only one sub-group is expanded
+        const expSub = expandedSubGroup[key];
+        if (expSub && SUB_TO_FULL[expSub]) {
+          return { key, label: def.fullLabel, nodes: SUB_TO_FULL[expSub] };
+        }
+        return { key, label: def.fullLabel, nodes: def.fullNodes };
+      }
+      if (zoom === 1) return { key, label: def.subLabel, nodes: def.subNodes };
+      return { key, label: def.groupedLabel, nodes: def.groupedNodes };
     });
 
-    // Build edges based on current zoom levels
     const edges: { from: string; to: string }[] = [];
     for (let li = 0; li < layers.length - 1; li++) {
-      const fromNodes = layers[li].nodes;
-      const toNodes = layers[li + 1].nodes;
-      // Simple: connect each from to each to (geometry engine handles layout)
-      for (const f of fromNodes) {
-        for (const t of toNodes) { edges.push({ from: f, to: t }); }
+      for (const f of layers[li].nodes) {
+        for (const t of layers[li + 1].nodes) { edges.push({ from: f, to: t }); }
       }
     }
-
-    const allFullyExpanded = layerKeys.every(k => (layerZoom[k] ?? 0) >= 2);
 
     return {
       ...fullChain,
       layers,
       edges,
-      minor: allFullyExpanded ? fullChain.minor : [],
-      supplyNodes: (layerZoom.supplyAggregates ?? 0) >= 1 ? fullChain.supplyNodes : [{ name: "Global Supply", quantity_pill: "~230t/yr", descriptor_pill: "Global", country: "" }],
+      minor: [],
+      supplyNodes: (layerZoom.supplyAggregates ?? 0) >= 1 ? fullChain.supplyNodes : [{ name: "Global Supply", quantity_pill: "230t/yr Ge sold", descriptor_pill: "Global", country: "" }],
       outputNode: null,
     } as unknown as ChainDefinition;
-  }, [fullChain, layerZoom]);
+  }, [fullChain, layerZoom, expandedSubGroup]);
 
   const svgW = useMemo(() => computeChainSvgWidth(chain), [chain]);
   const geo = useMemo(() => buildChainGeometry(chain, svgW / 2, 80), [chain, svgW]);
   const inl = useMemo(() => {
     const base = buildInlineNodes(chain);
-    // Grouped nodes
     base["Deposits (8)"] = { quantity_pill: "4,000t Reserves", descriptor_pill: "Zinc & coal ores" };
-    base["Host Operations (7)"] = { quantity_pill: "~140t/yr", descriptor_pill: "Primary extraction" };
-    base["Refiners (7)"] = { quantity_pill: "~230t/yr", descriptor_pill: "Zone refining" };
-    base["Global Supply"] = { quantity_pill: "~230t/yr", descriptor_pill: "Global supply" };
-    // Sub-group nodes with flags
+    base["Host Operations (7)"] = { quantity_pill: "140t/yr Ge extracted", descriptor_pill: "Primary extraction" };
+    base["Refiners & Recyclers (7)"] = { quantity_pill: "230t/yr Ge refined", descriptor_pill: "Zone refining" };
+    base["Global Supply"] = { quantity_pill: "230t/yr Ge sold", descriptor_pill: "Global supply" };
     base["Non-Western Deposits (3)"] = { quantity_pill: "3 deposits", descriptor_pill: "China, Russia", flags: ["cn", "ru"] };
     base["Western Deposits (5)"] = { quantity_pill: "5 deposits", descriptor_pill: "DRC, USA", flags: ["cd", "us"] };
     base["Non-Western Operators (3)"] = { quantity_pill: "~120t/yr", descriptor_pill: "State-linked", flags: ["cn", "ru"] };
@@ -1359,28 +1344,31 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
     return base;
   }, [chain]);
 
-  // Map group node names to their layer key
   const GROUP_TO_LAYER: Record<string, string> = {
-    "Deposits (8)": "deposits",
-    "Host Operations (7)": "hostOperations",
-    "Refiners (7)": "refiners",
-    "Global Supply": "supplyAggregates",
-    "Non-Western Deposits (3)": "deposits",
-    "Western Deposits (5)": "deposits",
-    "Non-Western Operators (3)": "hostOperations",
-    "Western Operators (4)": "hostOperations",
-    "Non-Western Refiners (4)": "refiners",
-    "Western Refiners (3)": "refiners",
-    "China Primary Supply": "supplyAggregates",
-    "Western Recycled Supply": "supplyAggregates",
+    "Deposits (8)": "deposits", "Host Operations (7)": "hostOperations",
+    "Refiners & Recyclers (7)": "refiners", "Global Supply": "supplyAggregates",
+    "Non-Western Deposits (3)": "deposits", "Western Deposits (5)": "deposits",
+    "Non-Western Operators (3)": "hostOperations", "Western Operators (4)": "hostOperations",
+    "Non-Western Refiners (4)": "refiners", "Western Refiners (3)": "refiners",
+    "China Primary Supply": "supplyAggregates", "Western Recycled Supply": "supplyAggregates",
   };
 
   const handleNodeClick = (name: string) => {
+    // Downstream grouped node
+    if (name.startsWith("Downstream Demand")) {
+      setDownstreamExpanded(true);
+      return;
+    }
     const layerKey = GROUP_TO_LAYER[name];
     if (layerKey) {
       const current = layerZoom[layerKey] ?? 0;
-      if (current < 2) {
-        setLayerZoom(prev => ({ ...prev, [layerKey]: current + 1 }));
+      if (current === 0) {
+        setLayerZoom(prev => ({ ...prev, [layerKey]: 1 }));
+        return;
+      }
+      if (current === 1 && SUB_TO_FULL[name]) {
+        setLayerZoom(prev => ({ ...prev, [layerKey]: 2 }));
+        setExpandedSubGroup(prev => ({ ...prev, [layerKey]: name }));
         return;
       }
     }
@@ -1388,14 +1376,14 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
   };
 
   const anyExpanded = Object.values(layerZoom).some(v => v > 0);
-  const allFull = ["deposits", "hostOperations", "refiners", "supplyAggregates"].every(k => (layerZoom[k] ?? 0) >= 2);
+  const allFull = ["deposits", "hostOperations", "refiners", "supplyAggregates"].every(k => (layerZoom[k] ?? 0) >= 2 && !expandedSubGroup[k]);
 
   return (
     <div>
       {anyExpanded && (
         <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
           <span
-            onClick={() => setLayerZoom({})}
+            onClick={() => { setLayerZoom({}); setExpandedSubGroup({}); setDownstreamExpanded(false); }}
             style={{ fontSize: 9, color: "#81713c", cursor: "pointer", fontFamily: "'Geist Mono', monospace", transition: "opacity 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
             onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
@@ -1409,16 +1397,11 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
         nodes={universalNodes as unknown as Record<string, NodeData>}
         layerConfig={lc}
         onNodeClick={handleNodeClick}
-        downstream={allFull ? downstream : [{ id: "_demand_grouped", name: "Downstream Demand (" + (downstream?.length ?? 0) + ")", pill: "~286t/yr" }]}
-        onDownstreamClick={allFull ? onDownstreamClick : undefined}
+        downstream={downstreamExpanded ? downstream : [{ id: "_demand_grouped", name: "Downstream Demand (" + (downstream?.length ?? 0) + ")", pill: "~286t/yr" }]}
+        onDownstreamClick={downstreamExpanded ? onDownstreamClick : undefined}
         inlineNodes={inl}
         accentColor="#81713c"
       />
-      {!allFull && (
-        <p style={{ fontSize: 9, color: "#555", margin: "6px 0 0 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
-          Click a node to expand
-        </p>
-      )}
     </div>
   );
 }
@@ -3201,6 +3184,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             const target = dsNav[id];
             if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); }
           }} />
+          <p style={{ fontSize: 9, color: "#555", margin: "10px 0 0 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
+            Click a node to expand
+          </p>
         </>
       );
     }
