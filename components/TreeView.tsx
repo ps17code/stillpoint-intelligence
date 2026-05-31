@@ -3931,9 +3931,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
           {/* Supply tree area */}
           <div style={{
-            flex: 1, minHeight: 0,
+            minHeight: 0,
             overflowY: "auto", overflowX: "hidden",
-            ...(oppExpanded && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") ? { maxHeight: 0, opacity: 0, overflow: "hidden" as const, padding: 0, transition: "max-height 0.3s ease, opacity 0.2s ease, padding 0.3s ease" } : { padding: "0 30px 20px", transition: "max-height 0.3s ease, opacity 0.2s ease" }),
+            ...(oppExpanded && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") ? { flex: 0, maxHeight: 0, opacity: 0, overflow: "hidden" as const, padding: 0, transition: "all 0.3s ease" } : { flex: 1, padding: "0 30px 20px" }),
           }}>
             <div style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "0 16px 14px", overflow: "hidden", ...(currentVertical?.id === "ai" && currentLevel === "subsystems" ? { background: "transparent", padding: 0 } : {}) }}>
               {/* Tabs — hidden on AI infra vertical tree */}
@@ -4210,7 +4210,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             };
 
             return (
-              <div style={{ margin: "10px 30px 0", background: "rgb(27, 27, 27)", border: "0.5px solid rgb(36, 36, 36)", borderRadius: 5, padding: "14px 16px", overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
+              <div style={{ margin: "10px 30px 20px", background: "rgb(27, 27, 27)", border: "0.5px solid rgb(36, 36, 36)", borderRadius: 5, padding: "14px 16px", overflow: oppExpanded ? "auto" : "hidden", ...(oppExpanded ? { flex: 1, minHeight: 0 } : {}) }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Opportunities</p>
                   <span
