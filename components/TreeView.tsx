@@ -1291,7 +1291,7 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
       full: { nodes: fullChain.layers[2].nodes, label: "REFINERS & RECYCLERS" },
     },
     supplyAggregates: {
-      grouped: { nodes: ["Supply & Output"], label: "" },
+      grouped: { nodes: ["Global Supply"], label: "" },
       subGroups: { nodes: ["China Primary Supply", "Western Recycled Supply"], label: "SUPPLY" },
       full: { nodes: fullChain.layers[3].nodes, label: "SUPPLY" },
     },
@@ -1334,8 +1334,9 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
       ...fullChain,
       layers,
       edges,
-      supplyNodes: (layerZoom.supplyAggregates ?? 0) >= 2 ? fullChain.supplyNodes : [{ name: "Supply & Output", quantity_pill: "~230t/yr", descriptor_pill: "Global", country: "" }],
-      outputNode: allFullyExpanded ? fullChain.outputNode : null,
+      minor: allFullyExpanded ? fullChain.minor : [],
+      supplyNodes: (layerZoom.supplyAggregates ?? 0) >= 1 ? fullChain.supplyNodes : [{ name: "Global Supply", quantity_pill: "~230t/yr", descriptor_pill: "Global", country: "" }],
+      outputNode: null,
     } as unknown as ChainDefinition;
   }, [fullChain, layerZoom]);
 
@@ -1347,7 +1348,7 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
     base["Deposits (8)"] = { quantity_pill: "4,000t Reserves", descriptor_pill: "Zinc & coal ores" };
     base["Host Operations (7)"] = { quantity_pill: "~140t/yr", descriptor_pill: "Primary extraction" };
     base["Refiners (7)"] = { quantity_pill: "~230t/yr", descriptor_pill: "Zone refining" };
-    base["Supply & Output"] = { quantity_pill: "~230t/yr", descriptor_pill: "Global supply" };
+    base["Global Supply"] = { quantity_pill: "~230t/yr", descriptor_pill: "Global supply" };
     // Sub-group nodes with flags
     base["Non-Western Deposits (3)"] = { quantity_pill: "3 deposits", descriptor_pill: "China, Russia", flags: ["cn", "ru"] };
     base["Western Deposits (5)"] = { quantity_pill: "5 deposits", descriptor_pill: "DRC, USA", flags: ["cd", "us"] };
@@ -1363,7 +1364,7 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
     "Deposits (8)": "deposits",
     "Host Operations (7)": "hostOperations",
     "Refiners (7)": "refiners",
-    "Supply & Output": "supplyAggregates",
+    "Global Supply": "supplyAggregates",
     "Non-Western Deposits (3)": "deposits",
     "Western Deposits (5)": "deposits",
     "Non-Western Operators (3)": "hostOperations",
@@ -1403,7 +1404,16 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
           </span>
         </div>
       )}
-      <HorizontalTree geometry={geo} nodes={universalNodes as unknown as Record<string, NodeData>} layerConfig={lc} onNodeClick={handleNodeClick} downstream={allFull ? downstream : undefined} onDownstreamClick={onDownstreamClick} inlineNodes={inl} accentColor="#81713c" />
+      <HorizontalTree
+        geometry={geo}
+        nodes={universalNodes as unknown as Record<string, NodeData>}
+        layerConfig={lc}
+        onNodeClick={handleNodeClick}
+        downstream={allFull ? downstream : [{ id: "_demand_grouped", name: "Downstream Demand (" + (downstream?.length ?? 0) + ")", pill: "~286t/yr" }]}
+        onDownstreamClick={allFull ? onDownstreamClick : undefined}
+        inlineNodes={inl}
+        accentColor="#81713c"
+      />
       {!allFull && (
         <p style={{ fontSize: 9, color: "#555", margin: "6px 0 0 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
           Click a node to expand
