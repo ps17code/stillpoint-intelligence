@@ -1877,6 +1877,91 @@ function AIOverviewTree({ onNodeClick }: { onNodeClick: (id: string, type: "raw-
   );
 }
 
+/* ── Analysis Panel Component ── */
+function AnalysisPanel({ inputId, accent }: { inputId: string; accent: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const warmW = "#ece8e1";
+  const borderC = "rgba(255,255,255,0.06)";
+
+  const soWhat = INPUT_SOWHAT[inputId];
+  if (!soWhat || soWhat.length === 0) return null;
+
+  const activeSection = soWhat[activeIdx] ?? soWhat[0];
+
+  return (
+    <div style={{ margin: "10px 0 0", background: "rgb(27, 27, 27)", border: "0.5px solid rgb(36, 36, 36)", borderRadius: 5, padding: "14px 16px" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <p style={{ fontSize: 10, color: warmW, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Analysis</p>
+        <span
+          onClick={() => setExpanded(!expanded)}
+          style={{ fontSize: 9, color: accent, cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s", animation: "fadeInDown 0.3s ease" }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+        >
+          {expanded ? "Collapse" : "Expand"}
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ transform: expanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+            <path d="M2 4L5 7L8 4" />
+          </svg>
+        </span>
+      </div>
+
+      <div style={{ maxHeight: expanded ? 2000 : 0, opacity: expanded ? 1 : 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
+        <div style={{ height: 1, background: borderC, margin: "10px 0" }} />
+        <div style={{ display: "flex", gap: 0, padding: 10, background: "rgb(22, 21, 20)", borderRadius: 6 }}>
+          {/* Left — section labels */}
+          <div style={{ width: 240, minWidth: 240, flexShrink: 0, borderRight: `1px solid ${borderC}`, paddingRight: 16 }}>
+            {soWhat.map((item, i) => {
+              const isActive = i === activeIdx;
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => setActiveIdx(i)}
+                  style={{
+                    padding: "12px 12px", cursor: "pointer",
+                    borderBottom: `1px solid rgba(255,255,255,0.04)`,
+                    borderLeft: isActive ? "2px solid #706a60" : "2px solid transparent",
+                    background: isActive ? "rgba(255,255,255,0.02)" : "transparent",
+                    transition: "background 0.15s, border-color 0.15s",
+                  }}
+                  onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.015)"; }}
+                  onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+                >
+                  <p style={{ fontSize: 12, fontWeight: isActive ? 600 : 500, color: isActive ? warmW : "rgb(160, 152, 136)", margin: 0 }}>{item.label}</p>
+                </div>
+              );
+            })}
+          </div>
+          {/* Right — analysis content */}
+          <div style={{ flex: 1, paddingLeft: 20, overflowY: "auto" }}>
+            <p style={{ fontSize: 12, color: "#706a60", margin: "0 0 12px 0", fontStyle: "italic" }}>{activeSection.question}</p>
+            {activeSection.analysis.map((block, bi) => {
+              if (block.type === "subhead") return <p key={bi} style={{ fontSize: 12, color: warmW, fontWeight: 600, margin: bi === 0 ? "0 0 6px 0" : "16px 0 6px 0" }}>{block.text}</p>;
+              if (block.type === "item") return (
+                <div key={bi} style={{ marginBottom: 10, paddingLeft: 10, borderLeft: "2px solid rgba(255,255,255,0.06)" }}>
+                  <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", fontWeight: 500, margin: "0 0 3px 0" }}>{block.name}</p>
+                  <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.7, margin: 0 }}>{block.desc}</p>
+                </div>
+              );
+              if (block.type === "callout") return (
+                <div key={bi} style={{ marginBottom: 12, borderLeft: "2px solid #4a4540", paddingLeft: 12 }}>
+                  <p style={{ fontSize: 12, color: "#a09888", lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>{block.text}</p>
+                </div>
+              );
+              return (
+                <div key={bi} style={{ marginBottom: 12 }}>
+                  {block.title && <p style={{ fontSize: 12, color: warmW, fontWeight: 500, margin: "0 0 4px 0" }}>{block.title}</p>}
+                  <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.7, margin: 0 }}>{block.text}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ── Opportunities Panel Component ── */
 function OpportunitiesPanel({ inputId, accent, onExpandChange }: { inputId: string; accent: string; onExpandChange?: (expanded: boolean) => void }) {
   const [filter, setFilter] = useState<string | null>(null);
@@ -4304,9 +4389,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
           {/* Analysis panel */}
           {activeTab === "supply-tree" && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") && (
-            <div style={{ margin: "10px 0 0", background: "rgb(27, 27, 27)", border: "0.5px solid rgb(36, 36, 36)", borderRadius: 5, padding: "14px 16px" }}>
-              <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Analysis</p>
-            </div>
+            <AnalysisPanel inputId={lastEntry.id === "fiber" ? "fiber" : lastEntry.id} accent={templateAccent ?? "#706a60"} />
           )}
 
           {/* Opportunities panel */}
