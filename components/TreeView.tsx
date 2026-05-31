@@ -3764,9 +3764,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               type LayerStep = { label: string; value: string; desc: string; context: string };
               const LAYER_FLOWS: Record<string, { steps: LayerStep[] }> = {
                 germanium: { steps: [
-                  { label: "Host Ore Extraction", value: "4,000t Ge Reserves", desc: "Recovered as byproduct from zinc ores, coal ash, and smelting residues.", context: "Only 8 deposits globally with high enough germanium concentration to justify extraction circuits. China operates ~83% of primary capacity." },
-                  { label: "High-Purity Refining", value: "230t/yr Ge Refined", desc: "Processed into purified germanium metal or chemical feedstock.", context: "Six refineries worldwide. Only one in the west — Umicore in Belgium — produces fiber-grade GeCl₄ at commercial scale." },
-                  { label: "End-Product Conversion", value: "286t/yr Demand", desc: "Converted into forms used in fiber optics, IR optics, solar cells, and semiconductors.", context: "Fiber optics, IR defense optics, satellite solar, SiGe chips, and catalysts all draw from the same fixed supply." },
+                  { label: "Host Ore Extraction", value: "4,000t Ge Reserves", desc: "Recovered as byproduct from zinc ores, coal ash, and smelting residues.", context: "Only 8 deposits with high enough Ge concentration to economically justify extraction circuits." },
+                  { label: "High-Purity Refining", value: "230t/yr Ge Refined", desc: "Processed into purified germanium metal or chemical feedstock.", context: "Six refineries perform conversion at ultra-high purity. Only one in west — constrained by feedstock availability." },
+                  { label: "End-Product Conversion", value: "286t/yr Demand", desc: "Converted into forms used in fiber optics, IR optics, solar cells, and semiconductors.", context: "Demand from AI data centers, drones, and satellite constellations are all pulling from same fixed supply." },
                 ]},
                 gallium: { steps: [
                   { label: "Byproduct Source", value: "50 ppm in Bauxite", desc: "Extracted as a trace element during alumina refining from bauxite.", context: "Gallium content is uniform across all bauxite. Output is set by aluminum demand, not gallium demand." },
@@ -3806,7 +3806,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const maxShare = 25; // max share % for key players bar scale
 
               const dataLabelStyle = { fontSize: 8 as const, color: "#555" as string, margin: "0 0 6px 0" as const, textTransform: "uppercase" as const, letterSpacing: "0.06em" as const, fontFamily: "'Geist Mono', monospace" as const };
-              const DATA_HEIGHT = 120;
+              const DATA_HEIGHT = 110;
 
               const maxDemand = 104; // max usage for demand bar scale
 
