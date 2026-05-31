@@ -1916,7 +1916,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [geTreeExpanded, setGeTreeExpanded] = useState(false);
   const [oppFilter, setOppFilter] = useState<string | null>(null);
   const [oppBriefId, setOppBriefId] = useState<string | null>(null);
-  const [oppExpanded, setOppExpanded] = useState(false);
+  const [oppExpanded, setOppExpanded] = useState(true);
   // Auto-collapse supply chain card when tree expands
   useEffect(() => {
     if (geTreeExpanded) setLayersExpanded(false);
