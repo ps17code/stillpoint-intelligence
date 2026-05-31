@@ -1380,18 +1380,6 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
 
   return (
     <div>
-      {anyExpanded && (
-        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
-          <span
-            onClick={() => { setLayerZoom({}); setExpandedSubGroup({}); setDownstreamExpanded(false); }}
-            style={{ fontSize: 9, color: "#81713c", cursor: "pointer", fontFamily: "'Geist Mono', monospace", transition: "opacity 0.15s" }}
-            onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
-            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
-          >
-            ← Collapse all
-          </span>
-        </div>
-      )}
       <HorizontalTree
         geometry={geo}
         nodes={universalNodes as unknown as Record<string, NodeData>}
@@ -1402,6 +1390,32 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
         inlineNodes={inl}
         accentColor="#81713c"
       />
+      {anyExpanded && (
+        <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 8 }}>
+          <span
+            onClick={() => { setLayerZoom({}); setExpandedSubGroup({}); setDownstreamExpanded(false); }}
+            style={{ fontSize: 9, color: "#81713c", cursor: "pointer", fontFamily: "'Geist Mono', monospace", transition: "opacity 0.15s" }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+          >
+            ← Collapse all
+          </span>
+          {!allFull && (
+            <span
+              onClick={() => {
+                setLayerZoom({ deposits: 2, hostOperations: 2, refiners: 2, supplyAggregates: 2 });
+                setExpandedSubGroup({});
+                setDownstreamExpanded(true);
+              }}
+              style={{ fontSize: 9, color: "#81713c", cursor: "pointer", fontFamily: "'Geist Mono', monospace", transition: "opacity 0.15s" }}
+              onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+            >
+              Expand full tree →
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -3184,9 +3198,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             const target = dsNav[id];
             if (target) { setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); }
           }} />
-          <p style={{ fontSize: 9, color: "#555", margin: "10px 0 0 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
-            Click a node to expand
-          </p>
         </>
       );
     }
@@ -4013,7 +4024,12 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             </div>
           </div>
 
-          {/* Chain Analysis moved inside value chain panel */}
+          {/* Hint below supply tree card — only for input pages on supply-tree tab */}
+          {activeTab === "supply-tree" && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") && (
+            <p style={{ fontSize: 9, color: "#555", margin: "10px 0 0 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
+              Click a node to expand
+            </p>
+          )}
 
           {/* Bottom section — key takeaways (hidden) */}
           <div style={{
