@@ -4176,8 +4176,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               {!(currentVertical?.id === "ai" && currentLevel === "subsystems") && (
                 <>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Asset & Company Map</p>
-                  {supplyTreeCollapsed && <span style={{ fontSize: 9, color: "#555", marginLeft: 10, fontWeight: 400 }}>Key players across value chain layers</span>}
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Asset & Company Map</p>
+                    {supplyTreeCollapsed && <span style={{ fontSize: 9, color: "#555", marginLeft: 10, fontWeight: 400 }}>Key players across value chain layers</span>}
+                  </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                     {!supplyTreeCollapsed && <span
                       onClick={() => setActiveTab(activeTab === "map" ? "supply-tree" : "map")}
