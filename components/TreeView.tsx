@@ -3800,15 +3800,18 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 { product: "IR optics (thermal imaging, missiles)", usage: "~65t/yr" },
                 { product: "Satellite solar (LEO constellations)", usage: "~55t/yr" },
                 { product: "SiGe semiconductors (5G RF, radar)", usage: "~25t/yr" },
-                { product: "Other (catalysts, phosphors)", usage: "~28t/yr" },
               ];
 
-              const pieColors = [accent, "#706a60", "#4a4540", "#3a3835"];
+              const maxPct = Math.max(...geDepositConcentration.map(d => d.pct));
+              const maxShare = 25; // max share % for key players bar scale
+
+              const dataLabelStyle = { fontSize: 8 as const, color: "#555" as string, margin: "0 0 6px 0" as const, textTransform: "uppercase" as const, letterSpacing: "0.06em" as const, fontFamily: "'Geist Mono', monospace" as const };
+              const DATA_HEIGHT = 120;
 
               return (
-                <div style={{ marginBottom: 12, background: "rgb(27, 27, 27)", borderRadius: 5, padding: "10px 16px" }}>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Chain</p>
+                <div style={{ marginBottom: 12 }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                    <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Chain</p>
                     <span
                       onClick={() => setLayersExpanded(!layersExpanded)}
                       style={{ fontSize: 9, color: accent, cursor: "pointer", transition: "color 0.15s", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4 }}
@@ -3821,10 +3824,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       </svg>
                     </span>
                   </div>
-                  <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 0 8px 0" }} />
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
                     {flow.steps.map((step, si) => (
-                      <div key={step.label} style={{ padding: "4px 0" }}>
+                      <div key={step.label} style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "10px 12px", border: "0.5px solid rgb(36, 36, 36)" }}>
                         {/* Step header */}
                         <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
                           <div style={{ width: 16, height: 16, borderRadius: "50%", border: `1.5px solid ${accent}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
@@ -3838,73 +3840,77 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           <>
                             <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "8px 0" }} />
 
-                            {/* Supporting data per column — germanium only */}
-                            {lastEntry.id === "germanium" && si === 0 && (
-                              <div style={{ minHeight: 110 }}>
-                                <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Deposit Reserves by Country</p>
-                                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                                  <svg width={50} height={50} viewBox="0 0 50 50" style={{ flexShrink: 0 }}>
-                                    {(() => {
-                                      const R = 20, cx = 25, cy = 25, stroke = 8, circ = 2 * Math.PI * R;
-                                      let offset = 0;
-                                      return geDepositConcentration.map((s, ssi) => {
-                                        const len = (s.pct / 100) * circ;
-                                        const el = <circle key={s.source} cx={cx} cy={cy} r={R} fill="none" stroke={pieColors[ssi % pieColors.length]} strokeWidth={stroke} strokeDasharray={`${len} ${circ - len}`} strokeDashoffset={-offset} transform={`rotate(-90 ${cx} ${cy})`} />;
-                                        offset += len;
-                                        return el;
-                                      });
-                                    })()}
-                                  </svg>
-                                  <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                                    {geDepositConcentration.map((s, ssi) => (
-                                      <div key={s.source} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                                        <span style={{ width: 5, height: 5, borderRadius: 1, background: pieColors[ssi % pieColors.length], flexShrink: 0 }} />
-                                        <span style={{ fontSize: 9, color: "rgb(160, 152, 136)" }}>{s.source}</span>
-                                        <span style={{ fontSize: 9, color: warmWhite, fontFamily: "'Geist Mono', monospace" }}>{s.pct}%</span>
+                            {/* Data module */}
+                            <div style={{ height: DATA_HEIGHT }}>
+                              {lastEntry.id === "germanium" && si === 0 && (
+                                <>
+                                  <p style={dataLabelStyle}>Deposit Reserves by Country</p>
+                                  <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                                    {geDepositConcentration.map(s => (
+                                      <div key={s.source}>
+                                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 2 }}>
+                                          <span style={{ fontSize: 9, color: "rgb(160, 152, 136)" }}>{s.source}</span>
+                                          <span style={{ fontSize: 9, color: warmWhite, fontFamily: "'Geist Mono', monospace" }}>{s.pct}%</span>
+                                        </div>
+                                        <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2 }}>
+                                          <div style={{ height: "100%", width: `${(s.pct / maxPct) * 100}%`, background: accent, borderRadius: 2 }} />
+                                        </div>
                                       </div>
                                     ))}
                                   </div>
-                                </div>
-                              </div>
-                            )}
+                                </>
+                              )}
 
-                            {lastEntry.id === "germanium" && si === 1 && (
-                              <div style={{ minHeight: 110 }}>
-                                <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Key Players</p>
-                                {geKeyPlayers.map(p => (
-                                  <div key={p.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "2px 0" }}>
-                                    <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 10, height: 7, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                                    <span style={{ fontSize: 10, color: "rgb(160, 152, 136)" }}>{p.name}</span>
-                                    <span style={{ fontSize: 9, color: "#555", fontFamily: "'Geist Mono', monospace", marginLeft: "auto" }}>{p.share}</span>
+                              {lastEntry.id === "germanium" && si === 1 && (
+                                <>
+                                  <p style={dataLabelStyle}>Key Players</p>
+                                  <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                                    {geKeyPlayers.map(p => {
+                                      const shareNum = parseFloat(p.share.replace(/[^0-9.]/g, "")) || 0;
+                                      return (
+                                        <div key={p.name}>
+                                          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 2 }}>
+                                            <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                                              <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 10, height: 7, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
+                                              <span style={{ fontSize: 9, color: "rgb(160, 152, 136)" }}>{p.name}</span>
+                                            </div>
+                                            <span style={{ fontSize: 9, color: warmWhite, fontFamily: "'Geist Mono', monospace" }}>{p.share}</span>
+                                          </div>
+                                          <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2 }}>
+                                            <div style={{ height: "100%", width: `${(shareNum / maxShare) * 100}%`, background: accent, borderRadius: 2 }} />
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
                                   </div>
-                                ))}
-                              </div>
-                            )}
+                                </>
+                              )}
 
-                            {lastEntry.id === "germanium" && si === 2 && (
-                              <div style={{ minHeight: 110 }}>
-                                <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace" }}>Downstream Demand</p>
-                                <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                                  <thead>
-                                    <tr>
-                                      {["Product", "Usage"].map(h => (
-                                        <th key={h} style={{ textAlign: "left", padding: "3px 4px", fontSize: 7, color: "#555", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{h}</th>
-                                      ))}
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {geDemandTable.map(r => (
-                                      <tr key={r.product}>
-                                        <td style={{ padding: "3px 4px", fontSize: 9, color: warmWhite }}>{r.product}</td>
-                                        <td style={{ padding: "3px 4px", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{r.usage}</td>
+                              {lastEntry.id === "germanium" && si === 2 && (
+                                <>
+                                  <p style={dataLabelStyle}>Downstream Demand</p>
+                                  <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                                    <thead>
+                                      <tr>
+                                        {["Product", "Usage"].map(h => (
+                                          <th key={h} style={{ textAlign: "left", padding: "2px 0", fontSize: 7, color: "#555", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{h}</th>
+                                        ))}
                                       </tr>
-                                    ))}
-                                  </tbody>
-                                </table>
-                              </div>
-                            )}
+                                    </thead>
+                                    <tbody>
+                                      {geDemandTable.map(r => (
+                                        <tr key={r.product}>
+                                          <td style={{ padding: "2px 0", fontSize: 9, color: warmWhite }}>{r.product}</td>
+                                          <td style={{ padding: "2px 0", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace", textAlign: "right" }}>{r.usage}</td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </>
+                              )}
+                            </div>
 
-                            {/* Context moved below data */}
+                            {/* Context below data */}
                             <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "8px 0" }} />
                             <p style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.55)", lineHeight: 1.4, margin: 0, fontWeight: 500 }}>{step.context}</p>
                           </>
