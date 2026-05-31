@@ -1916,7 +1916,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [geTreeExpanded, setGeTreeExpanded] = useState(false);
   const [oppFilter, setOppFilter] = useState<string | null>(null);
   const [oppBriefId, setOppBriefId] = useState<string | null>(null);
-  const [oppExpanded, setOppExpanded] = useState(true);
+  const [oppExpanded, setOppExpanded] = useState(false);
   // Auto-collapse supply chain card when tree expands
   useEffect(() => {
     if (geTreeExpanded) setLayersExpanded(false);
@@ -3763,8 +3763,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 </div>
               );
             })()}
-            {/* Layer flow steps — shown on input pages above tabs, hidden when opportunities expanded */}
-            {!oppExpanded && (() => {
+            {/* Layer flow steps — shown on input pages above tabs */}
+            {(() => {
               const isInputPage = lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component");
               if (!isInputPage) return null;
               const accent = templateAccent ?? "#706a60";
@@ -3931,10 +3931,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
           {/* Supply tree area */}
           <div style={{
+            flex: oppExpanded ? 0 : 1,
             minHeight: 0,
             overflowY: "auto", overflowX: "hidden",
             padding: "0 30px 20px",
-            ...(oppExpanded && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") ? { display: "none" } : { flex: 1 }),
           }}>
             <div style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "0 16px 14px", overflow: "hidden", ...(currentVertical?.id === "ai" && currentLevel === "subsystems" ? { background: "transparent", padding: 0 } : {}) }}>
               {/* Tabs — hidden on AI infra vertical tree */}
