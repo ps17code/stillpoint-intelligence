@@ -1378,6 +1378,19 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
   const anyExpanded = Object.values(layerZoom).some(v => v > 0);
   const allFull = ["deposits", "hostOperations", "refiners", "supplyAggregates"].every(k => (layerZoom[k] ?? 0) >= 2 && !expandedSubGroup[k]);
 
+  // Group node names for distinct styling
+  const GROUP_NODE_NAMES = new Set([
+    "Deposits (8)", "Host Operations (7)", "Refiners & Recyclers (7)", "Global Supply",
+    "Non-Western Deposits (3)", "Western Deposits (5)",
+    "Non-Western Operators (3)", "Western Operators (4)",
+    "Non-Western Refiners (4)", "Western Refiners (3)",
+    "China Primary Supply", "Western Recycled Supply",
+    "Downstream Demand",
+  ]);
+
+  // Check if a name is a group node (for styling)
+  const isGroupNode = (name: string) => GROUP_NODE_NAMES.has(name) || name.startsWith("Downstream Demand");
+
   return (
     <div>
       <HorizontalTree
@@ -1389,9 +1402,23 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick }: { o
         onDownstreamClick={downstreamExpanded ? onDownstreamClick : undefined}
         inlineNodes={inl}
         accentColor="#81713c"
+        groupNodes={GROUP_NODE_NAMES}
+        expandedLayers={new Set(Object.entries(layerZoom).filter(([, v]) => v > 0).map(([k]) => k))}
+        onLayerBack={(layerKey) => {
+          const current = layerZoom[layerKey] ?? 0;
+          if (current > 0) {
+            setLayerZoom(prev => ({ ...prev, [layerKey]: current - 1 }));
+            setExpandedSubGroup(prev => { const next = { ...prev }; delete next[layerKey]; return next; });
+          }
+        }}
       />
+      {!anyExpanded && (
+        <p style={{ fontSize: 9, color: "#555", margin: "10px 0 0 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
+          Click a node to expand
+        </p>
+      )}
       {anyExpanded && (
-        <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 8 }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 15 }}>
           <span
             onClick={() => { setLayerZoom({}); setExpandedSubGroup({}); setDownstreamExpanded(false); }}
             style={{ fontSize: 9, color: "#81713c", cursor: "pointer", fontFamily: "'Geist Mono', monospace", transition: "opacity 0.15s" }}
@@ -4024,12 +4051,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             </div>
           </div>
 
-          {/* Hint below supply tree card — only for input pages on supply-tree tab */}
-          {activeTab === "supply-tree" && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") && (
-            <p style={{ fontSize: 9, color: "#555", margin: "10px 0 0 0", fontFamily: "'Geist Mono', monospace", textAlign: "center" }}>
-              Click a node to expand
-            </p>
-          )}
 
           {/* Bottom section — key takeaways (hidden) */}
           <div style={{

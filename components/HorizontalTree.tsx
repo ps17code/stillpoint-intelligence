@@ -34,6 +34,12 @@ interface HorizontalTreeProps {
   inlineNodes?: Record<string, { quantity_pill?: string; descriptor_pill?: string; country?: string; flags?: string[] }>;
   /** Accent color for the input (used for idea dots) */
   accentColor?: string;
+  /** Set of node names that are group/summary nodes (styled differently) */
+  groupNodes?: Set<string>;
+  /** Callback when user clicks back on a layer; receives layer key */
+  onLayerBack?: (layerKey: string) => void;
+  /** Set of layer keys that are expanded (show back button) */
+  expandedLayers?: Set<string>;
 }
 
 /* ── Country code mapping for flag icons ── */
@@ -70,6 +76,7 @@ function NodeCard({
   cardRef,
   inlineNodeData,
   accentColor,
+  isGroup,
 }: {
   name: string;
   nodeData: NodeData | undefined;
@@ -84,6 +91,7 @@ function NodeCard({
   cardRef?: React.Ref<HTMLDivElement>;
   inlineNodeData?: { quantity_pill?: string; descriptor_pill?: string; country?: string; flags?: string[] };
   accentColor?: string;
+  isGroup?: boolean;
 }) {
   const raw = nodeData as unknown as Record<string, unknown>;
   const inl = inlineNodeData;
@@ -104,8 +112,8 @@ function NodeCard({
       onMouseLeave={onLeave}
       style={{
         padding: "5px 8px",
-        background: isActiveNode ? "rgb(60, 56, 52)" : highlighted ? "rgb(42, 38, 35)" : "rgb(36, 32, 29)",
-        border: isActiveNode ? "1px solid rgb(60, 56, 52)" : highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
+        background: isGroup ? "rgb(42, 38, 34)" : isActiveNode ? "rgb(60, 56, 52)" : highlighted ? "rgb(42, 38, 35)" : "rgb(36, 32, 29)",
+        border: isGroup ? "1px solid rgb(60, 55, 48)" : isActiveNode ? "1px solid rgb(60, 56, 52)" : highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
         borderRadius: 4,
         width: "100%",
         cursor: onClick ? "pointer" : "default",
@@ -179,6 +187,9 @@ export default function HorizontalTree({
   onDownstreamClick,
   inlineNodes,
   accentColor,
+  groupNodes,
+  onLayerBack,
+  expandedLayers,
 }: HorizontalTreeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
@@ -424,6 +435,14 @@ export default function HorizontalTree({
             }}
           >
             {col.label}
+            {onLayerBack && expandedLayers?.has(col.key) && (
+              <span
+                onClick={(e) => { e.stopPropagation(); onLayerBack(col.key); }}
+                style={{ marginLeft: 6, fontSize: 7, color: "#81713c", cursor: "pointer", fontWeight: 400, textTransform: "none" as const, letterSpacing: "0" }}
+              >
+                ← back
+              </span>
+            )}
           </p>
           {/* Node cards */}
           {col.nodes.map((node) => {
@@ -496,6 +515,7 @@ export default function HorizontalTree({
                 highlighted={isHighlighted}
                 isActiveNode={isActive}
                 dimmedByHover={isDimmed}
+                isGroup={groupNodes?.has(node.name)}
                 onClick={onNodeClick ? () => {
                   setClickedNode(prev => prev === node.name ? null : node.name);
                   onNodeClick(node.name);
