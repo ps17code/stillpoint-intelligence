@@ -1440,7 +1440,7 @@ function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExp
         }}
       />
       {anyExpanded && (
-        <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 15 }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 15, animation: "fadeInDown 0.3s ease" }}>
           <span
             onClick={() => { setLayerZoom({}); setExpandedSubGroup({}); setDownstreamExpanded(false); }}
             style={{ fontSize: 9, color: "#81713c", cursor: "pointer", fontFamily: "'Geist Mono', monospace", transition: "opacity 0.15s" }}
@@ -1912,8 +1912,12 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
   const [opportunityLayerFilter, setOpportunityLayerFilter] = useState<string | null>(null);
   const [selectedOpportunityBrief, setSelectedOpportunityBrief] = useState<string | null>(null);
-  const [layersExpanded, setLayersExpanded] = useState(false);
+  const [layersExpanded, setLayersExpanded] = useState(true);
   const [geTreeExpanded, setGeTreeExpanded] = useState(false);
+  // Auto-collapse supply chain card when tree expands
+  useEffect(() => {
+    if (geTreeExpanded) setLayersExpanded(false);
+  }, [geTreeExpanded]);
 
   // Featured chains data
   type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; highlight_display_index?: number; navigate_path: string[] };
@@ -3816,7 +3820,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Chain</p>
                     <span
                       onClick={() => setLayersExpanded(!layersExpanded)}
-                      style={{ fontSize: 9, color: accent, cursor: "pointer", transition: "color 0.15s", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4 }}
+                      style={{ fontSize: 9, color: accent, cursor: "pointer", transition: "color 0.15s, opacity 0.3s", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, animation: "fadeInDown 0.3s ease" }}
                       onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
                       onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
                     >
@@ -3828,7 +3832,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
                     {flow.steps.map((step, si) => (
-                      <div key={step.label} style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "10px 12px", border: "0.5px solid rgb(36, 36, 36)" }}>
+                      <div key={step.label} style={{ background: "rgb(34, 34, 34)", borderRadius: 5, padding: "10px 12px", border: "0.5px solid rgb(42, 42, 42)" }}>
                         {/* Step header */}
                         <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
                           <div style={{ width: 16, height: 16, borderRadius: "50%", border: `1.5px solid ${accent}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
@@ -3838,8 +3842,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           <span style={{ fontSize: 11, color: accent, fontWeight: 500, marginLeft: 4 }}>{step.value}</span>
                         </div>
                         <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: "5px 0 0 0" }}>{step.desc}</p>
-                        {layersExpanded && (
-                          <>
+                        <div style={{ maxHeight: layersExpanded ? 300 : 0, opacity: layersExpanded ? 1 : 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
                             <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "8px 0" }} />
 
                             {/* Data module */}
@@ -3855,7 +3858,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                                           <span style={{ fontSize: 9, color: warmWhite, fontFamily: "'Geist Mono', monospace" }}>{s.pct}%</span>
                                         </div>
                                         <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2 }}>
-                                          <div style={{ height: "100%", width: `${(s.pct / maxPct) * 100}%`, background: accent, borderRadius: 2 }} />
+                                          <div style={{ height: "100%", width: `${(s.pct / maxPct) * 100}%`, background: "rgb(131, 131, 131)", borderRadius: 2 }} />
                                         </div>
                                       </div>
                                     ))}
@@ -3879,7 +3882,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                                             <span style={{ fontSize: 9, color: warmWhite, fontFamily: "'Geist Mono', monospace" }}>{p.share}</span>
                                           </div>
                                           <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2 }}>
-                                            <div style={{ height: "100%", width: `${(shareNum / maxShare) * 100}%`, background: accent, borderRadius: 2 }} />
+                                            <div style={{ height: "100%", width: `${(shareNum / maxShare) * 100}%`, background: "rgb(131, 131, 131)", borderRadius: 2 }} />
                                           </div>
                                         </div>
                                       );
@@ -3901,7 +3904,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                                             <span style={{ fontSize: 9, color: warmWhite, fontFamily: "'Geist Mono', monospace", flexShrink: 0, marginLeft: 6 }}>{r.usage}</span>
                                           </div>
                                           <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2 }}>
-                                            <div style={{ height: "100%", width: `${(usageNum / maxDemand) * 100}%`, background: accent, borderRadius: 2 }} />
+                                            <div style={{ height: "100%", width: `${(usageNum / maxDemand) * 100}%`, background: "rgb(131, 131, 131)", borderRadius: 2 }} />
                                           </div>
                                         </div>
                                       );
@@ -3914,8 +3917,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             {/* Context below data */}
                             <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "8px 0" }} />
                             <p style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.55)", lineHeight: 1.4, margin: 0, fontWeight: 500 }}>{step.context}</p>
-                          </>
-                        )}
+                        </div>
                       </div>
                     ))}
                   </div>
