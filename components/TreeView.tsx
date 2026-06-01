@@ -4611,24 +4611,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const svAccent = templateAccent ?? "#706a60";
               return (
                 <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px", marginBottom: 10 }}>
-                  <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Stillpoint View</p>
-                  <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{sv.view}</p>
-                  {sv.signalLabel && (
-                    <span
-                      onClick={() => {
-                        setPath([{ type: "vertical", id: "ai", name: "AI Infrastructure" }]);
-                        setAnimKey(k => k + 1);
-                        setSelectedFeaturedChain(sv.signalId);
-                        setSelectedTreeNode("Germanium");
-                        setRightTab("summary");
-                      }}
-                      style={{ fontSize: 10, color: svAccent, cursor: "pointer", transition: "opacity 0.15s", display: "inline-block", marginTop: 8 }}
-                      onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
-                      onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
-                    >
-                      {sv.signalLabel} →
-                    </span>
-                  )}
+                  <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Stillpoint View</p>
+                  <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{sv.view}</p>
                 </div>
               );
             })()}
@@ -5714,26 +5698,26 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 const signals = inputSignals[inputIdRP] ?? [];
 
                 const inputChains: Record<string, string[][]> = {
-                  germanium: [["Germanium", "Fiber Optic Cable"], ["Germanium", "IR Defense Optics"], ["Germanium", "Satellite Solar"]],
-                  gallium: [["Gallium", "GaN Power Chips"], ["Gallium", "5G RF Amplifiers"]],
-                  fiber: [["Fiber Optic Cable", "AI Datacenters"], ["Fiber Optic Cable", "Telecom Networks"]],
+                  germanium: [["Ge", "GeCl₄", "Fiber"], ["Ge", "GeO₂", "IR Optics"], ["Ge", "SiGe", "Satellite Solar"]],
+                  gallium: [["Ga", "GaN", "Power Chips"], ["Ga", "GaAs", "5G RF"]],
+                  fiber: [["GeCl₄", "Preform", "Fiber Cable"], ["Fiber", "Transceiver", "AI DC"]],
                 };
                 const chains = inputChains[inputIdRP] ?? [];
 
                 return (
                   <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px" }}>
                     {/* Signals */}
-                    <p style={labelRP}>Signals</p>
+                    <p style={{ ...labelRP, margin: "0 0 10px 0" }}>Signals</p>
                     {signals.map(s => (
-                      <div key={s.title} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                        <span className="relative flex" style={{ width: 6, height: 6, marginTop: 4, flexShrink: 0 }}>
-                          <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: accentRP, opacity: 0.75, animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite" }} />
-                          <span style={{ position: "relative", width: 6, height: 6, borderRadius: "50%", background: accentRP }} />
-                        </span>
-                        <div>
-                          <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 1px 0" }}>{s.title}</p>
-                          <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{s.teaser}</p>
+                      <div key={s.title}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
+                          <span style={{ position: "relative", width: 6, height: 6, flexShrink: 0 }}>
+                            <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: accentRP, opacity: 0.75, animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite" }} />
+                            <span style={{ position: "relative", display: "block", width: 6, height: 6, borderRadius: "50%", background: accentRP }} />
+                          </span>
+                          <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{s.title}</span>
                         </div>
+                        <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{s.teaser}</p>
                       </div>
                     ))}
 
@@ -5743,14 +5727,14 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     <p style={labelRP}>Chains</p>
                     <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                       {chains.map((chain, ci) => (
-                        <div key={ci} style={{ display: "flex", alignItems: "center", gap: 0 }}>
+                        <span key={ci} style={{ display: "inline-flex", alignItems: "center", fontSize: 9, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.04)", borderRadius: 3, padding: "3px 8px", fontFamily: "'Geist Mono', monospace", gap: 0 }}>
                           {chain.map((node, ni) => (
                             <React.Fragment key={ni}>
-                              {ni > 0 && <span style={{ fontSize: 9, color: "#3a3835", margin: "0 5px" }}>→</span>}
-                              <span style={{ fontSize: 10, color: ni === 0 ? warmWhite : "rgb(160, 152, 136)", fontWeight: ni === 0 ? 500 : 400 }}>{node}</span>
+                              {ni > 0 && <span style={{ margin: "0 4px", color: "rgba(255,255,255,0.2)" }}>→</span>}
+                              <span>{node}</span>
                             </React.Fragment>
                           ))}
-                        </div>
+                        </span>
                       ))}
                     </div>
 
@@ -5760,7 +5744,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         {dividerRP}
                         <p style={labelRP}>Upstream</p>
                         {connected.upstream.map(u => (
-                          <p key={u.name} style={{ fontSize: 11, color: u.linked ? warmWhite : "rgb(160, 152, 136)", margin: "2px 0", cursor: u.linked ? "pointer" : "default" }}>{u.name}</p>
+                          <div key={u.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "2px 0" }}>
+                            <span style={{ fontSize: 11, color: "rgb(160, 152, 136)" }}>{u.name}</span>
+                            {u.linked && <span style={{ fontSize: 8, color: accentRP }}>→</span>}
+                          </div>
                         ))}
                       </>
                     )}
@@ -5771,7 +5758,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     <p style={labelRP}>Downstream</p>
                     {connected?.downstream?.map(d => (
                       <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "2px 0" }}>
-                        <span style={{ fontSize: 11, color: d.linked ? warmWhite : "rgb(160, 152, 136)", cursor: d.linked ? "pointer" : "default" }}>{d.name}</span>
+                        <span style={{ fontSize: 11, color: "rgb(160, 152, 136)" }}>{d.name}</span>
                         {d.linked && <span style={{ fontSize: 8, color: accentRP }}>→</span>}
                       </div>
                     ))}
