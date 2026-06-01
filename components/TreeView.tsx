@@ -5687,8 +5687,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 const inputJson = inputIdRP === "germanium" ? germaniumInputJson : inputIdRP === "gallium" ? galliumInputJson : inputIdRP === "fiber" ? fiberInputJson : null;
                 const connected = (inputJson as unknown as { connectedInputs?: { upstream?: { name: string; linked: boolean; href: string }[]; downstream?: { name: string; linked: boolean; href: string }[] } })?.connectedInputs;
                 const accentRP = templateAccent ?? "#706a60";
-                const labelRP = { fontSize: 9 as const, color: "#555" as string, margin: "0 0 6px 0" as const, textTransform: "uppercase" as const, letterSpacing: "0.06em" as const, fontFamily: "'Geist Mono', monospace" as const, fontWeight: 500 as const };
-                const dividerRP = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
+                const labelRP = { fontSize: 9 as const, color: "rgb(219, 219, 218)" as string, margin: "0 0 10px 0" as const, textTransform: "uppercase" as const, letterSpacing: "0.06em" as const, fontFamily: "'Geist Mono', monospace" as const, fontWeight: 500 as const };
+                const dividerRP = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "15px 0" }} />;
 
                 const inputSignals: Record<string, { title: string; teaser: string }[]> = {
                   germanium: [{ title: "GeCl₄ Chokepoint", teaser: "Single western supplier controls fiber-grade conversion." }],
@@ -5707,7 +5707,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 return (
                   <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px" }}>
                     {/* Signals */}
-                    <p style={{ ...labelRP, margin: "0 0 10px 0" }}>Signals</p>
+                    <p style={labelRP}>Signals</p>
                     {signals.map(s => (
                       <div key={s.title}>
                         <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
@@ -5715,9 +5715,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: accentRP, opacity: 0.75, animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite" }} />
                             <span style={{ position: "relative", display: "block", width: 6, height: 6, borderRadius: "50%", background: accentRP }} />
                           </span>
-                          <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{s.title}</span>
+                          <span style={{ fontSize: 11, color: accentRP, fontWeight: 500 }}>{s.title}</span>
                         </div>
-                        <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{s.teaser}</p>
+                        <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{s.teaser}</p>
                       </div>
                     ))}
 
@@ -5727,7 +5727,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     <p style={labelRP}>Chains</p>
                     <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                       {chains.map((chain, ci) => (
-                        <span key={ci} style={{ display: "inline-flex", alignItems: "center", fontSize: 9, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.04)", borderRadius: 3, padding: "3px 8px", fontFamily: "'Geist Mono', monospace", gap: 0 }}>
+                        <span key={ci} style={{ display: "inline-flex", alignItems: "center", fontSize: 10, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "3px 10px", fontFamily: "'Geist Mono', monospace", gap: 0 }}>
                           {chain.map((node, ni) => (
                             <React.Fragment key={ni}>
                               {ni > 0 && <span style={{ margin: "0 4px", color: "rgba(255,255,255,0.2)" }}>→</span>}
