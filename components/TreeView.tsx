@@ -2929,7 +2929,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   { name: "Sumitomo Electric", node: "Fiber Optic Cable", flag: "jp" },
                 ],
                 explore: [
-                  { label: "Open GeCl₄ Chokepoint Brief", desc: "Deep analysis of the germanium-to-fiber bottleneck", icon: "doc", action: () => { setSelectedFeaturedChain("germanium_chokepoint"); setSelectedTreeNode("Germanium"); setRightTab("summary"); } },
+                  { label: "Open GeCl₄ Chokepoint Brief", desc: "Deep analysis of the germanium-to-fiber bottleneck", icon: "doc", action: () => { setSelectedFeaturedChain("germanium_chokepoint"); setSelectedTreeNode(null); setRightTab("summary"); } },
                   { label: "View Connectivity Supply Tree", desc: "Explore the full connectivity supply chain", icon: "tree", action: () => { setChainTreeTab("tree"); } },
                   { label: "Map Geographic Exposure", desc: "See where connectivity supply is concentrated", icon: "globe", action: () => {} },
                   { label: "See Company Universe", desc: "Browse all companies in this subsystem", icon: "companies", action: () => {} },
@@ -3068,7 +3068,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   <div style={{ paddingRight: 14 }}>
                     {featuredSignal ? (
                       <div
-                        onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
+                        onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode(null); setRightTab("summary"); }}
                         style={{ background: "rgb(37, 37, 37)", borderRadius: 5, overflow: "hidden", cursor: "pointer", transition: "background 0.15s", border: "1px solid rgba(200, 122, 74, 0.25)" }}
                         onMouseEnter={e => { e.currentTarget.style.background = "rgb(42, 42, 42)"; }}
                         onMouseLeave={e => { e.currentTarget.style.background = "rgb(37, 37, 37)"; }}
@@ -3150,7 +3150,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         {otherSignals.map((s, si) => (
                           <div
                             key={s.id}
-                            onClick={() => { setSelectedFeaturedChain(s.id); setSelectedTreeNode("Germanium"); setRightTab("summary"); }}
+                            onClick={() => { setSelectedFeaturedChain(s.id); setSelectedTreeNode(null); setRightTab("summary"); }}
                             style={{
                               paddingTop: si === 0 ? 8 : 10,
                               paddingBottom: si === otherSignals.length - 1 ? 0 : 10,
@@ -4736,7 +4736,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 const titleColor = pill.color + "bf";
                 return (
                   <div
-                    onClick={() => { const wasSelected = selectedFeaturedChain === chain.id; setSelectedFeaturedChain(wasSelected ? null : chain.id); setSelectedGroup(null); setSelectedTreeNode(wasSelected ? null : "Germanium"); if (!wasSelected) setRightTab("summary"); }}
+                    onClick={() => { const wasSelected = selectedFeaturedChain === chain.id; setSelectedFeaturedChain(wasSelected ? null : chain.id); setSelectedGroup(null); setSelectedTreeNode(null); if (!wasSelected) setRightTab("summary"); }}
                     style={{ cursor: "pointer", padding: "8px 10px", borderRadius: 4, transition: "background 0.15s", background: selectedFeaturedChain === chain.id ? "rgba(255, 255, 255, 0.06)" : "rgba(255, 255, 255, 0.02)" }}
                     onMouseEnter={e => { e.currentTarget.style.background = selectedFeaturedChain === chain.id ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.05)"; }}
                     onMouseLeave={e => { e.currentTarget.style.background = selectedFeaturedChain === chain.id ? "rgba(255, 255, 255, 0.06)" : "rgba(255, 255, 255, 0.02)"; }}
@@ -5205,17 +5205,65 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     </div>
                   );
                 }
-                // No node selected — show key takeaways + key players
+                // No node selected — show chain summary card
+                const chainSummaryLabelStyle = { fontSize: 9 as const, color: "rgb(219, 219, 218)" as string, margin: "0 0 10px 0" as const, textTransform: "uppercase" as const, letterSpacing: "0.06em" as const, fontFamily: "'Geist Mono', monospace" as const, fontWeight: 500 as const };
+                const chainDivider = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "15px 0" }} />;
+                const chainAccent = templateAccent ?? "#c87a4a";
+
+                const chainSignals = [
+                  { title: "GeCl₄ Chokepoint", tag: "Supply", teaser: "Single western supplier controls fiber-grade conversion." },
+                  { title: "China Export Controls", tag: "Geopolitics", teaser: "Dual-use licensing restricts 83% of global germanium supply." },
+                  { title: "800G Transceiver Shortage", tag: "Demand", teaser: "Silicon photonics yield issues limiting production as AI demands more optical links." },
+                  { title: "Preform Equipment Monopoly", tag: "Supply", teaser: "One equipment supplier with 18-24 month backlogs." },
+                ];
+
+                const relatedChains = [
+                  ["Ge", "GeO₂", "IR Optics"],
+                  ["Ge", "SiGe", "Satellite Solar"],
+                  ["Ga", "GaN", "Power Chips"],
+                ];
+
                 return (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                    <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
-                      <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>Key Takeaways</p>
-                      {CHAIN_TAKEAWAYS.map((t, i) => (
-                        <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
-                          <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{t}</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {/* Stillpoint View */}
+                    <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px" }}>
+                      <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Stillpoint View</p>
+                      <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>AI data centers create massive new fiber demand. But high-performance fiber depends on germanium, which must be converted into ultra-pure GeCl₄ before it can be used in fiber preforms.</p>
+                      <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: "8px 0 0 0" }}>Fiber manufacturing capacity can expand with equipment capex. GeCl₄ supply is much harder to scale. It depends on limited germanium feedstock and a small group of refiners with the capability to produce fiber-grade material. Outside China, the key Western supplier appears to be Umicore — and GeCl₄ is not its core business.</p>
+                    </div>
+
+                    {/* Signals + Related Chains */}
+                    <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px" }}>
+                      <p style={chainSummaryLabelStyle}>Signals</p>
+                      {chainSignals.map((s, si) => (
+                        <div key={s.title} style={{ marginBottom: si < chainSignals.length - 1 ? 10 : 0 }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
+                            <span style={{ position: "relative", width: 6, height: 6, flexShrink: 0 }}>
+                              <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: chainAccent, opacity: 0.75, animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite" }} />
+                              <span style={{ position: "relative", display: "block", width: 6, height: 6, borderRadius: "50%", background: chainAccent }} />
+                            </span>
+                            <span style={{ fontSize: 11, color: chainAccent, fontWeight: 500 }}>{s.title}</span>
+                            <span style={{ fontSize: 7, color: "#555", background: "rgba(255,255,255,0.04)", borderRadius: 3, padding: "1px 5px", fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.tag}</span>
+                          </div>
+                          <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{s.teaser}</p>
                         </div>
                       ))}
+
+                      {chainDivider}
+
+                      <p style={chainSummaryLabelStyle}>Related Chains</p>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                        {relatedChains.map((chain, ci) => (
+                          <span key={ci} style={{ display: "inline-flex", alignItems: "center", fontSize: 10, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "3px 10px", fontFamily: "'Geist Mono', monospace", gap: 0 }}>
+                            {chain.map((node, ni) => (
+                              <React.Fragment key={ni}>
+                                {ni > 0 && <span style={{ margin: "0 4px", color: "rgba(255,255,255,0.2)" }}>→</span>}
+                                <span>{node}</span>
+                              </React.Fragment>
+                            ))}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 );
@@ -5701,7 +5749,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                               setPath([{ type: "vertical", id: "ai", name: "AI Infrastructure" }]);
                               setAnimKey(k => k + 1);
                               setSelectedFeaturedChain(s.chainId);
-                              setSelectedTreeNode("Germanium");
+                              setSelectedTreeNode(null);
                               setRightTab("summary");
                             }
                           }}
@@ -5731,7 +5779,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                               setAnimKey(k => k + 1);
                               if (chain.navPath[0]?.id === "ai") {
                                 setSelectedFeaturedChain("germanium_chokepoint");
-                                setSelectedTreeNode("Germanium");
+                                setSelectedTreeNode(null);
                                 setRightTab("summary");
                               }
                             }
