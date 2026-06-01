@@ -5039,46 +5039,17 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 return (
                   <div style={{ background: cardBg, borderRadius: 6, padding: "12px 12px" }}>
 
-                    {/* Market Price */}
-                    {priceData && (
-                      <>
-                        <p style={sectionTitle}>Market Price</p>
-                        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
-                          <div>
-                            <span style={{ fontSize: 16, fontWeight: 600, color: warmWhite, fontFamily: "'Geist Mono', monospace" }}>{priceData.currentPrice}</span>
-                            <span style={{ fontSize: 8, color: "#555", marginLeft: 4, fontFamily: "'Geist Mono', monospace" }}>{priceData.unit}</span>
-                          </div>
-                          <span style={{ fontSize: 10, color: accentForGap, fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>{priceData.change12m}</span>
-                        </div>
-                        {/* Sparkline */}
-                        {(() => {
-                          const W = 200, H = 35, padY = 4;
-                          const min = Math.min(...priceData.points);
-                          const max = Math.max(...priceData.points);
-                          const range = max - min || 1;
-                          const pts = priceData.points.map((v, i) => ({
-                            x: (i / (priceData.points.length - 1)) * W,
-                            y: padY + (1 - (v - min) / range) * (H - padY * 2),
-                          }));
-                          const linePath = pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x},${p.y}`).join(" ");
-                          const areaPath = linePath + ` L ${pts[pts.length - 1].x},${H} L ${pts[0].x},${H} Z`;
-                          return (
-                            <svg width="100%" height={H} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{ display: "block" }}>
-                              <defs>
-                                <linearGradient id="rpPriceGrad" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="0%" stopColor={accentForGap} stopOpacity="0.2" />
-                                  <stop offset="100%" stopColor={accentForGap} stopOpacity="0" />
-                                </linearGradient>
-                              </defs>
-                              <path d={areaPath} fill="url(#rpPriceGrad)" />
-                              <path d={linePath} fill="none" stroke={accentForGap} strokeWidth="1.5" />
-                              <circle cx={pts[pts.length - 1].x} cy={pts[pts.length - 1].y} r="2" fill={accentForGap} />
-                            </svg>
-                          );
-                        })()}
-                        {divider}
-                      </>
-                    )}
+                    {/* Header */}
+                    <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: "0 0 2px 0", fontFamily: "'EB Garamond', Georgia, serif" }}>{data.name}</p>
+                    <p style={{ ...labelStyle, margin: 0 }}>{data.layer}</p>
+
+                    {divider}
+
+                    {/* Why It Matters */}
+                    <p style={sectionTitle}>Why It Matters</p>
+                    <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{data.whyItMatters}</p>
+
+                    {divider}
 
                     {/* Supply */}
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
