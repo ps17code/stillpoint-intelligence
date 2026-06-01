@@ -5690,17 +5690,30 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 const labelRP = { fontSize: 9 as const, color: "rgb(219, 219, 218)" as string, margin: "0 0 10px 0" as const, textTransform: "uppercase" as const, letterSpacing: "0.06em" as const, fontFamily: "'Geist Mono', monospace" as const, fontWeight: 500 as const };
                 const dividerRP = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "15px 0" }} />;
 
-                const inputSignals: Record<string, { title: string; teaser: string }[]> = {
-                  germanium: [{ title: "GeCl₄ Chokepoint", teaser: "Single western supplier controls fiber-grade conversion." }],
-                  gallium: [{ title: "Alumina Byproduct Lock", teaser: "Output determined by aluminum industry, not gallium demand." }],
-                  fiber: [{ title: "Preform Equipment Monopoly", teaser: "One equipment supplier with 18-24 month backlogs." }],
+                const inputSignals: Record<string, { title: string; tag: string; teaser: string; chainId?: string }[]> = {
+                  germanium: [
+                    { title: "GeCl₄ Chokepoint", tag: "Supply", teaser: "Single western supplier controls fiber-grade conversion.", chainId: "germanium_chokepoint" },
+                    { title: "China Export Controls", tag: "Geopolitics", teaser: "Dual-use licensing restricts 83% of global germanium supply." },
+                  ],
+                  gallium: [{ title: "Alumina Byproduct Lock", tag: "Supply", teaser: "Output determined by aluminum industry, not gallium demand." }],
+                  fiber: [{ title: "Preform Equipment Monopoly", tag: "Supply", teaser: "One equipment supplier with 18-24 month backlogs." }],
                 };
                 const signals = inputSignals[inputIdRP] ?? [];
 
-                const inputChains: Record<string, string[][]> = {
-                  germanium: [["Ge", "GeCl₄", "Fiber"], ["Ge", "GeO₂", "IR Optics"], ["Ge", "SiGe", "Satellite Solar"]],
-                  gallium: [["Ga", "GaN", "Power Chips"], ["Ga", "GaAs", "5G RF"]],
-                  fiber: [["GeCl₄", "Preform", "Fiber Cable"], ["Fiber", "Transceiver", "AI DC"]],
+                const inputChains: Record<string, { nodes: string[]; navPath: PathEntry[] }[]> = {
+                  germanium: [
+                    { nodes: ["Ge", "GeCl₄", "Fiber"], navPath: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }] },
+                    { nodes: ["Ge", "GeO₂", "IR Optics"], navPath: [] },
+                    { nodes: ["Ge", "SiGe", "Satellite Solar"], navPath: [] },
+                  ],
+                  gallium: [
+                    { nodes: ["Ga", "GaN", "Power Chips"], navPath: [] },
+                    { nodes: ["Ga", "GaAs", "5G RF"], navPath: [] },
+                  ],
+                  fiber: [
+                    { nodes: ["GeCl₄", "Preform", "Fiber Cable"], navPath: [{ type: "vertical", id: "ai", name: "AI Infrastructure" }] },
+                    { nodes: ["Fiber", "Transceiver", "AI DC"], navPath: [] },
+                  ],
                 };
                 const chains = inputChains[inputIdRP] ?? [];
 
@@ -5708,14 +5721,26 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px" }}>
                     {/* Signals */}
                     <p style={labelRP}>Signals</p>
-                    {signals.map(s => (
-                      <div key={s.title}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
+                    {signals.map((s, si) => (
+                      <div key={s.title} style={{ marginBottom: si < signals.length - 1 ? 10 : 0 }}>
+                        <div
+                          style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5, cursor: s.chainId ? "pointer" : "default" }}
+                          onClick={() => {
+                            if (s.chainId) {
+                              setPath([{ type: "vertical", id: "ai", name: "AI Infrastructure" }]);
+                              setAnimKey(k => k + 1);
+                              setSelectedFeaturedChain(s.chainId);
+                              setSelectedTreeNode("Germanium");
+                              setRightTab("summary");
+                            }
+                          }}
+                        >
                           <span style={{ position: "relative", width: 6, height: 6, flexShrink: 0 }}>
                             <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: accentRP, opacity: 0.75, animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite" }} />
                             <span style={{ position: "relative", display: "block", width: 6, height: 6, borderRadius: "50%", background: accentRP }} />
                           </span>
                           <span style={{ fontSize: 11, color: accentRP, fontWeight: 500 }}>{s.title}</span>
+                          <span style={{ fontSize: 7, color: "#555", background: "rgba(255,255,255,0.04)", borderRadius: 3, padding: "1px 5px", fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.tag}</span>
                         </div>
                         <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{s.teaser}</p>
                       </div>
@@ -5727,13 +5752,30 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     <p style={labelRP}>Chains</p>
                     <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                       {chains.map((chain, ci) => (
-                        <span key={ci} style={{ display: "inline-flex", alignItems: "center", fontSize: 10, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "3px 10px", fontFamily: "'Geist Mono', monospace", gap: 0 }}>
-                          {chain.map((node, ni) => (
+                        <span
+                          key={ci}
+                          onClick={() => {
+                            if (chain.navPath.length > 0) {
+                              setPath(chain.navPath);
+                              setAnimKey(k => k + 1);
+                              if (chain.navPath[0]?.id === "ai") {
+                                setSelectedFeaturedChain("germanium_chokepoint");
+                                setSelectedTreeNode("Germanium");
+                                setRightTab("summary");
+                              }
+                            }
+                          }}
+                          style={{ display: "inline-flex", alignItems: "center", fontSize: 10, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "3px 10px", fontFamily: "'Geist Mono', monospace", gap: 0, cursor: chain.navPath.length > 0 ? "pointer" : "default", transition: "background 0.15s" }}
+                          onMouseEnter={e => { if (chain.navPath.length > 0) e.currentTarget.style.background = "rgba(255,255,255,0.07)"; }}
+                          onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+                        >
+                          {chain.nodes.map((node, ni) => (
                             <React.Fragment key={ni}>
                               {ni > 0 && <span style={{ margin: "0 4px", color: "rgba(255,255,255,0.2)" }}>→</span>}
                               <span>{node}</span>
                             </React.Fragment>
                           ))}
+                          {chain.navPath.length > 0 && <span style={{ marginLeft: 6, fontSize: 8, color: accentRP }}>→</span>}
                         </span>
                       ))}
                     </div>
@@ -5744,7 +5786,20 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         {dividerRP}
                         <p style={labelRP}>Upstream</p>
                         {connected.upstream.map(u => (
-                          <div key={u.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "2px 0" }}>
+                          <div
+                            key={u.name}
+                            onClick={() => {
+                              if (u.linked && u.href) {
+                                const slug = u.href.split("/").pop() ?? "";
+                                const nameMap: Record<string, string> = { "germanium": "Germanium", "gallium": "Gallium", "fiber-optic-cable": "Fiber optic cable" };
+                                const idMap: Record<string, string> = { "germanium": "germanium", "gallium": "gallium", "fiber-optic-cable": "fiber" };
+                                if (nameMap[slug]) {
+                                  pushPath({ type: "raw-material", id: idMap[slug] ?? slug, name: nameMap[slug] ?? slug });
+                                }
+                              }
+                            }}
+                            style={{ display: "flex", alignItems: "center", gap: 6, padding: "2px 0", cursor: u.linked ? "pointer" : "default" }}
+                          >
                             <span style={{ fontSize: 11, color: "rgb(160, 152, 136)" }}>{u.name}</span>
                             {u.linked && <span style={{ fontSize: 8, color: accentRP }}>→</span>}
                           </div>
@@ -5757,7 +5812,21 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     {/* Downstream */}
                     <p style={labelRP}>Downstream</p>
                     {connected?.downstream?.map(d => (
-                      <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "2px 0" }}>
+                      <div
+                        key={d.name}
+                        onClick={() => {
+                          if (d.linked && d.href) {
+                            const slug = d.href.split("/").pop() ?? "";
+                            const nameMap: Record<string, string> = { "germanium": "Germanium", "gallium": "Gallium", "fiber-optic-cable": "Fiber optic cable" };
+                            const idMap: Record<string, string> = { "germanium": "germanium", "gallium": "gallium", "fiber-optic-cable": "fiber" };
+                            const typeMap: Record<string, "raw-material" | "component"> = { "germanium": "raw-material", "gallium": "raw-material", "fiber-optic-cable": "component" };
+                            if (nameMap[slug]) {
+                              pushPath({ type: typeMap[slug] ?? "component", id: idMap[slug] ?? slug, name: nameMap[slug] ?? slug });
+                            }
+                          }
+                        }}
+                        style={{ display: "flex", alignItems: "center", gap: 6, padding: "2px 0", cursor: d.linked ? "pointer" : "default" }}
+                      >
                         <span style={{ fontSize: 11, color: "rgb(160, 152, 136)" }}>{d.name}</span>
                         {d.linked && <span style={{ fontSize: 8, color: accentRP }}>→</span>}
                       </div>
