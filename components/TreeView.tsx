@@ -5156,7 +5156,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
                           onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
                         >
-                          View Opportunities &rarr;
+                          View {data.navLabel ?? data.name}&apos;s Page &rarr;
                         </button>
                       </>
                     )}
