@@ -5696,90 +5696,85 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 }
               }
 
-              // Input page — show dependencies panel instead of chain step panel
+              // Input page — show dependencies panel
               const isInputPageRP = lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component");
               if (isInputPageRP) {
                 const inputIdRP = lastEntry.id === "fiber" ? "fiber" : lastEntry.id;
                 const inputJson = inputIdRP === "germanium" ? germaniumInputJson : inputIdRP === "gallium" ? galliumInputJson : inputIdRP === "fiber" ? fiberInputJson : null;
                 const connected = (inputJson as unknown as { connectedInputs?: { upstream?: { name: string; linked: boolean; href: string }[]; downstream?: { name: string; linked: boolean; href: string }[] } })?.connectedInputs;
-                const depsData = INPUT_DEPS[inputIdRP];
-                const cardBgRP = "rgba(255, 255, 255, 0.02)";
-                const divRP = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
-                const sectionTitleRP = { fontSize: 11 as const, color: "rgb(219, 219, 218)" as const, fontWeight: 500 as const, margin: "0 0 6px 0" as const };
+                const accentRP = templateAccent ?? "#706a60";
+                const labelRP = { fontSize: 9 as const, color: "#555" as string, margin: "0 0 6px 0" as const, textTransform: "uppercase" as const, letterSpacing: "0.06em" as const, fontFamily: "'Geist Mono', monospace" as const, fontWeight: 500 as const };
+                const dividerRP = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
 
-                // Signals related to this input
                 const inputSignals: Record<string, { title: string; teaser: string }[]> = {
-                  germanium: [
-                    { title: "GeCl₄ Chokepoint", teaser: "Single western supplier controls fiber-grade conversion." },
-                    { title: "China Export Controls", teaser: "Dual-use licensing restricts 83% of global supply." },
-                    { title: "Price 5.7x Since 2024", teaser: "No futures market — physical transactions only." },
-                  ],
-                  gallium: [
-                    { title: "Alumina Byproduct Lock", teaser: "Output determined by aluminum industry, not gallium demand." },
-                    { title: "China 98% Refining", teaser: "Nearly all recovery circuits installed in Chinese plants." },
-                  ],
-                  fiber: [
-                    { title: "Preform Monopoly", teaser: "One equipment supplier with 18-24 month backlogs." },
-                    { title: "Helium Supply Risk", teaser: "Non-renewable gas critical for fiber draw cooling." },
-                    { title: "GeCl₄ Dependency", teaser: "Every km of fiber requires ultra-pure GeCl₄." },
-                  ],
+                  germanium: [{ title: "GeCl₄ Chokepoint", teaser: "Single western supplier controls fiber-grade conversion." }],
+                  gallium: [{ title: "Alumina Byproduct Lock", teaser: "Output determined by aluminum industry, not gallium demand." }],
+                  fiber: [{ title: "Preform Equipment Monopoly", teaser: "One equipment supplier with 18-24 month backlogs." }],
                 };
-
                 const signals = inputSignals[inputIdRP] ?? [];
 
+                const inputChains: Record<string, string[][]> = {
+                  germanium: [["Germanium", "Fiber Optic Cable"], ["Germanium", "IR Defense Optics"], ["Germanium", "Satellite Solar"]],
+                  gallium: [["Gallium", "GaN Power Chips"], ["Gallium", "5G RF Amplifiers"]],
+                  fiber: [["Fiber Optic Cable", "AI Datacenters"], ["Fiber Optic Cable", "Telecom Networks"]],
+                };
+                const chains = inputChains[inputIdRP] ?? [];
+
                 return (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px" }}>
                     {/* Signals */}
-                    {signals.length > 0 && (
-                      <div style={{ background: cardBgRP, borderRadius: 6, padding: "10px 12px" }}>
-                        <p style={sectionTitleRP}>Signals</p>
-                        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                          {signals.map(s => (
-                            <div key={s.title} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                              <span style={{ width: 3, height: 3, borderRadius: "50%", background: templateAccent ?? "#706a60", flexShrink: 0, marginTop: 5 }} />
-                              <div>
-                                <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 1px 0" }}>{s.title}</p>
-                                <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{s.teaser}</p>
-                              </div>
-                            </div>
-                          ))}
+                    <p style={labelRP}>Signals</p>
+                    {signals.map(s => (
+                      <div key={s.title} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+                        <span className="relative flex" style={{ width: 6, height: 6, marginTop: 4, flexShrink: 0 }}>
+                          <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: accentRP, opacity: 0.75, animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite" }} />
+                          <span style={{ position: "relative", width: 6, height: 6, borderRadius: "50%", background: accentRP }} />
+                        </span>
+                        <div>
+                          <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 1px 0" }}>{s.title}</p>
+                          <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{s.teaser}</p>
                         </div>
                       </div>
-                    )}
+                    ))}
+
+                    {dividerRP}
+
+                    {/* Chains */}
+                    <p style={labelRP}>Chains</p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                      {chains.map((chain, ci) => (
+                        <div key={ci} style={{ display: "flex", alignItems: "center", gap: 0 }}>
+                          {chain.map((node, ni) => (
+                            <React.Fragment key={ni}>
+                              {ni > 0 && <span style={{ fontSize: 9, color: "#3a3835", margin: "0 5px" }}>→</span>}
+                              <span style={{ fontSize: 10, color: ni === 0 ? warmWhite : "rgb(160, 152, 136)", fontWeight: ni === 0 ? 500 : 400 }}>{node}</span>
+                            </React.Fragment>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
 
                     {/* Upstream */}
                     {connected?.upstream && connected.upstream.length > 0 && (
-                      <div style={{ background: cardBgRP, borderRadius: 6, padding: "10px 12px" }}>
-                        <p style={sectionTitleRP}>Upstream Inputs</p>
+                      <>
+                        {dividerRP}
+                        <p style={labelRP}>Upstream</p>
                         {connected.upstream.map(u => (
-                          <div key={u.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "3px 0" }}>
-                            <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0 }} />
-                            <span style={{ fontSize: 11, color: u.linked ? warmWhite : "rgb(160, 152, 136)", cursor: u.linked ? "pointer" : "default" }}
-                              onClick={() => {
-                                if (u.linked && u.href) {
-                                  const slug = u.href.split("/").pop();
-                                  if (slug) { /* navigate */ }
-                                }
-                              }}
-                            >{u.name}</span>
-                          </div>
+                          <p key={u.name} style={{ fontSize: 11, color: u.linked ? warmWhite : "rgb(160, 152, 136)", margin: "2px 0", cursor: u.linked ? "pointer" : "default" }}>{u.name}</p>
                         ))}
-                      </div>
+                      </>
                     )}
 
+                    {dividerRP}
+
                     {/* Downstream */}
-                    {connected?.downstream && connected.downstream.length > 0 && (
-                      <div style={{ background: cardBgRP, borderRadius: 6, padding: "10px 12px" }}>
-                        <p style={sectionTitleRP}>Downstream Products</p>
-                        {connected.downstream.map(d => (
-                          <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "3px 0" }}>
-                            <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0 }} />
-                            <span style={{ fontSize: 11, color: d.linked ? warmWhite : "rgb(160, 152, 136)", cursor: d.linked ? "pointer" : "default" }}>{d.name}</span>
-                            {d.linked && <span style={{ fontSize: 8, color: templateAccent ?? "#706a60" }}>→</span>}
-                          </div>
-                        ))}
+                    <p style={labelRP}>Downstream</p>
+                    {connected?.downstream?.map(d => (
+                      <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "2px 0" }}>
+                        <span style={{ fontSize: 11, color: d.linked ? warmWhite : "rgb(160, 152, 136)", cursor: d.linked ? "pointer" : "default" }}>{d.name}</span>
+                        {d.linked && <span style={{ fontSize: 8, color: accentRP }}>→</span>}
                       </div>
-                    )}
+                    ))}
                   </div>
                 );
               }
