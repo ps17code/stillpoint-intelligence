@@ -2116,7 +2116,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
   const [opportunityLayerFilter, setOpportunityLayerFilter] = useState<string | null>(null);
   const [selectedOpportunityBrief, setSelectedOpportunityBrief] = useState<string | null>(null);
-  const [layersExpanded, setLayersExpanded] = useState(true);
+  const [layersExpanded, setLayersExpanded] = useState(false);
   const [geTreeExpanded, setGeTreeExpanded] = useState(false);
   const [oppFilter, setOppFilter] = useState<string | null>(null);
   const [oppBriefId, setOppBriefId] = useState<string | null>(null);
