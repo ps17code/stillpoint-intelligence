@@ -5213,7 +5213,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 const chainSignals = [
                   { title: "GeCl₄ Chokepoint", tag: "Supply", teaser: "Single western supplier controls fiber-grade conversion." },
                   { title: "China Export Controls", tag: "Geopolitics", teaser: "Dual-use licensing restricts 83% of global germanium supply." },
-                  { title: "800G Transceiver Shortage", tag: "Demand", teaser: "Silicon photonics yield issues limiting production as AI demands more optical links." },
                   { title: "Preform Equipment Monopoly", tag: "Supply", teaser: "One equipment supplier with 18-24 month backlogs." },
                 ];
 
