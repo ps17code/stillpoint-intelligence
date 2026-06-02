@@ -2114,6 +2114,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [selectedSubsystem, setSelectedSubsystem] = useState<string | null>(null);
   const [selectedArchPiece, setSelectedArchPiece] = useState<string | null>(null);
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
+  const [chainSummaryExpanded, setChainSummaryExpanded] = useState(false);
   const [opportunityLayerFilter, setOpportunityLayerFilter] = useState<string | null>(null);
   const [selectedOpportunityBrief, setSelectedOpportunityBrief] = useState<string | null>(null);
   const [layersExpanded, setLayersExpanded] = useState(false);
@@ -2720,15 +2721,15 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         {/* Illustration — collapses when arch piece selected */}
                         <div style={{
                           width: "100%",
-                          maxHeight: ((!selectedArchPiece || selectedFeaturedChain) && !showChainOpportunities) ? 90 : 0,
-                          opacity: ((!selectedArchPiece || selectedFeaturedChain) && !showChainOpportunities) ? 1 : 0,
+                          maxHeight: ((!selectedArchPiece || selectedFeaturedChain) && !showChainOpportunities && !chainSummaryExpanded) ? 90 : 0,
+                          opacity: ((!selectedArchPiece || selectedFeaturedChain) && !showChainOpportunities && !chainSummaryExpanded) ? 1 : 0,
                           borderRadius: 3,
                           overflow: "hidden",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                           background: "rgb(36, 36, 36)",
-                          marginBottom: ((!selectedArchPiece || selectedFeaturedChain) && !showChainOpportunities) ? 8 : 0,
+                          marginBottom: ((!selectedArchPiece || selectedFeaturedChain) && !showChainOpportunities && !chainSummaryExpanded) ? 8 : 0,
                           transition: "max-height 0.3s ease, opacity 0.2s ease, margin-bottom 0.3s ease",
                         }}>
                           <img src={step.img} alt={step.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
@@ -3182,19 +3183,33 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           })()}
 
           {selectedFeaturedChain === "germanium_chokepoint" && (
-            <div style={{
-              marginTop: 10,
-              maxHeight: showChainOpportunities ? 48 : 600,
-              opacity: showChainOpportunities ? 1 : 1,
-              overflow: "hidden",
-              transition: "max-height 0.3s ease 0.15s",
-              ...(showChainOpportunities ? {} : { animation: "fadeSlideDown 0.4s ease-out 0.2s both" }),
-            }}>
-              <ChainAnalysis collapsed={showChainOpportunities} onShowOpportunities={() => setShowChainOpportunities(true)} onExpand={() => { setShowChainOpportunities(false); setSelectedOpportunityBrief(null); setOpportunityLayerFilter(null); }} />
+            <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chain Summary</p>
+                  {!chainSummaryExpanded && <span style={{ fontSize: 9, color: "#555", marginLeft: 10, fontWeight: 400 }}>Supply flow, demand, gap, and constraints</span>}
+                </div>
+                <span
+                  onClick={() => setChainSummaryExpanded(!chainSummaryExpanded)}
+                  style={{ fontSize: 9, color: "#c87a4a", cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s" }}
+                  onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+                  onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                >
+                  {chainSummaryExpanded ? "Collapse" : "Expand"}
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ transform: chainSummaryExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                    <path d="M2 4L5 7L8 4" />
+                  </svg>
+                </span>
+              </div>
+              <div style={{ maxHeight: chainSummaryExpanded ? 2000 : 0, opacity: chainSummaryExpanded ? 1 : 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
+                <div style={{ marginTop: 10 }}>
+                  <ChainAnalysis collapsed={false} onShowOpportunities={() => { setShowChainOpportunities(true); setChainSummaryExpanded(false); }} onExpand={() => { setShowChainOpportunities(false); setSelectedOpportunityBrief(null); setOpportunityLayerFilter(null); }} />
+                </div>
+              </div>
             </div>
           )}
 
-          {showChainOpportunities && selectedFeaturedChain === "germanium_chokepoint" && (() => {
+          {selectedFeaturedChain === "germanium_chokepoint" && (() => {
             type WtmiIdeaLocal = { id: string; name: string; ticker?: string; category: string; line1: string };
             const geWtmi = (germaniumInputJson as unknown as { wtmi: { layers: { label: string; ideas: WtmiIdeaLocal[] }[] } }).wtmi;
             const fiberWtmi = (fiberInputJson as unknown as { wtmi: { layers: { label: string; ideas: WtmiIdeaLocal[] }[] } }).wtmi;
@@ -3241,8 +3256,27 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             const selectedBrief = selectedOpportunityBrief ? (geBriefs[selectedOpportunityBrief] ?? fiberBriefs[selectedOpportunityBrief]) : null;
 
             return (
-              <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", display: "flex", flexDirection: "column", animation: "fadeSlideDown 0.4s ease-out 0.4s both" }}>
-                <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 12px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chain Opportunities</p>
+              <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", display: "flex", flexDirection: "column" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chain Opportunities</p>
+                    {!showChainOpportunities && <span style={{ fontSize: 9, color: "#555", marginLeft: 10, fontWeight: 400 }}>Ideas, companies, and strategic plays to capture value</span>}
+                  </div>
+                  <span
+                    onClick={() => { setShowChainOpportunities(!showChainOpportunities); if (!showChainOpportunities) setChainSummaryExpanded(false); }}
+                    style={{ fontSize: 9, color: "#c87a4a", cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s" }}
+                    onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+                    onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                  >
+                    {showChainOpportunities ? "Collapse" : "Expand"}
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ transform: showChainOpportunities ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                      <path d="M2 4L5 7L8 4" />
+                    </svg>
+                  </span>
+                </div>
+
+                <div style={{ maxHeight: showChainOpportunities ? 2000 : 0, opacity: showChainOpportunities ? 1 : 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
+                <div style={{ marginTop: 12 }}>
 
                 {/* Layer filter pills */}
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 12, flexShrink: 0 }}>
@@ -3349,6 +3383,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     ))}
                   </div>
                 )}
+                </div>
+                </div>
               </div>
             );
           })()}
