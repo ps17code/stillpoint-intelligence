@@ -11,9 +11,11 @@ const accent = "#c87a4a";
 
 type SupplyNode = {
   name: string;
-  type: string;
-  desc: string;
+  role: string;
+  sub?: string;
   highlight?: boolean;
+  clickable?: boolean;
+  onClick?: () => void;
 };
 
 type SupplyLayer = {
@@ -23,57 +25,59 @@ type SupplyLayer = {
 
 const UMICORE_LAYERS: SupplyLayer[] = [
   {
-    label: "INPUTS",
+    label: "UPSTREAM",
     nodes: [
-      { name: "Germanium Concentrate", type: "Raw Material Feedstock", desc: "Germanium-bearing feedstock used for refining." },
-      { name: "Recycled Ge Streams", type: "Secondary Material", desc: "Recovered germanium from industrial waste." },
-      { name: "Ge-Bearing Waste", type: "Secondary Material", desc: "Recoverable material containing germanium." },
+      { name: "STL / Gécamines", role: "Deposit Operator", clickable: true },
+      { name: "Teck Resources", role: "Zinc Smelter", clickable: true },
+      { name: "Yunnan Chihong", role: "Primary Producer", clickable: true },
     ],
   },
   {
-    label: "BUSINESS SEGMENT",
+    label: "INPUT",
     nodes: [
-      { name: "Electro-Optic Materials", type: "Specialty Materials", desc: "Germanium refining, electro-optic materials, GeCl\u2084 production.", highlight: true },
+      { name: "Germanium", role: "Raw Material", clickable: true },
+      { name: "Recycled Ge", role: "Secondary Feedstock" },
     ],
   },
   {
-    label: "CAPABILITIES",
+    label: "COMPANY",
     nodes: [
-      { name: "Germanium Refining", type: "Process", desc: "Refining and purification of germanium-bearing inputs." },
-      { name: "GeCl\u2084 Conversion", type: "Process", desc: "Chemical conversion to ultra-pure GeCl\u2084." },
+      { name: "Umicore", role: "Refiner & Converter", sub: "Electro-Optic Materials", highlight: true },
     ],
   },
   {
-    label: "OUTPUTS",
+    label: "OUTPUT",
     nodes: [
-      { name: "GeCl\u2084", type: "Chemical Intermediate", desc: "Ultra-pure input for fiber preform production.", highlight: true },
-      { name: "Refined Ge Products", type: "Intermediate Material", desc: "High-purity germanium for optical and electronic applications." },
+      { name: "GeCl₄", role: "Chemical Intermediate", highlight: true, clickable: true },
+      { name: "Refined Ge", role: "Intermediate Material", clickable: true },
     ],
   },
   {
     label: "DOWNSTREAM",
     nodes: [
-      { name: "Fiber Preform", type: "Intermediate", desc: "Glass preform rod for drawing optical fiber." },
-      { name: "Optical Fiber", type: "Component", desc: "Fiber for telecom and AI datacenter connectivity." },
-      { name: "AI DC Connectivity", type: "Subsystem", desc: "Data movement across racks, clusters, and campuses." },
+      { name: "Corning", role: "Fiber Manufacturer", clickable: true },
+      { name: "Prysmian", role: "Fiber Manufacturer", clickable: true },
+      { name: "YOFC", role: "Fiber Manufacturer", clickable: true },
     ],
   },
 ];
 
 const OVERVIEW_TEXT = [
-  "In the GeCl\u2084 chain, Umicore matters less as a diversified materials company and more as a specialized conversion node. Its Electro-Optic Materials business connects germanium-bearing feedstock and recycled streams to ultra-pure GeCl\u2084, which then feeds fiber preform production and ultimately optical fiber for AI data center connectivity.",
-  "The key question is whether GeCl\u2084 capacity can scale with AI-driven fiber demand. Fiber manufacturers can add equipment and draw capacity, but GeCl\u2084 depends on constrained germanium feedstock and specialized refining capability. That places Umicore near a critical Western chokepoint in the germanium-to-fiber chain.",
+  "In the GeCl₄ chain, Umicore matters less as a diversified materials company and more as a specialized conversion node. Its Electro-Optic Materials business connects germanium-bearing feedstock and recycled streams to ultra-pure GeCl₄, which then feeds fiber preform production and ultimately optical fiber for AI data center connectivity.",
+  "The key question is whether GeCl₄ capacity can scale with AI-driven fiber demand. Fiber manufacturers can add equipment and draw capacity, but GeCl₄ depends on constrained germanium feedstock and specialized refining capability. That places Umicore near a critical Western chokepoint in the germanium-to-fiber chain.",
 ];
 
 const RELATED_SIGNALS = [
-  "The GeCl\u2084 Chokepoint",
+  "The GeCl₄ Chokepoint",
   "Germanium Feedstock Constraint",
   "Western Redundancy Gap",
 ];
 
-function SupplyNodeCard({ node }: { node: SupplyNode }) {
+function NodeCard({ node }: { node: SupplyNode }) {
+  const isClickable = node.clickable && !node.highlight;
   return (
     <div
+      onClick={isClickable ? node.onClick : undefined}
       style={{
         padding: "6px 8px",
         background: node.highlight ? "rgb(42, 38, 34)" : cardBg,
@@ -81,11 +85,20 @@ function SupplyNodeCard({ node }: { node: SupplyNode }) {
         borderRadius: 4,
         width: "100%",
         boxSizing: "border-box",
+        cursor: isClickable ? "pointer" : "default",
+        transition: "border-color 0.15s",
       }}
+      onMouseEnter={e => { if (isClickable) e.currentTarget.style.borderColor = "rgb(60, 56, 52)"; }}
+      onMouseLeave={e => { if (isClickable) e.currentTarget.style.borderColor = node.highlight ? `${accent}40` : "rgb(45, 41, 39)"; }}
     >
-      <p style={{ fontSize: 10, fontWeight: 500, color: node.highlight ? warmWhite : dimText, margin: "0 0 2px 0", lineHeight: 1.2, fontFamily: SERIF }}>{node.name}</p>
-      <p style={{ fontSize: 7, color: "#555", margin: "0 0 3px 0", fontFamily: MONO, letterSpacing: "0.04em", textTransform: "uppercase" }}>{node.type}</p>
-      <p style={{ fontSize: 8, color: "#706a60", margin: 0, lineHeight: 1.3 }}>{node.desc}</p>
+      <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+        <p style={{ fontSize: 11, fontWeight: 500, color: node.highlight ? warmWhite : dimText, margin: 0, lineHeight: 1.2, fontFamily: SERIF }}>{node.name}</p>
+        {isClickable && <span style={{ fontSize: 8, color: "#555" }}>→</span>}
+      </div>
+      <p style={{ fontSize: 7, color: "#555", margin: "2px 0 0 0", fontFamily: MONO, letterSpacing: "0.04em", textTransform: "uppercase" }}>{node.role}</p>
+      {node.sub && (
+        <p style={{ fontSize: 9, color: accent, margin: "3px 0 0 0", fontWeight: 500 }}>{node.sub}</p>
+      )}
     </div>
   );
 }
@@ -114,7 +127,7 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
         style={{
           position: "relative",
           width: "90%",
-          maxWidth: 1100,
+          maxWidth: 1000,
           maxHeight: "85vh",
           background: "#141414",
           border: "1px solid rgb(42, 42, 42)",
@@ -167,17 +180,17 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
           <div style={{ display: "flex", gap: 0, overflowX: "auto", paddingBottom: 8 }}>
             {UMICORE_LAYERS.map((layer, li) => (
               <React.Fragment key={layer.label}>
-                <div style={{ flex: "0 0 auto", width: 180, display: "flex", flexDirection: "column", gap: 6 }}>
+                <div style={{ flex: "0 0 auto", width: 160, display: "flex", flexDirection: "column", gap: 6 }}>
                   <p style={{ fontSize: 7, color: "#555", margin: "0 0 4px 0", fontFamily: MONO, letterSpacing: "0.06em", textTransform: "uppercase" }}>{layer.label}</p>
                   {layer.nodes.map(node => (
-                    <SupplyNodeCard key={node.name} node={node} />
+                    <NodeCard key={node.name} node={node} />
                   ))}
                 </div>
                 {li < UMICORE_LAYERS.length - 1 && (
-                  <div style={{ display: "flex", alignItems: "center", padding: "0 6px", flexShrink: 0, marginTop: 16 }}>
-                    <svg width="20" height="8" viewBox="0 0 20 8" fill="none">
-                      <line x1="0" y1="4" x2="14" y2="4" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-                      <path d="M12 1L16 4L12 7" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
+                  <div style={{ display: "flex", alignItems: "center", padding: "0 4px", flexShrink: 0, marginTop: 16 }}>
+                    <svg width="16" height="8" viewBox="0 0 16 8" fill="none">
+                      <line x1="0" y1="4" x2="10" y2="4" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+                      <path d="M9 1L13 4L9 7" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
                     </svg>
                   </div>
                 )}
@@ -187,7 +200,7 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
 
           <div style={{ height: 1, background: borderColor, margin: "16px 0" }} />
 
-          {/* Company Overview */}
+          {/* Stillpoint View */}
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
             <img src="/stillpoint-icon.png" alt="" style={{ width: 14, height: 14, borderRadius: 2, opacity: 0.85 }} />
             <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: 0 }}>Stillpoint View</p>
