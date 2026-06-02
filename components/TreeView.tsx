@@ -2704,7 +2704,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     return (
                       <div
                         key={step.name}
-                        onClick={() => { if (nodeId) { setSelectedTreeNode(nodeId); setRightTab("summary"); } else { const next = selectedSubsystem === step.name ? null : step.name; setSelectedSubsystem(next); setSelectedArchPiece(null); } }}
+                        onClick={() => { if (nodeId) { setSelectedTreeNode(selectedTreeNode === nodeId ? null : nodeId); setRightTab("summary"); } else { const next = selectedSubsystem === step.name ? null : step.name; setSelectedSubsystem(next); setSelectedArchPiece(null); } }}
                         style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? "rgb(37, 37, 37)" : "transparent", borderRadius: 5, border: isSelected ? "1px solid rgba(200, 122, 74, 0.25)" : "1px solid transparent", padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s, border-color 0.15s" }}
                         onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
                         onMouseLeave={e => { if (!isSelected) e.currentTarget.style.background = "transparent"; }}
@@ -4579,10 +4579,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 </div>
               );
             })()}
-            {currentVertical?.id === "ai" && currentLevel === "subsystems" && (
-              <div style={{ height: 1, background: borderColor, marginBottom: 10 }} />
-            )}
-            <div style={{ height: 1, background: borderColor, marginBottom: 10 }} />
           </div>
 
           {/* Bottom section — content based on selected tab */}
@@ -4611,7 +4607,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const svAccent = templateAccent ?? "#706a60";
               return (
                 <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px", marginBottom: 10 }}>
-                  <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Stillpoint View</p>
+                  <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: 6 }}><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="rgb(219,219,218)" strokeWidth="1.2" /><circle cx="8" cy="8" r="2.5" fill="rgb(219,219,218)" /><line x1="8" y1="1" x2="8" y2="4" stroke="rgb(219,219,218)" strokeWidth="1" /><line x1="8" y1="12" x2="8" y2="15" stroke="rgb(219,219,218)" strokeWidth="1" /><line x1="1" y1="8" x2="4" y2="8" stroke="rgb(219,219,218)" strokeWidth="1" /><line x1="12" y1="8" x2="15" y2="8" stroke="rgb(219,219,218)" strokeWidth="1" /></svg>Stillpoint View</p>
                   <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{sv.view}</p>
                 </div>
               );
@@ -5177,20 +5173,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   if (chainPanel) return chainPanel;
                   return renderSubNodeSummary(targetNode, { chainMode: true, chainStatusColor: "#c87a4a" }) ?? null;
                 }
-                // No filter or "Other" — show key takeaways
-                return (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                    <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
-                      <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 4px 0" }}>Key Takeaways</p>
-                      {CHAIN_TAKEAWAYS.map((t, i) => (
-                        <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
-                          <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{t}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                );
+                // No filter or "Other" — fall through to chain summary card below
               }
 
               // ── PATH 1: Featured chain mode ──
@@ -5226,7 +5209,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                     {/* Stillpoint View */}
                     <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px" }}>
-                      <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Stillpoint View</p>
+                      <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: 6 }}><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="rgb(219,219,218)" strokeWidth="1.2" /><circle cx="8" cy="8" r="2.5" fill="rgb(219,219,218)" /><line x1="8" y1="1" x2="8" y2="4" stroke="rgb(219,219,218)" strokeWidth="1" /><line x1="8" y1="12" x2="8" y2="15" stroke="rgb(219,219,218)" strokeWidth="1" /><line x1="1" y1="8" x2="4" y2="8" stroke="rgb(219,219,218)" strokeWidth="1" /><line x1="12" y1="8" x2="15" y2="8" stroke="rgb(219,219,218)" strokeWidth="1" /></svg>Stillpoint View</p>
                       <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>AI data centers create massive new fiber demand. But high-performance fiber depends on germanium, which must be converted into ultra-pure GeCl₄ before it can be used in fiber preforms.</p>
                       <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: "8px 0 0 0" }}>Fiber manufacturing capacity can expand with equipment capex but GeCl₄ supply depends on limited germanium feedstock and a small group of refiners with the capability to produce fiber-grade material. Outside China, the key Western supplier appears to be Umicore — and GeCl₄ is not its core business.</p>
                     </div>
