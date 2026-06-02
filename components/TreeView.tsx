@@ -3,6 +3,7 @@ import React, { useState, useMemo, useCallback, useRef, useEffect } from "react"
 import HorizontalTree from "@/components/HorizontalTree";
 import AISupplyTree from "@/components/AISupplyTree";
 import ChainAnalysis, { CHAIN_TAKEAWAYS, CHAIN_KEY_PLAYERS } from "@/components/ChainAnalysis";
+import CompanyViewPopup from "@/components/CompanyViewPopup";
 import Globe from "@/components/Globe";
 import type { GlobeHandle } from "@/components/Globe";
 import NodeMap from "@/components/NodeMap";
@@ -2120,6 +2121,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [layersExpanded, setLayersExpanded] = useState(false);
   const [geTreeExpanded, setGeTreeExpanded] = useState(false);
   const [oppFilter, setOppFilter] = useState<string | null>(null);
+  const [companyPopupOpen, setCompanyPopupOpen] = useState(false);
   const [oppBriefId, setOppBriefId] = useState<string | null>(null);
   const [oppExpanded, setOppExpanded] = useState(false);
   const [supplyTreeCollapsed, setSupplyTreeCollapsed] = useState(true);
@@ -2747,6 +2749,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 <AISupplyTree
                   highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : subsystemNodeSet.size > 0 ? subsystemNodeSet : undefined}
                   onNodeClick={(name) => {
+                    if (name === "Umicore") { setCompanyPopupOpen(true); return; }
                     if (selectedFeaturedChain) {
                       if (!name) { setSelectedTreeNode(null); } else { setSelectedTreeNode(name); setRightTab("summary"); }
                       return;
@@ -3482,6 +3485,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
       return (
         <>
           <GermaniumSupplyTree onNodeClick={(name) => {
+            if (name === "Umicore") { setCompanyPopupOpen(true); return; }
             setSelectedTreeNode(name);
             setRightTab("nodes");
           }} downstream={[
@@ -5154,11 +5158,11 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     <table style={{ width: "100%", borderCollapse: "collapse" }}>
                       <tbody>
                         {data.keyPlayers.map(p => (
-                          <tr key={p.name}>
+                          <tr key={p.name} onClick={() => { if (p.name === "Umicore") setCompanyPopupOpen(true); }} style={{ cursor: p.name === "Umicore" ? "pointer" : "default" }}>
                             <td style={{ padding: "3px 0", fontSize: 11 }}>
                               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                                 <img src={`https://flagcdn.com/16x12/${p.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                                <span style={{ color: "rgb(160, 152, 136)", fontWeight: 500 }}>{p.name}</span>
+                                <span style={{ color: p.name === "Umicore" ? warmWhite : "rgb(160, 152, 136)", fontWeight: 500, textDecoration: p.name === "Umicore" ? "underline" : "none", textDecorationColor: "rgba(255,255,255,0.2)", textUnderlineOffset: "2px" }}>{p.name}</span>
                               </div>
                             </td>
                             <td style={{ padding: "3px 0", fontSize: 9, color: "rgb(160, 152, 136)", textAlign: "right", fontFamily: "'Geist Mono', monospace" }}>{p.share}</td>
@@ -6057,6 +6061,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
+      <CompanyViewPopup isOpen={companyPopupOpen} onClose={() => setCompanyPopupOpen(false)} />
     </div>
   );
 }
