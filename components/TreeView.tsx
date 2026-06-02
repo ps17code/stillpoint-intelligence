@@ -3203,7 +3203,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               </div>
               <div style={{ maxHeight: chainSummaryExpanded ? 2000 : 0, opacity: chainSummaryExpanded ? 1 : 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
                 <div style={{ marginTop: 10 }}>
-                  <ChainAnalysis collapsed={false} onShowOpportunities={() => { setShowChainOpportunities(true); setChainSummaryExpanded(false); }} onExpand={() => { setShowChainOpportunities(false); setSelectedOpportunityBrief(null); setOpportunityLayerFilter(null); }} />
+                  <ChainAnalysis collapsed={false} hideWrapper onShowOpportunities={() => { setShowChainOpportunities(true); setChainSummaryExpanded(false); }} onExpand={() => { setShowChainOpportunities(false); setSelectedOpportunityBrief(null); setOpportunityLayerFilter(null); }} />
                 </div>
               </div>
             </div>
@@ -4643,7 +4643,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const svAccent = templateAccent ?? "#706a60";
               return (
                 <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px", marginBottom: 10 }}>
-                  <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: 6 }}><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="rgb(219,219,218)" strokeWidth="1.2" /><circle cx="8" cy="8" r="2.5" fill="rgb(219,219,218)" /><line x1="8" y1="1" x2="8" y2="4" stroke="rgb(219,219,218)" strokeWidth="1" /><line x1="8" y1="12" x2="8" y2="15" stroke="rgb(219,219,218)" strokeWidth="1" /><line x1="1" y1="8" x2="4" y2="8" stroke="rgb(219,219,218)" strokeWidth="1" /><line x1="12" y1="8" x2="15" y2="8" stroke="rgb(219,219,218)" strokeWidth="1" /></svg>Stillpoint View</p>
+                  <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: 6 }}><img src="/stillpoint-icon.png" alt="" style={{ width: 14, height: 14, borderRadius: 2, opacity: 0.85 }} />Stillpoint View</p>
                   <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{sv.view}</p>
                 </div>
               );
@@ -5245,7 +5245,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                     {/* Stillpoint View */}
                     <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px" }}>
-                      <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: 6 }}><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="rgb(219,219,218)" strokeWidth="1.2" /><circle cx="8" cy="8" r="2.5" fill="rgb(219,219,218)" /><line x1="8" y1="1" x2="8" y2="4" stroke="rgb(219,219,218)" strokeWidth="1" /><line x1="8" y1="12" x2="8" y2="15" stroke="rgb(219,219,218)" strokeWidth="1" /><line x1="1" y1="8" x2="4" y2="8" stroke="rgb(219,219,218)" strokeWidth="1" /><line x1="12" y1="8" x2="15" y2="8" stroke="rgb(219,219,218)" strokeWidth="1" /></svg>Stillpoint View</p>
+                      <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: 6 }}><img src="/stillpoint-icon.png" alt="" style={{ width: 14, height: 14, borderRadius: 2, opacity: 0.85 }} />Stillpoint View</p>
                       <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>AI data centers create massive new fiber demand. But high-performance fiber depends on germanium, which must be converted into ultra-pure GeCl₄ before it can be used in fiber preforms.</p>
                       <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: "8px 0 0 0" }}>Fiber manufacturing capacity can expand with equipment capex but GeCl₄ supply depends on limited germanium feedstock and a small group of refiners with the capability to produce fiber-grade material. Outside China, the key Western supplier appears to be Umicore — and GeCl₄ is not its core business.</p>
                     </div>
