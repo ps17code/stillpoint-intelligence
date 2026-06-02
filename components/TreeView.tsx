@@ -5297,6 +5297,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     title: string; layer: string; desc: string;
                     deps: { name: string; role: string }[];
                     companies: { name: string; role: string; flag: string }[];
+                    chains?: string[][];
                   }> = {
                     "gpu-server": {
                       title: "GPU / Server", layer: "Data Source",
@@ -5311,6 +5312,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         { name: "AMD", role: "GPU Accelerators", flag: "us" },
                         { name: "Super Micro", role: "Server Assembly", flag: "us" },
                       ],
+                      chains: [["HBM", "GPU", "Server"], ["Si Wafer", "GPU", "AI Rack"]],
                     },
                     "nic": {
                       title: "NIC / Interconnect Card", layer: "Server I/O",
@@ -5325,6 +5327,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         { name: "Broadcom", role: "Ethernet NICs", flag: "us" },
                         { name: "Intel", role: "Server NICs", flag: "us" },
                       ],
+                      chains: [["SerDes", "NIC", "Server"], ["PCB", "NIC", "Switch"]],
                     },
                     "transceiver": {
                       title: "Optical Transceiver", layer: "Electro-Optical Conversion",
@@ -5340,6 +5343,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         { name: "Broadcom", role: "DSP / PHY", flag: "us" },
                         { name: "InnoLight", role: "800G Modules", flag: "cn" },
                       ],
+                      chains: [["Laser", "Transceiver", "Switch"], ["InP Wafer", "SiPh", "Transceiver"]],
                     },
                     "fiber": {
                       title: "Fiber Optic Cable", layer: "Physical Transport",
@@ -5355,6 +5359,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         { name: "YOFC", role: "Fiber & Cable", flag: "cn" },
                         { name: "Umicore", role: "GeCl₄ Refining", flag: "be" },
                       ],
+                      chains: [["Ge", "GeCl₄", "Fiber"], ["He", "Draw Tower", "Fiber"], ["SiO₂", "Preform", "Fiber"]],
                     },
                     "tor-switch": {
                       title: "Top-of-Rack Switch", layer: "Rack Aggregation",
@@ -5369,6 +5374,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         { name: "Cisco", role: "Network Switches", flag: "us" },
                         { name: "Broadcom", role: "Switch ASICs", flag: "us" },
                       ],
+                      chains: [["ASIC", "Switch", "Fabric"], ["Optics", "Switch", "Rack"]],
                     },
                     "spine-switch": {
                       title: "Spine / Fabric Switch", layer: "Cluster Fabric",
@@ -5383,6 +5389,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         { name: "Cisco", role: "Fabric Switches", flag: "us" },
                         { name: "Broadcom", role: "Tomahawk ASICs", flag: "us" },
                       ],
+                      chains: [["ASIC", "Spine", "Cluster"], ["Optics", "Spine", "Fabric"]],
                     },
                     "campus-link": {
                       title: "Campus / Region Link", layer: "Inter-Site Transport",
@@ -5397,6 +5404,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         { name: "Prysmian", role: "Cable Systems", flag: "it" },
                         { name: "Lumen Technologies", role: "Fiber Networks", flag: "us" },
                       ],
+                      chains: [["Fiber", "Conduit", "Campus"], ["Fiber", "DWDM", "Metro"]],
                     },
                   };
 
@@ -5434,6 +5442,25 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             <span style={{ fontSize: 9, color: "#706a60" }}>— {c.role}</span>
                           </div>
                         ))}
+
+                        {archDetail.chains && archDetail.chains.length > 0 && (
+                          <>
+                            {dividerPanel}
+                            <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Related Chains</p>
+                            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                              {archDetail.chains.map((chain, ci) => (
+                                <span key={ci} style={{ display: "inline-flex", alignItems: "center", fontSize: 10, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "3px 10px", fontFamily: "'Geist Mono', monospace", gap: 0 }}>
+                                  {chain.map((node, ni) => (
+                                    <React.Fragment key={ni}>
+                                      {ni > 0 && <span style={{ margin: "0 4px", color: "rgba(255,255,255,0.2)" }}>→</span>}
+                                      <span>{node}</span>
+                                    </React.Fragment>
+                                  ))}
+                                </span>
+                              ))}
+                            </div>
+                          </>
+                        )}
                       </div>
                     );
                   }
