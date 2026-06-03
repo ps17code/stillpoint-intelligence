@@ -2115,6 +2115,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [selectedArchPiece, setSelectedArchPiece] = useState<string | null>(null);
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
   const [chainSummaryExpanded, setChainSummaryExpanded] = useState(false);
+  const [hoveredChainCard, setHoveredChainCard] = useState<string | null>(null);
   const [opportunityLayerFilter, setOpportunityLayerFilter] = useState<string | null>(null);
   const [selectedOpportunityBrief, setSelectedOpportunityBrief] = useState<string | null>(null);
   const [layersExpanded, setLayersExpanded] = useState(false);
@@ -2635,9 +2636,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         const chainSteps = [
-          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Recovered as a byproduct of zinc and coal, then refined to high purity.", supply: "~230t/yr", aiDemand: "~87t/yr", gap: "~56t", constraint: "Byproduct — cannot be mined directly", summary: "83% Chinese. One western refiner.", constraintSeverity: "Severe", constraintLabel: "Supply is fixed by geology", constraintDetails: ["Only a few coal and zinc deposits can recover Ge economically at high concentration.", "No dedicated germanium mines. Increasing output means installing capture and purification equipment — capex intense and multi-year project.", "Few projects coming online but not fast enough or large enough."], featuredCompany: { name: "STL / Gecamines", note: "New DRC germanium supply" } },
-          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "Converted to germanium tetrachloride and purified to fiber-grade.", supply: "~500t/yr", aiDemand: "~120t/yr", gap: "~150t", constraint: "8N purity — few facilities capable", summary: "One commercial-scale western supplier.", constraintSeverity: "Severe", constraintLabel: "Market has select few capable suppliers", constraintDetails: ["Only a few refiners worldwide can hit ultra purity at commercial scale. Almost all are Chinese except Umicore as sole western producer.", "New entrants have high entry barrier from qualification requirements and even existing refiners mostly run under capacity as still limited by Ge feedstock availability."], featuredCompany: { name: "Umicore", note: "Sole western supplier" } },
-          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "GeCl4 is deposited in glass rods, drawn in strands, and assembled into cables.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity.", constraintSeverity: "Moderate", constraintLabel: "Time and capital for equipment", constraintDetails: ["Production is not the bottleneck and scales with capex. Multiple manufacturers can compete to build new capacity.", "Friction is in high yield preform technology which is proprietary and concentrated in a few vertically integrated incumbents (Corning, Sumitomo, Shin-Etsu). Standing up new lines is gated by long-lead deposition and draw equipment."], featuredCompany: { name: "Corning", note: "Market leader" } },
+          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Recovered as a byproduct of zinc and coal, then refined to high purity.", supply: "~230t/yr", aiDemand: "~87t/yr", gap: "~56t", constraint: "Byproduct — cannot be mined directly", summary: "83% Chinese. One western refiner.", constraintSeverity: "Severe", constraintLabel: "Supply is fixed by geology", constraintDetails: ["Only a few coal and zinc deposits can recover Ge economically at high concentration.", "No dedicated germanium mines. Increasing output means installing capture and purification equipment — capex intense and multi-year project.", "Few projects coming online but not fast enough or large enough."], featuredCompany: { name: "STL / Gecamines", note: "New DRC germanium supply" }, inputHref: "/input/germanium" },
+          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "Converted to germanium tetrachloride and purified to fiber-grade.", supply: "~500t/yr", aiDemand: "~120t/yr", gap: "~150t", constraint: "8N purity — few facilities capable", summary: "One commercial-scale western supplier.", constraintSeverity: "Severe", constraintLabel: "Market has select few capable suppliers", constraintDetails: ["Only a few refiners worldwide can hit ultra purity at commercial scale. Almost all are Chinese except Umicore as sole western producer.", "New entrants have high entry barrier from qualification requirements and even existing refiners mostly run under capacity as still limited by Ge feedstock availability."], featuredCompany: { name: "Umicore", note: "Sole western supplier" }, inputHref: "/input/germanium" },
+          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "GeCl4 is deposited in glass rods, drawn in strands, and assembled into cables.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity.", constraintSeverity: "Moderate", constraintLabel: "Time and capital for equipment", constraintDetails: ["Production is not the bottleneck and scales with capex. Multiple manufacturers can compete to build new capacity.", "Friction is in high yield preform technology which is proprietary and concentrated in a few vertically integrated incumbents (Corning, Sumitomo, Shin-Etsu). Standing up new lines is gated by long-lead deposition and draw equipment."], featuredCompany: { name: "Corning", note: "Market leader" }, inputHref: "/input/fiber-optic-cable" },
           { name: "AI DC Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "Fiber deployed to link GPUs, switches, and storage to tie an AI cluster together.", rows: [["Fiber per 1 GW AI DC", "9M KM"], ["New Annual AI DC Capacity", "20 GW"], ["Required Fiber", "120M KM", "accent"], ["Status", "Accelerating", "pill"]], summary: "36x more fiber per AI rack vs CPU." },
         ];
 
@@ -2706,13 +2707,21 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     const isAIDC = step.name === "AI DC Connectivity";
                     const cardBg = isAIDC ? "rgb(20, 20, 20)" : "rgb(32, 32, 32)";
                     const cardBgSel = isAIDC ? "rgb(28, 28, 28)" : "rgb(40, 40, 40)";
+                    const inputHref = (step as { inputHref?: string }).inputHref;
                     return (
                       <div
                         key={step.name}
-                        onClick={() => { if (nodeId) { setSelectedTreeNode(selectedTreeNode === nodeId ? null : nodeId); setRightTab("summary"); } else { const next = selectedSubsystem === step.name ? null : step.name; setSelectedSubsystem(next); setSelectedArchPiece(null); } }}
+                        onClick={() => {
+                          if (selectedFeaturedChain) {
+                            if (isAIDC) { setSelectedFeaturedChain(null); setSelectedSubsystem("Connectivity"); setSelectedArchPiece(null); setRightTab("summary"); }
+                            else if (inputHref) { window.location.href = inputHref; }
+                            return;
+                          }
+                          if (nodeId) { setSelectedTreeNode(selectedTreeNode === nodeId ? null : nodeId); setRightTab("summary"); } else { const next = selectedSubsystem === step.name ? null : step.name; setSelectedSubsystem(next); setSelectedArchPiece(null); }
+                        }}
                         style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? cardBgSel : cardBg, borderRadius: 5, border: isSelected ? "1px solid rgba(200, 122, 74, 0.25)" : isAIDC ? "1px solid rgba(200, 122, 74, 0.15)" : "1px solid rgba(255, 255, 255, 0.04)", padding: "10px 10px 12px", transition: "background 0.15s, border-color 0.15s" }}
-                        onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = cardBgSel; }}
-                        onMouseLeave={e => { if (!isSelected) e.currentTarget.style.background = cardBg; }}
+                        onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = cardBgSel; setHoveredChainCard(step.name); }}
+                        onMouseLeave={e => { if (!isSelected) e.currentTarget.style.background = cardBg; setHoveredChainCard(null); }}
                       >
                         {/* Name row with dot and connecting line */}
                         <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
@@ -2739,7 +2748,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           <img src={step.img} alt={step.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
                         </div>
                         {/* Description */}
-                        <p style={{ fontSize: 11, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                        <p style={{ fontSize: 11, color: "rgb(212, 212, 212)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
                         {/* Supply/Demand data — chain steps only */}
                         {(() => {
                           const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string; constraintSeverity?: string; constraintLabel?: string; constraintDetails?: string[]; rows?: string[][]; featuredCompany?: { name: string; note: string } };
@@ -2789,25 +2798,20 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             {s.featuredCompany && (
                               <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
                                 <p style={sectionTitleStyle}>Featured Company</p>
-                                <div style={{ display: "inline-block", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 6, padding: "3px 8px" }}>
-                                  <p style={{ fontSize: 11, color: "rgb(200, 122, 74)", fontWeight: 400, margin: 0, lineHeight: 1.3 }}>{s.featuredCompany.name}</p>
-                                  <p style={{ fontSize: 10, color: "rgba(115, 115, 115, 1)", fontWeight: 400, margin: 0, lineHeight: 1.3 }}>{s.featuredCompany.note}</p>
-                                </div>
+                                <p style={{ fontSize: 11, color: "rgb(200, 122, 74)", fontWeight: 400, margin: 0 }}>{s.featuredCompany.name}</p>
+                                <p style={{ fontSize: 10, color: "rgba(115, 115, 115, 1)", fontWeight: 400, margin: 0 }}>{s.featuredCompany.note}</p>
                               </div>
                             )}
                             </>
                           );
                         })()}
                         {selectedFeaturedChain && (
-                          <button
-                            onClick={(e) => { e.stopPropagation(); if (nodeId) { setSelectedTreeNode(nodeId); setChainTreeTab("tree"); setRightTab("summary"); } }}
-                            style={{ display: "inline-flex", alignItems: "center", gap: 5, marginTop: "auto", paddingTop: 10, background: "transparent", border: "none", cursor: "pointer", color: "#c87a4a", fontSize: 10, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em", textAlign: "left" }}
-                            onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
-                            onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+                          <span
+                            style={{ display: "inline-flex", alignItems: "center", gap: 4, marginTop: "auto", paddingTop: 10, color: "rgb(182, 156, 140)", fontSize: 8, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em", opacity: hoveredChainCard === step.name ? 1 : 0, transition: "opacity 0.15s", pointerEvents: "none" }}
                           >
                             View {step.name} Supply Chain
-                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-                          </button>
+                            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                          </span>
                         )}
                       </div>
                     );
