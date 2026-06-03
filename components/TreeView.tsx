@@ -5387,29 +5387,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
                         <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>{archDetail.desc}</p>
 
-                        {dividerPanel}
-
-                        <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Key Inputs</p>
-                        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                          {archDetail.deps.map(d => (
-                            <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                              <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
-                              <span style={{ fontSize: 11, color: "rgb(158, 150, 136)" }}>{d.name}</span>
-                            </div>
-                          ))}
-                        </div>
-
-                        {dividerPanel}
-
-                        <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Key Players</p>
-                        {archDetail.companies.map(c => (
-                          <div key={c.name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "3px 0" }}>
-                            <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                            <span style={{ fontSize: 11, color: "rgb(160, 152, 136)" }}>{c.name}</span>
-                            <span style={{ fontSize: 9, color: "#706a60" }}>— {c.role}</span>
-                          </div>
-                        ))}
-
                         {(() => {
                           const ARCH_SIGNALS: Record<string, { title: string; tag: string; teaser: string }[]> = {
                             "gpu-server": [{ title: "HBM Memory Concentration", tag: "Supply", teaser: "Two companies control >95% of HBM production." }],
@@ -5443,6 +5420,35 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                                   <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{s.teaser}</p>
                                 </div>
                               ))}
+                            </>
+                          );
+                        })()}
+
+                        {/* Key Inputs — from architecture deps + chain-derived inputs */}
+                        {(() => {
+                          const ARCH_CHAIN_INPUTS: Record<string, string[]> = {
+                            "gpu-server": ["HBM Stacks", "Advanced Logic Wafers", "Server Boards"],
+                            "nic": ["SerDes", "PHY Chips", "PCB Traces"],
+                            "transceiver": ["Lasers", "DSPs", "Silicon Photonics"],
+                            "fiber": ["Germanium", "GeCl₄", "Silica", "SiCl₄", "Helium"],
+                            "tor-switch": ["Switch ASICs", "Optical Ports", "Power"],
+                            "spine-switch": ["High-Radix ASICs", "Optics", "Network OS"],
+                            "campus-link": ["Long-Haul Fiber", "Conduit", "Install Labor"],
+                          };
+                          const inputs = selectedArchPiece ? ARCH_CHAIN_INPUTS[selectedArchPiece] ?? [] : [];
+                          if (inputs.length === 0) return null;
+                          return (
+                            <>
+                              {dividerPanel}
+                              <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Key Inputs</p>
+                              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                                {inputs.map(inp => (
+                                  <div key={inp} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                    <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
+                                    <span style={{ fontSize: 11, color: "rgb(158, 150, 136)" }}>{inp}</span>
+                                  </div>
+                                ))}
+                              </div>
                             </>
                           );
                         })()}
