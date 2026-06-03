@@ -2789,13 +2789,26 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             {s.featuredCompany && (
                               <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
                                 <p style={sectionTitleStyle}>Featured Company</p>
-                                <p style={{ fontSize: 11, color: "rgb(200, 122, 74)", fontWeight: 400, margin: 0 }}>{s.featuredCompany.name}</p>
-                                <p style={{ fontSize: 10, color: "rgba(115, 115, 115, 1)", fontWeight: 400, margin: 0 }}>{s.featuredCompany.note}</p>
+                                <div style={{ display: "inline-block", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 6, padding: "3px 8px" }}>
+                                  <p style={{ fontSize: 11, color: "rgb(200, 122, 74)", fontWeight: 400, margin: 0, lineHeight: 1.3 }}>{s.featuredCompany.name}</p>
+                                  <p style={{ fontSize: 10, color: "rgba(115, 115, 115, 1)", fontWeight: 400, margin: 0, lineHeight: 1.3 }}>{s.featuredCompany.note}</p>
+                                </div>
                               </div>
                             )}
                             </>
                           );
                         })()}
+                        {selectedFeaturedChain && (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); if (nodeId) { setSelectedTreeNode(nodeId); setChainTreeTab("tree"); setRightTab("summary"); } }}
+                            style={{ display: "inline-flex", alignItems: "center", gap: 5, marginTop: "auto", paddingTop: 10, background: "transparent", border: "none", cursor: "pointer", color: "#c87a4a", fontSize: 10, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em", textAlign: "left" }}
+                            onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+                            onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+                          >
+                            View {step.name} Supply Chain
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                          </button>
+                        )}
                       </div>
                     );
                   })}
