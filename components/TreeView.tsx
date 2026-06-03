@@ -2888,8 +2888,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               <div style={{ padding: "10px 15px" }}>
                 {[
                   {
-                    nodes: ["Ge", "GeCl₄", "Preform", "Fiber"],
-                    context: "Germanium must convert to ultra-pure GeCl₄ before it can be used in fiber preforms. One western supplier.",
+                    nodes: ["Germanium", "GeCl₄", "Preform", "Fiber"],
+                    context: "Germanium must convert to ultra-pure GeCl₄ before it can be used in fiber preforms.",
                     status: "Severe",
                     statusColor: "#c87a4a",
                     navPath: [{ type: "vertical" as const, id: "ai", name: "AI Infrastructure" }],
@@ -2904,7 +2904,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     chainId: "",
                   },
                   {
-                    nodes: ["He", "Draw Tower", "Optical Fiber", "Fiber"],
+                    nodes: ["Helium", "Draw Tower", "Fiber"],
                     context: "Helium cools fiber during drawing. Non-renewable byproduct with declining US reserves.",
                     status: "Moderate",
                     statusColor: "#c8a85a",
@@ -2929,12 +2929,20 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       transition: "background 0.15s",
                       borderRadius: 3,
                     }}
-                    onMouseEnter={e => { if (chain.navPath.length > 0) e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                    onMouseEnter={e => {
+                      if (chain.navPath.length > 0) e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+                      const pill = e.currentTarget.querySelector("[data-chain-pill]") as HTMLElement;
+                      if (pill) pill.style.color = "#c87a4a";
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.background = "transparent";
+                      const pill = e.currentTarget.querySelector("[data-chain-pill]") as HTMLElement;
+                      if (pill) pill.style.color = "rgb(236, 232, 225)";
+                    }}
                   >
                     {/* Left: chain + context */}
                     <div style={{ display: "flex", alignItems: "center", flex: 1, minWidth: 0 }}>
-                      <span style={{ display: "inline-flex", alignItems: "center", fontSize: 11, color: "rgb(236, 232, 225)", background: "rgba(255,255,255,0.04)", borderRadius: 3, padding: "3px 10px", fontFamily: "'Geist Mono', monospace", gap: 0, flexShrink: 0, marginRight: 30 }}>
+                      <span data-chain-pill="" style={{ display: "inline-flex", alignItems: "center", fontSize: 11, color: "rgb(236, 232, 225)", background: "rgba(255,255,255,0.04)", borderRadius: 3, padding: "3px 10px", gap: 0, flexShrink: 0, marginRight: 30, transition: "color 0.15s" }}>
                         {chain.nodes.map((node, ni) => (
                           <React.Fragment key={ni}>
                             {ni > 0 && <span style={{ margin: "0 3px", color: "rgba(255,255,255,0.2)" }}>→</span>}
@@ -3135,129 +3143,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
             return (
               <>
-              {/* Signals section card */}
-              <div style={{ animation: "fadeSlideDown 0.4s ease-out 0.15s both", background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10 }}>
-                {/* Header */}
-                <div style={{ padding: "10px 15px" }}>
-                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{selectedArchPiece ? (() => { const ARCH_NAMES: Record<string, string> = { "gpu-server": "GPU / Server", "nic": "NIC / Interconnect", "transceiver": "Optical Transceiver", "fiber": "Fiber Optic Cable", "tor-switch": "Top-of-Rack Switch", "spine-switch": "Spine / Fabric Switch", "campus-link": "Campus / Region Link" }; return (ARCH_NAMES[selectedArchPiece] ?? selectedSubsystem) + " Signals"; })() : "Signals"}</p>
-                </div>
-                <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
-
-                {/* Two-column content */}
-                <div style={{ display: "grid", gridTemplateColumns: "1.4fr 0.6fr", gap: 0, padding: "10px 15px" }}>
-                  {/* Featured Signal card */}
-                  <div style={{ paddingRight: 14 }}>
-                    {featuredSignal ? (
-                      <div
-                        onClick={() => { setSelectedFeaturedChain(featuredSignal.id); setSelectedTreeNode(null); setRightTab("summary"); }}
-                        style={{ background: "rgb(37, 37, 37)", borderRadius: 5, overflow: "hidden", cursor: "pointer", transition: "background 0.15s", border: "1px solid rgba(200, 122, 74, 0.25)" }}
-                        onMouseEnter={e => { e.currentTarget.style.background = "rgb(42, 42, 42)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = "rgb(37, 37, 37)"; }}
-                      >
-                        {/* Header row: title + chain pill */}
-                        <div style={{ padding: "10px 14px 0 14px", marginBottom: 5 }}>
-                          <div style={{ display: "flex", alignItems: "center" }}>
-                            <p style={{ fontSize: 13, color: warmWhite, fontWeight: 500, margin: 0, marginRight: 20, flexShrink: 0 }}>{featuredSignal.title}</p>
-                            {chainPills && (
-                              <span style={{ fontSize: 8, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 8px", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>
-                                {chainPills.join(" → ")}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        {/* Two-column content */}
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-                          {/* Left: signal details */}
-                          <div style={{ padding: "8px 14px 10px 14px" }}>
-                            <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: "0 0 8px 0", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as const, overflow: "hidden" }}>{featuredSignal.teaser}</p>
-                            {featuredSignal.whyItMatters && (
-                              <>
-                              <p style={{ fontSize: 8, color: dimText, margin: "0 0 4px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Why it matters?</p>
-                              <p style={{ fontSize: 10, color: "rgb(140, 132, 116)", lineHeight: 1.5, margin: "0 0 10px 0", fontStyle: "italic", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{featuredSignal.whyItMatters}</p>
-                              </>
-                            )}
-                            <span style={{ fontSize: 13, color: "#c87a4a" }}>
-                              Open signal brief and analysis →
-                            </span>
-                          </div>
-                          {/* Right: key companies table */}
-                          <div style={{ padding: "8px 14px 10px 14px" }}>
-                            {(() => {
-                              const relatedNames = new Set(featuredSignal.relatedCompanies ?? []);
-                              const filtered = sub.companies.filter(c => relatedNames.has(c.name)).slice(0, 4);
-                              return (
-                                <div style={{ border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
-                                  <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                                    <thead>
-                                      <tr style={{ background: "rgb(54, 54, 54)" }}>
-                                        <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Company</th>
-                                        <th style={{ textAlign: "left", padding: "7px 10px", fontSize: 7, letterSpacing: "0.08em", color: "rgb(159, 146, 132)", fontWeight: 500, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" }}>Supply Chain Node</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {filtered.map((c, ci) => (
-                                        <tr key={c.name} style={{ borderTop: ci > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
-                                          <td style={{ padding: "7px 10px", fontSize: 10 }}>
-                                            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                              <img src={`https://flagcdn.com/16x12/${c.flag}.png`} alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7, flexShrink: 0 }} />
-                                              <span style={{ color: warmWhite, fontWeight: 500 }}>{c.name}</span>
-                                            </div>
-                                          </td>
-                                          <td style={{ padding: "7px 10px", fontSize: 9, color: "rgb(160, 152, 136)", fontFamily: "'Geist Mono', monospace" }}>{c.node}</td>
-                                        </tr>
-                                      ))}
-                                    </tbody>
-                                  </table>
-                                </div>
-                              );
-                            })()}
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div style={{ background: "rgb(37, 37, 37)", borderRadius: 5, padding: "14px 12px" }}>
-                        <p style={{ fontSize: 10, color: dimText, margin: 0 }}>No featured signal for {selectedSubsystem} yet.</p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Signal list — no card style, dividers between items */}
-                  <div>
-                    {otherSignals.length === 0 && !featuredSignal ? (
-                      <p style={{ fontSize: 10, color: dimText, margin: 0, padding: "10px 0" }}>No additional signals yet.</p>
-                    ) : (
-                      <>
-                      <div>
-                        {otherSignals.map((s, si) => (
-                          <div
-                            key={s.id}
-                            onClick={() => { setSelectedFeaturedChain(s.id); setSelectedTreeNode(null); setRightTab("summary"); }}
-                            style={{
-                              paddingTop: si === 0 ? 8 : 10,
-                              paddingBottom: si === otherSignals.length - 1 ? 0 : 10,
-                              paddingLeft: 8,
-                              paddingRight: 8,
-                              cursor: "pointer",
-                              borderTop: si > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
-                              borderRadius: 4,
-                              transition: "background 0.15s",
-                            }}
-                            onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
-                          >
-                            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                              <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c87a4a", flexShrink: 0 }} />
-                              <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: 0 }}>{s.title}</p>
-                            </div>
-                            <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{s.teaser}</p>
-                          </div>
-                        ))}
-                      </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
+              {/* Signals section card — hidden for now */}
               </>
             );
           })()}
@@ -5524,24 +5410,42 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           </div>
                         ))}
 
-                        {archDetail.chains && archDetail.chains.length > 0 && (
-                          <>
-                            {dividerPanel}
-                            <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 6px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Related Chains</p>
-                            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                              {archDetail.chains.map((chain, ci) => (
-                                <span key={ci} style={{ display: "inline-flex", alignItems: "center", fontSize: 10, color: "rgb(160, 152, 136)", background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "3px 10px", fontFamily: "'Geist Mono', monospace", gap: 0 }}>
-                                  {chain.map((node, ni) => (
-                                    <React.Fragment key={ni}>
-                                      {ni > 0 && <span style={{ margin: "0 4px", color: "rgba(255,255,255,0.2)" }}>→</span>}
-                                      <span>{node}</span>
-                                    </React.Fragment>
-                                  ))}
-                                </span>
+                        {(() => {
+                          const ARCH_SIGNALS: Record<string, { title: string; tag: string; teaser: string }[]> = {
+                            "gpu-server": [{ title: "HBM Memory Concentration", tag: "Supply", teaser: "Two companies control >95% of HBM production." }],
+                            "nic": [{ title: "SerDes Bandwidth Wall", tag: "Technology", teaser: "Signal integrity at 200G+ per lane requires new PHY architectures." }],
+                            "transceiver": [{ title: "800G Transceiver Shortage", tag: "Supply", teaser: "Silicon photonics yield issues limiting production." }],
+                            "fiber": [
+                              { title: "GeCl₄ Chokepoint", tag: "Supply", teaser: "Single western supplier controls fiber-grade conversion." },
+                              { title: "Preform Equipment Monopoly", tag: "Supply", teaser: "One equipment supplier with 18-24 month backlogs." },
+                              { title: "Helium Supply Risk", tag: "Supply", teaser: "Non-renewable gas critical for fiber draw cooling." },
+                            ],
+                            "tor-switch": [{ title: "Switch ASIC Lead Times", tag: "Supply", teaser: "40+ week lead times on Broadcom Tomahawk." }],
+                            "spine-switch": [{ title: "Fabric Bandwidth Scaling", tag: "Technology", teaser: "51.2T+ switching needed for next-gen AI clusters." }],
+                            "campus-link": [{ title: "Permitting Delays", tag: "Regulatory", teaser: "Conduit and ROW access adding months to deployments." }],
+                          };
+                          const signals = selectedArchPiece ? ARCH_SIGNALS[selectedArchPiece] ?? [] : [];
+                          if (signals.length === 0) return null;
+                          return (
+                            <>
+                              {dividerPanel}
+                              <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>Signals</p>
+                              {signals.map((s, si) => (
+                                <div key={s.title} style={{ marginBottom: si < signals.length - 1 ? 8 : 0 }}>
+                                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
+                                    <span style={{ position: "relative", width: 6, height: 6, flexShrink: 0 }}>
+                                      <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "#c87a4a", opacity: 0.75, animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite" }} />
+                                      <span style={{ position: "relative", display: "block", width: 6, height: 6, borderRadius: "50%", background: "#c87a4a" }} />
+                                    </span>
+                                    <span style={{ fontSize: 11, color: "#c87a4a", fontWeight: 500 }}>{s.title}</span>
+                                    <span style={{ fontSize: 7, color: "#555", background: "rgba(255,255,255,0.04)", borderRadius: 3, padding: "1px 5px", fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.tag}</span>
+                                  </div>
+                                  <p style={{ fontSize: 10, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{s.teaser}</p>
+                                </div>
                               ))}
-                            </div>
-                          </>
-                        )}
+                            </>
+                          );
+                        })()}
                       </div>
                     );
                   }
