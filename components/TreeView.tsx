@@ -2115,7 +2115,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [selectedArchPiece, setSelectedArchPiece] = useState<string | null>(null);
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
   const [chainSummaryExpanded, setChainSummaryExpanded] = useState(false);
-  const [chainConstraintsExpanded, setChainConstraintsExpanded] = useState(false);
   const [opportunityLayerFilter, setOpportunityLayerFilter] = useState<string | null>(null);
   const [selectedOpportunityBrief, setSelectedOpportunityBrief] = useState<string | null>(null);
   const [layersExpanded, setLayersExpanded] = useState(false);
@@ -2636,9 +2635,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         const chainSteps = [
-          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Recovered as a byproduct of zinc and coal, then refined to high purity.", supply: "~230t/yr", aiDemand: "~87t/yr", gap: "~56t", constraint: "Byproduct — cannot be mined directly", summary: "83% Chinese. One western refiner.", constraintSeverity: "Severe", constraintLabel: "Supply is fixed by geology", constraintDetails: ["Only a few coal and zinc deposits can recover Ge economically at high concentration.", "No dedicated germanium mines. Increasing output means installing capture and purification equipment — capex intense and multi-year project.", "Few projects coming online but not fast enough or large enough."] },
-          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "Converted to germanium tetrachloride and purified to fiber-grade.", supply: "~500t/yr", aiDemand: "~120t/yr", gap: "~150t", constraint: "8N purity — few facilities capable", summary: "One commercial-scale western supplier.", constraintSeverity: "Severe", constraintLabel: "Market has select few capable suppliers", constraintDetails: ["Only a few refiners worldwide can hit ultra purity at commercial scale. Almost all are Chinese except Umicore as sole western producer.", "New entrants have high entry barrier from qualification requirements and even existing refiners mostly run under capacity as still limited by Ge feedstock availability."] },
-          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "Deposited into glass preform, drawn into thin strands, and assembled into cables.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity.", constraintSeverity: "Moderate", constraintLabel: "Time and capital for equipment", constraintDetails: ["Production is not the bottleneck and scales with capex. Multiple manufacturers can compete to build new capacity.", "Friction is in high yield preform technology which is proprietary and concentrated in a few vertically integrated incumbents (Corning, Sumitomo, Shin-Etsu). Standing up new lines is gated by long-lead deposition and draw equipment."] },
+          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Recovered as a byproduct of zinc and coal, then refined to high purity.", supply: "~230t/yr", aiDemand: "~87t/yr", gap: "~56t", constraint: "Byproduct — cannot be mined directly", summary: "83% Chinese. One western refiner.", constraintSeverity: "Severe", constraintLabel: "Supply is fixed by geology", constraintDetails: ["Only a few coal and zinc deposits can recover Ge economically at high concentration.", "No dedicated germanium mines. Increasing output means installing capture and purification equipment — capex intense and multi-year project.", "Few projects coming online but not fast enough or large enough."], featuredCompany: { name: "STL / Gecamines", note: "New DRC germanium supply" } },
+          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "Converted to germanium tetrachloride and purified to fiber-grade.", supply: "~500t/yr", aiDemand: "~120t/yr", gap: "~150t", constraint: "8N purity — few facilities capable", summary: "One commercial-scale western supplier.", constraintSeverity: "Severe", constraintLabel: "Market has select few capable suppliers", constraintDetails: ["Only a few refiners worldwide can hit ultra purity at commercial scale. Almost all are Chinese except Umicore as sole western producer.", "New entrants have high entry barrier from qualification requirements and even existing refiners mostly run under capacity as still limited by Ge feedstock availability."], featuredCompany: { name: "Umicore", note: "Sole western supplier" } },
+          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "Deposited into glass preform, drawn into thin strands, and assembled into cables.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity.", constraintSeverity: "Moderate", constraintLabel: "Time and capital for equipment", constraintDetails: ["Production is not the bottleneck and scales with capex. Multiple manufacturers can compete to build new capacity.", "Friction is in high yield preform technology which is proprietary and concentrated in a few vertically integrated incumbents (Corning, Sumitomo, Shin-Etsu). Standing up new lines is gated by long-lead deposition and draw equipment."], featuredCompany: { name: "Corning", note: "Market leader" } },
           { name: "AI DC Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "Fiber deployed to link GPUs, switches, and storage to tie an AI cluster together.", rows: [["Fiber per 1 GW AI DC", "9M KM"], ["New Annual AI DC Capacity", "20 GW"], ["Required Fiber", "120M KM", "accent"], ["Status", "Accelerating", "pill"]], summary: "36x more fiber per AI rack vs CPU." },
         ];
 
@@ -2743,7 +2742,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         <p style={{ fontSize: 11, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
                         {/* Supply/Demand data — chain steps only */}
                         {(() => {
-                          const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string; constraintSeverity?: string; constraintLabel?: string; constraintDetails?: string[]; rows?: string[][] };
+                          const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string; constraintSeverity?: string; constraintLabel?: string; constraintDetails?: string[]; rows?: string[][]; featuredCompany?: { name: string; note: string } };
                           if (!s.supply && !s.rows) return null;
                           const rowStyle = { display: "flex" as const, justifyContent: "space-between" as const, alignItems: "baseline" as const, padding: "2px 0" as const };
                           const labelStyle2 = { fontSize: 11 as const, color: "#706a60" as string };
@@ -2779,16 +2778,16 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                                 </div>
                               )}
                             </div>
-                            {chainConstraintsExpanded && s.constraintLabel && s.constraintDetails && (
+                            {s.constraintLabel && (
                               <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
                                 <p style={{ fontSize: 11, color: "rgb(236, 232, 225)", fontWeight: 500, margin: "0 0 2px 0" }}>Constraint</p>
-                                <p style={{ fontSize: 11, color: sevColors[s.constraintSeverity ?? ""] ?? "#c87a4a", fontWeight: 100, margin: "0 0 4px 0" }}>{s.constraintLabel}</p>
-                                {s.constraintDetails.map((d, di) => (
-                                  <div key={di} style={{ display: "flex", gap: 6, margin: di < s.constraintDetails!.length - 1 ? "0 0 4px 0" : "0" }}>
-                                    <span style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, flexShrink: 0 }}>•</span>
-                                    <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{d}</p>
-                                  </div>
-                                ))}
+                                <p style={{ fontSize: 11, color: sevColors[s.constraintSeverity ?? ""] ?? "#c87a4a", fontWeight: 100, margin: 0 }}>{s.constraintLabel}</p>
+                              </div>
+                            )}
+                            {s.featuredCompany && (
+                              <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
+                                <p style={{ fontSize: 11, color: "rgb(236, 232, 225)", fontWeight: 500, margin: "0 0 2px 0" }}>Featured Company</p>
+                                <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: 0 }}>{s.featuredCompany.name} <span style={{ color: "rgb(160, 152, 136)", fontWeight: 400 }}>— {s.featuredCompany.note}</span></p>
                               </div>
                             )}
                             </>
@@ -2801,14 +2800,14 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 {diagramSteps.some(st => (st as { constraintDetails?: string[] }).constraintDetails) && (
                   <div style={{ display: "flex", justifyContent: "center", marginTop: 6 }}>
                     <button
-                      onClick={() => setChainConstraintsExpanded(v => !v)}
+                      onClick={() => setShowChainOpportunities(true)}
                       style={{ display: "flex", alignItems: "center", gap: 6, background: "transparent", border: "none", cursor: "pointer", padding: "6px 10px", color: "#706a60", fontSize: 10, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.06em" }}
                       onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }}
                       onMouseLeave={e => { e.currentTarget.style.color = "#706a60"; }}
                     >
-                      <span>{chainConstraintsExpanded ? "Hide constraints" : "Show constraints"}</span>
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: chainConstraintsExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s ease" }}>
-                        <polyline points="6 9 12 15 18 9" />
+                      <span>Read full chain brief</span>
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
                       </svg>
                     </button>
                   </div>
