@@ -2922,7 +2922,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       }
                     }}
                     style={{
-                      display: "flex", alignItems: "center", gap: 30,
+                      display: "flex", alignItems: "center",
                       padding: "5px 0",
                       borderTop: ci > 0 ? "1px solid rgba(255,255,255,0.04)" : "none",
                       cursor: chain.navPath.length > 0 ? "pointer" : "default",
@@ -2933,7 +2933,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
                   >
                     {/* Chain pill */}
-                    <span style={{ display: "inline-flex", alignItems: "center", fontSize: 11, color: "rgb(236, 232, 225)", background: "rgba(255,255,255,0.04)", borderRadius: 3, padding: "3px 10px", fontFamily: "'Geist Mono', monospace", gap: 0, flexShrink: 0 }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", fontSize: 11, color: "rgb(236, 232, 225)", background: "rgba(255,255,255,0.04)", borderRadius: 3, padding: "3px 10px", fontFamily: "'Geist Mono', monospace", gap: 0, flexShrink: 0, marginRight: 30 }}>
                       {chain.nodes.map((node, ni) => (
                         <React.Fragment key={ni}>
                           {ni > 0 && <span style={{ margin: "0 3px", color: "rgba(255,255,255,0.2)" }}>→</span>}
@@ -2942,11 +2942,11 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       ))}
                     </span>
                     {/* Context */}
-                    <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", margin: 0, lineHeight: 1.3, flex: 1 }}>{chain.context}</p>
+                    <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", margin: 0, marginRight: 30, lineHeight: 1.3, flex: 1 }}>{chain.context}</p>
                     {/* Status */}
-                    <span style={{ fontSize: 9, color: chain.statusColor, background: `${chain.statusColor}15`, border: `0.5px solid ${chain.statusColor}40`, padding: "2px 8px", borderRadius: 3, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em", flexShrink: 0 }}>{chain.status}</span>
+                    <span style={{ fontSize: 9, color: chain.statusColor, background: `${chain.statusColor}15`, border: `0.5px solid ${chain.statusColor}40`, padding: "2px 8px", borderRadius: 3, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em", flexShrink: 0, marginRight: 30 }}>{chain.status}</span>
                     {/* Arrow */}
-                    {chain.navPath.length > 0 && <span style={{ fontSize: 16, color: "#555", flexShrink: 0 }}>›</span>}
+                    <span style={{ fontSize: 16, color: "#555", flexShrink: 0 }}>›</span>
                   </div>
                 ))}
               </div>
