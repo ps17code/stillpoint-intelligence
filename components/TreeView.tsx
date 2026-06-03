@@ -2636,9 +2636,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         const chainSteps = [
-          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Recovered as a byproduct of zinc and coal, then refined to high purity.", supply: "~230t/yr", aiDemand: "~87t/yr", gap: "~56t", constraint: "Byproduct — cannot be mined directly", summary: "83% Chinese. One western refiner." },
-          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "Converted to germanium tetrachloride and purified to fiber-grade.", supply: "~500t/yr", aiDemand: "~120t/yr", gap: "~150t", constraint: "8N purity — few facilities capable", summary: "One commercial-scale western supplier." },
-          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "Deposited into glass preform, drawn into thin strands, and assembled into cables.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity." },
+          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Recovered as a byproduct of zinc and coal, then refined to high purity.", supply: "~230t/yr", aiDemand: "~87t/yr", gap: "~56t", constraint: "Byproduct — cannot be mined directly", summary: "83% Chinese. One western refiner.", constraintSeverity: "Severe", constraintLabel: "Supply is fixed by geology", constraintDetails: ["Only a few coal and zinc deposits can recover Ge economically at high concentration.", "No dedicated germanium mines. Increasing output means installing capture and purification equipment — capex intense and multi-year project.", "Few projects coming online but not fast enough or large enough."] },
+          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "Converted to germanium tetrachloride and purified to fiber-grade.", supply: "~500t/yr", aiDemand: "~120t/yr", gap: "~150t", constraint: "8N purity — few facilities capable", summary: "One commercial-scale western supplier.", constraintSeverity: "Severe", constraintLabel: "Market has select few capable suppliers", constraintDetails: ["Only a few refiners worldwide can hit ultra purity at commercial scale. Almost all are Chinese except Umicore as sole western producer.", "New entrants have high entry barrier from qualification requirements and even existing refiners mostly run under capacity as still limited by Ge feedstock availability."] },
+          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "Deposited into glass preform, drawn into thin strands, and assembled into cables.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity.", constraintSeverity: "Moderate", constraintLabel: "Time and capital for equipment", constraintDetails: ["Production is not the bottleneck and scales with capex. Multiple manufacturers can compete to build new capacity.", "Friction is in high yield preform technology which is proprietary and concentrated in a few vertically integrated incumbents (Corning, Sumitomo, Shin-Etsu). Standing up new lines is gated by long-lead deposition and draw equipment."] },
           { name: "AI DC Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "Fiber deployed to link GPUs, switches, and storage to tie an AI cluster together.", supply: "~$48B/yr", aiDemand: "~$22B/yr", gap: "Scaling", constraint: "Transceiver yield + fiber availability", summary: "36x more fiber per AI rack vs CPU." },
         ];
 
@@ -2739,19 +2739,33 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         <p style={{ fontSize: 10, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
                         {/* Supply/Demand data — chain steps only */}
                         {(() => {
-                          const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string };
+                          const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string; constraintSeverity?: string; constraintLabel?: string; constraintDetails?: string[] };
                           if (!s.supply) return null;
                           const rowStyle = { display: "flex" as const, justifyContent: "space-between" as const, alignItems: "baseline" as const, padding: "2px 0" as const };
                           const labelStyle2 = { fontSize: 8 as const, color: "#706a60" as string };
                           const valueStyle = { fontSize: 8 as const, color: warmWhite as string, fontFamily: "'Geist Mono', monospace" as string };
+                          const sevColors: Record<string, string> = { Severe: "#c87a4a", Moderate: "#c8a85a" };
                           return (
+                            <>
                             <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
                               <div style={rowStyle}><span style={labelStyle2}>Supply</span><span style={valueStyle}>{s.supply}</span></div>
                               <div style={rowStyle}><span style={labelStyle2}>AI Demand</span><span style={valueStyle}>{s.aiDemand}</span></div>
                               <div style={rowStyle}><span style={labelStyle2}>Gap</span><span style={{ ...valueStyle, color: "#c87a4a" }}>{s.gap}</span></div>
-                              <div style={rowStyle}><span style={labelStyle2}>Constraint</span><span style={{ fontSize: 8, color: "rgb(160, 152, 136)" }}>{s.constraint}</span></div>
                               <div style={{ ...rowStyle, borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 2, paddingTop: 4 }}><span style={{ fontSize: 8, color: "rgb(160, 152, 136)", fontStyle: "italic" }}>{s.summary}</span></div>
                             </div>
+                            {s.constraintSeverity && s.constraintDetails && (
+                              <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                                  <span style={{ fontSize: 8, color: "#706a60" }}>Constraint</span>
+                                  <span style={{ fontSize: 7, color: sevColors[s.constraintSeverity] ?? "#c8a85a", background: `${sevColors[s.constraintSeverity] ?? "#c8a85a"}15`, border: `0.5px solid ${sevColors[s.constraintSeverity] ?? "#c8a85a"}40`, padding: "1px 5px", borderRadius: 2, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.constraintSeverity}</span>
+                                </div>
+                                <p style={{ fontSize: 8, color: warmWhite, margin: "0 0 4px 0", fontWeight: 500 }}>{s.constraintLabel}</p>
+                                {s.constraintDetails.map((d, di) => (
+                                  <p key={di} style={{ fontSize: 8, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: di < s.constraintDetails!.length - 1 ? "0 0 4px 0" : "0" }}>{d}</p>
+                                ))}
+                              </div>
+                            )}
+                            </>
                           );
                         })()}
                       </div>
@@ -2973,7 +2987,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     </div>
                     {/* Right: status + arrow */}
                     <div style={{ display: "flex", alignItems: "center", gap: 30, flexShrink: 0, marginLeft: 30 }}>
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 9, color: chain.statusColor, background: `${chain.statusColor}15`, border: `0.5px solid ${chain.statusColor}40`, padding: "3px 8px", borderRadius: 3, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em", width: 150, boxSizing: "border-box", justifyContent: "center" }}>
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 9, color: chain.statusColor, background: `${chain.statusColor}15`, border: `0.5px solid ${chain.statusColor}40`, padding: "3px 8px", borderRadius: 3, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em", width: 130, boxSizing: "border-box", justifyContent: "center" }}>
                         <span>{chain.status}</span>
                         <span style={{ width: 1, height: 10, background: `${chain.statusColor}40`, flexShrink: 0 }} />
                         <span style={{ textTransform: "none", letterSpacing: "0" }}>{chain.signals} Signal{chain.signals !== 1 ? "s" : ""}</span>
