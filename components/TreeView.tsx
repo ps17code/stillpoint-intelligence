@@ -2892,6 +2892,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     context: "Germanium must convert to ultra-pure GeCl₄ before it can be used in fiber preforms.",
                     status: "Severe",
                     statusColor: "#c87a4a",
+                    signals: 3,
                     navPath: [{ type: "vertical" as const, id: "ai", name: "AI Infrastructure" }],
                     chainId: "germanium_chokepoint",
                   },
@@ -2900,6 +2901,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     context: "Silicon feedstock is abundant but conversion to high-purity SiCl₄ requires specialized processing.",
                     status: "Abundant",
                     statusColor: "#6a9a6a",
+                    signals: 0,
                     navPath: [],
                     chainId: "",
                   },
@@ -2908,6 +2910,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     context: "Helium cools fiber during drawing. Non-renewable byproduct with declining US reserves.",
                     status: "Moderate",
                     statusColor: "#c8a85a",
+                    signals: 1,
                     navPath: [],
                     chainId: "",
                   },
@@ -2954,7 +2957,15 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     </div>
                     {/* Right: status + arrow */}
                     <div style={{ display: "flex", alignItems: "center", gap: 30, flexShrink: 0, marginLeft: 30 }}>
-                      <span style={{ fontSize: 9, color: chain.statusColor, background: `${chain.statusColor}15`, border: `0.5px solid ${chain.statusColor}40`, padding: "2px 0", borderRadius: 3, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em", width: 70, textAlign: "center", display: "inline-block" }}>{chain.status}</span>
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 9, color: chain.statusColor, background: `${chain.statusColor}15`, border: `0.5px solid ${chain.statusColor}40`, padding: "3px 8px", borderRadius: 3, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em", width: 150, boxSizing: "border-box", justifyContent: "center" }}>
+                        <span>{chain.status}</span>
+                        <span style={{ width: 1, height: 10, background: `${chain.statusColor}40`, flexShrink: 0 }} />
+                        <span style={{ position: "relative", width: 5, height: 5, flexShrink: 0 }}>
+                          <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: chain.statusColor, opacity: 0.6, animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite" }} />
+                          <span style={{ position: "relative", display: "block", width: 5, height: 5, borderRadius: "50%", background: chain.statusColor }} />
+                        </span>
+                        <span style={{ textTransform: "none", letterSpacing: "0" }}>{chain.signals} Signal{chain.signals !== 1 ? "s" : ""}</span>
+                      </span>
                       <span style={{ fontSize: 16, color: "#555", marginRight: 10 }}>›</span>
                     </div>
                   </div>
