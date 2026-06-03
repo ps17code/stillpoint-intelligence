@@ -2637,7 +2637,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
         const chainSteps = [
           { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Recovered as a byproduct of zinc and coal, then refined to high purity.", supply: "~230t/yr", aiDemand: "~87t/yr", gap: "~56t", constraint: "Byproduct — cannot be mined directly", summary: "83% Chinese. One western refiner.", constraintSeverity: "Severe", constraintLabel: "Supply is fixed by geology", constraintDetails: ["Only a few coal and zinc deposits can recover Ge economically at high concentration.", "No dedicated germanium mines. Increasing output means installing capture and purification equipment — capex intense and multi-year project.", "Few projects coming online but not fast enough or large enough."], featuredCompany: { name: "STL / Gecamines", note: "New DRC germanium supply" } },
           { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "Converted to germanium tetrachloride and purified to fiber-grade.", supply: "~500t/yr", aiDemand: "~120t/yr", gap: "~150t", constraint: "8N purity — few facilities capable", summary: "One commercial-scale western supplier.", constraintSeverity: "Severe", constraintLabel: "Market has select few capable suppliers", constraintDetails: ["Only a few refiners worldwide can hit ultra purity at commercial scale. Almost all are Chinese except Umicore as sole western producer.", "New entrants have high entry barrier from qualification requirements and even existing refiners mostly run under capacity as still limited by Ge feedstock availability."], featuredCompany: { name: "Umicore", note: "Sole western supplier" } },
-          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "Deposited into glass preform, drawn into thin strands, and assembled into cables.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity.", constraintSeverity: "Moderate", constraintLabel: "Time and capital for equipment", constraintDetails: ["Production is not the bottleneck and scales with capex. Multiple manufacturers can compete to build new capacity.", "Friction is in high yield preform technology which is proprietary and concentrated in a few vertically integrated incumbents (Corning, Sumitomo, Shin-Etsu). Standing up new lines is gated by long-lead deposition and draw equipment."], featuredCompany: { name: "Corning", note: "Market leader" } },
+          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "GeCl4 is deposited in glass rods, drawn in strands, and assembled into cables.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity.", constraintSeverity: "Moderate", constraintLabel: "Time and capital for equipment", constraintDetails: ["Production is not the bottleneck and scales with capex. Multiple manufacturers can compete to build new capacity.", "Friction is in high yield preform technology which is proprietary and concentrated in a few vertically integrated incumbents (Corning, Sumitomo, Shin-Etsu). Standing up new lines is gated by long-lead deposition and draw equipment."], featuredCompany: { name: "Corning", note: "Market leader" } },
           { name: "AI DC Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "Fiber deployed to link GPUs, switches, and storage to tie an AI cluster together.", rows: [["Fiber per 1 GW AI DC", "9M KM"], ["New Annual AI DC Capacity", "20 GW"], ["Required Fiber", "120M KM", "accent"], ["Status", "Accelerating", "pill"]], summary: "36x more fiber per AI rack vs CPU." },
         ];
 
@@ -2749,9 +2749,11 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           const valueStyle = { fontSize: 11 as const, color: warmWhite as string };
                           const sevColors: Record<string, string> = { Severe: "#c2554d", Moderate: "#c2a23f", Accelerating: "#5f9a5f" };
                           const pillStyle = (color: string) => ({ fontSize: 9 as const, color, background: `${color}15`, padding: "1px 6px" as const, borderRadius: 2, fontFamily: "'Geist Mono', monospace" as const, textTransform: "uppercase" as const, letterSpacing: "0.04em" as const });
+                          const sectionTitleStyle = { fontSize: 11 as const, color: "rgb(159, 150, 135)" as string, fontWeight: 700 as const, margin: "0 0 2px 0" as const };
                           return (
                             <>
                             <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
+                              <p style={sectionTitleStyle}>Supply vs. Demand</p>
                               {s.rows ? (
                                 s.rows.map((r, ri) => {
                                   const mode = r[2];
@@ -2780,14 +2782,15 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             </div>
                             {s.constraintLabel && (
                               <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
-                                <p style={{ fontSize: 11, color: "rgb(236, 232, 225)", fontWeight: 500, margin: "0 0 2px 0" }}>Constraint</p>
-                                <p style={{ fontSize: 11, color: sevColors[s.constraintSeverity ?? ""] ?? "#c87a4a", fontWeight: 100, margin: 0 }}>{s.constraintLabel}</p>
+                                <p style={sectionTitleStyle}>Constraint</p>
+                                <p style={{ fontSize: 11, color: "rgba(221, 221, 221, 1)", fontWeight: 100, margin: 0 }}>{s.constraintLabel}</p>
                               </div>
                             )}
                             {s.featuredCompany && (
                               <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
-                                <p style={{ fontSize: 11, color: "rgb(236, 232, 225)", fontWeight: 500, margin: "0 0 2px 0" }}>Featured Company</p>
-                                <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: 0 }}>{s.featuredCompany.name} <span style={{ color: "rgb(160, 152, 136)", fontWeight: 400 }}>— {s.featuredCompany.note}</span></p>
+                                <p style={sectionTitleStyle}>Featured Company</p>
+                                <p style={{ fontSize: 11, color: "rgb(200, 122, 74)", fontWeight: 400, margin: 0 }}>{s.featuredCompany.name}</p>
+                                <p style={{ fontSize: 10, color: "rgba(115, 115, 115, 1)", fontWeight: 400, margin: 0 }}>{s.featuredCompany.note}</p>
                               </div>
                             )}
                             </>
