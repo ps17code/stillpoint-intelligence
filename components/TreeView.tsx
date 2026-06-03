@@ -2743,7 +2743,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           if (!s.supply) return null;
                           const rowStyle = { display: "flex" as const, justifyContent: "space-between" as const, alignItems: "baseline" as const, padding: "2px 0" as const };
                           const labelStyle2 = { fontSize: 11 as const, color: "#706a60" as string };
-                          const valueStyle = { fontSize: 11 as const, color: warmWhite as string, fontFamily: "'Geist Mono', monospace" as string };
+                          const valueStyle = { fontSize: 11 as const, color: warmWhite as string };
                           const sevColors: Record<string, string> = { Severe: "#c87a4a", Moderate: "#c8a85a" };
                           return (
                             <>
@@ -2754,10 +2754,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                               {s.constraintSeverity && (
                                 <div style={{ ...rowStyle, alignItems: "center" }}>
                                   <span style={labelStyle2}>Constraint</span>
-                                  <span style={{ fontSize: 11, color: sevColors[s.constraintSeverity] ?? "#c8a85a", background: `${sevColors[s.constraintSeverity] ?? "#c8a85a"}15`, border: `0.5px solid ${sevColors[s.constraintSeverity] ?? "#c8a85a"}40`, padding: "1px 6px", borderRadius: 2, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.constraintSeverity}</span>
+                                  <span style={{ fontSize: 9, color: sevColors[s.constraintSeverity] ?? "#c8a85a", background: `${sevColors[s.constraintSeverity] ?? "#c8a85a"}15`, padding: "1px 6px", borderRadius: 2, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.constraintSeverity}</span>
                                 </div>
                               )}
-                              <div style={{ ...rowStyle, borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 2, paddingTop: 4 }}><span style={{ fontSize: 11, color: "rgb(160, 152, 136)", fontStyle: "italic" }}>{s.summary}</span></div>
                             </div>
                             {s.constraintLabel && s.constraintDetails && (
                               <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
