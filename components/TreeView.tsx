@@ -2886,38 +2886,28 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               </div>
               <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
               <div style={{ padding: "10px 15px" }}>
-                {/* Header row */}
-                <div style={{ display: "grid", gridTemplateColumns: "1.2fr 2fr 0.7fr 0.5fr", gap: 10, marginBottom: 8 }}>
-                  {["Chain", "Context", "Status", "Signals"].map(h => (
-                    <p key={h} style={{ fontSize: 7, color: "#555", margin: 0, textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace", fontWeight: 500 }}>{h}</p>
-                  ))}
-                </div>
-                {/* Chain rows */}
                 {[
                   {
                     nodes: ["Ge", "GeCl₄", "Preform", "Fiber"],
                     context: "Germanium must convert to ultra-pure GeCl₄ before it can be used in fiber preforms. One western supplier.",
                     status: "Severe",
                     statusColor: "#c87a4a",
-                    signals: 3,
                     navPath: [{ type: "vertical" as const, id: "ai", name: "AI Infrastructure" }],
                     chainId: "germanium_chokepoint",
                   },
                   {
                     nodes: ["Silica", "SiCl₄", "Preform", "Fiber"],
-                    context: "Silicon feedstock is abundant but conversion to high-purity SiCl₄ requires specialized chemical processing.",
+                    context: "Silicon feedstock is abundant but conversion to high-purity SiCl₄ requires specialized processing.",
                     status: "Abundant",
                     statusColor: "#6a9a6a",
-                    signals: 0,
                     navPath: [],
                     chainId: "",
                   },
                   {
                     nodes: ["He", "Draw Tower", "Optical Fiber", "Fiber"],
-                    context: "Helium cools fiber during drawing. Non-renewable byproduct of natural gas with declining US reserves.",
+                    context: "Helium cools fiber during drawing. Non-renewable byproduct with declining US reserves.",
                     status: "Moderate",
                     statusColor: "#c8a85a",
-                    signals: 1,
                     navPath: [],
                     chainId: "",
                   },
@@ -2932,7 +2922,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       }
                     }}
                     style={{
-                      display: "grid", gridTemplateColumns: "1.2fr 2fr 0.7fr 0.5fr", gap: 10,
+                      display: "flex", alignItems: "center", gap: 10,
                       padding: "8px 0",
                       borderTop: ci > 0 ? "1px solid rgba(255,255,255,0.04)" : "none",
                       cursor: chain.navPath.length > 0 ? "pointer" : "default",
@@ -2943,26 +2933,20 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
                   >
                     {/* Chain pill */}
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <span style={{ display: "inline-flex", alignItems: "center", fontSize: 9, color: dimText, background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "3px 8px", fontFamily: "'Geist Mono', monospace", gap: 0 }}>
-                        {chain.nodes.map((node, ni) => (
-                          <React.Fragment key={ni}>
-                            {ni > 0 && <span style={{ margin: "0 3px", color: "rgba(255,255,255,0.2)" }}>→</span>}
-                            <span>{node}</span>
-                          </React.Fragment>
-                        ))}
-                      </span>
-                    </div>
-                    {/* Context */}
-                    <p style={{ fontSize: 10, color: dimText, margin: 0, lineHeight: 1.4 }}>{chain.context}</p>
+                    <span style={{ display: "inline-flex", alignItems: "center", fontSize: 11, color: "rgb(236, 232, 225)", background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "3px 10px", fontFamily: "'Geist Mono', monospace", gap: 0, flexShrink: 0 }}>
+                      {chain.nodes.map((node, ni) => (
+                        <React.Fragment key={ni}>
+                          {ni > 0 && <span style={{ margin: "0 3px", color: "rgba(255,255,255,0.2)" }}>→</span>}
+                          <span>{node}</span>
+                        </React.Fragment>
+                      ))}
+                    </span>
                     {/* Status */}
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <span style={{ fontSize: 8, color: chain.statusColor, background: `${chain.statusColor}15`, border: `0.5px solid ${chain.statusColor}40`, padding: "2px 6px", borderRadius: 3, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{chain.status}</span>
-                    </div>
-                    {/* Signals count */}
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <span style={{ fontSize: 10, color: chain.signals > 0 ? warmWhite : "#555", fontFamily: "'Geist Mono', monospace" }}>{chain.signals}</span>
-                    </div>
+                    <span style={{ fontSize: 10, color: chain.statusColor, background: `${chain.statusColor}15`, border: `0.5px solid ${chain.statusColor}40`, padding: "2px 8px", borderRadius: 3, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em", flexShrink: 0 }}>{chain.status}</span>
+                    {/* Context */}
+                    <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", margin: 0, lineHeight: 1.3, flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{chain.context}</p>
+                    {/* Arrow */}
+                    {chain.navPath.length > 0 && <span style={{ fontSize: 10, color: "#555", flexShrink: 0 }}>→</span>}
                   </div>
                 ))}
               </div>
