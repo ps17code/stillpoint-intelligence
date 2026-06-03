@@ -2945,9 +2945,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", margin: 0, lineHeight: 1.3 }}>{chain.context}</p>
                     </div>
                     {/* Right: status + arrow */}
-                    <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0, marginLeft: 30 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 30, flexShrink: 0, marginLeft: 30 }}>
                       <span style={{ fontSize: 9, color: chain.statusColor, background: `${chain.statusColor}15`, border: `0.5px solid ${chain.statusColor}40`, padding: "2px 0", borderRadius: 3, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em", width: 70, textAlign: "center", display: "inline-block" }}>{chain.status}</span>
-                      <span style={{ fontSize: 16, color: "#555" }}>›</span>
+                      <span style={{ fontSize: 16, color: "#555", marginRight: 10 }}>›</span>
                     </div>
                   </div>
                 ))}
