@@ -2637,10 +2637,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         const chainSteps = [
+          { name: "AI DC Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "Fiber deployed to link GPUs, switches, and storage to tie an AI cluster together.", rows: [["Fiber per 1 GW AI DC", "9M KM"], ["New Annual AI DC Capacity", "20 GW"], ["Required Fiber", "120M KM", true], ["Demand", "Accelerating", true]], summary: "36x more fiber per AI rack vs CPU." },
           { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Recovered as a byproduct of zinc and coal, then refined to high purity.", supply: "~230t/yr", aiDemand: "~87t/yr", gap: "~56t", constraint: "Byproduct — cannot be mined directly", summary: "83% Chinese. One western refiner.", constraintSeverity: "Severe", constraintLabel: "Supply is fixed by geology", constraintDetails: ["Only a few coal and zinc deposits can recover Ge economically at high concentration.", "No dedicated germanium mines. Increasing output means installing capture and purification equipment — capex intense and multi-year project.", "Few projects coming online but not fast enough or large enough."] },
           { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "Converted to germanium tetrachloride and purified to fiber-grade.", supply: "~500t/yr", aiDemand: "~120t/yr", gap: "~150t", constraint: "8N purity — few facilities capable", summary: "One commercial-scale western supplier.", constraintSeverity: "Severe", constraintLabel: "Market has select few capable suppliers", constraintDetails: ["Only a few refiners worldwide can hit ultra purity at commercial scale. Almost all are Chinese except Umicore as sole western producer.", "New entrants have high entry barrier from qualification requirements and even existing refiners mostly run under capacity as still limited by Ge feedstock availability."] },
           { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "Deposited into glass preform, drawn into thin strands, and assembled into cables.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity.", constraintSeverity: "Moderate", constraintLabel: "Time and capital for equipment", constraintDetails: ["Production is not the bottleneck and scales with capex. Multiple manufacturers can compete to build new capacity.", "Friction is in high yield preform technology which is proprietary and concentrated in a few vertically integrated incumbents (Corning, Sumitomo, Shin-Etsu). Standing up new lines is gated by long-lead deposition and draw equipment."] },
-          { name: "AI DC Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "Fiber deployed to link GPUs, switches, and storage to tie an AI cluster together.", supply: "~$48B/yr", aiDemand: "~$22B/yr", gap: "Scaling", constraint: "Transceiver yield + fiber availability", summary: "36x more fiber per AI rack vs CPU." },
         ];
 
         const subsystemSteps = [
@@ -2700,18 +2700,21 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               {/* Diagram view */}
               {chainTreeTab === "diagram" && (
                 <>
-                <div style={{ display: "grid", gridTemplateColumns: `repeat(${diagramSteps.length}, 1fr)`, gap: 0 }}>
+                <div style={{ display: "grid", gridTemplateColumns: `repeat(${diagramSteps.length}, 1fr)`, gap: 8 }}>
                   {diagramSteps.map((step, i) => {
                     const nodeId = (step as { nodeId?: string }).nodeId;
                     const isSelected = nodeId ? selectedTreeNode === nodeId : selectedSubsystem === step.name;
                     const dotColor = "#c87a4a";
+                    const isAIDC = step.name === "AI DC Connectivity";
+                    const cardBg = isAIDC ? "rgb(40, 34, 30)" : "rgb(32, 32, 32)";
+                    const cardBgSel = isAIDC ? "rgb(48, 40, 34)" : "rgb(40, 40, 40)";
                     return (
                       <div
                         key={step.name}
                         onClick={() => { if (nodeId) { setSelectedTreeNode(selectedTreeNode === nodeId ? null : nodeId); setRightTab("summary"); } else { const next = selectedSubsystem === step.name ? null : step.name; setSelectedSubsystem(next); setSelectedArchPiece(null); } }}
-                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? "rgb(37, 37, 37)" : "transparent", borderRadius: 5, border: isSelected ? "1px solid rgba(200, 122, 74, 0.25)" : "1px solid transparent", padding: i === 0 ? "10px 10px 12px 10px" : "10px 10px 12px", transition: "background 0.15s, border-color 0.15s" }}
-                        onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
-                        onMouseLeave={e => { if (!isSelected) e.currentTarget.style.background = "transparent"; }}
+                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? cardBgSel : cardBg, borderRadius: 5, border: isSelected ? "1px solid rgba(200, 122, 74, 0.25)" : isAIDC ? "1px solid rgba(200, 122, 74, 0.15)" : "1px solid rgba(255, 255, 255, 0.04)", padding: "10px 10px 12px", transition: "background 0.15s, border-color 0.15s" }}
+                        onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = cardBgSel; }}
+                        onMouseLeave={e => { if (!isSelected) e.currentTarget.style.background = cardBg; }}
                       >
                         {/* Name row with dot and connecting line */}
                         <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
@@ -2741,8 +2744,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         <p style={{ fontSize: 11, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
                         {/* Supply/Demand data — chain steps only */}
                         {(() => {
-                          const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string; constraintSeverity?: string; constraintLabel?: string; constraintDetails?: string[] };
-                          if (!s.supply) return null;
+                          const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string; constraintSeverity?: string; constraintLabel?: string; constraintDetails?: string[]; rows?: (string | boolean)[][] };
+                          if (!s.supply && !s.rows) return null;
                           const rowStyle = { display: "flex" as const, justifyContent: "space-between" as const, alignItems: "baseline" as const, padding: "2px 0" as const };
                           const labelStyle2 = { fontSize: 11 as const, color: "#706a60" as string };
                           const valueStyle = { fontSize: 11 as const, color: warmWhite as string };
@@ -2750,9 +2753,17 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           return (
                             <>
                             <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
-                              <div style={rowStyle}><span style={labelStyle2}>Supply</span><span style={valueStyle}>{s.supply}</span></div>
-                              <div style={rowStyle}><span style={labelStyle2}>AI Demand</span><span style={valueStyle}>{s.aiDemand}</span></div>
-                              <div style={rowStyle}><span style={labelStyle2}>Gap</span><span style={{ ...valueStyle, color: "#c87a4a" }}>{s.gap}</span></div>
+                              {s.rows ? (
+                                s.rows.map((r, ri) => (
+                                  <div key={ri} style={rowStyle}><span style={labelStyle2}>{r[0] as string}</span><span style={r[2] ? { ...valueStyle, color: "#c87a4a" } : valueStyle}>{r[1] as string}</span></div>
+                                ))
+                              ) : (
+                                <>
+                                  <div style={rowStyle}><span style={labelStyle2}>Supply</span><span style={valueStyle}>{s.supply}</span></div>
+                                  <div style={rowStyle}><span style={labelStyle2}>AI Demand</span><span style={valueStyle}>{s.aiDemand}</span></div>
+                                  <div style={rowStyle}><span style={labelStyle2}>Gap</span><span style={{ ...valueStyle, color: "#c87a4a" }}>{s.gap}</span></div>
+                                </>
+                              )}
                               {s.constraintSeverity && (
                                 <div style={{ ...rowStyle, alignItems: "center" }}>
                                   <span style={labelStyle2}>Status</span>
