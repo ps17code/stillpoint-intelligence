@@ -2714,7 +2714,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         {/* Name row with dot and connecting line */}
                         <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
                           <span style={{ width: 5, height: 5, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
-                          <p style={{ fontSize: 13, fontWeight: 500, color: "#ece8e1", margin: "0 0 0 6px", fontFamily: "'EB Garamond', Georgia, serif", whiteSpace: "nowrap", flexShrink: 0 }}>{step.name}</p>
+                          <p style={{ fontSize: 11, fontWeight: 500, color: "#ece8e1", margin: "0 0 0 6px", fontFamily: "'EB Garamond', Georgia, serif", whiteSpace: "nowrap", flexShrink: 0 }}>{step.name}</p>
                           {i < diagramSteps.length - 1 && (
                             <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)", marginLeft: 8 }} />
                           )}
@@ -2736,14 +2736,14 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           <img src={step.img} alt={step.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
                         </div>
                         {/* Description */}
-                        <p style={{ fontSize: 10, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                        <p style={{ fontSize: 11, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
                         {/* Supply/Demand data — chain steps only */}
                         {(() => {
                           const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string; constraintSeverity?: string; constraintLabel?: string; constraintDetails?: string[] };
                           if (!s.supply) return null;
                           const rowStyle = { display: "flex" as const, justifyContent: "space-between" as const, alignItems: "baseline" as const, padding: "2px 0" as const };
-                          const labelStyle2 = { fontSize: 8 as const, color: "#706a60" as string };
-                          const valueStyle = { fontSize: 8 as const, color: warmWhite as string, fontFamily: "'Geist Mono', monospace" as string };
+                          const labelStyle2 = { fontSize: 11 as const, color: "#706a60" as string };
+                          const valueStyle = { fontSize: 11 as const, color: warmWhite as string, fontFamily: "'Geist Mono', monospace" as string };
                           const sevColors: Record<string, string> = { Severe: "#c87a4a", Moderate: "#c8a85a" };
                           return (
                             <>
@@ -2751,17 +2751,22 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                               <div style={rowStyle}><span style={labelStyle2}>Supply</span><span style={valueStyle}>{s.supply}</span></div>
                               <div style={rowStyle}><span style={labelStyle2}>AI Demand</span><span style={valueStyle}>{s.aiDemand}</span></div>
                               <div style={rowStyle}><span style={labelStyle2}>Gap</span><span style={{ ...valueStyle, color: "#c87a4a" }}>{s.gap}</span></div>
-                              <div style={{ ...rowStyle, borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 2, paddingTop: 4 }}><span style={{ fontSize: 8, color: "rgb(160, 152, 136)", fontStyle: "italic" }}>{s.summary}</span></div>
-                            </div>
-                            {s.constraintSeverity && s.constraintDetails && (
-                              <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
-                                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                                  <span style={{ fontSize: 8, color: "#706a60" }}>Constraint</span>
-                                  <span style={{ fontSize: 7, color: sevColors[s.constraintSeverity] ?? "#c8a85a", background: `${sevColors[s.constraintSeverity] ?? "#c8a85a"}15`, border: `0.5px solid ${sevColors[s.constraintSeverity] ?? "#c8a85a"}40`, padding: "1px 5px", borderRadius: 2, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.constraintSeverity}</span>
+                              {s.constraintSeverity && (
+                                <div style={{ ...rowStyle, alignItems: "center" }}>
+                                  <span style={labelStyle2}>Constraint</span>
+                                  <span style={{ fontSize: 11, color: sevColors[s.constraintSeverity] ?? "#c8a85a", background: `${sevColors[s.constraintSeverity] ?? "#c8a85a"}15`, border: `0.5px solid ${sevColors[s.constraintSeverity] ?? "#c8a85a"}40`, padding: "1px 6px", borderRadius: 2, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.constraintSeverity}</span>
                                 </div>
-                                <p style={{ fontSize: 8, color: warmWhite, margin: "0 0 4px 0", fontWeight: 500 }}>{s.constraintLabel}</p>
+                              )}
+                              <div style={{ ...rowStyle, borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 2, paddingTop: 4 }}><span style={{ fontSize: 11, color: "rgb(160, 152, 136)", fontStyle: "italic" }}>{s.summary}</span></div>
+                            </div>
+                            {s.constraintLabel && s.constraintDetails && (
+                              <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
+                                <p style={{ fontSize: 11, color: warmWhite, margin: "0 0 4px 0", fontWeight: 500 }}>{s.constraintLabel}</p>
                                 {s.constraintDetails.map((d, di) => (
-                                  <p key={di} style={{ fontSize: 8, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: di < s.constraintDetails!.length - 1 ? "0 0 4px 0" : "0" }}>{d}</p>
+                                  <div key={di} style={{ display: "flex", gap: 6, margin: di < s.constraintDetails!.length - 1 ? "0 0 4px 0" : "0" }}>
+                                    <span style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, flexShrink: 0 }}>•</span>
+                                    <p style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, margin: 0 }}>{d}</p>
+                                  </div>
                                 ))}
                               </div>
                             )}
