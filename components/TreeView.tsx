@@ -2636,11 +2636,11 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         const chainSteps = [
-          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Starts as a small byproduct metal recovered from zinc and coal. Hard to scale because nobody mines it directly." },
-          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "This is the hidden step. Germanium has to become ultra-pure GeCl₄ before it can be used in fiber." },
-          { name: "Fiber Preform", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "GeCl₄ gets deposited into glass rods that become the template for optical fiber." },
-          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-optic-cable-v2.jpg", desc: "The preform gets drawn into long strands of low-loss fiber for high-bandwidth data movement." },
-          { name: "AI Datacenter Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "This is where it shows up: fiber linking GPUs, switches, storage, and buildings across AI clusters." },
+          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Starts as a small byproduct metal recovered from zinc and coal. Hard to scale because nobody mines it directly.", supply: "~230t/yr", aiDemand: "~87t/yr", gap: "~56t", constraint: "Byproduct — cannot be mined directly", summary: "83% Chinese. One western refiner." },
+          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "This is the hidden step. Germanium has to become ultra-pure GeCl₄ before it can be used in fiber.", supply: "~500t/yr", aiDemand: "~120t/yr", gap: "~150t", constraint: "8N purity — few facilities capable", summary: "One commercial-scale western supplier." },
+          { name: "Fiber Preform", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "GeCl₄ gets deposited into glass rods that become the template for optical fiber.", supply: "~24kt/yr", aiDemand: "~6kt/yr", gap: "Tight", constraint: "One equipment supplier — 18-24mo backlog", summary: "Lines at full utilization globally." },
+          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-optic-cable-v2.jpg", desc: "The preform gets drawn into long strands of low-loss fiber for high-bandwidth data movement.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity." },
+          { name: "AI DC Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "This is where it shows up: fiber linking GPUs, switches, storage, and buildings across AI clusters.", supply: "~$48B/yr", aiDemand: "~$22B/yr", gap: "Scaling", constraint: "Transceiver yield + fiber availability", summary: "36x more fiber per AI rack vs CPU." },
         ];
 
         const subsystemSteps = [
@@ -2738,6 +2738,23 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         </div>
                         {/* Description */}
                         <p style={{ fontSize: 10, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                        {/* Supply/Demand data — chain steps only */}
+                        {(() => {
+                          const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string };
+                          if (!s.supply) return null;
+                          const rowStyle = { display: "flex" as const, justifyContent: "space-between" as const, alignItems: "baseline" as const, padding: "2px 0" as const };
+                          const labelStyle2 = { fontSize: 8 as const, color: "#706a60" as string };
+                          const valueStyle = { fontSize: 8 as const, color: warmWhite as string, fontFamily: "'Geist Mono', monospace" as string };
+                          return (
+                            <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
+                              <div style={rowStyle}><span style={labelStyle2}>Supply</span><span style={valueStyle}>{s.supply}</span></div>
+                              <div style={rowStyle}><span style={labelStyle2}>AI Demand</span><span style={valueStyle}>{s.aiDemand}</span></div>
+                              <div style={rowStyle}><span style={labelStyle2}>Gap</span><span style={{ ...valueStyle, color: "#c87a4a" }}>{s.gap}</span></div>
+                              <div style={rowStyle}><span style={labelStyle2}>Constraint</span><span style={{ fontSize: 8, color: "rgb(160, 152, 136)" }}>{s.constraint}</span></div>
+                              <div style={{ ...rowStyle, borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 2, paddingTop: 4 }}><span style={{ fontSize: 8, color: "rgb(160, 152, 136)", fontStyle: "italic" }}>{s.summary}</span></div>
+                            </div>
+                          );
+                        })()}
                       </div>
                     );
                   })}
