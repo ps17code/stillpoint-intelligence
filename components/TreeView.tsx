@@ -2,7 +2,6 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import HorizontalTree from "@/components/HorizontalTree";
 import AISupplyTree from "@/components/AISupplyTree";
-import ChainAnalysis, { CHAIN_TAKEAWAYS, CHAIN_KEY_PLAYERS } from "@/components/ChainAnalysis";
 import CompanyViewPopup from "@/components/CompanyViewPopup";
 import Globe from "@/components/Globe";
 import type { GlobeHandle } from "@/components/Globe";
@@ -2637,10 +2636,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         const chainSteps = [
-          { name: "AI DC Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "Fiber deployed to link GPUs, switches, and storage to tie an AI cluster together.", rows: [["Fiber per 1 GW AI DC", "9M KM"], ["New Annual AI DC Capacity", "20 GW"], ["Required Fiber", "120M KM", true], ["Demand", "Accelerating", true]], summary: "36x more fiber per AI rack vs CPU." },
           { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Recovered as a byproduct of zinc and coal, then refined to high purity.", supply: "~230t/yr", aiDemand: "~87t/yr", gap: "~56t", constraint: "Byproduct — cannot be mined directly", summary: "83% Chinese. One western refiner.", constraintSeverity: "Severe", constraintLabel: "Supply is fixed by geology", constraintDetails: ["Only a few coal and zinc deposits can recover Ge economically at high concentration.", "No dedicated germanium mines. Increasing output means installing capture and purification equipment — capex intense and multi-year project.", "Few projects coming online but not fast enough or large enough."] },
           { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "Converted to germanium tetrachloride and purified to fiber-grade.", supply: "~500t/yr", aiDemand: "~120t/yr", gap: "~150t", constraint: "8N purity — few facilities capable", summary: "One commercial-scale western supplier.", constraintSeverity: "Severe", constraintLabel: "Market has select few capable suppliers", constraintDetails: ["Only a few refiners worldwide can hit ultra purity at commercial scale. Almost all are Chinese except Umicore as sole western producer.", "New entrants have high entry barrier from qualification requirements and even existing refiners mostly run under capacity as still limited by Ge feedstock availability."] },
           { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "Deposited into glass preform, drawn into thin strands, and assembled into cables.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity.", constraintSeverity: "Moderate", constraintLabel: "Time and capital for equipment", constraintDetails: ["Production is not the bottleneck and scales with capex. Multiple manufacturers can compete to build new capacity.", "Friction is in high yield preform technology which is proprietary and concentrated in a few vertically integrated incumbents (Corning, Sumitomo, Shin-Etsu). Standing up new lines is gated by long-lead deposition and draw equipment."] },
+          { name: "AI DC Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "Fiber deployed to link GPUs, switches, and storage to tie an AI cluster together.", rows: [["Fiber per 1 GW AI DC", "9M KM"], ["New Annual AI DC Capacity", "20 GW"], ["Required Fiber", "120M KM", "accent"], ["Status", "Accelerating", "pill"]], summary: "36x more fiber per AI rack vs CPU." },
         ];
 
         const subsystemSteps = [
@@ -2706,8 +2705,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     const isSelected = nodeId ? selectedTreeNode === nodeId : selectedSubsystem === step.name;
                     const dotColor = "#c87a4a";
                     const isAIDC = step.name === "AI DC Connectivity";
-                    const cardBg = isAIDC ? "rgb(40, 34, 30)" : "rgb(32, 32, 32)";
-                    const cardBgSel = isAIDC ? "rgb(48, 40, 34)" : "rgb(40, 40, 40)";
+                    const cardBg = isAIDC ? "rgb(20, 20, 20)" : "rgb(32, 32, 32)";
+                    const cardBgSel = isAIDC ? "rgb(28, 28, 28)" : "rgb(40, 40, 40)";
                     return (
                       <div
                         key={step.name}
@@ -2744,19 +2743,28 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         <p style={{ fontSize: 11, color: "rgb(158, 150, 136)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
                         {/* Supply/Demand data — chain steps only */}
                         {(() => {
-                          const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string; constraintSeverity?: string; constraintLabel?: string; constraintDetails?: string[]; rows?: (string | boolean)[][] };
+                          const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string; constraintSeverity?: string; constraintLabel?: string; constraintDetails?: string[]; rows?: string[][] };
                           if (!s.supply && !s.rows) return null;
                           const rowStyle = { display: "flex" as const, justifyContent: "space-between" as const, alignItems: "baseline" as const, padding: "2px 0" as const };
                           const labelStyle2 = { fontSize: 11 as const, color: "#706a60" as string };
                           const valueStyle = { fontSize: 11 as const, color: warmWhite as string };
-                          const sevColors: Record<string, string> = { Severe: "#c87a4a", Moderate: "#c8a85a" };
+                          const sevColors: Record<string, string> = { Severe: "#c2554d", Moderate: "#c2a23f", Accelerating: "#5f9a5f" };
+                          const pillStyle = (color: string) => ({ fontSize: 9 as const, color, background: `${color}15`, padding: "1px 6px" as const, borderRadius: 2, fontFamily: "'Geist Mono', monospace" as const, textTransform: "uppercase" as const, letterSpacing: "0.04em" as const });
                           return (
                             <>
                             <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
                               {s.rows ? (
-                                s.rows.map((r, ri) => (
-                                  <div key={ri} style={rowStyle}><span style={labelStyle2}>{r[0] as string}</span><span style={r[2] ? { ...valueStyle, color: "#c87a4a" } : valueStyle}>{r[1] as string}</span></div>
-                                ))
+                                s.rows.map((r, ri) => {
+                                  const mode = r[2];
+                                  return (
+                                    <div key={ri} style={{ ...rowStyle, alignItems: mode === "pill" ? "center" : "baseline" }}>
+                                      <span style={labelStyle2}>{r[0]}</span>
+                                      {mode === "pill"
+                                        ? <span style={pillStyle(sevColors.Accelerating)}>{r[1]}</span>
+                                        : <span style={mode === "accent" ? { ...valueStyle, color: "#c87a4a" } : valueStyle}>{r[1]}</span>}
+                                    </div>
+                                  );
+                                })
                               ) : (
                                 <>
                                   <div style={rowStyle}><span style={labelStyle2}>Supply</span><span style={valueStyle}>{s.supply}</span></div>
@@ -2767,14 +2775,14 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                               {s.constraintSeverity && (
                                 <div style={{ ...rowStyle, alignItems: "center" }}>
                                   <span style={labelStyle2}>Status</span>
-                                  <span style={{ fontSize: 9, color: sevColors[s.constraintSeverity] ?? "#c8a85a", background: `${sevColors[s.constraintSeverity] ?? "#c8a85a"}15`, padding: "1px 6px", borderRadius: 2, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.constraintSeverity}</span>
+                                  <span style={pillStyle(sevColors[s.constraintSeverity] ?? "#c2a23f")}>{s.constraintSeverity}</span>
                                 </div>
                               )}
                             </div>
                             {chainConstraintsExpanded && s.constraintLabel && s.constraintDetails && (
                               <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
                                 <p style={{ fontSize: 11, color: "rgb(236, 232, 225)", fontWeight: 500, margin: "0 0 2px 0" }}>Constraint</p>
-                                <p style={{ fontSize: 11, color: "#c87a4a", fontWeight: 100, margin: "0 0 4px 0" }}>{s.constraintLabel}</p>
+                                <p style={{ fontSize: 11, color: sevColors[s.constraintSeverity ?? ""] ?? "#c87a4a", fontWeight: 100, margin: "0 0 4px 0" }}>{s.constraintLabel}</p>
                                 {s.constraintDetails.map((d, di) => (
                                   <div key={di} style={{ display: "flex", gap: 6, margin: di < s.constraintDetails!.length - 1 ? "0 0 4px 0" : "0" }}>
                                     <span style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, flexShrink: 0 }}>•</span>
@@ -3218,33 +3226,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               </>
             );
           })()}
-
-          {selectedFeaturedChain === "germanium_chokepoint" && (
-            <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chain Summary</p>
-                  {!chainSummaryExpanded && <span style={{ fontSize: 9, color: "#555", marginLeft: 10, fontWeight: 400 }}>Supply flow, demand, gap, and constraints</span>}
-                </div>
-                <span
-                  onClick={() => setChainSummaryExpanded(!chainSummaryExpanded)}
-                  style={{ fontSize: 9, color: "#c87a4a", cursor: "pointer", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4, transition: "opacity 0.15s" }}
-                  onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
-                  onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
-                >
-                  {chainSummaryExpanded ? "Collapse" : "Expand"}
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ transform: chainSummaryExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
-                    <path d="M2 4L5 7L8 4" />
-                  </svg>
-                </span>
-              </div>
-              <div style={{ maxHeight: chainSummaryExpanded ? 2000 : 0, opacity: chainSummaryExpanded ? 1 : 0, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
-                <div style={{ marginTop: 10 }}>
-                  <ChainAnalysis collapsed={false} hideWrapper onShowOpportunities={() => { setShowChainOpportunities(true); setChainSummaryExpanded(false); }} onExpand={() => { setShowChainOpportunities(false); setSelectedOpportunityBrief(null); setOpportunityLayerFilter(null); }} />
-                </div>
-              </div>
-            </div>
-          )}
 
           {selectedFeaturedChain === "germanium_chokepoint" && (() => {
             type WtmiIdeaLocal = { id: string; name: string; ticker?: string; category: string; line1: string };
@@ -4004,23 +3985,21 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               return (
                 <div style={{ marginBottom: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 20 : 14 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
-                    <h1 style={{
-                      fontFamily: "'Instrument Serif', serif",
-                      fontSize: 20,
-                      fontWeight: 400, color: warmWhite, margin: 0,
-                    }}>
-                      {templateTitle}
-                    </h1>
-                    {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
-                      <div style={{
-                        display: "inline-flex", alignItems: "center", gap: 0,
-                        background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
-                        borderRadius: 20, padding: "4px 12px",
+                    {!(selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems") && (
+                      <h1 style={{
+                        fontFamily: "'Instrument Serif', serif",
+                        fontSize: 20,
+                        fontWeight: 400, color: warmWhite, margin: 0,
                       }}>
+                        {templateTitle}
+                      </h1>
+                    )}
+                    {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
+                      <div style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
                         {["Germanium", "GeCl₄", "Fiber Optics", "Connectivity", "AI Data Center"].map((node, ni, arr) => (
                           <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
-                            <span style={{ fontSize: 9, color: "#a09888", fontFamily: "'Geist Mono', monospace", whiteSpace: "nowrap" }}>{node}</span>
-                            {ni < arr.length - 1 && <span style={{ fontSize: 8, color: "#4a4540", margin: "0 6px" }}>→</span>}
+                            <span style={{ fontSize: 20, color: "rgb(236, 232, 225)", whiteSpace: "nowrap" }}>{node}</span>
+                            {ni < arr.length - 1 && <span style={{ fontSize: 14, color: "#4a4540", margin: "0 8px" }}>→</span>}
                           </span>
                         ))}
                       </div>
@@ -4036,9 +4015,11 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       >Full analysis &rarr;</a>
                     )}
                   </div>
-                  <p style={{ fontSize: 12, color: bodyText, lineHeight: 1.5, margin: 0 }}>
-                    {templateSubtitle}
-                  </p>
+                  {!(selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems") && (
+                    <p style={{ fontSize: 12, color: bodyText, lineHeight: 1.5, margin: 0 }}>
+                      {templateSubtitle}
+                    </p>
+                  )}
                 </div>
               );
             })()}
