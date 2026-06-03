@@ -2116,6 +2116,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [selectedArchPiece, setSelectedArchPiece] = useState<string | null>(null);
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
   const [chainSummaryExpanded, setChainSummaryExpanded] = useState(false);
+  const [chainConstraintsExpanded, setChainConstraintsExpanded] = useState(false);
   const [opportunityLayerFilter, setOpportunityLayerFilter] = useState<string | null>(null);
   const [selectedOpportunityBrief, setSelectedOpportunityBrief] = useState<string | null>(null);
   const [layersExpanded, setLayersExpanded] = useState(false);
@@ -2698,6 +2699,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             <div style={{ padding: "0 15px 10px" }}>
               {/* Diagram view */}
               {chainTreeTab === "diagram" && (
+                <>
                 <div style={{ display: "grid", gridTemplateColumns: `repeat(${diagramSteps.length}, 1fr)`, gap: 0 }}>
                   {diagramSteps.map((step, i) => {
                     const nodeId = (step as { nodeId?: string }).nodeId;
@@ -2753,14 +2755,15 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                               <div style={rowStyle}><span style={labelStyle2}>Gap</span><span style={{ ...valueStyle, color: "#c87a4a" }}>{s.gap}</span></div>
                               {s.constraintSeverity && (
                                 <div style={{ ...rowStyle, alignItems: "center" }}>
-                                  <span style={labelStyle2}>Constraint</span>
+                                  <span style={labelStyle2}>Status</span>
                                   <span style={{ fontSize: 9, color: sevColors[s.constraintSeverity] ?? "#c8a85a", background: `${sevColors[s.constraintSeverity] ?? "#c8a85a"}15`, padding: "1px 6px", borderRadius: 2, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.constraintSeverity}</span>
                                 </div>
                               )}
                             </div>
-                            {s.constraintLabel && s.constraintDetails && (
+                            {chainConstraintsExpanded && s.constraintLabel && s.constraintDetails && (
                               <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
-                                <p style={{ fontSize: 11, color: warmWhite, margin: "0 0 4px 0", fontWeight: 500 }}>{s.constraintLabel}</p>
+                                <p style={{ fontSize: 11, color: "rgb(236, 232, 225)", fontWeight: 500, margin: "0 0 2px 0" }}>Constraint</p>
+                                <p style={{ fontSize: 11, color: "#c87a4a", fontWeight: 100, margin: "0 0 4px 0" }}>{s.constraintLabel}</p>
                                 {s.constraintDetails.map((d, di) => (
                                   <div key={di} style={{ display: "flex", gap: 6, margin: di < s.constraintDetails!.length - 1 ? "0 0 4px 0" : "0" }}>
                                     <span style={{ fontSize: 11, color: "rgb(160, 152, 136)", lineHeight: 1.4, flexShrink: 0 }}>•</span>
@@ -2776,9 +2779,25 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     );
                   })}
                 </div>
-              )}
+                {diagramSteps.some(st => (st as { constraintDetails?: string[] }).constraintDetails) && (
+                  <div style={{ display: "flex", justifyContent: "center", marginTop: 6 }}>
+                    <button
+                      onClick={() => setChainConstraintsExpanded(v => !v)}
+                      style={{ display: "flex", alignItems: "center", gap: 6, background: "transparent", border: "none", cursor: "pointer", padding: "6px 10px", color: "#706a60", fontSize: 10, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.06em" }}
+                      onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }}
+                      onMouseLeave={e => { e.currentTarget.style.color = "#706a60"; }}
+                    >
+                      <span>{chainConstraintsExpanded ? "Hide constraints" : "Show constraints"}</span>
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: chainConstraintsExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s ease" }}>
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
 
-              {/* Tree view */}
+            {/* Tree view */}
               {chainTreeTab === "tree" && (
                 <AISupplyTree
                   highlightedChainNodes={featuredChainNodeSet.size > 0 ? featuredChainNodeSet : subsystemNodeSet.size > 0 ? subsystemNodeSet : undefined}
