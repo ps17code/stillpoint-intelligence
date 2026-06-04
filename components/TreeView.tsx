@@ -2907,6 +2907,25 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               Select a subsystem to reveal: Signals / Chokepoints / Companies / Supply Tree
             </p>
           )}
+          {/* Components panel — components within the selected subsystem */}
+          {!selectedFeaturedChain && selectedSubsystem && (() => {
+            const sub = getSubsystems().find(s => s.name === selectedSubsystem);
+            const comps = sub?.components ?? [];
+            if (comps.length === 0) return null;
+            return (
+              <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10, animation: "fadeSlideDown 0.3s ease-out" }}>
+                <div style={{ padding: "10px 15px" }}>
+                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Components</p>
+                </div>
+                <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
+                <div style={{ padding: "10px 15px", display: "flex", flexWrap: "wrap", gap: 5 }}>
+                  {comps.map(c => (
+                    <span key={c.id} style={{ fontSize: 11, color: "rgb(254, 174, 0)", background: "rgba(255, 255, 255, 0.05)", borderRadius: 3, padding: "3px 10px", fontWeight: 300 }}>{c.name}</span>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
           {/* Connectivity Architecture — shown when Connectivity is selected */}
           {(() => {
             const showArch = !selectedFeaturedChain && selectedSubsystem === "Connectivity";
@@ -2983,11 +3002,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           {/* Content */}
                           <p style={{ fontSize: 11, color: "rgb(236, 232, 225)", fontWeight: 400, margin: "0 0 3px 0", lineHeight: 1.3 }}>{piece.title}</p>
                           <p style={{ fontSize: 9, color: "rgb(160, 152, 136)", lineHeight: 1.3, margin: "0 0 5px 0", fontWeight: 300 }}>{piece.desc}</p>
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
-                            {piece.deps.map(d => (
-                              <span key={d} style={{ fontSize: 7, color: isActive ? "rgb(254, 174, 0)" : "rgb(160, 152, 136)", background: "rgba(255,255,255,0.05)", borderRadius: 3, padding: "2px 5px", fontWeight: 300 }}>{d}</span>
-                            ))}
-                          </div>
                         </div>
                       );
                     })}
@@ -3008,7 +3022,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           {!selectedFeaturedChain && selectedSubsystem === "Connectivity" && selectedArchPiece === "fiber" && (
             <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10, animation: "fadeSlideDown 0.3s ease-out" }}>
               <div style={{ padding: "10px 15px" }}>
-                <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Component Supply Chains</p>
+                <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Chains</p>
               </div>
               <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
               <div style={{ padding: "10px 15px" }}>
