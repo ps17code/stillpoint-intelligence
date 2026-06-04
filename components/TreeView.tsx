@@ -2800,13 +2800,25 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                                 <p style={{ fontSize: 11, color: "rgba(221, 221, 221, 1)", fontWeight: 100, margin: 0 }}>{s.constraintLabel}</p>
                               </div>
                             )}
-                            {s.featuredCompany && (
-                              <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
-                                <p style={sectionTitleStyle}>Featured Company</p>
-                                <p style={{ fontSize: 11, color: "rgb(200, 122, 74)", fontWeight: 400, margin: 0 }}>{s.featuredCompany.name}</p>
-                                <p style={{ fontSize: 10, color: "rgba(115, 115, 115, 1)", fontWeight: 400, margin: 0 }}>{s.featuredCompany.note}</p>
-                              </div>
-                            )}
+                            {s.featuredCompany && (() => {
+                              const fc = s.featuredCompany;
+                              const fcClickable = fc.name === "Umicore";
+                              return (
+                                <div
+                                  onClick={fcClickable ? (e) => { e.stopPropagation(); setCompanyPopupOpen(true); } : undefined}
+                                  onMouseEnter={fcClickable ? (e) => { e.currentTarget.style.borderColor = "rgba(200,122,74,0.4)"; e.currentTarget.style.background = "rgba(200,122,74,0.06)"; } : undefined}
+                                  onMouseLeave={fcClickable ? (e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.background = "rgba(255,255,255,0.02)"; } : undefined}
+                                  style={{ marginTop: 8, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)", borderRadius: 6, padding: "7px 9px", cursor: fcClickable ? "pointer" : "default", transition: "border-color 0.15s, background 0.15s" }}
+                                >
+                                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                                    <p style={sectionTitleStyle}>Featured Company</p>
+                                    {fcClickable && <span style={{ fontSize: 9, color: "rgb(182, 156, 140)" }}>→</span>}
+                                  </div>
+                                  <p style={{ fontSize: 11, color: "rgb(200, 122, 74)", fontWeight: 400, margin: 0 }}>{fc.name}</p>
+                                  <p style={{ fontSize: 10, color: "rgba(115, 115, 115, 1)", fontWeight: 400, margin: 0 }}>{fc.note}</p>
+                                </div>
+                              );
+                            })()}
                             </>
                           );
                         })()}
