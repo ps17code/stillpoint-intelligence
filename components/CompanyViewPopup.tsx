@@ -61,6 +61,18 @@ const OUTPUT_TO_DOWNSTREAM: Record<string, string[]> = {
   "PVD Materials": ["Optical Thin Films"],
 };
 
+// Which input materials each output is refined from (the path through Umicore)
+const OUTPUT_TO_INPUTS: Record<string, string[]> = {
+  "GeCl₄": ["Germanium"],
+  "Germanium Products": ["Germanium"],
+  "Cobalt Compounds": ["Cobalt"],
+  "Nickel Compounds": ["Nickel"],
+  "Zinc Chemicals": ["Zinc"],
+  "Electroplating Chemistry": ["Precious Metals", "Organic Chemical Feedstocks"],
+  "Copper Plating Chemistry": ["Copper / Deposition Feedstocks", "Organic Chemical Feedstocks"],
+  "PVD Materials": ["Precious Metals", "Copper / Deposition Feedstocks"],
+};
+
 const ALL_DOWNSTREAM = [
   { name: "Fiber Optic Cable", role: "Component" },
   { name: "IR Optics", role: "Component" },
@@ -83,7 +95,7 @@ const RELATED_SIGNALS = ["The GeCl₄ Chokepoint", "Germanium Feedstock Constrai
 
 type ActiveNode = { layer: string; name: string } | null;
 
-/* Which nodes light up when `active` is hovered/selected. Umicore is the hub. */
+/* Full dependency map (upstream → downstream) for the active node. Umicore is the hub. */
 function computeHighlight(active: ActiveNode, visibleOutputs: typeof ALL_OUTPUTS, visibleDownstream: typeof ALL_DOWNSTREAM): Set<string> | null {
   if (!active) return null;
   const set = new Set<string>();
@@ -96,16 +108,30 @@ function computeHighlight(active: ActiveNode, visibleOutputs: typeof ALL_OUTPUTS
     visibleDownstream.forEach(d => set.add(d.name));
     return set;
   }
-  if (active.layer === "upstream") {
-    const u = UPSTREAM.find(x => x.name === active.name);
-    u?.inputs.forEach(inp => { if (ALL_INPUTS.some(ai => ai.name === inp)) set.add(inp); });
-  } else if (active.layer === "input") {
-    UPSTREAM.filter(u => u.inputs.includes(active.name)).forEach(u => set.add(u.name));
-  } else if (active.layer === "output") {
-    (OUTPUT_TO_DOWNSTREAM[active.name] ?? []).forEach(d => { if (visibleDownstream.some(vd => vd.name === d)) set.add(d); });
-  } else if (active.layer === "downstream") {
-    visibleOutputs.forEach(o => { if ((OUTPUT_TO_DOWNSTREAM[o.name] ?? []).includes(active.name)) set.add(o.name); });
-  }
+
+  // Build the directed graph: upstream → input → output → downstream
+  const isInput = (n: string) => ALL_INPUTS.some(ai => ai.name === n);
+  const visDown = new Set(visibleDownstream.map(d => d.name));
+  const fwd = new Map<string, string[]>();
+  const rev = new Map<string, string[]>();
+  const addEdge = (a: string, b: string) => {
+    (fwd.get(a) ?? fwd.set(a, []).get(a)!).push(b);
+    (rev.get(b) ?? rev.set(b, []).get(b)!).push(a);
+  };
+  UPSTREAM.forEach(u => u.inputs.forEach(inp => { if (isInput(inp)) addEdge(u.name, inp); }));
+  visibleOutputs.forEach(o => (OUTPUT_TO_INPUTS[o.name] ?? []).forEach(inp => { if (isInput(inp)) addEdge(inp, o.name); }));
+  visibleOutputs.forEach(o => (OUTPUT_TO_DOWNSTREAM[o.name] ?? []).forEach(d => { if (visDown.has(d)) addEdge(o.name, d); }));
+
+  // Walk both directions from the active node to capture its whole chain
+  const walk = (adj: Map<string, string[]>) => {
+    const stack = [active.name];
+    while (stack.length) {
+      const cur = stack.pop()!;
+      (adj.get(cur) ?? []).forEach(n => { if (!set.has(n)) { set.add(n); stack.push(n); } });
+    }
+  };
+  walk(fwd);
+  walk(rev);
   return set;
 }
 
