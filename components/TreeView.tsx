@@ -3742,7 +3742,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           return (
             <div style={{
               width: 150, minWidth: 150, flexShrink: 0,
-              background: "#111111", borderRadius: 10,
+              background: "#111111", borderRadius: 5,
               margin: "0 5px",
               border: "0.2px solid rgb(42, 42, 42)",
               padding: "14px 0",
@@ -3874,7 +3874,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
         <div style={{
           width: 1020, maxWidth: 1020, flexShrink: 0,
           background: "#111111",
-          borderRadius: 10,
+          borderRadius: 5,
           overflow: "hidden",
           border: "0.2px solid rgb(42, 42, 42)",
           display: "flex", flexDirection: "column",
@@ -4652,7 +4652,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
         {/* Right panel — two sections */}
         <div style={{
           flex: 1,
-          background: "#111111", borderRadius: 10,
+          background: "#111111", borderRadius: 5,
           margin: "0 5px",
           border: "0.2px solid rgb(42, 42, 42)",
           display: "flex", flexDirection: "column",
