@@ -4073,13 +4073,21 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       </h1>
                     )}
                     {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
-                      <div style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
-                        {["Germanium", "GeCl₄", "Fiber Optics", "Connectivity", "AI Data Center"].map((node, ni, arr) => (
-                          <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
-                            <span style={{ fontSize: 20, color: "rgb(236, 232, 225)", whiteSpace: "nowrap" }}>{node}</span>
-                            {ni < arr.length - 1 && <span style={{ fontSize: 14, color: "#4a4540", margin: "0 8px" }}>→</span>}
-                          </span>
-                        ))}
+                      <div style={{ display: "inline-flex", alignItems: "center" }}>
+                        <div style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
+                          {["Germanium", "GeCl₄", "Fiber Optics", "Connectivity", "AI Data Center"].map((node, ni, arr) => (
+                            <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
+                              <span style={{ fontSize: 20, color: "rgb(236, 232, 225)", whiteSpace: "nowrap" }}>{node}</span>
+                              {ni < arr.length - 1 && <span style={{ fontSize: 14, color: "#4a4540", margin: "0 8px" }}>→</span>}
+                            </span>
+                          ))}
+                        </div>
+                        <a
+                          href="/input/germanium"
+                          style={{ marginLeft: 10, fontSize: 10, color: "rgb(255, 255, 255)", padding: "5px 14px", background: "rgb(103, 71, 51)", border: "none", borderRadius: 6, textDecoration: "none", transition: "opacity 0.15s", flexShrink: 0, opacity: 1, whiteSpace: "nowrap" }}
+                          onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
+                          onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                        >Read Full Chain Brief →</a>
                       </div>
                     )}
                     {templateAnalysisHref && (
