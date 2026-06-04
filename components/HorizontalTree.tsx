@@ -198,36 +198,29 @@ export default function HorizontalTree({
   const [clickedNode, setClickedNode] = useState<string | null>(null);
   const activeNode = clickedNode ?? hoveredNode;
 
-  /* Build adjacency set for hover highlighting */
-  const connectedNodes = useMemo(() => {
-    const map = new Map<string, Set<string>>();
-    for (const edge of geometry.edges) {
-      const fromLayer = geometry.layers[edge.fromLayer];
-      const toLayer = geometry.layers[edge.fromLayer + 1];
-      if (!fromLayer || !toLayer) continue;
-      const fromNode = fromLayer.nodes.find(n => Math.abs(n.cx - edge.x1) < 1);
-      const toNode = toLayer.nodes.find(n => Math.abs(n.cx - edge.x2) < 1);
-      if (!fromNode || !toNode) continue;
-      if (!map.has(fromNode.name)) map.set(fromNode.name, new Set());
-      if (!map.has(toNode.name)) map.set(toNode.name, new Set());
-      map.get(fromNode.name)!.add(toNode.name);
-      map.get(toNode.name)!.add(fromNode.name);
-    }
-    return map;
-  }, [geometry]);
-
-  /* Full dependency chain for the active node — BFS both directions through the graph */
+  /* Dependency chain for the active node — only its upstream ancestors and downstream
+     descendants (directed), so hovering a node lights the path it actually depends on /
+     feeds, not every node reachable through shared hubs. */
   const highlightSet = useMemo(() => {
     if (!activeNode) return null;
-    const set = new Set<string>([activeNode]);
-    const stack = [activeNode];
-    while (stack.length) {
-      const cur = stack.pop()!;
-      const neighbors = connectedNodes.get(cur);
-      if (neighbors) neighbors.forEach(n => { if (!set.has(n)) { set.add(n); stack.push(n); } });
+    const fwd = new Map<string, string[]>();
+    const rev = new Map<string, string[]>();
+    for (const l of lines) {
+      (fwd.get(l.fromName) ?? fwd.set(l.fromName, []).get(l.fromName)!).push(l.toName);
+      (rev.get(l.toName) ?? rev.set(l.toName, []).get(l.toName)!).push(l.fromName);
     }
+    const set = new Set<string>([activeNode]);
+    const walk = (adj: Map<string, string[]>) => {
+      const stack = [activeNode];
+      while (stack.length) {
+        const cur = stack.pop()!;
+        (adj.get(cur) ?? []).forEach(n => { if (!set.has(n)) { set.add(n); stack.push(n); } });
+      }
+    };
+    walk(fwd);
+    walk(rev);
     return set;
-  }, [activeNode, connectedNodes]);
+  }, [activeNode, lines]);
 
   /* Build a lookup: for each edge, we need source node name -> target node name.
      Edges reference layer indices and node indices via x-coords.
