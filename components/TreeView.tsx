@@ -4586,7 +4586,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 const geo = geoKey ? GEO_SUMMARY[geoKey] : null;
                 if (!geo) return null;
                 return (
-                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 8, padding: "14px 18px", width: "100%" }}>
+                  <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 8, padding: "14px 18px", width: "100%" }}>
                     <p style={{ fontSize: 10, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>GEOGRAPHIC CONCENTRATION</p>
                     <p style={{ fontSize: 12, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{geo}</p>
                   </div>
@@ -4599,7 +4599,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 const takeaway = deps?.downstream?.takeaway ?? deps?.upstream?.takeaway;
                 if (!takeaway) return null;
                 return (
-                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 8, padding: "14px 18px", width: "100%" }}>
+                  <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 8, padding: "14px 18px", width: "100%" }}>
                     <p style={{ fontSize: 10, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>KEY TAKEAWAY</p>
                     <p style={{ fontSize: 12, color: "#706a60", lineHeight: 1.5, margin: 0 }}>{takeaway}</p>
                   </div>
@@ -4632,7 +4632,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               }
               if (takeaways.length === 0) return null;
               return (
-                <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 8, padding: "14px 18px", width: "100%" }}>
+                <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 8, padding: "14px 18px", width: "100%" }}>
                   <p style={{ fontSize: 10, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>KEY TAKEAWAYS</p>
                   {takeaways.map((text, i) => (
                     <div key={i} style={{ display: "flex", gap: 6, marginBottom: 4 }}>
@@ -4671,7 +4671,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   return (
                     <div style={{ marginBottom: 10 }}>
                       <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>{uNode.layer}</p>
-                      <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                      <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px" }}>
                         <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0" }}>{uNode.name}</p>
                         <p style={{ fontSize: 8, color: "#555", margin: "0 0 6px 0", fontFamily: "'Geist Mono', monospace" }}>{uNode.location_detail}</p>
                         {uNode.quantity_pill ? <p style={{ fontSize: 10, color: "#a09888", margin: "0 0 6px 0" }}>{uNode.quantity_pill}</p> : null}
@@ -4696,7 +4696,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               return (
                 <div style={{ marginBottom: 10 }}>
                   <p style={{ fontSize: 8, letterSpacing: "0.08em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>Geographic Concentration</p>
-                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "8px 10px" }}>
+                  <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "8px 10px" }}>
                     <p style={{ fontSize: 11, color: "#807870", lineHeight: 1.5, margin: 0 }}>{geo}</p>
                   </div>
                 </div>
@@ -4729,7 +4729,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               if (!sv) return null;
               const svAccent = templateAccent ?? "#706a60";
               return (
-                <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px", marginBottom: 10 }}>
+                <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px", marginBottom: 10 }}>
                   <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: 6 }}><img src="/stillpoint-icon.png" alt="" style={{ width: 14, height: 14, borderRadius: 2, opacity: 0.85 }} />Stillpoint View</p>
                   <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.5, margin: 0 }}>{sv.view}</p>
                 </div>
@@ -4765,7 +4765,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   {layerCards.map(card => (
                     <div key={card.label} style={{
-                      background: "rgba(36, 32, 29, 0.28)",
+                      background: "rgba(26, 26, 26, 1)",
                       borderRadius: 6, padding: "10px 12px",
                     }}>
                         <p style={{ fontSize: 10, letterSpacing: "0.08em", color: accent, margin: "0 0 6px 0", fontWeight: 500, textTransform: "uppercase" as const }}>{card.label}</p>
@@ -4886,7 +4886,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const renderKeyPlayersCard = (players: { name: string; layer: string }[], isChainMode?: boolean) => {
                 if (players.length === 0) return null;
                 return (
-                  <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                  <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px" }}>
                     <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0" }}>Key Players</p>
                     {players.map(p => {
                       const domain = PLAYER_DOMAINS[p.name];
@@ -4942,7 +4942,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
                     {/* Price + chart card */}
                     {metrics && priceData && (
-                      <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                      <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px" }}>
                         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
                           <div>
                             <span style={{ fontSize: 16, fontWeight: 600, color: warmWhite, fontFamily: "'Geist Mono', monospace" }}>{priceData.currentPrice}</span>
@@ -4987,14 +4987,14 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
                     {/* Output for non-priced nodes */}
                     {!metrics && qtyPill && (
-                      <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                      <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px" }}>
                         <p style={{ fontSize: 7, color: "#4a4540", margin: "0 0 1px 0", fontFamily: "'Geist Mono', monospace", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Output</p>
                         <p style={{ fontSize: 10, color: warmWhite, margin: 0, fontWeight: 500 }}>{qtyPill}</p>
                       </div>
                     )}
 
                     {/* Summary card */}
-                    <div style={{ background: isChainMode ? "rgba(255, 255, 255, 0.02)" : "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
+                    <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
                       <p style={{ fontSize: 11, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 2px 0" }}>Summary</p>
                       {bullets.map((bullet, i) => (
                         <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
@@ -5139,7 +5139,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const renderChainStepPanel = (nodeId: string) => {
                 const data = CHAIN_STEP_PANELS[nodeId];
                 if (!data) return null;
-                const cardBg = "rgba(255, 255, 255, 0.02)";
+                const cardBg = "rgba(26, 26, 26, 1)";
                 const labelStyle = { fontSize: 7 as const, color: "#4a4540", margin: "0 0 1px 0" as const, fontFamily: "'Geist Mono', monospace" as const, letterSpacing: "0.06em" as const, textTransform: "uppercase" as const };
                 const sectionTitle = { fontSize: 11 as const, color: "rgb(219, 219, 218)" as const, fontWeight: 500 as const, margin: "0 0 6px 0" as const };
                 const bulletDot = { width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0 as const, marginTop: 6 };
@@ -5331,7 +5331,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 return (
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                     {/* Stillpoint View */}
-                    <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px" }}>
+                    <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px" }}>
                       <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: 6 }}><img src="/stillpoint-icon.png" alt="" style={{ width: 14, height: 14, borderRadius: 2, opacity: 0.85 }} />Stillpoint View</p>
                       <div style={{ display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 10, overflow: "hidden" }}>
                         <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>AI data centers create massive new fiber demand. But high-performance fiber depends on germanium, which must be converted into ultra-pure GeCl₄ before it can be used in fiber preforms.</p>
@@ -5346,7 +5346,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     </div>
 
                     {/* Signals + Related Chains */}
-                    <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px" }}>
+                    <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px" }}>
                       <p style={chainSummaryLabelStyle}>Signals</p>
                       {chainSignals.map((s, si) => (
                         <div key={s.title} style={{ marginBottom: si < chainSignals.length - 1 ? 10 : 0 }}>
@@ -5505,7 +5505,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
                   const archDetail = ARCH_PIECE_DETAIL[selectedArchPiece];
                   if (archDetail) {
-                    const cardBgPanel = "rgba(255, 255, 255, 0.02)";
+                    const cardBgPanel = "rgba(26, 26, 26, 1)";
                     const dividerPanel = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
                     return (
                       <div style={{ background: cardBgPanel, borderRadius: 6, padding: "12px 12px" }}>
@@ -5699,7 +5699,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 const detail = SUBSYSTEM_DETAIL[selectedSubsystem];
                 if (!detail) return null;
 
-                const cardBgPanel = "rgba(255, 255, 255, 0.02)";
+                const cardBgPanel = "rgba(26, 26, 26, 1)";
                 const dividerPanel = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
 
                 return (
@@ -5744,7 +5744,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               // Show group description if a group is selected on AI tree (and no sub-node is selected)
               if (selectedGroup && !selectedTreeNode && currentVertical?.id === "ai" && currentLevel === "subsystems") {
                 return (
-                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 12 }}>
                     <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{selectedGroup.name}</p>
                     {selectedGroup.overview && (
                       <div>
@@ -5797,7 +5797,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   ] as [string, string][];
                   const sections = sectionsRaw.filter(([, v]) => v.length > 0);
                   return (
-                    <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 10 }}>
+                    <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 10 }}>
                       <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{selectedTreeNode}</p>
                       {sections.map(([label, text]) => (
                         <div key={label}>
@@ -5847,7 +5847,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   };
                   return (
                     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                      <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                      <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px" }}>
                         <p style={{ fontSize: 12, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>{input.label}</p>
                         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                           {bullets.map((b, i) => (
@@ -5901,7 +5901,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 const chains = inputChains[inputIdRP] ?? [];
 
                 return (
-                  <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px" }}>
+                  <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px" }}>
                     {/* Signals */}
                     <p style={labelRP}>Signals</p>
                     {signals.map((s, si) => (
@@ -6048,7 +6048,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               if (bullets.length === 0) return <p style={{ fontSize: 10, color: "#555", padding: "20px 0" }}>Select an input to view its executive summary.</p>;
 
               return (
-                <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px" }}>
                   <p style={{ fontSize: 12, letterSpacing: "0.1em", color: "rgb(158, 156, 153)", textTransform: "uppercase" as const, margin: "0 0 10px 0", fontFamily: "'Geist Mono', monospace" }}>EXECUTIVE SUMMARY</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                     {bullets.map((bullet, i) => (
@@ -6070,7 +6070,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const uNode = getUniversalNode(selectedTreeNode);
               if (!uNode) {
                 return (
-                  <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                  <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px" }}>
                     <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 6px 0" }}>{selectedTreeNode}</p>
                     <p style={{ fontSize: 10, color: "#555" }}>No additional data available for this node.</p>
                   </div>
@@ -6084,7 +6084,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               const nodeCountryCode = uNode.country ? ({"China":"cn","USA":"us","Belgium":"be","Canada":"ca","Russia":"ru","DRC":"cd","Japan":"jp","Germany":"de","France":"fr","Italy":"it","Australia":"au","Brazil":"br","Indonesia":"id","India":"in","Guinea":"gn","South Korea":"kr","Austria":"at","Netherlands":"nl","UAE":"ae","Saudi Arabia":"sa","Greece":"gr","Global":"un","Multiple":"un"} as Record<string,string>)[uNode.country] : null;
 
               return (
-                <div style={{ background: "rgba(36, 32, 29, 0.28)", borderRadius: 6, padding: "10px 12px" }}>
+                <div style={{ background: "rgba(26, 26, 26, 1)", borderRadius: 6, padding: "10px 12px" }}>
                   {/* Name + ticker */}
                   <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 2 }}>
                     <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: "0 0 2px 0", fontFamily: "'Instrument Serif', serif" }}>{uNode.name}</p>

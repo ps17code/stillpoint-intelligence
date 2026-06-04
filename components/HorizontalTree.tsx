@@ -112,8 +112,8 @@ function NodeCard({
       onMouseLeave={onLeave}
       style={{
         padding: "5px 8px",
-        background: isGroup ? "rgb(42, 38, 34)" : isActiveNode ? "rgb(60, 56, 52)" : highlighted ? "rgb(42, 38, 35)" : "rgb(36, 32, 29)",
-        border: isGroup ? "1px solid rgb(60, 55, 48)" : isActiveNode ? "1px solid rgb(60, 56, 52)" : highlighted ? "1px solid rgb(60, 56, 52)" : "1px solid rgb(45, 41, 39)",
+        background: isActiveNode ? "rgba(200, 122, 74, 0.18)" : highlighted ? "rgba(200, 122, 74, 0.1)" : isGroup ? "rgb(42, 38, 34)" : "rgb(36, 32, 29)",
+        border: isActiveNode ? "1px solid #c87a4a" : highlighted ? "1px solid rgba(200, 122, 74, 0.5)" : isGroup ? "1px solid rgb(60, 55, 48)" : "1px solid rgb(45, 41, 39)",
         borderRadius: 4,
         width: "100%",
         cursor: onClick ? "pointer" : "default",
@@ -215,6 +215,19 @@ export default function HorizontalTree({
     }
     return map;
   }, [geometry]);
+
+  /* Full dependency chain for the active node — BFS both directions through the graph */
+  const highlightSet = useMemo(() => {
+    if (!activeNode) return null;
+    const set = new Set<string>([activeNode]);
+    const stack = [activeNode];
+    while (stack.length) {
+      const cur = stack.pop()!;
+      const neighbors = connectedNodes.get(cur);
+      if (neighbors) neighbors.forEach(n => { if (!set.has(n)) { set.add(n); stack.push(n); } });
+    }
+    return set;
+  }, [activeNode, connectedNodes]);
 
   /* Build a lookup: for each edge, we need source node name -> target node name.
      Edges reference layer indices and node indices via x-coords.
@@ -505,9 +518,9 @@ export default function HorizontalTree({
             const configKey = toConfigKey(col.key);
             const fields = layerConfig?.[configKey]?.displayFields ?? [];
             const isActive = activeNode === node.name;
-            const isConnected = activeNode != null && connectedNodes.get(activeNode)?.has(node.name);
-            const isHighlighted = isActive || !!isConnected;
-            const isDimmed = false;
+            const inChain = highlightSet?.has(node.name) ?? false;
+            const isHighlighted = highlightSet != null && inChain;
+            const isDimmed = highlightSet != null && !inChain;
             return (
               <NodeCard
                 key={node.name}
@@ -549,23 +562,23 @@ export default function HorizontalTree({
         }}
       >
         {lines.map((line, i) => {
-          const lineHighlighted = activeNode != null && (line.fromName === activeNode || line.toName === activeNode);
-          const lineDimmed = false;
+          const lineHighlighted = highlightSet != null && highlightSet.has(line.fromName) && highlightSet.has(line.toName);
+          const lineDimmed = highlightSet != null && !lineHighlighted;
           return (
-            <g key={i} style={{ opacity: lineDimmed ? 0.15 : 1, transition: "opacity 0.15s" }}>
+            <g key={i} style={{ opacity: lineDimmed ? 0.12 : 1, transition: "opacity 0.15s" }}>
               <circle
                 cx={line.fromX}
                 cy={line.fromY}
                 r="1.5"
-                fill={lineHighlighted ? "rgba(255,255,255,0.5)" : "rgba(200,200,200,0.4)"}
+                fill={lineHighlighted ? "#c87a4a" : "rgba(200,200,200,0.4)"}
                 style={{ transition: "fill 0.15s" }}
               />
               <path
                 d={line.d}
                 fill="none"
-                stroke={lineHighlighted ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.18)"}
-                strokeWidth={lineHighlighted ? "1.2" : "0.8"}
-                strokeDasharray="4,3"
+                stroke={lineHighlighted ? "#c87a4a" : "rgba(255,255,255,0.18)"}
+                strokeWidth={lineHighlighted ? "1.6" : "0.8"}
+                strokeDasharray={lineHighlighted ? undefined : "4,3"}
                 style={{ transition: "stroke 0.15s, stroke-width 0.15s" }}
               />
             </g>
