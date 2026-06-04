@@ -4093,6 +4093,11 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       >Full analysis &rarr;</a>
                     )}
                   </div>
+                  {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
+                    <p style={{ fontSize: 12, color: bodyText, lineHeight: 1.5, margin: "0 0 20px 0", maxWidth: 760 }}>
+                      Every kilometer of fiber in every AI datacenter depends on a chemical form of germanium refined almost entirely in China with exception of one Western supplier.
+                    </p>
+                  )}
                   {!(selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems") && (
                     <p style={{ fontSize: 12, color: bodyText, lineHeight: 1.5, margin: 0 }}>
                       {templateSubtitle}
