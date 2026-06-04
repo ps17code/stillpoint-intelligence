@@ -2114,6 +2114,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [chainTreeTab, setChainTreeTab] = useState<"diagram" | "tree">("diagram");
   const [selectedSubsystem, setSelectedSubsystem] = useState<string | null>(null);
   const [selectedArchPiece, setSelectedArchPiece] = useState<string | null>(null);
+  const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
   const [chainSummaryExpanded, setChainSummaryExpanded] = useState(false);
   const [hoveredChainCard, setHoveredChainCard] = useState<string | null>(null);
@@ -2763,7 +2764,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             }
                             return;
                           }
-                          if (nodeId) { setSelectedTreeNode(selectedTreeNode === nodeId ? null : nodeId); setRightTab("summary"); } else { const next = selectedSubsystem === step.name ? null : step.name; setSelectedSubsystem(next); setSelectedArchPiece(null); }
+                          if (nodeId) { setSelectedTreeNode(selectedTreeNode === nodeId ? null : nodeId); setRightTab("summary"); } else { const next = selectedSubsystem === step.name ? null : step.name; setSelectedSubsystem(next); setSelectedArchPiece(null); setSelectedComponent(null); }
                         }}
                         style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? cardBgSel : cardBg, borderRadius: 5, border: isSelected ? "1px solid rgba(200, 122, 74, 0.25)" : isAIDC ? "1px solid rgba(200, 122, 74, 0.15)" : "1px solid rgba(255, 255, 255, 0.04)", padding: "10px 10px 12px", transition: "background 0.15s, border-color 0.15s" }}
                         onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = cardBgSel; setHoveredChainCard(step.name); }}
@@ -2937,15 +2938,16 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       return (
                         <div
                           key={piece.id}
-                          onClick={() => setSelectedArchPiece(selectedArchPiece === piece.id ? null : piece.id)}
+                          onClick={() => { setSelectedArchPiece(selectedArchPiece === piece.id ? null : piece.id); setSelectedComponent(null); }}
                           style={{
                             flex: "0 0 auto",
                             width: 130,
                             padding: "8px 10px 8px",
                             borderRadius: 5,
                             cursor: "pointer",
-                            background: "transparent",
-                            border: "1px solid transparent",
+                            background: isActive ? "rgba(200, 122, 74, 0.1)" : "transparent",
+                            border: isActive ? "1px solid rgba(200, 122, 74, 0.4)" : "1px solid transparent",
+                            transition: "background 0.15s, border-color 0.15s",
                           }}
                           onMouseEnter={e => {
                             const ring = e.currentTarget.querySelector("[data-ring]") as HTMLElement;
@@ -3016,19 +3018,26 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 </div>
                 <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
                 <div style={{ padding: "10px 15px", display: "flex", flexWrap: "wrap", gap: 5 }}>
-                  {comps.map(c => (
-                    <span key={c.name} style={{ display: "inline-flex", flexDirection: "column", gap: 2, background: "rgba(255, 255, 255, 0.05)", borderRadius: 3, padding: "5px 10px" }}>
-                      <span style={{ fontSize: 11, color: "rgb(254, 174, 0)", fontWeight: 300 }}>{c.name}</span>
-                      <span style={{ fontSize: 9, color: "rgb(160, 152, 136)", fontWeight: 300 }}>{c.desc}</span>
-                    </span>
-                  ))}
+                  {comps.map(c => {
+                    const compActive = selectedComponent === c.name;
+                    return (
+                      <span
+                        key={c.name}
+                        onClick={() => setSelectedComponent(compActive ? null : c.name)}
+                        style={{ display: "inline-flex", flexDirection: "column", gap: 2, cursor: "pointer", background: compActive ? "rgba(200, 122, 74, 0.12)" : "rgba(255, 255, 255, 0.05)", border: compActive ? "1px solid rgba(200, 122, 74, 0.5)" : "1px solid transparent", borderRadius: 3, padding: "5px 10px", transition: "background 0.15s, border-color 0.15s" }}
+                      >
+                        <span style={{ fontSize: 11, color: compActive ? "rgb(254, 174, 0)" : "rgb(236, 232, 225)", fontWeight: 300 }}>{c.name}</span>
+                        <span style={{ fontSize: 9, color: "rgb(160, 152, 136)", fontWeight: 300 }}>{c.desc}</span>
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             );
           })()}
 
-          {/* Chains panel — shown when fiber optic cable piece is selected */}
-          {!selectedFeaturedChain && selectedSubsystem === "Connectivity" && selectedArchPiece === "fiber" && (
+          {/* Chains panel — shown when the Fiber Optic Cables component is selected */}
+          {!selectedFeaturedChain && selectedSubsystem === "Connectivity" && selectedArchPiece === "fiber" && selectedComponent === "Fiber Optic Cables" && (
             <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10, animation: "fadeSlideDown 0.3s ease-out" }}>
               <div style={{ padding: "10px 15px" }}>
                 <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Supply Chains</p>
