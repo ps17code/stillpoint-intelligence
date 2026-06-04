@@ -3375,6 +3375,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           <tr
                             key={idea.id + ii}
                             onClick={() => {
+                              if (idea.id === "umicore") { setCompanyPopupOpen(true); return; }
                               const f = getIdeaFilter(idea);
                               setOpportunityLayerFilter(f);
                               setSelectedOpportunityBrief(idea.id);

@@ -1,5 +1,14 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import germaniumInputJson from "@/data/inputs/germanium.json";
+
+type WtmiBrief = {
+  name: string; ticker: string; category: string;
+  metrics: { label: string; value: string }[];
+  sections: { label: string; items: { title?: string; text: string }[] }[];
+  disclaimer?: string;
+};
+const UMICORE_BRIEF = (germaniumInputJson as unknown as { wtmi: { briefs: Record<string, WtmiBrief> } }).wtmi.briefs.umicore;
 
 const MONO = "'Geist Mono', monospace";
 const SERIF = "'EB Garamond', Georgia, serif";
@@ -84,11 +93,6 @@ const ALL_DOWNSTREAM = [
   { name: "Electronics Plating", role: "Process" },
   { name: "Optical Thin Films", role: "Component" },
   { name: "Semiconductor Packaging", role: "Process" },
-];
-
-const OVERVIEW_TEXT = [
-  "In the GeCl₄ chain, Umicore matters less as a diversified materials company and more as a specialized conversion node. Its Electro-Optic Materials business connects germanium-bearing feedstock and recycled streams to ultra-pure GeCl₄, which then feeds fiber preform production and ultimately optical fiber for AI data center connectivity.",
-  "The key question is whether GeCl₄ capacity can scale with AI-driven fiber demand. Fiber manufacturers can add equipment and draw capacity, but GeCl₄ depends on constrained germanium feedstock and specialized refining capability. That places Umicore near a critical Western chokepoint in the germanium-to-fiber chain.",
 ];
 
 const RELATED_SIGNALS = ["The GeCl₄ Chokepoint", "Germanium Feedstock Constraint", "Western Redundancy Gap"];
@@ -392,12 +396,37 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
 
           <div style={{ height: 1, background: borderColor, margin: "16px 0" }} />
 
-          {/* Stillpoint View */}
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
-            <img src="/stillpoint-icon.png" alt="" style={{ width: 14, height: 14, borderRadius: 2, opacity: 0.85 }} />
-            <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: 0 }}>Stillpoint View</p>
-          </div>
-          {OVERVIEW_TEXT.map((p, i) => <p key={i} style={{ fontSize: 12, color: dimText, lineHeight: 1.6, margin: i === 0 ? "0 0 8px 0" : "0", maxWidth: 800 }}>{p}</p>)}
+          {/* Investment Brief */}
+          {UMICORE_BRIEF && (
+            <div style={{ marginBottom: 4 }}>
+              <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 10px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: MONO, fontWeight: 500 }}>Investment Brief</p>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
+                <h3 style={{ fontSize: 18, fontWeight: 500, color: warmWhite, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{UMICORE_BRIEF.name}</h3>
+                <span style={{ fontSize: 10, color: "#555", fontFamily: MONO }}>{UMICORE_BRIEF.ticker}</span>
+              </div>
+              <p style={{ fontSize: 10, color: accent, margin: "0 0 12px 0", fontFamily: MONO, letterSpacing: "0.04em" }}>{UMICORE_BRIEF.category}</p>
+              <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 16, paddingBottom: 12, borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                {UMICORE_BRIEF.metrics.map(m => (
+                  <div key={m.label}>
+                    <p style={{ fontSize: 9, color: "#555", margin: "0 0 2px 0", fontFamily: MONO, letterSpacing: "0.06em", textTransform: "uppercase" }}>{m.label}</p>
+                    <p style={{ fontSize: 12, color: warmWhite, margin: 0, fontWeight: 500 }}>{m.value}</p>
+                  </div>
+                ))}
+              </div>
+              {UMICORE_BRIEF.sections.map((sec, si) => (
+                <div key={si} style={{ marginBottom: 16 }}>
+                  <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", fontWeight: 500, margin: "0 0 8px 0" }}>{sec.label}</p>
+                  {sec.items.map((item, ii) => (
+                    <div key={ii} style={{ marginBottom: 8 }}>
+                      {item.title && <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{item.title}</p>}
+                      <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.6, margin: 0 }}>{item.text}</p>
+                    </div>
+                  ))}
+                </div>
+              ))}
+              {UMICORE_BRIEF.disclaimer && <p style={{ fontSize: 9, color: "#555", lineHeight: 1.5, margin: "4px 0 0 0", fontStyle: "italic" }}>{UMICORE_BRIEF.disclaimer}</p>}
+            </div>
+          )}
 
           <div style={{ height: 1, background: borderColor, margin: "16px 0" }} />
 
