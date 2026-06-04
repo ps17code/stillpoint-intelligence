@@ -2695,7 +2695,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", ...(selectedFeaturedChain ? { animation: "fadeSlideDown 0.4s ease-out" } : {}) }}>
             {/* Header row: title + toggle */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 15px" }}>
-              <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Value Chain</p>
+              <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Systems</p>
               {showChainOpportunities ? (
                 <span
                   onClick={() => setShowChainOpportunities(false)}
@@ -2925,7 +2925,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               <>
               <div style={{ animation: "fadeSlideDown 0.3s ease-out", background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10 }}>
                 <div style={{ padding: "10px 15px" }}>
-                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Connectivity Architecture</p>
+                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>System Components</p>
                 </div>
                 <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
 
@@ -3008,7 +3008,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           {!selectedFeaturedChain && selectedSubsystem === "Connectivity" && selectedArchPiece === "fiber" && (
             <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10, animation: "fadeSlideDown 0.3s ease-out" }}>
               <div style={{ padding: "10px 15px" }}>
-                <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chains</p>
+                <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Component Supply Chains</p>
               </div>
               <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
               <div style={{ padding: "10px 15px" }}>
@@ -5509,7 +5509,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     const dividerPanel = <div style={{ height: 0.5, background: "rgba(255,255,255,0.06)", margin: "10px 0" }} />;
                     return (
                       <div style={{ background: cardBgPanel, borderRadius: 6, padding: "12px 12px" }}>
-                        <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: "0 0 0 0", fontFamily: "'EB Garamond', Georgia, serif" }}>{archDetail.title}</p>
+                        <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: "0 0 0 0" }}>{archDetail.title}</p>
 
                         {dividerPanel}
 
@@ -5705,7 +5705,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 return (
                   <div style={{ background: cardBgPanel, borderRadius: 6, padding: "12px 12px" }}>
                     {/* Header */}
-                    <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: 0, fontFamily: "'EB Garamond', Georgia, serif" }}>{detail.name}</p>
+                    <p style={{ fontSize: 14, color: "#ece8e1", fontWeight: 500, margin: 0 }}>{detail.name}</p>
 
                     {dividerPanel}
 
