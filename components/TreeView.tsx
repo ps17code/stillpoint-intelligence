@@ -2907,25 +2907,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               Select a subsystem to reveal: Signals / Chokepoints / Companies / Supply Tree
             </p>
           )}
-          {/* Components panel — components within the selected subsystem */}
-          {!selectedFeaturedChain && selectedSubsystem && (() => {
-            const sub = getSubsystems().find(s => s.name === selectedSubsystem);
-            const comps = sub?.components ?? [];
-            if (comps.length === 0) return null;
-            return (
-              <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10, animation: "fadeSlideDown 0.3s ease-out" }}>
-                <div style={{ padding: "10px 15px" }}>
-                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Components</p>
-                </div>
-                <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
-                <div style={{ padding: "10px 15px", display: "flex", flexWrap: "wrap", gap: 5 }}>
-                  {comps.map(c => (
-                    <span key={c.id} style={{ fontSize: 11, color: "rgb(254, 174, 0)", background: "rgba(255, 255, 255, 0.05)", borderRadius: 3, padding: "3px 10px", fontWeight: 300 }}>{c.name}</span>
-                  ))}
-                </div>
-              </div>
-            );
-          })()}
           {/* Connectivity Architecture — shown when Connectivity is selected */}
           {(() => {
             const showArch = !selectedFeaturedChain && selectedSubsystem === "Connectivity";
@@ -2934,7 +2915,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               { id: "gpu-server", title: "GPU / Server", desc: "Generates data from AI workloads.", deps: ["GPUs", "HBM", "Boards"] },
               { id: "nic", title: "NIC / Interconnect", desc: "Moves data out of the server.", deps: ["SerDes", "PHY", "PCB"] },
               { id: "transceiver", title: "Optical Transceiver", desc: "Converts electrical into optical signals.", deps: ["Lasers", "DSPs", "SiPh"] },
-              { id: "fiber", title: "Fiber Optic Cable", desc: "Carries light across the data center.", deps: ["GeCl₄", "Preforms", "Helium"] },
+              { id: "fiber", title: "Cabling", desc: "Carries light across the data center.", deps: ["GeCl₄", "Preforms", "Helium"] },
               { id: "tor-switch", title: "ToR Switch", desc: "Aggregates traffic from servers in a rack.", deps: ["ASICs", "Optics", "Power"] },
               { id: "spine-switch", title: "Spine Switch", desc: "Routes traffic across the cluster fabric.", deps: ["ASICs", "Optics", "NOS"] },
               { id: "campus-link", title: "Campus Link", desc: "Connects buildings, sites, and regions.", deps: ["Fiber", "Conduit", "Labor"] },
@@ -3015,6 +2996,34 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 </p>
               )}
               </>
+            );
+          })()}
+
+          {/* Components panel — components within the selected subsystem (arch piece) */}
+          {!selectedFeaturedChain && selectedSubsystem === "Connectivity" && selectedArchPiece && (() => {
+            const ARCH_COMPONENTS: Record<string, { name: string; desc: string }[]> = {
+              fiber: [
+                { name: "Fiber Optic Cables", desc: "Moves data over longer distances." },
+                { name: "Copper / DAC", desc: "Moves data over short distances." },
+              ],
+            };
+            const comps = ARCH_COMPONENTS[selectedArchPiece];
+            if (!comps || comps.length === 0) return null;
+            return (
+              <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10, animation: "fadeSlideDown 0.3s ease-out" }}>
+                <div style={{ padding: "10px 15px" }}>
+                  <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Components</p>
+                </div>
+                <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
+                <div style={{ padding: "10px 15px", display: "flex", flexWrap: "wrap", gap: 5 }}>
+                  {comps.map(c => (
+                    <span key={c.name} style={{ display: "inline-flex", flexDirection: "column", gap: 2, background: "rgba(255, 255, 255, 0.05)", borderRadius: 3, padding: "5px 10px" }}>
+                      <span style={{ fontSize: 11, color: "rgb(254, 174, 0)", fontWeight: 300 }}>{c.name}</span>
+                      <span style={{ fontSize: 9, color: "rgb(160, 152, 136)", fontWeight: 300 }}>{c.desc}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
             );
           })()}
 
