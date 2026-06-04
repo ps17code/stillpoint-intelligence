@@ -4036,7 +4036,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               </div>
             </>
           ) : (
-          <>
+          <div
+            key={(lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component")) ? `drill-${animKey}` : "tree-content"}
+            style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0, ...((lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component")) ? { animation: "drillIn 0.55s cubic-bezier(0.22, 1, 0.36, 1)" } : {}) }}
+          >
           {/* Header area — fixed, doesn't scroll */}
           <div style={{ padding: "16px 30px 0", flexShrink: 0, position: "relative" }}>
             {renderBreadcrumb()}
@@ -4685,7 +4688,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             })()}
           </div>
           </div>
-          </>
+          </div>
           )}
         </div>
 
@@ -6200,6 +6203,11 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
         @keyframes spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
+        }
+        @keyframes drillIn {
+          from { opacity: 0; transform: scale(0.9); filter: blur(8px); }
+          60% { opacity: 1; }
+          to { opacity: 1; transform: scale(1); filter: blur(0); }
         }
         @keyframes illustrationFade {
           from { opacity: 0; transform: translateY(8px); }
