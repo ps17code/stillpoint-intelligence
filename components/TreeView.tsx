@@ -2117,6 +2117,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
   const [chainLoading, setChainLoading] = useState(false);
   const [chainExiting, setChainExiting] = useState(false);
+  const [aiExiting, setAiExiting] = useState(false);
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
   const [chainSummaryExpanded, setChainSummaryExpanded] = useState(false);
   const [hoveredChainCard, setHoveredChainCard] = useState<string | null>(null);
@@ -3086,10 +3087,21 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   <div
                     key={ci}
                     onClick={() => {
-                      if (chain.navPath.length > 0) {
-                        setPath(chain.navPath);
-                        setAnimKey(k => k + 1);
-                        if (chain.chainId) { setChainLoading(true); window.setTimeout(() => setChainLoading(false), 3000); setSelectedFeaturedChain(chain.chainId); setSelectedTreeNode(null); setRightTab("summary"); }
+                      if (chain.navPath.length > 0 && chain.chainId) {
+                        // 1) drill the AI infra page out
+                        setAiExiting(true);
+                        window.setTimeout(() => {
+                          // 2) cover with the ring loader, mount the chain page behind it
+                          setAiExiting(false);
+                          setChainLoading(true);
+                          setPath(chain.navPath);
+                          setAnimKey(k => k + 1);
+                          setSelectedFeaturedChain(chain.chainId);
+                          setSelectedTreeNode(null);
+                          setRightTab("summary");
+                          // 3) after a 1s ring load, fade the chain page in
+                          window.setTimeout(() => setChainLoading(false), 1000);
+                        }, 460);
                       }
                     }}
                     style={{
@@ -3923,7 +3935,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           position: "relative",
         }}>
           {/* Chain loading overlay — covers the center panel while the chain view loads */}
-          <div style={{ position: "absolute", inset: 0, zIndex: 50, background: "rgb(34, 34, 34)", display: "flex", alignItems: "center", justifyContent: "center", opacity: chainLoading ? 1 : 0, pointerEvents: chainLoading ? "auto" : "none", transition: "opacity 0.4s ease" }}>
+          <div style={{ position: "absolute", inset: 0, zIndex: 50, background: "rgb(34, 34, 34)", display: "flex", alignItems: "center", justifyContent: "center", opacity: chainLoading ? 1 : 0, pointerEvents: chainLoading ? "auto" : "none", transition: chainLoading ? "none" : "opacity 0.45s ease" }}>
             <div style={{ width: 40, height: 40, borderRadius: "50%", border: "3px solid rgba(255,255,255,0.1)", borderTopColor: "#c87a4a", animation: "spin 0.9s linear infinite" }} />
           </div>
           {centerView === "globe" ? (
@@ -4044,7 +4056,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           ) : (
           <div
             key={(lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component")) ? `in-${animKey}` : "tree-content"}
-            style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0, transformOrigin: "center center", ...(chainExiting ? { animation: "drillOut 0.46s cubic-bezier(0.4, 0, 0.6, 1) forwards" } : (lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component")) ? { animation: "fadeInDeep 0.45s ease-out" } : {}) }}
+            style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0, transformOrigin: "center center", ...((chainExiting || aiExiting) ? { animation: "drillOut 0.46s cubic-bezier(0.4, 0, 0.6, 1) forwards" } : (lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component")) ? { animation: "fadeInDeep 0.45s ease-out" } : {}) }}
           >
           {/* Header area — fixed, doesn't scroll */}
           <div style={{ padding: "16px 30px 0", flexShrink: 0, position: "relative" }}>
