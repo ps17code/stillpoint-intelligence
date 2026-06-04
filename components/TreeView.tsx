@@ -2116,6 +2116,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [selectedArchPiece, setSelectedArchPiece] = useState<string | null>(null);
   const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
   const [chainLoading, setChainLoading] = useState(false);
+  const [chainExiting, setChainExiting] = useState(false);
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
   const [chainSummaryExpanded, setChainSummaryExpanded] = useState(false);
   const [hoveredChainCard, setHoveredChainCard] = useState<string | null>(null);
@@ -2761,8 +2762,13 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             };
                             const target = navMap[step.name];
                             if (target) {
-                              setInputNavContext({ vertical: target[0], subsystem: selectedSubsystem ?? undefined, archPiece: selectedArchPiece ?? undefined, chainId: selectedFeaturedChain ?? undefined, chainTitle: activeFeaturedChain?.title, node: step.name });
-                              setSelectedFeaturedChain(null); setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null);
+                              const ctx = { vertical: target[0], subsystem: selectedSubsystem ?? undefined, archPiece: selectedArchPiece ?? undefined, chainId: selectedFeaturedChain ?? undefined, chainTitle: activeFeaturedChain?.title, node: step.name };
+                              setChainExiting(true);
+                              window.setTimeout(() => {
+                                setInputNavContext(ctx);
+                                setSelectedFeaturedChain(null); setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null);
+                                setChainExiting(false);
+                              }, 460);
                             }
                             return;
                           }
@@ -4037,8 +4043,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             </>
           ) : (
           <div
-            key={(lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component")) ? `drill-${animKey}` : "tree-content"}
-            style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0, ...((lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component")) ? { animation: "drillIn 0.55s cubic-bezier(0.22, 1, 0.36, 1)" } : {}) }}
+            key={(lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component")) ? `in-${animKey}` : "tree-content"}
+            style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0, transformOrigin: "center center", ...(chainExiting ? { animation: "drillOut 0.46s cubic-bezier(0.4, 0, 0.6, 1) forwards" } : (lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component")) ? { animation: "fadeInDeep 0.45s ease-out" } : {}) }}
           >
           {/* Header area — fixed, doesn't scroll */}
           <div style={{ padding: "16px 30px 0", flexShrink: 0, position: "relative" }}>
@@ -6204,10 +6210,13 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-        @keyframes drillIn {
-          from { opacity: 0; transform: scale(0.9); filter: blur(8px); }
-          60% { opacity: 1; }
-          to { opacity: 1; transform: scale(1); filter: blur(0); }
+        @keyframes drillOut {
+          from { opacity: 1; transform: scale(1); filter: blur(0); }
+          to { opacity: 0; transform: scale(0.8); filter: blur(8px); }
+        }
+        @keyframes fadeInDeep {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
         @keyframes illustrationFade {
           from { opacity: 0; transform: translateY(8px); }
