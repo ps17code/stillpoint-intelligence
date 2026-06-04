@@ -123,8 +123,8 @@ function NodeCard({
         position: "relative" as const,
       }}
     >
-      {/* Investment idea dot — disabled */}
-      {false && hasIdea && (() => {
+      {/* Investment idea dot — marks nodes in the opportunities / investment idea list */}
+      {hasIdea && (() => {
         const BRIGHT: Record<string, string> = { "#81713c": "#c8a85a", "#6a9ab8": "#8ec4e8", "#7a8a6a": "#a8c890" };
         const dotColor = BRIGHT[accentColor ?? ""] ?? accentColor ?? IDEA_DOT_COLOR;
         return (
