@@ -3524,8 +3524,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             };
             const navTarget = nodeNav[name];
             if (navTarget) { setPath(navTarget); setAnimKey(k => k + 1); setSelectedTreeNode(null); return; }
-            setSelectedTreeNode(name);
-            setRightTab("nodes");
+            if (selectedTreeNode === name) { setSelectedTreeNode(null); setRightTab("summary"); }
+            else { setSelectedTreeNode(name); setRightTab("nodes"); }
           }}
           upstream={[
             { id: "germanium", name: "Germanium", pill: "~230t/yr" },
@@ -3556,8 +3556,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
         <>
           <GermaniumSupplyTree onNodeClick={(name) => {
             if (name === "Umicore") { setCompanyPopupOpen(true); return; }
-            setSelectedTreeNode(name);
-            setRightTab("nodes");
+            if (selectedTreeNode === name) { setSelectedTreeNode(null); setRightTab("summary"); }
+            else { setSelectedTreeNode(name); setRightTab("nodes"); }
           }} downstream={[
             { id: "fiber", name: "Fiber Optic Cable", pill: "~87t/yr" },
             { id: "ir", name: "IR Optics", pill: "~55t/yr" },
@@ -3578,7 +3578,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
     if (lastEntry.type === "raw-material" && lastEntry.id === "gallium") {
       return (
         <>
-          <GalliumSupplyTree onNodeClick={(name) => { setSelectedTreeNode(name); setRightTab("nodes"); }} downstream={[
+          <GalliumSupplyTree onNodeClick={(name) => { if (selectedTreeNode === name) { setSelectedTreeNode(null); setRightTab("summary"); } else { setSelectedTreeNode(name); setRightTab("nodes"); } }} downstream={[
             { id: "gan", name: "GaN Power", pill: "~110t/yr" },
             { id: "gaas", name: "GaAs Devices", pill: "~140t/yr" },
             { id: "ndfeb", name: "NdFeB Magnets", pill: "~80t/yr" },
@@ -3873,7 +3873,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
         {/* Center — header + tabs + content OR globe */}
         <div style={{
           width: 1020, maxWidth: 1020, flexShrink: 0,
-          background: "#111111",
+          background: "rgb(34, 34, 34)",
           borderRadius: 5,
           overflow: "hidden",
           border: "0.2px solid rgb(42, 42, 42)",
@@ -4706,8 +4706,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
 
           {/* Bottom section — content based on selected tab */}
           <div style={{ flex: 1, overflowY: "auto", padding: "12px 12px" }}>
-            {/* Stillpoint View — shown on input pages */}
-            {centerView === "tree" && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") && (() => {
+            {/* Stillpoint View — shown on input pages when no node is selected */}
+            {centerView === "tree" && !selectedTreeNode && lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component") && (() => {
               const STILLPOINT_VIEWS: Record<string, { view: string; signalLabel: string; signalId: string }> = {
                 germanium: {
                   view: "Germanium's real bottleneck is in its conversion to GeCl₄ before it can be used to make fiber. There's only one company in the west that has the capacity and capability to produce it and it controls one of the only feedstock sources of Ge available to the west.",
@@ -6100,7 +6100,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   </div>
 
                   {/* Type / descriptor — uppercase */}
-                  <p style={{ fontSize: 10, color: templateAccent ?? "#706a60", margin: "0 0 10px 0", letterSpacing: "0.04em", textTransform: "uppercase" as const }}>{uNode.descriptor_pill || uNode.layer}</p>
+                  <p style={{ fontSize: 10, color: templateAccent ?? "#706a60", margin: "0 0 6px 0", letterSpacing: "0.04em", textTransform: "uppercase" as const }}>{uNode.descriptor_pill || uNode.layer}</p>
+
+                  {/* Output value — same format as on the node pill */}
+                  {uNode.quantity_pill && <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 10px 0" }}>{uNode.quantity_pill}</p>}
 
                   {/* Description as bullets (no label) */}
                   {uNode.about && (
@@ -6114,20 +6117,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     </div>
                   )}
 
-                  {/* Key metrics — stacked vertically */}
-                  {uNode.stats && uNode.stats.length > 0 && (
-                    <div style={{ paddingTop: 8, borderTop: "1px solid rgb(45, 41, 39)" }}>
-                      <p style={{ fontSize: 10, color: templateAccent ?? "#706a60", margin: "0 0 6px 0", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>KEY METRICS</p>
-                      {uNode.stats.map(([label, value]) => (
-                        <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
-                          <span style={{ fontSize: 10, color: "#555", fontFamily: "'Geist Mono', monospace" }}>{label}</span>
-                          <span style={{ fontSize: 11, color: warmWhite, fontWeight: 300, textAlign: "right" as const }}>{value}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Investment brief link */}
+                  {/* Full company profile link — only for nodes in the opportunities list */}
                   {(() => {
                     const inputId = lastEntry?.id === "fiber" ? "fiber" : lastEntry?.id;
                     const wtmi = inputId ? INPUT_WTMI[inputId] : null;
@@ -6148,7 +6138,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
                           onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
                         >
-                          View investment brief &rarr;
+                          View Full Company Profile &rarr;
                         </button>
                       </div>
                     );
