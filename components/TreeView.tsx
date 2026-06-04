@@ -2115,6 +2115,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [selectedSubsystem, setSelectedSubsystem] = useState<string | null>(null);
   const [selectedArchPiece, setSelectedArchPiece] = useState<string | null>(null);
   const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
+  const [chainLoading, setChainLoading] = useState(false);
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
   const [chainSummaryExpanded, setChainSummaryExpanded] = useState(false);
   const [hoveredChainCard, setHoveredChainCard] = useState<string | null>(null);
@@ -2746,6 +2747,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     const isAIDC = step.name === "AI DC Connectivity";
                     const cardBg = isAIDC ? "rgb(20, 20, 20)" : "rgb(32, 32, 32)";
                     const cardBgSel = isAIDC ? "rgb(28, 28, 28)" : "rgb(40, 40, 40)";
+                    const activeSysBg = "rgba(200, 122, 74, 0.1)";
                     return (
                       <div
                         key={step.name}
@@ -2766,7 +2768,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           }
                           if (nodeId) { setSelectedTreeNode(selectedTreeNode === nodeId ? null : nodeId); setRightTab("summary"); } else { const next = selectedSubsystem === step.name ? null : step.name; setSelectedSubsystem(next); setSelectedArchPiece(null); setSelectedComponent(null); }
                         }}
-                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? cardBgSel : cardBg, borderRadius: 5, border: isSelected ? "1px solid rgba(200, 122, 74, 0.25)" : isAIDC ? "1px solid rgba(200, 122, 74, 0.15)" : "1px solid rgba(255, 255, 255, 0.04)", padding: "10px 10px 12px", transition: "background 0.15s, border-color 0.15s" }}
+                        style={{ cursor: "pointer", display: "flex", flexDirection: "column", background: isSelected ? activeSysBg : cardBg, borderRadius: 5, border: isSelected ? "1px solid rgba(200, 122, 74, 0.45)" : isAIDC ? "1px solid rgba(200, 122, 74, 0.15)" : "1px solid rgba(255, 255, 255, 0.04)", padding: "10px 10px 12px", transition: "background 0.15s, border-color 0.15s" }}
                         onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = cardBgSel; setHoveredChainCard(step.name); }}
                         onMouseLeave={e => { if (!isSelected) e.currentTarget.style.background = cardBg; setHoveredChainCard(null); }}
                       >
@@ -2974,7 +2976,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                               <span style={{ fontSize: 8, color: isActive ? "#fff" : "#555", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{pi + 1}</span>
                             </div>
                             {pi < ARCH_PIECES.length - 1 && (
-                              <div style={{ flex: 1, display: "flex", alignItems: "center", marginLeft: 4, marginRight: -10 }}>
+                              <div style={{ flex: 1, display: "flex", alignItems: "center", marginLeft: 4 }}>
                                 <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.1)" }} />
                                 <svg width="6" height="6" viewBox="0 0 6 6" fill="none" style={{ flexShrink: 0 }}>
                                   <path d="M0 0.5L4 3L0 5.5" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
@@ -3017,13 +3019,15 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Components</p>
                 </div>
                 <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
-                <div style={{ padding: "10px 15px", display: "flex", flexWrap: "wrap", gap: 5 }}>
+                <div style={{ padding: "10px 15px", display: "flex", flexWrap: "wrap", gap: 10 }}>
                   {comps.map(c => {
                     const compActive = selectedComponent === c.name;
                     return (
                       <span
                         key={c.name}
                         onClick={() => setSelectedComponent(compActive ? null : c.name)}
+                        onMouseEnter={e => { if (!compActive) { e.currentTarget.style.background = "rgba(255, 255, 255, 0.08)"; e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.15)"; } }}
+                        onMouseLeave={e => { if (!compActive) { e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)"; e.currentTarget.style.borderColor = "transparent"; } }}
                         style={{ display: "inline-flex", flexDirection: "column", gap: 2, cursor: "pointer", background: compActive ? "rgba(200, 122, 74, 0.12)" : "rgba(255, 255, 255, 0.05)", border: compActive ? "1px solid rgba(200, 122, 74, 0.5)" : "1px solid transparent", borderRadius: 3, padding: "5px 10px", transition: "background 0.15s, border-color 0.15s" }}
                       >
                         <span style={{ fontSize: 11, color: compActive ? "rgb(254, 174, 0)" : "rgb(236, 232, 225)", fontWeight: 300 }}>{c.name}</span>
@@ -3079,7 +3083,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       if (chain.navPath.length > 0) {
                         setPath(chain.navPath);
                         setAnimKey(k => k + 1);
-                        if (chain.chainId) { setSelectedFeaturedChain(chain.chainId); setSelectedTreeNode(null); setRightTab("summary"); }
+                        if (chain.chainId) { setChainLoading(true); window.setTimeout(() => setChainLoading(false), 3000); setSelectedFeaturedChain(chain.chainId); setSelectedTreeNode(null); setRightTab("summary"); }
                       }
                     }}
                     style={{
@@ -3912,6 +3916,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           display: "flex", flexDirection: "column",
           position: "relative",
         }}>
+          {/* Chain loading overlay — covers the center panel while the chain view loads */}
+          <div style={{ position: "absolute", inset: 0, zIndex: 50, background: "rgb(34, 34, 34)", display: "flex", alignItems: "center", justifyContent: "center", opacity: chainLoading ? 1 : 0, pointerEvents: chainLoading ? "auto" : "none", transition: "opacity 0.4s ease" }}>
+            <div style={{ width: 40, height: 40, borderRadius: "50%", border: "3px solid rgba(255,255,255,0.1)", borderTopColor: "#c87a4a", animation: "spin 0.9s linear infinite" }} />
+          </div>
           {centerView === "globe" ? (
             <>
               {/* Globe view — default landing */}
@@ -6188,6 +6196,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
         @keyframes accordionEnter {
           from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
         @keyframes illustrationFade {
           from { opacity: 0; transform: translateY(8px); }
