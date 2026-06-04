@@ -2772,7 +2772,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         {/* Name row with dot and connecting line */}
                         <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
                           <span style={{ width: 5, height: 5, borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
-                          <p style={{ fontSize: 11, fontWeight: 500, color: "#ece8e1", margin: "0 0 0 6px", fontFamily: "'EB Garamond', Georgia, serif", whiteSpace: "nowrap", flexShrink: 0 }}>{step.name}</p>
+                          <p style={{ fontSize: 13, fontWeight: 500, color: "#ece8e1", margin: "0 0 0 6px", fontFamily: "'EB Garamond', Georgia, serif", whiteSpace: "nowrap", flexShrink: 0 }}>{step.name}</p>
                           {i < diagramSteps.length - 1 && (
                             <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)", marginLeft: 8 }} />
                           )}
@@ -2794,7 +2794,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           <img src={step.img} alt={step.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
                         </div>
                         {/* Description */}
-                        <p style={{ fontSize: 11, color: "rgb(212, 212, 212)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                        <p style={{ fontSize: 11, color: "rgb(212, 212, 212)", lineHeight: 1.5, margin: "5px 0" }}>{step.desc}</p>
                         {/* Supply/Demand data — chain steps only */}
                         {(() => {
                           const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string; constraintSeverity?: string; constraintTitle?: string; constraintLabel?: string; constraintDetails?: string[]; rows?: string[][]; keyPlayers?: { name: string; share: string }[] };
@@ -2803,12 +2803,12 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           const labelStyle2 = { fontSize: 11 as const, color: "#706a60" as string };
                           const valueStyle = { fontSize: 11 as const, color: warmWhite as string };
                           const sevColors: Record<string, string> = { Severe: "#c2554d", Moderate: "#c2a23f", Accelerating: "#5f9a5f" };
-                          const pillStyle = (color: string) => ({ fontSize: 9 as const, color, background: `${color}15`, padding: "1px 6px" as const, borderRadius: 2, fontFamily: "'Geist Mono', monospace" as const, textTransform: "uppercase" as const, letterSpacing: "0.04em" as const });
+                          const pillStyle = (color: string) => ({ fontSize: 9 as const, color, fontFamily: "'Geist Mono', monospace" as const, textTransform: "uppercase" as const, letterSpacing: "0.04em" as const });
                           const sectionTitleStyle = { fontSize: 11 as const, color: "rgb(159, 150, 135)" as string, fontWeight: 700 as const, margin: "0 0 2px 0" as const };
                           return (
                             <>
                             <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
-                              <p style={sectionTitleStyle}>Supply vs. Demand</p>
+                              <p style={sectionTitleStyle}>{s.rows ? "Demand Pull" : "Supply vs. Demand"}</p>
                               {s.rows ? (
                                 s.rows.map((r, ri) => {
                                   const mode = r[2];
@@ -4038,7 +4038,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             </div>
             {(() => {
               return (
-                <div style={{ marginBottom: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 20 : 14 }}>
+                <div style={{ marginBottom: (currentVertical?.id === "ai" && currentLevel === "subsystems") ? 15 : 14 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
                     {!(selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems") && (
                       <h1 style={{
@@ -4051,7 +4051,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     )}
                     {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
                       <div style={{ display: "inline-flex", alignItems: "center" }}>
-                        <div style={{ display: "inline-flex", alignItems: "center", gap: 0, marginRight: 10 }}>
+                        <div style={{ display: "inline-flex", alignItems: "center", gap: 0, marginRight: 20 }}>
                           {["Germanium", "GeCl₄", "Fiber Optics", "Connectivity", "AI Data Center"].map((node, ni, arr) => (
                             <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
                               <span style={{ fontSize: 20, color: "rgb(236, 232, 225)", whiteSpace: "nowrap" }}>{node}</span>
@@ -4079,7 +4079,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     )}
                   </div>
                   {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
-                    <p style={{ fontSize: 12, color: bodyText, lineHeight: 1.5, margin: "0 0 20px 0" }}>
+                    <p style={{ fontSize: 12, color: bodyText, lineHeight: 1.5, margin: "10px 0" }}>
                       Every kilometer of fiber in every AI datacenter depends on a chemical form of germanium refined almost entirely in China with exception of one Western supplier.
                     </p>
                   )}
@@ -5333,8 +5333,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     {/* Stillpoint View */}
                     <div style={{ background: "rgba(255, 255, 255, 0.02)", borderRadius: 6, padding: "10px 12px" }}>
                       <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: 6 }}><img src="/stillpoint-icon.png" alt="" style={{ width: 14, height: 14, borderRadius: 2, opacity: 0.85 }} />Stillpoint View</p>
-                      <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>AI data centers create massive new fiber demand. But high-performance fiber depends on germanium, which must be converted into ultra-pure GeCl₄ before it can be used in fiber preforms.</p>
-                      <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: "8px 0 0 0" }}>Fiber manufacturing capacity can expand with equipment capex but GeCl₄ supply depends on limited germanium feedstock and a small group of refiners with the capability to produce fiber-grade material. Outside China, the key Western supplier appears to be Umicore — and GeCl₄ is not its core business.</p>
+                      <div style={{ display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 10, overflow: "hidden" }}>
+                        <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>AI data centers create massive new fiber demand. But high-performance fiber depends on germanium, which must be converted into ultra-pure GeCl₄ before it can be used in fiber preforms.</p>
+                        <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: "8px 0 0 0" }}>Fiber manufacturing capacity can expand with equipment capex but GeCl₄ supply depends on limited germanium feedstock and a small group of refiners with the capability to produce fiber-grade material. Outside China, the key Western supplier appears to be Umicore — and GeCl₄ is not its core business.</p>
+                      </div>
                       <a
                         href="/input/germanium"
                         style={{ display: "inline-flex", alignItems: "center", gap: 4, marginTop: 12, fontSize: 10, color: "rgb(255, 255, 255)", padding: "5px 14px", background: "rgb(103, 71, 51)", border: "none", borderRadius: 6, textDecoration: "none", transition: "opacity 0.15s", opacity: 1, whiteSpace: "nowrap" }}
