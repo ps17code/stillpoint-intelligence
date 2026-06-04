@@ -1263,7 +1263,8 @@ function buildInlineNodes(chain: ChainDefinition): Record<string, { quantity_pil
 }
 
 function GermaniumSupplyTree({ onNodeClick, downstream, onDownstreamClick, onExpansionChange }: { onNodeClick: (name: string) => void; downstream?: { id: string; name: string; pill: string }[]; onDownstreamClick?: (id: string) => void; onExpansionChange?: (expanded: boolean) => void }) {
-  const [layerZoom, setLayerZoom] = useState<Record<string, number>>({});
+  // Default to fully expanded — all layers show their full node sets
+  const [layerZoom, setLayerZoom] = useState<Record<string, number>>({ deposits: 2, hostOperations: 2, refiners: 2 });
   const [downstreamExpanded, setDownstreamExpanded] = useState(false);
   const fullChain = chainDefs.germanium;
   const lc = chainsData.layerConfig as Record<string, { displayFields: { key: string; label: string }[] }>;
@@ -2118,17 +2119,16 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [hoveredChainCard, setHoveredChainCard] = useState<string | null>(null);
   const [opportunityLayerFilter, setOpportunityLayerFilter] = useState<string | null>(null);
   const [selectedOpportunityBrief, setSelectedOpportunityBrief] = useState<string | null>(null);
-  const [layersExpanded, setLayersExpanded] = useState(false);
+  const [layersExpanded, setLayersExpanded] = useState(true);
   const [geTreeExpanded, setGeTreeExpanded] = useState(false);
   const [oppFilter, setOppFilter] = useState<string | null>(null);
   const [companyPopupOpen, setCompanyPopupOpen] = useState(false);
   const [oppBriefId, setOppBriefId] = useState<string | null>(null);
   const [oppExpanded, setOppExpanded] = useState(false);
-  const [supplyTreeCollapsed, setSupplyTreeCollapsed] = useState(true);
-  // Auto-collapse supply chain card when tree expands
-  useEffect(() => {
-    if (geTreeExpanded) setLayersExpanded(false);
-  }, [geTreeExpanded]);
+  const [supplyTreeCollapsed, setSupplyTreeCollapsed] = useState(false);
+  // Breadcrumb navigation context captured when drilling into an input page from a chain
+  type InputNavContext = { vertical: PathEntry; subsystem?: string; archPiece?: string; chainId?: string; chainTitle?: string; node: string };
+  const [inputNavContext, setInputNavContext] = useState<InputNavContext | null>(null);
 
   // Featured chains data
   type FeaturedChain = { id: string; title: string; status: string; teaser: string; chain_nodes: string[]; chokepoint_node_id: string; display_chain: string[]; chokepoint_display_index: number; highlight_display_index?: number; navigate_path: string[] };
@@ -2244,33 +2244,71 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   ];
 
   /* ── render: breadcrumb ── */
+  const ARCH_PIECE_NAMES: Record<string, string> = {
+    fiber: "Fiber Optic Cable", transceiver: "Transceiver",
+    "tor-switch": "ToR Switch", "spine-switch": "Spine Switch", "campus-link": "Campus Link",
+  };
+
   function renderBreadcrumb() {
-    const baseLabels = ["All verticals", ...path.map(p => p.name)];
-    // Append chain breadcrumb when a featured chain is selected
-    const chainTitle = selectedFeaturedChain && activeFeaturedChain ? activeFeaturedChain.title : null;
-    const labels = chainTitle ? [...baseLabels, "Chains", chainTitle] : baseLabels;
+    const aiVertical = path.find(p => p.type === "vertical");
+    const isInput = !!lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component");
+    const isAI = currentVertical?.id === "ai";
+
+    // Return to the AI infra subsystems view with the given selections restored
+    const back = (sub?: string, arch?: string, chainId?: string) => {
+      if (aiVertical) setPath([aiVertical]);
+      setSelectedSubsystem(sub ?? null);
+      setSelectedArchPiece(arch ?? null);
+      setSelectedFeaturedChain(chainId ?? null);
+      setSelectedTreeNode(null);
+      setSelectedGroup(null);
+      setShowChainOpportunities(false);
+      setSelectedOpportunityBrief(null);
+      setInputNavContext(null);
+      setAnimKey(k => k + 1);
+    };
+
+    type Crumb = { label: string; onClick?: () => void };
+    const crumbs: Crumb[] = [];
+    crumbs.push({ label: "Vertical", onClick: () => { goHome(); setInputNavContext(null); } });
+
+    if (path.length > 0) {
+      const vert = path[0];
+      crumbs.push({ label: vert.name, onClick: () => { popToIndex(0); setSelectedSubsystem(null); setSelectedArchPiece(null); setSelectedFeaturedChain(null); setSelectedTreeNode(null); setInputNavContext(null); } });
+
+      if (isAI) {
+        const ctx = inputNavContext;
+        const useCtx = isInput && !!ctx;
+        const sub = useCtx ? ctx!.subsystem : (selectedSubsystem ?? undefined);
+        const arch = useCtx ? ctx!.archPiece : (selectedArchPiece ?? undefined);
+        const chainId = useCtx ? ctx!.chainId : (selectedFeaturedChain ?? undefined);
+        const chainTitle = useCtx ? ctx!.chainTitle : (selectedFeaturedChain ? activeFeaturedChain?.title : undefined);
+
+        if (sub) crumbs.push({ label: sub, onClick: () => back(sub) });
+        if (arch) crumbs.push({ label: ARCH_PIECE_NAMES[arch] ?? arch, onClick: () => back(sub, arch) });
+        if (chainId) {
+          crumbs.push({ label: "Chains", onClick: () => back(sub, arch) });
+          crumbs.push({ label: chainTitle ?? "Chain", onClick: () => back(sub, arch, chainId) });
+        }
+        if (isInput) {
+          crumbs.push({ label: useCtx ? ctx!.node : lastEntry!.name });
+        } else if (!sub && !arch && !chainId) {
+          for (let i = 1; i < path.length; i++) { const idx = i; crumbs.push({ label: path[i].name, onClick: () => popToIndex(idx) }); }
+        }
+      } else {
+        for (let i = 1; i < path.length; i++) { const idx = i; crumbs.push({ label: path[i].name, onClick: () => popToIndex(idx) }); }
+      }
+    }
 
     return (
       <div style={{ marginBottom: 16, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", minHeight: 14 }}>
-        {labels.map((label, i) => {
-          const isLast = i === labels.length - 1;
-          const clickHandler = () => {
-            if (chainTitle && i >= baseLabels.length) {
-              // Clicking "Chains" or chain title — deselect the chain
-              setSelectedFeaturedChain(null);
-              setSelectedTreeNode(null);
-              setShowChainOpportunities(false);
-              setSelectedOpportunityBrief(null);
-              return;
-            }
-            if (i === 0) goHome();
-            else popToIndex(i - 1);
-          };
+        {crumbs.map((c, i) => {
+          const isLast = i === crumbs.length - 1;
           return (
             <React.Fragment key={i}>
               {i > 0 && <span style={{ fontSize: 10, color: dimmer }}>/</span>}
               <span
-                onClick={isLast ? undefined : clickHandler}
+                onClick={isLast ? undefined : c.onClick}
                 style={{
                   fontSize: 10,
                   color: isLast ? bodyText : dimmer,
@@ -2280,7 +2318,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 onMouseEnter={e => { if (!isLast) e.currentTarget.style.color = bodyText; }}
                 onMouseLeave={e => { if (!isLast) e.currentTarget.style.color = dimmer; }}
               >
-                {label}
+                {c.label}
               </span>
             </React.Fragment>
           );
@@ -2712,14 +2750,17 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         key={step.name}
                         onClick={() => {
                           if (selectedFeaturedChain) {
-                            if (isAIDC) { setSelectedFeaturedChain(null); setSelectedSubsystem("Connectivity"); setSelectedArchPiece(null); setRightTab("summary"); return; }
+                            if (isAIDC) { setInputNavContext(null); setSelectedFeaturedChain(null); setSelectedSubsystem("Connectivity"); setSelectedArchPiece(null); setRightTab("summary"); return; }
                             const navMap: Record<string, PathEntry[]> = {
                               "Germanium": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
                               "GeCl₄": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }],
-                              "Fiber Optic Cable": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
+                              "Fiber Optic Cable": [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "component", id: "fiber", name: "Fiber optic cable" }],
                             };
                             const target = navMap[step.name];
-                            if (target) { setSelectedFeaturedChain(null); setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); }
+                            if (target) {
+                              setInputNavContext({ vertical: target[0], subsystem: selectedSubsystem ?? undefined, archPiece: selectedArchPiece ?? undefined, chainId: selectedFeaturedChain ?? undefined, chainTitle: activeFeaturedChain?.title, node: step.name });
+                              setSelectedFeaturedChain(null); setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null);
+                            }
                             return;
                           }
                           if (nodeId) { setSelectedTreeNode(selectedTreeNode === nodeId ? null : nodeId); setRightTab("summary"); } else { const next = selectedSubsystem === step.name ? null : step.name; setSelectedSubsystem(next); setSelectedArchPiece(null); }
@@ -4060,6 +4101,15 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 </div>
               );
             })()}
+          </div>
+
+          {/* Scrolling content area (Supply Chain panel + Asset map) */}
+          <div style={{
+            flex: 1,
+            minHeight: 0,
+            overflowY: "auto", overflowX: "hidden",
+            padding: "0 30px 20px",
+          }}>
             {/* Layer flow steps — shown on input pages above tabs */}
             {(() => {
               const isInputPage = lastEntry && (lastEntry.type === "raw-material" || lastEntry.type === "component");
@@ -4254,15 +4304,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 </div>
               );
             })()}
-          </div>
-
-          {/* Supply tree area */}
-          <div style={{
-            flex: 1,
-            minHeight: 0,
-            overflowY: "auto", overflowX: "hidden",
-            padding: "0 30px 20px",
-          }}>
             <div style={{ background: "rgb(27, 27, 27)", borderRadius: 5, padding: "14px 16px", overflow: "hidden", ...(currentVertical?.id === "ai" && currentLevel === "subsystems" ? { background: "transparent", padding: 0 } : {}) }}>
               {/* Header — hidden on AI infra vertical tree */}
               {!(currentVertical?.id === "ai" && currentLevel === "subsystems") && (
