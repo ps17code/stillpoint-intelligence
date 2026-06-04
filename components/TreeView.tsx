@@ -2674,10 +2674,10 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
       /* AI Infrastructure — full supply tree with 185 nodes */
       if (currentVertical?.id === "ai") {
         const chainSteps = [
-          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Recovered as a byproduct of zinc and coal, then refined to high purity.", supply: "~230t/yr", aiDemand: "~87t/yr", gap: "~56t", constraint: "Byproduct — cannot be mined directly", summary: "83% Chinese. One western refiner.", constraintSeverity: "Severe", constraintLabel: "Supply is fixed by geology", constraintDetails: ["Only a few coal and zinc deposits can recover Ge economically at high concentration.", "No dedicated germanium mines. Increasing output means installing capture and purification equipment — capex intense and multi-year project.", "Few projects coming online but not fast enough or large enough."], featuredCompany: { name: "STL / Gecamines", note: "New DRC germanium supply" } },
-          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "Converted to germanium tetrachloride and purified to fiber-grade.", supply: "~500t/yr", aiDemand: "~120t/yr", gap: "~150t", constraint: "8N purity — few facilities capable", summary: "One commercial-scale western supplier.", constraintSeverity: "Severe", constraintLabel: "Market has select few capable suppliers", constraintDetails: ["Only a few refiners worldwide can hit ultra purity at commercial scale. Almost all are Chinese except Umicore as sole western producer.", "New entrants have high entry barrier from qualification requirements and even existing refiners mostly run under capacity as still limited by Ge feedstock availability."], featuredCompany: { name: "Umicore", note: "Sole western supplier" } },
-          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "GeCl4 is deposited in glass rods, drawn in strands, and assembled into cables.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity.", constraintSeverity: "Moderate", constraintLabel: "Time and capital for equipment", constraintDetails: ["Production is not the bottleneck and scales with capex. Multiple manufacturers can compete to build new capacity.", "Friction is in high yield preform technology which is proprietary and concentrated in a few vertically integrated incumbents (Corning, Sumitomo, Shin-Etsu). Standing up new lines is gated by long-lead deposition and draw equipment."], featuredCompany: { name: "Corning", note: "40% fiber market share" } },
-          { name: "AI DC Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "Fiber deployed to link GPUs, switches, and storage to tie an AI cluster together.", rows: [["Fiber per 1 GW AI DC", "9M KM"], ["New Annual AI DC Capacity", "20 GW"], ["Required Fiber", "120M KM", "accent"], ["Status", "Accelerating", "pill"]], constraintTitle: "Demand Driver", constraintLabel: "Fiber intensity rises with GPU scale-out", featuredCompany: { name: "Meta", note: "Locked $6B in Corning fiber supply." }, summary: "36x more fiber per AI rack vs CPU." },
+          { name: "Germanium", nodeId: "Germanium", img: "/chain-steps/germanium-v2.jpg", desc: "Recovered as a byproduct of zinc and coal, then refined to high purity.", supply: "~230t/yr", aiDemand: "~87t/yr", gap: "~56t", constraint: "Byproduct — cannot be mined directly", summary: "83% Chinese. One western refiner.", constraintSeverity: "Severe", constraintLabel: "Supply is fixed by geology", constraintDetails: ["Only a few coal and zinc deposits can recover Ge economically at high concentration.", "No dedicated germanium mines. Increasing output means installing capture and purification equipment — capex intense and multi-year project.", "Few projects coming online but not fast enough or large enough."], keyPlayers: [{ name: "Yunnan Chihong", share: "~25%" }, { name: "Umicore", share: "~20%" }, { name: "Teck Resources", share: "~5%" }] },
+          { name: "GeCl₄", nodeId: "Germanium Tetrachloride (GeCl4)", img: "/chain-steps/gecl4-v2.jpg", desc: "Converted to germanium tetrachloride and purified to fiber-grade.", supply: "~500t/yr", aiDemand: "~120t/yr", gap: "~150t", constraint: "8N purity — few facilities capable", summary: "One commercial-scale western supplier.", constraintSeverity: "Severe", constraintLabel: "Market has select few capable suppliers", constraintDetails: ["Only a few refiners worldwide can hit ultra purity at commercial scale. Almost all are Chinese except Umicore as sole western producer.", "New entrants have high entry barrier from qualification requirements and even existing refiners mostly run under capacity as still limited by Ge feedstock availability."], keyPlayers: [{ name: "Yunnan Chihong", share: "~30%" }, { name: "Umicore", share: "~18%" }, { name: "5N Plus", share: "~6%" }] },
+          { name: "Fiber Optic Cable", nodeId: "Fiber Optic Cable", img: "/chain-steps/fiber-preform-v2.jpg", desc: "GeCl4 is deposited in glass rods, drawn in strands, and assembled into cables.", supply: "~720M km/yr", aiDemand: "~120M km/yr", gap: "~130M km", constraint: "Preform supply is the binding constraint", summary: "Corning controls ~40% of global capacity.", constraintSeverity: "Moderate", constraintLabel: "Time and capital for equipment", constraintDetails: ["Production is not the bottleneck and scales with capex. Multiple manufacturers can compete to build new capacity.", "Friction is in high yield preform technology which is proprietary and concentrated in a few vertically integrated incumbents (Corning, Sumitomo, Shin-Etsu). Standing up new lines is gated by long-lead deposition and draw equipment."], keyPlayers: [{ name: "Corning", share: "~40%" }, { name: "Prysmian", share: "~15%" }, { name: "YOFC", share: "~12%" }] },
+          { name: "AI DC Connectivity", nodeId: "Connectivity", img: "/chain-steps/ai-connectivity-v2.jpg", desc: "Fiber deployed to link GPUs, switches, and storage to tie an AI cluster together.", rows: [["Fiber per 1 GW AI DC", "9M KM"], ["New Annual AI DC Capacity", "20 GW"], ["Required Fiber", "120M KM", "accent"], ["Status", "Accelerating", "pill"]], constraintTitle: "Demand Driver", constraintLabel: "Fiber intensity rises with GPU scale-out", keyPlayers: [{ name: "Innolight", share: "~25%" }, { name: "Coherent", share: "~18%" }, { name: "Eoptolink", share: "~12%" }], summary: "36x more fiber per AI rack vs CPU." },
         ];
 
         const subsystemSteps = [
@@ -2797,7 +2797,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         <p style={{ fontSize: 11, color: "rgb(212, 212, 212)", lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
                         {/* Supply/Demand data — chain steps only */}
                         {(() => {
-                          const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string; constraintSeverity?: string; constraintTitle?: string; constraintLabel?: string; constraintDetails?: string[]; rows?: string[][]; featuredCompany?: { name: string; note: string } };
+                          const s = step as { supply?: string; aiDemand?: string; gap?: string; constraint?: string; summary?: string; constraintSeverity?: string; constraintTitle?: string; constraintLabel?: string; constraintDetails?: string[]; rows?: string[][]; keyPlayers?: { name: string; share: string }[] };
                           if (!s.supply && !s.rows) return null;
                           const rowStyle = { display: "flex" as const, justifyContent: "space-between" as const, alignItems: "baseline" as const, padding: "2px 0" as const };
                           const labelStyle2 = { fontSize: 11 as const, color: "#706a60" as string };
@@ -2841,25 +2841,17 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                                 <p style={{ fontSize: 11, color: "rgba(221, 221, 221, 1)", fontWeight: 100, margin: 0 }}>{s.constraintLabel}</p>
                               </div>
                             )}
-                            {s.featuredCompany && (() => {
-                              const fc = s.featuredCompany;
-                              const fcClickable = fc.name === "Umicore";
-                              return (
-                                <div
-                                  onClick={fcClickable ? (e) => { e.stopPropagation(); setCompanyPopupOpen(true); } : undefined}
-                                  onMouseEnter={fcClickable ? (e) => { e.currentTarget.style.borderColor = "rgba(200,122,74,0.4)"; e.currentTarget.style.background = "rgba(200,122,74,0.06)"; } : undefined}
-                                  onMouseLeave={fcClickable ? (e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.background = "rgba(255,255,255,0.02)"; } : undefined}
-                                  style={{ marginTop: 8, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)", borderRadius: 6, padding: "7px 9px", cursor: fcClickable ? "pointer" : "default", transition: "border-color 0.15s, background 0.15s" }}
-                                >
-                                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                                    <p style={sectionTitleStyle}>Featured Company</p>
-                                    {fcClickable && <span style={{ fontSize: 9, color: "rgb(182, 156, 140)" }}>→</span>}
+                            {s.keyPlayers && (
+                              <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
+                                <p style={sectionTitleStyle}>Key Players</p>
+                                {s.keyPlayers.map((p, pi) => (
+                                  <div key={pi} style={rowStyle}>
+                                    <span style={{ fontSize: 11, color: warmWhite }}>{p.name}</span>
+                                    <span style={{ fontSize: 11, color: "#c87a4a", fontFamily: "'Geist Mono', monospace" }}>{p.share}</span>
                                   </div>
-                                  <p style={{ fontSize: 11, color: "rgb(200, 122, 74)", fontWeight: 400, margin: 0 }}>{fc.name}</p>
-                                  <p style={{ fontSize: 10, color: "rgba(115, 115, 115, 1)", fontWeight: 400, margin: 0 }}>{fc.note}</p>
-                                </div>
-                              );
-                            })()}
+                                ))}
+                              </div>
+                            )}
                             </>
                           );
                         })()}
