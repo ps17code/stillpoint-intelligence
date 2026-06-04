@@ -2838,7 +2838,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             {s.constraintLabel && (
                               <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
                                 <p style={sectionTitleStyle}>{s.constraintTitle ?? "Constraint"}</p>
-                                <p style={{ fontSize: 11, color: "rgba(221, 221, 221, 1)", fontWeight: 100, margin: 0 }}>{s.constraintLabel}</p>
+                                <p style={{ fontSize: 11, color: "rgb(112, 106, 96)", fontWeight: 100, margin: 0 }}>{s.constraintLabel}</p>
                               </div>
                             )}
                             {s.keyPlayers && (
@@ -2846,8 +2846,8 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                                 <p style={sectionTitleStyle}>Key Players</p>
                                 {s.keyPlayers.map((p, pi) => (
                                   <div key={pi} style={rowStyle}>
-                                    <span style={{ fontSize: 11, color: warmWhite }}>{p.name}</span>
-                                    <span style={{ fontSize: 11, color: "#c87a4a", fontFamily: "'Geist Mono', monospace" }}>{p.share}</span>
+                                    <span style={{ fontSize: 11, color: "rgb(112, 106, 96)" }}>{p.name}</span>
+                                    <span style={{ fontSize: 11, color: "rgb(236, 232, 225)", fontFamily: "'Geist Mono', monospace" }}>{p.share}</span>
                                   </div>
                                 ))}
                               </div>
@@ -2867,21 +2867,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     );
                   })}
                 </div>
-                {diagramSteps.some(st => (st as { constraintDetails?: string[] }).constraintDetails) && (
-                  <div style={{ display: "flex", justifyContent: "center", marginTop: 6 }}>
-                    <button
-                      onClick={() => setShowChainOpportunities(true)}
-                      style={{ display: "flex", alignItems: "center", gap: 6, background: "transparent", border: "none", cursor: "pointer", padding: "6px 10px", color: "#706a60", fontSize: 10, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.06em" }}
-                      onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }}
-                      onMouseLeave={e => { e.currentTarget.style.color = "#706a60"; }}
-                    >
-                      <span>Read full chain brief</span>
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-                      </svg>
-                    </button>
-                  </div>
-                )}
               </>
             )}
 
@@ -4066,7 +4051,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     )}
                     {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
                       <div style={{ display: "inline-flex", alignItems: "center" }}>
-                        <div style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
+                        <div style={{ display: "inline-flex", alignItems: "center", gap: 0, marginRight: 10 }}>
                           {["Germanium", "GeCl₄", "Fiber Optics", "Connectivity", "AI Data Center"].map((node, ni, arr) => (
                             <span key={node} style={{ display: "inline-flex", alignItems: "center", gap: 0 }}>
                               <span style={{ fontSize: 20, color: "rgb(236, 232, 225)", whiteSpace: "nowrap" }}>{node}</span>
@@ -4076,7 +4061,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         </div>
                         <a
                           href="/input/germanium"
-                          style={{ marginLeft: 10, fontSize: 10, color: "rgb(255, 255, 255)", padding: "5px 14px", background: "rgb(103, 71, 51)", border: "none", borderRadius: 6, textDecoration: "none", transition: "opacity 0.15s", flexShrink: 0, opacity: 1, whiteSpace: "nowrap" }}
+                          style={{ fontSize: 10, color: "rgb(255, 255, 255)", padding: "5px 14px", background: "rgb(103, 71, 51)", border: "none", borderRadius: 6, textDecoration: "none", transition: "opacity 0.15s", flexShrink: 0, opacity: 1, whiteSpace: "nowrap" }}
                           onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
                           onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
                         >Read Full Chain Brief →</a>
@@ -4094,7 +4079,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                     )}
                   </div>
                   {selectedFeaturedChain && currentVertical?.id === "ai" && currentLevel === "subsystems" && (
-                    <p style={{ fontSize: 12, color: bodyText, lineHeight: 1.5, margin: "0 0 20px 0", maxWidth: 760 }}>
+                    <p style={{ fontSize: 12, color: bodyText, lineHeight: 1.5, margin: "0 0 20px 0" }}>
                       Every kilometer of fiber in every AI datacenter depends on a chemical form of germanium refined almost entirely in China with exception of one Western supplier.
                     </p>
                   )}
@@ -5350,6 +5335,12 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                       <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: 6 }}><img src="/stillpoint-icon.png" alt="" style={{ width: 14, height: 14, borderRadius: 2, opacity: 0.85 }} />Stillpoint View</p>
                       <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: 0 }}>AI data centers create massive new fiber demand. But high-performance fiber depends on germanium, which must be converted into ultra-pure GeCl₄ before it can be used in fiber preforms.</p>
                       <p style={{ fontSize: 12, color: "rgb(160, 152, 136)", lineHeight: 1.6, margin: "8px 0 0 0" }}>Fiber manufacturing capacity can expand with equipment capex but GeCl₄ supply depends on limited germanium feedstock and a small group of refiners with the capability to produce fiber-grade material. Outside China, the key Western supplier appears to be Umicore — and GeCl₄ is not its core business.</p>
+                      <a
+                        href="/input/germanium"
+                        style={{ display: "inline-flex", alignItems: "center", gap: 4, marginTop: 12, fontSize: 10, color: "rgb(255, 255, 255)", padding: "5px 14px", background: "rgb(103, 71, 51)", border: "none", borderRadius: 6, textDecoration: "none", transition: "opacity 0.15s", opacity: 1, whiteSpace: "nowrap" }}
+                        onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
+                        onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                      >Read Full Chain Brief →</a>
                     </div>
 
                     {/* Signals + Related Chains */}
