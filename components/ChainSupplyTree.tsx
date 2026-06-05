@@ -28,8 +28,6 @@ const LAYERS: Layer[] = [
     label: "GEOGRAPHIC SOURCE", stage: "Deposits / geologic sources", cta: "Germanium", nav: "germanium",
     cells: [
       { name: "China", group: { code: "cn", reserves: "~2,500t reserves" } },
-      { name: "Russia", group: { code: "ru", reserves: "~1,000t reserves" } },
-      { name: "USA", group: { code: "us", reserves: "~450t reserves" } },
       { name: "DRC", group: { code: "cd", reserves: "~700t reserves" } },
     ],
   },
