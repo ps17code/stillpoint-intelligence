@@ -2887,30 +2887,32 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   ];
                   const headers = ["Input", "Qty / 1 GW", "Price / unit", "Cost / 1 GW", "Cost / 20 GW", "% of cost stack"];
                   const thStyle = { textAlign: "left" as const, padding: "8px 12px", fontSize: 8, letterSpacing: "0.06em", color: "rgb(159, 146, 132)", fontWeight: 500 as const, fontFamily: "'Geist Mono', monospace", textTransform: "uppercase" as const, whiteSpace: "nowrap" as const };
-                  const cellStyle = { padding: "9px 12px", fontSize: 11, color: "rgb(160, 152, 136)", verticalAlign: "middle" as const, whiteSpace: "nowrap" as const };
-                  const costStyle = { ...cellStyle, color: warmWhite, fontWeight: 600 as const };
+                  const cellStyle = { padding: "9px 12px", fontSize: 11, color: "rgb(160, 152, 136)", fontWeight: 400 as const, verticalAlign: "middle" as const, whiteSpace: "nowrap" as const };
                   return (
-                    <div style={{ margin: "12px 15px 4px", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
-                      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                        <thead>
-                          <tr style={{ background: "rgb(38, 38, 38)" }}>
-                            {headers.map(h => <th key={h} style={thStyle}>{h}</th>)}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {COST_ROWS.map((r, ri) => (
-                            <tr key={r.input} style={{ borderTop: ri > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
-                              <td style={{ ...cellStyle, color: warmWhite, fontWeight: 500 }}>{r.input}</td>
-                              <td style={cellStyle}>{r.qty}</td>
-                              <td style={cellStyle}>{r.price}</td>
-                              <td style={costStyle}>{r.cost1}</td>
-                              <td style={costStyle}>{r.cost20}</td>
-                              <td style={cellStyle}>{r.pct}</td>
+                    <>
+                      <p style={{ fontSize: 10, color: warmWhite, margin: "10px 0 0 0", padding: "10px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Cost Stack</p>
+                      <div style={{ border: "1px solid rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
+                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                          <thead>
+                            <tr style={{ background: "rgb(38, 38, 38)" }}>
+                              {headers.map(h => <th key={h} style={thStyle}>{h}</th>)}
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+                          </thead>
+                          <tbody>
+                            {COST_ROWS.map((r, ri) => (
+                              <tr key={r.input} style={{ borderTop: ri > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
+                                <td style={cellStyle}>{r.input}</td>
+                                <td style={cellStyle}>{r.qty}</td>
+                                <td style={cellStyle}>{r.price}</td>
+                                <td style={cellStyle}>{r.cost1}</td>
+                                <td style={cellStyle}>{r.cost20}</td>
+                                <td style={cellStyle}>{r.pct}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </>
                   );
                 })()}
               </>
