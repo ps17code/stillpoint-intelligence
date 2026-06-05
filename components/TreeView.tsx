@@ -2866,9 +2866,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                             </>
                           );
                         })()}
-                        {selectedFeaturedChain && (
+                        {selectedFeaturedChain && hoveredChainCard === step.name && (
                           <span
-                            style={{ display: "inline-flex", alignItems: "center", gap: 4, marginTop: "auto", paddingTop: 10, color: "rgb(182, 156, 140)", fontSize: 8, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em", opacity: hoveredChainCard === step.name ? 1 : 0, transition: "opacity 0.15s", pointerEvents: "none" }}
+                            style={{ display: "inline-flex", alignItems: "center", gap: 4, marginTop: "auto", paddingTop: 10, color: "rgb(182, 156, 140)", fontSize: 8, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.03em", pointerEvents: "none" }}
                           >
                             View {step.name} Supply Chain
                             <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
