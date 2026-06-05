@@ -3,6 +3,7 @@ import React, { useState, useMemo, useCallback, useRef, useEffect } from "react"
 import HorizontalTree from "@/components/HorizontalTree";
 import AISupplyTree from "@/components/AISupplyTree";
 import CompanyViewPopup from "@/components/CompanyViewPopup";
+import ChainSupplyTree from "@/components/ChainSupplyTree";
 import Globe from "@/components/Globe";
 import type { GlobeHandle } from "@/components/Globe";
 import NodeMap from "@/components/NodeMap";
@@ -3334,6 +3335,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               </>
             );
           })()}
+
+          {/* Chain supply tree — companies at each layer of the germanium → fiber chain */}
+          {selectedFeaturedChain === "germanium_chokepoint" && <ChainSupplyTree />}
 
           {selectedFeaturedChain === "germanium_chokepoint" && (() => {
             type WtmiIdeaLocal = { id: string; name: string; ticker?: string; category: string; line1: string };
