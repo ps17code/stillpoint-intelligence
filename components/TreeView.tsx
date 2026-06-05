@@ -2119,6 +2119,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
   const [chainLoading, setChainLoading] = useState(false);
   const [chainExiting, setChainExiting] = useState(false);
   const [aiExiting, setAiExiting] = useState(false);
+  const [chainDiagramCollapsed, setChainDiagramCollapsed] = useState(false);
   const [showChainOpportunities, setShowChainOpportunities] = useState(false);
   const [chainSummaryExpanded, setChainSummaryExpanded] = useState(false);
   const [hoveredChainCard, setHoveredChainCard] = useState<string | null>(null);
@@ -2700,7 +2701,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", ...(selectedFeaturedChain ? { animation: "fadeSlideDown 0.4s ease-out" } : {}) }}>
             {/* Header row: title + toggle */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 15px" }}>
-              <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Systems</p>
+              <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>{selectedFeaturedChain ? "Supply Chain" : "Systems"}</p>
               {showChainOpportunities ? (
                 <span
                   onClick={() => setShowChainOpportunities(false)}
@@ -2710,6 +2711,16 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 >
                   Expand
                   <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M2 4L5 7L8 4" /></svg>
+                </span>
+              ) : selectedFeaturedChain ? (
+                <span
+                  onClick={() => setChainDiagramCollapsed(v => !v)}
+                  style={{ fontSize: 9, color: "#c87a4a", cursor: "pointer", transition: "color 0.15s", fontFamily: "'Geist Mono', monospace", display: "flex", alignItems: "center", gap: 4 }}
+                  onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+                >
+                  {chainDiagramCollapsed ? "Expand" : "Collapse"}
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ transform: chainDiagramCollapsed ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}><path d="M2 4L5 7L8 4" /></svg>
                 </span>
               ) : (
                 <button
@@ -2733,11 +2744,11 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                 </button>
               )}
             </div>
-            {!showChainOpportunities && (
+            {!showChainOpportunities && !chainDiagramCollapsed && (
               <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: ((selectedArchPiece && !selectedFeaturedChain)) ? "0 15px 10px" : "0 15px 15px" }} />
             )}
 
-            <div style={{ maxHeight: showChainOpportunities ? 0 : 800, opacity: showChainOpportunities ? 0 : 1, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
+            <div style={{ maxHeight: (showChainOpportunities || chainDiagramCollapsed) ? 0 : 800, opacity: (showChainOpportunities || chainDiagramCollapsed) ? 0 : 1, overflow: "hidden", transition: "max-height 0.3s ease, opacity 0.2s ease" }}>
             <div style={{ padding: "0 15px 10px" }}>
               {/* Diagram view */}
               {chainTreeTab === "diagram" && (
@@ -3385,7 +3396,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
               <div style={{ marginTop: 10, background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", padding: "14px 16px", display: "flex", flexDirection: "column" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Chain Opportunities</p>
+                    <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: "'Geist Mono', monospace" }}>Opportunities</p>
                     {!showChainOpportunities && <span style={{ fontSize: 9, color: "#555", marginLeft: 10, fontWeight: 400 }}>Ideas, companies, and strategic plays to capture value</span>}
                   </div>
                   <span

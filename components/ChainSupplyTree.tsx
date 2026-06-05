@@ -175,6 +175,7 @@ export default function ChainSupplyTree({ onViewLayer }: { onViewLayer?: (nav: "
   const treeRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
+  const [collapsed, setCollapsed] = useState(false);
   const active = hovered ?? selected;
   const highlightSet = useMemo(() => computeHighlight(active), [active]);
 
@@ -188,11 +189,20 @@ export default function ChainSupplyTree({ onViewLayer }: { onViewLayer?: (nav: "
 
   return (
     <div style={{ background: "rgb(27, 27, 27)", border: "0.1px solid rgb(36, 36, 36)", borderRadius: 5, overflow: "hidden", marginTop: 10, animation: "fadeSlideDown 0.3s ease-out" }}>
-      <div style={{ padding: "10px 15px" }}>
-        <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: MONO }}>Supply Tree</p>
+      <div style={{ padding: "10px 15px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <p style={{ fontSize: 10, color: warmWhite, margin: 0, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: MONO }}>Company &amp; Asset Map</p>
+        <span
+          onClick={() => setCollapsed(v => !v)}
+          style={{ fontSize: 9, color: "#c87a4a", cursor: "pointer", transition: "color 0.15s", fontFamily: MONO, display: "flex", alignItems: "center", gap: 4 }}
+          onMouseEnter={e => { e.currentTarget.style.color = "#e09060"; }}
+          onMouseLeave={e => { e.currentTarget.style.color = "#c87a4a"; }}
+        >
+          {collapsed ? "Expand" : "Collapse"}
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ transform: collapsed ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}><path d="M2 4L5 7L8 4" /></svg>
+        </span>
       </div>
-      <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />
-      <div ref={treeRef} onClick={() => setSelected(null)} style={{ position: "relative", display: "flex", gap: 36, overflowX: "auto", padding: "14px 15px 16px" }}>
+      {!collapsed && <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />}
+      <div ref={treeRef} onClick={() => setSelected(null)} style={{ position: "relative", display: collapsed ? "none" : "flex", gap: 36, overflowX: "auto", padding: "14px 15px 16px" }}>
         <EdgeLines edges={edges} containerRef={treeRef} highlightSet={highlightSet} />
         {LAYERS.map((layer, li) => (
           <div key={layer.label} style={{ flex: "0 0 auto", width: 150, display: "flex", flexDirection: "column", gap: 6, position: "relative", zIndex: 1 }}>
