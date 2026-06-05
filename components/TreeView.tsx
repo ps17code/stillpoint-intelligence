@@ -2852,17 +2852,6 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                                 <p style={{ fontSize: 11, color: "rgb(112, 106, 96)", fontWeight: 100, margin: 0 }}>{s.constraintLabel}</p>
                               </div>
                             )}
-                            {s.keyPlayers && (
-                              <div style={{ marginTop: 8, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 6 }}>
-                                <p style={sectionTitleStyle}>Key Players</p>
-                                {s.keyPlayers.map((p, pi) => (
-                                  <div key={pi} style={rowStyle}>
-                                    <span style={{ fontSize: 11, color: "rgb(112, 106, 96)" }}>{p.name}</span>
-                                    <span style={{ fontSize: 11, color: "rgb(236, 232, 225)", fontFamily: "'Geist Mono', monospace" }}>{p.share}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
                             </>
                           );
                         })()}
@@ -3337,7 +3326,14 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
           })()}
 
           {/* Chain supply tree — companies at each layer of the germanium → fiber chain */}
-          {selectedFeaturedChain === "germanium_chokepoint" && <ChainSupplyTree />}
+          {selectedFeaturedChain === "germanium_chokepoint" && <ChainSupplyTree onViewLayer={(nav) => {
+            const target: PathEntry[] = nav === "fiber"
+              ? [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "component", id: "fiber", name: "Fiber optic cable" }]
+              : [{ type: "vertical", id: "ai", name: "AI Infrastructure" }, { type: "raw-material", id: "germanium", name: "Germanium" }];
+            const ctx = { vertical: target[0], subsystem: selectedSubsystem ?? undefined, archPiece: selectedArchPiece ?? undefined, chainId: selectedFeaturedChain ?? undefined, chainTitle: activeFeaturedChain?.title, node: nav === "fiber" ? "Fiber optic cable" : "Germanium" };
+            setChainExiting(true);
+            window.setTimeout(() => { setInputNavContext(ctx); setSelectedFeaturedChain(null); setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); setChainExiting(false); }, 460);
+          }} />}
 
           {selectedFeaturedChain === "germanium_chokepoint" && (() => {
             type WtmiIdeaLocal = { id: string; name: string; ticker?: string; category: string; line1: string };
