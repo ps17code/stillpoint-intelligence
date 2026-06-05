@@ -2901,7 +2901,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                           <tbody>
                             {COST_ROWS.map((r, ri) => (
                               <tr key={r.input} style={{ borderTop: ri > 0 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
-                                <td style={cellStyle}>{r.input}</td>
+                                <td style={{ ...cellStyle, color: warmWhite, fontWeight: 600 }}>{r.input}</td>
                                 <td style={cellStyle}>{r.qty}</td>
                                 <td style={cellStyle}>{r.price}</td>
                                 <td style={cellStyle}>{r.cost1}</td>
