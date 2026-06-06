@@ -679,7 +679,7 @@ export default function HomePage() {
 
       {/* Header */}
       <div style={{
-        height: 42, flexShrink: 0,
+        height: 42, flexShrink: 0, position: "relative",
         background: "#131210", borderBottom: "1px solid #252220",
         display: "flex", alignItems: "center", justifyContent: "space-between", paddingLeft: 16, paddingRight: 16,
       }}>
@@ -690,15 +690,15 @@ export default function HomePage() {
         </div>
 
         {/* Search */}
-        <div style={{ position: "relative" }}>
+        <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)", width: 460, maxWidth: "50%" }}>
           <button
             onClick={() => { setSearchOpen(o => !o); setSearchQuery(""); }}
-            style={{ display: "flex", alignItems: "center", gap: 6, background: searchOpen ? "rgba(255,255,255,0.06)" : "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 5, padding: "4px 10px", cursor: "pointer", color: "rgba(255,255,255,0.55)", fontFamily: "'Geist Mono', monospace", fontSize: 10, transition: "background 0.15s, border-color 0.15s" }}
+            style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", boxSizing: "border-box", justifyContent: "flex-start", background: searchOpen ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "5px 12px", cursor: "pointer", color: "rgba(255,255,255,0.4)", fontFamily: "'Geist Mono', monospace", fontSize: 11, transition: "background 0.15s, border-color 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
           >
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="7" cy="7" r="5" /><line x1="11" y1="11" x2="14.5" y2="14.5" /></svg>
-            Search
+            Search verticals, chains, companies…
           </button>
           {searchOpen && (() => {
             const q = searchQuery.trim().toLowerCase();
@@ -707,7 +707,7 @@ export default function HomePage() {
             return (
               <>
                 <div onClick={() => setSearchOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 40 }} />
-                <div style={{ position: "absolute", top: "calc(100% + 6px)", right: 0, width: 320, background: "#1a1a1a", border: "1px solid rgb(48,48,48)", borderRadius: 8, boxShadow: "0 8px 24px rgba(0,0,0,0.5)", zIndex: 50, overflow: "hidden" }}>
+                <div style={{ position: "absolute", top: "calc(100% + 6px)", left: 0, width: "100%", background: "#1a1a1a", border: "1px solid rgb(48,48,48)", borderRadius: 8, boxShadow: "0 8px 24px rgba(0,0,0,0.5)", zIndex: 50, overflow: "hidden" }}>
                   <input
                     autoFocus
                     value={searchQuery}
