@@ -679,7 +679,7 @@ export default function HomePage() {
 
       {/* Header */}
       <div style={{
-        height: 42, flexShrink: 0, position: "relative",
+        height: 42, flexShrink: 0, position: "relative", zIndex: 100,
         background: "#131210", borderBottom: "1px solid #252220",
         display: "flex", alignItems: "center", justifyContent: "space-between", paddingLeft: 16, paddingRight: 16,
       }}>
