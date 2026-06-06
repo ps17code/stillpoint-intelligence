@@ -468,7 +468,7 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
           {treeTab === "brief" && UMICORE_BRIEF && (
             <>
             {/* Stillpoint View */}
-            <div style={{ border: `1px solid ${borderColor}`, borderRadius: 6, padding: "16px 18px", background: "rgb(24,24,24)", marginBottom: 14 }}>
+            <div style={{ border: `1px solid ${borderColor}`, borderRadius: 6, padding: "16px 18px", background: "rgb(34, 34, 34)", marginBottom: 14 }}>
               <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 10px 0", display: "flex", alignItems: "center", gap: 6 }}>
                 <img src="/stillpoint-icon.png" alt="" style={{ width: 14, height: 14, borderRadius: 2, opacity: 0.85 }} />Stillpoint View
               </p>
@@ -480,9 +480,9 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
             <div style={{ border: `1px solid ${borderColor}`, borderRadius: 6, padding: "16px 18px", background: "rgb(24,24,24)" }}>
               {UMICORE_BRIEF.sections.map((sec, si) => (
                 <div key={si} style={{ marginBottom: 18 }}>
-                  <p style={{ fontSize: 13, color: warmWhite, fontWeight: 600, margin: "0 0 8px 0" }}>{BRIEF_SECTION_TITLES[si] ?? sec.label}</p>
+                  <p style={{ fontSize: 13, color: warmWhite, fontWeight: 400, margin: "0 0 8px 0" }}>{BRIEF_SECTION_TITLES[si] ?? sec.label}</p>
                   {sec.items.map((item, ii) => (
-                    <p key={ii} style={{ fontSize: 12, color: "#807870", lineHeight: 1.65, margin: "0 0 10px 0" }}>{item.text}</p>
+                    <p key={ii} style={{ fontSize: 12, color: "rgb(172, 172, 172)", lineHeight: 1.65, margin: "0 0 10px 0" }}>{item.text}</p>
                   ))}
                 </div>
               ))}
