@@ -246,7 +246,7 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
   const [selectedGroup, setSelectedGroup] = useState("Specialty Metals");
   const [hoveredNode, setHoveredNode] = useState<ActiveNode>(null);
   const [selectedNode, setSelectedNode] = useState<ActiveNode>(null);
-  const [treeTab, setTreeTab] = useState<"supply" | "brief">("supply");
+  const [treeTab, setTreeTab] = useState<"overview" | "supply" | "brief">("overview");
   const treeRef = useRef<HTMLDivElement>(null);
   const umicoreRef = useRef<HTMLDivElement>(null);
 
@@ -329,6 +329,15 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
 
         {/* Content */}
         <div style={{ flex: 1, overflowY: "auto", padding: "16px 24px 24px" }}>
+          {/* Tab row */}
+          <div style={{ display: "flex", gap: 6, marginBottom: 16 }}>
+            {([["overview", "Overview"], ["supply", "Supply Tree"], ["brief", "Investment Brief"]] as const).map(([k, label]) => (
+              <button key={k} onClick={() => setTreeTab(k)} style={{ fontSize: 9, fontFamily: MONO, letterSpacing: "0.04em", textTransform: "uppercase", padding: "5px 12px", borderRadius: 4, cursor: "pointer", border: treeTab === k ? `1px solid ${accent}55` : "1px solid rgba(255,255,255,0.08)", background: treeTab === k ? "rgba(200,122,74,0.12)" : "transparent", color: treeTab === k ? accent : dimText, transition: "all 0.15s" }}>{label}</button>
+            ))}
+          </div>
+
+          {treeTab === "overview" && (
+          <>
           <div style={{ display: "flex", gap: 16, alignItems: "stretch", marginBottom: 18 }}>
             {/* Overview summary card */}
             <div style={{ flex: 1, minWidth: 0, border: `1px solid ${borderColor}`, borderRadius: 6, padding: "14px 16px", background: "rgb(24,24,24)" }}>
@@ -370,16 +379,23 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
             </div>
           </div>
 
-          <div style={{ height: 1, background: borderColor, margin: "0 0 14px" }} />
+          <div style={{ height: 1, background: borderColor, margin: "16px 0 14px" }} />
 
-          {/* Tab row */}
-          <div style={{ display: "flex", gap: 6, marginBottom: 14 }}>
-            {([["supply", "Supply Tree"], ["brief", "Investment Brief"]] as const).map(([k, label]) => (
-              <button key={k} onClick={() => setTreeTab(k)} style={{ fontSize: 9, fontFamily: MONO, letterSpacing: "0.04em", textTransform: "uppercase", padding: "5px 12px", borderRadius: 4, cursor: "pointer", border: treeTab === k ? `1px solid ${accent}55` : "1px solid rgba(255,255,255,0.08)", background: treeTab === k ? "rgba(200,122,74,0.12)" : "transparent", color: treeTab === k ? accent : dimText, transition: "all 0.15s" }}>{label}</button>
+          {/* Related Signals */}
+          <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: MONO, fontWeight: 500 }}>Related Signals</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            {RELATED_SIGNALS.map(sig => (
+              <div key={sig} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#555", flexShrink: 0 }} />
+                <span style={{ fontSize: 11, color: dimText }}>{sig}</span>
+              </div>
             ))}
           </div>
+          </>
+          )}
 
           {treeTab === "supply" && (
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: 6, padding: "14px 16px", background: "rgb(24,24,24)" }}>
           <div ref={treeRef} onClick={() => setSelectedNode(null)} style={{ position: "relative", display: "flex", gap: 40, overflowX: "auto", paddingBottom: 8 }}>
                 <EdgeLines edges={allEdges} containerRef={treeRef} highlightSet={highlightSet} />
 
@@ -445,17 +461,12 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
                   }) : <p style={{ fontSize: 9, color: "#555", margin: 0, fontStyle: "italic" }}>—</p>}
                 </Col>
               </div>
-
+          </div>
           )}
 
           {/* Investment Brief tab — flowing paragraphs under 5 section headers */}
           {treeTab === "brief" && UMICORE_BRIEF && (
-            <div style={{ marginBottom: 4 }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
-                <h3 style={{ fontSize: 18, fontWeight: 500, color: warmWhite, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{UMICORE_BRIEF.name}</h3>
-                <span style={{ fontSize: 10, color: "#555", fontFamily: MONO }}>{UMICORE_BRIEF.ticker}</span>
-              </div>
-              <p style={{ fontSize: 10, color: accent, margin: "0 0 18px 0", fontFamily: MONO, letterSpacing: "0.04em" }}>{UMICORE_BRIEF.category}</p>
+            <div style={{ border: `1px solid ${borderColor}`, borderRadius: 6, padding: "16px 18px", background: "rgb(24,24,24)" }}>
               {UMICORE_BRIEF.sections.map((sec, si) => (
                 <div key={si} style={{ marginBottom: 18 }}>
                   <p style={{ fontSize: 13, color: warmWhite, fontWeight: 600, margin: "0 0 8px 0" }}>{BRIEF_SECTION_TITLES[si] ?? sec.label}</p>
@@ -467,19 +478,6 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
               {UMICORE_BRIEF.disclaimer && <p style={{ fontSize: 9, color: "#555", lineHeight: 1.5, margin: "4px 0 0 0", fontStyle: "italic" }}>{UMICORE_BRIEF.disclaimer}</p>}
             </div>
           )}
-
-          <div style={{ height: 1, background: borderColor, margin: "16px 0" }} />
-
-          {/* Related Signals */}
-          <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: MONO, fontWeight: 500 }}>Related Signals</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            {RELATED_SIGNALS.map(sig => (
-              <div key={sig} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#555", flexShrink: 0 }} />
-                <span style={{ fontSize: 11, color: dimText }}>{sig}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </div>
