@@ -1,6 +1,13 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import germaniumInputJson from "@/data/inputs/germanium.json";
+import universalNodesJson from "@/data/universal-nodes.json";
+
+type UNode = { name: string; ticker: string | null; country: string | null; location_detail: string; descriptor_pill: string; quantity_pill: string; about: string };
+const UNODE = (universalNodesJson as unknown as Record<string, UNode>)["Umicore"];
+
+/* Renamed section headers for the investment brief (by order) */
+const BRIEF_SECTION_TITLES = ["Why it matters", "How value flows", "Key numbers", "What to watch", "Investment angle"];
 
 type WtmiBrief = {
   name: string; ticker: string; category: string;
@@ -228,6 +235,7 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
   const [selectedGroup, setSelectedGroup] = useState("Specialty Metals");
   const [hoveredNode, setHoveredNode] = useState<ActiveNode>(null);
   const [selectedNode, setSelectedNode] = useState<ActiveNode>(null);
+  const [treeTab, setTreeTab] = useState<"supply" | "brief">("supply");
   const treeRef = useRef<HTMLDivElement>(null);
   const umicoreRef = useRef<HTMLDivElement>(null);
 
@@ -300,13 +308,79 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
         {/* Header */}
         <div style={{ padding: "20px 24px 0", flexShrink: 0 }}>
           <p style={{ fontSize: 7, color: "#555", margin: "0 0 4px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>Company Node</p>
-          <h2 style={{ fontSize: 22, fontWeight: 400, color: warmWhite, margin: "0 0 6px 0", fontFamily: SERIF }}>Umicore</h2>
-          <p style={{ fontSize: 12, color: dimText, lineHeight: 1.5, margin: "0 0 16px 0", maxWidth: 700 }}>Specialty materials and refining company connecting germanium-bearing feedstock to fiber-grade GeCl&#x2084; and downstream optical fiber chains.</p>
+          <h2 style={{ fontSize: 22, fontWeight: 400, color: warmWhite, margin: "0 0 12px 0", fontFamily: SERIF }}>Umicore</h2>
           <div style={{ height: 1, background: borderColor }} />
         </div>
 
         {/* Content */}
         <div style={{ flex: 1, overflowY: "auto", padding: "16px 24px 24px" }}>
+          {/* Overview */}
+          <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 10px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: MONO, fontWeight: 500 }}>Overview</p>
+          <div style={{ display: "flex", gap: 16, alignItems: "stretch", marginBottom: 18 }}>
+            {/* Summary card (mirrors the right-panel node summary) */}
+            <div style={{ flex: 1, minWidth: 0, border: `1px solid ${borderColor}`, borderRadius: 6, padding: "12px 14px", background: "rgb(24,24,24)" }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 2 }}>
+                <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{UNODE.name}</p>
+                <span style={{ fontSize: 9, color: "#555", fontFamily: MONO }}>{UNODE.ticker ?? "Private"}</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 8 }}>
+                <img src="https://flagcdn.com/16x12/be.png" alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7 }} />
+                <p style={{ fontSize: 11, color: "#706a60", margin: 0 }}>{UNODE.location_detail}</p>
+              </div>
+              <p style={{ fontSize: 10, color: accent, margin: "0 0 6px 0", letterSpacing: "0.04em", textTransform: "uppercase" }}>{UNODE.descriptor_pill}</p>
+              {UNODE.quantity_pill && <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 10px 0" }}>{UNODE.quantity_pill}</p>}
+              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                {UNODE.about.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 10).map((s, i) => (
+                  <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                    <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
+                    <p style={{ fontSize: 11, color: "rgb(158, 156, 153)", margin: 0, lineHeight: 1.5 }}>{s.trim()}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Right: stock chart + key metrics */}
+            <div style={{ flex: "0 0 300px", display: "flex", flexDirection: "column", gap: 12 }}>
+              {/* Stock chart card — placeholder until live data API */}
+              <div style={{ border: `1px solid ${borderColor}`, borderRadius: 6, padding: "12px 14px", background: "rgb(24,24,24)" }}>
+                <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 8 }}>
+                  <span style={{ fontSize: 9, color: "rgb(219, 219, 218)", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: MONO, fontWeight: 500 }}>Stock</span>
+                  <span style={{ fontSize: 9, color: "#5f9a5f", fontFamily: MONO }}>+131% 12mo</span>
+                </div>
+                <svg viewBox="0 0 200 56" preserveAspectRatio="none" style={{ width: "100%", height: 56, display: "block" }}>
+                  <defs><linearGradient id="umiSpark" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="rgba(200,122,74,0.25)" /><stop offset="100%" stopColor="rgba(200,122,74,0)" /></linearGradient></defs>
+                  <path d="M0,48 L25,44 L50,46 L75,38 L100,40 L125,28 L150,22 L175,14 L200,8 L200,56 L0,56 Z" fill="url(#umiSpark)" stroke="none" />
+                  <path d="M0,48 L25,44 L50,46 L75,38 L100,40 L125,28 L150,22 L175,14 L200,8" fill="none" stroke={accent} strokeWidth="1.5" />
+                </svg>
+                <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginTop: 6 }}>
+                  <span style={{ fontSize: 14, color: warmWhite, fontWeight: 500 }}>€17.26</span>
+                  <span style={{ fontSize: 8, color: "#555", fontFamily: MONO }}>Live data coming soon</span>
+                </div>
+              </div>
+              {/* Key metrics card */}
+              <div style={{ border: `1px solid ${borderColor}`, borderRadius: 6, padding: "12px 14px", background: "rgb(24,24,24)" }}>
+                <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 10px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: MONO, fontWeight: 500 }}>Key Metrics</p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+                  {UMICORE_BRIEF.metrics.map(m => (
+                    <div key={m.label} style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
+                      <span style={{ fontSize: 10, color: "#706a60", fontFamily: MONO }}>{m.label}</span>
+                      <span style={{ fontSize: 11, color: warmWhite, fontWeight: 500 }}>{m.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ height: 1, background: borderColor, margin: "0 0 14px" }} />
+
+          {/* Tab row */}
+          <div style={{ display: "flex", gap: 6, marginBottom: 14 }}>
+            {([["supply", "Supply Tree"], ["brief", "Investment Brief"]] as const).map(([k, label]) => (
+              <button key={k} onClick={() => setTreeTab(k)} style={{ fontSize: 9, fontFamily: MONO, letterSpacing: "0.04em", textTransform: "uppercase", padding: "5px 12px", borderRadius: 4, cursor: "pointer", border: treeTab === k ? `1px solid ${accent}55` : "1px solid rgba(255,255,255,0.08)", background: treeTab === k ? "rgba(200,122,74,0.12)" : "transparent", color: treeTab === k ? accent : dimText, transition: "all 0.15s" }}>{label}</button>
+            ))}
+          </div>
+
+          {treeTab === "supply" && (
           <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
             {/* Left: chains the company is part of */}
             <div style={{ flex: "0 0 188px", border: `1px solid ${borderColor}`, borderRadius: 6, padding: "12px 12px 14px", background: "rgb(24,24,24)" }}>
@@ -394,33 +468,21 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
             </div>
           </div>
 
-          <div style={{ height: 1, background: borderColor, margin: "16px 0" }} />
+          )}
 
-          {/* Investment Brief */}
-          {UMICORE_BRIEF && (
+          {/* Investment Brief tab — flowing paragraphs under 5 section headers */}
+          {treeTab === "brief" && UMICORE_BRIEF && (
             <div style={{ marginBottom: 4 }}>
-              <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 10px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: MONO, fontWeight: 500 }}>Investment Brief</p>
               <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
                 <h3 style={{ fontSize: 18, fontWeight: 500, color: warmWhite, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{UMICORE_BRIEF.name}</h3>
                 <span style={{ fontSize: 10, color: "#555", fontFamily: MONO }}>{UMICORE_BRIEF.ticker}</span>
               </div>
-              <p style={{ fontSize: 10, color: accent, margin: "0 0 12px 0", fontFamily: MONO, letterSpacing: "0.04em" }}>{UMICORE_BRIEF.category}</p>
-              <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 16, paddingBottom: 12, borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-                {UMICORE_BRIEF.metrics.map(m => (
-                  <div key={m.label}>
-                    <p style={{ fontSize: 9, color: "#555", margin: "0 0 2px 0", fontFamily: MONO, letterSpacing: "0.06em", textTransform: "uppercase" }}>{m.label}</p>
-                    <p style={{ fontSize: 12, color: warmWhite, margin: 0, fontWeight: 500 }}>{m.value}</p>
-                  </div>
-                ))}
-              </div>
+              <p style={{ fontSize: 10, color: accent, margin: "0 0 18px 0", fontFamily: MONO, letterSpacing: "0.04em" }}>{UMICORE_BRIEF.category}</p>
               {UMICORE_BRIEF.sections.map((sec, si) => (
-                <div key={si} style={{ marginBottom: 16 }}>
-                  <p style={{ fontSize: 12, color: "rgb(158, 156, 153)", fontWeight: 500, margin: "0 0 8px 0" }}>{sec.label}</p>
+                <div key={si} style={{ marginBottom: 18 }}>
+                  <p style={{ fontSize: 13, color: warmWhite, fontWeight: 600, margin: "0 0 8px 0" }}>{BRIEF_SECTION_TITLES[si] ?? sec.label}</p>
                   {sec.items.map((item, ii) => (
-                    <div key={ii} style={{ marginBottom: 8 }}>
-                      {item.title && <p style={{ fontSize: 12, color: warmWhite, fontWeight: 500, margin: "0 0 3px 0" }}>{item.title}</p>}
-                      <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.6, margin: 0 }}>{item.text}</p>
-                    </div>
+                    <p key={ii} style={{ fontSize: 12, color: "#807870", lineHeight: 1.65, margin: "0 0 10px 0" }}>{item.text}</p>
                   ))}
                 </div>
               ))}
