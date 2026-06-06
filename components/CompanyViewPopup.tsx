@@ -1,10 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import germaniumInputJson from "@/data/inputs/germanium.json";
-import universalNodesJson from "@/data/universal-nodes.json";
-
-type UNode = { name: string; ticker: string | null; country: string | null; location_detail: string; descriptor_pill: string; quantity_pill: string; about: string };
-const UNODE = (universalNodesJson as unknown as Record<string, UNode>)["Umicore"];
 
 /* Renamed section headers for the investment brief (by order) */
 const BRIEF_SECTION_TITLES = ["Why it matters", "How value flows", "Key numbers", "What to watch", "Investment angle"];
@@ -314,29 +310,13 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
 
         {/* Content */}
         <div style={{ flex: 1, overflowY: "auto", padding: "16px 24px 24px" }}>
-          {/* Overview */}
-          <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 10px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: MONO, fontWeight: 500 }}>Overview</p>
           <div style={{ display: "flex", gap: 16, alignItems: "stretch", marginBottom: 18 }}>
-            {/* Summary card (mirrors the right-panel node summary) */}
-            <div style={{ flex: 1, minWidth: 0, border: `1px solid ${borderColor}`, borderRadius: 6, padding: "12px 14px", background: "rgb(24,24,24)" }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 2 }}>
-                <p style={{ fontSize: 14, color: warmWhite, fontWeight: 500, margin: 0, fontFamily: "'Instrument Serif', serif" }}>{UNODE.name}</p>
-                <span style={{ fontSize: 9, color: "#555", fontFamily: MONO }}>{UNODE.ticker ?? "Private"}</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 8 }}>
-                <img src="https://flagcdn.com/16x12/be.png" alt="" style={{ width: 12, height: 9, borderRadius: 1, opacity: 0.7 }} />
-                <p style={{ fontSize: 11, color: "#706a60", margin: 0 }}>{UNODE.location_detail}</p>
-              </div>
-              <p style={{ fontSize: 10, color: accent, margin: "0 0 6px 0", letterSpacing: "0.04em", textTransform: "uppercase" }}>{UNODE.descriptor_pill}</p>
-              {UNODE.quantity_pill && <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 10px 0" }}>{UNODE.quantity_pill}</p>}
-              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                {UNODE.about.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 10).map((s, i) => (
-                  <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                    <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3835", flexShrink: 0, marginTop: 6 }} />
-                    <p style={{ fontSize: 11, color: "rgb(158, 156, 153)", margin: 0, lineHeight: 1.5 }}>{s.trim()}</p>
-                  </div>
-                ))}
-              </div>
+            {/* Overview summary card */}
+            <div style={{ flex: 1, minWidth: 0, border: `1px solid ${borderColor}`, borderRadius: 6, padding: "14px 16px", background: "rgb(24,24,24)" }}>
+              <p style={{ fontSize: 13, color: warmWhite, fontWeight: 600, margin: "0 0 10px 0" }}>Overview</p>
+              <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.65, margin: "0 0 10px 0" }}>Umicore is a Belgian materials technology and recycling group, headquartered in Brussels with roots dating to 1805. It operates globally, with major manufacturing and recycling sites across Europe, North America, and Asia, and trades on Euronext Brussels under the ticker UMI. The business is organized around four groups — Catalysis, Battery Materials, Specialty Materials, and Recycling — spanning automotive emission-control catalysts, battery cathode materials, germanium and specialty chemistries, and metals recovery. The majority of revenue comes from its Recycling segment, which processes complex waste streams to recover precious and specialty metals.</p>
+              <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.65, margin: "0 0 10px 0" }}>Its defining advantage is a closed-loop model: Umicore sources, refines, transforms, and then recycles metals, with recovered material from end-of-life products and industrial residues feeding back into its own upstream supply. This vertical integration across metallurgy and chemistry lets it capture value at multiple points in the same metal&apos;s lifecycle and reduces dependence on primary raw-material sourcing — a structural edge in a world of tightening critical-material supply.</p>
+              <p style={{ fontSize: 12, color: "#807870", lineHeight: 1.65, margin: 0 }}>On strategy, Umicore launched its CORE strategy in 2025, prioritizing capital discipline, cash generation, and operational efficiency across its foundation businesses (Catalysis, Recycling, and Specialty Materials), while working to restore value in battery materials amid weaker-than-expected EV demand. Financially, the company guided full-year 2026 adjusted EBITDA toward roughly €1 billion, with a strong first quarter driven by Catalysis and a favorable metal-price environment; Specialty Materials is expected to carry top-line momentum on the back of solid demand for its germanium products. The foundation businesses are doing the heavy lifting while battery materials stabilizes.</p>
             </div>
             {/* Right: stock chart + key metrics */}
             <div style={{ flex: "0 0 300px", display: "flex", flexDirection: "column", gap: 12 }}>
