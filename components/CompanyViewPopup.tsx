@@ -98,6 +98,20 @@ const ALL_DOWNSTREAM = [
   { name: "Semiconductor Packaging", role: "Process" },
 ];
 
+// What each component ends up in (the end product / market)
+const DOWNSTREAM_TO_ENDPRODUCT: Record<string, string> = {
+  "Fiber Optic Cable": "AI Data Center",
+  "IR Optics": "Defense Systems",
+  "Solar Cells": "Satellites",
+  "Semiconductor Materials": "Semiconductors",
+  "Battery Cells": "Electric Vehicles",
+  "Pigments / Ceramics": "Coatings",
+  "Rubber Products": "Tires",
+  "Electronics Plating": "Electronics",
+  "Optical Thin Films": "Optical Systems",
+  "Semiconductor Packaging": "Chip Packaging",
+};
+
 const RELATED_SIGNALS = ["The GeCl₄ Chokepoint", "Germanium Feedstock Constraint", "Western Redundancy Gap"];
 
 type ActiveNode = { layer: string; name: string } | null;
@@ -112,11 +126,11 @@ function computeHighlight(active: ActiveNode, visibleOutputs: typeof ALL_OUTPUTS
     UPSTREAM.forEach(u => set.add(u.name));
     ALL_INPUTS.forEach(n => set.add(n.name));
     visibleOutputs.forEach(o => set.add(o.name));
-    visibleDownstream.forEach(d => set.add(d.name));
+    visibleDownstream.forEach(d => { set.add(d.name); const ep = DOWNSTREAM_TO_ENDPRODUCT[d.name]; if (ep) set.add(ep); });
     return set;
   }
 
-  // Build the directed graph: upstream → input → output → downstream
+  // Build the directed graph: source → raw material → intermediate → component → end product
   const isInput = (n: string) => ALL_INPUTS.some(ai => ai.name === n);
   const visDown = new Set(visibleDownstream.map(d => d.name));
   const fwd = new Map<string, string[]>();
@@ -128,6 +142,7 @@ function computeHighlight(active: ActiveNode, visibleOutputs: typeof ALL_OUTPUTS
   UPSTREAM.forEach(u => u.inputs.forEach(inp => { if (isInput(inp)) addEdge(u.name, inp); }));
   visibleOutputs.forEach(o => (OUTPUT_TO_INPUTS[o.name] ?? []).forEach(inp => { if (isInput(inp)) addEdge(inp, o.name); }));
   visibleOutputs.forEach(o => (OUTPUT_TO_DOWNSTREAM[o.name] ?? []).forEach(d => { if (visDown.has(d)) addEdge(o.name, d); }));
+  visibleDownstream.forEach(d => { const ep = DOWNSTREAM_TO_ENDPRODUCT[d.name]; if (ep) addEdge(d.name, ep); });
 
   // Walk both directions from the active node to capture its whole chain
   const walk = (adj: Map<string, string[]>) => {
@@ -240,6 +255,7 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
   const inputRefs = useRef<Record<string, React.RefObject<HTMLDivElement | null>>>({});
   const outputRefs = useRef<Record<string, React.RefObject<HTMLDivElement | null>>>({});
   const downstreamRefs = useRef<Record<string, React.RefObject<HTMLDivElement | null>>>({});
+  const endProductRefs = useRef<Record<string, React.RefObject<HTMLDivElement | null>>>({});
 
   // Ensure refs exist
   const getRef = (map: React.MutableRefObject<Record<string, React.RefObject<HTMLDivElement | null>>>, key: string) => {
@@ -254,6 +270,8 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
   const visibleDownstreamNames = new Set<string>();
   visibleOutputs.forEach(o => { (OUTPUT_TO_DOWNSTREAM[o.name] ?? []).forEach(d => visibleDownstreamNames.add(d)); });
   const visibleDownstream = ALL_DOWNSTREAM.filter(d => visibleDownstreamNames.has(d.name));
+  const visibleEndProducts: string[] = [];
+  visibleDownstream.forEach(d => { const ep = DOWNSTREAM_TO_ENDPRODUCT[d.name]; if (ep && !visibleEndProducts.includes(ep)) visibleEndProducts.push(ep); });
 
   const activeNode = hoveredNode ?? selectedNode;
   const highlightSet = computeHighlight(activeNode, visibleOutputs, visibleDownstream);
@@ -267,9 +285,6 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
   const clearHover = () => setHoveredNode(null);
   const toggleSelect = (layer: string, name: string) => () =>
     setSelectedNode(prev => prev && prev.layer === layer && prev.name === name ? null : { layer, name });
-
-  // Chains the company participates in (one per output → its downstream destinations)
-  const companyChains = visibleOutputs.map(o => ({ name: o.name, downstream: (OUTPUT_TO_DOWNSTREAM[o.name] ?? []).join(" · "), seed: o.name }));
 
   // Build edges
   const upInputEdges: Edge[] = UPSTREAM.flatMap(u =>
@@ -288,7 +303,11 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
       fromRef: getRef(outputRefs, o.name), toRef: getRef(downstreamRefs, d), from: o.name, to: d,
     }))
   );
-  const allEdges = [...upInputEdges, ...inputUmicoreEdges, ...umicoreOutputEdges, ...outDownEdges];
+  const downEndEdges: Edge[] = visibleDownstream.map(d => {
+    const ep = DOWNSTREAM_TO_ENDPRODUCT[d.name];
+    return ep ? { fromRef: getRef(downstreamRefs, d.name), toRef: getRef(endProductRefs, ep), from: d.name, to: ep } : null;
+  }).filter((e): e is Edge => e != null);
+  const allEdges = [...upInputEdges, ...inputUmicoreEdges, ...umicoreOutputEdges, ...outDownEdges, ...downEndEdges];
 
   // Umicore hub visual state
   const umiIn = isActive ? highlightSet!.has(COMPANY) : true;
@@ -361,46 +380,19 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
           </div>
 
           {treeTab === "supply" && (
-          <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
-            {/* Left: chains the company is part of */}
-            <div style={{ flex: "0 0 188px", border: `1px solid ${borderColor}`, borderRadius: 6, padding: "12px 12px 14px", background: "rgb(24,24,24)" }}>
-              <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 10px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: MONO, fontWeight: 500 }}>Chains ({companyChains.length})</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                {companyChains.map(c => {
-                  const sel = selectedNode?.layer === "output" && selectedNode?.name === c.seed;
-                  return (
-                    <div
-                      key={c.seed}
-                      onMouseEnter={hover("output", c.seed)}
-                      onMouseLeave={clearHover}
-                      onClick={(e) => { e.stopPropagation(); toggleSelect("output", c.seed)(); }}
-                      style={{ padding: "6px 8px", borderRadius: 4, cursor: "pointer", background: sel ? "rgba(200,122,74,0.12)" : "rgba(255,255,255,0.02)", border: sel ? `1px solid ${accent}55` : "1px solid transparent", transition: "background 0.15s, border-color 0.15s" }}
-                    >
-                      <p style={{ fontSize: 10, color: sel ? accent : warmWhite, margin: 0, fontWeight: 500, fontFamily: SERIF }}>{c.name}</p>
-                      {c.downstream && <p style={{ fontSize: 8, color: "#6c6c6c", margin: "2px 0 0 0", fontFamily: MONO, letterSpacing: "0.02em" }}>{c.downstream}</p>}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Right: supply tree */}
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <p style={{ fontSize: 10, color: warmWhite, margin: "0 0 12px 0", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, fontFamily: MONO }}>Supply Chain Position</p>
-
-              <div ref={treeRef} onClick={() => setSelectedNode(null)} style={{ position: "relative", display: "flex", gap: 40, overflowX: "auto", paddingBottom: 8 }}>
+          <div ref={treeRef} onClick={() => setSelectedNode(null)} style={{ position: "relative", display: "flex", gap: 40, overflowX: "auto", paddingBottom: 8 }}>
                 <EdgeLines edges={allEdges} containerRef={treeRef} highlightSet={highlightSet} />
 
-                {/* Upstream */}
-                <Col label="UPSTREAM">
+                {/* Source */}
+                <Col label="SOURCE">
                   {UPSTREAM.map(u => {
                     const st = nodeState("upstream", u.name);
                     return <TreeNode key={u.name} name={u.name} role={u.role} clickable nodeRef={getRef(upstreamRefs, u.name)} {...st} onHoverIn={hover("upstream", u.name)} onHoverOut={clearHover} onSelect={toggleSelect("upstream", u.name)} />;
                   })}
                 </Col>
 
-                {/* Input */}
-                <Col label="INPUT">
+                {/* Raw materials */}
+                <Col label="RAW MATERIALS">
                   {ALL_INPUTS.map(n => {
                     const st = nodeState("input", n.name);
                     return <TreeNode key={n.name} name={n.name} role={n.role} clickable nodeRef={getRef(inputRefs, n.name)} {...st} onHoverIn={hover("input", n.name)} onHoverOut={clearHover} onSelect={toggleSelect("input", n.name)} />;
@@ -429,24 +421,30 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
                   </div>
                 </div>
 
-                {/* Output */}
-                <Col label="OUTPUT">
+                {/* Intermediate */}
+                <Col label="INTERMEDIATE">
                   {visibleOutputs.length > 0 ? visibleOutputs.map(o => {
                     const st = nodeState("output", o.name, o.name === "GeCl₄");
                     return <TreeNode key={o.name} name={o.name} role={o.role} clickable nodeRef={getRef(outputRefs, o.name)} {...st} onHoverIn={hover("output", o.name)} onHoverOut={clearHover} onSelect={toggleSelect("output", o.name)} />;
                   }) : <p style={{ fontSize: 9, color: "#555", margin: 0, fontStyle: "italic" }}>Select a segment</p>}
                 </Col>
 
-                {/* Downstream */}
-                <Col label="DOWNSTREAM">
+                {/* Component */}
+                <Col label="COMPONENT">
                   {visibleDownstream.length > 0 ? visibleDownstream.map(d => {
                     const st = nodeState("downstream", d.name);
                     return <TreeNode key={d.name} name={d.name} role={d.role} clickable nodeRef={getRef(downstreamRefs, d.name)} {...st} onHoverIn={hover("downstream", d.name)} onHoverOut={clearHover} onSelect={toggleSelect("downstream", d.name)} />;
                   }) : <p style={{ fontSize: 9, color: "#555", margin: 0, fontStyle: "italic" }}>—</p>}
                 </Col>
+
+                {/* End Product */}
+                <Col label="END PRODUCT">
+                  {visibleEndProducts.length > 0 ? visibleEndProducts.map(ep => {
+                    const st = nodeState("endproduct", ep);
+                    return <TreeNode key={ep} name={ep} role="End Market" clickable nodeRef={getRef(endProductRefs, ep)} {...st} onHoverIn={hover("endproduct", ep)} onHoverOut={clearHover} onSelect={toggleSelect("endproduct", ep)} />;
+                  }) : <p style={{ fontSize: 9, color: "#555", margin: 0, fontStyle: "italic" }}>—</p>}
+                </Col>
               </div>
-            </div>
-          </div>
 
           )}
 
