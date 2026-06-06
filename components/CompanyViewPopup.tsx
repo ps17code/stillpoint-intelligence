@@ -466,6 +466,17 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
 
           {/* Investment Brief tab — flowing paragraphs under 5 section headers */}
           {treeTab === "brief" && UMICORE_BRIEF && (
+            <>
+            {/* Stillpoint View */}
+            <div style={{ border: `1px solid ${borderColor}`, borderRadius: 6, padding: "16px 18px", background: "rgb(24,24,24)", marginBottom: 14 }}>
+              <p style={{ fontSize: 12, color: "rgb(219, 219, 218)", fontWeight: 500, margin: "0 0 10px 0", display: "flex", alignItems: "center", gap: 6 }}>
+                <img src="/stillpoint-icon.png" alt="" style={{ width: 14, height: 14, borderRadius: 2, opacity: 0.85 }} />Stillpoint View
+              </p>
+              <p style={{ fontSize: 12, color: "rgb(172, 172, 172)", lineHeight: 1.65, margin: "0 0 10px 0" }}>Umicore sits at the intersection of the two things I want exposure to: irreplaceable chokepoint positions and diversified critical-materials refining. The GeCl₄ position is the anchor — the sole western source of fiber-grade germanium tetrachloride, with no substitute at the volumes the industry requires. But that chokepoint is one node in a much broader footprint. Umicore refines a wide set of critical materials feeding sectors that aren&apos;t going anywhere — catalysis, electronics, optics, batteries (see supply tree). Demand for these inputs compounds with electrification, connectivity, and reshoring. It doesn&apos;t evaporate.</p>
+              <p style={{ fontSize: 12, color: "rgb(172, 172, 172)", lineHeight: 1.65, margin: "0 0 10px 0" }}>The recycling loop is the part the market underrates. Umicore doesn&apos;t just refine — it recovers, closing the loop on its own feedstock and insulating margins from spot volatility. That&apos;s a structural moat, not a cyclical one, and it&apos;s exactly the kind of self-renewing position I want to own.</p>
+              <p style={{ fontSize: 12, color: "rgb(172, 172, 172)", lineHeight: 1.65, margin: "0 0 10px 0" }}>On battery materials — where the market has punished the stock hardest — I take the contrarian side. The division is depressed because passenger-EV demand softened, but I think the demand base is about to broaden well beyond cars. Drones and robotics are scaling into real volume, and both draw on the same cathode chemistry. Separately, I expect the Iran war to accelerate EV adoption across oil-dependent economies looking to cut exposure to fuel-price and supply shocks. If either plays out, battery materials flips from drag to tailwind — and in the meantime the foundation businesses pay me to wait.</p>
+              <p style={{ fontSize: 12, color: "rgb(172, 172, 172)", lineHeight: 1.65, margin: 0 }}>I hold a position here. What I&apos;m watching: battery materials resolution (divestiture or stabilization), sustained germanium momentum, and the DRC volume ramp confirming the throughput story.</p>
+            </div>
             <div style={{ border: `1px solid ${borderColor}`, borderRadius: 6, padding: "16px 18px", background: "rgb(24,24,24)" }}>
               {UMICORE_BRIEF.sections.map((sec, si) => (
                 <div key={si} style={{ marginBottom: 18 }}>
@@ -477,6 +488,7 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
               ))}
               {UMICORE_BRIEF.disclaimer && <p style={{ fontSize: 9, color: "#555", lineHeight: 1.5, margin: "4px 0 0 0", fontStyle: "italic" }}>{UMICORE_BRIEF.disclaimer}</p>}
             </div>
+            </>
           )}
         </div>
       </div>
