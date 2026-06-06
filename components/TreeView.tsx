@@ -3381,6 +3381,9 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
             const ctx = { vertical: target[0], subsystem: selectedSubsystem ?? undefined, archPiece: selectedArchPiece ?? undefined, chainId: selectedFeaturedChain ?? undefined, chainTitle: activeFeaturedChain?.title, node: nav === "fiber" ? "Fiber optic cable" : "Germanium" };
             setChainExiting(true);
             window.setTimeout(() => { setInputNavContext(ctx); setSelectedFeaturedChain(null); setPath(target); setAnimKey(k => k + 1); setSelectedTreeNode(null); setSelectedGroup(null); setChainExiting(false); }, 460);
+          }} onSelectNode={(name) => {
+            if (name) { setSelectedTreeNode(name); setRightTab("nodes"); }
+            else { setSelectedTreeNode(null); setRightTab("summary"); }
           }} />}
 
           {selectedFeaturedChain === "germanium_chokepoint" && (() => {

@@ -171,7 +171,7 @@ function EdgeLines({ edges, containerRef, highlightSet }: { edges: Edge[]; conta
   );
 }
 
-export default function ChainSupplyTree({ onViewLayer }: { onViewLayer?: (nav: "germanium" | "fiber") => void }) {
+export default function ChainSupplyTree({ onViewLayer, onSelectNode }: { onViewLayer?: (nav: "germanium" | "fiber") => void; onSelectNode?: (name: string | null) => void }) {
   const treeRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
@@ -202,7 +202,7 @@ export default function ChainSupplyTree({ onViewLayer }: { onViewLayer?: (nav: "
         </span>
       </div>
       {!collapsed && <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 15px" }} />}
-      <div ref={treeRef} onClick={() => setSelected(null)} style={{ position: "relative", display: collapsed ? "none" : "flex", gap: 36, overflowX: "auto", padding: "14px 15px 16px" }}>
+      <div ref={treeRef} onClick={() => { setSelected(null); onSelectNode?.(null); }} style={{ position: "relative", display: collapsed ? "none" : "flex", gap: 36, overflowX: "auto", padding: "14px 15px 16px" }}>
         <EdgeLines edges={edges} containerRef={treeRef} highlightSet={highlightSet} />
         {LAYERS.map((layer, li) => (
           <div key={layer.label} style={{ flex: "0 0 auto", width: 150, display: "flex", flexDirection: "column", gap: 6, position: "relative", zIndex: 1 }}>
@@ -223,7 +223,11 @@ export default function ChainSupplyTree({ onViewLayer }: { onViewLayer?: (nav: "
                   nodeRef={getRef(id)}
                   onHover={() => setHovered(id)}
                   onLeave={() => setHovered(null)}
-                  onClick={() => setSelected(prev => prev === id ? null : id)}
+                  onClick={() => {
+                    const willSelect = selected !== id;
+                    setSelected(willSelect ? id : null);
+                    onSelectNode?.(willSelect && !c.group ? c.name : null);
+                  }}
                 />
               );
             })}
