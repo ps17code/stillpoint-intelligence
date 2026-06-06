@@ -6218,7 +6218,21 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                   {uNode.quantity_pill && <p style={{ fontSize: 11, color: warmWhite, fontWeight: 500, margin: "0 0 10px 0" }}>{uNode.quantity_pill}</p>}
 
                   {/* Description as bullets (no label) */}
-                  {uNode.about && (
+                  {selectedTreeNode === "Umicore" ? (
+                    <div style={{ marginBottom: 10 }}>
+                      <div style={{ display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 15, overflow: "hidden" }}>
+                        <p style={{ fontSize: 11, color: "rgb(172, 172, 172)", lineHeight: 1.55, margin: "0 0 8px 0" }}>Umicore is a Belgian materials technology and recycling group, headquartered in Brussels with roots dating to 1805. It is organized around four groups — Catalysis, Battery Materials, Specialty Materials, and Recycling — and the majority of revenue comes from its Recycling segment.</p>
+                        <p style={{ fontSize: 11, color: "rgb(172, 172, 172)", lineHeight: 1.55, margin: "0 0 8px 0" }}>Its defining advantage is a closed-loop model: it sources, refines, transforms, and then recycles metals, with recovered material feeding back into its own upstream supply — capturing value at multiple points in the same metal&apos;s lifecycle and reducing dependence on primary sourcing.</p>
+                        <p style={{ fontSize: 11, color: "rgb(172, 172, 172)", lineHeight: 1.55, margin: 0 }}>Under its 2025 CORE strategy it prioritizes capital discipline and cash generation across its foundation businesses (Catalysis, Recycling, Specialty Materials) while restoring value in battery materials; FY2026 adjusted EBITDA is guided toward roughly €1 billion, with germanium products carrying Specialty Materials momentum.</p>
+                      </div>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setCompanyPopupOpen(true); }}
+                        style={{ display: "inline-flex", alignItems: "center", gap: 4, marginTop: 8, background: "transparent", border: "none", cursor: "pointer", padding: 0, color: templateAccent ?? "#c87a4a", fontSize: 9, fontFamily: "'Geist Mono', monospace", letterSpacing: "0.04em" }}
+                        onMouseEnter={e => { e.currentTarget.style.opacity = "0.7"; }}
+                        onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                      >See Full Profile →</button>
+                    </div>
+                  ) : uNode.about ? (
                     <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 10 }}>
                       {uNode.about.split(/(?<=[.!?])\s+/).filter(s => s.trim().length > 10).map((sentence, i) => (
                         <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
@@ -6227,7 +6241,7 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
                         </div>
                       ))}
                     </div>
-                  )}
+                  ) : null}
 
                   {/* Full company profile link — only for nodes in the opportunities list */}
                   {(() => {

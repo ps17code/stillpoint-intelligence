@@ -323,7 +323,7 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
         {/* Header */}
         <div style={{ padding: "20px 24px 0", flexShrink: 0 }}>
           <p style={{ fontSize: 7, color: "#555", margin: "0 0 4px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>Company Node</p>
-          <h2 style={{ fontSize: 22, fontWeight: 400, color: warmWhite, margin: "0 0 12px 0", fontFamily: SERIF }}>Umicore (UMI)</h2>
+          <h2 style={{ fontSize: 22, fontWeight: 400, color: warmWhite, margin: "0 0 12px 0" }}>Umicore (UMI)</h2>
           <div style={{ height: 1, background: borderColor }} />
         </div>
 
@@ -379,22 +379,14 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
             </div>
           </div>
 
-          <div style={{ height: 1, background: borderColor, margin: "16px 0 14px" }} />
-
-          {/* Related Signals */}
-          <p style={{ fontSize: 9, color: "rgb(219, 219, 218)", margin: "0 0 8px 0", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: MONO, fontWeight: 500 }}>Related Signals</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            {RELATED_SIGNALS.map(sig => (
-              <div key={sig} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#555", flexShrink: 0 }} />
-                <span style={{ fontSize: 11, color: dimText }}>{sig}</span>
-              </div>
-            ))}
-          </div>
           </>
           )}
 
           {treeTab === "supply" && (
+          <>
+          <div style={{ border: `1px solid ${borderColor}`, borderRadius: 6, padding: "12px 14px", background: "rgb(24,24,24)", marginBottom: 12 }}>
+            <p style={{ fontSize: 12, color: "rgb(172, 172, 172)", lineHeight: 1.6, margin: 0 }}>Umicore sits at the conversion layer of this chain — refining germanium-bearing feedstock and recycled scrap into fiber-grade GeCl₄ and specialty intermediates, then supplying the downstream component makers. As the sole western GeCl₄ producer, it is the chokepoint between raw material and finished fiber.</p>
+          </div>
           <div style={{ border: `1px solid ${borderColor}`, borderRadius: 6, padding: "14px 16px", background: "rgb(24,24,24)" }}>
           <div ref={treeRef} onClick={() => setSelectedNode(null)} style={{ position: "relative", display: "flex", gap: 40, overflowX: "auto", paddingBottom: 8 }}>
                 <EdgeLines edges={allEdges} containerRef={treeRef} highlightSet={highlightSet} />
@@ -462,6 +454,7 @@ export default function CompanyViewPopup({ isOpen, onClose }: { isOpen: boolean;
                 </Col>
               </div>
           </div>
+          </>
           )}
 
           {/* Investment Brief tab — flowing paragraphs under 5 section headers */}
