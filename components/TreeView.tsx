@@ -1493,6 +1493,12 @@ export type PathEntry = {
   name: string;
 };
 
+export type SearchTarget =
+  | { kind: "path"; path: PathEntry[] }
+  | { kind: "chain"; chainId: string }
+  | { kind: "subsystem"; name: string }
+  | { kind: "companyPopup" };
+
 /* ═══════════════════════════════════════════ */
 /*  Spine sub-components                       */
 /* ═══════════════════════════════════════════ */
@@ -2083,7 +2089,7 @@ function OpportunitiesPanel({ inputId, accent, onExpandChange }: { inputId: stri
   );
 }
 
-export default function TreeView({ initialPath, onGoHome }: { initialPath?: PathEntry[]; onGoHome?: () => void } = {}) {
+export default function TreeView({ initialPath, onGoHome, searchNav }: { initialPath?: PathEntry[]; onGoHome?: () => void; searchNav?: { target: SearchTarget; nonce: number } } = {}) {
   /* ── unified path state ── */
   const [path, setPath] = useState<PathEntry[]>(() => {
     if (initialPath && initialPath.length > 0) return initialPath;
@@ -2180,6 +2186,23 @@ export default function TreeView({ initialPath, onGoHome }: { initialPath?: Path
     const idx = VERTICALS_DATA.findIndex(v => !v.comingSoon);
     return idx >= 0 ? idx : 0;
   });
+
+  /* ── search-driven navigation ── */
+  useEffect(() => {
+    const t = searchNav?.target;
+    if (!t) return;
+    const aiVert: PathEntry = { type: "vertical", id: "ai", name: "AI Infrastructure" };
+    setCompanyPopupOpen(false);
+    if (t.kind === "companyPopup") { setCompanyPopupOpen(true); return; }
+    if (t.kind === "path") {
+      setPath(t.path); setSelectedFeaturedChain(null); setSelectedSubsystem(null); setSelectedArchPiece(null); setSelectedComponent(null); setSelectedTreeNode(null); setSelectedGroup(null); setRightTab("summary"); setAnimKey(k => k + 1);
+    } else if (t.kind === "chain") {
+      setPath([aiVert]); setSelectedSubsystem(null); setSelectedArchPiece(null); setSelectedComponent(null); setSelectedFeaturedChain(t.chainId); setSelectedTreeNode(null); setSelectedGroup(null); setRightTab("summary"); setAnimKey(k => k + 1);
+    } else if (t.kind === "subsystem") {
+      setPath([aiVert]); setSelectedFeaturedChain(null); setSelectedSubsystem(t.name); setSelectedArchPiece(null); setSelectedComponent(null); setSelectedTreeNode(null); setSelectedGroup(null); setRightTab("summary"); setAnimKey(k => k + 1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchNav?.nonce]);
 
   /* ── navigation helpers ── */
   function pushPath(entry: PathEntry) {

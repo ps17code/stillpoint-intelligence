@@ -7,7 +7,21 @@ import * as topojson from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
 import AnatomyView from "@/components/AnatomyView";
 import TreeView from "@/components/TreeView";
-import type { PathEntry } from "@/components/TreeView";
+import type { PathEntry, SearchTarget } from "@/components/TreeView";
+
+const AI_VERT: PathEntry = { type: "vertical", id: "ai", name: "AI Infrastructure" };
+const SEARCH_ITEMS: { label: string; sub: string; target: SearchTarget }[] = [
+  { label: "AI Infrastructure", sub: "Vertical", target: { kind: "path", path: [AI_VERT] } },
+  { label: "Compute", sub: "Subsystem", target: { kind: "subsystem", name: "Compute" } },
+  { label: "Connectivity", sub: "Subsystem", target: { kind: "subsystem", name: "Connectivity" } },
+  { label: "Cooling", sub: "Subsystem", target: { kind: "subsystem", name: "Cooling" } },
+  { label: "Power", sub: "Subsystem", target: { kind: "subsystem", name: "Power" } },
+  { label: "Physical Structure", sub: "Subsystem", target: { kind: "subsystem", name: "Physical Structure" } },
+  { label: "Germanium → AI Data Center", sub: "Supply chain", target: { kind: "chain", chainId: "germanium_chokepoint" } },
+  { label: "Germanium", sub: "Raw material", target: { kind: "path", path: [AI_VERT, { type: "raw-material", id: "germanium", name: "Germanium" }] } },
+  { label: "Fiber Optic Cable", sub: "Component", target: { kind: "path", path: [AI_VERT, { type: "subsystem", id: "connectivity", name: "Connectivity" }, { type: "component", id: "fiber", name: "Fiber optic cable" }] } },
+  { label: "Umicore", sub: "Company", target: { kind: "companyPopup" } },
+];
 import GlobePanel from "@/components/GlobePanel";
 import StillpointLoadingLanding from "@/components/StillpointLoadingLanding";
 import VerticalLandingPage from "@/components/VerticalLandingPage";
@@ -280,6 +294,9 @@ export default function HomePage() {
   const [hovered,       setHovered]       = useState<string | null>(null);
   const [hoveredNode,   setHoveredNode]   = useState<{ name: string; type: string; location: string } | null>(null);
   const [domainOpen,    setDomainOpen]    = useState(false);
+  const [searchOpen,    setSearchOpen]    = useState(false);
+  const [searchQuery,   setSearchQuery]   = useState("");
+  const [searchNav,     setSearchNav]     = useState<{ target: SearchTarget; nonce: number } | undefined>(undefined);
   const [viewMode,      setViewMode]      = useState<"map" | "anatomy" | "tree">(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
@@ -634,7 +651,7 @@ export default function HomePage() {
         <div style={{ position: "absolute", inset: 0, visibility: "hidden", pointerEvents: "none" }}>
           <div style={{ background: "#161414", width: "100%", height: "100%", overflow: "hidden" }}>
             <div style={{ width: "100%", height: "100%", overflow: "auto", background: "#111" }}>
-              <TreeView initialPath={[{ type: "vertical", id: "ai", name: "AI Infrastructure" }]} onGoHome={() => setVerticalSelected(false)} />
+              <TreeView initialPath={[{ type: "vertical", id: "ai", name: "AI Infrastructure" }]} onGoHome={() => setVerticalSelected(false)} searchNav={searchNav} />
             </div>
           </div>
         </div>
@@ -671,7 +688,55 @@ export default function HomePage() {
           <span style={{ width: 5, display: "inline-block" }} />
           <span style={{ fontFamily: "Inter, -apple-system, sans-serif", fontSize: 11, fontWeight: 200, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)" }}>Intelligence</span>
         </div>
-        {/* View toggle removed */}
+
+        {/* Search */}
+        <div style={{ position: "relative" }}>
+          <button
+            onClick={() => { setSearchOpen(o => !o); setSearchQuery(""); }}
+            style={{ display: "flex", alignItems: "center", gap: 6, background: searchOpen ? "rgba(255,255,255,0.06)" : "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 5, padding: "4px 10px", cursor: "pointer", color: "rgba(255,255,255,0.55)", fontFamily: "'Geist Mono', monospace", fontSize: 10, transition: "background 0.15s, border-color 0.15s" }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+          >
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="7" cy="7" r="5" /><line x1="11" y1="11" x2="14.5" y2="14.5" /></svg>
+            Search
+          </button>
+          {searchOpen && (() => {
+            const q = searchQuery.trim().toLowerCase();
+            const results = q ? SEARCH_ITEMS.filter(i => i.label.toLowerCase().includes(q) || i.sub.toLowerCase().includes(q)) : SEARCH_ITEMS;
+            const go = (target: SearchTarget) => { setViewMode("tree"); setSearchNav({ target, nonce: Date.now() }); setSearchOpen(false); setSearchQuery(""); };
+            return (
+              <>
+                <div onClick={() => setSearchOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 40 }} />
+                <div style={{ position: "absolute", top: "calc(100% + 6px)", right: 0, width: 320, background: "#1a1a1a", border: "1px solid rgb(48,48,48)", borderRadius: 8, boxShadow: "0 8px 24px rgba(0,0,0,0.5)", zIndex: 50, overflow: "hidden" }}>
+                  <input
+                    autoFocus
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    onKeyDown={e => { if (e.key === "Enter" && results[0]) go(results[0].target); if (e.key === "Escape") setSearchOpen(false); }}
+                    placeholder="Search verticals, chains, companies…"
+                    style={{ width: "100%", boxSizing: "border-box", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.08)", outline: "none", padding: "10px 12px", color: "#ece8e1", fontSize: 12, fontFamily: "Inter, sans-serif" }}
+                  />
+                  <div style={{ maxHeight: 320, overflowY: "auto" }}>
+                    {results.length === 0 ? (
+                      <p style={{ fontSize: 11, color: "#666", padding: "12px", margin: 0 }}>No matches</p>
+                    ) : results.map(r => (
+                      <div
+                        key={r.label}
+                        onClick={() => go(r.target)}
+                        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 12px", cursor: "pointer", transition: "background 0.12s" }}
+                        onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                      >
+                        <span style={{ fontSize: 12, color: "#ece8e1" }}>{r.label}</span>
+                        <span style={{ fontSize: 8, color: "#777", fontFamily: "'Geist Mono', monospace", textTransform: "uppercase", letterSpacing: "0.04em" }}>{r.sub}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            );
+          })()}
+        </div>
       </div>
 
       {/* Content area below header */}
@@ -681,7 +746,7 @@ export default function HomePage() {
         {viewMode === "map" && <GlobePanel activeLayer={panelLayer} activeItem={panelItem} activeVertical={panelVertical} onLayerChange={setPanelLayer} onItemChange={setPanelItem} onVerticalChange={setPanelVertical} />}
         {viewMode === "tree" && (
           <div style={{ width: "100%", height: "100%", overflow: "hidden", background: "#111" }}>
-            <TreeView initialPath={[{ type: "vertical", id: "ai", name: "AI Infrastructure" }]} onGoHome={() => setVerticalSelected(false)} />
+            <TreeView initialPath={[{ type: "vertical", id: "ai", name: "AI Infrastructure" }]} onGoHome={() => setVerticalSelected(false)} searchNav={searchNav} />
           </div>
         )}
 
