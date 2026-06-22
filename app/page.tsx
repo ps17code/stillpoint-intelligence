@@ -27,6 +27,7 @@ import StillpointLoadingLanding from "@/components/StillpointLoadingLanding";
 import VerticalLandingPage from "@/components/VerticalLandingPage";
 import ExplorerHub from "@/components/ExplorerHub";
 import ExplorerPlaceholder from "@/components/ExplorerPlaceholder";
+import NodeExplorer from "@/components/NodeExplorer";
 
 const R = 1;
 
@@ -688,7 +689,7 @@ export default function HomePage() {
             </div>
           )}
           {explorer === "node" && (
-            <ExplorerPlaceholder title="Node Explorer" message="No nodes yet — generated nodes will appear here once the node generation engine is connected." onBack={() => setExplorer("hub")} />
+            <NodeExplorer onBack={() => setExplorer("hub")} />
           )}
           {explorer === "global" && (
             <ExplorerPlaceholder title="Global Explorer" message="Geographic supply network view — coming soon." onBack={() => setExplorer("hub")} />

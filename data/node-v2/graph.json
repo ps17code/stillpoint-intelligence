@@ -1,0 +1,169 @@
+{
+  "_meta": {
+    "version": "v2",
+    "description": "Node-generation-engine graph store. Holds class nodes (rawmat / intermediate / component), entity nodes (deposit / mine / refinery), and company nodes. Grows per material run.",
+    "materials_run": ["germanium"],
+    "last_run": "2026-06-22"
+  },
+
+  "classes": {
+    "class_rawmat_germanium": {
+      "kind": "class",
+      "class_id": "class_rawmat_germanium",
+      "class_type": "rawmat",
+      "name": "Germanium",
+      "aliases": ["germanium", "Ge", "atomic number 32"],
+      "description": "A brittle, grayish-white metalloid recovered almost entirely as a byproduct of zinc smelting and, secondarily, from coal fly ash. Not mined directly at scale. Major end uses are fiber optics, infrared optics, semiconductors and solar cells. Supply is highly concentrated in China, and Chinese export controls since 2023 have split the market into a low domestic price and a much higher Western price.",
+      "supply": {
+        "market_price": {
+          "primary_benchmark": {
+            "value": 6150, "unit": "USD/kg", "form": "germanium metal", "location": "USA in-warehouse", "as_of": "2026-06-01",
+            "note": "Western-available price — material that has cleared Chinese export controls.",
+            "source": { "name": "Shanghai Metals Market (SMM), USA in-warehouse benchmark", "url": "https://rare-earth-mining.com/germanium-price/", "retrieved": "2026-06-22" }
+          },
+          "reference_prices": [
+            { "value": 2673.66, "unit": "USD/kg", "form": "germanium metal 99.9999%", "location": "China domestic", "as_of": "2026-06-01", "note": "Shown for the export-control spread; not transactable by Western buyers", "source": { "name": "SMM benchmark SMM-GE-GI-001", "retrieved": "2026-06-22" } },
+            { "value": 2850, "unit": "USD/kg", "form": "germanium dioxide (GeO2)", "as_of": "2025-10", "source": { "name": "USGS MCS 2026", "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf", "retrieved": "2026-06-22" } }
+          ]
+        },
+        "annual_production": {
+          "value": 135, "unit": "t/yr", "measure": "global refinery production (primary)", "value_usd": 830250000,
+          "value_usd_basis": "computed: 135 t x 1000 x 6,150 USD/kg (Western benchmark)",
+          "source": { "name": "USGS Mineral Resources Program (130-140 t/yr est.)", "retrieved": "2026-06-22" }
+        },
+        "total_reserve": { "value": null, "unit": "t", "basis": "not_quantified", "value_usd": null, "source": { "name": "USGS MCS 2026", "note": "USGS states germanium reserves are not widely reported at mine or country level; no reliable global reserve figure exists.", "retrieved": "2026-06-22" } },
+        "total_resource": { "value": null, "unit": "t", "basis": "not_quantified", "value_usd": null, "qualitative": "Resources are associated with certain zinc and lead-zinc-copper sulfide ores and with coal deposits; substantial germanium-bearing deposits are in China, DRC, Russia, and the United States.", "source": { "name": "USGS MCS 2026", "retrieved": "2026-06-22" } },
+        "by_country": [
+          { "country": "China", "production_share_pct": 80, "reserve": { "value": null, "unit": "t", "basis": "not_quantified" }, "note": "~80% of global refined output; zinc smelters in Yunnan & Guangdong, plus lignite-derived metal", "source": { "name": "USGS MCS 2026 / SMM", "retrieved": "2026-06-22" } },
+          { "country": "DRC", "production_share_pct": null, "reserve": { "value": null, "unit": "t", "basis": "not_quantified" }, "note": "Big Hill tailings (STL/Gécamines), ~30 t/yr plant; emerging Western-aligned source", "source": { "name": "USGS MCS 2026", "retrieved": "2026-06-22" } },
+          { "country": "United States", "production_share_pct": null, "reserve": { "value": null, "unit": "t", "basis": "not_quantified" }, "note": "Alaska zinc concentrates (Ge byproduct); Tennessee/Clarksville smelter recovery (suspended Nov 2023)", "source": { "name": "USGS MCS 2026", "retrieved": "2026-06-22" } }
+        ]
+      },
+      "entities": ["dep_wulantuga", "mine_wulantuga_shengli", "refinery_chinese_state_ge"],
+      "input_classes": [],
+      "output_classes": ["class_intermediate_gecl4", "class_intermediate_geo2", "class_intermediate_ge_metal", "class_intermediate_ge_wafer"]
+    },
+
+    "class_intermediate_gecl4": {
+      "kind": "class", "class_id": "class_intermediate_gecl4", "class_type": "intermediate", "name": "Germanium Tetrachloride (GeCl₄)",
+      "description": "The dominant traded refined form of germanium — a volatile liquid deposited into silica glass preforms to raise the refractive index of optical fiber. Capability is China-dominant, with Umicore (Belgium) the main Western producer.",
+      "entities": [], "input_classes": ["class_rawmat_germanium"], "output_classes": ["class_component_optical_fiber"]
+    },
+    "class_intermediate_geo2": {
+      "kind": "class", "class_id": "class_intermediate_geo2", "class_type": "intermediate", "name": "Germanium Dioxide (GeO₂)",
+      "description": "Purified germanium oxide powder, used mainly as a polymerization catalyst for high-clarity PET plastic and as the precursor to other germanium forms.",
+      "entities": [], "input_classes": ["class_rawmat_germanium"], "output_classes": ["class_component_pet_catalyst"]
+    },
+    "class_intermediate_ge_metal": {
+      "kind": "class", "class_id": "class_intermediate_ge_metal", "class_type": "intermediate", "name": "Germanium Metal / Crystal",
+      "description": "Zone-refined germanium metal and single crystal, transparent across the infrared band — the substrate for infrared lenses and windows in thermal imaging and targeting systems.",
+      "entities": [], "input_classes": ["class_rawmat_germanium"], "output_classes": ["class_component_ir_optics"]
+    },
+    "class_intermediate_ge_wafer": {
+      "kind": "class", "class_id": "class_intermediate_ge_wafer", "class_type": "intermediate", "name": "Germanium Wafers",
+      "description": "Polished germanium wafers whose crystal lattice matches gallium arsenide, used as the base for high-efficiency multijunction space solar cells and some high-frequency chips.",
+      "entities": [], "input_classes": ["class_rawmat_germanium"], "output_classes": ["class_component_space_solar"]
+    },
+
+    "class_component_optical_fiber": {
+      "kind": "class", "class_id": "class_component_optical_fiber", "class_type": "component", "name": "Optical Fiber",
+      "description": "Glass fiber that carries light signals across telecom and AI data-center networks; germanium tetrachloride is the dopant that makes the core guide light.",
+      "entities": [], "input_classes": ["class_intermediate_gecl4"], "output_classes": []
+    },
+    "class_component_ir_optics": {
+      "kind": "class", "class_id": "class_component_ir_optics", "class_type": "component", "name": "Infrared Optics",
+      "description": "Lenses and windows that focus heat rather than visible light, used in thermal-imaging, night-vision, and targeting systems.",
+      "entities": [], "input_classes": ["class_intermediate_ge_metal"], "output_classes": []
+    },
+    "class_component_space_solar": {
+      "kind": "class", "class_id": "class_component_space_solar", "class_type": "component", "name": "Space Solar Cells",
+      "description": "High-efficiency multijunction photovoltaic cells grown on germanium wafers, used to power satellites.",
+      "entities": [], "input_classes": ["class_intermediate_ge_wafer"], "output_classes": []
+    },
+    "class_component_pet_catalyst": {
+      "kind": "class", "class_id": "class_component_pet_catalyst", "class_type": "component", "name": "PET Catalyst",
+      "description": "Germanium dioxide used as a clean polymerization catalyst for high-clarity PET plastic.",
+      "entities": [], "input_classes": ["class_intermediate_geo2"], "output_classes": []
+    }
+  },
+
+  "entities": {
+    "dep_wulantuga": {
+      "kind": "entity",
+      "node_id": "dep_wulantuga",
+      "node_type": "deposit",
+      "name": "Wulantuga",
+      "location": "Shengli Coalfield, Xilingol League, Inner Mongolia",
+      "country": "China",
+      "deposit_category": "coal_lignite",
+      "status": "producing",
+      "deposit_short_description": "Wulantuga is a coal-hosted (lignite) germanium deposit in the Shengli Coalfield of Xilingol League, Inner Mongolia, and is notable as one of the largest germanium deposits in the world by contained-germanium reserve size (~1,600 t Ge), with germanium concentrated in the #6 coal seam at roughly 137 ppm; germanium here behaves as an organically-bound trace element in lignite rather than a discrete mineral. It matters because, alongside the higher-grade Lincang deposit in Yunnan, it anchors China's coal-route primary germanium supply, which together with zinc-route recovery gives China ~83% of global primary germanium. The germanium-bearing lignite is worked as part of large-scale thermal-coal mining and power generation; germanium is recovered as a by-product from coal combustion ash, so output is set by power/coal economics, not germanium demand, and only an estimated ~15-25% of the theoretical contained germanium is commercially recovered. Current status is active/producing. The operator is Shengli Coal Group, a state-owned enterprise; ownership is treated as state-affiliated via the same group given the absence of public disclosure of any separate resource holder. Reserves are reported at the deposit level as ~1,600 t contained Ge (project-internal estimate, not USGS-verified in this run); germanium is the strategic by-product while thermal coal/power is the primary product, and contained-Ge recovery to refined output is estimated at ~20-35 t/yr. Specific offtake agreements for the recovered germanium concentrate are not publicly disclosed.",
+      "owner": [ { "company_id": "co_shengli_coal_group", "company_name": "Shengli Coal Group (Inner Mongolia, state-owned)", "stake_pct": 100 } ],
+      "operator": { "company_id": "co_shengli_coal_group", "company_name": "Shengli Coal Group" },
+      "classes": ["class_rawmat_germanium"],
+      "total_reserve": { "value": 1600, "unit": "t", "measure": "contained germanium (reserve, deposit total)", "basis": "derived", "source": { "name": "Stillpoint internal germanium intelligence (germanium-nodes.json) — secondary estimate; USGS/primary filings not re-verified (web access blocked)", "url": "internal:data/germanium-nodes.json#Wulantuga", "retrieved": "2026-06-22" } },
+      "produces": [
+        { "form": "germanium (contained, in coal-ash by-product)", "amount": { "value": 27, "unit": "t" }, "basis": "derived", "source": { "name": "Stillpoint internal germanium intelligence — midpoint of ~20-35 t/yr estimate; not independently verified", "url": "internal:data/germanium-nodes.json#Shengli%20Coal%20Group", "retrieved": "2026-06-22" } },
+        { "form": "thermal coal (lignite, primary product)", "amount": { "value": null, "unit": "t" }, "basis": "not_quantified", "source": { "name": "not publicly disaggregated for the Wulantuga Ge-bearing seam", "url": "", "retrieved": "2026-06-22" } }
+      ],
+      "inputs": [],
+      "outputs": [ { "to_node": "mine_wulantuga_shengli", "to_type": "entity", "traced": true, "form": "germanium-bearing lignite / coal-combustion ash (Ge by-product feed)", "internal": true, "carries": [ { "material_id": "mat_germanium", "amount": { "value": 27, "unit": "t/yr" } } ], "note": "ON TARGET — resource feeds the host mining/power operation that recovers Ge from ash" } ]
+    },
+    "mine_wulantuga_shengli": {
+      "kind": "entity",
+      "node_id": "mine_wulantuga_shengli",
+      "node_type": "mine",
+      "name": "Shengli Coalfield Host Operation",
+      "location": "Shengli Coalfield, Xilingol League, Inner Mongolia",
+      "country": "China",
+      "status": "producing",
+      "description": "The state-owned coal mining and power-generation host operation that works the Wulantuga germanium-bearing lignite in the Shengli Coalfield; germanium is not mined directly but is concentrated in the fly ash / combustion residue when the Ge-rich #6-seam lignite is burned, and a specialist circuit leaches a crude germanium concentrate from that ash. Owner and operator are Shengli Coal Group, a state-owned enterprise in Inner Mongolia. It takes in germanium-bearing lignite/ash from the Wulantuga deposit (~27 t/yr contained Ge, derived midpoint of a 20-35 t/yr estimate). The process: burn the Ge-rich lignite for power, then recover a germanium concentrate from the resulting fly ash via hydrometallurgical leaching. It produces a crude germanium concentrate as the on-target output, plus thermal power and bulk ash as off-target products. The germanium concentrate flows on-target to Chinese germanium refiners that convert it to GeO2 and germanium metal; specific named offtake is not publicly disclosed.",
+      "owner": [ { "company_id": "co_shengli_coal_group", "company_name": "Shengli Coal Group", "stake_pct": 100 } ],
+      "operator": { "company_id": "co_shengli_coal_group", "company_name": "Shengli Coal Group" },
+      "company_id": "co_shengli_coal_group",
+      "classes": ["class_rawmat_germanium"],
+      "process": "Ge-rich lignite is combusted for power and a crude germanium concentrate is leached from the resulting fly ash.",
+      "produces": [ { "form": "crude germanium concentrate (Ge-in-ash / crude oxide precursor)", "amount": { "value": 27, "unit": "t/yr" }, "basis": "derived", "source": { "name": "Stillpoint internal germanium intelligence — ~20-35 t/yr est., midpoint used; not independently verified", "url": "internal:data/germanium-nodes.json#Shengli%20Coal%20Group", "retrieved": "2026-06-22" } } ],
+      "inputs": [ { "from_node": "dep_wulantuga", "to_type": "entity", "form": "germanium-bearing lignite / coal-combustion ash", "internal": true, "carries": [ { "material_id": "mat_germanium", "amount": { "value": 27, "unit": "t/yr" } } ] } ],
+      "outputs": [ { "to_node": "refinery_chinese_state_ge", "to_type": "entity", "traced": true, "form": "crude germanium concentrate", "internal": false, "carries": [ { "material_id": "mat_germanium", "amount": { "value": 27, "unit": "t/yr" } } ], "note": "ON TARGET — crude Ge concentrate shipped to domestic Chinese refiner; named offtake not disclosed" } ]
+    },
+    "refinery_chinese_state_ge": {
+      "kind": "entity",
+      "node_id": "refinery_chinese_state_ge",
+      "node_type": "refinery",
+      "name": "Chinese Germanium Refiner (Inner Mongolia feed)",
+      "location": "Inner Mongolia / China (specific site not disclosed)",
+      "country": "China",
+      "status": "producing",
+      "description": "The domestic Chinese refining stage that converts the crude germanium concentrate recovered from Wulantuga (and other Inner Mongolia fly-ash sources) into refined germanium products; in the project intelligence this layer is the aggregate 'Chinese State Refiners' with limited public disclosure, focused on GeO2 and crude/refined germanium metal rather than fiber-grade GeCl4. Owner and operator are Chinese state-affiliated refiners; individual facility identity and ownership stakes are not publicly disclosed. It takes in crude germanium concentrate from the Shengli/Wulantuga host operation. The process: the crude concentrate is chlorinated/distilled and reduced/zone-refined to produce germanium dioxide (GeO2) and germanium metal. Output crosses out of the raw-material layer at the market/class boundary as refined germanium metal/GeO2 sold into the (largely domestic, export-licensed) germanium market. Specific commercial offtake agreements are not publicly disclosed.",
+      "owner": [ { "company_id": "co_chinese_state_ge_refiners", "company_name": "Chinese state-affiliated germanium refiners (aggregate)", "stake_pct": 100 } ],
+      "operator": { "company_id": "co_chinese_state_ge_refiners", "company_name": "Chinese state-affiliated germanium refiners (aggregate)" },
+      "company_id": "co_chinese_state_ge_refiners",
+      "classes": ["class_rawmat_germanium"],
+      "process": "Crude Ge concentrate is chlorinated, distilled, then reduced and zone-refined to GeO2 and germanium metal.",
+      "produces": [ { "form": "germanium metal + germanium dioxide (GeO2)", "amount": { "value": 14, "unit": "t/yr" }, "basis": "derived", "source": { "name": "Stillpoint internal germanium intelligence — ~14 t/yr combined estimate for the Chinese state-refiner aggregate; not independently verified", "url": "internal:data/germanium-nodes.json#Chinese%20State%20Refiners", "retrieved": "2026-06-22" } } ],
+      "inputs": [ { "from_node": "mine_wulantuga_shengli", "to_type": "entity", "form": "crude germanium concentrate", "internal": false, "carries": [ { "material_id": "mat_germanium", "amount": { "value": 27, "unit": "t/yr" } } ] } ],
+      "outputs": [ { "to_node": "class_rawmat_germanium", "to_type": "class", "traced": false, "form": "refined germanium metal / GeO2", "internal": false, "carries": [ { "material_id": "mat_germanium", "amount": { "value": 14, "unit": "t/yr" } } ], "note": "LAYER CROSSING — refined Ge metal/GeO2 ships to the germanium market (class boundary); germanium leaves the raw-material layer here" } ]
+    }
+  },
+  "companies": {
+    "co_shengli_coal_group": {
+      "kind": "company",
+      "company_id": "co_shengli_coal_group",
+      "name": "Shengli Coal Group (Inner Mongolia)",
+      "ticker": null,
+      "country": "China",
+      "description": "State-owned coal mining and power group operating the Shengli Coalfield in Xilingol League, Inner Mongolia, where it works the Wulantuga germanium-bearing lignite. Germanium is a by-product recovered from coal-combustion fly ash, so the group's germanium output is policy- and coal-economics-driven rather than responsive to germanium prices, and is estimated at ~20-35 t/yr contained.",
+      "entities": ["dep_wulantuga", "mine_wulantuga_shengli"]
+    },
+    "co_chinese_state_ge_refiners": {
+      "kind": "company",
+      "company_id": "co_chinese_state_ge_refiners",
+      "name": "Chinese state-affiliated germanium refiners (aggregate)",
+      "ticker": null,
+      "country": "China",
+      "description": "Aggregate of smaller Chinese state-affiliated germanium refiners with limited public disclosure that process Inner Mongolia / Wulantuga and Yimin fly-ash concentrate into germanium dioxide and germanium metal. They focus on GeO2 and crude/refined metal rather than fiber-grade GeCl4, with combined output estimated at ~14 t/yr, and their output is subject to MOFCOM export licensing.",
+      "entities": ["refinery_chinese_state_ge"]
+    }
+  }
+}
