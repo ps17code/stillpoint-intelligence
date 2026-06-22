@@ -25,6 +25,8 @@ const SEARCH_ITEMS: { label: string; sub: string; target: SearchTarget }[] = [
 import GlobePanel from "@/components/GlobePanel";
 import StillpointLoadingLanding from "@/components/StillpointLoadingLanding";
 import VerticalLandingPage from "@/components/VerticalLandingPage";
+import ExplorerHub from "@/components/ExplorerHub";
+import ExplorerPlaceholder from "@/components/ExplorerPlaceholder";
 
 const R = 1;
 
@@ -287,6 +289,7 @@ export default function HomePage() {
 
   const [appLoading,    setAppLoading]    = useState(true);
   const [verticalSelected, setVerticalSelected] = useState(false);
+  const [explorer,      setExplorer]      = useState<"hub" | "verticals" | "node" | "global">("hub");
   const [selectedL2,    setSelectedL2]    = useState<Map<string, string>>(new Map());
   const [openDropdown,  setOpenDropdown]  = useState<string | null>(null);
   const [activeL3,      setActiveL3]      = useState<{ parentId: string; nodeType: string } | null>(null);
@@ -656,14 +659,40 @@ export default function HomePage() {
           </div>
         </div>
         <div className="absolute inset-0 z-10">
-          <VerticalLandingPage
-            onSelect={(id) => {
-              if (id === "ai-infrastructure") {
-                setViewMode("tree");
-                setVerticalSelected(true);
-              }
-            }}
-          />
+          {explorer === "hub" && (
+            <ExplorerHub
+              onVertical={() => setExplorer("verticals")}
+              onNode={() => setExplorer("node")}
+              onGlobal={() => setExplorer("global")}
+            />
+          )}
+          {explorer === "verticals" && (
+            <div style={{ position: "relative", width: "100%", height: "100%" }}>
+              <VerticalLandingPage
+                onSelect={(id) => {
+                  if (id === "ai-infrastructure") {
+                    setViewMode("tree");
+                    setVerticalSelected(true);
+                  }
+                }}
+              />
+              <button
+                onClick={() => setExplorer("hub")}
+                style={{ position: "absolute", top: 18, left: 18, zIndex: 20, display: "flex", alignItems: "center", gap: 6, background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "5px 12px", cursor: "pointer", color: "rgba(255,255,255,0.55)", fontFamily: "'Geist Mono', monospace", fontSize: 10 }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)"; e.currentTarget.style.color = "#ece8e1"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "rgba(255,255,255,0.55)"; }}
+              >
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
+                Back
+              </button>
+            </div>
+          )}
+          {explorer === "node" && (
+            <ExplorerPlaceholder title="Node Explorer" message="No nodes yet — generated nodes will appear here once the node generation engine is connected." onBack={() => setExplorer("hub")} />
+          )}
+          {explorer === "global" && (
+            <ExplorerPlaceholder title="Global Explorer" message="Geographic supply network view — coming soon." onBack={() => setExplorer("hub")} />
+          )}
         </div>
         {appLoading && (
           <div className="absolute inset-0 z-50">
