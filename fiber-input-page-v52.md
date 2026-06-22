@@ -7,383 +7,85 @@ Source: Stillpoint Intelligence input page (/app/input/fiber-optic-cable/page.ts
 ## EXECUTIVE SUMMARY
 
 - Fiber optics are glass strands that transmit data as pulses of light. They serve as the physical layer connecting everything inside and between AI datacenters, telecom networks, and cross-ocean subsea systems.
-- The core inputs are high-purity silica, germanium, and helium. Silica glass forms the fiber body. Germanium is used as a dopant to create the refractive index gradient that guides light through the core. Helium — for which there is no substitute — cools the glass during the fiber drawing process. Without these three materials, there is no fiber.
-- Supply is constrained. Global production sits at ~720M fiber strand-km/yr. Preform lines are at full utilization. One equipment supplier — Rosendahl Nextrom — carries 18-24 month backlogs. Prices are at 7-year highs.
-- Driven by AI. ~20 GW of AI datacenter capacity is entering construction annually. Each GW requires ~6.5M fiber strand-km. A 130M km supply gap cannot close before 2027.
-- New preform capacity, DRC germanium ramp, and hollow-core fiber all target 2027-2028. Supply constraints persist through at least 2027.
-- The suppliers of germanium tetrachloride, fiber preform manufacturers, and proprietary equipment suppliers positioned at chokepoints will capture most of the value at this layer.
 
----
+- The core inputs are high-purity silica, germanium, and helium. Silica forms the fiber body, germanium is doped into the core to create the refractive index gradient that guides light, and helium cools the glass during fiber drawing.
 
-## HOW IT'S MADE
+- Global production sits at ~720M fiber strand-km/yr. Preform lines are at full utilization. One equipment supplier — Rosendahl Nextrom — carries 18-24 month backlogs.
 
-### Step 01: RAW MATERIAL INPUTS
-- **Description:** Refined germanium is chemically converted into germanium tetrachloride (GeCl₄) — the dopant that creates the refractive index gradient in the fiber core. High-purity silica (SiCl₄) forms the glass body itself. Both require extreme purity levels measured in parts per billion.
-- **Why it's hard:** Fiber-grade GeCl₄ requires ultra-high purity — specifically removing arsenic contamination. This demands proprietary techniques and specialized equipment that can't be purchased off the shelf.
-- **Who can do it:** Only 6 facilities worldwide produce fiber-grade GeCl₄. 4 are in China, 1 in Russia, and 1 in the west — a single site in Belgium.
-- **Output:** ~220t GeCl₄ produced annually
+- Fiber prices are at 7-year highs. Standard G.652D prices are up 150% since January 2025. Datacenter-grade G.657A is up over 210%. The price moves reflect simultaneous constraints in germanium, SiCl₄, and helium — combined with AI demand pulling forward years of order flow.
 
-### Step 02: PREFORM MANUFACTURING
-- **Description:** GeCl₄ is vaporized and deposited layer by layer inside a silica tube, building up a glass preform rod with a germanium-doped core. This step determines the optical properties of the final fiber.
-- **Why it's hard:** The process itself is well understood — nearly 20 manufacturers produce preforms globally. The constraint is equipment. Only one company makes the deposition systems. Adding a new line takes 18–24 months.
-- **Who can do it:** ~20 preform manufacturers globally. Most are vertically integrated — they also draw fiber and assemble cable. Lines running at full utilization.
-- **Output:** ~24,000t preform produced annually
+- AI datacenter buildout is the dominant growth vector. ~20 GW of AI datacenter capacity is entering construction annually. Each GW requires ~6.5M fiber strand-km. A 130M km supply gap cannot close before 2027.
 
-### Step 03: FIBER DRAW & CABLE ASSEMBLY
-- **Description:** The preform is heated in a draw tower and pulled into hair-thin fiber strands, coated for protection, then bundled with strength members and sheathed into finished cable. Helium gas is used to cool the fiber during drawing — there is no substitute.
-- **Why it's hard:** Drawing and assembly are the least constrained steps. The bottleneck is upstream — you can only draw as much fiber as you have preforms. Helium supply is tight, with a third of global production disrupted by conflict in the Middle East.
-- **Who can do it:** Most of the ~20 preform manufacturers plus ~10 dedicated cable assemblers who buy fiber strand and bundle it into finished products.
-- **Output:** ~720M fiber strand-km produced annually
+- Supply response is 2027-2028 at earliest. New preform capacity, the DRC germanium ramp via Umicore offtake, and hollow-core fiber commercialization all target the same window. None of them close the gap before then.
+
+**The investable surface of the fiber chain is the rebuild itself — chokepoint refiners and fiber manufacturers with locked-in supply, capacity-builders bringing new preform online, and the equipment monopoly that defines the industry's capacity ceiling.**
 
 ---
 
 ## SUPPLY TREE
 
-### Key Takeaway
-Three critical inputs feed fiber production: germanium tetrachloride as the core dopant, silicon tetrachloride as the glass substrate, and helium for cooling during fiber draw. GeCl₄ is the most constrained — ~87t of refined germanium enters the fiber supply chain annually, converted by just 6 facilities worldwide. Corning holds ~40% of fiber manufacturing. Total output: ~720M fiber strand-km/yr serving datacenter, telecom, and subsea markets.
+### Key Takeaways
+
+1. Three constrained inputs feed fiber production — germanium tetrachloride from a single western chokepoint, silicon tetrachloride for the glass body, and helium for cooling during fiber drawing.
+
+2. Only about 20 preform manufacturers globally produce the doped silica rods that get drawn into fiber, and the lines are running at full utilization.
+
+3. Rosendahl Nextrom in Austria is the global monopoly on preform deposition equipment — 18-24 month order backlogs define the capacity ceiling for the entire industry.
+
+4. Corning controls ~40% of global fiber manufacturing capacity and stopped selling bare glass fiber to other cable makers in late 2025, structurally tightening supply for everyone downstream.
+
+---
+
+[Tree visualization renders here from fiber-optic-cable-supply-tree.md]
+
+---
+
+### How It's Made
+
+*Three layers feed the supply tree above. Each is a distinct industrial operation with its own operators, economics, and bottlenecks.*
+
+#### CHEMICAL CONVERSION
+
+GeCl₄, SiCl₄, and helium suppliers that produce the chemical inputs for preform manufacturing.
+
+**WHAT HAPPENS HERE**
+Refined germanium is converted to GeCl₄ at 8N purity to dope the fiber core. High-purity silica is converted to SiCl₄ for the glass body. Helium is purified for fiber-drawing cooling.
+
+**WHY IT'S HARD**
+Fiber-grade GeCl₄ requires removing arsenic to parts-per-billion levels. Only 6 facilities globally produce it: four in China, one in Russia (sanctioned), one in the west — Umicore in Belgium. Helium has no substitute and trades on physical scarcity.
+
+**~220t/yr** fiber-grade GeCl₄ produced globally
+
+#### PREFORM MANUFACTURING
+
+Specialty manufacturers that deposit GeCl₄ vapor inside silica tubes to build doped glass preforms.
+
+**WHAT HAPPENS HERE**
+GeCl₄ is vaporized and deposited layer by layer inside a silica tube, building up a glass preform rod with a germanium-doped core. The optical properties of the final fiber are set at this step.
+
+**WHY IT'S HARD**
+Only one equipment supplier — Rosendahl Nextrom in Austria — produces the deposition systems. Adding a new preform line takes 18-24 months. About 20 preform manufacturers globally; lines run at full utilization.
+
+**~24,000t/yr** preform produced globally
+
+#### FIBER DRAW & CABLE ASSEMBLY
+
+Manufacturers that draw fiber from preforms and bundle it into finished optical cable.
+
+**WHAT HAPPENS HERE**
+Preforms are heated in a draw tower and pulled into hair-thin strands at 10-20 m/s, coated, then bundled with strength members and sheathed into finished cable. Helium cools the fiber during drawing.
+
+**WHY IT'S HARD**
+Drawing isn't the binding constraint — preform supply is. You can only draw as much fiber as preform output supports. Helium supply is tight, with a third of global production disrupted by Middle East conflict.
+
+**~720M fiber-km/yr** fiber strand produced globally
+
+---
 
 ### Nodes
 
-#### Umicore GeCl4
-- **Type:** GeCl₄ chemical supplier
-- **Location:** Olen, Belgium
-- **Key stat:** €3.9B market cap · Sole western GeCl₄ supplier at scale
-- **Risk:** DRC supply ramp risk. Single-facility concentration at Olen.
-- **Stats:**
-  - Market cap: €3.9B
-  - Revenue: €3.6B
-  - Adj. EBITDA: €847M
-  - GeCl₄ output/yr: ~86t
-- **Role:** Global materials technology and recycling group operating across four business groups: Catalysis, Recycling, Specialty Materials, and Battery Materials. Specialty Materials (€558M revenue, +4% YoY) houses the germanium business. CEO Bart Sap launched the ‘CORE’ strategy in March 2025, refocusing on cash generation from foundation businesses.
-- **Investment angle:** UMI is the most direct western investment vehicle for germanium supply chain exposure. Chinese export controls structurally improve Umicore’s pricing power.
-- **Risks:**
-  - DRC Big Hill ramp timeline uncertain
-  - Recycled scrap feed shrinks if Chinese fiber output declines
-  - Single facility concentration risk — Olen, Belgium
+*The full set of supply tree nodes — including universal records for every entity, per-chain placement data, and feeds_from/feeds_into edges — lives in `fiber-optic-cable-supply-tree.md`. The platform reads that file to render the interactive tree visualization above. The fiber tree covers the Chemical Converter, Substrate Manufacturer (preform), and Device Manufacturer (fiber cable) layers; upstream feedstocks (germanium, silica, helium) live on their own input pages — see Connected Inputs below.*
 
-#### Yunnan Chihong GeCl4
-- **Type:** GeCl₄ chemical supplier
-- **Location:** Kunming, Yunnan, China
-- **Key stat:** CNY ~8B market cap · China’s largest integrated Ge producer
-- **Risk:** Subject to Chinese export controls. Full US export ban since December 2024.
-- **Stats:**
-  - Market cap: CNY ~8B
-  - Ge products (2023): 65.9t
-  - Dedicated GeCl₄ line: 30t/yr
-  - Huize reserves: 443t
-- **Role:** State-owned subsidiary of Chinalco (Aluminum Corporation of China). China’s largest integrated germanium producer — vertically integrated from mining through refining to downstream products. Operates the Huize mine in Yunnan with 443 tonnes of germanium reserves. Produced 65.9 tonnes of germanium products in 2023.
-- **Investment angle:** Chinese A-share listed. Indirect proxy for Chinese germanium pricing. No direct western investment vehicle.
-- **Risks:**
-  - Export controls prevent western market access
-  - Price manipulation risk from Chinese state policy
-  - Geopolitical escalation could trigger further restrictions
-
-#### Chinese State GeCl4 Plants
-- **Type:** GeCl₄ chemical suppliers
-- **Location:** Multiple provinces, China
-- **Key stat:** ~50–60t Ge/yr combined · Nanjing Ge, GRINM, Lincang Xinyuan
-- **Risk:** Export controls block western access. MOFCOM licensed for any international shipments.
-- **Stats:**
-  - Ge equiv./yr: ~50-60t
-  - Purity range: 6N-8N
-  - Pricing: Domestic
-  - MOFCOM: Export-controlled
-- **Role:** Multiple Chinese state-linked processors produce GeCl₄ at various scales and purity levels. Includes Nanjing Germanium, GRINM Goujing (formerly Vital Materials), and Yunnan Lincang Xinyuan Germanium Industry. Collectively serve China’s domestic fiber optic market alongside Yunnan Chihong.
-- **Investment angle:** No direct western investment vehicle. Exposure only via Chinese state-owned enterprise listings.
-- **Risks:**
-  - Export controls block all western supply
-  - Aggregated opacity — actual output uncertain
-  - State directive risk could redirect supply to strategic uses
-
-#### JSC Germanium GeCl4
-- **Type:** Germanium processor — military/defense
-- **Location:** Moscow / Novomoskovsk, Russia
-- **Key stat:** ~15–20t capacity · Sanctioned · Zero commercial fiber connection
-- **Risk:** Fully sanctioned. Zero western market access. Not a fiber supply chain participant.
-- **Stats:**
-  - Ge capacity/yr: ~15-20t
-  - End use: Military only
-  - Status: Sanctioned
-  - Fiber connection: Zero
-- **Role:** Direct subsidiary of Rostec, Russia’s state defense conglomerate that provides approximately 80% of Russia’s weapons. Processes germanium for military applications — IR optics for aircraft, combat equipment, night vision systems. Recovers germanium from Spetsugli coal deposit in Russia’s Far East.
-- **Investment angle:** No investment case. Sanctioned entity. Historically removed ~9% of western-accessible germanium supply.
-- **Risks:**
-  - Fully sanctioned — no western access
-  - Permanently removed from western supply picture
-  - Cannot serve as emergency alternative
-
-#### Corning
-- **Type:** Fiber optic manufacturer — vertically integrated
-- **Location:** Corning, New York, USA
-- **Key stat:** ~$36B market cap · $1.65B optical comms Q3’25 (+33%)
-- **Risk:** GeO₂/GeCl₄ supply constraint limits capacity expansion.
-- **Stats:**
-  - Market cap: ~$36B
-  - Q3’25 optical rev: $1.65B
-  - Q3’25 net income: $530M
-  - Fiber-km/yr: ~300-400M
-- **Role:** Invented low-loss optical fiber in 1970. World’s largest western fiber manufacturer operating across Optical Communications, Display, Specialty Materials, Environmental, and Life Sciences. Optical communications is the growth engine — Q3 2025 revenue hit $1.65B (+33% YoY) with enterprise sales surging 58% on AI network demand.
-- **Investment angle:** GLW is the most liquid western proxy for AI infrastructure fiber demand. Multi-year datacenter backlogs give rare earnings visibility.
-- **Risks:**
-  - GeO₂/GeCl₄ supply constraint limits capacity
-  - Significant China revenue exposure (~$1B+ annually)
-  - Overcapacity risk if datacenter buildout slows
-
-#### Prysmian
-- **Type:** Fiber optic manufacturer — vertically integrated
-- **Location:** Milan, Italy
-- **Key stat:** ~€17B market cap · 15% global fiber share · World’s largest cable co.
-- **Risk:** European telecom capex cycles. 18–24 month preform expansion lag.
-- **Stats:**
-  - Market cap: ~€17B
-  - FY24 revenue: €16B+
-  - US optical capex: $115M+
-  - Cable-km/yr: >30M
-- **Role:** World’s largest cable company — energy cables, telecom cables, and submarine cable systems. 15% global fiber market share, the single largest. Acquired Encore Wire to expand North American footprint. Covers full cable value chain from preform manufacturing through finished cable.
-- **Investment angle:** PRY offers terrestrial and subsea exposure. Subsea demand is driven by AI hyperscalers building private subsea networks.
-- **Risks:**
-  - More exposed to European telecom capex cycles
-  - Italian listing reduces liquidity for US investors
-  - Currency risk (EUR-denominated)
-
-#### Fujikura
-- **Type:** Fiber optic manufacturer — vertically integrated
-- **Location:** Tokyo, Japan
-- **Key stat:** ~¥2.5T market cap · ¥979B revenue (+22.5%) FY25 · +160% stock 2025
-- **Risk:** Full Umicore dependency for GeCl₄ — no domestic Japanese alternative.
-- **Stats:**
-  - Market cap: ~¥2.5T
-  - FY25 revenue: ¥979B
-  - FY26 net income (fcst): ¥132B
-  - Fiber-km/yr: ~10-15M
-- **Role:** Developed the world’s first optical fiber in 1959. Revenue from Information Technology (fiber, cables), Electronics (PCBs), Automotive (wiring harnesses), and Energy (power cables). Over 50% of revenue from the US. ~75% of optical fiber output exported. Stock surged 160% in 2025 on AI data center demand.
-- **Investment angle:** TSE-listed with meaningful western investor access. Closest pure-play on the AI fiber demand + germanium supply constraint thesis.
-- **Risks:**
-  - Full Umicore dependency — no domestic Japanese GeCl₄ production
-  - Yen depreciation impacts USD returns
-  - Post-AI-surge valuation re-rating risk if growth decelerates
-
-#### Sumitomo Electric
-- **Type:** Fiber optic manufacturer — vertically integrated
-- **Location:** Osaka, Japan
-- **Key stat:** ~¥2.8T market cap · ¥4.1T FY24 revenue · Top 3 global fiber
-- **Risk:** Fiber is a minority of revenue — diversified industrial reduces direct germanium exposure.
-- **Stats:**
-  - Market cap: ~¥2.8T
-  - FY24 revenue: ¥4.1T
-  - Net income: —
-  - Fiber-km/yr: ~10-15M
-- **Role:** One of Japan’s largest diversified industrial companies. Business includes Automotive (wiring harnesses — largest segment), Infocommunications (optical fiber, cables, photonic devices), Electronics, Environment & Energy, and Industrial Materials. Optical fiber is a meaningful but minority portion of total revenue.
-- **Investment angle:** Unique dual exposure: AI fiber demand and EV wiring harness demand. Less pure-play than Fujikura given diversified revenue base.
-- **Risks:**
-  - Fiber is a minority of revenue — auto wiring harness dominates valuation
-  - TSE listing limits western direct access
-  - Auto wiring harness slowdown could weigh on overall valuation
-
-#### Shin-Etsu
-- **Type:** Fiber optic preform specialist
-- **Location:** Tokyo, Japan
-- **Key stat:** ~¥8T market cap · Japan’s largest chemical co. · Dual Si + Ge expertise
-- **Risk:** Silicon wafer oversupply risk if AI chip demand cycles down.
-- **Stats:**
-  - Market cap: ~¥8T
-  - FY24 revenue: ¥2.4T
-  - Net income: —
-  - Fiber-km/yr (Japan): ~5-8M
-- **Role:** Japan’s largest chemical company. World leader in PVC, semiconductor silicon wafers, and silicones. Optical fiber preform is part of the Electronics Materials segment. Produces preforms at Kashima (Japan), plus two China JVs — Shin-Etsu Jiangsu (with Fasten Group) and Shin-Etsu YOFC (Hubei, with YOFC).
-- **Investment angle:** Unique dual-exposure play: AI chip demand drives silicon wafer volumes AND AI datacenter buildout drives fiber preform volumes.
-- **Risks:**
-  - Silicon wafer oversupply risk if AI chip demand cycles
-  - Japanese listed — limited western direct access
-  - Yen exposure for USD investors
-
-#### YOFC
-- **Type:** Fiber optic manufacturer — vertically integrated
-- **Location:** Wuhan, China
-- **Key stat:** ~HK$18B market cap · World’s largest preform capacity · 3,500t/yr
-- **Risk:** Chinese state-backed. Geopolitically complex. Corning JV creates IP exposure.
-- **Stats:**
-  - Market cap: ~HK$18B
-  - 2025 rev (proj.): ~$5B
-  - Preform capacity: 3,500t/yr
-  - Export countries: 100+
-- **Role:** World’s largest optical fiber preform manufacturer by capacity. China’s dominant fiber and cable producer. Vertically integrated from preform to cable. JVs with Shin-Etsu for advanced preform technology. International plants in Mexico, Indonesia, South Africa, Brazil, and Poland. Supplies China Mobile (30% of their fiber needs).
-- **Investment angle:** HKEX-listed with more western accessibility than SSE. The Corning JV structure creates a direct link between Chinese Ge supply and western fiber manufacturing IP.
-- **Risks:**
-  - Geopolitical risk — Chinese state ownership
-  - Corning JV creates IP transfer concerns
-  - Export control risk limits western sales potential
-
-#### Optical Fiber Strand
-- **Type:** Output node
-- **Location:** Global
-- **Key stat:** ~720M fiber-km/yr
-- **Risk:** Supply gap cannot close before late 2027 due to 18–24 month preform expansion lag.
-- **Stats:**
-  - Output: ~720M fiber-km/yr
-  - 2030 forecast: 1.3-1.4B
-  - Ge per fiber-km: 0.087g
-- **Role:** Continuous strands of germanium-doped silica glass, 125 micrometers in diameter — thinner than a human hair. Drawn from preforms at 10-20 meters per second. Each strand carries data as pulses of light through the germanium-doped core. The germanium doping raises the refractive index by ~0.35%, creating the waveguide effect that makes fiber optic communication possible.
-- **Investment angle:** The cable itself is a commodity. Invest in manufacturers with highest datacenter/subsea mix (Corning, Prysmian) or at the hyperscale operator level.
-- **Risks:**
-  - Supply gap cannot close before late 2027 due to 18–24 month preform lag
-  - Chinese export controls directly constrain capacity expansion
-  - Demand pull-forward could exhaust western GeCl₄ stocks
-
-#### CommScope
-- **Type:** Cable assembler
-- **Location:** Hickory, North Carolina, USA
-- **Key stat:** CCS segment +27% YoY Q4 2024 · Propel 800G platform
-- **Risk:** $9B+ debt load from 2019 ARRIS acquisition.
-- **Stats:**
-  - Ticker: COMM · NASDAQ
-  - 2024 revenue: $4.2B total
-  - Q4 2024: CCS +27% YoY
-  - Innovation: Propel 800G platform 2024
-- **Role:** CommScope's Connectivity & Cable Solutions segment is the fastest-growing division, driven by hyperscale and cloud datacenter GenAI buildout. Q4 2024 net sales +27% YoY with CCS leading all segments. Launched Propel modular fiber platform in 2024 enabling 400G and 800G datacenter applications, reducing installation time by 30%. Strong US manufacturing presence for BABA-compliant broadband infrastructure.
-- **Investment angle:** COMM is a more leveraged play on US datacenter infrastructure buildout. Higher risk than Corning but also higher upside if datacenter spending continues.
-- **Risks:**
-  - $9B+ debt from 2019 ARRIS acquisition
-  - Not vertically integrated — exposed to strand price fluctuations
-  - Slower to benefit from Ge supply constraint than upstream players
-
-#### AFL
-- **Type:** Cable assembler
-- **Location:** Duncan, South Carolina, USA
-- **Key stat:** US domestic · utility + datacenter · BABA-compliant
-- **Risk:** Private company — no direct investment vehicle.
-- **Stats:**
-  - Ownership: Fujikura subsidiary
-  - Headquarters: Duncan, SC, USA
-  - Focus: Utility + DC + defense
-  - Advantage: US domestic manufacturing
-- **Role:** AFL (Fujikura subsidiary) is a major US cable assembler focused on utility, datacenter, and enterprise fiber optic infrastructure. Produces specialty cables for power utilities, military, and hyperscale datacenter applications. Fully US-based manufacturing makes AFL a BABA-compliant domestic supplier for government-funded broadband and defense programs.
-- **Investment angle:** No direct investment — privately held Fujikura subsidiary. Indirect exposure via Fujikura (5803 TSE).
-- **Risks:**
-  - No listed equity vehicle
-  - Dependent on Fujikura parent strategy
-  - US utility cable market has different demand cycle than datacenter
-
-#### Alcatel SN
-- **Type:** Subsea cable manufacturer
-- **Location:** Paris, France
-- **Key stat:** ~20%+ submarine wet-plant · French state-owned
-- **Risk:** Recently transferred to French state ownership — geopolitical asset.
-- **Stats:**
-  - Ownership: French state (post Nokia divestiture)
-  - Market share: ~20%+ submarine wet-plant
-  - Customers: Hyperscalers + telecoms
-  - Strategic: French critical infrastructure asset
-- **Role:** Alcatel Submarine Networks is one of three companies controlling over 60% of global submarine cable wet-plant revenue. Recently transferred to French state ownership — underscoring governments' heightened interest in controlling critical subsea infrastructure. Partners with hyperscalers (Google, Meta, Microsoft, Amazon) building private submarine cable systems. Signed partnership with leading cloud provider for next-generation submarine cable system in July 2025.
-- **Investment angle:** Exposure via Nokia (NOKIA HE) prior to divestiture. Now French state asset. AI hyperscalers are funding private subsea cables directly, driving unprecedented demand.
-- **Risks:**
-  - Geopolitical risk around cable routes and landing rights
-  - Subsea projects have 3-5 year lead times — lumpy revenue
-  - State ownership may affect commercial flexibility
-
-#### SubCom
-- **Type:** Subsea cable manufacturer
-- **Location:** Eatontown, New Jersey, USA
-- **Key stat:** #2 global · cable + installation vessels · US-preferred
-- **Risk:** Private — no direct investment vehicle.
-- **Stats:**
-  - Ownership: Private · Cerberus Capital
-  - Vertically integrated: Cable + installation vessels
-  - 2026 pipeline: 40 new systems entering service
-  - US advantage: National security preferred vendor
-- **Role:** SubCom is the leading US submarine cable system supplier, combining cable manufacturing with marine installation vessels — a critical vertical integration that limits competition. SubCom controls a major share of US government-approved submarine cable projects given national security scrutiny of Chinese competitors. Expanding marine fulfillment capabilities to meet surging demand from 40 new submarine cable systems entering service in 2026.
-- **Investment angle:** No direct investment — private Cerberus portfolio company. An IPO or strategic sale would be significant given AI-driven subsea demand.
-- **Risks:**
-  - Private — no investment access
-  - Revenue concentration in large contracts
-  - US government scrutiny of subsea cable routes
-
-#### NEC
-- **Type:** Subsea cable manufacturer
-- **Location:** Tokyo, Japan
-- **Key stat:** 400,000+ km deployed · Asia-Pacific dominant
-- **Risk:** Subsea is a minority of NEC's total revenue.
-- **Stats:**
-  - Ticker: 6701 · TSE
-  - Deployed: 400,000+ km subsea
-  - Region: Asia-Pacific dominant
-  - 2025: New system for Asian AI traffic
-- **Role:** NEC Corporation has deployed over 400,000 km of undersea cables worldwide, making it one of the most experienced submarine cable installers globally. Dominant in the Asia-Pacific submarine cable market. Unveiled new submarine cable system for Asia in September 2025 to meet growing data traffic. Competes with SubCom and Alcatel Submarine Networks for hyperscaler private cable projects.
-- **Investment angle:** NEC is a diversified Japanese IT company — subsea cable is important but not dominant. Indirect play via TSE listing.
-- **Risks:**
-  - Subsea is minority of revenue
-  - TSE listing limits western access
-  - Japanese government IT services is the primary business
-
-#### Datacenter Cable
-- **Type:** Cable specification
-- **Location:** Global
-- **Key stat:** 96 to 6,912 fibers/cable · AI demand +500% 2025–2026
-- **Risk:** Prices surged 500%+ in 2025–2026 on AI demand.
-- **Stats:**
-  - Fiber count: 96 to 6,912 per cable
-  - AI multiplier: 36x more vs CPU rack
-  - Price surge: +500% since Jan 2025
-  - Key buyers: AWS · Google · Microsoft · Meta
-- **Role:** Datacenter fiber optic cable connects GPU clusters, spine-leaf switching networks, and datacenter interconnects. AI datacenters require 36x more fiber than traditional CPU racks — a single million-GPU cluster can consume tens of thousands of fiber-km. High fiber count cables (1,728+ strands) are now standard for hyperscale AI builds. Prices surged 500%+ in 2025-2026 driven by AI demand. Meta's $6B Corning deal and Lumen's Corning agreement represent the new norm of multi-year locked supply.
-- **Investment angle:** Invest in manufacturers with the highest datacenter revenue mix: Corning, CommScope.
-- **Risks:**
-  - Commoditization risk as manufacturing scales
-  - Hyperscaler in-sourcing risk
-  - Demand tied entirely to datacenter capex cycles
-
-#### Terrestrial Long-Haul
-- **Type:** Cable specification
-- **Location:** Global
-- **Key stat:** 12 to 432 fibers/cable · 213M fiber-miles needed US by 2029
-- **Risk:** Telecom operator capex sensitivity.
-- **Stats:**
-  - Fiber count: 12 to 432 per cable
-  - US demand: 213M fiber-miles needed by 2029
-  - Price: G.652D +150% since Jan 2025
-  - Key operators: AT&T · Verizon · Deutsche Telekom
-- **Role:** Long-haul terrestrial fiber cables carry internet backbone traffic between cities and datacenters. Standard single-mode fiber (G.652D) is the dominant cable type. US needs to add 213.3 million fiber miles by 2029 to support AI datacenter interconnect demands — more than doubling current installed base. 5G transport backhaul adds additional demand on top of existing FTTH and backbone replacement cycles.
-- **Investment angle:** More telecom-dependent than datacenter cable — slower growth but more stable recurring demand.
-- **Risks:**
-  - Telecom operator capex cycles create demand volatility
-  - 5G backhaul buildout varies by country
-  - Competition from wireless backhaul alternatives
-
-#### Subsea Cable
-- **Type:** Cable specification
-- **Location:** Ocean floors globally
-- **Key stat:** 8 to 24 fiber pairs · ~40 new systems entering service 2026
-- **Risk:** Geopolitical risk around cable routes and landing rights.
-- **Stats:**
-  - Fiber pairs: 8 to 24 per cable
-  - 2026 pipeline: ~40 new systems · ~$6B
-  - Market control: SubCom + ASN + NEC >60%
-  - Hyperscaler shift: Private ownership growing fast
-- **Role:** Submarine fiber optic cables carry ~99% of international internet traffic across ocean floors. Nearly 40 new submarine cable systems enter service in 2026 alone — the most active year in history, worth ~$6B in construction. Hyperscalers (Google, Meta, Microsoft, Amazon) now fund private submarine cables directly, bypassing traditional telecom carriers. SubCom, Alcatel Submarine Networks, and NEC collectively control >60% of wet-plant revenue. Each system uses Ge-doped single-mode fiber for the entire cable length.
-- **Investment angle:** AI hyperscalers are funding private subsea cable projects. This structural demand shift benefits Alcatel SN and SubCom most directly.
-- **Risks:**
-  - Geopolitical tension around cable landing rights
-  - Repair costs and lead times are extremely high
-  - Route concentration through a handful of landing stations
-
-#### Deployed Fiber Network
-- **Type:** Global fiber infrastructure
-- **Location:** Global
-- **Key stat:** ~720M fiber-km/yr
-- **Risk:** Supply gap cannot close before late 2027 due to 18-24 month preform expansion lag.
-- **Stats:**
-  - Output: ~720M fiber-km/yr
-  - Routes: 3-4M route-km/yr
-  - Conversion: 1 route-km = ~144 fiber-km strand
-  - Supply gap: Cannot close before late 2027
-- **Role:** The deployed fiber network measures route-km of installed cable infrastructure — distinct from the fiber-km strand output of the component layer. One route-km of terrestrial cable contains ~144 fiber-km of strand; one route-km of subsea cable contains ~16-24 fiber pairs. Global new cable deployment runs ~3-4M route-km/yr. AI datacenter demand requires an additional 2-3M route-km of high-density datacenter cable by 2026 — on top of existing telecom, FTTH, and backbone deployment. The gap cannot close before late 2027 due to the 18-24 month preform expansion lag at the component layer above.
-- **Investment angle:** The cable itself is a commodity. Invest in manufacturers with highest datacenter/subsea mix (Corning, Prysmian) or at the hyperscale operator level.
-- **Risks:**
-  - Supply cannot triple without proportional GeCl₄ increase
-  - Chinese export controls directly constrain capacity expansion
-  - Demand pull-forward could exhaust western GeCl₄ stocks
-
----
 
 ## DEPENDENCIES
 
@@ -438,10 +140,10 @@ Three critical inputs feed fiber production: germanium tetrachloride as the core
 
 ## SO WHAT
 
-### Market signals — What is the price telling us?
-**Teaser:** Fiber prices at 7-year high. Germanium up 4.5x since Jan 2024. Lead times past 60 weeks. At least one major manufacturer sold out through 2026.
+### Block 1 — Market signals
 
-**Analysis:**
+*What is the price telling us?*
+**Teaser:** Fiber prices reaching 7-year highs alongside a 4.5x germanium price rise and 60+ week lead times are telling us that AI datacenter demand has pulled forward years of fiber industry orders into a supply chain that cannot expand fast enough to meet them.
 
 The fiber optic supply chain is exhibiting classic shortage pricing across every major input simultaneously — a pattern not seen since the telecom buildout of 2000. Standard telecom fiber (G.652D) has surged from approximately 20 RMB per core-km to 35-50+ RMB, a 70-120% increase representing a 7-year high. This is not a localized or transient spike. CRU data shows Chinese G.652D bare-fibre prices advanced more than 80% between November 2025 and January 2026 alone, with actual transactions occurring in the 40-50 yuan range.
 
@@ -455,10 +157,10 @@ Lead times tell the operational story. Ribbon fiber, the primary format for data
 
 Corning's actions confirm the severity: by October 2025, the company reportedly stopped selling bare glass fiber to other cable manufacturers in order to preserve supply for its own anchor customers. CEO Wendell Weeks declined to comment directly but acknowledged that “demand for our products relative to our supply puts us in a situation where we are quite tight.” Globally, fiber optic cable prices have climbed from a 2021 low of $3.70 per fibre-km to $6.30 — a 70% increase — with the steepest rises in Europe, India, and China.
 
-### Supply constraints — Why can't supply respond?
-**Teaser:** Three independent bottlenecks — preform equipment, GeCl₄ conversion, helium. CRU estimates 138M fiber-km shortfall in 2026. New capacity won't arrive until end of 2027.
+### Block 2 — Supply constraints
 
-**Analysis:**
+*Why can't supply respond?*
+**Teaser:** Supply cannot respond because three independent bottlenecks — preform deposition equipment from a single Austrian supplier, fiber-grade GeCl₄ from a single Belgian facility, and a constrained global helium market — must all expand simultaneously and none of them does before late 2027.
 
 **Preform manufacturing equipment**
 
@@ -484,10 +186,10 @@ Global helium supply has been disrupted by plant outages in Russia and the Unite
 
 > CRU estimates the global fiber shortfall will reach approximately 138 million fiber-km in 2026 — a shortfall rate of 16.7%. This gap is expected to widen in 2027. New preform capacity initiated in 2025 will not reach commercialization until end of 2027 at the earliest. Industry consensus: the price uptrend will persist through at least 2026-2027, with the full bull cycle spanning 2 to 3 years.
 
-### Competing demand — Who else needs this?
-**Teaser:** AI datacenters, $42B federal broadband, military drones — all competing for the same fiber. Manufacturers cannibalizing telecom production for higher-margin datacenter fiber.
+### Block 3 — Competing demand
 
-**Analysis:**
+*Who else needs this?*
+**Teaser:** AI datacenter buildout, the $42B federal BEAD broadband program, military drone fiber, and continued telecom expansion are all competing for the same fixed pool of fiber output, with manufacturers actively cannibalizing telecom production for higher-margin datacenter products.
 
 **Federal broadband (BEAD)**
 
@@ -505,10 +207,10 @@ Perhaps the most underappreciated dynamic: fiber manufacturers are actively shif
 
 Traditional telecom operators are getting squeezed from both sides: paying higher prices and waiting longer. Hyperscalers spent $416 billion on infrastructure in 2025, while global telecom capex is expected to decline 2% in 2026 (Dell'Oro Group). In a supply-constrained market, whoever pays more gets served first.
 
-### Geopolitical risk — How could it get worse?
-**Teaser:** China controls 83% of germanium under export licensing. US ban suspended until Nov 2026. Western buyers paying 3.5x premium. Reimposition = supply shock.
+### Block 4 — Geopolitical risk
 
-**Analysis:**
+*How could it get worse?*
+**Teaser:** It gets worse if the November 2026 US-targeted Chinese germanium export ban suspension expires and is reimposed — western fiber manufacturers would lose access to ~120 t/yr of Chinese primary germanium that reaches them via third-country re-exports today.
 
 In August 2023, MOFCOM placed export licensing requirements on six germanium products. Chinese exports dropped approximately 55%. In December 2024, China banned all germanium exports to the United States. Suspended until November 2026, but the global dual-use license requirement remains in full force.
 
@@ -520,10 +222,10 @@ Prysmian renewed its Umicore supply agreement in 2025, accepting a significant p
 
 > The November 2026 deadline represents a binary risk event. A reimposition of the US export ban — or further tightening to restrict flows to Belgium — would send an immediate supply shock through an already constrained market. Even without a ban, the persistent uncertainty functions as a de facto tax on western buyers.
 
-### Supply response — What's being done?
-**Teaser:** DRC ramping to Umicore. 5N Plus facility decision Nov 2026. All projects add feedstock — none add GeCl₄ conversion outside Umicore. Bottleneck concentrates further.
+### Block 5 — Supply response
 
-**Analysis:**
+*What's being done?*
+**Teaser:** Three western supply responses are underway — STL/Gécamines DRC tailings feeding Umicore, 5N Plus pursuing fiber-grade GeCl₄ qualification, and Corning building the world's largest cable plant — but none of them adds GeCl₄ conversion capacity outside Umicore, so the bottleneck concentrates further as feedstock expands.
 
 **Umicore — EU Critical Raw Materials Act**
 Two EU-backed strategic projects: one focused on increasing germanium recovery yields, the other on new recycling technologies for complex waste. Meaningful process improvements — but optimization of an existing facility, not greenfield expansion. They improve Umicore's position without breaking the single-source dependency.
@@ -542,10 +244,10 @@ Acquired by China's Vital Materials in December 2020. Now operates as Vital Pure
 
 > Every expansion project adds raw germanium feedstock. None add GeCl₄ conversion capacity outside of Umicore's single facility in Belgium. The feedstock constraint eases gradually. The conversion bottleneck concentrates further. Umicore's position strengthens with every tonne of new feedstock that has nowhere else to go.
 
-### Technology — What could change the game?
-**Teaser:** Hollow-core fiber eliminates germanium entirely. Microsoft deploying. ~20,000 km by end 2026 vs billions installed. Arrives after the crisis peaks.
+### Block 6 — Technology
 
-**Analysis:**
+*What could change the game?*
+**Teaser:** Hollow-core fiber eliminates germanium entirely by guiding light through air rather than doped glass — Microsoft is already deploying it on Azure — but the technology arrives at scale around 2028-2030, well after the current supply crisis peaks, and even then displaces only a fraction of installed fiber.
 
 **Hollow-core fiber (HCF)**
 
@@ -590,6 +292,14 @@ Reduces near-term demand for BABA-compliant fiber. But frees capacity for datace
 
 ## WHERE THE MONEY IS
 
+### Idea list
+
+*Grouped by supply tree layer, from preform manufacturing through substitution technology and parallel constrained inputs.*
+
+---
+
+#### Preform / Cable Manufacturer layer
+
 ### Corning · GLW · NYSE · Chokepoint holder
 **Hook:** ~40% of global fiber manufacturing capacity. Inventor of Contour cable for AI datacenter workloads.
 **Detail:** Sold out through 2026. Stopped selling bare glass to competitors. $6B Meta anchor deal. Building world's largest cable plant in Hickory, NC. Pricing power from structural shortage.
@@ -602,21 +312,37 @@ Reduces near-term demand for BABA-compliant fiber. But frees capacity for datace
 **Hook:** Closest thing to a pure-play on AI-driven fiber demand. Over 50% of revenue from the US.
 **Detail:** Tripling optical fiber output for US market. Entirely dependent on Umicore for GeCl₄. Debt-free. Stock +155% in 2025. AFL subsidiary provides BABA-compliant US cable for defense and BEAD.
 
+### YOFC · 6869 · HKEX · Technology
+**Hook:** China's largest fiber manufacturer. World-record 0.040 dB/km hollow-core fiber in lab.
+**Detail:** 3,500t/yr preform capacity. Dual exposure: benefits from conventional supply tightness today while building HCF optionality. 91.2 km drawn from a single preform. Also developing multicore fiber.
+
+---
+
+#### Equipment layer (non-tree)
+
 ### Rosendahl Nextrom · Private · Knill Gruppe (Austria) · Chokepoint holder
 **Hook:** Near-monopoly on preform deposition equipment — MCVD, PCVD, OVD, VAD systems.
 **Detail:** Defines the capacity ceiling for the entire fiber industry. 18-24 month delivery backlogs. Hundreds of systems delivered since 1990. Not directly investable but determines the timeline for everyone else.
 
-### YOFC · 6869 · HKEX · Technology
-**Hook:** China's largest fiber manufacturer. World-record 0.040 dB/km hollow-core fiber in lab.
-**Detail:** 3,500t/yr preform capacity. Dual exposure: benefits from conventional supply tightness today while building HCF optionality. 91.2 km drawn from a single preform. Also developing multicore fiber.
+---
+
+#### Substitution / Technology (non-tree)
 
 ### Hollow-core fiber ecosystem · Thematic · Technology
 **Hook:** Eliminates germanium from fiber entirely. Light through air, not doped glass. 30% lower latency.
 **Detail:** Microsoft deploying on Azure (1,280 km, zero failures). Relativity Networks ($10.7M raised, Prysmian-backed). Lumenisity (Microsoft acquisition). ~1,000x current fiber price. Pre-commercial but rapidly advancing.
 
+---
+
+#### Parallel constrained input (non-tree)
+
 ### Helium · Physical input · Constrained input
 **Hook:** Third independent bottleneck in fiber production. No substitute. Cannot be manufactured or recycled.
 **Detail:** Price +135% over two years. US Federal Helium Reserve nearing depletion. Fiber manufacturers competing with semiconductor fabs, MRI systems, and space launch for supply.
+
+---
+
+### Full briefs
 
 #### Corning — Full Brief
 *GLW · NYSE*
@@ -882,21 +608,65 @@ Reduces near-term demand for BABA-compliant fiber. But frees capacity for datace
 
 ---
 
+## CATALYSTS
+
+### Near-term (next 6 months)
+- **April 28, 2026** — Corning Q1 2026 earnings (Optical Communications segment trajectory; Hickory plant ramp commentary)
+- **April-May 2026** — Prysmian Q1 2026 earnings (preform supply contracts, BEAD pipeline visibility)
+- **May 2026** — Fujikura Q4 FY26 earnings (US manufacturing capacity expansion update, AFL subsidiary defense backlog)
+- **June 2026** — 5N Plus fiber-grade GeCl₄ commercial qualification update (status of pursuit of second western GeCl₄ supplier role)
+- **July-August 2026** — YOFC interim results (Chinese fiber capacity utilization, hollow-core fiber commercial milestones)
+- **August 2026** — three-year anniversary of MOFCOM germanium export licensing (Aug 2023); possible policy review affecting GeCl₄ supply
+
+### Medium-term (6-12 months)
+- **November 27, 2026** — US-targeted Chinese export ban suspension expiry (**binary catalyst** — reimposition would tighten western GeCl₄ supply for fiber manufacturers)
+- **Q1 2027** — Hickory mega-plant first production (Corning's Meta-anchored facility — North Carolina)
+- **Q1 2027** — STL/Gécamines DRC tailings full-rate germanium production under Umicore offtake (relieves Umicore feedstock constraint, indirectly relieves fiber chain)
+- **Q2 2027** — Microsoft Azure hollow-core fiber commercial deployment expansion (validation of HCF for production AI workloads)
+- **Q3 2027** — BEAD broadband deployment ramp (state-level fiber procurement begins at scale)
+
+### Long-term (12+ months)
+- **2028** — Hollow-core fiber share of new fiber deployments expected to reach 5-10% per IOWN Forum roadmap
+- **2028-2029** — US Defense Production Act Title III investments in domestic fiber and germanium capacity expected to deploy
+- **2028** — Corning Springboard plan target: $11B incremental annualized sales (testable trajectory for AI fiber thesis)
+- **2029-2030** — Multicore fiber commercial transition (potential further reduction in per-strand fiber-km demand if multicore takes share)
+- **2030+** — Hollow-core fiber commercialization at scale could begin meaningfully displacing germanium-doped fiber in datacenter applications
+
+---
+
 ## CONNECTED INPUTS
 
 ### Upstream
-- Germanium (linked)
-- Silicon tetrachloride
-- Helium
+Fiber is a component chain whose production depends on three upstream raw material chains, each with its own input page on the platform:
+
+- **Germanium** (linked) — fiber-grade germanium tetrachloride (GeCl₄) is doped into the fiber core to create the refractive index gradient that guides light. ~87 t of refined germanium enters the fiber chain annually as GeCl₄. Western fiber manufacturers depend on Umicore (Belgium) as their sole non-Chinese GeCl₄ supplier; Chinese fiber manufacturers depend on Yunnan Chihong, Lincang Xinyuan, and other Chinese state refiners.
+
+- **Silicon tetrachloride (SiCl₄)** — the primary glass body of the fiber. Produced from high-purity quartz sand at multiple suppliers globally. Less concentrated than germanium but high-purity grades are non-trivial to source.
+
+- **Helium** — used to cool the glass during fiber drawing at 10-20 m/s in draw towers. There is no substitute. Fiber manufacturers compete with semiconductor fabs, MRI systems, and space launch for a constrained global helium supply.
 
 ### Downstream
-- AI datacenters
-- Subsea cables
-- Military / UAV
+Finished fiber optic cable feeds multiple downstream end-use chains, each potentially its own input page:
+
+- **AI datacenters** — fiber connects GPU clusters, spine-leaf switching networks, and datacenter interconnects. AI datacenter racks require ~36x more fiber than traditional CPU racks. Primary growth vector for fiber demand through 2030.
+
+- **Telecom long-haul and FTTH** — backbone telecommunications networks and fiber-to-the-home deployments. Stable mature market with periodic upgrade cycles.
+
+- **Subsea cables** — transcontinental submarine fiber connecting cloud regions. Long lead times, premium pricing, and increasing strategic importance for hyperscalers.
+
+- **Military and UAV** — defense fiber including military drones (~50-60M km/yr of G.657A demand growing rapidly), tactical communications, and platform integration. BABA-compliant US-made fiber commands premium pricing.
+
+- **BEAD broadband program** — the $42B US federal broadband infrastructure program is entering deployment phase in 2026. Competes with datacenter and military demand for the same fiber supply.
 
 ---
 
 ## META
-- **Generated:** 2026-04-24T22:35:45.383Z
-- **Source file:** /app/input/fiber-optic-cable/page.tsx
-- **Extract script:** /scripts/extract-input-page.ts
+- **Vertical:** AI Infrastructure
+- **Layer:** Component / Manufacturing
+- **Chain position:** Component chain consuming GeCl₄ (germanium chain), SiCl₄ (silica chain), and helium; feeds AI datacenter, telecom, subsea, military/UAV, and BEAD broadband end-use chains
+- **Status:** Constrained (preform equipment monopoly, GeCl₄ chokepoint, helium scarcity converging)
+- **Research dossier:** fiber-optic-cable-research-dossier.md
+- **Framework version:** Stillpoint Master Framework v5.2
+- **Writing agent:** Claude (Stillpoint Intelligence)
+- **Page generated:** 2026-04-24
+- **Last updated:** 2026-04-24

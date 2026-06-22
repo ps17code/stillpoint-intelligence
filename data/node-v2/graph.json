@@ -2,91 +2,301 @@
   "_meta": {
     "version": "v2",
     "description": "Node-generation-engine graph store. Holds class nodes (rawmat / intermediate / component), entity nodes (deposit / mine / refinery), and company nodes. Grows per material run.",
-    "materials_run": ["germanium"],
-    "last_run": "2026-06-22"
+    "materials_run": [
+      "germanium"
+    ],
+    "last_run": "2026-06-22",
+    "note": "Full global germanium source set generated via Module 3 Step 2 enumeration + per-node web research. Non-producing sites terminate (no downstream edge)."
   },
-
   "classes": {
     "class_rawmat_germanium": {
       "kind": "class",
       "class_id": "class_rawmat_germanium",
       "class_type": "rawmat",
       "name": "Germanium",
-      "aliases": ["germanium", "Ge", "atomic number 32"],
+      "aliases": [
+        "germanium",
+        "Ge",
+        "atomic number 32"
+      ],
       "description": "A brittle, grayish-white metalloid recovered almost entirely as a byproduct of zinc smelting and, secondarily, from coal fly ash. Not mined directly at scale. Major end uses are fiber optics, infrared optics, semiconductors and solar cells. Supply is highly concentrated in China, and Chinese export controls since 2023 have split the market into a low domestic price and a much higher Western price.",
       "supply": {
         "market_price": {
           "primary_benchmark": {
-            "value": 6150, "unit": "USD/kg", "form": "germanium metal", "location": "USA in-warehouse", "as_of": "2026-06-01",
+            "value": 6150,
+            "unit": "USD/kg",
+            "form": "germanium metal",
+            "location": "USA in-warehouse",
+            "as_of": "2026-06-01",
             "note": "Western-available price — material that has cleared Chinese export controls.",
-            "source": { "name": "Shanghai Metals Market (SMM), USA in-warehouse benchmark", "url": "https://rare-earth-mining.com/germanium-price/", "retrieved": "2026-06-22" }
+            "source": {
+              "name": "Shanghai Metals Market (SMM), USA in-warehouse benchmark",
+              "url": "https://rare-earth-mining.com/germanium-price/",
+              "retrieved": "2026-06-22"
+            }
           },
           "reference_prices": [
-            { "value": 2673.66, "unit": "USD/kg", "form": "germanium metal 99.9999%", "location": "China domestic", "as_of": "2026-06-01", "note": "Shown for the export-control spread; not transactable by Western buyers", "source": { "name": "SMM benchmark SMM-GE-GI-001", "retrieved": "2026-06-22" } },
-            { "value": 2850, "unit": "USD/kg", "form": "germanium dioxide (GeO2)", "as_of": "2025-10", "source": { "name": "USGS MCS 2026", "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf", "retrieved": "2026-06-22" } }
+            {
+              "value": 2673.66,
+              "unit": "USD/kg",
+              "form": "germanium metal 99.9999%",
+              "location": "China domestic",
+              "as_of": "2026-06-01",
+              "note": "Shown for the export-control spread; not transactable by Western buyers",
+              "source": {
+                "name": "SMM benchmark SMM-GE-GI-001",
+                "retrieved": "2026-06-22"
+              }
+            },
+            {
+              "value": 2850,
+              "unit": "USD/kg",
+              "form": "germanium dioxide (GeO2)",
+              "as_of": "2025-10",
+              "source": {
+                "name": "USGS MCS 2026",
+                "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf",
+                "retrieved": "2026-06-22"
+              }
+            }
           ]
         },
         "annual_production": {
-          "value": 135, "unit": "t/yr", "measure": "global refinery production (primary)", "value_usd": 830250000,
+          "value": 135,
+          "unit": "t/yr",
+          "measure": "global refinery production (primary)",
+          "value_usd": 830250000,
           "value_usd_basis": "computed: 135 t x 1000 x 6,150 USD/kg (Western benchmark)",
-          "source": { "name": "USGS Mineral Resources Program (130-140 t/yr est.)", "retrieved": "2026-06-22" }
+          "source": {
+            "name": "USGS Mineral Resources Program (130-140 t/yr est.)",
+            "retrieved": "2026-06-22"
+          }
         },
-        "total_reserve": { "value": null, "unit": "t", "basis": "not_quantified", "value_usd": null, "source": { "name": "USGS MCS 2026", "note": "USGS states germanium reserves are not widely reported at mine or country level; no reliable global reserve figure exists.", "retrieved": "2026-06-22" } },
-        "total_resource": { "value": null, "unit": "t", "basis": "not_quantified", "value_usd": null, "qualitative": "Resources are associated with certain zinc and lead-zinc-copper sulfide ores and with coal deposits; substantial germanium-bearing deposits are in China, DRC, Russia, and the United States.", "source": { "name": "USGS MCS 2026", "retrieved": "2026-06-22" } },
+        "total_reserve": {
+          "value": null,
+          "unit": "t",
+          "basis": "not_quantified",
+          "value_usd": null,
+          "source": {
+            "name": "USGS MCS 2026",
+            "note": "USGS states germanium reserves are not widely reported at mine or country level; no reliable global reserve figure exists.",
+            "retrieved": "2026-06-22"
+          }
+        },
+        "total_resource": {
+          "value": null,
+          "unit": "t",
+          "basis": "not_quantified",
+          "value_usd": null,
+          "qualitative": "Resources are associated with certain zinc and lead-zinc-copper sulfide ores and with coal deposits; substantial germanium-bearing deposits are in China, DRC, Russia, and the United States.",
+          "source": {
+            "name": "USGS MCS 2026",
+            "retrieved": "2026-06-22"
+          }
+        },
         "by_country": [
-          { "country": "China", "production_share_pct": 80, "reserve": { "value": null, "unit": "t", "basis": "not_quantified" }, "note": "~80% of global refined output; zinc smelters in Yunnan & Guangdong, plus lignite-derived metal", "source": { "name": "USGS MCS 2026 / SMM", "retrieved": "2026-06-22" } },
-          { "country": "DRC", "production_share_pct": null, "reserve": { "value": null, "unit": "t", "basis": "not_quantified" }, "note": "Big Hill tailings (STL/Gécamines), ~30 t/yr plant; emerging Western-aligned source", "source": { "name": "USGS MCS 2026", "retrieved": "2026-06-22" } },
-          { "country": "United States", "production_share_pct": null, "reserve": { "value": null, "unit": "t", "basis": "not_quantified" }, "note": "Alaska zinc concentrates (Ge byproduct); Tennessee/Clarksville smelter recovery (suspended Nov 2023)", "source": { "name": "USGS MCS 2026", "retrieved": "2026-06-22" } }
+          {
+            "country": "China",
+            "production_share_pct": 80,
+            "reserve": {
+              "value": null,
+              "unit": "t",
+              "basis": "not_quantified"
+            },
+            "note": "~80% of global refined output; zinc smelters in Yunnan & Guangdong, plus lignite-derived metal",
+            "source": {
+              "name": "USGS MCS 2026 / SMM",
+              "retrieved": "2026-06-22"
+            }
+          },
+          {
+            "country": "DRC",
+            "production_share_pct": null,
+            "reserve": {
+              "value": null,
+              "unit": "t",
+              "basis": "not_quantified"
+            },
+            "note": "Big Hill tailings (STL/Gécamines), ~30 t/yr plant; emerging Western-aligned source",
+            "source": {
+              "name": "USGS MCS 2026",
+              "retrieved": "2026-06-22"
+            }
+          },
+          {
+            "country": "United States",
+            "production_share_pct": null,
+            "reserve": {
+              "value": null,
+              "unit": "t",
+              "basis": "not_quantified"
+            },
+            "note": "Alaska zinc concentrates (Ge byproduct); Tennessee/Clarksville smelter recovery (suspended Nov 2023)",
+            "source": {
+              "name": "USGS MCS 2026",
+              "retrieved": "2026-06-22"
+            }
+          }
         ]
       },
-      "entities": ["dep_wulantuga", "mine_wulantuga_shengli", "refinery_chinese_state_ge"],
+      "entities": [
+        "dep_wulantuga",
+        "mine_wulantuga_shengli",
+        "refinery_chinese_state_ge",
+        "dep_lincang_coal_ge",
+        "dep_yimin_coal_ge",
+        "mine_huize_pbzn",
+        "mine_yiliang_pbzn",
+        "refinery_lincang_xinyuan",
+        "refinery_chihong",
+        "dep_russia_spetsugli_pavlovskoye_ge",
+        "dep_russia_shkotovskoye_ge",
+        "dep_russia_rakovskoye_ge",
+        "dep_russia_bikinskoye_ge",
+        "dep_russia_novikovskoye_ge",
+        "dep_russia_minor_ge_occurrences",
+        "dep_ukraine_donbas_ge",
+        "dep_ukraine_lviv_volyn_ge",
+        "refinery_jsc_germanium_krasnoyarsk",
+        "smelter_kazzinc_ukmc",
+        "refinery_umicore",
+        "refinery_ppm_vital",
+        "dep_almalyk_uztmk",
+        "smelter_nyrstar_eu",
+        "smelter_nyrstar_hobart",
+        "smelter_boliden",
+        "dep_red_dog",
+        "dep_middle_tennessee",
+        "dep_pend_oreille",
+        "dep_empire_state",
+        "dep_apex",
+        "dep_brook_mine",
+        "smelter_teck_trail",
+        "smelter_nyrstar_clarksville",
+        "dep_big_hill",
+        "plant_stl_lubumbashi",
+        "dep_kipushi",
+        "dep_tsumeb",
+        "dep_tsumeb_slag",
+        "dep_khusib_springs",
+        "dep_central_otavi",
+        "dep_tres_marias",
+        "dep_san_vicente",
+        "dep_cerro_lindo"
+      ],
       "input_classes": [],
-      "output_classes": ["class_intermediate_gecl4", "class_intermediate_geo2", "class_intermediate_ge_metal", "class_intermediate_ge_wafer"]
+      "output_classes": [
+        "class_intermediate_gecl4",
+        "class_intermediate_geo2",
+        "class_intermediate_ge_metal",
+        "class_intermediate_ge_wafer"
+      ]
     },
-
     "class_intermediate_gecl4": {
-      "kind": "class", "class_id": "class_intermediate_gecl4", "class_type": "intermediate", "name": "Germanium Tetrachloride (GeCl₄)",
+      "kind": "class",
+      "class_id": "class_intermediate_gecl4",
+      "class_type": "intermediate",
+      "name": "Germanium Tetrachloride (GeCl₄)",
       "description": "The dominant traded refined form of germanium — a volatile liquid deposited into silica glass preforms to raise the refractive index of optical fiber. Capability is China-dominant, with Umicore (Belgium) the main Western producer.",
-      "entities": [], "input_classes": ["class_rawmat_germanium"], "output_classes": ["class_component_optical_fiber"]
+      "entities": [],
+      "input_classes": [
+        "class_rawmat_germanium"
+      ],
+      "output_classes": [
+        "class_component_optical_fiber"
+      ]
     },
     "class_intermediate_geo2": {
-      "kind": "class", "class_id": "class_intermediate_geo2", "class_type": "intermediate", "name": "Germanium Dioxide (GeO₂)",
+      "kind": "class",
+      "class_id": "class_intermediate_geo2",
+      "class_type": "intermediate",
+      "name": "Germanium Dioxide (GeO₂)",
       "description": "Purified germanium oxide powder, used mainly as a polymerization catalyst for high-clarity PET plastic and as the precursor to other germanium forms.",
-      "entities": [], "input_classes": ["class_rawmat_germanium"], "output_classes": ["class_component_pet_catalyst"]
+      "entities": [],
+      "input_classes": [
+        "class_rawmat_germanium"
+      ],
+      "output_classes": [
+        "class_component_pet_catalyst"
+      ]
     },
     "class_intermediate_ge_metal": {
-      "kind": "class", "class_id": "class_intermediate_ge_metal", "class_type": "intermediate", "name": "Germanium Metal / Crystal",
+      "kind": "class",
+      "class_id": "class_intermediate_ge_metal",
+      "class_type": "intermediate",
+      "name": "Germanium Metal / Crystal",
       "description": "Zone-refined germanium metal and single crystal, transparent across the infrared band — the substrate for infrared lenses and windows in thermal imaging and targeting systems.",
-      "entities": [], "input_classes": ["class_rawmat_germanium"], "output_classes": ["class_component_ir_optics"]
+      "entities": [],
+      "input_classes": [
+        "class_rawmat_germanium"
+      ],
+      "output_classes": [
+        "class_component_ir_optics"
+      ]
     },
     "class_intermediate_ge_wafer": {
-      "kind": "class", "class_id": "class_intermediate_ge_wafer", "class_type": "intermediate", "name": "Germanium Wafers",
+      "kind": "class",
+      "class_id": "class_intermediate_ge_wafer",
+      "class_type": "intermediate",
+      "name": "Germanium Wafers",
       "description": "Polished germanium wafers whose crystal lattice matches gallium arsenide, used as the base for high-efficiency multijunction space solar cells and some high-frequency chips.",
-      "entities": [], "input_classes": ["class_rawmat_germanium"], "output_classes": ["class_component_space_solar"]
+      "entities": [],
+      "input_classes": [
+        "class_rawmat_germanium"
+      ],
+      "output_classes": [
+        "class_component_space_solar"
+      ]
     },
-
     "class_component_optical_fiber": {
-      "kind": "class", "class_id": "class_component_optical_fiber", "class_type": "component", "name": "Optical Fiber",
+      "kind": "class",
+      "class_id": "class_component_optical_fiber",
+      "class_type": "component",
+      "name": "Optical Fiber",
       "description": "Glass fiber that carries light signals across telecom and AI data-center networks; germanium tetrachloride is the dopant that makes the core guide light.",
-      "entities": [], "input_classes": ["class_intermediate_gecl4"], "output_classes": []
+      "entities": [],
+      "input_classes": [
+        "class_intermediate_gecl4"
+      ],
+      "output_classes": []
     },
     "class_component_ir_optics": {
-      "kind": "class", "class_id": "class_component_ir_optics", "class_type": "component", "name": "Infrared Optics",
+      "kind": "class",
+      "class_id": "class_component_ir_optics",
+      "class_type": "component",
+      "name": "Infrared Optics",
       "description": "Lenses and windows that focus heat rather than visible light, used in thermal-imaging, night-vision, and targeting systems.",
-      "entities": [], "input_classes": ["class_intermediate_ge_metal"], "output_classes": []
+      "entities": [],
+      "input_classes": [
+        "class_intermediate_ge_metal"
+      ],
+      "output_classes": []
     },
     "class_component_space_solar": {
-      "kind": "class", "class_id": "class_component_space_solar", "class_type": "component", "name": "Space Solar Cells",
+      "kind": "class",
+      "class_id": "class_component_space_solar",
+      "class_type": "component",
+      "name": "Space Solar Cells",
       "description": "High-efficiency multijunction photovoltaic cells grown on germanium wafers, used to power satellites.",
-      "entities": [], "input_classes": ["class_intermediate_ge_wafer"], "output_classes": []
+      "entities": [],
+      "input_classes": [
+        "class_intermediate_ge_wafer"
+      ],
+      "output_classes": []
     },
     "class_component_pet_catalyst": {
-      "kind": "class", "class_id": "class_component_pet_catalyst", "class_type": "component", "name": "PET Catalyst",
+      "kind": "class",
+      "class_id": "class_component_pet_catalyst",
+      "class_type": "component",
+      "name": "PET Catalyst",
       "description": "Germanium dioxide used as a clean polymerization catalyst for high-clarity PET plastic.",
-      "entities": [], "input_classes": ["class_intermediate_geo2"], "output_classes": []
+      "entities": [],
+      "input_classes": [
+        "class_intermediate_geo2"
+      ],
+      "output_classes": []
     }
   },
-
   "entities": {
     "dep_wulantuga": {
       "kind": "entity",
@@ -98,16 +308,79 @@
       "deposit_category": "coal_lignite",
       "status": "producing",
       "deposit_short_description": "Wulantuga is a coal-hosted (lignite) germanium deposit in the Shengli Coalfield near Xilinhot, Xilingol League, Inner Mongolia — meaning the germanium sits as an organically-bound trace element inside an Early Cretaceous brown-coal seam rather than as a discrete mineral. It is one of the three super-large coal-hosted germanium deposits in the world (with Lincang in Yunnan and Spetsugli in the Russian Far East), which together supply more than half of global industrial germanium, so it anchors China's coal-route primary germanium supply alongside zinc-smelter recovery. The germanium grade averages about 137 ppm on a bulk-coal basis (individual samples range from roughly 22 to over 1,500 ppm), which is high enough to make germanium, not power, the economic driver: recent practice combusts the high-germanium lignite in small and medium power plants and recovers the germanium from the resulting fly ash, so power generation has become secondary to germanium recovery. It was discovered in 1974 by the Coal Geology Bureau of Inner Mongolia and is currently active and producing. The deposit is worked by Ulantuga Coal Co., Ltd. (Xilingol, Inner Mongolia, state-affiliated); no separate resource owner is publicly disclosed, so ownership is treated as that operating company. Contained reserves are reported in the geological literature at about 1,600 t of metallic germanium recoverable from coal with Ge content above 100 ppm (about 1,700 t after extended exploration), against roughly 6 Mt of brown coal above 30 ppm Ge; the annual recovered-germanium output specific to Wulantuga is not publicly disaggregated. Germanium is the strategic by-product while thermal coal is the primary product. Specific offtake agreements for the recovered germanium concentrate are not publicly disclosed.",
-      "owner": [ { "company_id": "co_ulantuga_coal", "company_name": "Ulantuga Coal Co., Ltd.", "stake_pct": 100 } ],
-      "operator": { "company_id": "co_ulantuga_coal", "company_name": "Ulantuga Coal Co., Ltd." },
-      "classes": ["class_rawmat_germanium"],
-      "total_reserve": { "value": 1600, "unit": "t", "measure": "contained metallic germanium recoverable from coal >100 ppm Ge (deposit total)", "basis": "reported", "source": { "name": "Mindat — Wulantuga Ge deposit (1,600 t metallic Ge; ~1,700 t extended); Dai et al., Ge distribution, Shengli coalfield", "url": "https://www.mindat.org/loc-224612.html", "retrieved": "2026-06-22" } },
+      "owner": [
+        {
+          "company_id": "co_ulantuga_coal",
+          "company_name": "Ulantuga Coal Co., Ltd.",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "co_ulantuga_coal",
+        "company_name": "Ulantuga Coal Co., Ltd."
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 1600,
+        "unit": "t",
+        "measure": "contained metallic germanium recoverable from coal >100 ppm Ge (deposit total)",
+        "basis": "reported",
+        "source": {
+          "name": "Mindat — Wulantuga Ge deposit (1,600 t metallic Ge; ~1,700 t extended); Dai et al., Ge distribution, Shengli coalfield",
+          "url": "https://www.mindat.org/loc-224612.html",
+          "retrieved": "2026-06-22"
+        }
+      },
       "produces": [
-        { "form": "germanium (contained, in lignite/coal-ash)", "amount": { "value": 1600, "unit": "t" }, "basis": "reported", "source": { "name": "Mindat / Dai et al. (Int. J. Coal Geology) — ~1,600 t contained Ge", "url": "https://www.sciencedirect.com/science/article/abs/pii/S0166516208002127", "retrieved": "2026-06-22" } },
-        { "form": "thermal coal (lignite, primary product)", "amount": { "value": null, "unit": "t" }, "basis": "not_quantified", "source": { "name": "not publicly disaggregated for the Wulantuga Ge-bearing seam", "url": "", "retrieved": "2026-06-22" } }
+        {
+          "form": "germanium (contained, in lignite/coal-ash)",
+          "amount": {
+            "value": 1600,
+            "unit": "t"
+          },
+          "basis": "reported",
+          "source": {
+            "name": "Mindat / Dai et al. (Int. J. Coal Geology) — ~1,600 t contained Ge",
+            "url": "https://www.sciencedirect.com/science/article/abs/pii/S0166516208002127",
+            "retrieved": "2026-06-22"
+          }
+        },
+        {
+          "form": "thermal coal (lignite, primary product)",
+          "amount": {
+            "value": null,
+            "unit": "t"
+          },
+          "basis": "not_quantified",
+          "source": {
+            "name": "not publicly disaggregated for the Wulantuga Ge-bearing seam",
+            "url": "",
+            "retrieved": "2026-06-22"
+          }
+        }
       ],
       "inputs": [],
-      "outputs": [ { "to_node": "mine_wulantuga_shengli", "to_type": "entity", "traced": true, "form": "germanium-bearing lignite / coal-combustion fly ash (Ge by-product feed)", "internal": true, "carries": [ { "material_id": "mat_germanium", "amount": { "value": null, "unit": "t/yr" } } ], "note": "ON TARGET — resource feeds the host mining/power operation that recovers Ge from fly ash" } ]
+      "outputs": [
+        {
+          "to_node": "mine_wulantuga_shengli",
+          "to_type": "entity",
+          "traced": true,
+          "form": "germanium-bearing lignite / coal-combustion fly ash (Ge by-product feed)",
+          "internal": true,
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "ON TARGET — resource feeds the host mining/power operation that recovers Ge from fly ash"
+        }
+      ]
     },
     "mine_wulantuga_shengli": {
       "kind": "entity",
@@ -118,14 +391,73 @@
       "country": "China",
       "status": "producing",
       "description": "The coal mining and power-generation host operation that works the Wulantuga germanium-bearing lignite in the Shengli Coalfield; germanium is not mined directly but is concentrated in the fly ash when the Ge-rich coal is combusted, and a specialist circuit then recovers a crude germanium concentrate from that ash. The operator is Ulantuga Coal Co., Ltd., a state-affiliated company in Xilingol, Inner Mongolia. It takes in germanium-bearing lignite/ash from the Wulantuga deposit. The process: combust the high-germanium lignite in small and medium power plants, then recover germanium from the resulting fly ash by hydrometallurgical leaching into a crude germanium concentrate; published practice now treats germanium recovery, not power, as the economic driver. It produces a crude germanium concentrate as the on-target output, plus power and bulk ash off-target; the annual recovered-germanium tonnage is not publicly disclosed. The germanium concentrate flows on-target to Chinese germanium refiners (the major refining names are Yunnan Chihong Zinc & Germanium and Yunnan Lincang Xinyuan Germanium Industry); the specific buyer for Wulantuga concentrate is not publicly disclosed.",
-      "owner": [ { "company_id": "co_ulantuga_coal", "company_name": "Ulantuga Coal Co., Ltd.", "stake_pct": 100 } ],
-      "operator": { "company_id": "co_ulantuga_coal", "company_name": "Ulantuga Coal Co., Ltd." },
+      "owner": [
+        {
+          "company_id": "co_ulantuga_coal",
+          "company_name": "Ulantuga Coal Co., Ltd.",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "co_ulantuga_coal",
+        "company_name": "Ulantuga Coal Co., Ltd."
+      },
       "company_id": "co_ulantuga_coal",
-      "classes": ["class_rawmat_germanium"],
+      "classes": [
+        "class_rawmat_germanium"
+      ],
       "process": "High-germanium lignite is combusted for power and a crude germanium concentrate is recovered from the resulting fly ash by hydrometallurgical leaching.",
-      "produces": [ { "form": "crude germanium concentrate (Ge-in-ash)", "amount": { "value": null, "unit": "t/yr" }, "basis": "not_quantified", "source": { "name": "Wulantuga-specific annual Ge recovery not publicly disaggregated; recovery-from-fly-ash route per Molecules 2025 review of Ge from coal by-products", "url": "https://doi.org/10.3390/molecules30081695", "retrieved": "2026-06-22" } } ],
-      "inputs": [ { "from_node": "dep_wulantuga", "to_type": "entity", "form": "germanium-bearing lignite / coal-combustion fly ash", "internal": true, "carries": [ { "material_id": "mat_germanium", "amount": { "value": null, "unit": "t/yr" } } ] } ],
-      "outputs": [ { "to_node": "refinery_chinese_state_ge", "to_type": "entity", "traced": true, "form": "crude germanium concentrate", "internal": false, "carries": [ { "material_id": "mat_germanium", "amount": { "value": null, "unit": "t/yr" } } ], "note": "ON TARGET — crude Ge concentrate shipped to a domestic Chinese refiner; named offtake not disclosed" } ]
+      "produces": [
+        {
+          "form": "crude germanium concentrate (Ge-in-ash)",
+          "amount": {
+            "value": null,
+            "unit": "t/yr"
+          },
+          "basis": "not_quantified",
+          "source": {
+            "name": "Wulantuga-specific annual Ge recovery not publicly disaggregated; recovery-from-fly-ash route per Molecules 2025 review of Ge from coal by-products",
+            "url": "https://doi.org/10.3390/molecules30081695",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "from_node": "dep_wulantuga",
+          "to_type": "entity",
+          "form": "germanium-bearing lignite / coal-combustion fly ash",
+          "internal": true,
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "to_node": "refinery_chinese_state_ge",
+          "to_type": "entity",
+          "traced": true,
+          "form": "crude germanium concentrate",
+          "internal": false,
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "ON TARGET — crude Ge concentrate shipped to a domestic Chinese refiner; named offtake not disclosed"
+        }
+      ]
     },
     "refinery_chinese_state_ge": {
       "kind": "entity",
@@ -136,14 +468,2883 @@
       "country": "China",
       "status": "producing",
       "description": "The domestic Chinese refining stage that converts the crude germanium concentrate recovered from Wulantuga (and other coal-ash sources) into refined germanium products. China accounts for roughly 80-82% of global refined germanium output, and the two named majors are Yunnan Chihong Zinc & Germanium and Yunnan Lincang Xinyuan Germanium Industry (Shenzhen: 002428), the latter with material-grade germanium capacity of about 47.6 t/yr and recent actual output near 40 t/yr (about 20 t from its own mines), expanding toward roughly 75 t/yr. The specific refiner taking Wulantuga's concentrate is not publicly disclosed, so this node represents the Chinese germanium refining layer rather than a single named facility. The process chlorinates and distills the crude concentrate, then reduces and zone-refines it into germanium dioxide (GeO2) and germanium metal. Output crosses out of the raw-material layer at the market boundary as refined germanium metal / GeO2 sold into the (largely domestic, export-licensed) germanium market; benchmark Western prices rose through 2024-2026 (germanium metal around $6,150/kg, GeO2 around $2,125-2,850/kg). Specific commercial offtake agreements are not publicly disclosed.",
-      "owner": [ { "company_id": "co_chinese_ge_refiners", "company_name": "Chinese germanium refiners (Yunnan Chihong / Yunnan Lincang Xinyuan and others)", "stake_pct": null } ],
-      "operator": { "company_id": "co_chinese_ge_refiners", "company_name": "Chinese germanium refiners (aggregate)" },
+      "owner": [
+        {
+          "company_id": "co_chinese_ge_refiners",
+          "company_name": "Chinese germanium refiners (Yunnan Chihong / Yunnan Lincang Xinyuan and others)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "co_chinese_ge_refiners",
+        "company_name": "Chinese germanium refiners (aggregate)"
+      },
       "company_id": "co_chinese_ge_refiners",
-      "classes": ["class_rawmat_germanium"],
+      "classes": [
+        "class_rawmat_germanium"
+      ],
       "process": "Crude Ge concentrate is chlorinated, distilled, then reduced and zone-refined into germanium dioxide and germanium metal.",
-      "produces": [ { "form": "germanium metal + germanium dioxide (GeO2)", "amount": { "value": null, "unit": "t/yr" }, "basis": "not_quantified", "source": { "name": "Wulantuga-specific refined output not disaggregated; China ~80-82% of global refined Ge per USGS MCS 2025", "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-germanium.pdf", "retrieved": "2026-06-22" } } ],
-      "inputs": [ { "from_node": "mine_wulantuga_shengli", "to_type": "entity", "form": "crude germanium concentrate", "internal": false, "carries": [ { "material_id": "mat_germanium", "amount": { "value": null, "unit": "t/yr" } } ] } ],
-      "outputs": [ { "to_node": "class_rawmat_germanium", "to_type": "class", "traced": false, "form": "refined germanium metal / GeO2", "internal": false, "carries": [ { "material_id": "mat_germanium", "amount": { "value": null, "unit": "t/yr" } } ], "note": "LAYER CROSSING — refined Ge metal/GeO2 ships to the germanium market (class boundary); germanium leaves the raw-material layer here" } ]
+      "produces": [
+        {
+          "form": "germanium metal + germanium dioxide (GeO2)",
+          "amount": {
+            "value": null,
+            "unit": "t/yr"
+          },
+          "basis": "not_quantified",
+          "source": {
+            "name": "Wulantuga-specific refined output not disaggregated; China ~80-82% of global refined Ge per USGS MCS 2025",
+            "url": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-germanium.pdf",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "from_node": "mine_wulantuga_shengli",
+          "to_type": "entity",
+          "form": "crude germanium concentrate",
+          "internal": false,
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "to_node": "class_rawmat_germanium",
+          "to_type": "class",
+          "traced": false,
+          "form": "refined germanium metal / GeO2",
+          "internal": false,
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "LAYER CROSSING — refined Ge metal/GeO2 ships to the germanium market (class boundary); germanium leaves the raw-material layer here"
+        }
+      ]
+    },
+    "dep_lincang_coal_ge": {
+      "kind": "entity",
+      "node_id": "dep_lincang_coal_ge",
+      "node_type": "deposit",
+      "name": "Lincang Coal-Germanium Deposit (Dazhai / Zhongzhai / Meiziqing)",
+      "location": "Bangmai Basin, Linxiang District, Lincang Prefecture, Yunnan Province",
+      "country": "China",
+      "deposit_category": "coal_lignite",
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "Lincang is a giant coal-seam-hosted (lignite) germanium deposit in the Miocene Bangmai Formation, Yunnan, deposited above a Ge-rich granite batholith that sourced the mineralizing hydrothermal fluids. Ge resides in organic matter within the basal coal-bearing unit, interlayered with siliceous rocks/limestone. Grades are exceptional: Ge ranges from tens of µg/g to ~2,500 µg/g, averaging ~847 ppm at Dazhai and ~833 ppm at Zhongzhai, with a deposit-wide average ~850 ppm. Peer-reviewed reviews (Hu et al./Dai et al., ScienceDirect S0169136809000225) put contained Ge at >=1,000 t. Per-orebody 'ensured' reserves were reported as Dazhai 613 t (31 Dec 2009), Meiziqing 76 t (31 Dec 2009) and Zhongzhai 39 t (31 Oct 2010); earlier proven figures were ~800 t (Dazhai) and >=200 t (Zhongzhai). The deposit is mined and operated by Yunnan Lincang Xinyuan Germanium Industry (SZSE 002428), which holds captive lignite mines and reported 940 t of Ge reserves (~27% of China's total) as of 2023. Xinyuan produced 47.7 t of Ge ingot in 2023 (+53% YoY); deposit-level mined Ge feeds its in-house refining rather than being reported separately, so annual output here is attributed to the integrated operator (treated as ~48 t/yr Ge in 2023).",
+      "owner": [
+        {
+          "company_id": "company_lincang_xinyuan",
+          "company_name": "Yunnan Lincang Xinyuan Germanium Industry Co., Ltd.",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "company_lincang_xinyuan",
+        "company_name": "Yunnan Lincang Xinyuan Germanium Industry Co., Ltd."
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 940,
+        "unit": "t",
+        "measure": "contained_ge_company_reported",
+        "basis": "operator_reported",
+        "source": {
+          "name": "Yunnan Lincang Xinyuan Germanium Industry (002428) — 940 t Ge reserves, ~27% of China total (as reported 2023); cross-checked vs. peer-reviewed >=1,000 t contained Ge (Dai et al., ScienceDirect)",
+          "url": "https://www.sciencedirect.com/science/article/abs/pii/S0169136809000225",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 47.7,
+        "unit": "t/yr",
+        "measure": "ge_ingot_operator_reported",
+        "year": 2023,
+        "basis": "operator_reported",
+        "sources": [
+          {
+            "name": "Futu/moomoo — Lincang Xinyuan produced 47.7 t Ge ingot in 2023 (+53% YoY)",
+            "url": "https://news.futunn.com/en/post/52526032/last-year-the-price-of-germanium-doubled-and-yunnan-lincang"
+          },
+          {
+            "name": "RFC Ambrian Germanium report 2025 / China major producers",
+            "url": "https://www.rfcambrian.com/insights/germanium-china-in-control-for-now/"
+          }
+        ]
+      },
+      "grade_ppm": 850,
+      "produces": [
+        {
+          "form": "germanium_in_lignite_ore",
+          "amount": {
+            "value": 47.7,
+            "unit": "t/yr"
+          },
+          "basis": "operator_reported",
+          "source": {
+            "name": "Lincang Xinyuan 2023 Ge ingot output (integrated mine-to-refinery)",
+            "url": "https://news.futunn.com/en/post/52526032/last-year-the-price-of-germanium-doubled-and-yunnan-lincang",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [],
+      "outputs": [
+        {
+          "to_node": "refinery_lincang_xinyuan",
+          "to_type": "entity",
+          "traced": true,
+          "form": "ge_concentrate_from_lignite",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": 47.7,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Vertically integrated: captive Lincang lignite mines feed Xinyuan's own Ge refining/ingot plant."
+        }
+      ]
+    },
+    "dep_yimin_coal_ge": {
+      "kind": "entity",
+      "node_id": "dep_yimin_coal_ge",
+      "node_type": "deposit",
+      "name": "Yimin Coal-Germanium Deposit (Wumuchang district)",
+      "location": "Yimin Coalfield, Hailar Basin, Hulunbuir, Inner Mongolia",
+      "country": "China",
+      "deposit_category": "coal_lignite",
+      "status": "undeveloped",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Yimin is China's third-largest coal-hosted germanium deposit, after Lincang and Wulantuga, in the Lower Cretaceous coal-bearing strata of the Hailar Basin. It was discovered in 1992 by the No. 109 Geological Team of the Inner Mongolia Coal Geological Bureau. High-Ge coals carry Ge with an organic and partial sulfur affinity (negative correlation with Al, positive with S); Ge was emplaced by hydrothermal fluids percolating from overlying porous conglomerates into the coal top during early diagenesis. Ge is concentrated at the deposit margins, decreasing toward the centre. Seven coal seams exceed 100 ppm Ge; individual sample Ge ranges from <1 to 470 ppm, mostly 50-200 ppm. The estimated metallic Ge reserve is ~4,000 t (Springer/ScienceDirect geochemical studies), making the Wumuchang sub-deposit arguably the world's largest germanium-bearing coal accumulation. Critically, despite this endowment the deposit is NOT currently mined for germanium and remains undeveloped for industrial Ge recovery — no commercial Ge extraction plant operates here, in contrast to Lincang and Wulantuga. It therefore presently contributes zero Ge to the supply chain and terminates as a node (no downstream output).",
+      "owner": [],
+      "operator": null,
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 4000,
+        "unit": "t",
+        "measure": "estimated_metallic_ge",
+        "basis": "literature_estimate",
+        "source": {
+          "name": "Distribution Characteristics and Enrichment Model of Germanium in Coal: Yimin Coalfield (Natural Resources Research, Springer) — estimated metallic Ge reserve ~4,000 t",
+          "url": "https://link.springer.com/article/10.1007/s11053-020-09752-x",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_recovered",
+        "year": 2025,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "MDPI Molecules 2025 review (Hydrometallurgical Recovery of Ge from Coal By-Products) — Wumuchang/Yimin is the probably largest Ge-bearing coal deposit but is NOT currently mined",
+            "url": "https://www.mdpi.com/1420-3049/30/8/1695"
+          }
+        ]
+      },
+      "grade_ppm": 200,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "mine_huize_pbzn": {
+      "kind": "entity",
+      "node_id": "mine_huize_pbzn",
+      "node_type": "mine",
+      "name": "Huize Germanium-Enriched Pb-Zn Mine",
+      "location": "Huize County, Qujing, northeastern Yunnan Province",
+      "country": "China",
+      "deposit_category": "sphalerite_zinc",
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "Huize is a world-class, high-grade supergiant carbonate-hosted (Mississippi Valley-type) Zn-Pb-Ag deposit in the Sichuan-Yunnan-Guizhou metallogenic province, northeastern Yunnan. It hosts >7 Mt combined Pb+Zn metal at an exceptional ore grade of ~25-35% Pb+Zn; Chihong cites its Huize zinc-concentrate grade above 27% Zn. The deposit is renowned for germanium enrichment: Ge is incorporated chiefly into the sphalerite lattice by element substitution, with the discrete Ge mineral argutite (GeO2) also reported. Sphalerite carries up to 593 ppm Ge, and the deposit-wide average Ge content is ~65.9 ppm (Mineralium Deposita, Springer 2023; Ore Geology Reviews). The mine is owned and operated by Yunnan Chihong Zinc & Germanium (SSE 600497), which built a ~US$510 M Huize complex able to produce 100,000 t/yr refined zinc and 60,000 t/yr crude lead. Ge is recovered as a by-product of zinc processing and feeds Chihong's germanium refining (company-wide Ge resource ~448-600 t; refining capacity 60 t/yr Ge; ~56 t Ge produced in 2021-2022). Mine-level Ge output is not separately disclosed and is reported via the integrated Chihong refinery.",
+      "owner": [
+        {
+          "company_id": "company_chihong",
+          "company_name": "Yunnan Chihong Zinc & Germanium Co., Ltd.",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "company_chihong",
+        "company_name": "Yunnan Chihong Zinc & Germanium Co., Ltd."
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "contained_ge_mine_level",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Mine-level Ge reserve not separately disclosed; Chihong company-wide Ge resource ~448 t (RFC Ambrian) / >600 t (Chihong). Ore: >7 Mt Pb+Zn at 25-35%, avg Ge 65.9 ppm, sphalerite up to 593 ppm (Mineralium Deposita 2023)",
+          "url": "https://link.springer.com/article/10.1007/s00126-023-01242-3",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_recovered_mine_level",
+        "year": 2022,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Ge output reported at Chihong company level (~56 t Ge in 2022, ~17% of China), not split by mine",
+            "url": "https://en.wikipedia.org/wiki/Chihong_Zinc_and_Germanium"
+          }
+        ]
+      },
+      "grade_ppm": 65.9,
+      "produces": [
+        {
+          "form": "ge_bearing_zinc_concentrate",
+          "amount": {
+            "value": null,
+            "unit": "t/yr"
+          },
+          "basis": "not_quantified",
+          "source": {
+            "name": "Ge recovered as by-product of zinc processing; mine-level Ge tonnage not disclosed",
+            "url": "https://link.springer.com/article/10.1007/s00126-023-01242-3",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [],
+      "outputs": [
+        {
+          "to_node": "refinery_chihong",
+          "to_type": "entity",
+          "traced": true,
+          "form": "ge_bearing_zinc_concentrate",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Ge recovered as by-product during zinc refining at Chihong's integrated Huize/Qujing operations."
+        }
+      ]
+    },
+    "mine_yiliang_pbzn": {
+      "kind": "entity",
+      "node_id": "mine_yiliang_pbzn",
+      "node_type": "mine",
+      "name": "Yiliang (Maoping) Germanium-Rich Pb-Zn Mine",
+      "location": "Yiliang County, Zhaotong, northeastern Yunnan Province",
+      "country": "China",
+      "deposit_category": "sphalerite_zinc",
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "The Yiliang operation centres on the Maoping carbonate-hosted (MVT) Pb-Zn deposit in northeastern Yunnan, mined by Yiliang Chihong Mining Co., a subsidiary of Yunnan Chihong Zinc & Germanium (SSE 600497). Maoping is one of the largest and highest-grade Pb-Zn deposits of the Sichuan-Yunnan-Guizhou province, reported as the district's second-largest at ~12.51 Mt ore, with total Zn+Pb metal reserves >3 Mt at an average Zn+Pb grade >20%; Chihong cites a Yiliang zinc-concentrate grade above 23% Zn. Orebodies are hosted in Devonian and Carboniferous dolostone as veins and massive sulfide ore. It is noted for huge germanium resources: sphalerite is the principal Ge host, with Ge contents up to ~1,300 ppm in regional Sichuan-Yunnan-Guizhou sphalerite, and Maoping sphalerite specifically enriched in Cd and Ge (ScienceDirect, Ore Geology Reviews; Frontiers in Earth Science 2022). Ge is recovered as a by-product of zinc smelting and feeds Chihong's germanium refining (company refining capacity 60 t/yr Ge; ~56 t Ge produced 2021-2022). Mine-level Ge tonnage is not separately disclosed.",
+      "owner": [
+        {
+          "company_id": "company_chihong",
+          "company_name": "Yunnan Chihong Zinc & Germanium Co., Ltd.",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "company_chihong",
+        "company_name": "Yiliang Chihong Mining Co., Ltd. (subsidiary of Yunnan Chihong Zinc & Germanium)"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "contained_ge_mine_level",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Mine-level Ge reserve not disclosed; Maoping ore ~12.51 Mt, >3 Mt Pb+Zn at >20%, Ge-rich sphalerite up to ~1,300 ppm (regional). Chihong company Ge resource ~448-600 t",
+          "url": "https://www.frontiersin.org/journals/earth-science/articles/10.3389/feart.2022.1109112/full",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_recovered_mine_level",
+        "year": 2022,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Ge output reported at Chihong company level (~56 t Ge in 2022), not split by mine",
+            "url": "https://en.wikipedia.org/wiki/Chihong_Zinc_and_Germanium"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        {
+          "form": "ge_bearing_zinc_concentrate",
+          "amount": {
+            "value": null,
+            "unit": "t/yr"
+          },
+          "basis": "not_quantified",
+          "source": {
+            "name": "Ge recovered as by-product of zinc processing; mine-level Ge tonnage not disclosed",
+            "url": "https://www.frontiersin.org/journals/earth-science/articles/10.3389/feart.2022.1109112/full",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [],
+      "outputs": [
+        {
+          "to_node": "refinery_chihong",
+          "to_type": "entity",
+          "traced": true,
+          "form": "ge_bearing_zinc_concentrate",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Ge recovered as by-product during zinc refining at Chihong's integrated operations."
+        }
+      ]
+    },
+    "refinery_lincang_xinyuan": {
+      "kind": "entity",
+      "node_id": "refinery_lincang_xinyuan",
+      "node_type": "refinery",
+      "name": "Yunnan Lincang Xinyuan Germanium Refinery",
+      "location": "Lincang, Yunnan Province",
+      "country": "China",
+      "deposit_category": null,
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "Yunnan Lincang Xinyuan Germanium Industry (SZSE 002428) operates China's largest dedicated coal-Ge refining complex, vertically integrated with its captive Lincang lignite mines. The plant smelts/leaches Ge-rich lignite to a Ge concentrate, then refines to Ge ingot/zone-refined ingot and downstream products (germanium dioxide, germanium tetrachloride). Reported Ge-product capacity reached ~500 t/yr by end-2024 (note: this 'germanium products' figure spans multiple chemical forms, not 500 t contained Ge). Actual contained-Ge output is far smaller: the company produced 47.7 t of Ge ingot in 2023 (+53% YoY) and ~280 t of germanium products in 2022 (~20% of China's output). Its 2025 'advanced germanium materials' project adds 45 t/yr high-purity GeCl4, 15 t/yr high-purity GeO2 and 50 t/yr zone-refined Ge ingot (~75 t/yr contained Ge equivalent). Company-stated Ge reserves are 940 t (~27% of China's total). Xinyuan targets ~25% global market share by 2026. The refinery receives Ge from the captive Lincang deposit and outputs refined germanium to the raw-material germanium class boundary.",
+      "owner": [
+        {
+          "company_id": "company_lincang_xinyuan",
+          "company_name": "Yunnan Lincang Xinyuan Germanium Industry Co., Ltd.",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "company_lincang_xinyuan",
+        "company_name": "Yunnan Lincang Xinyuan Germanium Industry Co., Ltd."
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 940,
+        "unit": "t",
+        "measure": "contained_ge_company_reported",
+        "basis": "operator_reported",
+        "source": {
+          "name": "Lincang Xinyuan (002428) — 940 t Ge reserves, ~27% of China total (2023)",
+          "url": "https://dcfmodeling.com/blogs/history/002428sz-history-mission-ownership",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 47.7,
+        "unit": "t/yr",
+        "measure": "ge_ingot_contained",
+        "year": 2023,
+        "basis": "operator_reported",
+        "sources": [
+          {
+            "name": "Futu/moomoo — 47.7 t Ge ingot in 2023 (+53% YoY)",
+            "url": "https://news.futunn.com/en/post/52526032/last-year-the-price-of-germanium-doubled-and-yunnan-lincang"
+          },
+          {
+            "name": "USGS / RFC Ambrian — ~500 t/yr germanium-products capacity by end-2024 (multi-form, not contained Ge)",
+            "url": "https://www.rfcambrian.com/insights/germanium-china-in-control-for-now/"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        {
+          "form": "germanium_ingot",
+          "amount": {
+            "value": 47.7,
+            "unit": "t/yr"
+          },
+          "basis": "operator_reported",
+          "source": {
+            "name": "Lincang Xinyuan 2023 Ge ingot output",
+            "url": "https://news.futunn.com/en/post/52526032/last-year-the-price-of-germanium-doubled-and-yunnan-lincang",
+            "retrieved": "2026-06-22"
+          }
+        },
+        {
+          "form": "germanium_products_GeO2_GeCl4_zone_refined",
+          "amount": {
+            "value": 500,
+            "unit": "t/yr"
+          },
+          "basis": "operator_reported_capacity_multiform",
+          "source": {
+            "name": "RFC Ambrian / company — ~500 t/yr germanium-products capacity by end-2024",
+            "url": "https://www.rfcambrian.com/insights/germanium-china-in-control-for-now/",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "from_node": "dep_lincang_coal_ge",
+          "from_type": "entity",
+          "form": "ge_concentrate_from_lignite",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": 47.7,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Captive Lincang lignite Ge feedstock."
+        }
+      ],
+      "outputs": [
+        {
+          "to_node": "class_rawmat_germanium",
+          "to_type": "class",
+          "traced": true,
+          "form": "refined_germanium",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": 47.7,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Refined Ge ingot/products enter the raw-material germanium class boundary."
+        }
+      ]
+    },
+    "refinery_chihong": {
+      "kind": "entity",
+      "node_id": "refinery_chihong",
+      "node_type": "refinery",
+      "name": "Yunnan Chihong Zinc & Germanium Refinery",
+      "location": "Qujing / Huize, Yunnan Province",
+      "country": "China",
+      "deposit_category": null,
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "Yunnan Chihong Zinc & Germanium (SSE 600497), a state-owned enterprise founded 2000 in Qujing, is described as the world's largest germanium producer. It recovers Ge as a by-product of zinc smelting from its captive high-grade Huize (Zn conc. >27%) and Yiliang/Maoping (Zn conc. >23%) Pb-Zn mines, where Ge is hosted in sphalerite. Reported germanium refining capacity is 60 t/yr Ge at the Huize-linked operation, with a company germanium resource cited at ~448 t (RFC Ambrian) and >600 t per Chihong (~17% of China's total). Actual Ge output was ~56 t in 2021 and ~56 t in 2022 (~17% of China); H1 2024 yielded 34.29 t of germanium-containing products. The broader business is large: 2024 revenue ~CNY 18.80 bn, net profit ~CNY 1.29 bn, ~289,800 t lead-zinc concentrate metal content, and retained Pb-Zn resources >32 Mt. The refinery receives Ge-bearing zinc concentrate from the Huize and Yiliang mines and outputs refined germanium to the raw-material germanium class boundary.",
+      "owner": [
+        {
+          "company_id": "company_chihong",
+          "company_name": "Yunnan Chihong Zinc & Germanium Co., Ltd.",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "company_chihong",
+        "company_name": "Yunnan Chihong Zinc & Germanium Co., Ltd."
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 448,
+        "unit": "t",
+        "measure": "contained_ge_company_resource",
+        "basis": "third_party_reported",
+        "source": {
+          "name": "RFC Ambrian — Chihong Ge resource 448 t, 60 t/yr Ge refining capacity at Huize (Chihong itself states proven Ge resources >600 t, ~17% of China)",
+          "url": "https://www.rfcambrian.com/insights/germanium-china-in-control-for-now/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 56,
+        "unit": "t/yr",
+        "measure": "ge_produced_contained",
+        "year": 2022,
+        "basis": "operator_reported",
+        "sources": [
+          {
+            "name": "Wikipedia / Chihong — ~56 t Ge in 2022 (~17% of China); 34.29 t Ge-containing products H1 2024",
+            "url": "https://en.wikipedia.org/wiki/Chihong_Zinc_and_Germanium"
+          },
+          {
+            "name": "RFC Ambrian — 60 t/yr Ge refining capacity, world's largest producer",
+            "url": "https://www.rfcambrian.com/insights/germanium-china-in-control-for-now/"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        {
+          "form": "refined_germanium",
+          "amount": {
+            "value": 56,
+            "unit": "t/yr"
+          },
+          "basis": "operator_reported",
+          "source": {
+            "name": "Chihong ~56 t Ge produced 2022",
+            "url": "https://en.wikipedia.org/wiki/Chihong_Zinc_and_Germanium",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "from_node": "mine_huize_pbzn",
+          "from_type": "entity",
+          "form": "ge_bearing_zinc_concentrate",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Ge-bearing zinc concentrate from Huize."
+        },
+        {
+          "from_node": "mine_yiliang_pbzn",
+          "from_type": "entity",
+          "form": "ge_bearing_zinc_concentrate",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Ge-bearing zinc concentrate from Yiliang/Maoping."
+        }
+      ],
+      "outputs": [
+        {
+          "to_node": "class_rawmat_germanium",
+          "to_type": "class",
+          "traced": true,
+          "form": "refined_germanium",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": 56,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "By-product refined Ge enters the raw-material germanium class boundary."
+        }
+      ]
+    },
+    "dep_russia_spetsugli_pavlovskoye_ge": {
+      "kind": "entity",
+      "node_id": "dep_russia_spetsugli_pavlovskoye_ge",
+      "node_type": "deposit",
+      "name": "Spetsugli / Pavlovskoye Coal-Germanium Deposit",
+      "location": "Spetsugli section, Pavlovskoye brown-coal field, Pavlovskaya Depression, Mikhaylovsky District, Primorsky Krai, Russian Far East",
+      "country": "Russia",
+      "deposit_category": "coal_lignite",
+      "status": "idle",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Spetsugli, the germanium-rich section of the Pavlovskoye brown-coal field in Primorsky Krai, is the only deposit in Russia ever placed into industrial germanium production and one of the world's three super-large coal-hosted Ge deposits (with Lincang and Wulantuga in China). Discovered in the mid-1960s and mined open-pit from 1968, its 2B brown coals and carbonaceous mudstones overlie weathered granite basement and carry exceptional Ge grades — averaging ~166 g/t in coal and ~229 g/t in carbonaceous rock, with maxima of 3,000-3,460 g/t (0.3-0.4%). Per the Russian State Reserve Balance (Gosbalans, 01.01.2024), A+B+C1 reserves total ~525.9 t Ge in 3,166 kt coal plus ~348.7 t Ge in 1,524 kt carbonaceous rock (~874.6 t Ge combined), with 8.8 t C2 and ~43.5 t off-balance. Operator is LLC Germanium and Applications. Germanium-bearing coal was burned and Ge captured in fly-ash concentrate, then refined in Siberia. STATUS IS CONFLICTING: the 2021 Arbuzov et al. (Ore Geology Reviews) paper describes the deposit as 'currently being mined,' but Russian regulatory and Gosbalans data (Chekryzhov et al. 2025) confirm mining halted in 2018 (only ~1.45 t Ge in H1-2017, ~3 t/yr in 2016-2017) due to worn equipment, weak economics, and very low recovery (28.7% in 2017); a 2018 Novoshakhtinsky upgrade plant was built but is not operating. Best evidence: production stopped; deposit remains the most development-ready Russian Ge object. Terminated as a node.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "LLC Germanium and Applications",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "company_germanium_and_applications",
+        "company_name": "LLC Germanium and Applications"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 874.6,
+        "unit": "t",
+        "measure": "reserve_A_B_C1_Ge_metal",
+        "basis": "state_reserve_balance",
+        "source": {
+          "name": "Chekryzhov et al. 2025, Vestnik FEB RAS, citing Russian State Reserve Balance (Gosbalans) of scattered elements as of 01.01.2024 (525.9 t Ge in coal + 348.7 t Ge in carbonaceous rock; +8.8 t C2)",
+          "url": "https://journals.eco-vector.com/0869-7698/article/view/698769",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 0,
+        "unit": "t/yr",
+        "measure": "Ge_metal_in_concentrate",
+        "year": 2018,
+        "basis": "production_ceased",
+        "sources": [
+          {
+            "name": "Chekryzhov et al. 2025 (mining ceased 2018; ~3 t/yr Ge in 2016-2017; ~1.45 t Ge H1-2017)",
+            "url": "https://journals.eco-vector.com/0869-7698/article/view/698769"
+          },
+          {
+            "name": "OSK Expert Center — 'Germanium production halted in Primorye'",
+            "url": "https://osk-ec.ru/news/promyshlennaya-bezopasnost265/evrazes/sertifikatsiya-i-standartizatsiya/otraslevye-novosti/gornorudnaya-otrasl/show32490/"
+          }
+        ]
+      },
+      "grade_ppm": 186.48,
+      "produces": [
+        "mat_germanium"
+      ],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_russia_shkotovskoye_ge": {
+      "kind": "entity",
+      "node_id": "dep_russia_shkotovskoye_ge",
+      "node_type": "deposit",
+      "name": "Shkotovskoye Coal-Germanium Deposit",
+      "location": "Yuzhny section, Shkotovskaya Depression, Shkotovsky District, near Ussuri Gulf, Primorsky Krai",
+      "country": "Russia",
+      "deposit_category": "coal_lignite",
+      "status": "undeveloped",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Shkotovskoye is an undeveloped germanium-coal deposit in the Cenozoic Shkotovskaya Depression near the Ussuri Gulf coast in Primorsky Krai. Anomalous germanium occurs in upper humic coal seams and associated carbonaceous rocks. It hosts the highest Ge grades of the Primorye deposits: per the Russian State Reserve Balance (Gosbalans, 01.01.2024) the Yuzhny (Southern) section holds C2 reserves of 1,383 kt brown coal at an average 610.41 g/t Ge (~844.2 t Ge), plus 1,274 kt Ge-bearing coal at 589.56 g/t (~751.1 t) and 109 kt carbonaceous rock (~93.1 t Ge). Earlier work (Sedykh 2008) cited Ge grades of 410-1,400 g/t, locally >3,000 g/t, and resources of ~800 t. The deposit sits in the undistributed (unlicensed) state fund and is mothballed; no fuel mining occurs because of remoteness from power infrastructure and difficult terrain. It is regarded as a promising future raw-material source but would require major investment and dedicated beneficiation/extraction capacity. No production. Terminated as a node.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Russian Federation (undistributed state subsoil fund)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": null,
+        "company_name": null
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 844.2,
+        "unit": "t",
+        "measure": "reserve_C2_Ge_metal_in_brown_coal_Yuzhny_section",
+        "basis": "state_reserve_balance",
+        "source": {
+          "name": "Chekryzhov et al. 2025, citing Russian State Reserve Balance (Gosbalans) 01.01.2024 (1,383 kt coal at 610.41 g/t = 844.2 t Ge; +751.1 t in Ge-coal; +93.1 t in carbonaceous rock)",
+          "url": "https://journals.eco-vector.com/0869-7698/article/view/698769",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": null,
+        "year": null,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Chekryzhov et al. 2025 (mothballed, undistributed fund, no fuel mining)",
+            "url": "https://journals.eco-vector.com/0869-7698/article/view/698769"
+          }
+        ]
+      },
+      "grade_ppm": 610.41,
+      "produces": [
+        "mat_germanium"
+      ],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_russia_rakovskoye_ge": {
+      "kind": "entity",
+      "node_id": "dep_russia_rakovskoye_ge",
+      "node_type": "deposit",
+      "name": "Rakovskoye Coal-Germanium Deposit",
+      "location": "Rakovskaya Depression near Ussuriysk, Mikhaylovsky District, Primorsky Krai",
+      "country": "Russia",
+      "deposit_category": "coal_lignite",
+      "status": "undeveloped",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Rakovskoye is an undeveloped germanium-coal deposit in the Rakovskaya Depression near Ussuriysk, Primorsky Krai. Brown coal seams 1-5 m thick of medium ash content served historically as power-station fuel; germanium concentrates in carbonaceous shales and coal interbeds, and the coals are also anomalously enriched in uranium (forming a separate uranium deposit) with some beds carrying industrial REE concentrations. Predicted Ge resources are estimated at ~600 t (Sedykh 2008); average Ge grades are on the order of tens of g/t with maxima of several hundred g/t. The deposit was worked only as an ordinary brown-coal mine (~379 kt coal in 2009, 341 kt in 2010); in 2016 the license was acquired by JSC Primorskugol with plans for integrated development including Ge recovery, but no industrial Ge extraction has ever taken place and coal mining has since stopped. The deposit is NOT carried on the State Reserve Balance for Ge. No germanium production. Terminated as a node.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "JSC Primorskugol (license acquired 2016)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": null,
+        "company_name": "JSC Primorskugol"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 600,
+        "unit": "t",
+        "measure": "predicted_resource_Ge_metal",
+        "basis": "predicted_resource",
+        "source": {
+          "name": "Chekryzhov et al. 2025, citing Sedykh 2008 (predicted Ge resources ~600 t; not on State Reserve Balance)",
+          "url": "https://journals.eco-vector.com/0869-7698/article/view/698769",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": null,
+        "year": null,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Chekryzhov et al. 2025 (no industrial Ge extraction; coal mining stopped)",
+            "url": "https://journals.eco-vector.com/0869-7698/article/view/698769"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        "mat_germanium"
+      ],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_russia_bikinskoye_ge": {
+      "kind": "entity",
+      "node_id": "dep_russia_bikinskoye_ge",
+      "node_type": "deposit",
+      "name": "Bikinskoye (Nizhnebikinskoye) Coal-Germanium Deposit",
+      "location": "Cheremshovy section, Nizhnebikinskaya Depression, Bikin River basin near Luchegorsk, Pozharsky District, northern Primorsky Krai",
+      "country": "Russia",
+      "deposit_category": "coal_lignite",
+      "status": "undeveloped",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Bikinskoye (Nizhnebikinskoye) is a large brown-coal deposit in the Bikin River basin near Luchegorsk, northern Primorsky Krai, with germanium concentrated in coal and carbonaceous rock in the central part of the depression (Fedosyevsky and Cheremshovy sections), alongside elevated W, Be, Sb, Zn, Ga and Ag. Coal reserves are very large (hundreds of millions of tonnes). Predicted Ge resources across the delineated Ge-bearing sections are ~2,800 t at grades of 0.011-0.059% Ge (Sedykh 2008). The State Reserve Balance (01.01.2024) records, for the Cheremshovy section, C1 balance reserves of 2,162 kt Ge-bearing coal at ~83.26 g/t Ge (~180 t Ge). The deposit is actively worked as a thermal-coal mine by JSC Luchegorsky Coal Open-Pit (part of SUEK), producing ~4 Mt coal/yr feeding the Primorskaya GRES (the largest thermal power plant in the Far East) — but mining of Ge-bearing coals and targeted germanium recovery are NOT carried out, and the Ge object is in the undistributed state fund. No germanium production. Terminated as a node.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Russian Federation (Ge object in undistributed state fund); JSC Luchegorsky Coal Open-Pit / SUEK (operates coal mine)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": null,
+        "company_name": "JSC Luchegorsky Coal Open-Pit (SUEK) — thermal coal only, no Ge recovery"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 2800,
+        "unit": "t",
+        "measure": "predicted_resource_Ge_metal (Fedosyevsky + Cheremshovy); C1 balance reserves separately ~180 t Ge",
+        "basis": "predicted_resource",
+        "source": {
+          "name": "Chekryzhov et al. 2025, citing Sedykh 2008 (~2,800 t Ge predicted at 0.011-0.059% Ge) and State Reserve Balance 01.01.2024 (Cheremshovy C1: 2,162 kt coal at 83.26 g/t = ~180 t Ge)",
+          "url": "https://journals.eco-vector.com/0869-7698/article/view/698769",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": null,
+        "year": null,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Chekryzhov et al. 2025 (no Ge recovery; coal mine ~4 Mt/yr to Primorskaya GRES only)",
+            "url": "https://journals.eco-vector.com/0869-7698/article/view/698769"
+          }
+        ]
+      },
+      "grade_ppm": 83.26,
+      "produces": [
+        "mat_germanium"
+      ],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_russia_novikovskoye_ge": {
+      "kind": "entity",
+      "node_id": "dep_russia_novikovskoye_ge",
+      "node_type": "deposit",
+      "name": "Novikovskoye Coal-Germanium Deposit",
+      "location": "Tonino-Anivsky Peninsula, southern Sakhalin, Korsakovsky District, Sakhalin Oblast",
+      "country": "Russia",
+      "deposit_category": "coal_lignite",
+      "status": "idle",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Novikovskoye is a mothballed germanium-bearing brown-coal deposit on the Tonino-Anivsky Peninsula of southern Sakhalin, genetically similar to the Primorye Ge-coal deposits. It was exploited in the Soviet era (1960s-1970s), when coal and associated carbonaceous mudstones were mined and germanium recovered; the open pit was closed by the late 1980s and remaining reserves mothballed. Per the State Reserve Balance (01.01.2024), residual open-pit balance reserves are 81.9 t Ge in 353 kt of Ge-bearing rock — split ~38.9 t Ge in coal (avg ~182.63 g/t) and ~43.0 t Ge in carbonaceous mudstone (~307 g/t). A further ~547.6 t Ge sits below the pit and is carried as off-balance (underground-mining) resource, making Novikovskoye a large object overall (>600 t Ge) though only ~82 t is accessible by open-pit. Coal mining has ceased and the pit is flooded; the object is in the undistributed state fund. Future restart could rely on in-situ leaching or open-pit work on small remaining blocks. Sakhalin remains a valuable Ge reserve for Russia. No current production. Terminated as a node.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Russian Federation (undistributed state subsoil fund)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": null,
+        "company_name": null
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 81.9,
+        "unit": "t",
+        "measure": "balance_reserve_open_pit_Ge_metal (plus ~547.6 t off-balance underground; >600 t total)",
+        "basis": "state_reserve_balance",
+        "source": {
+          "name": "Chekryzhov et al. 2025, citing State Reserve Balance 01.01.2024 (81.9 t Ge open-pit in 353 kt rock; +547.6 t off-balance)",
+          "url": "https://journals.eco-vector.com/0869-7698/article/view/698769",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 0,
+        "unit": "t/yr",
+        "measure": "Ge_metal",
+        "year": 1989,
+        "basis": "production_ceased",
+        "sources": [
+          {
+            "name": "Chekryzhov et al. 2025 (mined Soviet era, pit closed late 1980s, now flooded/mothballed)",
+            "url": "https://journals.eco-vector.com/0869-7698/article/view/698769"
+          }
+        ]
+      },
+      "grade_ppm": 182.63,
+      "produces": [
+        "mat_germanium"
+      ],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_russia_minor_ge_occurrences": {
+      "kind": "entity",
+      "node_id": "dep_russia_minor_ge_occurrences",
+      "node_type": "deposit",
+      "name": "Russian Minor Germanium Occurrences (Tarbagatai, Elandinskoye/Ozernoye, Kunarevskaya)",
+      "location": "Tarbagataiskoye (Petrovsk-Zabaikalsky, Zabaykalsky Krai); Elandinskoye coal & Ozernoye Pb-Zn (Bauntovsky, Republic of Buryatia); Kunarevskaya area (Srednekansky, Magadan Oblast)",
+      "country": "Russia",
+      "deposit_category": "coal_lignite",
+      "status": "undeveloped",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "This node groups three minor/exploration-stage Russian germanium objects too thinly documented to separate. (1) Tarbagataiskoye (Zabaykalsky Krai): a Ge-bearing brown-coal deposit whose NE part (Tigninsky section) was mined 1964-1994 for fly-ash Ge concentrate at 120-130 g/t; total Ge resources >710 t with ~380 t in industrial categories (Vyalov). Per State Reserve Balance 01.01.2024, the Novy section holds A+B+C1 balance reserves of 5,256 kt coal with 280.8 t Ge (plus 97.8 t C2); undistributed fund, restart possible. (2) Elandinskoye (Buryatia): a large Ge-brown-coal deposit (~14 Mt coal A+B+C1) with low Ge grades (tens of g/t) but 165 t Ge (C1) explored in the 1960s; development-ready on paper but undeveloped due to permafrost, swamp and no infrastructure; not on the State Balance. The nearby Ozernoye Pb-Zn deposit carries 508 t Ge (P1 category) in sphalerite but no Ge is recovered. (3) Kunarevskaya area (Magadan): an exploration target in Fe-Mn skarn metasomatites with anomalous Ge (up to 0.1% in ilvaite/garnet) and very preliminary predicted resources up to 6,000 t (P3). All are exploration/undeveloped with no germanium production. Terminated as a node.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Russian Federation (state subsoil fund / various exploration holders)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": null,
+        "company_name": null
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 280.8,
+        "unit": "t",
+        "measure": "A_B_C1_balance_reserve_Ge_metal_Tarbagatai_Novy_section (Elandinskoye 165 t C1; Ozernoye 508 t P1; Kunarevskaya up to 6,000 t P3 — all separate/lower-confidence)",
+        "basis": "state_reserve_balance",
+        "source": {
+          "name": "Chekryzhov et al. 2025, citing State Reserve Balance 01.01.2024 (Tarbagatai Novy A+B+C1 = 280.8 t Ge; +97.8 t C2) and Vyalov (resources >710 t)",
+          "url": "https://journals.eco-vector.com/0869-7698/article/view/698769",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": null,
+        "year": null,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Chekryzhov et al. 2025 (exploration/undeveloped; Tarbagatai Tigninsky mined 1964-1994 then idle; no current Ge output)",
+            "url": "https://journals.eco-vector.com/0869-7698/article/view/698769"
+          }
+        ]
+      },
+      "grade_ppm": 53.2,
+      "produces": [
+        "mat_germanium"
+      ],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_ukraine_donbas_ge": {
+      "kind": "entity",
+      "node_id": "dep_ukraine_donbas_ge",
+      "node_type": "deposit",
+      "name": "Donbas / Donets Basin Coal-Germanium",
+      "location": "Donets coal basin (Donbas), Donetsk and Luhansk Oblasts, eastern Ukraine",
+      "country": "Ukraine",
+      "deposit_category": "coal_lignite",
+      "status": "suspended",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Germanium in Ukraine is hosted mainly as a by-element in the coals of the Donets Basin (Donbas), which holds ~90% of Ukraine's coal reserves (~101.9 billion t of coal in place). Germanium content is grade-dependent: ~0.3-1.3 g/t in anthracite, ~3.8-9.2 g/t in low-metamorphosed coals, and ~4.5 g/t average in coking coal — far lower than the Russian Far East coal-Ge deposits. Historically Ukraine recovered germanium as a coking/coal by-product, but germanium production is now suspended: metal-bearing coal is processed without producing a germanium concentrate. Coal mining itself was severely disrupted from 2014 onward by the war in Donbas (many mines closed/occupied) and further curtailed after 2022. No discrete Ge tonnage reserve is carried for the basin as a germanium deposit (figures are coal-tonnage and grade based, not a stated Ge-metal reserve). No germanium production. Terminated as a node.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Ukraine (state) / occupied-territory operators",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": null,
+        "company_name": null
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": null,
+        "basis": "not_quantified",
+        "source": {
+          "name": "Coal in Ukraine (Wikipedia) and germanium-in-Donbas-coal literature — Ge given as grade in coal (0.3-9.2 g/t), no discrete Ge-metal reserve stated; coal reserves ~101.9 Gt in place",
+          "url": "https://en.wikipedia.org/wiki/Coal_in_Ukraine",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 0,
+        "unit": "t/yr",
+        "measure": "Ge_metal",
+        "year": 2024,
+        "basis": "production_ceased",
+        "sources": [
+          {
+            "name": "Germanium extraction literature — 'germanium production in Ukraine is currently suspended; metal-bearing coal processed without obtaining Ge concentrate'",
+            "url": "https://doaj.org/article/e76ee14bd7964767b5db16e75e943d86"
+          }
+        ]
+      },
+      "grade_ppm": 4.5,
+      "produces": [
+        "mat_germanium"
+      ],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_ukraine_lviv_volyn_ge": {
+      "kind": "entity",
+      "node_id": "dep_ukraine_lviv_volyn_ge",
+      "node_type": "deposit",
+      "name": "Lviv-Volyn Basin Coal-Germanium (incl. Lyubelya)",
+      "location": "Lviv-Volyn coal basin, Lviv and Volyn Oblasts, western Ukraine (Lyubelya deposit, Lyubelya No. 3 section)",
+      "country": "Ukraine",
+      "deposit_category": "coal_lignite",
+      "status": "suspended",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "The Lviv-Volyn Basin in western Ukraine is the country's secondary coal region (~2.3 billion t coal reserves) and hosts germanium as a by-element distributed through Lower and Middle Carboniferous coal seams (Ge measured in coal-ash samples across all seams). The best-documented Ge object is the Lyubelya deposit: coal from the Lyubelya No. 3 section is considered suitable feedstock for germanium extraction, with C2 germanium reserves (in terms of actual Ge content in coal) estimated at 248.41 t. Germanium is on the EU critical-raw-materials list, raising interest in extraction from this basin. However, as in Donbas, germanium production in Ukraine is suspended and metal-bearing coal is processed without producing a Ge concentrate; integrated/complex development of the Lyubelya deposit for associated minerals remains at the study/proposal stage. No germanium production. Terminated as a node.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Ukraine (state)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": null,
+        "company_name": null
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 248.41,
+        "unit": "t",
+        "measure": "C2_reserve_Ge_metal_in_coal_Lyubelya_No3_section",
+        "basis": "reported_reserve",
+        "source": {
+          "name": "Visnyk of Taras Shevchenko Nat. Univ. of Kyiv (Geology) — Lyubelya deposit integrated development; Lyubelya No.3 C2 Ge reserves = 248.41 t",
+          "url": "https://geology.bulletin.knu.ua/en/article/view/1096",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 0,
+        "unit": "t/yr",
+        "measure": "Ge_metal",
+        "year": 2024,
+        "basis": "production_ceased",
+        "sources": [
+          {
+            "name": "Germanium extraction literature — Ukrainian Ge production suspended; coal processed without Ge concentrate",
+            "url": "https://doaj.org/article/e76ee14bd7964767b5db16e75e943d86"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        "mat_germanium"
+      ],
+      "inputs": [],
+      "outputs": []
+    },
+    "refinery_jsc_germanium_krasnoyarsk": {
+      "kind": "entity",
+      "node_id": "refinery_jsc_germanium_krasnoyarsk",
+      "node_type": "refinery",
+      "name": "JSC Germanium (Krasnoyarsk)",
+      "location": "Krasnoyarsk, Krasnoyarsk Krai, Russia",
+      "country": "Russia",
+      "deposit_category": null,
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "JSC Germanium in Krasnoyarsk (under Shvabe Holding / Rostec since September 2018) is the sole full-cycle germanium processor in Russia. It runs three integrated sections — hydrometallurgical, metallurgical, and mechanical processing — covering the chain from raw material and internal recycling/turnover to finished products, with a stated capacity of ~20 t/yr of germanium. Its product range includes poly- and single-crystal germanium, germanium granules, germanium tetrachloride (GeCl4) and dioxide (GeO2), and optical blanks/substrates. In July 2025, with Federal Industrial Development Fund support, it became the first Russian producer of ultra-pure (99.9999%) GeCl4 for fiber-optic cable, having developed the process from 2023. In 2025 it manufactured more than 30,000 polished germanium wafers for satellite solar panels (first mass production of this component in Russia; Russian market demand ~50,000 wafers/yr, ~90% previously imported). Because the Spetsugli deposit has been idle since 2018, the plant's feedstock today is largely secondary/recycled germanium-bearing materials plus imports — leaked customs data show it sources germanium from China's Yunnan Lincang Xinyuan Germanium Industry. It is the refining node linking Russian raw-germanium supply to the germanium raw-material class boundary.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Shvabe Holding (Rostec State Corporation)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "company_jsc_germanium",
+        "company_name": "JSC Germanium (Krasnoyarsk)"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": null,
+        "basis": "not_quantified",
+        "source": {
+          "name": "Not applicable — refinery, no in-ground reserve",
+          "url": "https://www.shvabe.com/about/company/germaniy/proizvodstvo-germaniy/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 20,
+        "unit": "t/yr",
+        "measure": "nameplate_capacity_Ge",
+        "year": 2025,
+        "basis": "stated_capacity",
+        "sources": [
+          {
+            "name": "Shvabe — Germanium production page (capacity 20 t/yr Ge; full cycle from raw material and internal recycling to product)",
+            "url": "https://www.shvabe.com/about/company/germaniy/proizvodstvo-germaniy/"
+          },
+          {
+            "name": "Interfax / Rostec — first Russian industrial production of ultra-pure GeCl4 (99.9999%), July 2025; 30,000 Ge wafers in 2025",
+            "url": "https://rostec.ru/media/news/rostekh-pri-podderzhke-frp-pervym-v-rossii-nachal-proizvodstvo-osobo-chistogo-veshchestva-dlya-optov/"
+          },
+          {
+            "name": "OCCRP — China (Yunnan Lincang Xinyuan) supplies germanium to Rostec's JSC Germanium",
+            "url": "https://www.occrp.org/en/news/china-becomes-russias-lifeline-for-critical-war-minerals"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        "mat_germanium"
+      ],
+      "inputs": [],
+      "outputs": [
+        {
+          "to_node": "class_rawmat_germanium",
+          "to_type": "class",
+          "traced": true,
+          "form": "refined germanium (poly/single-crystal Ge, GeCl4 99.9999%, GeO2, optical blanks, wafers)",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": 20,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Sole full-cycle Ge refiner in Russia; nameplate ~20 t/yr Ge. With Spetsugli idle since 2018, feed is largely secondary/recycled Ge materials plus imports (notably Chinese germanium from Yunnan Lincang per OCCRP), not domestic mine concentrate."
+        }
+      ]
+    },
+    "smelter_kazzinc_ukmc": {
+      "kind": "entity",
+      "node_id": "smelter_kazzinc_ukmc",
+      "node_type": "smelter",
+      "name": "Kazzinc Ust-Kamenogorsk Metallurgical Complex (UKMC)",
+      "location": "Ust-Kamenogorsk (Oskemen), East Kazakhstan Region",
+      "country": "Kazakhstan",
+      "deposit_category": "sphalerite_zinc",
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "The Ust-Kamenogorsk Metallurgical Complex (UKMC) is the flagship integrated zinc-lead-copper-precious metals smelting hub of Kazzinc, Kazakhstan's largest non-ferrous metals producer, in which Glencore plc holds a controlling 69.61% stake. The complex treats polymetallic sphalerite-bearing concentrates from Kazzinc's East Kazakhstan mines and produces roughly 174,000 t zinc, 36,000 t lead and 15,000 t copper plus ~600,000 oz gold in 2023 (Glencore FY2024 production report). Germanium occurs as a trace substituent in the sphalerite feed and concentrates in zinc-plant leach residues and dusts, the classic source from which Ge is recovered as a by-product. Kazzinc/UKMC is treated here as a producing Ge recovery node because the trace-metals circuit handles germanium-bearing intermediates; however, no public figure exists for its germanium output. Successive USGS Minerals Yearbooks for Kazakhstan state that germanium 'may have been produced, but available information was inadequate to make reliable estimates of output,' and neither Kazzinc nor Glencore disclose germanium tonnage in production reports (which itemise only zinc, lead, copper, gold and silver). Reserves of germanium are likewise not separately reported at mine or country level for Kazakhstan. Annual germanium output is therefore recorded as not quantified pending a primary disclosure.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Glencore plc (69.61%)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "company_kazzinc",
+        "company_name": "Kazzinc Ltd."
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "contained_ge",
+        "basis": "not_quantified",
+        "source": {
+          "name": "USGS Minerals Yearbook (Kazakhstan): germanium reserves not reported at mine or country level",
+          "url": "https://pubs.usgs.gov/myb/vol3/2022/myb3-2022-kazakhstan.pdf",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_metal",
+        "year": 2024,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "USGS 2022 Minerals Yearbook — Kazakhstan (Ge output 'inadequate to estimate')",
+            "url": "https://pubs.usgs.gov/myb/vol3/2022/myb3-2022-kazakhstan.pdf"
+          },
+          {
+            "name": "Glencore Full Year 2024 Production Report (Kazzinc — zinc/lead/copper/gold only, no Ge line item)",
+            "url": "https://www.glencore.com/"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        {
+          "form": "germanium_byproduct (volume unconfirmed)",
+          "amount": {
+            "value": null,
+            "unit": "t/yr"
+          },
+          "basis": "not_quantified",
+          "source": {
+            "name": "USGS — Kazakhstan Ge output inadequate to estimate",
+            "url": "https://pubs.usgs.gov/myb/vol3/2022/myb3-2022-kazakhstan.pdf",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [],
+      "outputs": [
+        {
+          "to_node": "class_rawmat_germanium",
+          "to_type": "class",
+          "traced": false,
+          "form": "germanium_byproduct",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Germanium recovered as a by-product of the zinc circuit; output volume not publicly quantified by Kazzinc or Glencore. Edge retained because node is treated as producing per recovery role, but tonnage is unknown."
+        }
+      ]
+    },
+    "refinery_umicore": {
+      "kind": "entity",
+      "node_id": "refinery_umicore",
+      "node_type": "refinery",
+      "name": "Umicore Germanium Refining & Recycling (Olen / Hoboken)",
+      "location": "Olen and Hoboken, Antwerp Province, Belgium",
+      "country": "Belgium",
+      "deposit_category": "recycling",
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "Umicore is the leading Western producer and recycler of germanium, refining 6N-7N germanium metal, GeO2, GeCl4 and germanium substrates at its Olen and Hoboken sites in Belgium (with complementary recycling in the U.S.). Independent supply-chain mapping puts Umicore's germanium output at roughly 12-15 t/yr, about 5-7% of global supply (investingermanium.com). Its hydro- and pyro-metallurgical circuits can refine primary feed with Ge concentrations as low as 0.3% and process several thousand tonnes of primary material annually (Umicore). Umicore states that more than 50% of its germanium now comes from recycling (customer scrap, fibre-optic, IR-optics, solar and production scrap), with most of the remaining primary feed drawn from zinc-industry by-products. A strategic new primary source is the DRC: in May 2024 Umicore signed an offtake/processing partnership with Gécamines subsidiary STL covering germanium concentrate recovered from the 'Big Hill' Lubumbashi tailings, with the first 'Made-in-DRC' shipment dispatched to Belgium in October 2024 (Umicore; Gécamines). The Lubumbashi plant is designed to ultimately supply up to ~30% of world germanium demand, with Umicore securing the offtake. Two Umicore germanium recovery/recycling projects (including the GePETO circular initiative) received EU Strategic Project status in 2025. Annual germanium output ~12-15 t/yr.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Umicore N.V.",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "company_umicore",
+        "company_name": "Umicore N.V."
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "n/a_refinery",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Refinery/recycler — no in-ground reserve; feed is recycling scrap plus DRC/zinc-industry concentrate",
+          "url": "https://eom.umicore.com/en/germanium-solutions/services/germanium-sourcing-supply/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 13.5,
+        "unit": "t/yr",
+        "measure": "ge_metal_equivalent",
+        "year": 2024,
+        "basis": "third_party_estimate_range_12_15t",
+        "sources": [
+          {
+            "name": "InvestInGermanium — Key Companies (Umicore 12-15 t/yr, 5-7% global share)",
+            "url": "https://investingermanium.com/supply-chain/key-companies/"
+          },
+          {
+            "name": "Umicore — Germanium sourcing & supply (>50% from recycling; processes several thousand t/yr primary material)",
+            "url": "https://eom.umicore.com/en/germanium-solutions/services/germanium-sourcing-supply/"
+          },
+          {
+            "name": "Umicore — First Made-in-DRC germanium concentrates to Umicore",
+            "url": "https://www.umicore.com/en/media/newsroom/first-made-in-drc-germanium-concentrates-due-for-export-to-umicore-for-high-tech-applications/"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        {
+          "form": "germanium_metal_6N_7N / GeO2 / GeCl4 / substrates",
+          "amount": {
+            "value": 13.5,
+            "unit": "t/yr"
+          },
+          "basis": "third_party_estimate",
+          "source": {
+            "name": "InvestInGermanium — Umicore 12-15 t/yr",
+            "url": "https://investingermanium.com/supply-chain/key-companies/",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "from_node": "plant_stl_lubumbashi",
+          "to_type": "entity",
+          "form": "germanium_concentrate",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Big Hill (DRC) germanium concentrate from Gécamines/STL Lubumbashi tailings plant under May 2024 Umicore-STL offtake partnership; first shipment Oct 2024."
+        }
+      ],
+      "outputs": [
+        {
+          "to_node": "class_rawmat_germanium",
+          "to_type": "class",
+          "traced": true,
+          "form": "refined_germanium_metal_and_compounds",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": 13.5,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Refined Ge metal/GeO2/GeCl4/substrates to class boundary; ~12-15 t/yr (midpoint 13.5) per third-party supply-chain mapping. >50% of feed from recycling; primary feed from DRC (STL) and zinc-industry by-products."
+        }
+      ]
+    },
+    "refinery_ppm_vital": {
+      "kind": "entity",
+      "node_id": "refinery_ppm_vital",
+      "node_type": "refinery",
+      "name": "PPM Pure Metals / Vital Pure Metal Solutions (Langelsheim)",
+      "location": "Langelsheim (Astfeld), Lower Saxony",
+      "country": "Germany",
+      "deposit_category": "recycling",
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "The Langelsheim plant in Lower Saxony is a specialist high-purity minor-metals refiner and recycler producing ultra-high-purity germanium (6N grade, resistivity >50 ohm-cm) by reduction of GeO2 to metal followed by zone refining. The site was operated for decades as PPM Pure Metals GmbH (a Recylex group company); on 18 December 2020 China's Vital Materials Co. acquired the PPM Pure Metals industrial site at Langelsheim and now runs it through a newly established subsidiary, Vital Pure Metal Solutions GmbH (VPMS), serving semiconductor, telecom, solar and optoelectronics markets. Independent supply-chain mapping puts germanium output at the site at roughly 2-3 t/yr, about 1% of global supply, drawing on imported concentrates and zone-refined scrap (investingermanium.com). German trade press reports the minor-metals operation is on a growth path. As a producing recycler/refiner, the node feeds refined germanium to the class boundary. Annual germanium output ~2-3 t/yr; no in-ground reserve applies (feed is concentrate and recycling scrap).",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Vital Materials Co., Ltd.",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "company_vital_pms",
+        "company_name": "Vital Pure Metal Solutions GmbH (VPMS)"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "n/a_refinery",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Refiner/recycler — no in-ground reserve; feed is imported GeO2/concentrate and zone-refined scrap",
+          "url": "https://www.vital-pms.de/germanium",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 2.5,
+        "unit": "t/yr",
+        "measure": "ge_metal_6N",
+        "year": 2024,
+        "basis": "third_party_estimate_range_2_3t",
+        "sources": [
+          {
+            "name": "InvestInGermanium — Key Companies (PPM Pure Metals 2-3 t/yr, ~1% global share)",
+            "url": "https://investingermanium.com/supply-chain/key-companies/"
+          },
+          {
+            "name": "Vital Materials — acquisition of PPM Pure Metals site, Langelsheim",
+            "url": "https://en.vitalchem.com/news-PPM-20210104"
+          },
+          {
+            "name": "Vital Pure Metal Solutions — Germanium products",
+            "url": "https://www.vital-pms.de/germanium"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        {
+          "form": "germanium_metal_6N / GeO2",
+          "amount": {
+            "value": 2.5,
+            "unit": "t/yr"
+          },
+          "basis": "third_party_estimate",
+          "source": {
+            "name": "InvestInGermanium — PPM 2-3 t/yr",
+            "url": "https://investingermanium.com/supply-chain/key-companies/",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [],
+      "outputs": [
+        {
+          "to_node": "class_rawmat_germanium",
+          "to_type": "class",
+          "traced": true,
+          "form": "refined_germanium_metal_6N",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": 2.5,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "6N germanium to class boundary; ~2-3 t/yr (midpoint 2.5) per third-party supply-chain mapping. Feed: imported GeO2/concentrate + zone-refined scrap."
+        }
+      ]
+    },
+    "dep_almalyk_uztmk": {
+      "kind": "entity",
+      "node_id": "dep_almalyk_uztmk",
+      "node_type": "deposit",
+      "name": "Almalyk MMC / UzTMK Germanium (Uzbekistan)",
+      "location": "Almalyk (Olmaliq), Tashkent Region",
+      "country": "Uzbekistan",
+      "deposit_category": "sphalerite_zinc",
+      "status": "undeveloped",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Almalyk Mining and Metallurgical Combine (Almalyk MMC / AGMK), a major Uzbek state-owned copper-zinc-lead-precious metals enterprise, is associated with the country's germanium endowment. Uzbekistan's reported germanium reserve is 74.6 tonnes, cited in an Asian Development Bank-hosted presentation on Uzbekistan's critical minerals potential (Shukurjonov, ADB Asia Clean Energy Forum 2024); other CRM reserves listed include rhenium 804.2 t, tellurium ~2,800 t and indium 38.9 t. Germanium occurs as a trace constituent of sphalerite/polymetallic feed, and Uzbekistan has flagged germanium within a $2.6bn, three-year critical-minerals initiative launched in 2025. However, there is no confirmed current germanium production: the resource is emerging/aspirational and no operating Ge recovery circuit or output figure has been disclosed. The node is therefore TERMINATED (no current germanium output to feed the class boundary). It is retained for the reserve figure (74.6 t) and may be re-activated if Almalyk/UzTMK commissions a germanium recovery line.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Almalyk Mining and Metallurgical Combine JSC (state-owned)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "company_almalyk_mmc",
+        "company_name": "Almalyk Mining and Metallurgical Combine JSC (AGMK)"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 74.6,
+        "unit": "t",
+        "measure": "contained_ge_country_reserve",
+        "basis": "reported_country_reserve",
+        "source": {
+          "name": "K. Shukurjonov, 'Uzbekistan's Critical Minerals: Unlocking Investment', ADB Asia Clean Energy Forum 2024",
+          "url": "https://asiacleanenergyforum.adb.org/wp-content/uploads/2024/06/Kuhinur-Shukurjonov.pdf",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_metal",
+        "year": 2024,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "GTR — Uzbekistan: the next critical minerals hub? (germanium listed among endowment; no production)",
+            "url": "https://www.gtreview.com/magazine/the-commodities-issue-2025/uzbekistan-the-next-critical-minerals-hub/"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "smelter_nyrstar_eu": {
+      "kind": "entity",
+      "node_id": "smelter_nyrstar_eu",
+      "node_type": "smelter",
+      "name": "Nyrstar EU Germanium Recovery Program (Budel / Balen-Pelt / Auby)",
+      "location": "Budel (Netherlands), Balen-Pelt (Belgium), Auby (France)",
+      "country": "Netherlands / Belgium / France",
+      "deposit_category": "sphalerite_zinc",
+      "status": "planned",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Nyrstar (Trafigura group) has proposed a combined Zinc Critical Minerals Recovery program across its European zinc smelters at Budel (Netherlands), Balen-Pelt (Belgium) and Auby (France) that could produce around 10 tonnes of germanium per year, enough to meet up to 100% of the EU Critical Raw Materials Act's 40% processing benchmark. Germanium is present as a trace constituent in the sphalerite zinc concentrate feed and follows zinc through smelting into intermediate streams from which it could be isolated with dedicated recovery circuits. As of mid-2026 this is a planned program, not an operating germanium line: the projects are under consideration/study and Nyrstar has been seeking policy and investment support. Because there is no current germanium output to feed the class boundary, the node is TERMINATED (outputs empty). Re-activate when a recovery circuit is commissioned and producing.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Trafigura Group (via Nyrstar)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "company_nyrstar",
+        "company_name": "Nyrstar (Trafigura)"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "n/a_smelter",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Smelter feed — germanium in sphalerite concentrate, no separate reserve",
+          "url": "https://www.mining.com/web/nyrstar-considers-potential-germanium-and-gallium-projects/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_metal",
+        "year": 2026,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Nyrstar comments to US BIS — Zinc, Germanium and Gallium (EU program ~10 t/yr Ge, planned)",
+            "url": "https://downloads.regulations.gov/BIS-2025-0025-0123/attachment_1.pdf"
+          },
+          {
+            "name": "Mining.com — Nyrstar considers potential germanium and gallium projects",
+            "url": "https://www.mining.com/web/nyrstar-considers-potential-germanium-and-gallium-projects/"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "smelter_nyrstar_hobart": {
+      "kind": "entity",
+      "node_id": "smelter_nyrstar_hobart",
+      "node_type": "smelter",
+      "name": "Nyrstar Hobart Germanium Scoping",
+      "location": "Hobart, Tasmania",
+      "country": "Australia",
+      "deposit_category": "sphalerite_zinc",
+      "status": "scoping",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Nyrstar's Hobart zinc smelter in Tasmania (Trafigura group) is the subject of a government-supported scoping study into recovering critical minerals — germanium and indium — from its zinc circuit. Under an A$135 million Australian Commonwealth/State support package announced for Nyrstar's Hobart and Port Pirie smelters, Nyrstar is to study production of germanium and indium at Hobart (and antimony/bismuth at Port Pirie). Germanium occurs as a trace constituent of the sphalerite zinc concentrate feed and follows zinc into intermediate process streams where, with a dedicated recovery circuit, it could be isolated and refined. This work is at the scoping/feasibility stage only; the funded studies are not expected to deliver definitive answers until late 2026 at the earliest, and no germanium is currently produced. The node is therefore TERMINATED (no current output to feed the class boundary).",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Trafigura Group (via Nyrstar)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "company_nyrstar",
+        "company_name": "Nyrstar (Trafigura)"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "n/a_smelter",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Smelter feed — germanium in sphalerite concentrate, no separate reserve",
+          "url": "https://www.minister.industry.gov.au/ministers/timayres/media-releases/partnership-scope-critical-minerals-and-protect-jobs-port-pirie-and-hobart",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_metal",
+        "year": 2026,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Australian Minister for Resources — Partnership to scope critical minerals at Port Pirie and Hobart (germanium/indium scoping, results not before late 2026)",
+            "url": "https://www.minister.industry.gov.au/ministers/timayres/media-releases/partnership-scope-critical-minerals-and-protect-jobs-port-pirie-and-hobart"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "smelter_boliden": {
+      "kind": "entity",
+      "node_id": "smelter_boliden",
+      "node_type": "smelter",
+      "name": "Boliden Kokkola / Odda Zinc Smelters (Germanium Feed)",
+      "location": "Kokkola (Finland) and Odda (Norway)",
+      "country": "Finland / Norway",
+      "deposit_category": "sphalerite_zinc",
+      "status": "recovery_unconfirmed",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Boliden operates major European zinc smelters at Kokkola (Finland) and Odda (Norway), both treating sphalerite zinc-sulphide concentrates via direct/oxidative pressure leaching. Rare dispersed metals — gallium, germanium and indium — are present in the sphalerite feed through coupled substitution and report into zinc-plant residues and intermediate streams, so germanium is genuinely contained in Boliden's feedstock. However, there is no confirmed commercial germanium recovery at these sites: published material describes germanium as present in the concentrate, not as a recovered product, and Boliden's own product/operations disclosures cover zinc and other base/precious metals without a germanium output line. Boliden has been expanding zinc capacity (notably Odda, roughly 200 to 350 kt/yr) but no germanium recovery circuit or output figure is confirmed. The node is therefore TERMINATED (recovery unconfirmed, no output to feed the class boundary); re-activate only on a confirmed germanium product disclosure.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Boliden AB",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "company_boliden",
+        "company_name": "Boliden AB"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "n/a_smelter",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Smelter feed — germanium present in sphalerite concentrate, no separate reserve; recovery unconfirmed",
+          "url": "https://www.boliden.com/operations/smelters/boliden-odda/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_metal",
+        "year": 2024,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "ScienceDirect — Oxidative pressure leaching of zinc sulphide concentrate (Ga/Ge/In in sphalerite feed at Odda/Kokkola)",
+            "url": "https://www.sciencedirect.com/science/article/abs/pii/S0892687524003170"
+          },
+          {
+            "name": "Boliden Odda smelter (operations; no germanium product line disclosed)",
+            "url": "https://www.boliden.com/operations/smelters/boliden-odda/"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_red_dog": {
+      "kind": "entity",
+      "node_id": "dep_red_dog",
+      "node_type": "mine",
+      "name": "Red Dog Mine",
+      "location": "Northwest Arctic Borough, Alaska, USA",
+      "country": "United States",
+      "deposit_category": "sphalerite_zinc",
+      "status": "producing",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Red Dog, in Alaska's Northwest Arctic Borough, is the world's largest zinc mine and one of North America's most significant byproduct germanium sources. It is a clastic-dominated (CD/SEDEX) sediment-hosted massive sulphide deposit in which germanium substitutes within sphalerite; published work places Ge in Red Dog-type SHMS sphalerite in the 10-300 ppm range, with Teck not disclosing an exact deposit Ge grade. Teck reported 38.5 Mt of proven and probable reserves averaging 12.4% zinc as of the start of 2023 (an earlier 2018 figure was 57.6 Mt at 13.6% Zn). The mine produced 555,600 t of zinc-in-concentrate in 2024, with 2025 guidance of 430,000-470,000 t as grades decline. Critically, Red Dog recovers NO germanium on-site: the Ge-bearing sphalerite concentrate is shipped to Teck's Trail Operations in British Columbia, where germanium is recovered downstream. Teck is the largest germanium producer in North America (~8-10 t/yr Ge at Trail), but Red Dog's specific Ge contribution is not separately disclosed because Trail blends concentrates from multiple sources. Operated by Teck Resources under agreement with NANA Regional Corporation, which owns the land.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Teck Resources Limited",
+          "stake_pct": null
+        },
+        {
+          "company_id": null,
+          "company_name": "NANA Regional Corporation",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "co_teck",
+        "company_name": "Teck Resources Limited"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 38500000,
+        "unit": "t",
+        "measure": "proven_and_probable_ore",
+        "basis": "company_reserve_statement",
+        "source": {
+          "name": "North of 60 Mining News / Teck reserves (start of 2023)",
+          "url": "https://www.miningnewsnorth.com/story/2026/02/20/news-nuggets/red-dog-output-drops-as-reserves-dwindle/9549.html",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "germanium_metal",
+        "year": 2024,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "USGS 2019 Germanium Minerals Yearbook",
+            "url": "https://pubs.usgs.gov/myb/vol1/2019/myb1-2019-germanium.pdf"
+          },
+          {
+            "name": "Metal Tech News - Teck germanium traceability",
+            "url": "https://www.metaltechnews.com/story/2022/01/26/mining-tech/teck-to-trace-germanium-with-blockchain/830.html"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        {
+          "form": "zinc concentrate / lead concentrate / silver (Ge in sphalerite, recovered at Trail)",
+          "amount": {
+            "value": null,
+            "unit": "t/yr"
+          },
+          "basis": "not_quantified",
+          "source": {
+            "name": "Ge in Red Dog SHMS sphalerite 10-300 ppm; recovered downstream at Trail",
+            "url": "https://pubs.usgs.gov/myb/vol1/2019/myb1-2019-germanium.pdf",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [],
+      "outputs": [
+        {
+          "to_node": "smelter_teck_trail",
+          "to_type": "entity",
+          "traced": true,
+          "form": "zinc (sphalerite) concentrate",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Ge-bearing sphalerite concentrate shipped to Teck Trail Operations (BC) where germanium is recovered downstream. Red Dog recovers no Ge on-site; per-mine Ge tonnage is not disclosed because Trail blends feed from multiple sources."
+        }
+      ]
+    },
+    "dep_middle_tennessee": {
+      "kind": "entity",
+      "node_id": "dep_middle_tennessee",
+      "node_type": "mine",
+      "name": "Middle Tennessee Mines (Gordonsville / Elmwood / Cumberland)",
+      "location": "Smith County, Tennessee, USA",
+      "country": "United States",
+      "deposit_category": "sphalerite_zinc",
+      "status": "idle",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "The Middle Tennessee Mines comprise the underground Gordonsville, Cumberland and Elmwood zinc mines plus a processing plant at Gordonsville, in Smith County, Tennessee. Mineralisation is classic Mississippi Valley-type (MVT): sphalerite in open-space fillings, breccias and fractures within Ordovician limestone and dolomite. The Middle Tennessee ore is germanium-bearing - it delivers recoverable germanium and gallium as byproducts to the Clarksville smelter - with concentrate germanium widely cited around ~400 ppm (the highest-grade Ge byproduct stream among the Tennessee operations; East Tennessee ore is not Ge-bearing). Nyrstar produced about 115,000 t zinc-in-concentrate across its East and Middle Tennessee mines in 2018. As of end-2025 the Middle Tennessee complex was non-operational and held under care and maintenance. In December 2025 Nyrstar (Trafigura) agreed to sell the Tennessee mines and the Clarksville smelter to Korea Zinc, a deal that closed in the first half of 2026; Korea Zinc plans to resume Gordonsville operations as part of its $6.6B 'Project Crucible.' Because dedicated Ge recovery at Clarksville is not yet built (construction from 2027, operations ~2029), the producing path currently yields NO refined germanium.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Korea Zinc Inc. (Nyrstar Tennessee Mines - Gordonsville LLC)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "co_korea_zinc",
+        "company_name": "Korea Zinc Inc. (formerly Nyrstar / Trafigura)"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "not_disclosed",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Mining Data Online - Middle Tennessee Complex (reserves behind subscription; care & maintenance confirmed)",
+          "url": "https://miningdataonline.com/property/699/Middle-Tennessee-Complex.aspx",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 0,
+        "unit": "t/yr",
+        "measure": "germanium_metal",
+        "year": 2025,
+        "basis": "no_recovery_route",
+        "sources": [
+          {
+            "name": "Nyrstar - Middle Tennessee Mines (germanium/gallium byproduct to Clarksville)",
+            "url": "https://www.nyrstar.com/operations/mining/middle-tennessee-mines"
+          },
+          {
+            "name": "ClarksvilleNow - Nyrstar Clarksville Ge/Ga source",
+            "url": "https://clarksvillenow.com/local/nyrstar-zinc-in-clarksville-could-become-nations-top-source-of-2-key-minerals-after-china-cuts-off-supply/"
+          }
+        ]
+      },
+      "grade_ppm": 400,
+      "produces": [
+        {
+          "form": "germanium-bearing zinc concentrate (~400 ppm Ge)",
+          "amount": {
+            "value": null,
+            "unit": "t/yr"
+          },
+          "basis": "no_recovery_route",
+          "source": {
+            "name": "Middle Tennessee Ge ~400 ppm in concentrate; mine idle, no Ge recovery online",
+            "url": "https://www.nyrstar.com/operations/mining/middle-tennessee-mines",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [],
+      "outputs": [
+        {
+          "to_node": "smelter_nyrstar_clarksville",
+          "to_type": "entity",
+          "traced": true,
+          "form": "germanium-bearing zinc concentrate (~400 ppm Ge)",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Concentrate edge to Clarksville is real, but the deposit is currently idle (care & maintenance, end-2025) and Clarksville has no operating Ge recovery. No refined germanium is produced from this path today; the chain TERMINATES at the smelter. Korea Zinc plans to restart Gordonsville and build dedicated Ge recovery, but Ge production is not expected until ~2029."
+        }
+      ]
+    },
+    "dep_pend_oreille": {
+      "kind": "entity",
+      "node_id": "dep_pend_oreille",
+      "node_type": "mine",
+      "name": "Pend Oreille Mine (Metaline)",
+      "location": "Metaline Falls, Pend Oreille County, Washington, USA",
+      "country": "United States",
+      "deposit_category": "sphalerite_zinc",
+      "status": "closed",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "The Pend Oreille Mine, about two miles north of Metaline Falls in northeast Washington, was an underground zinc-lead mine in the Metaline mining district. It first began lead-zinc production in 1952, operated intermittently, and was reopened by Teck Washington Inc. in 2004. The host is carbonate-hosted (MVT-style) sphalerite mineralisation; USGS sphalerite trace-element studies of the Metaline district include it among germanium-bearing sphalerite sources, alongside Red Dog and the Tennessee districts, though Pend Oreille's germanium was never commercially recovered. Teck permanently ceased operations on 31 July 2019, citing declining metal values, eliminating roughly 200 jobs. In April 2021 Teck transitioned the site from care and maintenance to formal closure, and remediation/cleanup of the historic debris field has since been overseen by the Washington State Department of Ecology. Because the mine is closed and never produced germanium as a product, this node TERMINATES with no germanium output.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Teck Resources Limited (Teck Washington Inc.)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "co_teck",
+        "company_name": "Teck Resources Limited"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "depleted_closed",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Trail Times - Teck closing Pend Oreille mine (2019)",
+          "url": "https://www.trailtimes.ca/news/slowing-market-has-teck-closing-pend-oreille-mine-5038526",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 0,
+        "unit": "t/yr",
+        "measure": "germanium_metal",
+        "year": 2019,
+        "basis": "closed",
+        "sources": [
+          {
+            "name": "Mining and Energy - Teck to shut down Metaline Falls mine",
+            "url": "https://www.miningandenergy.ca/read/teck-to-shutdown-metaline-falls-zinc-and-lead-mine"
+          },
+          {
+            "name": "WA Dept of Ecology - Pend Oreille Mine",
+            "url": "https://ecology.wa.gov/ecologys-work-near-you/regional-work/eastern-region/pend-oreille-mine"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_empire_state": {
+      "kind": "entity",
+      "node_id": "dep_empire_state",
+      "node_type": "mine",
+      "name": "Empire State Mine (Balmat)",
+      "location": "Balmat, St. Lawrence County, New York, USA",
+      "country": "United States",
+      "deposit_category": "sphalerite_zinc",
+      "status": "ge_exploration",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "The Empire State Mine (ESM) at Balmat, St. Lawrence County, New York, is Titan Mining's operating underground zinc mine in the Balmat-Edwards zinc district, hosted in metamorphosed Proterozoic carbonate (marble) with stratabound sphalerite. While ESM is a producing zinc operation, germanium is at the test-work / evaluation stage and is NOT yet produced. In October 2025 Titan announced it had found significant germanium concentrations within existing process streams: plant feed graded ~21 g/t Ge, enriching to 77 g/t in the pre-float stream (initial sampling on ~5,400 t of plant feed). In May 2026 Titan signed a cooperation agreement with Teck's Trail Operations to evaluate ESM process streams as germanium feedstock, targeting ~13,000 kg/yr (~13 t/yr) of contained germanium - drawn from scavenger tailings (~23 g/t over ~600,000 short t/yr) and pre-float tailings (~69 g/t over ~5,400 short t/yr). This remains explicitly evaluation-stage: the companies note recovery 'may not be economic on stated terms' and no binding offtake exists. Because no germanium is currently produced, this node TERMINATES. The ~13 t/yr is a potential future feedstock to Teck Trail, not realized output.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Titan Mining Corporation",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "co_titan",
+        "company_name": "Titan Mining Corporation"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "ge_not_in_reserve_test_work_stage",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Titan Mining - Significant Germanium Concentrations at Empire State Mine",
+          "url": "https://www.titanminingcorp.com/news/news-releases/titan-mining-enters-into-cooperation-agreement-with-tecks-trail-operations-to-evaluate-germanium-recovery-from-existing-mine-waste-streams",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 0,
+        "unit": "t/yr",
+        "measure": "germanium_metal",
+        "year": 2026,
+        "basis": "test_work_only_not_produced",
+        "sources": [
+          {
+            "name": "StockTitan - Titan/Teck evaluate ~13,000 kg/yr Ge from ESM waste",
+            "url": "https://www.stocktitan.net/news/TII/titan-mining-enters-into-cooperation-agreement-with-teck-s-trail-r7x1irlhlbjo.html"
+          },
+          {
+            "name": "Titan Mining - Significant Germanium Concentrations (21 g/t feed)",
+            "url": "https://markets.financialcontent.com/wral/article/gnwcq-2025-10-20-titan-mining-finds-significant-concentrations-of-germanium-at-its-empire-state-mine-in-new-york"
+          }
+        ]
+      },
+      "grade_ppm": 21,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_apex": {
+      "kind": "entity",
+      "node_id": "dep_apex",
+      "node_type": "mine",
+      "name": "Apex Mine",
+      "location": "Jarvis Peak, Tutsagubet Mining District, Beaver Dam Mountains, Washington County, Utah, USA",
+      "country": "United States",
+      "deposit_category": "oxide",
+      "status": "closed",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "The Apex Mine in Washington County, southwestern Utah, holds the distinction of being the first mine in the world operated primarily for germanium and gallium. Originally a 19th-century copper-silver underground mine, it was recognised for exceptional germanium-gallium enrichment in oxidized/supergene zones (Ge and Ga grades reported 10-100x higher than typical deposits). Musto Explorations Ltd. brought it into primary Ge-Ga production in the mid-1980s; Hecla Mining Company reopened it in early 1990 with ~85 employees but ceased operations in August 1990 amid falling germanium and gallium prices. In its peak year the mine processed ~10,270 tons yielding ~5,634 lb Ge (~2.6 t), ~1,645 lb Ga and ~224,800 lb Cu. The mine has been closed since 1990; subsequent US germanium supply came from refining/recycling rather than Apex. In March 2026 Blue Moon Metals agreed to acquire Apex from Teck to advance US critical-mineral supply, but the mine remains non-producing. Because no germanium is currently produced, this node TERMINATES.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Blue Moon Metals Inc. (acquired from Teck Resources, 2026)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "co_blue_moon",
+        "company_name": "Blue Moon Metals Inc."
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "historic_no_current_reserve",
+        "basis": "not_quantified",
+        "source": {
+          "name": "USGS Bulletin 1577 - Germanium-Gallium Mine, Washington County, Utah",
+          "url": "https://pubs.usgs.gov/bul/1577/report.pdf",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 0,
+        "unit": "t/yr",
+        "measure": "germanium_metal",
+        "year": 1990,
+        "basis": "closed",
+        "sources": [
+          {
+            "name": "Western Mining History - Apex (peak year ~5,634 lb Ge)",
+            "url": "https://westernmininghistory.com/mine-detail/10276875/"
+          },
+          {
+            "name": "Deseret News - Hecla quits Utah Apex unit (1990 closure)",
+            "url": "https://www.deseret.com/1990/8/7/18875249/hecla-buys-into-toronto-firm-quits-utah-mine-unit/"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_brook_mine": {
+      "kind": "entity",
+      "node_id": "dep_brook_mine",
+      "node_type": "deposit",
+      "name": "Brook Mine",
+      "location": "Sheridan County, Wyoming, USA",
+      "country": "United States",
+      "deposit_category": "coal_lignite",
+      "status": "exploration",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "The Brook Mine near Sheridan, Wyoming, is Ramaco Resources' coal-hosted critical-minerals project - Wyoming's first new coal mine in roughly 50 years, with coal mining commencing July 2025. Following ~18 months of core drilling and independent analysis by NETL/US national labs, Ramaco reports the coal and associated strata host rare earth elements (Nd, Pr, Dy, Tb) plus the critical minerals gallium, scandium and germanium. The July 2025 Preliminary Economic Assessment (PEA) cites an exploration target of up to ~1.7 million tons of contained critical-mineral oxides within the permitted ~4,500-acre area, and projects ~1,242 short tons/yr of mixed oxide output (aggregating gallium, germanium, scandium, terbium, dysprosium, neodymium and praseodymium) at a planned 2 Mt/yr coal rate - germanium is not separately quantified at the annual level. Full mine-plus-processing-plant development is estimated at ~$533M; a $6.1M Wyoming grant supports a processing plant. The project is at the exploration/development (PEA) stage with no operating germanium recovery, so this node TERMINATES - no germanium is being produced.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Ramaco Resources, Inc.",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "co_ramaco",
+        "company_name": "Ramaco Resources, Inc."
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "exploration_target_oxides_not_ge_reserve",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Ramaco Brook Mine Rare Earth Project PEA Summary (July 2025)",
+          "url": "https://ramacoresources.com/wp-content/uploads/2025/07/Ramaco-PEA-Report-Jul-2025.pdf",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 0,
+        "unit": "t/yr",
+        "measure": "germanium_metal",
+        "year": 2025,
+        "basis": "exploration_no_production",
+        "sources": [
+          {
+            "name": "Ramaco Brook Mine FAQs",
+            "url": "https://ramacoresources.com/brook-mine-faqs/"
+          },
+          {
+            "name": "Institute for Energy Research - Wyoming mine REE/critical minerals",
+            "url": "https://www.instituteforenergyresearch.org/fossil-fuels/coal/wyoming-mine-to-extract-rare-earth-minerals-from-coal/"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "smelter_teck_trail": {
+      "kind": "entity",
+      "node_id": "smelter_teck_trail",
+      "node_type": "smelter",
+      "name": "Teck Trail Operations",
+      "location": "Trail, British Columbia, Canada",
+      "country": "Canada",
+      "deposit_category": null,
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "Teck's Trail Operations in Trail, British Columbia, is one of the world's largest fully integrated zinc-lead smelting and refining complexes and the ONLY commercial-scale primary germanium recovery facility in North America. Germanium is recovered as a byproduct of zinc concentrate processing: residues from zinc concentrates are treated in roasters or pressure-leach circuits and purified to produce germanium dioxide and other byproduct metals. Most of Trail's germanium feed comes from Red Dog-district (Alaska) sphalerite concentrate, supplemented by other zinc concentrates. Trail currently recovers approximately 8-10 tonnes per year of germanium, making Teck North America's largest germanium producer and the fourth largest globally; the company has signaled a planned ~4 t/yr expansion by 2027 and is evaluating additional feedstock (e.g., ~13,000 kg/yr potential from Titan Mining's Empire State Mine waste streams). In Q1 2026, higher byproduct prices (notably silver and germanium) boosted Trail's results while volumes held roughly flat year-on-year. Trail is the node where Red Dog's contained germanium is actually converted into a marketable raw material, feeding the germanium raw-material class boundary.",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Teck Resources Limited",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "co_teck",
+        "company_name": "Teck Resources Limited"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "smelter_no_reserve",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Teck - Trail Operations",
+          "url": "https://www.teck.com/operations/canada/operations/trail-operations/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 9,
+        "unit": "t/yr",
+        "measure": "germanium_metal_recovered_midpoint_of_8_to_10",
+        "year": 2025,
+        "basis": "trade_press_reported_range",
+        "sources": [
+          {
+            "name": "Mining Engineering Online (SME) - Teck eyes germanium output boost (8-10 t/yr, +4 t by 2027)",
+            "url": "https://me.smenet.org/teck-resources-eyes-output-boost-for-chipmaking-metal-germanium/"
+          },
+          {
+            "name": "Mining.com - Teck mulls expanding germanium production",
+            "url": "https://www.mining.com/teck-mulls-expanding-its-production-of-germanium-reuters/"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        {
+          "form": "germanium dioxide / refined Ge (byproduct)",
+          "amount": {
+            "value": 9,
+            "unit": "t/yr"
+          },
+          "basis": "trade_press_reported_range",
+          "source": {
+            "name": "SME / Mining.com - Trail ~8-10 t/yr Ge",
+            "url": "https://me.smenet.org/teck-resources-eyes-output-boost-for-chipmaking-metal-germanium/",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "from_node": "dep_red_dog",
+          "to_type": "entity",
+          "form": "germanium-bearing zinc (sphalerite) concentrate",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Principal Ge feed is Red Dog-district sphalerite concentrate; feeds blended."
+        }
+      ],
+      "outputs": [
+        {
+          "to_node": "class_rawmat_germanium",
+          "to_type": "class",
+          "traced": true,
+          "form": "germanium dioxide (GeO2) / germanium concentrate",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": 9,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Trail recovers ~8-10 t/yr Ge (midpoint ~9 t/yr) and is North America's only commercial-scale primary germanium recovery operation. ~4 t/yr expansion planned by 2027. Output crosses the germanium raw-material class boundary."
+        }
+      ]
+    },
+    "smelter_nyrstar_clarksville": {
+      "kind": "entity",
+      "node_id": "smelter_nyrstar_clarksville",
+      "node_type": "smelter",
+      "name": "Nyrstar Clarksville (Korea Zinc) Smelter",
+      "location": "Clarksville, Montgomery County, Tennessee, USA",
+      "country": "United States",
+      "deposit_category": null,
+      "status": "ge_recovery_planned",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "The Clarksville smelter in Montgomery County, Tennessee, is the sole primary zinc smelter in the United States. It historically processed germanium- and gallium-bearing zinc concentrate from the Middle Tennessee Mines, depositing Ge/Ga-rich residues in on-site ponds, but it has NEVER operated a commercial germanium recovery circuit. Nyrstar (Trafigura) proposed a dedicated germanium-gallium recovery and processing facility - initially a ~$90M project, later cited at ~$150M - targeting up to ~30 t/yr germanium and ~40 t/yr gallium (claimed potential ~80% of US Ge/Ga demand), but the facility was never built. In December 2025 Nyrstar agreed to sell Clarksville and the Tennessee mines to Korea Zinc, closing in H1 2026. Korea Zinc launched its $6.6B (total $7.4B) 'Project Crucible' in April 2026; site preparation and engineering run through 2026, construction begins early 2027 (~33-month build), with initial zinc operations targeted for 2029 and critical-mineral (Ge/Ga/In) recovery from ~620,000 t of stored residues thereafter. Because dedicated germanium recovery is NOT yet operational, Clarksville currently produces NO refined germanium - the Middle Tennessee germanium path TERMINATES here until the recovery plant comes online (~2029).",
+      "owner": [
+        {
+          "company_id": null,
+          "company_name": "Korea Zinc Inc. (acquired from Nyrstar / Trafigura, H1 2026)",
+          "stake_pct": null
+        }
+      ],
+      "operator": {
+        "company_id": "co_korea_zinc",
+        "company_name": "Korea Zinc Inc."
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "smelter_no_reserve",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Nyrstar Clarksville (USA)",
+          "url": "https://www.nyrstar.com/operations/metals-processing/nyrstar-clarksville",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 0,
+        "unit": "t/yr",
+        "measure": "germanium_metal_planned_30_not_yet_operational",
+        "year": 2026,
+        "basis": "facility_not_operational",
+        "sources": [
+          {
+            "name": "ClarksvilleNow - Nyrstar $90M Ge/Ga processing facility (planned 30 t/yr Ge)",
+            "url": "https://clarksvillenow.com/local/nyrstar-plans-expansion-of-clarksville-plant-with-90-million-germanium-gallium-processing-facility/"
+          },
+          {
+            "name": "S&P Global - Korea Zinc launches Crucible Zinc (construction 2027, ops ~2029)",
+            "url": "https://www.spglobal.com/energy/en/news-research/latest-news/metals/040226-korea-zinc-launches-crucible-zinc-to-build-us-critical-metals-smelter"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [],
+      "inputs": [
+        {
+          "from_node": "dep_middle_tennessee",
+          "to_type": "entity",
+          "form": "germanium-bearing zinc concentrate (~400 ppm Ge) from Middle Tennessee Mines",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": null,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Feed from Middle Tennessee; Ge recovery circuit not yet built."
+        }
+      ],
+      "outputs": []
+    },
+    "dep_big_hill": {
+      "kind": "entity",
+      "node_id": "dep_big_hill",
+      "node_type": "deposit",
+      "name": "Big Hill Slag / Tailings (Terril de Lubumbashi)",
+      "location": "Lubumbashi, Haut-Katanga Province",
+      "country": "Democratic Republic of the Congo",
+      "deposit_category": "slag_tailings",
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "Big Hill (the 'Terril de Lubumbashi') is a man-made slag dump accumulated over roughly a century of copper/cobalt smelting at the former Gécamines Lubumbashi smelter. It is not a natural orebody but ~10 million tonnes of metals-bearing slag containing recoverable zinc, copper, cobalt, silver and germanium (Umicore/Gécamines, 2024). The dump is worked by STL (Société pour le Traitement du Terril de Lubumbashi), a 100% subsidiary of state miner Gécamines. Germanium is concentrated in the residual phases of the slag and is the strategic by-product driving recent investment. Per the USGS 2020-2021 Minerals Yearbook (Congo Kinshasa), STL produced about 14,000 kg of germanium in 2020, up sharply from about 3,000 kg in 2019. The on-site hydrometallurgical plant has a nameplate germanium capacity of about 24 t/yr (alongside 3,500 t Co, 15,000 t Zn, 3,600 t Cu), and Gécamines/STL have publicly targeted ~30 t/yr — which they claim could supply up to ~30% of world germanium demand. Since the October 2024 first export, slag-derived germanium concentrate is processed locally and shipped to Umicore (Belgium) under an exclusive offtake/processing partnership. Reserve tonnage cited refers to slag in place rather than a JORC/NI 43-101 reserve.",
+      "owner": [
+        {
+          "company_id": "co_gecamines",
+          "company_name": "Gécamines (via STL)",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "co_gecamines",
+        "company_name": "Société pour le Traitement du Terril de Lubumbashi (STL), subsidiary of Gécamines"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 10000000,
+        "unit": "t",
+        "measure": "slag_in_place",
+        "basis": "reported_resource",
+        "source": {
+          "name": "Umicore — Umicore and STL sign partnership related to germanium recycling from Big Hill's mining waste materials in DRC",
+          "url": "https://www.umicore.com/en/media/newsroom/umicore-and-stl-sign-partnership-related-to-germanium-recycling/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 14,
+        "unit": "t/yr",
+        "measure": "ge_contained",
+        "year": 2020,
+        "basis": "reported_production",
+        "sources": [
+          {
+            "name": "USGS 2020-2021 Minerals Yearbook — Congo (Kinshasa)",
+            "url": "https://pubs.usgs.gov/myb/vol3/2020-21/myb3-2020-21-congo-kinshasa.pdf"
+          },
+          {
+            "name": "Mining.com — China's grip on germanium gets challenged by new Congo plant",
+            "url": "https://www.mining.com/web/congo-eyes-30-of-germaniums-global-output-by-tapping-new-plant/"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        {
+          "form": "germanium-bearing slag (contained Ge)",
+          "amount": {
+            "value": 14,
+            "unit": "t/yr"
+          },
+          "basis": "reported_production",
+          "source": {
+            "name": "USGS 2020-2021 MYB — STL ~14,000 kg Ge in 2020",
+            "url": "https://pubs.usgs.gov/myb/vol3/2020-21/myb3-2020-21-congo-kinshasa.pdf",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [],
+      "outputs": [
+        {
+          "to_node": "plant_stl_lubumbashi",
+          "to_type": "entity",
+          "traced": true,
+          "form": "germanium_bearing_slag",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": 14,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Slag from Big Hill is fed to the co-located STL hydrometallurgical plant for germanium concentrate recovery."
+        }
+      ]
+    },
+    "plant_stl_lubumbashi": {
+      "kind": "entity",
+      "node_id": "plant_stl_lubumbashi",
+      "node_type": "recovery_plant",
+      "name": "STL Lubumbashi Hydrometallurgical Plant",
+      "location": "Lubumbashi, Haut-Katanga Province",
+      "country": "Democratic Republic of the Congo",
+      "deposit_category": null,
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "The STL hydrometallurgical plant in Lubumbashi is the germanium-recovery node that sits between the Big Hill slag dump and Umicore's refinery. Operated by Société pour le Traitement du Terril de Lubumbashi (STL), a 100% Gécamines subsidiary, it leaches and concentrates germanium (with zinc, copper, cobalt and silver credits) from Big Hill slag. The new germanium-capable hydrometallurgical facility was inaugurated by President Félix Tshisekedi in October 2023; in October 2024 STL achieved the first-ever export of locally transformed germanium concentrate from the DRC, shipped to Umicore in Belgium. Reported germanium capacity is about 24 t/yr, with a stated target of ~30 t/yr — which Gécamines/STL claim could meet up to ~30% of global germanium demand, breaking China's near-monopoly. STL's contained-germanium output was about 14,000 kg in 2020 versus 3,000 kg in 2019 (USGS 2020-2021 Minerals Yearbook). Under a May 2024 partnership, Umicore engineers (on site since June 2024) optimised the process and Umicore holds exclusive access to the processed germanium for high-tech applications (optics, infrared, semiconductors). The plant is the value-add step turning slag into a saleable Ge concentrate; output is reported as contained Ge rather than refined metal.",
+      "owner": [
+        {
+          "company_id": "co_gecamines",
+          "company_name": "Gécamines (via STL)",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "co_gecamines",
+        "company_name": "Société pour le Traitement du Terril de Lubumbashi (STL), subsidiary of Gécamines"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": null,
+        "basis": "not_quantified",
+        "source": {
+          "name": "Not applicable — recovery plant (reserve held at dep_big_hill)",
+          "url": "https://www.umicore.com/en/media/newsroom/umicore-and-stl-sign-partnership-related-to-germanium-recycling/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 14,
+        "unit": "t/yr",
+        "measure": "ge_contained_in_concentrate",
+        "year": 2020,
+        "basis": "reported_production",
+        "sources": [
+          {
+            "name": "USGS 2020-2021 Minerals Yearbook — Congo (Kinshasa)",
+            "url": "https://pubs.usgs.gov/myb/vol3/2020-21/myb3-2020-21-congo-kinshasa.pdf"
+          },
+          {
+            "name": "Ecofin Agency — DR Congo: Gécamines Starts Exporting Germanium from New Lubumbashi Plant",
+            "url": "https://www.ecofinagency.com/mining/1610-46023-dr-congo-gecamines-starts-exporting-germanium-from-new-lubumbashi-plant"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [
+        {
+          "form": "germanium concentrate",
+          "amount": {
+            "value": 14,
+            "unit": "t/yr"
+          },
+          "basis": "reported_production",
+          "source": {
+            "name": "USGS 2020-2021 MYB — ~14,000 kg Ge (2020); plant capacity ~24 t/yr, target ~30 t/yr",
+            "url": "https://pubs.usgs.gov/myb/vol3/2020-21/myb3-2020-21-congo-kinshasa.pdf",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "from_node": "dep_big_hill",
+          "to_type": "entity",
+          "form": "germanium_bearing_slag",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": 14,
+                "unit": "t/yr"
+              }
+            }
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "to_node": "refinery_umicore",
+          "to_type": "entity",
+          "traced": true,
+          "form": "germanium_concentrate",
+          "carries": [
+            {
+              "material_id": "mat_germanium",
+              "amount": {
+                "value": 14,
+                "unit": "t/yr"
+              }
+            }
+          ],
+          "note": "Germanium concentrate exported to Umicore (Belgium) under an exclusive May 2024 offtake/processing partnership; first export October 2024. Plant capacity ~24 t/yr, target ~30 t/yr."
+        }
+      ]
+    },
+    "dep_kipushi": {
+      "kind": "entity",
+      "node_id": "dep_kipushi",
+      "node_type": "mine",
+      "name": "Kipushi Mine",
+      "location": "Kipushi, Haut-Katanga Province",
+      "country": "Democratic Republic of the Congo",
+      "deposit_category": "carbonate_pb_zn",
+      "status": "producing",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Kipushi is an ultra-high-grade carbonate-hosted Zn-Cu-Ag-Ge-Pb deposit in the Central African Copperbelt, regarded as the world's highest-grade zinc mine. It is a joint venture between Ivanhoe Mines (62%) and Gécamines (38%, increased Q1 2025). The 2018 Measured & Indicated resource was about 11.8 Mt grading 35.34% zinc (first-five-year mining grade). Germanium is present in the sphalerite and copper-rich zones — Ivanhoe drilling has returned up to ~64-90 g/t Ge, and 2025 zinc concentrate assayed up to ~90 g/t Ge. Historically, between 1956 and 1978 the mine produced approximately 278 tonnes of germanium as a by-product alongside copper and zinc. The 800,000 t/yr (debottlenecked to ~960,000 t/yr) concentrator was completed in May 2024 with first concentrate in June 2024; 2025 output was about 203,000 t of zinc. Critically, germanium is NOT currently recovered: the operation produces a zinc concentrate (and the Ge reports to that concentrate) but there is no germanium extraction circuit on site, so germanium does not yet reach the germanium class boundary as a separated product. This node therefore terminates at the deposit despite significant in-situ and historic Ge endowment.",
+      "owner": [
+        {
+          "company_id": "co_ivanhoe",
+          "company_name": "Ivanhoe Mines",
+          "stake_pct": 62
+        },
+        {
+          "company_id": "co_gecamines",
+          "company_name": "Gécamines",
+          "stake_pct": 38
+        }
+      ],
+      "operator": {
+        "company_id": "co_ivanhoe",
+        "company_name": "Kipushi Holding (Ivanhoe Mines / Gécamines JV)"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "ge_contained",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Ivanhoe Mines — Kipushi Mine project page (resource 11.8 Mt @ 35.34% Zn; Ge present, not separately reserved)",
+          "url": "https://www.ivanhoemines.com/what-we-do/operations-projects/kipushi-development-project/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_recovered",
+        "year": 2025,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Ivanhoe Mines — Kipushi Mine (zinc producing; germanium not recovered)",
+            "url": "https://www.ivanhoemines.com/what-we-do/operations-projects/kipushi-development-project/"
+          }
+        ]
+      },
+      "grade_ppm": 64,
+      "produces": [
+        {
+          "form": "zinc concentrate (Ge present, not recovered)",
+          "amount": {
+            "value": null,
+            "unit": "t/yr"
+          },
+          "basis": "not_quantified",
+          "source": {
+            "name": "Ivanhoe — Ge reports to zinc concentrate, no Ge recovery circuit",
+            "url": "https://www.ivanhoemines.com/what-we-do/operations-projects/kipushi-development-project/",
+            "retrieved": "2026-06-22"
+          }
+        }
+      ],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_tsumeb": {
+      "kind": "entity",
+      "node_id": "dep_tsumeb",
+      "node_type": "mine",
+      "name": "Tsumeb Mine",
+      "location": "Tsumeb, Otavi Mountain Land, Oshikoto Region",
+      "country": "Namibia",
+      "deposit_category": "carbonate_pb_zn",
+      "status": "closed",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Tsumeb is a famous, deeply mineralised carbonate-hosted Cu-Pb-Zn-Ag-Ge pipe in Namibia's Otavi Mountain Land, mined from 1905 until closure in 1996 when the orebody was effectively exhausted. Over its life it produced roughly 30 Mt of ore grading about 4.3% Cu, 10% Pb, 3.5% Zn, 95 g/t Ag and ~50 g/t (50 ppm) germanium. Pre-mining germanium endowment in the Tsumeb pipe was estimated at about 2,160 tonnes, though actual recovered germanium over the mine's life is reported at only on the order of ~80 tonnes — the large gap reflects that most germanium reported to smelter slag and concentrates rather than to finished metal. Tsumeb is the type locality for 'Tsumeb-type' Ge-bearing deposits and underpins exploration interest across the wider Otavi belt. The mine itself is closed and depleted; there is no active germanium production from the underground deposit. (Smelter slag at the associated Tsumeb smelter is a separate node.) This deposit node therefore terminates: no current germanium recovery and no remaining mineable reserve.",
+      "owner": [],
+      "operator": {
+        "company_id": null,
+        "company_name": "Closed (formerly Ongopolo / TCL; mine depleted 1996)"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 0,
+        "unit": "t",
+        "measure": "ge_remaining_in_situ",
+        "basis": "depleted",
+        "source": {
+          "name": "The Extractor Magazine — Tsumeb Mine: The Jewel of the Otavi Mountains (life-of-mine ~30 Mt @ 50 g/t Ge; pre-mining Ge estimate ~2,160 t; ~80 t Ge produced; closed 1996)",
+          "url": "https://theextractormagazine.com/2025/10/03/tsumeb-mine-the-jewel-of-the-otavi-mountains/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 0,
+        "unit": "t/yr",
+        "measure": "ge_recovered",
+        "year": 1996,
+        "basis": "ceased_production",
+        "sources": [
+          {
+            "name": "The Extractor Magazine — Tsumeb Mine (closed 1996, ~80 t Ge produced over life)",
+            "url": "https://theextractormagazine.com/2025/10/03/tsumeb-mine-the-jewel-of-the-otavi-mountains/"
+          }
+        ]
+      },
+      "grade_ppm": 50,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_tsumeb_slag": {
+      "kind": "entity",
+      "node_id": "dep_tsumeb_slag",
+      "node_type": "deposit",
+      "name": "Tsumeb Smelter Slag / Tailings",
+      "location": "Tsumeb, Oshikoto Region",
+      "country": "Namibia",
+      "deposit_category": "slag_tailings",
+      "status": "exploration",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "The Tsumeb copper smelter (long operated by Dundee Precious Metals, DPM) generated decades of metallurgical slag and tailings enriched in critical metals. The smelter and its slag stockpiles were sold by Dundee Precious Metals to China's Sinomine Resource Group in 2024. In September 2024 Sinomine stated the Tsumeb slag/smelter material contains over 700 t of germanium (cited as 746 t), plus about 410 t of gallium and roughly 209,000 t of contained zinc, per an NI 43-101-style technical report. Sinomine Namibia has announced a multi-metal recycling project (planned investment ~US$223 million) designed to process about 200,000 t/yr of slag and, on completion, produce roughly 33 t/yr of germanium ingots, 11 t/yr of gallium and 10,900 t/yr of zinc. As of mid-2026 this is a planned/under-development recovery project rather than a producing germanium operation (and the smelter itself was idled citing concentrate shortage), so germanium is present but not yet being recovered to the class boundary. The node therefore terminates pending project commissioning. Note: ownership transferred from Dundee Precious Metals to Sinomine in 2024 — this node reflects the current owner while retaining the DPM provenance.",
+      "owner": [
+        {
+          "company_id": "co_sinomine",
+          "company_name": "Sinomine Resource Group (acquired from Dundee Precious Metals, 2024)",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "co_sinomine",
+        "company_name": "Sinomine Namibia (formerly Dundee Precious Metals Tsumeb)"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": 746,
+        "unit": "t",
+        "measure": "ge_contained_in_slag",
+        "basis": "reported_resource",
+        "source": {
+          "name": "Mining.com — Sinomine says its Tsumeb smelter contains over 700t of germanium",
+          "url": "https://www.mining.com/web/sinomine-says-its-tsumeb-smelter-contains-over-700t-of-germanium/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_recovered",
+        "year": 2024,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Shanghai Metal Market — Sinomine Tsumeb Smelter Commences Polymetallic Recovery Project (planned ~33 t/yr Ge, not yet producing)",
+            "url": "https://www.metal.com/en/newscontent/103307591"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_khusib_springs": {
+      "kind": "entity",
+      "node_id": "dep_khusib_springs",
+      "node_type": "deposit",
+      "name": "Khusib Springs Deposit",
+      "location": "Otavi Mountain Land, Grootfontein / Otjozondjupa Region",
+      "country": "Namibia",
+      "deposit_category": "carbonate_pb_zn",
+      "status": "exploration",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Khusib Springs is a small but very high-grade carbonate-hosted Cu-Zn-Pb-Ag-(As-Sb-Ge) 'Tsumeb-type' sulfide deposit in Namibia's Otavi Mountain Land, now held within Golden Deeps Limited's exploration licences. Published mineralogy (Melcher et al., ScienceDirect) reports a body of about 300,000 t grading roughly 10% Cu, 1.8% Pb and 584 g/t Ag. Germanium is heterogeneously distributed: the central and lower orebody is enriched in Ge (up to ~200 ppm) and Pb, while the uppermost zinc-rich zone carries lower Ge (<30 ppm), giving an overall Ge range of roughly 13-203 ppm. Germanium is hosted chiefly in copper sulfides (e.g., germanite/renierite-type phases) rather than in sphalerite. The deposit is at exploration/historic-testing stage under Golden Deeps and is not in production; no germanium is currently recovered and there is no defined germanium reserve. The node therefore terminates. Its significance is as a high-grade Ge analogue within the same belt that hosted the world-class Tsumeb mine.",
+      "owner": [
+        {
+          "company_id": "co_golden_deeps",
+          "company_name": "Golden Deeps Limited",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "co_golden_deeps",
+        "company_name": "Golden Deeps Limited"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "ge_contained",
+        "basis": "not_quantified",
+        "source": {
+          "name": "ScienceDirect — Geochemical and mineralogical distribution of germanium in the Khusib Springs Cu-Zn-Pb-Ag sulfide deposit, Otavi Mountain Land, Namibia (~300,000 t ore; Ge up to ~200 ppm)",
+          "url": "https://www.sciencedirect.com/science/article/abs/pii/S0169136805000880",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_recovered",
+        "year": null,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Golden Deeps Limited — Otavi Mountain Land, Namibia (exploration stage)",
+            "url": "https://www.goldendeeps.com/projects/otavi-mountain-land-namibia/"
+          }
+        ]
+      },
+      "grade_ppm": 203,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_central_otavi": {
+      "kind": "entity",
+      "node_id": "dep_central_otavi",
+      "node_type": "deposit",
+      "name": "Central Otavi Critical Metals Project (Graceland / Kaskara / Nosib / Abenab)",
+      "location": "Otavi Mountain Land, Otjozondjupa / Oshikoto Region",
+      "country": "Namibia",
+      "deposit_category": "carbonate_pb_zn",
+      "status": "exploration",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "The Central Otavi Critical Metals Project is a cluster of polymetallic Cu-Pb-Zn-Ag-Ge prospects (Graceland, Kaskara, Nosib, Abenab and related targets) in Namibia's Otavi Mountain Land, acquired by Golden Deeps Limited in April 2025 and consolidating seven Exclusive Prospecting Licences. The targets are carbonate-hosted, Tsumeb-style systems where germanium occurs with copper-rich sulfides. Surface rock-chip and channel sampling has returned spectacular grades: at Graceland up to 50.6% Cu, 35.4% Zn, 34.1% Pb, 7,792 g/t Ag and 224 g/t Ge, while the Kaskara prospect has returned germanium grades up to 333 g/t, among the highest reported in the belt. These are early-stage surface/exploration results — no drill-defined resource, reserve or germanium tonnage has been published, and the project is firmly at the exploration stage with first systematic drilling planned for 2025-2026. Golden Deeps secured about N$44.3 million (A$3.54 million) to advance the Otavi critical-metals portfolio. As there is no production and no germanium recovery, the node terminates; its value is as a high-grade greenfield Ge exploration play.",
+      "owner": [
+        {
+          "company_id": "co_golden_deeps",
+          "company_name": "Golden Deeps Limited",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "co_golden_deeps",
+        "company_name": "Golden Deeps Limited"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "ge_contained",
+        "basis": "not_quantified",
+        "source": {
+          "name": "The Extractor Magazine — Golden Deeps lines up drilling as Graceland returns 50.6% Cu, 7,792 g/t Ag and 224 g/t Ge; Kaskara up to 333 g/t Ge (surface samples, no resource)",
+          "url": "https://theextractormagazine.com/2025/08/21/golden-deeps-lines-up-in-country-drilling-contractors-as-graceland-returns-50-6-cu-7792-g-t-ag-and-224-g-t-ge-in-central-otavi/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_recovered",
+        "year": null,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Golden Deeps Limited — projects (Central Otavi Critical Metals, exploration)",
+            "url": "https://www.goldendeeps.com/projects/otavi-mountain-land-namibia/"
+          }
+        ]
+      },
+      "grade_ppm": 333,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_tres_marias": {
+      "kind": "entity",
+      "node_id": "dep_tres_marias",
+      "node_type": "mine",
+      "name": "Tres Marias Mine",
+      "location": "Manuel Benavides Municipality, Chihuahua",
+      "country": "Mexico",
+      "deposit_category": "carbonate_pb_zn",
+      "status": "idle",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Tres Marias is a carbonate-hosted (MVT-style) Zn-Ge deposit in Chihuahua, Mexico, hosted in a solution-collapse breccia within Cretaceous carbonates. It is notable for exceptionally germanium-rich mineralogy: sphalerite averages around 960 ppm Ge and the deposit hosts the highest reported Ge contents in willemite of any MVT deposit worldwide (willemite locally up to ~4,000 ppm Ge, plus Ge-rich hemimorphite). Two ore types occur — primary Zn-Pb sulfide ore and an oxidised (nonsulfide) Zn-silicate/carbonate ore. The mine was worked intermittently between the late 1940s and 1992, mainly for high-germanium zinc-oxide mineralisation, with roughly 125,000 t mined historically. Despite the extraordinary germanium grades that have attracted academic and exploration interest, there is no current commercial germanium recovery and the mine's recent operating status is unclear/inactive; no JORC/NI 43-101 germanium reserve has been published. Because germanium is present but not currently being recovered to a saleable product, this node terminates at the deposit.",
+      "owner": [],
+      "operator": {
+        "company_id": null,
+        "company_name": "Status unclear / historically intermittent (no active Ge recovery)"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "ge_contained",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Saini-Eidukat et al., Mineralium Deposita — Zinc-germanium ores of the Tres Marias Mine, Chihuahua, Mexico (sphalerite ~960 ppm Ge; willemite up to ~4,000 ppm; ~125,000 t mined)",
+          "url": "https://rd.springer.com/article/10.1007/s00126-008-0222-2",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_recovered",
+        "year": null,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Mineralium Deposita (Springer) — Zinc-germanium ores of the Tres Marias Mine (no current Ge recovery)",
+            "url": "https://rd.springer.com/article/10.1007/s00126-008-0222-2"
+          }
+        ]
+      },
+      "grade_ppm": 960,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_san_vicente": {
+      "kind": "entity",
+      "node_id": "dep_san_vicente",
+      "node_type": "deposit",
+      "name": "San Vicente / Shalipayco / Bongará Zn District (Ge in sphalerite)",
+      "location": "Eastern Cordillera & sub-Andean belt (San Vicente district, Shalipayco, Bongará)",
+      "country": "Peru",
+      "deposit_category": "sphalerite_zinc",
+      "status": "producing",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "This node groups three Mississippi Valley-type (MVT) zinc systems in Peru — the San Vicente district (a long-running producing Zn-Pb mine), the Shalipayco deposit, and the Bongará/Cristal district in northern Peru — that share germanium-bearing sphalerite. Peer-reviewed LA-ICP-MS work (Mondillo et al., Mineralium Deposita, 2023) reports Ge in sphalerite with interquartile ranges of about 36-164 ppm at San Vicente and 101-425 ppm at Shalipayco, with late yellow sphalerite at Shalipayco reaching up to ~1,119 ppm; Bongará supergene/nonsulfide ores also show Ge enrichment in hemimorphite, Fe-hydroxides and remnant sphalerite. Although San Vicente is an active zinc producer, germanium is hosted in the sphalerite lattice and reports to zinc concentrate; it is NOT extracted as a separate germanium product, and no germanium reserve/output tonnage has been published for these deposits. Reported grades are mineralogical (per-mineral) rather than whole-rock reserves. Because germanium is present but not recovered to the germanium class boundary, this grouped node terminates at the deposit.",
+      "owner": [],
+      "operator": {
+        "company_id": null,
+        "company_name": "Multiple (San Vicente operated historically by Compañía Minera San Ignacio de Morococha; Ge not recovered at any)"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "ge_contained",
+        "basis": "not_quantified",
+        "source": {
+          "name": "Mondillo et al., Mineralium Deposita (Springer) — Germanium- and gallium-rich sphalerite in MVT deposits: the San Vicente district and the Shalipayco deposit, Peru (Ge 36-425 ppm IQR; up to 1,119 ppm)",
+          "url": "https://link.springer.com/article/10.1007/s00126-023-01160-4",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_recovered",
+        "year": null,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "Mondillo et al., Mineralium Deposita — San Vicente / Shalipayco Ge in sphalerite (not recovered)",
+            "url": "https://link.springer.com/article/10.1007/s00126-023-01160-4"
+          }
+        ]
+      },
+      "grade_ppm": 425,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_cerro_lindo": {
+      "kind": "entity",
+      "node_id": "dep_cerro_lindo",
+      "node_type": "mine",
+      "name": "Cerro Lindo Mine",
+      "location": "Chincha Province, Ica Region",
+      "country": "Peru",
+      "deposit_category": "sphalerite_zinc",
+      "status": "producing",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Cerro Lindo is a Kuroko-style volcanogenic massive sulfide (VMS) mine in the Chincha Province of Peru, owned and operated by Nexa Resources Peru (a subsidiary of Nexa Resources S.A.), producing zinc, copper, lead and silver since 2007. The orebody comprises lens-shaped massive sulfide bodies dominated by pyrite (50-90%) with yellow and brown sphalerite, chalcopyrite and minor galena. Germanium typically concentrates in sphalerite in such Zn-rich systems, but for Cerro Lindo any germanium content is an unconfirmed potential by-product: Nexa's public disclosures and SEC filings describe Zn-Cu-Pb-Ag production and do not report germanium grades, germanium recovery, or a germanium reserve. There is no evidence that germanium is separated as a product — it would report to zinc concentrate if present at all. Given the lack of confirmed germanium endowment and no recovery, this node terminates at the deposit. It is included for completeness as a candidate Peruvian zinc source whose germanium by-product status remains unverified.",
+      "owner": [
+        {
+          "company_id": "co_nexa",
+          "company_name": "Nexa Resources (via Nexa Resources Peru)",
+          "stake_pct": 100
+        }
+      ],
+      "operator": {
+        "company_id": "co_nexa",
+        "company_name": "Nexa Resources Peru"
+      },
+      "classes": [
+        "class_rawmat_germanium"
+      ],
+      "total_reserve": {
+        "value": null,
+        "unit": "t",
+        "measure": "ge_contained",
+        "basis": "not_quantified",
+        "source": {
+          "name": "NS Energy — Cerro Lindo Zinc, Copper, Lead and Silver Mine, Peru (Zn-Cu-Pb-Ag VMS; no germanium reported)",
+          "url": "https://www.nsenergybusiness.com/projects/cerro-lindo-mine/",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null,
+        "unit": "t/yr",
+        "measure": "ge_recovered",
+        "year": null,
+        "basis": "not_quantified",
+        "sources": [
+          {
+            "name": "NS Energy — Cerro Lindo Mine (germanium by-product unconfirmed, not recovered)",
+            "url": "https://www.nsenergybusiness.com/projects/cerro-lindo-mine/"
+          }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": [],
+      "inputs": [],
+      "outputs": []
     }
   },
   "companies": {
@@ -154,7 +3355,10 @@
       "ticker": null,
       "country": "China",
       "description": "State-affiliated coal company in Xilingol, Inner Mongolia that works the Wulantuga high-germanium lignite in the Shengli Coalfield. Germanium is recovered as a by-product from coal-combustion fly ash, so its germanium output is governed by coal/power economics and policy rather than germanium prices. Wulantuga-specific annual germanium tonnage is not publicly disclosed.",
-      "entities": ["dep_wulantuga", "mine_wulantuga_shengli"]
+      "entities": [
+        "dep_wulantuga",
+        "mine_wulantuga_shengli"
+      ]
     },
     "co_chinese_ge_refiners": {
       "kind": "company",
@@ -163,7 +3367,285 @@
       "ticker": null,
       "country": "China",
       "description": "The Chinese germanium refining layer that converts coal-ash and zinc-route germanium concentrate into germanium dioxide and germanium metal; China holds roughly 80-82% of global refined germanium output (USGS MCS 2025). The two named majors are Yunnan Chihong Zinc & Germanium and Yunnan Lincang Xinyuan Germanium Industry (Shenzhen: 002428, ~47.6 t/yr capacity, ~40 t/yr actual, expanding toward ~75 t/yr). The specific refiner taking Wulantuga concentrate is not publicly disclosed, so this node represents the refining layer. Output is subject to MOFCOM export licensing.",
-      "entities": ["refinery_chinese_state_ge"]
+      "entities": [
+        "refinery_chinese_state_ge"
+      ]
+    },
+    "company_lincang_xinyuan": {
+      "kind": "company",
+      "company_id": "company_lincang_xinyuan",
+      "name": "Yunnan Lincang Xinyuan Germanium Industry Co., Ltd.",
+      "ticker": "SZSE:002428",
+      "country": "China",
+      "description": "China's leading vertically integrated coal-hosted germanium producer, headquartered in Lincang, Yunnan, listed on Shenzhen (002428). Owns captive Lincang lignite mines (Dazhai/Zhongzhai/Meiziqing orebodies) and dedicated Ge refining. Company-stated Ge reserves: 940 t (~27% of China's total, 2023). Output: ~280 t germanium products in 2022 (~20% of China); 47.7 t Ge ingot in 2023 (+53% YoY). Germanium-products capacity reached ~500 t/yr by end-2024 (multi-form figure). A 2025 'advanced germanium materials' project adds 45 t/yr high-purity GeCl4, 15 t/yr high-purity GeO2 and 50 t/yr zone-refined Ge ingot (~75 t/yr contained Ge). Targets ~25% global market share by 2026.",
+      "entities": [
+        "dep_lincang_coal_ge",
+        "refinery_lincang_xinyuan"
+      ]
+    },
+    "company_chihong": {
+      "kind": "company",
+      "company_id": "company_chihong",
+      "name": "Yunnan Chihong Zinc & Germanium Co., Ltd.",
+      "ticker": "SSE:600497",
+      "country": "China",
+      "description": "State-owned Pb-Zn and germanium producer founded 2000 in Qujing, Yunnan, listed on Shanghai (600497); described as the world's largest germanium producer. Recovers Ge as a by-product of zinc smelting from captive high-grade Huize and Yiliang (Maoping) MVT Pb-Zn mines (Zn-concentrate grades >27% and >23%), where Ge is hosted in sphalerite (Huize avg ~65.9 ppm Ge, up to 593 ppm; Maoping sphalerite Ge-rich, regional up to ~1,300 ppm). Germanium refining capacity 60 t/yr Ge; company Ge resource ~448 t (RFC Ambrian) / >600 t per Chihong (~17% of China). Ge output ~56 t in 2021 and ~56 t in 2022 (~17% of China); 34.29 t Ge-containing products in H1 2024. 2024: revenue ~CNY 18.80 bn, net profit ~CNY 1.29 bn, ~289,800 t Pb-Zn concentrate metal content; retained Pb-Zn resources >32 Mt.",
+      "entities": [
+        "mine_huize_pbzn",
+        "mine_yiliang_pbzn",
+        "refinery_chihong"
+      ]
+    },
+    "company_germanium_and_applications": {
+      "kind": "company",
+      "company_id": "company_germanium_and_applications",
+      "name": "LLC Germanium and Applications",
+      "ticker": null,
+      "country": "Russia",
+      "description": "Russian company that operated the Spetsugli section of the Pavlovskoye coal-germanium deposit (Primorsky Krai), historically the source of >70% of Russian germanium. It recovered germanium from coal fly ash, with downstream facilities in Moscow and Novomoskovsk producing germanium oxide and metal, optical blanks, and electronic substrates. USGS reported the open-pit could yield as much as ~21,000 kg/yr (21 t/yr) of germanium; actual output was far lower — ~3 t/yr Ge in 2016-2017 and ~1.45 t Ge in H1-2017 — before mining ceased in 2018 due to worn equipment and weak economics (recovery only 28.7% in 2017). A 2018 upgraded extraction plant at Novoshakhtinsky was built but is not operating. It remains the licensed subsoil user of Spetsugli within the open-pit contour.",
+      "entities": [
+        "dep_russia_spetsugli_pavlovskoye_ge"
+      ]
+    },
+    "company_jsc_germanium": {
+      "kind": "company",
+      "company_id": "company_jsc_germanium",
+      "name": "JSC Germanium (Krasnoyarsk)",
+      "ticker": null,
+      "country": "Russia",
+      "description": "Krasnoyarsk-based JSC Germanium (INN 2462214466) is the only full-cycle germanium processor in Russia, part of Shvabe Holding within Rostec since September 2018. Capacity is ~20 t/yr of germanium across hydrometallurgical, metallurgical and mechanical-processing sections. Products include poly- and single-crystal germanium, granules, GeCl4, GeO2, and optical blanks. In July 2025 it became the first Russian producer of ultra-pure (99.9999%) GeCl4 for fiber-optic cable (FRP-supported; developed from 2023), and in 2025 it produced more than 30,000 polished germanium wafers for satellite solar panels — the first mass production of such wafers in Russia (Russian demand ~50,000 wafers/yr, ~90% previously imported). With domestic mine supply (Spetsugli) idle since 2018, its feed is largely recycled/secondary germanium materials plus imports; leaked customs data show it sources germanium from China's Yunnan Lincang Xinyuan Germanium Industry.",
+      "entities": [
+        "refinery_jsc_germanium_krasnoyarsk"
+      ]
+    },
+    "company_kazzinc": {
+      "kind": "company",
+      "company_id": "company_kazzinc",
+      "name": "Kazzinc Ltd.",
+      "ticker": null,
+      "country": "Kazakhstan",
+      "description": "Kazakhstan's largest zinc, lead and precious-metals producer, controlled by Glencore plc (69.61%); headquartered in Oskemen (Ust-Kamenogorsk). Operates the Ust-Kamenogorsk Metallurgical Complex which in 2023 produced ~173,900 t zinc, 35,600 t lead, 14,800 t copper and ~598,000 oz gold (Glencore FY2024 production report). Germanium is contained in its sphalerite feed and reports to zinc-plant residues, but no germanium output figure is publicly disclosed by Kazzinc or Glencore, and USGS states Kazakhstan's germanium output is inadequate to estimate.",
+      "entities": [
+        "smelter_kazzinc_ukmc"
+      ]
+    },
+    "company_glencore": {
+      "kind": "company",
+      "company_id": "company_glencore",
+      "name": "Glencore plc",
+      "ticker": "LSE:GLEN",
+      "country": "Switzerland",
+      "description": "Global diversified mining and commodity-trading group; controlling shareholder of Kazzinc (69.61%). Glencore's FY production reports itemise Kazzinc's zinc, lead, copper, gold and silver but do not disclose a germanium output figure.",
+      "entities": [
+        "smelter_kazzinc_ukmc"
+      ]
+    },
+    "company_umicore": {
+      "kind": "company",
+      "company_id": "company_umicore",
+      "name": "Umicore N.V.",
+      "ticker": "EBR:UMI",
+      "country": "Belgium",
+      "description": "Leading Western producer and recycler of germanium (6N-7N metal, GeO2, GeCl4, substrates) at Olen and Hoboken, Belgium, plus U.S. recycling. Estimated germanium output ~12-15 t/yr (~5-7% of global supply); more than 50% of feed from recycling, with primary feed from zinc-industry by-products and, from October 2024, germanium concentrate from Gécamines/STL's Big Hill plant in the DRC under a May 2024 offtake partnership. Two germanium projects (incl. GePETO circular initiative) gained EU Strategic Project status in 2025.",
+      "entities": [
+        "refinery_umicore"
+      ]
+    },
+    "company_vital_materials": {
+      "kind": "company",
+      "company_id": "company_vital_materials",
+      "name": "Vital Materials Co., Ltd.",
+      "ticker": null,
+      "country": "China",
+      "description": "Chinese specialty-metals group that acquired the PPM Pure Metals industrial site at Langelsheim, Germany, on 18 December 2020 and operates it via subsidiary Vital Pure Metal Solutions GmbH (VPMS). The Langelsheim plant produces ultra-high-purity (6N) germanium with output estimated at ~2-3 t/yr (~1% global share).",
+      "entities": [
+        "refinery_ppm_vital"
+      ]
+    },
+    "company_vital_pms": {
+      "kind": "company",
+      "company_id": "company_vital_pms",
+      "name": "Vital Pure Metal Solutions GmbH (VPMS)",
+      "ticker": null,
+      "country": "Germany",
+      "description": "Langelsheim (Lower Saxony) high-purity minor-metals refiner/recycler, subsidiary of Vital Materials, successor to PPM Pure Metals GmbH. Produces 6N germanium (reduction of GeO2 plus zone refining) for semiconductor, telecom, solar and optoelectronics markets; estimated germanium output ~2-3 t/yr.",
+      "entities": [
+        "refinery_ppm_vital"
+      ]
+    },
+    "company_almalyk_mmc": {
+      "kind": "company",
+      "company_id": "company_almalyk_mmc",
+      "name": "Almalyk Mining and Metallurgical Combine JSC (AGMK / Almalyk MMC)",
+      "ticker": null,
+      "country": "Uzbekistan",
+      "description": "Major Uzbek state-owned copper-zinc-lead-precious-metals enterprise at Almalyk (Olmaliq). Associated with Uzbekistan's reported 74.6 t germanium reserve (ADB-hosted Shukurjonov presentation, 2024), but no confirmed current germanium production; germanium is part of Uzbekistan's emerging $2.6bn critical-minerals initiative.",
+      "entities": [
+        "dep_almalyk_uztmk"
+      ]
+    },
+    "company_nyrstar": {
+      "kind": "company",
+      "company_id": "company_nyrstar",
+      "name": "Nyrstar",
+      "ticker": null,
+      "country": "Belgium / Australia (Trafigura group)",
+      "description": "Multinational zinc/lead smelting business owned by Trafigura. Has a planned EU germanium recovery program across Budel, Balen-Pelt and Auby (~10 t/yr Ge, not yet operational) and a government-supported scoping study for germanium/indium at Hobart, Tasmania (results not before late 2026). No current germanium production.",
+      "entities": [
+        "smelter_nyrstar_eu",
+        "smelter_nyrstar_hobart"
+      ]
+    },
+    "company_trafigura": {
+      "kind": "company",
+      "company_id": "company_trafigura",
+      "name": "Trafigura Group",
+      "ticker": null,
+      "country": "Singapore / Switzerland",
+      "description": "Global commodity-trading and industrial group; owner of Nyrstar's smelting assets. Backs Nyrstar's planned EU germanium recovery program and the Hobart germanium/indium scoping study; no current germanium output.",
+      "entities": [
+        "smelter_nyrstar_eu",
+        "smelter_nyrstar_hobart"
+      ]
+    },
+    "company_boliden": {
+      "kind": "company",
+      "company_id": "company_boliden",
+      "name": "Boliden AB",
+      "ticker": "STO:BOL",
+      "country": "Sweden",
+      "description": "Swedish mining and smelting group operating zinc smelters at Kokkola (Finland) and Odda (Norway). Sphalerite feed contains germanium (with gallium/indium) reporting to zinc-plant residues, but commercial germanium recovery is unconfirmed and no germanium output is disclosed.",
+      "entities": [
+        "smelter_boliden"
+      ]
+    },
+    "co_teck": {
+      "kind": "company",
+      "company_id": "co_teck",
+      "name": "Teck Resources Limited",
+      "ticker": "TSX:TECK.B / NYSE:TECK",
+      "country": "Canada",
+      "description": "Diversified Canadian miner and operator of the Red Dog zinc mine (Alaska) and Trail Operations (BC). Teck is North America's largest germanium producer and ~4th largest globally, recovering approximately 8-10 t/yr of germanium at Trail as a byproduct of zinc concentrate refining (principally Red Dog-district feed), with a ~4 t/yr expansion planned by 2027. Red Dog produced 555,600 t zinc-in-concentrate in 2024 (2025 guidance 430,000-470,000 t). Teck also formerly owned the closed Pend Oreille mine (WA, ceased 2019) and the historic Apex Ge-Ga mine (UT), which it agreed to sell to Blue Moon Metals in 2026.",
+      "entities": [
+        "dep_red_dog",
+        "dep_pend_oreille",
+        "smelter_teck_trail"
+      ]
+    },
+    "co_titan": {
+      "kind": "company",
+      "company_id": "co_titan",
+      "name": "Titan Mining Corporation",
+      "ticker": "TSX:TI",
+      "country": "Canada",
+      "description": "Operator of the Empire State Mine (Balmat, NY), a producing zinc mine where germanium is at the test-work/evaluation stage - plant feed ~21 g/t Ge, pre-float ~77 g/t. In May 2026 Titan signed a cooperation agreement with Teck's Trail Operations to evaluate ~13,000 kg/yr (~13 t/yr) of contained germanium from ESM scavenger (~23 g/t) and pre-float (~69 g/t) tailings as potential Trail feedstock; no germanium is yet produced and recovery 'may not be economic.'",
+      "entities": [
+        "dep_empire_state"
+      ]
+    },
+    "co_korea_zinc": {
+      "kind": "company",
+      "company_id": "co_korea_zinc",
+      "name": "Korea Zinc Inc. (formerly Nyrstar / Trafigura)",
+      "ticker": "KRX:010130",
+      "country": "South Korea",
+      "description": "Korea Zinc acquired Nyrstar's US operations - the Middle Tennessee Mines and the Clarksville smelter (the only primary zinc smelter in the US) - from Trafigura, with the deal closing in H1 2026. Nyrstar had proposed (~$90-150M) a dedicated germanium-gallium recovery plant at Clarksville targeting ~30 t/yr Ge and ~40 t/yr Ga, but it was never built; the Middle Tennessee ore carries ~400 ppm Ge in concentrate. Korea Zinc's $6.6B 'Project Crucible' (total $7.4B) will rebuild and expand Clarksville to recover Ge/Ga/In from ~620,000 t of stored residues - construction from early 2027, initial operations ~2029. No refined germanium is produced today.",
+      "entities": [
+        "dep_middle_tennessee",
+        "smelter_nyrstar_clarksville"
+      ]
+    },
+    "co_ramaco": {
+      "kind": "company",
+      "company_id": "co_ramaco",
+      "name": "Ramaco Resources, Inc.",
+      "ticker": "NASDAQ:METC / METCB",
+      "country": "United States",
+      "description": "US metallurgical coal producer developing the Brook Mine near Sheridan, Wyoming, as a coal-hosted critical-minerals project. NETL/national-lab analysis identified rare earths (Nd, Pr, Dy, Tb) plus gallium, scandium and germanium. The July 2025 PEA cites an exploration target up to ~1.7 Mt of contained critical-mineral oxides and projects ~1,242 short tons/yr of mixed oxides at 2 Mt/yr coal rate; germanium is not separately quantified. Project is exploration/development stage (~$533M to fully develop with processing plant; $6.1M Wyoming grant) with no germanium production yet.",
+      "entities": [
+        "dep_brook_mine"
+      ]
+    },
+    "co_blue_moon": {
+      "kind": "company",
+      "company_id": "co_blue_moon",
+      "name": "Blue Moon Metals Inc.",
+      "ticker": "TSXV:MOON",
+      "country": "Canada",
+      "description": "Junior explorer that agreed in March 2026 to acquire the historic Apex germanium-gallium mine (Washington County, Utah) from Teck Resources to advance US critical-mineral supply. Apex - the world's first mine operated primarily for Ge and Ga - has been closed since Hecla ceased operations in 1990; it is not currently producing germanium.",
+      "entities": [
+        "dep_apex"
+      ]
+    },
+    "co_gecamines": {
+      "kind": "company",
+      "company_id": "co_gecamines",
+      "name": "Gécamines (La Générale des Carrières et des Mines) / STL",
+      "ticker": null,
+      "country": "Democratic Republic of the Congo",
+      "description": "Gécamines is the DRC state-owned mining company. Its wholly-owned subsidiary STL (Société pour le Traitement du Terril de Lubumbashi) works the Big Hill slag dump in Lubumbashi for zinc, copper, cobalt, silver and germanium. STL produced about 14,000 kg of germanium in 2020 (vs ~3,000 kg in 2019, USGS 2020-2021 Minerals Yearbook), operates a hydrometallurgical plant with ~24 t/yr germanium capacity and a stated ~30 t/yr target, and in October 2024 made the first-ever DRC export of locally transformed germanium concentrate to Umicore. Gécamines also holds 38% of the Kipushi zinc mine (JV with Ivanhoe Mines), which historically produced ~278 t of germanium (1956-1978) but does not currently recover germanium.",
+      "entities": [
+        "dep_big_hill",
+        "plant_stl_lubumbashi",
+        "dep_kipushi"
+      ]
+    },
+    "co_ivanhoe": {
+      "kind": "company",
+      "company_id": "co_ivanhoe",
+      "name": "Ivanhoe Mines Ltd.",
+      "ticker": "TSX:IVN",
+      "country": "Canada",
+      "description": "Ivanhoe Mines is a Canadian-listed mining company (TSX: IVN) that holds 62% of the Kipushi zinc-copper-germanium-silver mine in the DRC (Gécamines 38%). Kipushi is described as the world's highest-grade zinc mine; its 800,000 t/yr (debottlenecked ~960,000 t/yr) concentrator was completed in May 2024 with first concentrate in June 2024 and ~203,000 t zinc produced in 2025. Germanium is present at grades up to ~64-90 g/t and the mine historically produced ~278 t Ge (1956-1978), but germanium is not currently recovered — it reports to zinc concentrate.",
+      "entities": [
+        "dep_kipushi"
+      ]
+    },
+    "co_golden_deeps": {
+      "kind": "company",
+      "company_id": "co_golden_deeps",
+      "name": "Golden Deeps Limited",
+      "ticker": "ASX:GED",
+      "country": "Australia",
+      "description": "Golden Deeps Limited (ASX: GED) is an Australian explorer consolidating polymetallic/critical-metals licences in Namibia's Otavi Mountain Land. It holds the high-grade Khusib Springs Cu-Ag-(Zn-Pb-Sb-Ge) deposit (~300,000 t ore; Ge up to ~200 ppm) and, from April 2025, the Central Otavi Critical Metals Project (Graceland, Kaskara, Nosib, Abenab) where surface samples have returned germanium up to 224 g/t at Graceland and up to 333 g/t at Kaskara. All assets are at exploration stage with no germanium production, reserve or output; the company raised ~N$44.3 million (A$3.54 million) to advance the portfolio.",
+      "entities": [
+        "dep_khusib_springs",
+        "dep_central_otavi"
+      ]
+    },
+    "co_nexa": {
+      "kind": "company",
+      "company_id": "co_nexa",
+      "name": "Nexa Resources S.A.",
+      "ticker": "NYSE:NEXA",
+      "country": "Luxembourg / Brazil",
+      "description": "Nexa Resources S.A. (NYSE/TSX: NEXA) is a Latin American zinc producer. Through Nexa Resources Peru it owns and operates the Cerro Lindo VMS mine (Zn-Cu-Pb-Ag, producing since 2007). Nexa's public filings report zinc, copper, lead and silver but do not disclose germanium grades, recovery or reserves; any germanium by-product at Cerro Lindo is unconfirmed and not currently recovered.",
+      "entities": [
+        "dep_cerro_lindo"
+      ]
+    },
+    "co_penoles": {
+      "kind": "company",
+      "company_id": "co_penoles",
+      "name": "Industrias Peñoles, S.A.B. de C.V.",
+      "ticker": "BMV:PE&OLES",
+      "country": "Mexico",
+      "description": "Industrias Peñoles is a major Mexican mining and metallurgical group (BMV: PE&OLES) and one of the world's largest producers of zinc and silver. It is associated with the Chihuahua zinc/germanium mineral province that includes the germanium-rich Tres Marias deposit (sphalerite ~960 ppm Ge; willemite up to ~4,000 ppm Ge), though there is no published evidence of current commercial germanium recovery from these Mexican Zn-Ge ores. Included as the principal Mexican zinc operator relevant to the Tres Marias germanium endowment; no germanium output is reported.",
+      "entities": [
+        "dep_tres_marias"
+      ]
+    },
+    "co_sinomine": {
+      "kind": "company",
+      "company_id": "co_sinomine",
+      "name": "Sinomine Resource Group",
+      "ticker": "SZSE:002738",
+      "country": "China (asset in Namibia)",
+      "description": "Sinomine Resource Group (SZSE: 002738) acquired the Tsumeb copper smelter and its slag stockpiles in Namibia from Dundee Precious Metals (DPM) in 2024. In September 2024 Sinomine stated the Tsumeb slag contains over 700 t (cited 746 t) of germanium, plus ~410 t gallium and ~209,000 t contained zinc per a technical report. Sinomine Namibia has announced a ~US$223 million multi-metal recycling project to process ~200,000 t/yr of slag and produce ~33 t/yr germanium ingots, ~11 t/yr gallium and ~10,900 t/yr zinc — currently a planned/under-development project, not yet producing germanium. Dundee Precious Metals (TSX: DPM, Canada) was the prior long-term operator of the Tsumeb smelter; the slag node retains DPM provenance but reflects current Sinomine ownership.",
+      "entities": [
+        "dep_tsumeb_slag",
+        "dep_tsumeb"
+      ]
     }
   }
 }

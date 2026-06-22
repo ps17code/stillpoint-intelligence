@@ -1,0 +1,304 @@
+{
+  "entities": {
+    "dep_russia_spetsugli_pavlovskoye_ge": {
+      "kind": "entity",
+      "node_id": "dep_russia_spetsugli_pavlovskoye_ge",
+      "node_type": "deposit",
+      "name": "Spetsugli / Pavlovskoye Coal-Germanium Deposit",
+      "location": "Spetsugli section, Pavlovskoye brown-coal field, Pavlovskaya Depression, Mikhaylovsky District, Primorsky Krai, Russian Far East",
+      "country": "Russia",
+      "deposit_category": "coal_lignite",
+      "status": "idle",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Spetsugli, the germanium-rich section of the Pavlovskoye brown-coal field in Primorsky Krai, is the only deposit in Russia ever placed into industrial germanium production and one of the world's three super-large coal-hosted Ge deposits (with Lincang and Wulantuga in China). Discovered in the mid-1960s and mined open-pit from 1968, its 2B brown coals and carbonaceous mudstones overlie weathered granite basement and carry exceptional Ge grades — averaging ~166 g/t in coal and ~229 g/t in carbonaceous rock, with maxima of 3,000-3,460 g/t (0.3-0.4%). Per the Russian State Reserve Balance (Gosbalans, 01.01.2024), A+B+C1 reserves total ~525.9 t Ge in 3,166 kt coal plus ~348.7 t Ge in 1,524 kt carbonaceous rock (~874.6 t Ge combined), with 8.8 t C2 and ~43.5 t off-balance. Operator is LLC Germanium and Applications. Germanium-bearing coal was burned and Ge captured in fly-ash concentrate, then refined in Siberia. STATUS IS CONFLICTING: the 2021 Arbuzov et al. (Ore Geology Reviews) paper describes the deposit as 'currently being mined,' but Russian regulatory and Gosbalans data (Chekryzhov et al. 2025) confirm mining halted in 2018 (only ~1.45 t Ge in H1-2017, ~3 t/yr in 2016-2017) due to worn equipment, weak economics, and very low recovery (28.7% in 2017); a 2018 Novoshakhtinsky upgrade plant was built but is not operating. Best evidence: production stopped; deposit remains the most development-ready Russian Ge object. Terminated as a node.",
+      "owner": ["LLC Germanium and Applications"],
+      "operator": {
+        "name": "LLC Germanium and Applications",
+        "company_id": "company_germanium_and_applications"
+      },
+      "classes": ["class_rawmat_germanium"],
+      "total_reserve": {
+        "value": 874.6,
+        "unit": "t",
+        "measure": "reserve_A_B_C1_Ge_metal",
+        "basis": "state_reserve_balance",
+        "source": {
+          "name": "Chekryzhov et al. 2025, Vestnik FEB RAS, citing Russian State Reserve Balance (Gosbalans) of scattered elements as of 01.01.2024 (525.9 t Ge in coal + 348.7 t Ge in carbonaceous rock; +8.8 t C2)",
+          "url": "https://journals.eco-vector.com/0869-7698/article/view/698769",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": 0,
+        "unit": "t/yr",
+        "measure": "Ge_metal_in_concentrate",
+        "year": 2018,
+        "basis": "production_ceased",
+        "sources": [
+          { "name": "Chekryzhov et al. 2025 (mining ceased 2018; ~3 t/yr Ge in 2016-2017; ~1.45 t Ge H1-2017)", "url": "https://journals.eco-vector.com/0869-7698/article/view/698769" },
+          { "name": "OSK Expert Center — 'Germanium production halted in Primorye'", "url": "https://osk-ec.ru/news/promyshlennaya-bezopasnost265/evrazes/sertifikatsiya-i-standartizatsiya/otraslevye-novosti/gornorudnaya-otrasl/show32490/" }
+        ]
+      },
+      "grade_ppm": 186.48,
+      "produces": ["mat_germanium"],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_russia_shkotovskoye_ge": {
+      "kind": "entity",
+      "node_id": "dep_russia_shkotovskoye_ge",
+      "node_type": "deposit",
+      "name": "Shkotovskoye Coal-Germanium Deposit",
+      "location": "Yuzhny section, Shkotovskaya Depression, Shkotovsky District, near Ussuri Gulf, Primorsky Krai",
+      "country": "Russia",
+      "deposit_category": "coal_lignite",
+      "status": "undeveloped",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Shkotovskoye is an undeveloped germanium-coal deposit in the Cenozoic Shkotovskaya Depression near the Ussuri Gulf coast in Primorsky Krai. Anomalous germanium occurs in upper humic coal seams and associated carbonaceous rocks. It hosts the highest Ge grades of the Primorye deposits: per the Russian State Reserve Balance (Gosbalans, 01.01.2024) the Yuzhny (Southern) section holds C2 reserves of 1,383 kt brown coal at an average 610.41 g/t Ge (~844.2 t Ge), plus 1,274 kt Ge-bearing coal at 589.56 g/t (~751.1 t) and 109 kt carbonaceous rock (~93.1 t Ge). Earlier work (Sedykh 2008) cited Ge grades of 410-1,400 g/t, locally >3,000 g/t, and resources of ~800 t. The deposit sits in the undistributed (unlicensed) state fund and is mothballed; no fuel mining occurs because of remoteness from power infrastructure and difficult terrain. It is regarded as a promising future raw-material source but would require major investment and dedicated beneficiation/extraction capacity. No production. Terminated as a node.",
+      "owner": ["Russian Federation (undistributed state subsoil fund)"],
+      "operator": { "name": null, "company_id": null },
+      "classes": ["class_rawmat_germanium"],
+      "total_reserve": {
+        "value": 844.2,
+        "unit": "t",
+        "measure": "reserve_C2_Ge_metal_in_brown_coal_Yuzhny_section",
+        "basis": "state_reserve_balance",
+        "source": {
+          "name": "Chekryzhov et al. 2025, citing Russian State Reserve Balance (Gosbalans) 01.01.2024 (1,383 kt coal at 610.41 g/t = 844.2 t Ge; +751.1 t in Ge-coal; +93.1 t in carbonaceous rock)",
+          "url": "https://journals.eco-vector.com/0869-7698/article/view/698769",
+          "retrieved": "2026-06-22"
+        }
+      },
+      "annual_output": {
+        "value": null, "unit": "t/yr", "measure": null, "year": null, "basis": "not_quantified",
+        "sources": [ { "name": "Chekryzhov et al. 2025 (mothballed, undistributed fund, no fuel mining)", "url": "https://journals.eco-vector.com/0869-7698/article/view/698769" } ]
+      },
+      "grade_ppm": 610.41,
+      "produces": ["mat_germanium"],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_russia_rakovskoye_ge": {
+      "kind": "entity",
+      "node_id": "dep_russia_rakovskoye_ge",
+      "node_type": "deposit",
+      "name": "Rakovskoye Coal-Germanium Deposit",
+      "location": "Rakovskaya Depression near Ussuriysk, Mikhaylovsky District, Primorsky Krai",
+      "country": "Russia",
+      "deposit_category": "coal_lignite",
+      "status": "undeveloped",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Rakovskoye is an undeveloped germanium-coal deposit in the Rakovskaya Depression near Ussuriysk, Primorsky Krai. Brown coal seams 1-5 m thick of medium ash content served historically as power-station fuel; germanium concentrates in carbonaceous shales and coal interbeds, and the coals are also anomalously enriched in uranium (forming a separate uranium deposit) with some beds carrying industrial REE concentrations. Predicted Ge resources are estimated at ~600 t (Sedykh 2008); average Ge grades are on the order of tens of g/t with maxima of several hundred g/t. The deposit was worked only as an ordinary brown-coal mine (~379 kt coal in 2009, 341 kt in 2010); in 2016 the license was acquired by JSC Primorskugol with plans for integrated development including Ge recovery, but no industrial Ge extraction has ever taken place and coal mining has since stopped. The deposit is NOT carried on the State Reserve Balance for Ge. No germanium production. Terminated as a node.",
+      "owner": ["JSC Primorskugol (license acquired 2016)"],
+      "operator": { "name": "JSC Primorskugol", "company_id": null },
+      "classes": ["class_rawmat_germanium"],
+      "total_reserve": {
+        "value": 600, "unit": "t", "measure": "predicted_resource_Ge_metal", "basis": "predicted_resource",
+        "source": { "name": "Chekryzhov et al. 2025, citing Sedykh 2008 (predicted Ge resources ~600 t; not on State Reserve Balance)", "url": "https://journals.eco-vector.com/0869-7698/article/view/698769", "retrieved": "2026-06-22" }
+      },
+      "annual_output": {
+        "value": null, "unit": "t/yr", "measure": null, "year": null, "basis": "not_quantified",
+        "sources": [ { "name": "Chekryzhov et al. 2025 (no industrial Ge extraction; coal mining stopped)", "url": "https://journals.eco-vector.com/0869-7698/article/view/698769" } ]
+      },
+      "grade_ppm": null,
+      "produces": ["mat_germanium"],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_russia_bikinskoye_ge": {
+      "kind": "entity",
+      "node_id": "dep_russia_bikinskoye_ge",
+      "node_type": "deposit",
+      "name": "Bikinskoye (Nizhnebikinskoye) Coal-Germanium Deposit",
+      "location": "Cheremshovy section, Nizhnebikinskaya Depression, Bikin River basin near Luchegorsk, Pozharsky District, northern Primorsky Krai",
+      "country": "Russia",
+      "deposit_category": "coal_lignite",
+      "status": "undeveloped",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Bikinskoye (Nizhnebikinskoye) is a large brown-coal deposit in the Bikin River basin near Luchegorsk, northern Primorsky Krai, with germanium concentrated in coal and carbonaceous rock in the central part of the depression (Fedosyevsky and Cheremshovy sections), alongside elevated W, Be, Sb, Zn, Ga and Ag. Coal reserves are very large (hundreds of millions of tonnes). Predicted Ge resources across the delineated Ge-bearing sections are ~2,800 t at grades of 0.011-0.059% Ge (Sedykh 2008). The State Reserve Balance (01.01.2024) records, for the Cheremshovy section, C1 balance reserves of 2,162 kt Ge-bearing coal at ~83.26 g/t Ge (~180 t Ge). The deposit is actively worked as a thermal-coal mine by JSC Luchegorsky Coal Open-Pit (part of SUEK), producing ~4 Mt coal/yr feeding the Primorskaya GRES (the largest thermal power plant in the Far East) — but mining of Ge-bearing coals and targeted germanium recovery are NOT carried out, and the Ge object is in the undistributed state fund. No germanium production. Terminated as a node.",
+      "owner": ["Russian Federation (Ge object in undistributed state fund); JSC Luchegorsky Coal Open-Pit / SUEK (operates coal mine)"],
+      "operator": { "name": "JSC Luchegorsky Coal Open-Pit (SUEK) — thermal coal only, no Ge recovery", "company_id": null },
+      "classes": ["class_rawmat_germanium"],
+      "total_reserve": {
+        "value": 2800, "unit": "t", "measure": "predicted_resource_Ge_metal (Fedosyevsky + Cheremshovy); C1 balance reserves separately ~180 t Ge", "basis": "predicted_resource",
+        "source": { "name": "Chekryzhov et al. 2025, citing Sedykh 2008 (~2,800 t Ge predicted at 0.011-0.059% Ge) and State Reserve Balance 01.01.2024 (Cheremshovy C1: 2,162 kt coal at 83.26 g/t = ~180 t Ge)", "url": "https://journals.eco-vector.com/0869-7698/article/view/698769", "retrieved": "2026-06-22" }
+      },
+      "annual_output": {
+        "value": null, "unit": "t/yr", "measure": null, "year": null, "basis": "not_quantified",
+        "sources": [ { "name": "Chekryzhov et al. 2025 (no Ge recovery; coal mine ~4 Mt/yr to Primorskaya GRES only)", "url": "https://journals.eco-vector.com/0869-7698/article/view/698769" } ]
+      },
+      "grade_ppm": 83.26,
+      "produces": ["mat_germanium"],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_russia_novikovskoye_ge": {
+      "kind": "entity",
+      "node_id": "dep_russia_novikovskoye_ge",
+      "node_type": "deposit",
+      "name": "Novikovskoye Coal-Germanium Deposit",
+      "location": "Tonino-Anivsky Peninsula, southern Sakhalin, Korsakovsky District, Sakhalin Oblast",
+      "country": "Russia",
+      "deposit_category": "coal_lignite",
+      "status": "idle",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Novikovskoye is a mothballed germanium-bearing brown-coal deposit on the Tonino-Anivsky Peninsula of southern Sakhalin, genetically similar to the Primorye Ge-coal deposits. It was exploited in the Soviet era (1960s-1970s), when coal and associated carbonaceous mudstones were mined and germanium recovered; the open pit was closed by the late 1980s and remaining reserves mothballed. Per the State Reserve Balance (01.01.2024), residual open-pit balance reserves are 81.9 t Ge in 353 kt of Ge-bearing rock — split ~38.9 t Ge in coal (avg ~182.63 g/t) and ~43.0 t Ge in carbonaceous mudstone (~307 g/t). A further ~547.6 t Ge sits below the pit and is carried as off-balance (underground-mining) resource, making Novikovskoye a large object overall (>600 t Ge) though only ~82 t is accessible by open-pit. Coal mining has ceased and the pit is flooded; the object is in the undistributed state fund. Future restart could rely on in-situ leaching or open-pit work on small remaining blocks. Sakhalin remains a valuable Ge reserve for Russia. No current production. Terminated as a node.",
+      "owner": ["Russian Federation (undistributed state subsoil fund)"],
+      "operator": { "name": null, "company_id": null },
+      "classes": ["class_rawmat_germanium"],
+      "total_reserve": {
+        "value": 81.9, "unit": "t", "measure": "balance_reserve_open_pit_Ge_metal (plus ~547.6 t off-balance underground; >600 t total)", "basis": "state_reserve_balance",
+        "source": { "name": "Chekryzhov et al. 2025, citing State Reserve Balance 01.01.2024 (81.9 t Ge open-pit in 353 kt rock; +547.6 t off-balance)", "url": "https://journals.eco-vector.com/0869-7698/article/view/698769", "retrieved": "2026-06-22" }
+      },
+      "annual_output": {
+        "value": 0, "unit": "t/yr", "measure": "Ge_metal", "year": 1989, "basis": "production_ceased",
+        "sources": [ { "name": "Chekryzhov et al. 2025 (mined Soviet era, pit closed late 1980s, now flooded/mothballed)", "url": "https://journals.eco-vector.com/0869-7698/article/view/698769" } ]
+      },
+      "grade_ppm": 182.63,
+      "produces": ["mat_germanium"],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_russia_minor_ge_occurrences": {
+      "kind": "entity",
+      "node_id": "dep_russia_minor_ge_occurrences",
+      "node_type": "deposit",
+      "name": "Russian Minor Germanium Occurrences (Tarbagatai, Elandinskoye/Ozernoye, Kunarevskaya)",
+      "location": "Tarbagataiskoye (Petrovsk-Zabaikalsky, Zabaykalsky Krai); Elandinskoye coal & Ozernoye Pb-Zn (Bauntovsky, Republic of Buryatia); Kunarevskaya area (Srednekansky, Magadan Oblast)",
+      "country": "Russia",
+      "deposit_category": "coal_lignite",
+      "status": "undeveloped",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "This node groups three minor/exploration-stage Russian germanium objects too thinly documented to separate. (1) Tarbagataiskoye (Zabaykalsky Krai): a Ge-bearing brown-coal deposit whose NE part (Tigninsky section) was mined 1964-1994 for fly-ash Ge concentrate at 120-130 g/t; total Ge resources >710 t with ~380 t in industrial categories (Vyalov). Per State Reserve Balance 01.01.2024, the Novy section holds A+B+C1 balance reserves of 5,256 kt coal with 280.8 t Ge (plus 97.8 t C2); undistributed fund, restart possible. (2) Elandinskoye (Buryatia): a large Ge-brown-coal deposit (~14 Mt coal A+B+C1) with low Ge grades (tens of g/t) but 165 t Ge (C1) explored in the 1960s; development-ready on paper but undeveloped due to permafrost, swamp and no infrastructure; not on the State Balance. The nearby Ozernoye Pb-Zn deposit carries 508 t Ge (P1 category) in sphalerite but no Ge is recovered. (3) Kunarevskaya area (Magadan): an exploration target in Fe-Mn skarn metasomatites with anomalous Ge (up to 0.1% in ilvaite/garnet) and very preliminary predicted resources up to 6,000 t (P3). All are exploration/undeveloped with no germanium production. Terminated as a node.",
+      "owner": ["Russian Federation (state subsoil fund / various exploration holders)"],
+      "operator": { "name": null, "company_id": null },
+      "classes": ["class_rawmat_germanium"],
+      "total_reserve": {
+        "value": 280.8, "unit": "t", "measure": "A_B_C1_balance_reserve_Ge_metal_Tarbagatai_Novy_section (Elandinskoye 165 t C1; Ozernoye 508 t P1; Kunarevskaya up to 6,000 t P3 — all separate/lower-confidence)", "basis": "state_reserve_balance",
+        "source": { "name": "Chekryzhov et al. 2025, citing State Reserve Balance 01.01.2024 (Tarbagatai Novy A+B+C1 = 280.8 t Ge; +97.8 t C2) and Vyalov (resources >710 t)", "url": "https://journals.eco-vector.com/0869-7698/article/view/698769", "retrieved": "2026-06-22" }
+      },
+      "annual_output": {
+        "value": null, "unit": "t/yr", "measure": null, "year": null, "basis": "not_quantified",
+        "sources": [ { "name": "Chekryzhov et al. 2025 (exploration/undeveloped; Tarbagatai Tigninsky mined 1964-1994 then idle; no current Ge output)", "url": "https://journals.eco-vector.com/0869-7698/article/view/698769" } ]
+      },
+      "grade_ppm": 53.2,
+      "produces": ["mat_germanium"],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_ukraine_donbas_ge": {
+      "kind": "entity",
+      "node_id": "dep_ukraine_donbas_ge",
+      "node_type": "deposit",
+      "name": "Donbas / Donets Basin Coal-Germanium",
+      "location": "Donets coal basin (Donbas), Donetsk and Luhansk Oblasts, eastern Ukraine",
+      "country": "Ukraine",
+      "deposit_category": "coal_lignite",
+      "status": "suspended",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "Germanium in Ukraine is hosted mainly as a by-element in the coals of the Donets Basin (Donbas), which holds ~90% of Ukraine's coal reserves (~101.9 billion t of coal in place). Germanium content is grade-dependent: ~0.3-1.3 g/t in anthracite, ~3.8-9.2 g/t in low-metamorphosed coals, and ~4.5 g/t average in coking coal — far lower than the Russian Far East coal-Ge deposits. Historically Ukraine recovered germanium as a coking/coal by-product, but germanium production is now suspended: metal-bearing coal is processed without producing a germanium concentrate. Coal mining itself was severely disrupted from 2014 onward by the war in Donbas (many mines closed/occupied) and further curtailed after 2022. No discrete Ge tonnage reserve is carried for the basin as a germanium deposit (figures are coal-tonnage and grade based, not a stated Ge-metal reserve). No germanium production. Terminated as a node.",
+      "owner": ["Ukraine (state) / occupied-territory operators"],
+      "operator": { "name": null, "company_id": null },
+      "classes": ["class_rawmat_germanium"],
+      "total_reserve": {
+        "value": null, "unit": "t", "measure": null, "basis": "not_quantified",
+        "source": { "name": "Coal in Ukraine (Wikipedia) and germanium-in-Donbas-coal literature — Ge given as grade in coal (0.3-9.2 g/t), no discrete Ge-metal reserve stated; coal reserves ~101.9 Gt in place", "url": "https://en.wikipedia.org/wiki/Coal_in_Ukraine", "retrieved": "2026-06-22" }
+      },
+      "annual_output": {
+        "value": 0, "unit": "t/yr", "measure": "Ge_metal", "year": 2024, "basis": "production_ceased",
+        "sources": [ { "name": "Germanium extraction literature — 'germanium production in Ukraine is currently suspended; metal-bearing coal processed without obtaining Ge concentrate'", "url": "https://doaj.org/article/e76ee14bd7964767b5db16e75e943d86" } ]
+      },
+      "grade_ppm": 4.5,
+      "produces": ["mat_germanium"],
+      "inputs": [],
+      "outputs": []
+    },
+    "dep_ukraine_lviv_volyn_ge": {
+      "kind": "entity",
+      "node_id": "dep_ukraine_lviv_volyn_ge",
+      "node_type": "deposit",
+      "name": "Lviv-Volyn Basin Coal-Germanium (incl. Lyubelya)",
+      "location": "Lviv-Volyn coal basin, Lviv and Volyn Oblasts, western Ukraine (Lyubelya deposit, Lyubelya No. 3 section)",
+      "country": "Ukraine",
+      "deposit_category": "coal_lignite",
+      "status": "suspended",
+      "ge_recovered": "present_not_recovered",
+      "deposit_short_description": "The Lviv-Volyn Basin in western Ukraine is the country's secondary coal region (~2.3 billion t coal reserves) and hosts germanium as a by-element distributed through Lower and Middle Carboniferous coal seams (Ge measured in coal-ash samples across all seams). The best-documented Ge object is the Lyubelya deposit: coal from the Lyubelya No. 3 section is considered suitable feedstock for germanium extraction, with C2 germanium reserves (in terms of actual Ge content in coal) estimated at 248.41 t. Germanium is on the EU critical-raw-materials list, raising interest in extraction from this basin. However, as in Donbas, germanium production in Ukraine is suspended and metal-bearing coal is processed without producing a Ge concentrate; integrated/complex development of the Lyubelya deposit for associated minerals remains at the study/proposal stage. No germanium production. Terminated as a node.",
+      "owner": ["Ukraine (state)"],
+      "operator": { "name": null, "company_id": null },
+      "classes": ["class_rawmat_germanium"],
+      "total_reserve": {
+        "value": 248.41, "unit": "t", "measure": "C2_reserve_Ge_metal_in_coal_Lyubelya_No3_section", "basis": "reported_reserve",
+        "source": { "name": "Visnyk of Taras Shevchenko Nat. Univ. of Kyiv (Geology) — Lyubelya deposit integrated development; Lyubelya No.3 C2 Ge reserves = 248.41 t", "url": "https://geology.bulletin.knu.ua/en/article/view/1096", "retrieved": "2026-06-22" }
+      },
+      "annual_output": {
+        "value": 0, "unit": "t/yr", "measure": "Ge_metal", "year": 2024, "basis": "production_ceased",
+        "sources": [ { "name": "Germanium extraction literature — Ukrainian Ge production suspended; coal processed without Ge concentrate", "url": "https://doaj.org/article/e76ee14bd7964767b5db16e75e943d86" } ]
+      },
+      "grade_ppm": null,
+      "produces": ["mat_germanium"],
+      "inputs": [],
+      "outputs": []
+    },
+    "refinery_jsc_germanium_krasnoyarsk": {
+      "kind": "entity",
+      "node_id": "refinery_jsc_germanium_krasnoyarsk",
+      "node_type": "refinery",
+      "name": "JSC Germanium (Krasnoyarsk)",
+      "location": "Krasnoyarsk, Krasnoyarsk Krai, Russia",
+      "country": "Russia",
+      "deposit_category": null,
+      "status": "producing",
+      "ge_recovered": "recovered",
+      "deposit_short_description": "JSC Germanium in Krasnoyarsk (under Shvabe Holding / Rostec since September 2018) is the sole full-cycle germanium processor in Russia. It runs three integrated sections — hydrometallurgical, metallurgical, and mechanical processing — covering the chain from raw material and internal recycling/turnover to finished products, with a stated capacity of ~20 t/yr of germanium. Its product range includes poly- and single-crystal germanium, germanium granules, germanium tetrachloride (GeCl4) and dioxide (GeO2), and optical blanks/substrates. In July 2025, with Federal Industrial Development Fund support, it became the first Russian producer of ultra-pure (99.9999%) GeCl4 for fiber-optic cable, having developed the process from 2023. In 2025 it manufactured more than 30,000 polished germanium wafers for satellite solar panels (first mass production of this component in Russia; Russian market demand ~50,000 wafers/yr, ~90% previously imported). Because the Spetsugli deposit has been idle since 2018, the plant's feedstock today is largely secondary/recycled germanium-bearing materials plus imports — leaked customs data show it sources germanium from China's Yunnan Lincang Xinyuan Germanium Industry. It is the refining node linking Russian raw-germanium supply to the germanium raw-material class boundary.",
+      "owner": ["Shvabe Holding (Rostec State Corporation)"],
+      "operator": { "name": "JSC Germanium (Krasnoyarsk)", "company_id": "company_jsc_germanium" },
+      "classes": ["class_rawmat_germanium"],
+      "total_reserve": {
+        "value": null, "unit": "t", "measure": null, "basis": "not_quantified",
+        "source": { "name": "Not applicable — refinery, no in-ground reserve", "url": "https://www.shvabe.com/about/company/germaniy/proizvodstvo-germaniy/", "retrieved": "2026-06-22" }
+      },
+      "annual_output": {
+        "value": 20, "unit": "t/yr", "measure": "nameplate_capacity_Ge", "year": 2025, "basis": "stated_capacity",
+        "sources": [
+          { "name": "Shvabe — Germanium production page (capacity 20 t/yr Ge; full cycle from raw material and internal recycling to product)", "url": "https://www.shvabe.com/about/company/germaniy/proizvodstvo-germaniy/" },
+          { "name": "Interfax / Rostec — first Russian industrial production of ultra-pure GeCl4 (99.9999%), July 2025; 30,000 Ge wafers in 2025", "url": "https://rostec.ru/media/news/rostekh-pri-podderzhke-frp-pervym-v-rossii-nachal-proizvodstvo-osobo-chistogo-veshchestva-dlya-optov/" },
+          { "name": "OCCRP — China (Yunnan Lincang Xinyuan) supplies germanium to Rostec's JSC Germanium", "url": "https://www.occrp.org/en/news/china-becomes-russias-lifeline-for-critical-war-minerals" }
+        ]
+      },
+      "grade_ppm": null,
+      "produces": ["mat_germanium"],
+      "inputs": [],
+      "outputs": [
+        {
+          "to_node": "class_rawmat_germanium",
+          "to_type": "class",
+          "traced": true,
+          "form": "refined germanium (poly/single-crystal Ge, GeCl4 99.9999%, GeO2, optical blanks, wafers)",
+          "carries": [ { "material_id": "mat_germanium", "amount": { "value": 20, "unit": "t/yr" } } ],
+          "note": "Sole full-cycle Ge refiner in Russia; nameplate ~20 t/yr Ge. With Spetsugli idle since 2018, feed is largely secondary/recycled Ge materials plus imports (notably Chinese germanium from Yunnan Lincang per OCCRP), not domestic mine concentrate."
+        }
+      ]
+    }
+  },
+  "companies": {
+    "company_germanium_and_applications": {
+      "kind": "company",
+      "company_id": "company_germanium_and_applications",
+      "name": "LLC Germanium and Applications",
+      "ticker": null,
+      "country": "Russia",
+      "description": "Russian company that operated the Spetsugli section of the Pavlovskoye coal-germanium deposit (Primorsky Krai), historically the source of >70% of Russian germanium. It recovered germanium from coal fly ash, with downstream facilities in Moscow and Novomoskovsk producing germanium oxide and metal, optical blanks, and electronic substrates. USGS reported the open-pit could yield as much as ~21,000 kg/yr (21 t/yr) of germanium; actual output was far lower — ~3 t/yr Ge in 2016-2017 and ~1.45 t Ge in H1-2017 — before mining ceased in 2018 due to worn equipment and weak economics (recovery only 28.7% in 2017). A 2018 upgraded extraction plant at Novoshakhtinsky was built but is not operating. It remains the licensed subsoil user of Spetsugli within the open-pit contour.",
+      "entities": ["dep_russia_spetsugli_pavlovskoye_ge"]
+    },
+    "company_jsc_germanium": {
+      "kind": "company",
+      "company_id": "company_jsc_germanium",
+      "name": "JSC Germanium (Krasnoyarsk)",
+      "ticker": null,
+      "country": "Russia",
+      "description": "Krasnoyarsk-based JSC Germanium (INN 2462214466) is the only full-cycle germanium processor in Russia, part of Shvabe Holding within Rostec since September 2018. Capacity is ~20 t/yr of germanium across hydrometallurgical, metallurgical and mechanical-processing sections. Products include poly- and single-crystal germanium, granules, GeCl4, GeO2, and optical blanks. In July 2025 it became the first Russian producer of ultra-pure (99.9999%) GeCl4 for fiber-optic cable (FRP-supported; developed from 2023), and in 2025 it produced more than 30,000 polished germanium wafers for satellite solar panels — the first mass production of such wafers in Russia (Russian demand ~50,000 wafers/yr, ~90% previously imported). With domestic mine supply (Spetsugli) idle since 2018, its feed is largely recycled/secondary germanium materials plus imports; leaked customs data show it sources germanium from China's Yunnan Lincang Xinyuan Germanium Industry.",
+      "entities": ["refinery_jsc_germanium_krasnoyarsk"]
+    }
+  }
+}

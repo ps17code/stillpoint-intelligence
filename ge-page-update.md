@@ -12,465 +12,75 @@ Source: Stillpoint Intelligence input page (/app/input/germanium/page.tsx)
 - Price has risen from $1,500/kg to over $8,500/kg in two years. 3.5x premium between western and Chinese markets persists because export controls prevent arbitrage.
 - Demand accelerating from AI datacenter fiber buildout, defense IR optics spending, and satellite constellation expansion. Every end market stable or growing.
 - No near-term supply relief. Hollow-core fiber, new mine capacity, and DRC feedstock ramp all target 2027-2028 at earliest.
-- Eight entities control the western germanium value chain. Several are positioned to capture outsized value from a supply gap driven by an AI boom.
 
----
-
-## HOW IT'S MADE
-
-### Step 01: EXTRACTION FROM HOST ORE
-- **Description:** Germanium is recovered as a byproduct of zinc smelting and coal combustion. Zinc concentrate is roasted and leached; germanium-rich residues are collected from flue dust and leach solutions.
-- **Why it's hard:** Germanium exists at 50-800 ppm in host ores. Recovery requires specialized hydrometallurgical circuits that most zinc smelters don't install. Production cannot scale independently of zinc economics.
-- **Who can do it:** ~10 zinc smelters worldwide recover germanium. China dominates with ~83% of primary production. DRC tailings represent a new non-smelter source via Umicore offtake.
-- **Output:** ~140t primary germanium extracted annually
-
-### Step 02: REFINING TO HIGH PURITY
-- **Description:** Crude germanium dioxide is reduced to metal, then purified through zone refining to 5N+ (99.999%) purity. For fiber optics, it is converted to GeCl₄ and further purified to 8N (99.999999%).
-- **Why it's hard:** Fiber-grade GeCl₄ requires removing arsenic and other trace contaminants to parts-per-billion levels. Proprietary techniques that cannot be purchased off the shelf. Zone refining is energy-intensive and slow.
-- **Who can do it:** Only 6 facilities produce fiber-grade GeCl₄. 4 in China, 1 in Russia, 1 in the west: Umicore in Olen, Belgium. 5N Plus could become the second western refiner.
-- **Output:** ~230t refined germanium produced annually (primary + recycled)
-
-### Step 03: CONVERSION TO END PRODUCTS
-- **Description:** Refined germanium is converted into application-specific forms: GeCl₄ for fiber optic preforms, GeO₂ blanks for IR optics, single-crystal wafers for satellite solar cells, and SiGe substrates for semiconductors.
-- **Why it's hard:** Each end product requires different purity levels and crystal structures. Fiber-grade GeCl₄ needs 8N purity. IR blanks need specific optical homogeneity. Solar wafers need precise crystal orientation. No single facility serves all markets.
-- **Who can do it:** Specialized converters for each application. Umicore (GeCl₄), Umicore + Chinese firms (IR blanks), AXT and others (solar wafers), IQE and GlobalFoundries (SiGe substrates).
-- **Output:** 5 markets competing for the same ~230t supply
+**Eight entities control the western germanium value chain. Several are positioned to capture outsized value from a supply gap driven by an AI boom.**
 
 ---
 
 ## SUPPLY TREE
 
-### Key Takeaway
-~230t of germanium enters the global supply chain annually. ~120t from Chinese zinc smelters and coal operations (export controlled since Aug 2023). ~90t from recycling (near maximum recovery). ~11t from Russia (sanctioned). Deposits in Yunnan, Inner Mongolia, DRC tailings, and Alaska feed into ~10 smelter-refiners. Umicore in Belgium is the sole western refiner at scale. All material converges to 5 competing end markets with no demand declining.
+### Key Takeaways
+
+1. Only 8 coal and zinc deposits in the world host germanium at high enough concentration to be commercially extracted.
+
+2. 83% of that supply is in China.
+
+3. Two western sources exist — Big Hill is new DRC tailings refined exclusively by Umicore, and Red Dog is a declining Alaskan zinc mine expected to expire in 2031.
+
+4. Outside China, Umicore and 5N Plus are the sole western supply for germanium-reliant products.
+
+---
+
+[Tree visualization renders here from germanium-supply-tree.md]
+
+---
+
+### How It's Made
+
+*Three layers feed the supply tree. Each is a distinct industrial operation with its own operators, economics, and bottlenecks.*
+
+#### HOST ORE EXTRACTION
+
+Zinc smelters and coal operations that recover germanium as a trace byproduct.
+
+**WHAT HAPPENS HERE**
+Zinc concentrate is roasted and leached to produce zinc metal. Germanium-rich residues collect in flue dust and leach solutions during this process. Operations with specialized hydrometallurgical circuits installed extract the germanium; most don't. A smaller volume comes from germanium-hosted coal operations in Yunnan and Inner Mongolia that produce germanium alongside coal combustion residues.
+
+**WHY IT'S HARD**
+Germanium exists at 50-800 ppm in host ores — orders of magnitude more concentrated than gallium in bauxite, but still trace. Recovery requires hydrometallurgical circuits that most zinc smelters never install. Production cannot scale independently of zinc economics: a smelter's gallium output is set by zinc demand, not germanium demand. Around 10 zinc smelters worldwide recover germanium; China operates ~83% of primary capacity.
+
+**~140t/yr** primary germanium extracted globally
+
+#### REFINING TO HIGH PURITY
+
+Specialty refiners that purify crude germanium oxide and metal to 5N-8N (99.999%-99.999999%) purity.
+
+**WHAT HAPPENS HERE**
+Crude germanium dioxide is reduced to metal, then purified through zone refining to 5N+ (99.999%) purity. For fiber optic preforms, the refined metal is converted to germanium tetrachloride (GeCl₄) and purified further to 8N (99.999999%). For infrared optics, it's cast as GeO₂ blanks. For satellite solar cells, it's grown into single-crystal wafers. Different end uses need different purity grades.
+
+**WHY IT'S HARD**
+Fiber-grade GeCl₄ requires removing arsenic and trace contaminants to parts-per-billion levels using proprietary techniques that cannot be purchased off the shelf. Zone refining is energy-intensive and slow. Only 6 facilities globally produce fiber-grade GeCl₄: four in China, one in Russia, and one in the west — Umicore in Olen, Belgium. 5N Plus is working toward becoming the second western refiner but remains pre-commercial.
+
+**~230t/yr** refined germanium produced globally (primary + recycled)
+
+#### CONVERSION TO END PRODUCTS
+
+Specialized converters that turn refined germanium into application-specific forms: GeCl₄ for fiber, GeO₂ blanks for IR optics, single-crystal wafers for satellite solar, and SiGe substrates for semiconductors.
+
+**WHAT HAPPENS HERE**
+Each end product requires a different conversion process and different purity specification. Fiber manufacturers consume GeCl₄ at 8N purity to dope the core of the fiber preform. IR optics makers need GeO₂ blanks with specific optical homogeneity. Satellite solar cell manufacturers need single-crystal wafers with precise crystallographic orientation. SiGe substrate makers need Ge epitaxial layers for RF and photonic integration.
+
+**WHY IT'S HARD**
+No single facility serves all end markets — each conversion path is bespoke. Umicore handles GeCl₄ and IR optics. AXT and Chinese firms handle solar wafers. IQE and GlobalFoundries handle SiGe substrates. Demand from five distinct end markets (fiber, IR, solar, SiGe, PET catalyst) all pulls on the same ~230t/yr refined supply, creating cross-market competition for the material.
+
+**5 markets** competing for the same ~230t/yr supply
+
+---
 
 ### Nodes
 
-#### Lincang
-- **Type:** Deposit
-- **Location:** Yunnan Province, China
-- **Key stat:** 1,000 t Ge reserves · 850 ppm
-- **Risk:** State-affiliated operator. Subject to export licensing.
-- **Stats:**
-  - Type: Coal-hosted lignite
-  - Grade: ~850 ppm avg
-  - Reserves: ~1,000 t Ge
-  - Status: Active
-- **Role:** One of the world's highest-grade germanium deposits. Ge was concentrated by hydrothermal fluids from the Lincang granite batholith into ancient swamp coal seams.
-- **Investment angle:** No direct public vehicle. Exposure via Lincang Xinyuan (002428.SZ).
-- **Risks:**
-  - Chinese export controls limit westward flow
-  - Lowest-cost Ge source globally
-  - Single operator concentration risk
+*The full set of supply tree nodes — including universal records for every entity, per-chain placement data, and feeds_from/feeds_into edges — lives in `germanium-supply-tree.md`. The platform reads that file to render the interactive tree visualization above. The germanium tree covers the Deposit, Host Operation, Refiner, and Chemical Converter layers; downstream substrate manufacturers (AXT, IQE, GlobalFoundries) and end-product makers (Corning, Prysmian, Lumenisity for fiber preforms) have their own input pages — see Connected Inputs below.*
 
-#### Wulantuga
-- **Type:** Deposit
-- **Location:** Inner Mongolia, China
-- **Key stat:** 1,600 t Ge reserves · 137 ppm
-- **Risk:** Only ~17% of theoretical Ge content is actually recovered.
-- **Stats:**
-  - Type: Coal-hosted lignite
-  - Grade: 137 ppm (#6 seam)
-  - Reserves: ~1,600 t Ge
-  - Recovery: ~20-35 t/yr actual
-- **Role:** Largest coal-hosted Ge deposit by reserve size in Inner Mongolia. Only ~15-25% of theoretical Ge content is recovered due to specialist extraction requirements.
-- **Investment angle:** Indirect exposure via Shengli Coal Group (state-owned).
-- **Risks:**
-  - Low recovery rate limits supply upside
-  - State ownership means output is policy-driven
-  - No western investment access
-
-#### Yimin
-- **Type:** Deposit
-- **Location:** Inner Mongolia, China
-- **Key stat:** 4,000 t Ge reserves · 28-135 ppm
-- **Risk:** Lower grade makes extraction marginal at current prices.
-- **Stats:**
-  - Type: Coal-hosted lignite
-  - Grade: 28-135 ppm
-  - Reserves: ~4,000 t Ge
-  - Status: Partial / low activity
-- **Role:** Largest coal-hosted Ge reserve in China by total size but lowest average grade. An optionality play rather than current supply source.
-- **Investment angle:** Future optionality if Ge prices sustain above $3,000/kg.
-- **Risks:**
-  - Grade too low at current prices
-  - 2-3 years to ramp if prices spike
-  - State control limits western access
-
-#### Huize
-- **Type:** Deposit
-- **Location:** NE Yunnan Province, China
-- **Key stat:** 7M+ t Zn+Pb reserves
-- **Risk:** Ge recovered only as byproduct — volume is price-inelastic.
-- **Stats:**
-  - Type: Zinc-lead sulfide ore
-  - Zn grade: World-class
-  - Ge content: Trace byproduct only
-  - Operator: Yunnan Chihong (600497.SH)
-- **Role:** One of the highest-grade zinc deposits globally. Germanium is a trace impurity that concentrates during zinc hydrometallurgy.
-- **Investment angle:** Listed exposure via Yunnan Chihong (600497.SH).
-- **Risks:**
-  - Ge output tied to zinc production decisions
-  - Zinc downturn reduces Ge supply
-  - Chinese listed - limited western access
-
-#### Yiliang + SYGT
-- **Type:** Deposit belt
-- **Location:** Yunnan / Sichuan / Guizhou, China
-- **Key stat:** 32M+ t Zn reserves in belt
-- **Risk:** Fragmented ownership across the SYGT triangle.
-- **Stats:**
-  - Type: Zn-Pb-Ge sulfide belt
-  - Belt: Sichuan-Yunnan-Guizhou
-  - Zn reserves: >32M t combined
-  - Deposits: 450+ Ge-bearing
-- **Role:** China's richest zinc province. Multiple deposits feed the Qujing smelter system. Ge is extracted as a byproduct of regional zinc processing.
-- **Investment angle:** Consolidated exposure via Yunnan Chihong (600497.SH).
-- **Risks:**
-  - Regional concentration risk
-  - Ownership fragmentation
-  - Full Ge reserves not publicly disclosed
-
-#### Spetsugli
-- **Type:** Coal-hosted germanium deposit
-- **Location:** Primorski Krai, Russia
-- **Key stat:** ~1,015 t Ge · 450–514 ppm · Pavlovsk Coalfield
-- **Risk:** Output blocked from western markets post-2022 Russia sanctions.
-- **Stats:**
-  - Reserves: ~1,015 t Ge
-  - Grade: 450–514 ppm avg
-  - Operator: JSC Germanium (Rostec)
-  - Status: Active but sanctioned
-- **Role:** Spetsugli is the third of the world's three active coal-hosted germanium deposits, alongside Lincang and Wulantuga. Located in the Pavlovsk Coalfield in Russia's Far East, it has been mined since the 1960s. JSC Germanium extracts germanium from coal fly ash at the site and refines it at a facility in Krasnoyarsk. Historically exported 80%+ of output to western markets — that flow has been effectively cut off since 2022.
-- **Investment angle:** No direct investment vehicle. Spetsugli represents ~10% of theoretical global germanium supply that is structurally unavailable to western buyers due to sanctions. Its exclusion from western supply chains permanently tightens the accessible supply picture and strengthens the investment case for Umicore and 5N Plus as the primary western alternatives.
-- **Risks:**
-  - Post-2022 sanctions effectively block all western access to Russian germanium
-  - JSC Germanium is part of Rostec, a sanctioned state defense conglomerate
-  - Sanctions could be reversed but political timeline is entirely unpredictable
-
-#### Big Hill
-- **Type:** Industrial tailings deposit
-- **Location:** Lubumbashi, DRC
-- **Key stat:** 14M t slag · 700+ t Ge potential · ramping up
-- **Risk:** DRC political and operational risk. Volume unproven at scale.
-- **Stats:**
-  - Slag volume: 14 million tonnes
-  - Ge potential: 700+ t est.
-  - Operator: STL / Gécamines
-  - First export: October 2024
-- **Role:** Big Hill is not a geological deposit — it is a century of accumulated mining slag from Lubumbashi's copper and cobalt industry. STL, a subsidiary of DRC state miner Gécamines, processes the slag through a new hydrometallurgical plant to extract germanium concentrate, which is then shipped exclusively to Umicore in Belgium for final refining. First shipment occurred October 2024. If fully ramped, could supply up to 30% of global germanium demand.
-- **Investment angle:** Big Hill is the most significant emerging non-Chinese germanium source in the world. The exclusive offtake agreement with Umicore makes UMI the primary beneficiary of any ramp-up. No direct investment in STL or Gécamines is possible for most western investors — exposure is via Umicore (UMI). The DRC has 700+ tonnes of estimated germanium in the slag heap — at current prices that represents $2B+ of embedded value.
-- **Risks:**
-  - DRC political risk — Gécamines is a state-owned entity subject to government policy changes
-  - Hydrometallurgical plant is new and unproven at scale — ramp-up timeline uncertain
-  - Exclusive Umicore offtake means no price competition — Umicore controls the western refining bottleneck
-
-#### Red Dog
-- **Type:** Zinc-germanium ore deposit
-- **Location:** NW Alaska, USA
-- **Key stat:** World's largest zinc mine · Ge byproduct · mine life to 2031
-- **Risk:** Declining grades — production falling each year. Mine life ends 2031.
-- **Stats:**
-  - Operator: Teck Resources (TECK)
-  - Zinc output: ~555,600 t Zn (2024)
-  - Mine life: To 2031 (current pits)
-  - Ge processing: Trail smelter, BC
-- **Role:** Red Dog is the world's largest zinc mine, located 170km north of the Arctic Circle in northwest Alaska on land owned by the NANA Regional Corporation. Germanium is recovered as a byproduct of zinc concentrate processing at Teck's Trail metallurgical facility in British Columbia. Germanium output volumes are not publicly disclosed. The mine has entered its decline phase — zinc grades are falling and production is expected to decrease each year through to 2031.
-- **Investment angle:** Teck (TECK.B TSX / TECK NYSE) offers indirect germanium exposure but the primary investment thesis is copper — Teck sold its coal business in 2023 and is repositioning as a copper-focused miner. Red Dog's germanium is a byproduct of a declining zinc operation. The more relevant angle is that Red Dog's decline removes one of the few non-Chinese zinc-germanium sources from the global supply picture — a structural tightening of western supply.
-- **Risks:**
-  - Mine life ends 2031 based on current developed deposits
-  - Germanium output volumes not publicly disclosed — no direct tracking
-  - Teck is merging with Anglo American — Red Dog's future ownership and operation post-merger unclear
-
-#### Lincang Xinyuan
-- **Type:** Miner
-- **Location:** Yunnan Province, China
-- **Key stat:** ~40,000 t lignite/yr · 002428.SZ
-- **Risk:** US export ban effective Dec 2024.
-- **Stats:**
-  - Ticker: 002428.SZ
-  - Lignite mined: ~40,000 t/yr
-  - Ge output: ~20 t/yr from mine
-  - Integration: Mine to refinery to wafers
-- **Role:** The only fully vertically integrated coal-route Ge producer. Controls its own mines, power plant, fly-ash leach circuits, and refinery all the way through to solar-grade wafers.
-- **Investment angle:** Listed on Shenzhen Exchange. Revenue ~CNY 767M (2024). A-share constraints limit western access.
-- **Risks:**
-  - US export ban cuts western revenue
-  - A-share listing limits western investors
-  - Single-site concentration risk
-
-#### Shengli Coal Group
-- **Type:** Miner
-- **Location:** Inner Mongolia, China
-- **Key stat:** ~1,000,000 t coal/yr · State-owned
-- **Risk:** State-owned enterprise. Output decisions are policy-driven.
-- **Stats:**
-  - Ownership: State-owned enterprise
-  - Coal mined: ~1M t/yr
-  - Ge content: ~137 ppm in #6 seam
-  - Ge recovered: ~20-35 t/yr
-- **Role:** Operates the Wulantuga coalfield primarily for power generation. Ge recovery is secondary — fly ash is leached with sulfuric acid to recover Ge concentrate.
-- **Investment angle:** No listed equity. State-owned with no direct western investment vehicle.
-- **Risks:**
-  - Power generation is primary — Ge always secondary
-  - Policy shifts directly impact output
-  - No western investment access
-
-#### Various State Ops
-- **Type:** Miners
-- **Location:** Inner Mongolia, China
-- **Key stat:** Partial · low activity
-- **Risk:** Fragmented state operators. Output data is opaque.
-- **Stats:**
-  - Type: Multiple state operators
-  - Region: Inner Mongolia
-  - Activity: Low — partial extraction
-  - Data: Limited disclosure
-- **Role:** A collection of smaller state-affiliated operators working Yimin and other lower-grade deposits. Activity rises and falls with Ge price.
-- **Investment angle:** No investable access.
-- **Risks:**
-  - Opaque operations with no public reporting
-  - Output highly variable
-  - Exit risk at low prices
-
-#### Yunnan Chihong
-- **Type:** Miner / Refiner
-- **Location:** Qujing, Yunnan, China
-- **Key stat:** 290,000 t Zn conc/yr · 600497.SH
-- **Risk:** Ge is a byproduct — tied to zinc economics.
-- **Stats:**
-  - Ticker: 600497.SH
-  - Zn concentrate: 290,000 t/yr
-  - Ge output: ~66 t/yr refined
-  - Role: China's largest Ge producer
-- **Role:** China's largest germanium producer by volume. Every tonne of zinc processed carries trace Ge that concentrates into leach residues. Chihong built dedicated circuits to capture this high-margin byproduct.
-- **Investment angle:** Listed on Shanghai Exchange. Ge segment is high-margin relative to total revenue.
-- **Risks:**
-  - Ge output tied to zinc production
-  - Export controls limit western sales
-  - Zinc price weakness reduces Ge output
-
-#### JSC Germanium
-- **Type:** Germanium miner and refiner
-- **Location:** Krasnoyarsk, Russia
-- **Key stat:** ~20 t/yr capacity · Rostec subsidiary · 80%+ historically exported
-- **Risk:** Sanctioned entity — output inaccessible to western buyers since 2022.
-- **Stats:**
-  - Capacity: ~20 t/yr
-  - Refinery: Krasnoyarsk, Siberia
-  - Ownership: Rostec (state defense)
-  - Export: Blocked post-2022
-- **Role:** JSC Germanium operates an integrated germanium refinery in Krasnoyarsk processing coal fly ash from the Spetsugli deposit plus recycled waste streams. Part of the Rostec state defense conglomerate via the Shvabe holding company. Historically exported more than 80% of production to western markets including Europe and Japan. That export flow has been cut off since Russia's 2022 invasion of Ukraine triggered western sanctions.
-- **Investment angle:** No investment access — state-owned sanctioned entity. JSC Germanium's exclusion from western supply represents a permanent structural tightening of accessible germanium supply, strengthening the investment case for Umicore and 5N Plus.
-- **Risks:**
-  - Sanctioned entity — no western investment or trade possible
-  - Part of Rostec defense conglomerate — geopolitical risk is structural not cyclical
-  - Production continues but serves only Russia and potentially China
-
-#### STL / Gécamines
-- **Type:** Tailings processor
-- **Location:** Lubumbashi, DRC
-- **Key stat:** First Ge export Oct 2024 · exclusive Umicore offtake · ramping
-- **Risk:** DRC political risk. New facility unproven at scale.
-- **Stats:**
-  - Operator: STL / Gécamines
-  - Offtake: 100% to Umicore
-  - Plant: Commissioned Oct 2023
-  - Target: Up to 30% world demand
-- **Role:** STL processes the Big Hill slag heap through a new hydrometallurgical plant commissioned in October 2023, extracting germanium concentrate from a century of accumulated copper mining waste. All output ships exclusively to Umicore in Belgium under a long-term exclusive partnership signed May 2024. First export batch shipped October 2024. If fully ramped, could represent the largest new non-Chinese germanium source in the world.
-- **Investment angle:** No direct investment vehicle — Gécamines is DRC state-owned. The investment play is Umicore (UMI), which holds the exclusive offtake and benefits directly from every tonne STL produces. This partnership is one of the key reasons UMI is strategically positioned as the western germanium supply hub.
-- **Risks:**
-  - DRC state ownership creates policy and nationalization risk
-  - Hydrometallurgical plant is new — ramp-up timeline and volumes unproven
-  - Exclusive Umicore offtake means no market price competition for this source
-
-#### Teck Resources
-- **Type:** Zinc miner — germanium byproduct
-- **Location:** Trail, British Columbia, Canada
-- **Key stat:** World's largest zinc mine · Ge byproduct · TECK NYSE/TSX
-- **Risk:** Red Dog mine life ends 2031. Germanium volumes not disclosed.
-- **Stats:**
-  - Ticker: TECK (NYSE/TSX)
-  - Zinc output: ~555,600 t/yr (2024)
-  - Ge output: Not disclosed
-  - Mine life: Red Dog to 2031
-- **Role:** Teck operates Red Dog in Alaska, the world's largest zinc mine, producing germanium as an undisclosed byproduct. Zinc concentrates are shipped to Teck's Trail metallurgical complex in British Columbia where germanium is recovered. Teck does not publicly disclose germanium production volumes. The company is in the process of merging with Anglo American and is repositioning as a copper-focused miner.
-- **Investment angle:** TECK offers indirect germanium exposure but copper is the primary thesis. The more relevant germanium angle is that Red Dog's decline removes one of the few non-Chinese zinc-germanium sources — a structural tightening of western supply that benefits Umicore and 5N Plus more than Teck itself.
-- **Risks:**
-  - Red Dog mine life ends 2031 — germanium source is finite and declining
-  - Teck-Anglo American merger may change operational priorities at Red Dog
-  - Germanium revenue is unquantified — no way to track or invest on that basis
-
-#### Lincang Xinyuan Refinery
-- **Type:** Refinery
-- **Location:** Kunming / Lincang, Yunnan
-- **Key stat:** ~40 t/yr refined Ge
-- **Risk:** US export ban directly impacts western revenue.
-- **Stats:**
-  - Output: ~40 t/yr refined Ge
-  - Products: GeO₂, GeCl₄, Ge ingots, wafers
-  - Wafer capacity: 300,000 four-inch wafers/yr
-  - Integration: Vertically integrated
-- **Role:** Refines Ge concentrate all the way through to finished products including solar-grade wafers — the only facility with full vertical integration from coal mine to wafer.
-- **Investment angle:** Part of Lincang Xinyuan (002428.SZ). Wafer business commands significant premiums over commodity Ge.
-- **Risks:**
-  - US export ban cuts wafer sales to western satellite manufacturers
-  - Single-facility risk
-  - Trade policy exposure
-
-#### Smaller Chinese Refiners
-- **Type:** Refiners
-- **Location:** Various · Inner Mongolia / Hunan
-- **Key stat:** ~14 t/yr est. combined
-- **Risk:** Fragmented, opaque, price-sensitive operators.
-- **Stats:**
-  - Combined output: ~14 t/yr est.
-  - Feedstock: Wulantuga + Yimin fly ash
-  - Products: GeO₂ and Ge metal
-  - Visibility: Limited public data
-- **Role:** A fragmented group of smaller processors refining Ge concentrate from coal-route sources. Most price-sensitive in the chain — they enter and exit based on spot prices.
-- **Investment angle:** No direct investment access. ~10% of Chinese primary Ge output.
-- **Risks:**
-  - High exit risk when prices fall
-  - No quality standardization
-  - Opaque output reporting
-
-#### Yunnan Chihong Refinery
-- **Type:** Refinery
-- **Location:** Qujing, Yunnan, China
-- **Key stat:** ~66 t/yr refined Ge
-- **Risk:** Largest single Ge refinery globally. High concentration risk.
-- **Stats:**
-  - Output: ~66 t/yr refined Ge
-  - Products: GeO₂, Ge metal, GeCl₄
-  - Scale: Largest single Ge refinery globally
-  - Ticker: 600497.SH
-- **Role:** The world's largest single germanium refinery. Processes zinc leach residues from the SYGT belt into refined GeO₂ and metal.
-- **Investment angle:** Part of Yunnan Chihong (600497.SH). Ge refining contributes disproportionate margins relative to its size within the zinc business.
-- **Risks:**
-  - Single-facility concentration
-  - Export control compliance adds cost
-  - Dependent on zinc smelter economics
-
-#### JSC Germanium Refinery
-- **Type:** Germanium refinery
-- **Location:** Krasnoyarsk, Russia
-- **Key stat:** ~20 t/yr capacity · Rostec · western-blocked
-- **Risk:** Sanctioned — inaccessible to western buyers and investors.
-- **Stats:**
-  - Capacity: ~20 t/yr
-  - Products: Ge metal, GeO₂, GeCl₄
-  - Status: Active · export-blocked
-  - Parent: Rostec / Shvabe
-- **Role:** JSC Germanium operates a fully integrated refinery in Krasnoyarsk processing Spetsugli fly ash and recycled germanium waste into finished products including germanium metal, dioxide, tetrachloride, IR optical blanks, and wafers. Has launched germanium wafer production for the Russian space industry. Historically the world's second largest germanium exporter after China — now effectively removed from the global market.
-- **Investment angle:** No investment access. Sanctioned entity.
-- **Risks:**
-  - Sanctioned — no western trade or investment
-  - Serves Russian domestic and potentially Chinese markets only
-  - Represents structural supply removal from western accessible market
-
-#### Umicore
-- **Type:** Germanium recycler
-- **Location:** Hoboken, Belgium
-- **Key stat:** World's largest Ge recycler · UMI Brussels
-- **Risk:** Feed dependent on western manufacturing scrap — constrained by fiber optic production volumes.
-- **Stats:**
-  - Ticker: UMI (Euronext)
-  - Ge output: ~40-50 t/yr est.
-  - Feed source: >50% recycled scrap
-  - Founded: 1989 (Belgium)
-- **Role:** Umicore is the western world's primary germanium recycler and refiner, operating out of Hoboken near Antwerp. More than 50% of their germanium feed comes from recycling customer scrap — fiber optic manufacturing waste from Corning and Prysmian, spent infrared optics, and decommissioned military equipment. Umicore is the strategic western buffer against Chinese export controls.
-- **Investment angle:** UMI offers the most direct western exposure to germanium supply security. As China's export restrictions tighten, Umicore's recycling model becomes structurally more valuable — it sources scrap domestically from western fiber manufacturers, entirely bypassing Chinese primary supply. The 2024 DRC partnership adds primary concentrate feed for the first time.
-- **Risks:**
-  - Germanium output volumes not publicly disclosed — estimates only
-  - Feed volume constrained by western fiber optic manufacturing scrap availability
-  - DRC partnership (Chemaf/STL) adds geopolitical risk from a different direction
-
-#### 5N Plus
-- **Type:** Germanium refiner
-- **Location:** Montreal, Quebec, Canada
-- **Key stat:** US DoD strategic partner · VNP TSX
-- **Risk:** Small scale relative to Umicore and Chinese producers.
-- **Stats:**
-  - Ticker: VNP (TSX)
-  - Ge output: ~15-20 t/yr est.
-  - Key customer: US Department of Defense
-  - Facility: Utah, USA (DoD-backed)
-- **Role:** 5N Plus produces high-purity germanium products including wafers for satellite solar cells and semiconductor applications. The US Department of Defense partnered with 5N Plus to establish a germanium wafer production facility in Utah — a direct strategic response to Chinese export controls on germanium announced in 2023.
-- **Investment angle:** VNP is the most direct investment play on US germanium supply independence. The DoD partnership provides contracted revenue and de-risks the business model. As US defense and space programs require domestically sourced germanium wafers, 5N Plus is structurally positioned as the primary American supplier.
-- **Risks:**
-  - Small scale — cannot meaningfully replace Chinese primary supply
-  - DoD revenue concentration creates customer dependency
-  - Dependent on imported germanium feed — not fully vertically integrated
-
-#### PPM Pure Metals
-- **Type:** Germanium refiner
-- **Location:** Langelsheim, Germany
-- **Key stat:** European specialist refiner · Private
-- **Risk:** Private company — limited transparency on volumes and financials.
-- **Stats:**
-  - Status: Private company
-  - Ge output: ~10-15 t/yr est.
-  - Process: Zone refining to 7N+ purity
-  - Location: Langelsheim, Germany
-- **Role:** PPM Pure Metals is a German specialty refiner focused on ultra-high purity germanium for semiconductor and detector applications. Their zone refining process achieves 7N+ purity (99.99999%+) — the highest grade required for radiation detection and advanced semiconductor applications. Supplies European defense and research institutions.
-- **Investment angle:** No direct investment vehicle — private company. Indirect exposure via European critical minerals supply chain security initiatives. PPM represents the European strategic refining capability for defense-grade germanium.
-- **Risks:**
-  - Private — no investment access
-  - Small scale, niche market focus
-  - Dependent on scrap feed from European fiber and IR optics manufacturers
-
-#### China Primary Supply
-- **Type:** Primary supply node
-- **Location:** China
-- **Key stat:** ~120 t/yr · ~57% of global supply
-- **Risk:** Export controls implemented August 2023 — ongoing supply risk for western buyers.
-- **Stats:**
-  - Volume: ~120 t/yr primary
-  - Global share: ~57%
-  - Export control: Active since Aug 2023
-  - Price impact: +88% in 2024
-- **Role:** China Primary Supply represents the aggregated output of Chinese germanium refiners — Lincang Xinyuan Refinery, Yunnan Chihong Refinery, and smaller operators. This is primary germanium refined from coal fly ash and zinc smelting byproducts. China implemented export licensing requirements for germanium in August 2023, creating structural uncertainty for all western buyers.
-- **Investment angle:** China's dominance of primary germanium supply is the central investment thesis of this supply chain. The export control regime has bifurcated the market — Chinese buyers get unrestricted access while western buyers face licensing delays and price premiums. This creates durable demand for western recycling alternatives.
-- **Risks:**
-  - Export licensing can be tightened or revoked at any time
-  - Chinese domestic demand consuming growing share of output
-  - No western alternative at equivalent scale
-
-#### Western Recycled Supply
-- **Type:** Secondary supply node
-- **Location:** Belgium, Canada, Germany, USA
-- **Key stat:** ~90-110 t/yr · ~43% of global supply
-- **Risk:** Volume constrained by western manufacturing scrap — cannot scale independently.
-- **Stats:**
-  - Volume: ~90-110 t/yr recycled
-  - Global share: ~43%
-  - Primary recycler: Umicore (Belgium)
-  - Growth driver: China export control response
-- **Role:** Western Recycled Supply aggregates germanium recovered by Umicore, 5N Plus, PPM Pure Metals, and smaller recyclers from manufacturing scrap — primarily fiber optic production waste from Corning, Prysmian, and Fujikura. This stream is the western world's strategic buffer against Chinese primary supply disruption.
-- **Investment angle:** The growth of western recycled supply is structurally driven by China's export controls. Every tonne recycled by Umicore or 5N Plus is a tonne that doesn't need to be sourced from China. As AI datacenter buildout drives fiber optic manufacturing volumes, the scrap stream feeding western recyclers also grows — a natural tailwind.
-- **Risks:**
-  - Cannot scale beyond available manufacturing scrap volumes
-  - Still partially dependent on Chinese primary Ge for high-purity applications
-  - Western recycling capacity remains well below Chinese primary output
-
-#### Global Supply
-- **Type:** Global market output
-- **Location:** Global
-- **Key stat:** ~220 t/yr total · $320M market (2024)
-- **Risk:** China controls ~57% of primary supply with active export restrictions.
-- **Stats:**
-  - Total supply: ~220 t/yr
-  - Market value: ~$320M (2024)
-  - China share: ~57% primary
-  - Price 2024 peak: ~$2,900/kg
-- **Role:** Global germanium supply combines Chinese primary refining (~120t/yr) and western recycling (~90-110t/yr). Total supply is structurally constrained — germanium cannot be mined directly and supply growth requires either increased coal/zinc processing in China or expanded western recycling capacity. The 2023 Chinese export controls have permanently bifurcated the market.
-- **Investment angle:** The global supply constraint is the investment thesis. ~220t/yr of supply serving rapidly growing AI infrastructure, defense, and solar demand. Supply cannot respond quickly to demand increases — it is locked to coal combustion and zinc smelting rates in China, and to western fiber manufacturing scrap volumes. Price is the release valve.
-- **Risks:**
-  - Supply permanently capped by byproduct dependency
-  - Chinese export controls create ongoing western supply risk
-  - Recycled supply cannot scale fast enough to close the gap if China tightens controls further
-
----
 
 ## DEPENDENCIES
 
@@ -507,10 +117,10 @@ Source: Stillpoint Intelligence input page (/app/input/germanium/page.tsx)
 
 ## SO WHAT
 
-### Market signals — What is the price telling us?
-**Teaser:** $1,500 → $8,500+/kg in two years. 4x spread between Chinese and western markets. No futures market. Physical commodity with no hedging mechanism.
+### Block 1 — Market signals
 
-**Analysis:**
+*What is the price telling us?*
+**Teaser:** The 5.7x price rise and persistent 3.5-4x China/west spread are telling us that export licensing has broken the physical market into two disconnected pools where arbitrage is illegal.
 
 Germanium prices have risen from approximately $1,500/kg in early 2024 to over $8,500/kg in international markets — a 5.7x increase in two years. This is not a speculative bubble: germanium has no futures market, no ETF, no derivatives. The price is set by physical transactions between a small number of producers and consumers.
 
@@ -520,10 +130,10 @@ The November 2026 ban expiry is the single most important near-term catalyst. If
 
 > There is no way to short germanium. No futures, no options, no ETF. The only way to express a view is through equities (Umicore, 5N Plus, Yunnan Chihong) or physical accumulation. This illiquidity amplifies price moves in both directions.
 
-### Supply constraints — Why can't supply respond?
-**Teaser:** Zinc byproduct. Can't mine it directly. Global production tied to zinc smelting economics. Recycling at ~90t/yr already near maximum recovery rates.
+### Block 2 — Supply constraints
 
-**Analysis:**
+*Why can't supply respond?*
+**Teaser:** Supply cannot respond because germanium is never a mine's primary product — output is set by zinc smelter economics, and even at $8,500/kg the germanium revenue is a rounding error in zinc P&Ls.
 
 Germanium is never the primary product of any mine. It exists at 50-800 parts per million inside zinc ores and coal fly ash. Global production is a function of zinc smelting volume, not germanium demand. When germanium prices rise, zinc miners cannot simply “produce more germanium” — they would need to smelt more zinc, which requires zinc prices to justify the economics.
 
@@ -537,10 +147,10 @@ This is the core structural issue: germanium supply is inelastic to germanium pr
 
 > The only way to meaningfully increase germanium supply is to find new primary sources (like the DRC tailings) or to reduce demand through substitution. Neither happens quickly. The DRC ramp to Umicore is the most significant new source in decades, and it routes through a single western refiner.
 
-### Competing demand — Who else needs germanium?
-**Teaser:** Fiber optics takes 38% but IR defense, satellite solar, SiGe chips all need it. Every end market stable or growing. No demand destruction in sight.
+### Block 3 — Competing demand
 
-**Analysis:**
+*Who else needs germanium?*
+**Teaser:** Five distinct end markets (fiber, IR defense, satellite solar, SiGe semiconductors, PET catalyst) all pull on the same fixed ~230t/yr pool with no meaningful demand destruction visible in any of them.
 
 **Fiber optics (~87t, 38%)**
 
@@ -560,10 +170,10 @@ Silicon-germanium alloys are used in high-frequency RF chips for 5G, radar, and 
 
 > The critical insight: there is no declining end market. Fiber is surging, IR defense is growing, satellite solar is growing, SiGe is stable. Total demand can only increase from current levels. Supply cannot respond proportionally. The deficit is structural.
 
-### Geopolitical risk — How could it get worse?
-**Teaser:** China controls 83%. MOFCOM licensing since Aug 2023. US ban suspended until Nov 2026. Western buyers paying 3.5x premium. Reimposition = supply shock.
+### Block 4 — Geopolitical risk
 
-**Analysis:**
+*How could it get worse?*
+**Teaser:** It gets worse if the November 2026 US-targeted ban suspension lapses and China reimposes full controls — western buyers would lose access to the ~120t/yr of Chinese primary supply that reaches them via third-country re-exports today.
 
 In August 2023, China's Ministry of Commerce placed export licensing requirements on six germanium products. Chinese germanium exports dropped approximately 55% within months. In December 2024, China banned all germanium exports to the United States — suspended until November 2026, but the global dual-use license requirement remains in full force.
 
@@ -577,10 +187,10 @@ The suspended US export ban expires in November 2026. Three scenarios: (1) Ban l
 
 > Even the best-case scenario (ban lapsing) does not eliminate the structural premium. The dual-use licensing regime remains in force. Every western buyer must apply for and receive Chinese government approval for each germanium shipment. This is a permanent friction cost, not a temporary disruption.
 
-### Supply response — What's being done?
-**Teaser:** DRC ramping to Umicore. 5N Plus decision Nov 2026. All projects add feedstock but western conversion remains single-source.
+### Block 5 — Supply response
 
-**Analysis:**
+*What's being done?*
+**Teaser:** Three western supply responses are underway — DRC tailings feeding Umicore, Teck's Red Dog zinc expansion, and Blue Moon Metals' Idaho mine restart — but they collectively add ~30-50 t/yr of primary feedstock and none of them resolves Umicore's single-facility refining chokepoint.
 
 **DRC / Gécamines — Big Hill tailings (exclusive to Umicore)**
 STL operates the Big Hill site in Lubumbashi — 14 million tonnes of century-old slag containing 700+ tonnes of germanium. First concentrate exports October 2024 under exclusive Umicore offtake. Target: 30% of global germanium demand at full scale. The most important new primary source of non-Chinese germanium in decades.
@@ -596,10 +206,10 @@ Targeting ~15 tonnes/yr germanium production restart. Adds raw feedstock to glob
 
 > Every expansion project adds raw germanium feedstock. The DRC is the most significant. But all western material routes through Umicore for refining. 5N Plus is the only project that would add independent western refining capacity. Its November 2026 decision is the single most important catalyst for breaking the Umicore single-source dependency.
 
-### Technology — What could replace germanium?
-**Teaser:** BlackDiamond glass replacing Ge in IR optics. Hollow-core fiber eliminates Ge in telecom. But substitution is partial and slow.
+### Block 6 — Technology
 
-**Analysis:**
+*What could replace germanium?*
+**Teaser:** Replacement technologies exist in every end market (BlackDiamond glass for IR, hollow-core fiber for telecom, InGaP for solar, SiC for RF) but each one is partial, slow, and commercially unproven at the scale that would displace germanium demand before 2030.
 
 **IR optics substitution — LightPath Technologies**
 
@@ -644,6 +254,14 @@ Reduces demand per fiber-km by ~50%. But MCVD installed base has 25+ year lifesp
 
 ## WHERE THE MONEY IS
 
+### Idea list
+
+*Grouped by supply tree layer, from primary production through substrate/device and direct commodity exposure.*
+
+---
+
+#### Refiner layer
+
 ### Umicore · UMI · Euronext · Chokepoint holder
 **Hook:** Sole western GeCl₄ supplier for commercial fiber optics.
 **Detail:** Exclusive DRC feedstock offtake ramping. Closed-loop recycling from fiber manufacturers creates circular barrier to entry. Major revenue upside from AI-driven fiber demand.
@@ -652,9 +270,9 @@ Reduces demand per fiber-km by ~50%. But MCVD installed base has 25+ year lifesp
 **Hook:** Only vertically integrated western supplier from refined germanium to finished space solar cells.
 **Detail:** Capacity expanding 25-35% annually with $395M backlog maxed out. $32.5M in DoD funding for wafer and refining expansion. FY25: revenue +35%, EBITDA +73%.
 
-### LightPath Technologies · LPTH · NASDAQ · Technology
-**Hook:** Holds exclusive license to BlackDiamond glass that replaces germanium in IR optics.
-**Detail:** $40M camera supply deal through 2027. F-35 combat aircraft program validated. Revenue +40% last quarter. Wins when germanium gets too scarce or too expensive.
+---
+
+#### Host Operation / Primary Producer layer
 
 ### Blue Moon Metals · MOON · TSXV / NASDAQ · Capacity builder
 **Hook:** Acquired Apex — the only past-producing primary germanium and gallium mine in the United States.
@@ -672,9 +290,25 @@ Reduces demand per fiber-km by ~50%. But MCVD installed base has 25+ year lifesp
 **Hook:** Largest new non-Chinese germanium source in development — 14M tonnes of slag, 700+ tonnes Ge potential.
 **Detail:** First germanium concentrates exported October 2024. Targeting 30% of global supply. Exclusive Umicore offtake — all value accrues to Umicore, not the mine.
 
+---
+
+#### Substitution exposure (non-tree)
+
+### LightPath Technologies · LPTH · NASDAQ · Technology
+**Hook:** Holds exclusive license to BlackDiamond glass that replaces germanium in IR optics.
+**Detail:** $40M camera supply deal through 2027. F-35 combat aircraft program validated. Revenue +40% last quarter. Wins when germanium gets too scarce or too expensive.
+
+---
+
+#### Direct exposure
+
 ### Germanium metal · Physical commodity · Direct exposure
 **Hook:** $1,500 → $8,500+/kg in two years on relatively fixed global supply of ~230t/yr.
 **Detail:** Nov 2026 ban review is a binary event for the entire chain. No futures market, no exchange pricing — all OTC. 3.5x spread between Chinese domestic and western market price.
+
+---
+
+### Full briefs
 
 #### Umicore — Full Brief
 *UMI · Euronext Brussels*
@@ -985,23 +619,59 @@ Reduces demand per fiber-km by ~50%. But MCVD installed base has 25+ year lifesp
 
 ---
 
+## CATALYSTS
+
+### Near-term (next 6 months)
+- **May-June 2026** — Umicore Q1 2026 earnings (Specialty Materials segment commentary on germanium pricing and DRC feedstock)
+- **June 2026** — 5N Plus fiber-grade GeCl₄ commercial qualification update (Lumenisity Microsoft hollow-core partnership progress)
+- **July 2026** — Teck Resources Q2 2026 earnings (Red Dog zinc production + germanium byproduct volumes)
+- **August 2026** — three-year anniversary of MOFCOM germanium export licensing regime (Aug 1, 2023); possible policy review
+- **October 2026** — Yunnan Chihong H2 2026 production guidance
+- **October 2026** — LightPath Technologies Q1 FY27 earnings (IR optics backlog and defense contract pipeline)
+
+### Medium-term (6-12 months)
+- **November 27, 2026** — US-targeted Chinese export ban suspension expiry (**binary catalyst** — reimposition or expansion would trigger western supply shock)
+- **Q1 2027** — Blue Moon Metals Idaho restart — Final Investment Decision expected
+- **Q1 2027** — STL/Gécamines DRC tailings full-rate production under Umicore offtake
+- **Q2 2027** — Corning hollow-core fiber commercial volumes (Microsoft Azure deployment)
+- **Q3 2027** — Teck Red Dog 2026 annual germanium production disclosure (benchmarks western primary capacity)
+
+### Long-term (12+ months)
+- **2028** — Blue Moon Idaho first germanium concentrate if FID greenfields on schedule
+- **2028** — Hollow-core fiber share of new fiber deployments reaches 5-10% (IOWN Forum roadmap)
+- **2028-2029** — US Defense Production Act Title III investments in domestic germanium capacity expected
+- **2030** — Chinese primary germanium capacity expected to expand further with new zinc smelter capacity in Yunnan and Inner Mongolia
+- **2030+** — BlackDiamond-2 and chalcogenide glass IR optics reach commercial scale, potentially reducing defense IR germanium demand
+
+---
+
 ## CONNECTED INPUTS
 
 ### Upstream
-- 
-- 
-- 
-- 
+Germanium is a raw material page — its upstream inputs are the zinc ores and germanium-hosted coal operations that host germanium as a trace byproduct. These feedstocks are represented on the supply tree itself (zinc concentrate from Red Dog, Teck, Nyrstar; coal-hosted lignite from Lincang, Wulantuga, Yimin, Huize) rather than as separate chain pages.
 
 ### Downstream
-- Fiber optic cable (linked)
-- IR optics
-- Satellite solar cells
-- SiGe semiconductors
+Refined germanium flows into multiple downstream chains, each of which will be its own input page on the platform:
+
+- **Fiber optic cable** — Corning, Prysmian, Sumitomo Electric, Fujikura, YOFC, and other preform manufacturers consume ~38% of global germanium supply via GeCl₄. AI datacenter network buildout is the primary growth vector.
+
+- **IR defense optics** — LightPath Technologies, Raytheon, Elbit Systems, Leonardo, and other thermal imaging and IR lens makers use GeO₂ blanks for military and surveillance optics. Defense spending modernization is driving demand.
+
+- **Satellite solar cells** — AZUR Space, Spectrolab, CESI consume single-crystal germanium wafers for multi-junction space-grade photovoltaics. LEO constellation expansion (Starlink, Kuiper, OneWeb) is the growth driver.
+
+- **SiGe semiconductors** — IQE, GlobalFoundries, STMicroelectronics use germanium in silicon-germanium substrates for RF front-ends and high-speed photonics. Growth from 5G infrastructure and AI optical interconnects.
+
+- **PET polymer catalysts** — germanium oxide is used as a catalyst in high-clarity polyethylene terephthalate for premium packaging applications. Stable mature market.
 
 ---
 
 ## META
-- **Generated:** 2026-04-24T17:57:33.186Z
-- **Source file:** /app/input/germanium/page.tsx
-- **Extract script:** /scripts/extract-input-page.ts
+- **Vertical:** AI Infrastructure
+- **Layer:** Raw Materials
+- **Chain position:** Trace element upstream of fiber optic cable, IR defense optics, satellite solar cells, and SiGe semiconductor chains
+- **Status:** Constrained (export-controlled supply, single-facility western refining chokepoint)
+- **Research dossier:** germanium-research-dossier.md
+- **Framework version:** Stillpoint Master Framework v5.2
+- **Writing agent:** Claude (Stillpoint Intelligence)
+- **Page generated:** 2026-04-24
+- **Last updated:** 2026-04-24

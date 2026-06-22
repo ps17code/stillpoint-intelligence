@@ -2,7 +2,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Lincang",
-    "relevance": "",
+    "relevance": "No direct public vehicle. Exposure via Lincang Xinyuan (002428.SZ).",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -16,7 +16,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Wulantuga",
-    "relevance": "",
+    "relevance": "Indirect exposure via Shengli Coal Group (state-owned).",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -30,7 +30,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Yimin",
-    "relevance": "",
+    "relevance": "Future optionality if Ge prices sustain above $3,000/kg.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -44,7 +44,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Huize",
-    "relevance": "",
+    "relevance": "Listed exposure via Yunnan Chihong (600497.SH).",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -58,7 +58,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Yiliang + SYGT",
-    "relevance": "",
+    "relevance": "Consolidated exposure via Yunnan Chihong (600497.SH).",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -72,7 +72,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Spetsugli",
-    "relevance": "",
+    "relevance": "No direct investment vehicle. Spetsugli represents ~10% of theoretical global germanium supply that is structurally unavailable to western buyers due to sanctions. Its exclusion from western supply chains permanently tightens the accessible supply picture and strengthens the investment case for Umicore and 5N Plus as the primary western alternatives.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -86,7 +86,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Big Hill",
-    "relevance": "",
+    "relevance": "Big Hill is the most significant emerging non-Chinese germanium source in the world. The exclusive offtake agreement with Umicore makes UMI the primary beneficiary of any ramp-up. No direct investment in STL or Gécamines is possible for most western investors — exposure is via Umicore (UMI). The DRC has 700+ tonnes of estimated germanium in the slag heap — at current prices that represents $2B+ of embedded value.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -100,7 +100,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Red Dog",
-    "relevance": "",
+    "relevance": "Teck (TECK.B TSX / TECK NYSE) offers indirect germanium exposure but the primary investment thesis is copper — Teck sold its coal business in 2023 and is repositioning as a copper-focused miner. Red Dog's germanium is a byproduct of a declining zinc operation. The more relevant angle is that Red Dog's decline removes one of the few non-Chinese zinc-germanium sources from the global supply picture — a structural tightening of western supply.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -114,7 +114,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Lincang Xinyuan",
-    "relevance": "",
+    "relevance": "Listed on Shenzhen Exchange. Revenue ~CNY 767M (2024). A-share constraints limit western access.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Lincang"
@@ -130,7 +130,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Shengli Coal Group",
-    "relevance": "",
+    "relevance": "No listed equity. State-owned with no direct western investment vehicle.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Wulantuga"
@@ -146,7 +146,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Various State Ops",
-    "relevance": "",
+    "relevance": "No investable access.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Yimin"
@@ -162,7 +162,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Yunnan Chihong",
-    "relevance": "",
+    "relevance": "Listed on Shanghai Exchange. Ge segment is high-margin relative to total revenue.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Huize",
@@ -179,7 +179,7 @@
   {
     "chain_id": "germanium",
     "node_id": "JSC Germanium",
-    "relevance": "",
+    "relevance": "No investment access — state-owned sanctioned entity. JSC Germanium's exclusion from western supply represents a permanent structural tightening of accessible germanium supply, strengthening the investment case for Umicore and 5N Plus.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Spetsugli"
@@ -195,7 +195,7 @@
   {
     "chain_id": "germanium",
     "node_id": "STL / Gécamines",
-    "relevance": "",
+    "relevance": "No direct investment vehicle — Gécamines is DRC state-owned. The investment play is Umicore (UMI), which holds the exclusive offtake and benefits directly from every tonne STL produces. This partnership is one of the key reasons UMI is strategically positioned as the western germanium supply hub.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Big Hill"
@@ -211,7 +211,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Teck Resources",
-    "relevance": "",
+    "relevance": "TECK offers indirect germanium exposure but copper is the primary thesis. The more relevant germanium angle is that Red Dog's decline removes one of the few non-Chinese zinc-germanium sources — a structural tightening of western supply that benefits Umicore and 5N Plus more than Teck itself.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Red Dog"
@@ -227,7 +227,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Lincang Xinyuan Refinery",
-    "relevance": "",
+    "relevance": "Part of Lincang Xinyuan (002428.SZ). Wafer business commands significant premiums over commodity Ge.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Lincang Xinyuan"
@@ -241,7 +241,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Smaller Chinese Refiners",
-    "relevance": "",
+    "relevance": "No direct investment access. ~10% of Chinese primary Ge output.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Shengli Coal Group",
@@ -256,7 +256,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Yunnan Chihong Refinery",
-    "relevance": "",
+    "relevance": "Part of Yunnan Chihong (600497.SH). Ge refining contributes disproportionate margins relative to its size within the zinc business.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Yunnan Chihong"
@@ -270,7 +270,7 @@
   {
     "chain_id": "germanium",
     "node_id": "JSC Germanium Refinery",
-    "relevance": "",
+    "relevance": "No investment access. Sanctioned entity.",
     "chain_specific_risk": "",
     "feeds_from": [
       "JSC Germanium"
@@ -284,7 +284,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Umicore",
-    "relevance": "",
+    "relevance": "UMI offers the most direct western exposure to germanium supply security. As China's export restrictions tighten, Umicore's recycling model becomes structurally more valuable — it sources scrap domestically from western fiber manufacturers, entirely bypassing Chinese primary supply. The 2024 DRC partnership adds primary concentrate feed for the first time.",
     "chain_specific_risk": "",
     "feeds_from": [
       "STL / Gécamines"
@@ -298,7 +298,7 @@
   {
     "chain_id": "germanium",
     "node_id": "5N Plus",
-    "relevance": "",
+    "relevance": "VNP is the most direct investment play on US germanium supply independence. The DoD partnership provides contracted revenue and de-risks the business model. As US defense and space programs require domestically sourced germanium wafers, 5N Plus is structurally positioned as the primary American supplier.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Teck Resources"
@@ -312,7 +312,7 @@
   {
     "chain_id": "germanium",
     "node_id": "PPM Pure Metals",
-    "relevance": "",
+    "relevance": "No direct investment vehicle — private company. Indirect exposure via European critical minerals supply chain security initiatives. PPM represents the European strategic refining capability for defense-grade germanium.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [],
@@ -324,7 +324,7 @@
   {
     "chain_id": "germanium",
     "node_id": "China Primary Supply",
-    "relevance": "",
+    "relevance": "China's dominance of primary germanium supply is the central investment thesis of this supply chain. The export control regime has bifurcated the market — Chinese buyers get unrestricted access while western buyers face licensing delays and price premiums. This creates durable demand for western recycling alternatives.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [],
@@ -336,7 +336,7 @@
   {
     "chain_id": "germanium",
     "node_id": "Western Recycled Supply",
-    "relevance": "",
+    "relevance": "The growth of western recycled supply is structurally driven by China's export controls. Every tonne recycled by Umicore or 5N Plus is a tonne that doesn't need to be sourced from China. As AI datacenter buildout drives fiber optic manufacturing volumes, the scrap stream feeding western recyclers also grows — a natural tailwind.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [],
@@ -348,7 +348,7 @@
   {
     "chain_id": "fiber",
     "node_id": "Umicore GeCl4",
-    "relevance": "",
+    "relevance": "Sole western GeCl₄ supplier at commercial fiber scale. Olen, Belgium facility produces the highest-purity GeCl₄ in the industry (8N — 99.999999%) and supplies the majority of western and Japanese fiber manufacturers — Corning, Prysmian, Fujikura, Sumitomo, Shin-Etsu — under long-term agreements.\n\nOver 50% of germanium input comes from recycled manufacturing waste sent back by these same customers via closed-loop tolling. Umicore is simultaneously supplier and sole recycler — a circular dependenc",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -364,7 +364,7 @@
   {
     "chain_id": "fiber",
     "node_id": "Yunnan Chihong GeCl4",
-    "relevance": "",
+    "relevance": "Operates a dedicated 30t/yr GeCl₄ production line specifically for optical fiber applications. Serves China’s domestic fiber manufacturers — YOFC, Hengtong, FiberHome — at domestic pricing completely insulated from MOFCOM export controls.\n\nThis creates a permanent structural cost advantage for Chinese fiber production. When western manufacturers pay Umicore spot-linked prices for GeCl₄, Chihong’s domestic customers pay controlled rates. The price differential enables Chinese fiber cable to under",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -380,7 +380,7 @@
   {
     "chain_id": "fiber",
     "node_id": "Chinese State GeCl4 Plants",
-    "relevance": "",
+    "relevance": "Provide the remaining domestic GeCl₄ supply for Chinese fiber manufacturers beyond what Chihong produces. Combined output estimated at ~50-60 tonnes Ge equivalent per year. Subject to MOFCOM export licensing for any international shipments.\n\nYunnan Lincang Xinyuan has been documented supplying germanium to Russian defense entities including JSC Germanium (a Rostec subsidiary), per OCCRP/Schemes investigation (January 2025).",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -396,7 +396,7 @@
   {
     "chain_id": "fiber",
     "node_id": "JSC Germanium GeCl4",
-    "relevance": "",
+    "relevance": "Does NOT produce GeCl₄ for commercial fiber optics. This is a military entity operating entirely within Russia’s defense-industrial complex. Its germanium output goes to IR optics, military electronics, and defense systems — not to fiber manufacturers.\n\nSubject to western sanctions. Included on this map for completeness as a germanium processor, but has zero connection to the commercial fiber supply chain. Receives germanium feedstock from Chinese suppliers including Yunnan Lincang Xinyuan.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -410,7 +410,7 @@
   {
     "chain_id": "fiber",
     "node_id": "Corning",
-    "relevance": "",
+    "relevance": "Single largest non-Chinese consumer of fiber-grade germanium. Sources GeCl₄ from Umicore under long-term agreements and uses the proprietary OVD process — which Corning invented — producing larger preforms with higher deposition efficiency than standard MCVD.\n\nIn January 2026, Meta signed a $6B multiyear agreement — equal to Corning’s entire 2025 optical-communications revenue from a single customer. Ground broken on Hickory, NC cable expansion March 2026 — will be one of the largest cable plant",
     "chain_specific_risk": "",
     "feeds_from": [
       "Umicore GeCl4"
@@ -424,7 +424,7 @@
   {
     "chain_id": "fiber",
     "node_id": "Prysmian",
-    "relevance": "",
+    "relevance": "Holds the most publicly documented GeCl₄ supply arrangement in the industry. In 2020, formalized a long-term supply AND recycling partnership with Umicore targeting ‘100% sustainable germanium’ through closed-loop recycling — Prysmian sends waste to Umicore, who reprocesses it into GeCl₄ and sells it back.\n\nAcquired a North American preform facility to vertically integrate the preform-to-fiber step. Investing $115M+ across US facilities including Jackson, Tennessee. In July 2025, invested in Rel",
     "chain_specific_risk": "",
     "feeds_from": [
       "Umicore GeCl4"
@@ -438,7 +438,7 @@
   {
     "chain_id": "fiber",
     "node_id": "Fujikura",
-    "relevance": "",
+    "relevance": "Sources GeCl₄ primarily from Umicore, shipping it from Belgium to Japan. Pre-2023, also imported germanium from China (~8% of China’s Ge exports went to Japan). MOFCOM controls made Chinese supply unreliable, increasing dependence on Umicore.\n\nClosest pure-play public equity exposure to the germanium-to-fiber thesis. Customers include Google/Alphabet. Investing ¥45B in new Japanese plant for optical fiber capacity. 3-year net income CAGR of 32.58%. Record dividend ¥190/share. No domestic Japanes",
     "chain_specific_risk": "",
     "feeds_from": [
       "Umicore GeCl4"
@@ -452,7 +452,7 @@
   {
     "chain_id": "fiber",
     "node_id": "Sumitomo Electric",
-    "relevance": "",
+    "relevance": "Same supply profile as Fujikura — sources GeCl₄ primarily from Umicore with some historical Chinese imports now reduced under MOFCOM controls. Does NOT source from Russian JSC Germanium.\n\nGermanium and fiber are a smaller share of total revenue than Fujikura, making Sumitomo a less direct play on the germanium-to-fiber thesis. One of the original fiber optic manufacturers with decades of preform and fiber production expertise.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Yunnan Chihong GeCl4",
@@ -468,7 +468,7 @@
   {
     "chain_id": "fiber",
     "node_id": "Shin-Etsu",
-    "relevance": "",
+    "relevance": "Unique dual sourcing among Japanese manufacturers. Japanese Kashima Plant sources GeCl₄ from Umicore. China JV operations source domestically from Yunnan Chihong and Chinese state plants at controlled pricing.\n\nThis gives Shin-Etsu more supply flexibility than Fujikura or Sumitomo, but creates a split cost structure — Japanese output at Umicore prices, Chinese output at domestic prices. Invested ¥18B in preform capacity expansion across all three manufacturing sites.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Yunnan Chihong GeCl4",
@@ -483,7 +483,7 @@
   {
     "chain_id": "fiber",
     "node_id": "YOFC",
-    "relevance": "",
+    "relevance": "Operates on an entirely separate supply chain from western manufacturers. GeCl₄ from Yunnan Chihong, Nanjing Germanium, and Chinese state plants at controlled domestic pricing insulated from export controls and global price surges. Chinese manufacturers undercut western rivals by 15-20%.\n\nAlso the global leader in hollow-core fiber — the technology that eliminates germanium entirely. Began commercial HCF production late 2023. World-record 0.040 dB/km attenuation. Demonstrated 1.2Tb/s over HCF wi",
     "chain_specific_risk": "",
     "feeds_from": [
       "Yunnan Chihong GeCl4",
@@ -594,7 +594,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Guinea Bauxite",
-    "relevance": "",
+    "relevance": "Guinea is the world's largest bauxite exporter but refines almost none of its own output. Roughly 80% of Guinean bauxite flows to Chinese refineries, meaning Guinea structurally underwrites Chinese gallium dominance.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -608,7 +608,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Australian Bauxite",
-    "relevance": "",
+    "relevance": "Australia is the only major bauxite-producing region with domestic alumina refining at scale AND a western-aligned political posture. The Wagerup refinery operated by Alcoa — the planned JAGA gallium site — processes Australian-origin bauxite.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -623,7 +623,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Chinese Domestic Bauxite",
-    "relevance": "",
+    "relevance": "China's combined domestic bauxite production and imports feed the ~20 Chinese alumina refineries that produce ~83% of global primary gallium.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -637,7 +637,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Brazilian Bauxite",
-    "relevance": "",
+    "relevance": "Brazil's bauxite feeds Alunorte, the world's largest alumina refinery, which currently does not produce gallium. A latent supply source — if any operator decides to retrofit recovery circuits.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -651,7 +651,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Indonesian Bauxite",
-    "relevance": "",
+    "relevance": "Indonesia's 2023 unrefined-export ban is reshaping bauxite flows globally. Limited current relevance to gallium production — strategic optionality if domestic Indonesian alumina capacity scales.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -665,7 +665,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Chinese Bauxite Refineries",
-    "relevance": "",
+    "relevance": "The structural core of global gallium supply. ~590 t/yr actual production across ~20 refineries at ~59% utilization represents China's ability to scale output up or down by hundreds of tonnes per year based on policy direction.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Guinea Bauxite",
@@ -687,7 +687,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Alcoa / JAGA (Wagerup)",
-    "relevance": "",
+    "relevance": "The single largest non-Chinese primary production facility in development. 100 t/yr at full ramp would be roughly 30% of current global refined supply.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Australian Bauxite"
@@ -703,7 +703,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Alcoa Corporation",
-    "relevance": "",
+    "relevance": "The corporate vehicle for gallium exposure via the JAGA project. Given sovereign backing, Alcoa is the most liquid western vehicle for primary production exposure.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Australian Bauxite"
@@ -719,7 +719,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Metlen Energy & Metals",
-    "relevance": "",
+    "relevance": "Europe's first industrial gallium producer. 50 t/yr by 2028 would fully cover current EU gallium demand. Already in production at demo scale.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -733,7 +733,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Rio Tinto / Indium JV",
-    "relevance": "",
+    "relevance": "Demonstration-stage North American producer with 40 t/yr commercial target post-2028. Less binary than Alcoa (demo already running) but further from commercial scale.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [
@@ -747,7 +747,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Korea Zinc / Crucible JV",
-    "relevance": "",
+    "relevance": "40 t/yr gallium from a multi-output smelter scheduled 2029. The US DoD 40% equity stake signals strategic-asset treatment of gallium alongside other outputs.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [],
@@ -759,7 +759,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Nyrstar Tennessee",
-    "relevance": "",
+    "relevance": "Historic zinc smelter illustrating the 'lost' western recovery opportunity that the Crucible rebuild is meant to finally capture.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [],
@@ -771,7 +771,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Dowa Holdings",
-    "relevance": "",
+    "relevance": "The de facto western pipeline for GaAs wafer supply. Japan's primary high-purity gallium refiner at the 6N+ purity grade required for compound semiconductor wafer production.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Chinese Bauxite Refineries",
@@ -787,7 +787,7 @@
   {
     "chain_id": "gallium",
     "node_id": "5N Plus",
-    "relevance": "",
+    "relevance": "VNP is the most direct investment play on US germanium supply independence. The DoD partnership provides contracted revenue and de-risks the business model. As US defense and space programs require domestically sourced germanium wafers, 5N Plus is structurally positioned as the primary American supplier.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Chinese Bauxite Refineries"
@@ -801,7 +801,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Indium Corporation",
-    "relevance": "",
+    "relevance": "Owns the process IP used in Rio Tinto's Vaudreuil demo plant. More of an IP-licensing and recycling play than a volume producer. Private, so no direct investment vehicle.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Alcoa Corporation",
@@ -816,7 +816,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Vital Materials",
-    "relevance": "",
+    "relevance": "Core Chinese high-purity gallium refiner. Produces MOCVD precursor chemicals — the specific chemical form gallium takes in GaN chip manufacturing.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Chinese Bauxite Refineries"
@@ -830,7 +830,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Zhuzhou Smelter Group",
-    "relevance": "",
+    "relevance": "Together with Vital Materials, comprise core Chinese downstream high-purity gallium production serving the Chinese semiconductor industry.",
     "chain_specific_risk": "",
     "feeds_from": [
       "Chinese Bauxite Refineries"
@@ -844,7 +844,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Western Refined Supply",
-    "relevance": "",
+    "relevance": "Summary view of non-Chinese refined gallium supply. The structural gap the western primary producer projects aim to close over 2026-2029.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [],
@@ -856,7 +856,7 @@
   {
     "chain_id": "gallium",
     "node_id": "Chinese Primary Supply",
-    "relevance": "",
+    "relevance": "The investable aggregate view of Chinese gallium dominance. Central stress-test variable — every other investable position derives its thesis from what China does.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [],
@@ -870,7 +870,7 @@
     "node_id": [
       "Global Supply"
     ],
-    "relevance": "",
+    "relevance": "The global supply constraint is the investment thesis. ~220t/yr of supply serving rapidly growing AI infrastructure, defense, and solar demand. Supply cannot respond quickly to demand increases — it is locked to coal combustion and zinc smelting rates in China, and to western fiber manufacturing scrap volumes. Price is the release valve.",
     "chain_specific_risk": "",
     "feeds_from": [],
     "feeds_into": [],

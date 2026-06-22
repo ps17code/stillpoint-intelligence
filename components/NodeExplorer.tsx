@@ -15,6 +15,11 @@ const COUNTRY_CODES: Record<string, string> = {
 };
 
 type AnyRec = Record<string, unknown>;
+
+function formatTonnes(v: number): string {
+  if (v >= 1e6) return `${(v / 1e6).toFixed(v >= 1e7 ? 0 : 1)} Mt`;
+  return `${v.toLocaleString()} t`;
+}
 const graph = graphJson as unknown as { classes: Record<string, AnyRec>; entities: Record<string, AnyRec>; companies: Record<string, AnyRec> };
 const classes = graph.classes;
 const entities = graph.entities ?? {};
@@ -176,15 +181,25 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     const cls = classes[drillClass];
     const ids = (cls?.entities as string[] | undefined) ?? [];
     const ents = ids.map(id => entities[id]).filter(Boolean) as AnyRec[];
-    const LAYERS: [string, string][] = [["deposit", "Source / Deposit"], ["mine", "Mine"], ["refinery", "Refiner"]];
-    const columns: Column[] = LAYERS.map(([t, label]) => ({
+    const LAYERS: [string, string[], string][] = [
+      ["Source / Deposit", ["deposit"], "deposit"],
+      ["Mine", ["mine"], "mine"],
+      ["Smelter / Recovery", ["smelter", "recovery_plant"], "smelter"],
+      ["Refiner", ["refinery"], "refinery"],
+    ];
+    const cardFor = (e: AnyRec): Card => {
+      const ao = e.annual_output as AnyRec | undefined;
+      const res = e.total_reserve as AnyRec | undefined;
+      let output = "";
+      if (ao?.value && Number(ao.value) > 0) output = `${ao.value} ${ao.unit ?? ""} out`.trim();
+      else if (res?.value && Number(res.value) > 0) output = `${formatTonnes(Number(res.value))} reserve`;
+      else if ((e.produces as AnyRec[] | undefined)?.length) output = (e.produces as AnyRec[])[0].form as string;
+      const terminates = ((e.outputs as AnyRec[] | undefined) ?? []).length === 0;
+      return { id: e.node_id as string, title: e.name as string, sub: e.status as string, flag: e.country as string, output, clickable: true, muted: terminates };
+    };
+    const columns: Column[] = LAYERS.map(([label, types]) => ({
       label,
-      items: ents.filter(e => e.node_type === t).map(e => {
-        const prod = ((e.produces as AnyRec[] | undefined) ?? [])[0];
-        const amt = prod?.amount as AnyRec | undefined;
-        const output = prod ? `${prod.form}${amt?.value ? ` · ${amt.value} ${amt.unit ?? ""}` : ""}` : "";
-        return { id: e.node_id as string, title: e.name as string, sub: e.status as string, flag: e.country as string, output, clickable: true };
-      }),
+      items: ents.filter(e => types.includes(e.node_type as string)).map(cardFor),
     }));
     // boundary / market targets from refinery outputs that cross to a class
     const boundary: Card[] = [];
@@ -248,11 +263,16 @@ function ResearchPanel({ node }: { node: AnyRec | null }) {
   const owner = (node?.owner as AnyRec[] | undefined)?.map(o => o.company_name).join(", ");
   const operator = (node?.operator as AnyRec | undefined)?.company_name as string | undefined;
   const reserve = node?.total_reserve as AnyRec | undefined;
+  const output = node?.annual_output as AnyRec | undefined;
   const produces = (node?.produces as AnyRec[] | undefined) ?? [];
+  const hasReserve = reserve?.value != null && Number(reserve.value) > 0;
+  const hasOutput = output?.value != null && Number(output.value) > 0;
+  const terminates = isEntity && ((node?.outputs as AnyRec[] | undefined) ?? []).length === 0;
   // gather source notes
   const sources: { name: string; url?: string }[] = [];
   const pushSrc = (s: AnyRec | undefined) => { if (s?.name && !sources.some(x => x.name === s.name)) sources.push({ name: s.name as string, url: s.url as string }); };
   pushSrc(reserve?.source as AnyRec | undefined);
+  ((output?.sources as AnyRec[] | undefined) ?? []).forEach(pushSrc);
   produces.forEach(p => pushSrc(p.source as AnyRec | undefined));
 
   return (
@@ -265,12 +285,16 @@ function ResearchPanel({ node }: { node: AnyRec | null }) {
           <h3 style={{ fontSize: 17, fontWeight: 400, color: warmWhite, margin: "0 0 4px 0" }}>{node.name as string}</h3>
           {(node.location || node.country) && <p style={{ fontSize: 11, color: "#807870", margin: "0 0 12px 0" }}>{[node.location, node.country].filter(Boolean).join(" · ") as string}</p>}
 
-          {isEntity && (owner || operator || reserve?.value) && (
+          {isEntity && (
             <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 14, paddingBottom: 12, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
               {node.status ? <Row label="Status" value={String(node.status)} /> : null}
+              <Row label="Feeds chain" value={terminates ? "Terminates (no Ge output)" : "Yes → germanium market"} />
               {owner ? <Row label="Owner" value={owner as string} /> : null}
               {operator && operator !== owner ? <Row label="Operator" value={operator} /> : null}
-              {reserve?.value ? <Row label="Reserve" value={`${reserve.value} ${reserve.unit ?? ""} (${reserve.basis})`} /> : null}
+              {hasReserve ? <Row label="Reserve" value={`${formatTonnes(Number(reserve!.value))} (${reserve!.basis})`} /> : <Row label="Reserve" value="not quantified" />}
+              {hasOutput
+                ? <Row label="Annual output" value={`${output!.value} ${output!.unit ?? ""}${output!.year ? ` (${output!.year})` : ""}`} />
+                : <Row label="Annual output" value={String(output?.basis ?? "not quantified").replace(/_/g, " ")} />}
             </div>
           )}
 
