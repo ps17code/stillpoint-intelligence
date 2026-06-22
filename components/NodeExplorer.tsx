@@ -148,6 +148,8 @@ function TreeCanvas({ columns, edges, onCardClick }: { columns: Column[]; edges:
 
 export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const [drillClass, setDrillClass] = useState<string | null>(null);
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+  const selectedNode = selectedNodeId ? (entities[selectedNodeId] ?? classes[selectedNodeId] ?? null) : null;
 
   // ── class graph (default) ──
   const classView = useMemo(() => {
@@ -161,7 +163,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
           const ap = (c.supply as AnyRec | undefined)?.["annual_production"] as AnyRec | undefined;
           if (ap?.value) output = `${ap.value} ${ap.unit ?? ""}`.trim();
         }
-        return { id: c.class_id as string, title: c.name as string, sub: c.class_type as string, output, clickable: ec.length > 0 };
+        return { id: c.class_id as string, title: c.name as string, sub: c.class_type as string, output, clickable: true };
       }),
     }));
     const edges: Edge[] = Object.values(classes).flatMap(c => ((c.output_classes as string[] | undefined) ?? []).filter(to => classes[to]).map(to => ({ from: c.class_id as string, to })));
@@ -181,7 +183,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
         const prod = ((e.produces as AnyRec[] | undefined) ?? [])[0];
         const amt = prod?.amount as AnyRec | undefined;
         const output = prod ? `${prod.form}${amt?.value ? ` · ${amt.value} ${amt.unit ?? ""}` : ""}` : "";
-        return { id: e.node_id as string, title: e.name as string, sub: e.status as string, flag: e.country as string, output };
+        return { id: e.node_id as string, title: e.name as string, sub: e.status as string, flag: e.country as string, output, clickable: true };
       }),
     }));
     // boundary / market targets from refinery outputs that cross to a class
@@ -220,17 +222,81 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
         <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "14px 0 0" }} />
       </div>
 
-      {/* Body */}
-      <div style={{ flex: 1, overflowY: "auto", overflowX: "auto", padding: "16px 24px 24px" }}>
-        {!drillClass && (
-          <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { if (((classes[id]?.entities as string[] | undefined) ?? []).length) setDrillClass(id); }} />
-        )}
-        {drillClass && entityView && (
-          entityView.count === 0
-            ? <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", padding: "30px 0", fontFamily: "Inter, sans-serif" }}>No entity nodes generated for this class yet — they will appear here as the engine runs.</p>
-            : <TreeCanvas columns={entityView.columns} edges={entityView.edges} />
-        )}
+      {/* Body: tree (left) + research panel (right) */}
+      <div style={{ flex: 1, minHeight: 0, display: "flex" }}>
+        <div style={{ flex: 1, minWidth: 0, overflowY: "auto", overflowX: "auto", padding: "16px 24px 24px" }}>
+          {!drillClass && (
+            <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { setSelectedNodeId(id); if (((classes[id]?.entities as string[] | undefined) ?? []).length) setDrillClass(id); }} />
+          )}
+          {drillClass && entityView && (
+            entityView.count === 0
+              ? <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", padding: "30px 0", fontFamily: "Inter, sans-serif" }}>No entity nodes generated for this class yet — they will appear here as the engine runs.</p>
+              : <TreeCanvas columns={entityView.columns} edges={entityView.edges} onCardClick={(id) => setSelectedNodeId(id)} />
+          )}
+        </div>
+
+        {/* Research panel */}
+        <ResearchPanel node={selectedNode} />
       </div>
+    </div>
+  );
+}
+
+function ResearchPanel({ node }: { node: AnyRec | null }) {
+  const summary = node ? ((node.deposit_short_description as string) ?? (node.description as string) ?? "") : "";
+  const isEntity = node?.kind === "entity";
+  const owner = (node?.owner as AnyRec[] | undefined)?.map(o => o.company_name).join(", ");
+  const operator = (node?.operator as AnyRec | undefined)?.company_name as string | undefined;
+  const reserve = node?.total_reserve as AnyRec | undefined;
+  const produces = (node?.produces as AnyRec[] | undefined) ?? [];
+  // gather source notes
+  const sources: { name: string; url?: string }[] = [];
+  const pushSrc = (s: AnyRec | undefined) => { if (s?.name && !sources.some(x => x.name === s.name)) sources.push({ name: s.name as string, url: s.url as string }); };
+  pushSrc(reserve?.source as AnyRec | undefined);
+  produces.forEach(p => pushSrc(p.source as AnyRec | undefined));
+
+  return (
+    <div style={{ flex: "0 0 360px", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)", overflowY: "auto", padding: "18px 20px" }}>
+      {!node ? (
+        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", fontFamily: "Inter, sans-serif", lineHeight: 1.5, margin: 0 }}>Select a node to read the research-stage summary captured during node generation.</p>
+      ) : (
+        <>
+          <p style={{ fontSize: 8, color: "#666", margin: "0 0 4px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{(node.node_type as string) ?? (node.class_type as string) ?? node.kind} · Research summary</p>
+          <h3 style={{ fontSize: 17, fontWeight: 400, color: warmWhite, margin: "0 0 4px 0" }}>{node.name as string}</h3>
+          {(node.location || node.country) && <p style={{ fontSize: 11, color: "#807870", margin: "0 0 12px 0" }}>{[node.location, node.country].filter(Boolean).join(" · ") as string}</p>}
+
+          {isEntity && (owner || operator || reserve?.value) && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 14, paddingBottom: 12, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              {node.status ? <Row label="Status" value={String(node.status)} /> : null}
+              {owner ? <Row label="Owner" value={owner as string} /> : null}
+              {operator && operator !== owner ? <Row label="Operator" value={operator} /> : null}
+              {reserve?.value ? <Row label="Reserve" value={`${reserve.value} ${reserve.unit ?? ""} (${reserve.basis})`} /> : null}
+            </div>
+          )}
+
+          <p style={{ fontSize: 12.5, color: "rgb(172, 172, 172)", lineHeight: 1.65, margin: 0, whiteSpace: "pre-wrap" }}>{summary || "No research summary recorded for this node."}</p>
+
+          {sources.length > 0 && (
+            <div style={{ marginTop: 16, paddingTop: 12, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <p style={{ fontSize: 8, color: "#666", margin: "0 0 6px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>Sources</p>
+              {sources.map((s, i) => (
+                <p key={i} style={{ fontSize: 10, color: "#807870", margin: "0 0 5px 0", lineHeight: 1.4 }}>
+                  {s.url ? <a href={s.url} target="_blank" rel="noreferrer" style={{ color: "#8ab0c0", textDecoration: "none" }}>{s.name}</a> : s.name}
+                </p>
+              ))}
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12 }}>
+      <span style={{ fontSize: 9, color: "#706a60", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", flexShrink: 0 }}>{label}</span>
+      <span style={{ fontSize: 11, color: warmWhite, textAlign: "right" }}>{value}</span>
     </div>
   );
 }
