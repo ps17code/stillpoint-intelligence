@@ -204,7 +204,8 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
         const nd = (result.downstream_nodes ?? []).length;
         const nu = (result.source_categories ?? []).length + (result.upstream_nodes ?? []).length;
         setRunResult(result);
-        setRunLog(l => [...l, `✓ created class node: ${(cn.node_name as string) ?? obj} · ${ct}`, `  ${nu} upstream/source · ${nd} downstream child node${nd === 1 ? "" : "s"}`]);
+        const tag = (result as AnyRec).cached ? " (cached)" : "";
+        setRunLog(l => [...l, `✓ created class node: ${(cn.node_name as string) ?? obj} · ${ct}${tag}`, `  ${nu} upstream/source · ${nd} downstream child node${nd === 1 ? "" : "s"}`]);
       }
     } catch (e) {
       setRunError((e as Error).message);

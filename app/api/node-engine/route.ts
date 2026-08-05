@@ -1,4 +1,5 @@
 import { NODE_ENGINE_SYSTEM, NODE_ENGINE_MODEL } from "@/lib/nodeEngineSpec";
+import { lookupCached, CACHED_NAMES } from "@/lib/nodeEngineCache";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
@@ -40,11 +41,19 @@ export async function POST(req: Request) {
     return Response.json({ error: "No class object provided." }, { status: 400 });
   }
 
+  // Serve pre-generated results first — works with no API key.
+  const cached = lookupCached(classObject);
+  if (cached) {
+    return Response.json(cached);
+  }
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return Response.json(
-      { error: "ANTHROPIC_API_KEY is not set on the server. Add it to .env.local (local) or the Vercel project env." },
-      { status: 500 }
+      {
+        error: `No cached result for "${classObject}". Live generation needs an ANTHROPIC_API_KEY (set it in .env.local, then restart the dev server). Available cached objects: ${CACHED_NAMES.join(", ")}.`,
+      },
+      { status: 400 }
     );
   }
 
