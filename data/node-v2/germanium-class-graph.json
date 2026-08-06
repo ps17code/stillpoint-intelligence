@@ -1,0 +1,11 @@
+{
+  "node": { "id": "class_node_000001", "name": "Germanium", "class_type": "raw material" },
+  "downstream": [
+    { "id": "cn_ge_substrate_wafer", "name": "Germanium substrate wafer", "class_type": "intermediate material" },
+    { "id": "cn_gecl4", "name": "Germanium tetrachloride", "class_type": "intermediate material" },
+    { "id": "cn_geo2", "name": "Germanium dioxide", "class_type": "intermediate material" },
+    { "id": "cn_ge_optical_blank", "name": "Germanium optical blank", "class_type": "intermediate material" },
+    { "id": "cn_ge_on_si", "name": "Germanium photodetector material / Ge-on-Si layer", "class_type": "intermediate material" },
+    { "id": "cn_sige_wafer", "name": "SiGe material / wafer", "class_type": "intermediate material" }
+  ]
+}

@@ -1,0 +1,658 @@
+{
+  "graph_id": "graph_ge_v1",
+  "node_object": "class_node_000001",
+  "graph_version": 1,
+  "source_route_ids": [
+    "RT-ZN-MET",
+    "RT-ZN-GEO2",
+    "RT-ZN-GECL4",
+    "RT-CO-MET",
+    "RT-CO-GEO2",
+    "RT-CO-GECL4",
+    "RT-RC-MET",
+    "RT-RC-GEO2",
+    "RT-RC-GECL4"
+  ],
+  "columns": [
+    {
+      "key": "resource",
+      "label": "Resource Site"
+    },
+    {
+      "key": "extraction",
+      "label": "Extraction / Collection"
+    },
+    {
+      "key": "primary",
+      "label": "Primary Processing"
+    },
+    {
+      "key": "recovery",
+      "label": "Germanium Recovery"
+    },
+    {
+      "key": "refining",
+      "label": "Germanium Refining"
+    },
+    {
+      "key": "output",
+      "label": "Output Form"
+    }
+  ],
+  "map_nodes": [
+    {
+      "map_node_id": "MN-RS-ZN",
+      "group_id": "PEG-RS-ZNSULF",
+      "group_name": "Sphalerite Zinc Deposit",
+      "entity_class": "Resource Site",
+      "entity_type": "Mineral deposit",
+      "column": "resource",
+      "input_forms": [],
+      "output_forms": [
+        "Ge-bearing sphalerite ore"
+      ],
+      "route_participation_ids": [
+        "RP-ZN-MET-1",
+        "RP-ZN-GEO2-1",
+        "RP-ZN-GECL4-1"
+      ],
+      "route_ids": [
+        "RT-ZN-MET",
+        "RT-ZN-GEO2",
+        "RT-ZN-GECL4"
+      ]
+    },
+    {
+      "map_node_id": "MN-ZNMINE",
+      "group_id": "PEG-OF-ZNMINE",
+      "group_name": "Zinc Mine / Concentrator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Mine-concentrator",
+      "column": "extraction",
+      "input_forms": [
+        "Ge-bearing sphalerite ore"
+      ],
+      "output_forms": [
+        "Ge-bearing zinc concentrate"
+      ],
+      "route_participation_ids": [
+        "RP-ZN-MET-2",
+        "RP-ZN-GEO2-2",
+        "RP-ZN-GECL4-2"
+      ],
+      "route_ids": [
+        "RT-ZN-MET",
+        "RT-ZN-GEO2",
+        "RT-ZN-GECL4"
+      ]
+    },
+    {
+      "map_node_id": "MN-ZNSMELT",
+      "group_id": "PEG-OF-ZNSMELT",
+      "group_name": "Zinc Smelter–Refinery",
+      "entity_class": "Operating Facility",
+      "entity_type": "Smelter-refinery",
+      "column": "primary",
+      "input_forms": [
+        "Ge-bearing zinc concentrate"
+      ],
+      "output_forms": [
+        "Ge-bearing residue / flue dust"
+      ],
+      "route_participation_ids": [
+        "RP-ZN-MET-3",
+        "RP-ZN-GEO2-3",
+        "RP-ZN-GECL4-3"
+      ],
+      "route_ids": [
+        "RT-ZN-MET",
+        "RT-ZN-GEO2",
+        "RT-ZN-GECL4"
+      ]
+    },
+    {
+      "map_node_id": "MN-GEREC-ZN",
+      "group_id": "PEG-OF-GEREC",
+      "group_name": "Germanium Recovery Operator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Hydrometallurgical recovery plant",
+      "column": "recovery",
+      "input_forms": [
+        "Ge-bearing residue / flue dust"
+      ],
+      "output_forms": [
+        "crude germanium concentrate"
+      ],
+      "route_participation_ids": [
+        "RP-ZN-MET-4",
+        "RP-ZN-GEO2-4",
+        "RP-ZN-GECL4-4"
+      ],
+      "route_ids": [
+        "RT-ZN-MET",
+        "RT-ZN-GEO2",
+        "RT-ZN-GECL4"
+      ]
+    },
+    {
+      "map_node_id": "MN-GEREF-MET",
+      "group_id": "PEG-OF-GEREF",
+      "group_name": "Germanium Refinery",
+      "entity_class": "Operating Facility",
+      "entity_type": "Chemical refinery",
+      "column": "refining",
+      "input_forms": [
+        "crude germanium concentrate"
+      ],
+      "output_forms": [
+        "high-purity germanium metal"
+      ],
+      "route_participation_ids": [
+        "RP-ZN-MET-5",
+        "RP-CO-MET-5",
+        "RP-RC-MET-4"
+      ],
+      "route_ids": [
+        "RT-ZN-MET",
+        "RT-CO-MET",
+        "RT-RC-MET"
+      ]
+    },
+    {
+      "map_node_id": "MN-GEREF-GEO2",
+      "group_id": "PEG-OF-GEREF",
+      "group_name": "Germanium Refinery",
+      "entity_class": "Operating Facility",
+      "entity_type": "Chemical refinery",
+      "column": "refining",
+      "input_forms": [
+        "crude germanium concentrate"
+      ],
+      "output_forms": [
+        "germanium dioxide (GeO₂)"
+      ],
+      "route_participation_ids": [
+        "RP-ZN-GEO2-5",
+        "RP-CO-GEO2-5",
+        "RP-RC-GEO2-4"
+      ],
+      "route_ids": [
+        "RT-ZN-GEO2",
+        "RT-CO-GEO2",
+        "RT-RC-GEO2"
+      ]
+    },
+    {
+      "map_node_id": "MN-GEREF-GECL4",
+      "group_id": "PEG-OF-GEREF",
+      "group_name": "Germanium Refinery",
+      "entity_class": "Operating Facility",
+      "entity_type": "Chemical refinery",
+      "column": "refining",
+      "input_forms": [
+        "crude germanium concentrate"
+      ],
+      "output_forms": [
+        "germanium tetrachloride (GeCl₄)"
+      ],
+      "route_participation_ids": [
+        "RP-ZN-GECL4-5",
+        "RP-CO-GECL4-5",
+        "RP-RC-GECL4-4"
+      ],
+      "route_ids": [
+        "RT-ZN-GECL4",
+        "RT-CO-GECL4",
+        "RT-RC-GECL4"
+      ]
+    },
+    {
+      "map_node_id": "MN-RS-CO",
+      "group_id": "PEG-RS-GECOAL",
+      "group_name": "Germanium Coal Deposit",
+      "entity_class": "Resource Site",
+      "entity_type": "Coal / lignite deposit",
+      "column": "resource",
+      "input_forms": [],
+      "output_forms": [
+        "Ge-bearing lignite"
+      ],
+      "route_participation_ids": [
+        "RP-CO-MET-1",
+        "RP-CO-GEO2-1",
+        "RP-CO-GECL4-1"
+      ],
+      "route_ids": [
+        "RT-CO-MET",
+        "RT-CO-GEO2",
+        "RT-CO-GECL4"
+      ]
+    },
+    {
+      "map_node_id": "MN-COALMINE",
+      "group_id": "PEG-OF-COALMINE",
+      "group_name": "Germaniferous Coal Mine",
+      "entity_class": "Operating Facility",
+      "entity_type": "Mine",
+      "column": "extraction",
+      "input_forms": [
+        "Ge-bearing coal deposit"
+      ],
+      "output_forms": [
+        "Ge-bearing lignite"
+      ],
+      "route_participation_ids": [
+        "RP-CO-MET-2",
+        "RP-CO-GEO2-2",
+        "RP-CO-GECL4-2"
+      ],
+      "route_ids": [
+        "RT-CO-MET",
+        "RT-CO-GEO2",
+        "RT-CO-GECL4"
+      ]
+    },
+    {
+      "map_node_id": "MN-POWER",
+      "group_id": "PEG-IA-POWER",
+      "group_name": "Coal-Fired Power Plant",
+      "entity_class": "Infrastructure Asset",
+      "entity_type": "Power plant",
+      "column": "primary",
+      "input_forms": [
+        "Ge-bearing lignite"
+      ],
+      "output_forms": [
+        "Ge-enriched fly ash"
+      ],
+      "route_participation_ids": [
+        "RP-CO-MET-3",
+        "RP-CO-GEO2-3",
+        "RP-CO-GECL4-3"
+      ],
+      "route_ids": [
+        "RT-CO-MET",
+        "RT-CO-GEO2",
+        "RT-CO-GECL4"
+      ]
+    },
+    {
+      "map_node_id": "MN-GEREC-CO",
+      "group_id": "PEG-OF-GEREC",
+      "group_name": "Germanium Recovery Operator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Hydrometallurgical recovery plant",
+      "column": "recovery",
+      "input_forms": [
+        "Ge-enriched fly ash"
+      ],
+      "output_forms": [
+        "crude germanium concentrate"
+      ],
+      "route_participation_ids": [
+        "RP-CO-MET-4",
+        "RP-CO-GEO2-4",
+        "RP-CO-GECL4-4"
+      ],
+      "route_ids": [
+        "RT-CO-MET",
+        "RT-CO-GEO2",
+        "RT-CO-GECL4"
+      ]
+    },
+    {
+      "map_node_id": "MN-RS-RC",
+      "group_id": "PEG-RS-GESCRAP",
+      "group_name": "End-of-Life Germanium Accumulation",
+      "entity_class": "Resource Site",
+      "entity_type": "Secondary / scrap accumulation",
+      "column": "resource",
+      "input_forms": [],
+      "output_forms": [
+        "Ge-bearing end-of-life products & scrap"
+      ],
+      "route_participation_ids": [
+        "RP-RC-MET-1",
+        "RP-RC-GEO2-1",
+        "RP-RC-GECL4-1"
+      ],
+      "route_ids": [
+        "RT-RC-MET",
+        "RT-RC-GEO2",
+        "RT-RC-GECL4"
+      ]
+    },
+    {
+      "map_node_id": "MN-SCRAP",
+      "group_id": "PEG-OF-SCRAP",
+      "group_name": "Germanium Scrap Pre-Processor",
+      "entity_class": "Operating Facility",
+      "entity_type": "Recycling pre-processor",
+      "column": "extraction",
+      "input_forms": [
+        "Ge-bearing end-of-life products & scrap"
+      ],
+      "output_forms": [
+        "Ge-bearing recyclable feed"
+      ],
+      "route_participation_ids": [
+        "RP-RC-MET-2",
+        "RP-RC-GEO2-2",
+        "RP-RC-GECL4-2"
+      ],
+      "route_ids": [
+        "RT-RC-MET",
+        "RT-RC-GEO2",
+        "RT-RC-GECL4"
+      ]
+    },
+    {
+      "map_node_id": "MN-GEREC-RC",
+      "group_id": "PEG-OF-GEREC",
+      "group_name": "Germanium Recovery Operator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Hydrometallurgical recovery plant",
+      "column": "recovery",
+      "input_forms": [
+        "Ge-bearing recyclable feed"
+      ],
+      "output_forms": [
+        "crude germanium concentrate"
+      ],
+      "route_participation_ids": [
+        "RP-RC-MET-3",
+        "RP-RC-GEO2-3",
+        "RP-RC-GECL4-3"
+      ],
+      "route_ids": [
+        "RT-RC-MET",
+        "RT-RC-GEO2",
+        "RT-RC-GECL4"
+      ]
+    }
+  ],
+  "ending_boundary_nodes": [
+    {
+      "map_node_id": "OUT-MET",
+      "form": "high-purity germanium metal",
+      "column": "output"
+    },
+    {
+      "map_node_id": "OUT-GEO2",
+      "form": "germanium dioxide (GeO₂)",
+      "column": "output"
+    },
+    {
+      "map_node_id": "OUT-GECL4",
+      "form": "germanium tetrachloride (GeCl₄)",
+      "column": "output"
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "E-1",
+      "from": "MN-RS-ZN",
+      "to": "MN-ZNMINE",
+      "handoff_form": "Ge-bearing sphalerite ore",
+      "route_ids": [
+        "RT-ZN-MET",
+        "RT-ZN-GEO2",
+        "RT-ZN-GECL4"
+      ]
+    },
+    {
+      "edge_id": "E-2",
+      "from": "MN-ZNMINE",
+      "to": "MN-ZNSMELT",
+      "handoff_form": "Ge-bearing zinc concentrate",
+      "route_ids": [
+        "RT-ZN-MET",
+        "RT-ZN-GEO2",
+        "RT-ZN-GECL4"
+      ]
+    },
+    {
+      "edge_id": "E-3",
+      "from": "MN-ZNSMELT",
+      "to": "MN-GEREC-ZN",
+      "handoff_form": "Ge-bearing residue / flue dust",
+      "route_ids": [
+        "RT-ZN-MET",
+        "RT-ZN-GEO2",
+        "RT-ZN-GECL4"
+      ]
+    },
+    {
+      "edge_id": "E-4",
+      "from": "MN-GEREC-ZN",
+      "to": "MN-GEREF-MET",
+      "handoff_form": "crude germanium concentrate",
+      "route_ids": [
+        "RT-ZN-MET"
+      ]
+    },
+    {
+      "edge_id": "E-5",
+      "from": "MN-GEREC-ZN",
+      "to": "MN-GEREF-GEO2",
+      "handoff_form": "crude germanium concentrate",
+      "route_ids": [
+        "RT-ZN-GEO2"
+      ]
+    },
+    {
+      "edge_id": "E-6",
+      "from": "MN-GEREC-ZN",
+      "to": "MN-GEREF-GECL4",
+      "handoff_form": "crude germanium concentrate",
+      "route_ids": [
+        "RT-ZN-GECL4"
+      ]
+    },
+    {
+      "edge_id": "E-7",
+      "from": "MN-RS-CO",
+      "to": "MN-COALMINE",
+      "handoff_form": "Ge-bearing lignite",
+      "route_ids": [
+        "RT-CO-MET",
+        "RT-CO-GEO2",
+        "RT-CO-GECL4"
+      ]
+    },
+    {
+      "edge_id": "E-8",
+      "from": "MN-COALMINE",
+      "to": "MN-POWER",
+      "handoff_form": "Ge-bearing lignite",
+      "route_ids": [
+        "RT-CO-MET",
+        "RT-CO-GEO2",
+        "RT-CO-GECL4"
+      ]
+    },
+    {
+      "edge_id": "E-9",
+      "from": "MN-POWER",
+      "to": "MN-GEREC-CO",
+      "handoff_form": "Ge-enriched fly ash",
+      "route_ids": [
+        "RT-CO-MET",
+        "RT-CO-GEO2",
+        "RT-CO-GECL4"
+      ]
+    },
+    {
+      "edge_id": "E-10",
+      "from": "MN-GEREC-CO",
+      "to": "MN-GEREF-MET",
+      "handoff_form": "crude germanium concentrate",
+      "route_ids": [
+        "RT-CO-MET"
+      ]
+    },
+    {
+      "edge_id": "E-11",
+      "from": "MN-GEREC-CO",
+      "to": "MN-GEREF-GEO2",
+      "handoff_form": "crude germanium concentrate",
+      "route_ids": [
+        "RT-CO-GEO2"
+      ]
+    },
+    {
+      "edge_id": "E-12",
+      "from": "MN-GEREC-CO",
+      "to": "MN-GEREF-GECL4",
+      "handoff_form": "crude germanium concentrate",
+      "route_ids": [
+        "RT-CO-GECL4"
+      ]
+    },
+    {
+      "edge_id": "E-13",
+      "from": "MN-RS-RC",
+      "to": "MN-SCRAP",
+      "handoff_form": "Ge-bearing end-of-life products & scrap",
+      "route_ids": [
+        "RT-RC-MET",
+        "RT-RC-GEO2",
+        "RT-RC-GECL4"
+      ]
+    },
+    {
+      "edge_id": "E-14",
+      "from": "MN-SCRAP",
+      "to": "MN-GEREC-RC",
+      "handoff_form": "Ge-bearing recyclable feed",
+      "route_ids": [
+        "RT-RC-MET",
+        "RT-RC-GEO2",
+        "RT-RC-GECL4"
+      ]
+    },
+    {
+      "edge_id": "E-15",
+      "from": "MN-GEREC-RC",
+      "to": "MN-GEREF-MET",
+      "handoff_form": "crude germanium concentrate",
+      "route_ids": [
+        "RT-RC-MET"
+      ]
+    },
+    {
+      "edge_id": "E-16",
+      "from": "MN-GEREC-RC",
+      "to": "MN-GEREF-GEO2",
+      "handoff_form": "crude germanium concentrate",
+      "route_ids": [
+        "RT-RC-GEO2"
+      ]
+    },
+    {
+      "edge_id": "E-17",
+      "from": "MN-GEREC-RC",
+      "to": "MN-GEREF-GECL4",
+      "handoff_form": "crude germanium concentrate",
+      "route_ids": [
+        "RT-RC-GECL4"
+      ]
+    },
+    {
+      "edge_id": "E-18",
+      "from": "MN-GEREF-MET",
+      "to": "OUT-MET",
+      "handoff_form": "high-purity germanium metal",
+      "route_ids": [
+        "RT-ZN-MET",
+        "RT-CO-MET",
+        "RT-RC-MET"
+      ]
+    },
+    {
+      "edge_id": "E-19",
+      "from": "MN-GEREF-GEO2",
+      "to": "OUT-GEO2",
+      "handoff_form": "germanium dioxide (GeO₂)",
+      "route_ids": [
+        "RT-ZN-GEO2",
+        "RT-CO-GEO2",
+        "RT-RC-GEO2"
+      ]
+    },
+    {
+      "edge_id": "E-20",
+      "from": "MN-GEREF-GECL4",
+      "to": "OUT-GECL4",
+      "handoff_form": "germanium tetrachloride (GeCl₄)",
+      "route_ids": [
+        "RT-ZN-GECL4",
+        "RT-CO-GECL4",
+        "RT-RC-GECL4"
+      ]
+    }
+  ],
+  "starting_boundaries": [
+    {
+      "boundary_id": "SB-ZN",
+      "group_id": "PEG-RS-ZNSULF",
+      "starting_form": "Ge-bearing sphalerite ore",
+      "first_map_node": "MN-RS-ZN",
+      "route_ids": [
+        "RT-ZN-MET",
+        "RT-ZN-GEO2",
+        "RT-ZN-GECL4"
+      ]
+    },
+    {
+      "boundary_id": "SB-CO",
+      "group_id": "PEG-RS-GECOAL",
+      "starting_form": "Ge-bearing lignite",
+      "first_map_node": "MN-RS-CO",
+      "route_ids": [
+        "RT-CO-MET",
+        "RT-CO-GEO2",
+        "RT-CO-GECL4"
+      ]
+    },
+    {
+      "boundary_id": "SB-RC",
+      "group_id": "PEG-RS-GESCRAP",
+      "starting_form": "Ge-bearing end-of-life products & scrap",
+      "first_map_node": "MN-RS-RC",
+      "route_ids": [
+        "RT-RC-MET",
+        "RT-RC-GEO2",
+        "RT-RC-GECL4"
+      ]
+    }
+  ],
+  "ending_boundaries": [
+    {
+      "boundary_id": "OUT-MET",
+      "form": "high-purity germanium metal",
+      "final_map_node": "MN-GEREF-MET"
+    },
+    {
+      "boundary_id": "OUT-GEO2",
+      "form": "germanium dioxide (GeO₂)",
+      "final_map_node": "MN-GEREF-GEO2"
+    },
+    {
+      "boundary_id": "OUT-GECL4",
+      "form": "germanium tetrachloride (GeCl₄)",
+      "final_map_node": "MN-GEREF-GECL4"
+    }
+  ],
+  "convergence_points": [
+    "MN-GEREF-MET",
+    "MN-GEREF-GEO2",
+    "MN-GEREF-GECL4"
+  ],
+  "branch_points": [
+    "MN-GEREC-ZN",
+    "MN-GEREC-CO",
+    "MN-GEREC-RC"
+  ],
+  "compilation_status": "validated"
+}

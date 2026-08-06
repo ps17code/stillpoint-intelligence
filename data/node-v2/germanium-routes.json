@@ -1,0 +1,974 @@
+{
+  "node_object": {
+    "id": "class_node_000001",
+    "name": "Germanium",
+    "class_type": "raw material"
+  },
+  "groups": {
+    "PEG-RS-ZNSULF": {
+      "group_id": "PEG-RS-ZNSULF",
+      "name": "Sphalerite Zinc Deposit",
+      "entity_class": "Resource Site",
+      "entity_type": "Mineral deposit",
+      "definition": "A zinc sulfide ore body where germanium substitutes into the sphalerite lattice as a trace element.",
+      "main_function": "Hosts germanium-bearing sphalerite zinc ore.",
+      "typical_inputs": [],
+      "typical_outputs": [
+        "Ge-bearing sphalerite ore"
+      ]
+    },
+    "PEG-RS-GECOAL": {
+      "group_id": "PEG-RS-GECOAL",
+      "name": "Germanium Coal Deposit",
+      "entity_class": "Resource Site",
+      "entity_type": "Coal / lignite deposit",
+      "definition": "A coal (especially lignite) deposit in which germanium is organically bound and enriched above a recoverable cutoff grade.",
+      "main_function": "Hosts germanium-bearing lignite.",
+      "typical_inputs": [],
+      "typical_outputs": [
+        "Ge-bearing lignite"
+      ]
+    },
+    "PEG-RS-GESCRAP": {
+      "group_id": "PEG-RS-GESCRAP",
+      "name": "End-of-Life Germanium Accumulation",
+      "entity_class": "Resource Site",
+      "entity_type": "Secondary / scrap accumulation",
+      "definition": "An accumulation of end-of-life germanium products and production scrap holding recoverable germanium.",
+      "main_function": "Accumulates germanium-bearing end-of-life materials and scrap.",
+      "typical_inputs": [],
+      "typical_outputs": [
+        "Ge-bearing end-of-life products & scrap"
+      ]
+    },
+    "PEG-OF-ZNMINE": {
+      "group_id": "PEG-OF-ZNMINE",
+      "name": "Zinc Mine / Concentrator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Mine-concentrator",
+      "definition": "An operating facility that mines and concentrates zinc sulfide ore, carrying trace germanium forward in the zinc concentrate.",
+      "main_function": "Mines and concentrates Ge-bearing zinc ore.",
+      "typical_inputs": [
+        "Ge-bearing sphalerite ore"
+      ],
+      "typical_outputs": [
+        "Ge-bearing zinc concentrate"
+      ]
+    },
+    "PEG-OF-ZNSMELT": {
+      "group_id": "PEG-OF-ZNSMELT",
+      "name": "Zinc Smelter–Refinery",
+      "entity_class": "Operating Facility",
+      "entity_type": "Smelter-refinery",
+      "definition": "An operating facility that smelts and refines zinc concentrate, generating germanium-bearing residues and flue dusts as byproducts.",
+      "main_function": "Refines zinc and concentrates germanium into residues/dusts.",
+      "typical_inputs": [
+        "Ge-bearing zinc concentrate"
+      ],
+      "typical_outputs": [
+        "Ge-bearing residue / flue dust"
+      ]
+    },
+    "PEG-OF-COALMINE": {
+      "group_id": "PEG-OF-COALMINE",
+      "name": "Germaniferous Coal Mine",
+      "entity_class": "Operating Facility",
+      "entity_type": "Mine",
+      "definition": "An operating facility that mines germanium-bearing lignite.",
+      "main_function": "Mines Ge-rich lignite.",
+      "typical_inputs": [
+        "Ge-bearing coal deposit"
+      ],
+      "typical_outputs": [
+        "Ge-bearing lignite"
+      ]
+    },
+    "PEG-IA-POWER": {
+      "group_id": "PEG-IA-POWER",
+      "name": "Coal-Fired Power Plant",
+      "entity_class": "Infrastructure Asset",
+      "entity_type": "Power plant",
+      "definition": "A power-generation asset that combusts germanium-rich lignite, concentrating germanium into the resulting fly ash.",
+      "main_function": "Combusts Ge-lignite for power and concentrates Ge into fly ash.",
+      "typical_inputs": [
+        "Ge-bearing lignite"
+      ],
+      "typical_outputs": [
+        "Ge-enriched fly ash"
+      ]
+    },
+    "PEG-OF-SCRAP": {
+      "group_id": "PEG-OF-SCRAP",
+      "name": "Germanium Scrap Pre-Processor",
+      "entity_class": "Operating Facility",
+      "entity_type": "Recycling pre-processor",
+      "definition": "An operating facility that collects, sorts and dismantles end-of-life germanium materials into a recyclable feed.",
+      "main_function": "Collects and pre-processes Ge scrap.",
+      "typical_inputs": [
+        "Ge-bearing end-of-life products & scrap"
+      ],
+      "typical_outputs": [
+        "Ge-bearing recyclable feed"
+      ]
+    },
+    "PEG-OF-GEREC": {
+      "group_id": "PEG-OF-GEREC",
+      "name": "Germanium Recovery Operator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Hydrometallurgical recovery plant",
+      "definition": "An operating facility that leaches and concentrates germanium from residues, fly ash, or recyclable feed into a crude germanium concentrate.",
+      "main_function": "Recovers and concentrates germanium into a crude concentrate.",
+      "typical_inputs": [
+        "Ge-bearing residue / flue dust",
+        "Ge-enriched fly ash",
+        "Ge-bearing recyclable feed"
+      ],
+      "typical_outputs": [
+        "crude germanium concentrate"
+      ]
+    },
+    "PEG-OF-GEREF": {
+      "group_id": "PEG-OF-GEREF",
+      "name": "Germanium Refinery",
+      "entity_class": "Operating Facility",
+      "entity_type": "Chemical refinery",
+      "definition": "An operating facility that refines crude germanium concentrate via chlorination, distillation, hydrolysis, reduction and zone-refining into marketable germanium output forms.",
+      "main_function": "Refines crude Ge concentrate into GeCl₄, GeO₂ and germanium metal.",
+      "typical_inputs": [
+        "crude germanium concentrate"
+      ],
+      "typical_outputs": [
+        "high-purity germanium metal",
+        "germanium dioxide (GeO₂)",
+        "germanium tetrachloride (GeCl₄)"
+      ]
+    }
+  },
+  "routes": [
+    {
+      "route_id": "RT-ZN-MET",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-ZNSULF",
+        "starting_form": "Ge-bearing sphalerite ore"
+      },
+      "ending_output_form": "high-purity germanium metal",
+      "route_participation_ids": [
+        "RP-ZN-MET-1",
+        "RP-ZN-MET-2",
+        "RP-ZN-MET-3",
+        "RP-ZN-MET-4",
+        "RP-ZN-MET-5"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-ZN-MET-1",
+          "route_id": "RT-ZN-MET",
+          "seq": 1,
+          "group_id": "PEG-RS-ZNSULF",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "Ge-bearing sphalerite ore",
+          "prev_rp": null,
+          "next_rp": "RP-ZN-MET-2"
+        },
+        {
+          "rp_id": "RP-ZN-MET-2",
+          "route_id": "RT-ZN-MET",
+          "seq": 2,
+          "group_id": "PEG-OF-ZNMINE",
+          "input_form": "Ge-bearing sphalerite ore",
+          "functional_stage": "Mining & concentration",
+          "literal_steps": [
+            "mine",
+            "crush",
+            "grind",
+            "flotation"
+          ],
+          "output_form": "Ge-bearing zinc concentrate",
+          "prev_rp": "RP-ZN-MET-1",
+          "next_rp": "RP-ZN-MET-3"
+        },
+        {
+          "rp_id": "RP-ZN-MET-3",
+          "route_id": "RT-ZN-MET",
+          "seq": 3,
+          "group_id": "PEG-OF-ZNSMELT",
+          "input_form": "Ge-bearing zinc concentrate",
+          "functional_stage": "Zinc smelting & residue generation",
+          "literal_steps": [
+            "roast",
+            "leach",
+            "electrowin",
+            "residue/dust collection"
+          ],
+          "output_form": "Ge-bearing residue / flue dust",
+          "prev_rp": "RP-ZN-MET-2",
+          "next_rp": "RP-ZN-MET-4"
+        },
+        {
+          "rp_id": "RP-ZN-MET-4",
+          "route_id": "RT-ZN-MET",
+          "seq": 4,
+          "group_id": "PEG-OF-GEREC",
+          "input_form": "Ge-bearing residue / flue dust",
+          "functional_stage": "Germanium recovery",
+          "literal_steps": [
+            "leach",
+            "solvent-extraction / precipitation",
+            "concentrate"
+          ],
+          "output_form": "crude germanium concentrate",
+          "prev_rp": "RP-ZN-MET-3",
+          "next_rp": "RP-ZN-MET-5"
+        },
+        {
+          "rp_id": "RP-ZN-MET-5",
+          "route_id": "RT-ZN-MET",
+          "seq": 5,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "crude germanium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "high-purity germanium metal",
+          "prev_rp": "RP-ZN-MET-4",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-ZN-GEO2",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-ZNSULF",
+        "starting_form": "Ge-bearing sphalerite ore"
+      },
+      "ending_output_form": "germanium dioxide (GeO₂)",
+      "route_participation_ids": [
+        "RP-ZN-GEO2-1",
+        "RP-ZN-GEO2-2",
+        "RP-ZN-GEO2-3",
+        "RP-ZN-GEO2-4",
+        "RP-ZN-GEO2-5"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-ZN-GEO2-1",
+          "route_id": "RT-ZN-GEO2",
+          "seq": 1,
+          "group_id": "PEG-RS-ZNSULF",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "Ge-bearing sphalerite ore",
+          "prev_rp": null,
+          "next_rp": "RP-ZN-GEO2-2"
+        },
+        {
+          "rp_id": "RP-ZN-GEO2-2",
+          "route_id": "RT-ZN-GEO2",
+          "seq": 2,
+          "group_id": "PEG-OF-ZNMINE",
+          "input_form": "Ge-bearing sphalerite ore",
+          "functional_stage": "Mining & concentration",
+          "literal_steps": [
+            "mine",
+            "crush",
+            "grind",
+            "flotation"
+          ],
+          "output_form": "Ge-bearing zinc concentrate",
+          "prev_rp": "RP-ZN-GEO2-1",
+          "next_rp": "RP-ZN-GEO2-3"
+        },
+        {
+          "rp_id": "RP-ZN-GEO2-3",
+          "route_id": "RT-ZN-GEO2",
+          "seq": 3,
+          "group_id": "PEG-OF-ZNSMELT",
+          "input_form": "Ge-bearing zinc concentrate",
+          "functional_stage": "Zinc smelting & residue generation",
+          "literal_steps": [
+            "roast",
+            "leach",
+            "electrowin",
+            "residue/dust collection"
+          ],
+          "output_form": "Ge-bearing residue / flue dust",
+          "prev_rp": "RP-ZN-GEO2-2",
+          "next_rp": "RP-ZN-GEO2-4"
+        },
+        {
+          "rp_id": "RP-ZN-GEO2-4",
+          "route_id": "RT-ZN-GEO2",
+          "seq": 4,
+          "group_id": "PEG-OF-GEREC",
+          "input_form": "Ge-bearing residue / flue dust",
+          "functional_stage": "Germanium recovery",
+          "literal_steps": [
+            "leach",
+            "solvent-extraction / precipitation",
+            "concentrate"
+          ],
+          "output_form": "crude germanium concentrate",
+          "prev_rp": "RP-ZN-GEO2-3",
+          "next_rp": "RP-ZN-GEO2-5"
+        },
+        {
+          "rp_id": "RP-ZN-GEO2-5",
+          "route_id": "RT-ZN-GEO2",
+          "seq": 5,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "crude germanium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "germanium dioxide (GeO₂)",
+          "prev_rp": "RP-ZN-GEO2-4",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-ZN-GECL4",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-ZNSULF",
+        "starting_form": "Ge-bearing sphalerite ore"
+      },
+      "ending_output_form": "germanium tetrachloride (GeCl₄)",
+      "route_participation_ids": [
+        "RP-ZN-GECL4-1",
+        "RP-ZN-GECL4-2",
+        "RP-ZN-GECL4-3",
+        "RP-ZN-GECL4-4",
+        "RP-ZN-GECL4-5"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-ZN-GECL4-1",
+          "route_id": "RT-ZN-GECL4",
+          "seq": 1,
+          "group_id": "PEG-RS-ZNSULF",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "Ge-bearing sphalerite ore",
+          "prev_rp": null,
+          "next_rp": "RP-ZN-GECL4-2"
+        },
+        {
+          "rp_id": "RP-ZN-GECL4-2",
+          "route_id": "RT-ZN-GECL4",
+          "seq": 2,
+          "group_id": "PEG-OF-ZNMINE",
+          "input_form": "Ge-bearing sphalerite ore",
+          "functional_stage": "Mining & concentration",
+          "literal_steps": [
+            "mine",
+            "crush",
+            "grind",
+            "flotation"
+          ],
+          "output_form": "Ge-bearing zinc concentrate",
+          "prev_rp": "RP-ZN-GECL4-1",
+          "next_rp": "RP-ZN-GECL4-3"
+        },
+        {
+          "rp_id": "RP-ZN-GECL4-3",
+          "route_id": "RT-ZN-GECL4",
+          "seq": 3,
+          "group_id": "PEG-OF-ZNSMELT",
+          "input_form": "Ge-bearing zinc concentrate",
+          "functional_stage": "Zinc smelting & residue generation",
+          "literal_steps": [
+            "roast",
+            "leach",
+            "electrowin",
+            "residue/dust collection"
+          ],
+          "output_form": "Ge-bearing residue / flue dust",
+          "prev_rp": "RP-ZN-GECL4-2",
+          "next_rp": "RP-ZN-GECL4-4"
+        },
+        {
+          "rp_id": "RP-ZN-GECL4-4",
+          "route_id": "RT-ZN-GECL4",
+          "seq": 4,
+          "group_id": "PEG-OF-GEREC",
+          "input_form": "Ge-bearing residue / flue dust",
+          "functional_stage": "Germanium recovery",
+          "literal_steps": [
+            "leach",
+            "solvent-extraction / precipitation",
+            "concentrate"
+          ],
+          "output_form": "crude germanium concentrate",
+          "prev_rp": "RP-ZN-GECL4-3",
+          "next_rp": "RP-ZN-GECL4-5"
+        },
+        {
+          "rp_id": "RP-ZN-GECL4-5",
+          "route_id": "RT-ZN-GECL4",
+          "seq": 5,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "crude germanium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "germanium tetrachloride (GeCl₄)",
+          "prev_rp": "RP-ZN-GECL4-4",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-CO-MET",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-GECOAL",
+        "starting_form": "Ge-bearing lignite"
+      },
+      "ending_output_form": "high-purity germanium metal",
+      "route_participation_ids": [
+        "RP-CO-MET-1",
+        "RP-CO-MET-2",
+        "RP-CO-MET-3",
+        "RP-CO-MET-4",
+        "RP-CO-MET-5"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-CO-MET-1",
+          "route_id": "RT-CO-MET",
+          "seq": 1,
+          "group_id": "PEG-RS-GECOAL",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "Ge-bearing lignite",
+          "prev_rp": null,
+          "next_rp": "RP-CO-MET-2"
+        },
+        {
+          "rp_id": "RP-CO-MET-2",
+          "route_id": "RT-CO-MET",
+          "seq": 2,
+          "group_id": "PEG-OF-COALMINE",
+          "input_form": "Ge-bearing coal deposit",
+          "functional_stage": "Coal mining",
+          "literal_steps": [
+            "mine",
+            "handle"
+          ],
+          "output_form": "Ge-bearing lignite",
+          "prev_rp": "RP-CO-MET-1",
+          "next_rp": "RP-CO-MET-3"
+        },
+        {
+          "rp_id": "RP-CO-MET-3",
+          "route_id": "RT-CO-MET",
+          "seq": 3,
+          "group_id": "PEG-IA-POWER",
+          "input_form": "Ge-bearing lignite",
+          "functional_stage": "Combustion & fly-ash generation",
+          "literal_steps": [
+            "combust for power",
+            "ESP fly-ash collection"
+          ],
+          "output_form": "Ge-enriched fly ash",
+          "prev_rp": "RP-CO-MET-2",
+          "next_rp": "RP-CO-MET-4"
+        },
+        {
+          "rp_id": "RP-CO-MET-4",
+          "route_id": "RT-CO-MET",
+          "seq": 4,
+          "group_id": "PEG-OF-GEREC",
+          "input_form": "Ge-enriched fly ash",
+          "functional_stage": "Germanium recovery",
+          "literal_steps": [
+            "leach",
+            "solvent-extraction / precipitation",
+            "concentrate"
+          ],
+          "output_form": "crude germanium concentrate",
+          "prev_rp": "RP-CO-MET-3",
+          "next_rp": "RP-CO-MET-5"
+        },
+        {
+          "rp_id": "RP-CO-MET-5",
+          "route_id": "RT-CO-MET",
+          "seq": 5,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "crude germanium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "high-purity germanium metal",
+          "prev_rp": "RP-CO-MET-4",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-CO-GEO2",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-GECOAL",
+        "starting_form": "Ge-bearing lignite"
+      },
+      "ending_output_form": "germanium dioxide (GeO₂)",
+      "route_participation_ids": [
+        "RP-CO-GEO2-1",
+        "RP-CO-GEO2-2",
+        "RP-CO-GEO2-3",
+        "RP-CO-GEO2-4",
+        "RP-CO-GEO2-5"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-CO-GEO2-1",
+          "route_id": "RT-CO-GEO2",
+          "seq": 1,
+          "group_id": "PEG-RS-GECOAL",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "Ge-bearing lignite",
+          "prev_rp": null,
+          "next_rp": "RP-CO-GEO2-2"
+        },
+        {
+          "rp_id": "RP-CO-GEO2-2",
+          "route_id": "RT-CO-GEO2",
+          "seq": 2,
+          "group_id": "PEG-OF-COALMINE",
+          "input_form": "Ge-bearing coal deposit",
+          "functional_stage": "Coal mining",
+          "literal_steps": [
+            "mine",
+            "handle"
+          ],
+          "output_form": "Ge-bearing lignite",
+          "prev_rp": "RP-CO-GEO2-1",
+          "next_rp": "RP-CO-GEO2-3"
+        },
+        {
+          "rp_id": "RP-CO-GEO2-3",
+          "route_id": "RT-CO-GEO2",
+          "seq": 3,
+          "group_id": "PEG-IA-POWER",
+          "input_form": "Ge-bearing lignite",
+          "functional_stage": "Combustion & fly-ash generation",
+          "literal_steps": [
+            "combust for power",
+            "ESP fly-ash collection"
+          ],
+          "output_form": "Ge-enriched fly ash",
+          "prev_rp": "RP-CO-GEO2-2",
+          "next_rp": "RP-CO-GEO2-4"
+        },
+        {
+          "rp_id": "RP-CO-GEO2-4",
+          "route_id": "RT-CO-GEO2",
+          "seq": 4,
+          "group_id": "PEG-OF-GEREC",
+          "input_form": "Ge-enriched fly ash",
+          "functional_stage": "Germanium recovery",
+          "literal_steps": [
+            "leach",
+            "solvent-extraction / precipitation",
+            "concentrate"
+          ],
+          "output_form": "crude germanium concentrate",
+          "prev_rp": "RP-CO-GEO2-3",
+          "next_rp": "RP-CO-GEO2-5"
+        },
+        {
+          "rp_id": "RP-CO-GEO2-5",
+          "route_id": "RT-CO-GEO2",
+          "seq": 5,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "crude germanium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "germanium dioxide (GeO₂)",
+          "prev_rp": "RP-CO-GEO2-4",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-CO-GECL4",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-GECOAL",
+        "starting_form": "Ge-bearing lignite"
+      },
+      "ending_output_form": "germanium tetrachloride (GeCl₄)",
+      "route_participation_ids": [
+        "RP-CO-GECL4-1",
+        "RP-CO-GECL4-2",
+        "RP-CO-GECL4-3",
+        "RP-CO-GECL4-4",
+        "RP-CO-GECL4-5"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-CO-GECL4-1",
+          "route_id": "RT-CO-GECL4",
+          "seq": 1,
+          "group_id": "PEG-RS-GECOAL",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "Ge-bearing lignite",
+          "prev_rp": null,
+          "next_rp": "RP-CO-GECL4-2"
+        },
+        {
+          "rp_id": "RP-CO-GECL4-2",
+          "route_id": "RT-CO-GECL4",
+          "seq": 2,
+          "group_id": "PEG-OF-COALMINE",
+          "input_form": "Ge-bearing coal deposit",
+          "functional_stage": "Coal mining",
+          "literal_steps": [
+            "mine",
+            "handle"
+          ],
+          "output_form": "Ge-bearing lignite",
+          "prev_rp": "RP-CO-GECL4-1",
+          "next_rp": "RP-CO-GECL4-3"
+        },
+        {
+          "rp_id": "RP-CO-GECL4-3",
+          "route_id": "RT-CO-GECL4",
+          "seq": 3,
+          "group_id": "PEG-IA-POWER",
+          "input_form": "Ge-bearing lignite",
+          "functional_stage": "Combustion & fly-ash generation",
+          "literal_steps": [
+            "combust for power",
+            "ESP fly-ash collection"
+          ],
+          "output_form": "Ge-enriched fly ash",
+          "prev_rp": "RP-CO-GECL4-2",
+          "next_rp": "RP-CO-GECL4-4"
+        },
+        {
+          "rp_id": "RP-CO-GECL4-4",
+          "route_id": "RT-CO-GECL4",
+          "seq": 4,
+          "group_id": "PEG-OF-GEREC",
+          "input_form": "Ge-enriched fly ash",
+          "functional_stage": "Germanium recovery",
+          "literal_steps": [
+            "leach",
+            "solvent-extraction / precipitation",
+            "concentrate"
+          ],
+          "output_form": "crude germanium concentrate",
+          "prev_rp": "RP-CO-GECL4-3",
+          "next_rp": "RP-CO-GECL4-5"
+        },
+        {
+          "rp_id": "RP-CO-GECL4-5",
+          "route_id": "RT-CO-GECL4",
+          "seq": 5,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "crude germanium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "germanium tetrachloride (GeCl₄)",
+          "prev_rp": "RP-CO-GECL4-4",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-RC-MET",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-GESCRAP",
+        "starting_form": "Ge-bearing end-of-life products & scrap"
+      },
+      "ending_output_form": "high-purity germanium metal",
+      "route_participation_ids": [
+        "RP-RC-MET-1",
+        "RP-RC-MET-2",
+        "RP-RC-MET-3",
+        "RP-RC-MET-4"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-RC-MET-1",
+          "route_id": "RT-RC-MET",
+          "seq": 1,
+          "group_id": "PEG-RS-GESCRAP",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "Ge-bearing end-of-life products & scrap",
+          "prev_rp": null,
+          "next_rp": "RP-RC-MET-2"
+        },
+        {
+          "rp_id": "RP-RC-MET-2",
+          "route_id": "RT-RC-MET",
+          "seq": 2,
+          "group_id": "PEG-OF-SCRAP",
+          "input_form": "Ge-bearing end-of-life products & scrap",
+          "functional_stage": "Collection & pre-processing",
+          "literal_steps": [
+            "collect",
+            "sort",
+            "dismantle",
+            "size-reduce"
+          ],
+          "output_form": "Ge-bearing recyclable feed",
+          "prev_rp": "RP-RC-MET-1",
+          "next_rp": "RP-RC-MET-3"
+        },
+        {
+          "rp_id": "RP-RC-MET-3",
+          "route_id": "RT-RC-MET",
+          "seq": 3,
+          "group_id": "PEG-OF-GEREC",
+          "input_form": "Ge-bearing recyclable feed",
+          "functional_stage": "Germanium recovery",
+          "literal_steps": [
+            "leach",
+            "solvent-extraction / precipitation",
+            "concentrate"
+          ],
+          "output_form": "crude germanium concentrate",
+          "prev_rp": "RP-RC-MET-2",
+          "next_rp": "RP-RC-MET-4"
+        },
+        {
+          "rp_id": "RP-RC-MET-4",
+          "route_id": "RT-RC-MET",
+          "seq": 4,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "crude germanium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "high-purity germanium metal",
+          "prev_rp": "RP-RC-MET-3",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-RC-GEO2",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-GESCRAP",
+        "starting_form": "Ge-bearing end-of-life products & scrap"
+      },
+      "ending_output_form": "germanium dioxide (GeO₂)",
+      "route_participation_ids": [
+        "RP-RC-GEO2-1",
+        "RP-RC-GEO2-2",
+        "RP-RC-GEO2-3",
+        "RP-RC-GEO2-4"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-RC-GEO2-1",
+          "route_id": "RT-RC-GEO2",
+          "seq": 1,
+          "group_id": "PEG-RS-GESCRAP",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "Ge-bearing end-of-life products & scrap",
+          "prev_rp": null,
+          "next_rp": "RP-RC-GEO2-2"
+        },
+        {
+          "rp_id": "RP-RC-GEO2-2",
+          "route_id": "RT-RC-GEO2",
+          "seq": 2,
+          "group_id": "PEG-OF-SCRAP",
+          "input_form": "Ge-bearing end-of-life products & scrap",
+          "functional_stage": "Collection & pre-processing",
+          "literal_steps": [
+            "collect",
+            "sort",
+            "dismantle",
+            "size-reduce"
+          ],
+          "output_form": "Ge-bearing recyclable feed",
+          "prev_rp": "RP-RC-GEO2-1",
+          "next_rp": "RP-RC-GEO2-3"
+        },
+        {
+          "rp_id": "RP-RC-GEO2-3",
+          "route_id": "RT-RC-GEO2",
+          "seq": 3,
+          "group_id": "PEG-OF-GEREC",
+          "input_form": "Ge-bearing recyclable feed",
+          "functional_stage": "Germanium recovery",
+          "literal_steps": [
+            "leach",
+            "solvent-extraction / precipitation",
+            "concentrate"
+          ],
+          "output_form": "crude germanium concentrate",
+          "prev_rp": "RP-RC-GEO2-2",
+          "next_rp": "RP-RC-GEO2-4"
+        },
+        {
+          "rp_id": "RP-RC-GEO2-4",
+          "route_id": "RT-RC-GEO2",
+          "seq": 4,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "crude germanium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "germanium dioxide (GeO₂)",
+          "prev_rp": "RP-RC-GEO2-3",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-RC-GECL4",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-GESCRAP",
+        "starting_form": "Ge-bearing end-of-life products & scrap"
+      },
+      "ending_output_form": "germanium tetrachloride (GeCl₄)",
+      "route_participation_ids": [
+        "RP-RC-GECL4-1",
+        "RP-RC-GECL4-2",
+        "RP-RC-GECL4-3",
+        "RP-RC-GECL4-4"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-RC-GECL4-1",
+          "route_id": "RT-RC-GECL4",
+          "seq": 1,
+          "group_id": "PEG-RS-GESCRAP",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "Ge-bearing end-of-life products & scrap",
+          "prev_rp": null,
+          "next_rp": "RP-RC-GECL4-2"
+        },
+        {
+          "rp_id": "RP-RC-GECL4-2",
+          "route_id": "RT-RC-GECL4",
+          "seq": 2,
+          "group_id": "PEG-OF-SCRAP",
+          "input_form": "Ge-bearing end-of-life products & scrap",
+          "functional_stage": "Collection & pre-processing",
+          "literal_steps": [
+            "collect",
+            "sort",
+            "dismantle",
+            "size-reduce"
+          ],
+          "output_form": "Ge-bearing recyclable feed",
+          "prev_rp": "RP-RC-GECL4-1",
+          "next_rp": "RP-RC-GECL4-3"
+        },
+        {
+          "rp_id": "RP-RC-GECL4-3",
+          "route_id": "RT-RC-GECL4",
+          "seq": 3,
+          "group_id": "PEG-OF-GEREC",
+          "input_form": "Ge-bearing recyclable feed",
+          "functional_stage": "Germanium recovery",
+          "literal_steps": [
+            "leach",
+            "solvent-extraction / precipitation",
+            "concentrate"
+          ],
+          "output_form": "crude germanium concentrate",
+          "prev_rp": "RP-RC-GECL4-2",
+          "next_rp": "RP-RC-GECL4-4"
+        },
+        {
+          "rp_id": "RP-RC-GECL4-4",
+          "route_id": "RT-RC-GECL4",
+          "seq": 4,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "crude germanium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "germanium tetrachloride (GeCl₄)",
+          "prev_rp": "RP-RC-GECL4-3",
+          "next_rp": null
+        }
+      ]
+    }
+  ]
+}
