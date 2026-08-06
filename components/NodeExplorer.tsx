@@ -1,6 +1,12 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, type LoadedNode, type MapNode } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, type LoadedNode } from "@/lib/explorerRegistry";
+
+type CollapsedDetail = {
+  id: string; group_id: string; group_name: string; entity_class: string; entity_type: string;
+  column: string; input_forms: string[]; output_forms: string[]; route_ids: string[];
+  participation_count: number; member_count: number; role: string | null;
+};
 
 const MONO = "'Geist Mono', monospace";
 const SERIF = "'EB Garamond', Georgia, serif";
@@ -169,26 +175,65 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     return { columns, edges, rootId: g.node.id };
   }, [loaded]);
 
-  // ── supply chain graph view ──
+  // ── supply chain graph view (collapsed by canonical Physical Entity Node Group) ──
   const supplyView = useMemo(() => {
     if (!loaded) return null;
     const sg = loaded.supplyGraph;
-    const byCol: Record<string, Card[]> = {};
+
+    // collapse every map node into one visual node per canonical group_id
+    const detail: Record<string, CollapsedDetail> = {};
+    const mapNodeToCollapse: Record<string, string> = {};
     for (const n of sg.map_nodes) {
-      (byCol[n.column] ??= []).push({ id: n.map_node_id, title: n.group_name, sub: n.entity_class, clickable: true });
+      const id = n.group_id; // one group → one column, so group_id is a stable collapse key
+      mapNodeToCollapse[n.map_node_id] = id;
+      const d = (detail[id] ??= {
+        id, group_id: n.group_id, group_name: n.group_name, entity_class: n.entity_class, entity_type: n.entity_type,
+        column: n.column, input_forms: [], output_forms: [], route_ids: [], participation_count: 0, member_count: 0, role: null,
+      });
+      for (const f of n.input_forms) if (!d.input_forms.includes(f)) d.input_forms.push(f);
+      for (const f of n.output_forms) if (!d.output_forms.includes(f)) d.output_forms.push(f);
+      for (const r of n.route_ids) if (!d.route_ids.includes(r)) d.route_ids.push(r);
+      d.participation_count += n.route_participation_ids.length;
+      d.member_count += 1;
+    }
+    // ending-boundary (output form) nodes stay separate
+    for (const n of sg.ending_boundary_nodes) mapNodeToCollapse[n.map_node_id] = n.map_node_id;
+
+    // remap + dedupe edges onto collapsed ids
+    const seen = new Set<string>();
+    const edges: Edge[] = [];
+    const inDeg: Record<string, number> = {}, outDeg: Record<string, number> = {};
+    for (const e of sg.edges) {
+      const from = mapNodeToCollapse[e.from] ?? e.from;
+      const to = mapNodeToCollapse[e.to] ?? e.to;
+      const key = `${from}__${to}`;
+      if (from === to || seen.has(key)) continue;
+      seen.add(key);
+      edges.push({ from, to });
+      outDeg[from] = (outDeg[from] || 0) + 1;
+      inDeg[to] = (inDeg[to] || 0) + 1;
+    }
+    // graph role from collapsed degrees
+    for (const d of Object.values(detail)) {
+      if ((inDeg[d.id] || 0) > 1) d.role = "Convergence point";
+      else if ((outDeg[d.id] || 0) > 1) d.role = "Branch point";
+    }
+
+    const byCol: Record<string, Card[]> = {};
+    for (const d of Object.values(detail)) {
+      (byCol[d.column] ??= []).push({ id: d.id, title: d.group_name, sub: d.entity_class, clickable: true });
     }
     for (const n of sg.ending_boundary_nodes) {
       (byCol[n.column] ??= []).push({ id: n.map_node_id, title: n.form, sub: "ending output form", clickable: false, muted: true });
     }
     const columns: Column[] = sg.columns.map(c => ({ label: c.label, items: byCol[c.key] ?? [] }));
-    const edges: Edge[] = sg.edges.map(e => ({ from: e.from, to: e.to }));
-    return { columns, edges };
+    return { columns, edges, detail };
   }, [loaded]);
 
-  const selectedMapNode: MapNode | null = useMemo(() => {
-    if (view !== "supply" || !loaded || !selId) return null;
-    return loaded.supplyGraph.map_nodes.find(n => n.map_node_id === selId) ?? null;
-  }, [view, loaded, selId]);
+  const selectedDetail: CollapsedDetail | null = useMemo(() => {
+    if (view !== "supply" || !supplyView || !selId) return null;
+    return supplyView.detail[selId] ?? null;
+  }, [view, supplyView, selId]);
 
   const headerKicker = view === "empty" ? "Node Explorer" : view === "class" ? "Node Explorer · Class Graph" : "Node Explorer · Supply Chain Graph";
   const headerTitle = view === "empty" ? "Search a node" : view === "class" ? `${loaded?.name}` : `${loaded?.name} — Supply Chain`;
@@ -242,7 +287,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
           )}
         </div>
 
-        {view === "supply" && <SupplyPanel node={selectedMapNode} graphMeta={loaded!.supplyGraph} />}
+        {view === "supply" && <SupplyPanel detail={selectedDetail} />}
       </div>
 
       {/* Terminal */}
@@ -270,29 +315,35 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   );
 }
 
-/* right panel for a selected supply-graph node */
-function SupplyPanel({ node, graphMeta }: { node: MapNode | null; graphMeta: { convergence_points: string[]; branch_points: string[] } }) {
+/* right panel for a selected supply-graph node (collapsed group) */
+function SupplyPanel({ detail }: { detail: CollapsedDetail | null }) {
   return (
     <div style={{ flex: "0 0 340px", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)", overflowY: "auto", padding: "18px 20px" }}>
-      {!node ? (
+      {!detail ? (
         <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", lineHeight: 1.5, margin: 0 }}>Select a node on the supply-chain graph to see the physical entity group it maps to.</p>
       ) : (
         <>
-          <p style={{ fontSize: 8, color: "#666", margin: "0 0 4px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{node.entity_class} · {node.entity_type}</p>
-          <h3 style={{ fontSize: 17, fontWeight: 400, color: warmWhite, margin: "0 0 3px 0" }}>{node.group_name}</h3>
-          <p style={{ fontSize: 10, color: "#807870", margin: "0 0 12px 0", fontFamily: MONO }}>{node.group_id} · {node.map_node_id}</p>
+          <p style={{ fontSize: 8, color: "#666", margin: "0 0 4px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{detail.entity_class} · {detail.entity_type}</p>
+          <h3 style={{ fontSize: 17, fontWeight: 400, color: warmWhite, margin: "0 0 3px 0" }}>{detail.group_name}</h3>
+          <p style={{ fontSize: 10, color: "#807870", margin: "0 0 12px 0", fontFamily: MONO }}>{detail.group_id}</p>
 
-          <Row label="Class" value={node.entity_class} />
-          <Row label="Type" value={node.entity_type} />
-          {graphMeta.convergence_points.includes(node.map_node_id) && <Row label="Graph role" value="Convergence point" />}
-          {graphMeta.branch_points.includes(node.map_node_id) && <Row label="Graph role" value="Branch point" />}
+          <Row label="Class" value={detail.entity_class} />
+          <Row label="Type" value={detail.entity_type} />
+          {detail.role && <Row label="Graph role" value={detail.role} />}
 
-          <Sect label="Receives">{node.input_forms.length ? node.input_forms.map((f, i) => <Prose key={i}>• {f}</Prose>) : <Prose>— (resource host)</Prose>}</Sect>
-          <Sect label="Produces">{node.output_forms.map((f, i) => <Prose key={i}>• {f}</Prose>)}</Sect>
+          <Sect label="Receives">{detail.input_forms.length ? detail.input_forms.map((f, i) => <Prose key={i}>• {f}</Prose>) : <Prose>— (resource host)</Prose>}</Sect>
+          <Sect label="Produces">{detail.output_forms.map((f, i) => <Prose key={i}>• {f}</Prose>)}</Sect>
           <Sect label="Routes through">
-            <Prose>{node.route_ids.join(", ")}</Prose>
-            <p style={{ fontSize: 9, color: "#6f695f", fontFamily: MONO, margin: "4px 0 0 0" }}>{node.route_participation_ids.length} route participation record{node.route_participation_ids.length === 1 ? "" : "s"}</p>
+            <Prose>{detail.route_ids.join(", ")}</Prose>
+            <p style={{ fontSize: 9, color: "#6f695f", fontFamily: MONO, margin: "4px 0 0 0" }}>
+              {detail.member_count} route position{detail.member_count === 1 ? "" : "s"} · {detail.participation_count} participation record{detail.participation_count === 1 ? "" : "s"}
+            </p>
           </Sect>
+          {detail.member_count > 1 && (
+            <p style={{ fontSize: 9.5, color: "#6f695f", fontStyle: "italic", margin: "10px 0 0 0", lineHeight: 1.5 }}>
+              Collapsed from {detail.member_count} route-specific positions (distinct inputs/outputs) into one group for the graph view. The per-route detail is preserved in the route participation records.
+            </p>
+          )}
         </>
       )}
     </div>
