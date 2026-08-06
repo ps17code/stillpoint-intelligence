@@ -79,7 +79,14 @@ function EdgeLines({ edgeRefs, containerRef, highlightSet }: { edgeRefs: { from:
     }
     setLines(next);
   }, [edgeRefs, containerRef]);
-  useEffect(() => { measure(); const t = setTimeout(measure, 120); return () => clearTimeout(t); }, [measure]);
+  useEffect(() => {
+    measure();
+    const t = setTimeout(measure, 120);
+    const ro = new ResizeObserver(() => measure());
+    if (containerRef.current) ro.observe(containerRef.current);
+    window.addEventListener("resize", measure);
+    return () => { clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
+  }, [measure, containerRef]);
   if (lines.length === 0) return null;
   const activeMode = highlightSet != null;
   return (
@@ -100,7 +107,7 @@ function EdgeLines({ edgeRefs, containerRef, highlightSet }: { edgeRefs: { from:
 }
 
 /* shared column renderer */
-function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap = 46 }: { columns: Column[]; edges: Edge[]; onCardClick?: (id: string) => void; selected?: string | null; colWidth?: number; gap?: number }) {
+function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap = 46, fill = false }: { columns: Column[]; edges: Edge[]; onCardClick?: (id: string) => void; selected?: string | null; colWidth?: number; gap?: number; fill?: boolean }) {
   const treeRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const active = hovered ?? selected ?? null;
@@ -108,12 +115,15 @@ function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap
   const refs = useRef<Record<string, React.RefObject<HTMLDivElement | null>>>({});
   const getRef = (id: string) => (refs.current[id] ??= React.createRef<HTMLDivElement>());
   const edgeRefs = edges.map(e => ({ ...e, fromRef: getRef(e.from), toRef: getRef(e.to) }));
+  const colStyle: React.CSSProperties = fill
+    ? { flex: "1 1 0", minWidth: 108, maxWidth: 210 }
+    : { flex: "0 0 auto", width: colWidth };
 
   return (
-    <div ref={treeRef} style={{ position: "relative", display: "flex", gap, overflowX: "auto", padding: "8px 4px 16px", minHeight: "100%" }}>
+    <div ref={treeRef} style={{ position: "relative", display: "flex", gap: fill ? Math.min(gap, 32) : gap, overflowX: "auto", padding: "8px 4px 16px", minHeight: "100%", width: fill ? "100%" : undefined }}>
       <EdgeLines edgeRefs={edgeRefs} containerRef={treeRef} highlightSet={highlightSet} />
       {columns.map(col => (
-        <div key={col.label} style={{ flex: "0 0 auto", width: colWidth, display: "flex", flexDirection: "column", gap: 9, position: "relative", zIndex: 1, justifyContent: "center" }}>
+        <div key={col.label} style={{ ...colStyle, display: "flex", flexDirection: "column", gap: 9, position: "relative", zIndex: 1, justifyContent: "center" }}>
           <p style={{ fontSize: 7, color: "#706a60", margin: "0 0 3px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{col.label}</p>
           {col.items.length === 0 ? <p style={{ fontSize: 9, color: "#555", margin: 0, fontStyle: "italic" }}>—</p> : col.items.map(card => {
             const inSet = highlightSet?.has(card.id) ?? false;
@@ -271,7 +281,10 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
 
       {/* Body */}
       <div style={{ flex: 1, minHeight: 0, display: "flex" }}>
-        <div style={{ flex: 1, minWidth: 0, overflowY: "auto", overflowX: "auto", padding: "16px 24px 24px" }}>
+        <div
+          onClick={view === "supply" ? () => setSelId(null) : undefined}
+          style={{ flex: 1, minWidth: 0, overflowY: "auto", overflowX: "auto", padding: "16px 24px 24px" }}
+        >
           {view === "empty" && (
             <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10 }}>
               <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5"><circle cx="7" cy="7" r="3" /><circle cx="17" cy="17" r="3" /><path d="M10 7h4a3 3 0 0 1 3 3v4" /></svg>
@@ -283,11 +296,16 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
             <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { if (id === classView.rootId) { setView("supply"); setSelId(null); } }} />
           )}
           {view === "supply" && supplyView && (
-            <TreeCanvas columns={supplyView.columns} edges={supplyView.edges} onCardClick={(id) => setSelId(id)} selected={selId} colWidth={158} gap={40} />
+            <TreeCanvas columns={supplyView.columns} edges={supplyView.edges} onCardClick={(id) => setSelId(id)} selected={selId} fill gap={30} />
           )}
         </div>
 
-        {view === "supply" && <SupplyPanel detail={selectedDetail} />}
+        {/* on-demand panel: collapsed by default, expands in on node click; graph reflows to fit */}
+        {view === "supply" && (
+          <div style={{ flexBasis: selectedDetail ? 340 : 0, flexGrow: 0, flexShrink: 0, width: selectedDetail ? 340 : 0, transition: "flex-basis 0.24s ease, width 0.24s ease", overflow: "hidden", borderLeft: selectedDetail ? "1px solid rgba(255,255,255,0.06)" : "none", background: "rgb(20,20,20)" }}>
+            {selectedDetail && <SupplyPanel detail={selectedDetail} onClose={() => setSelId(null)} />}
+          </div>
+        )}
       </div>
 
       {/* Terminal */}
@@ -316,14 +334,14 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
 }
 
 /* right panel for a selected supply-graph node (collapsed group) */
-function SupplyPanel({ detail }: { detail: CollapsedDetail | null }) {
+function SupplyPanel({ detail, onClose }: { detail: CollapsedDetail; onClose: () => void }) {
   return (
-    <div style={{ flex: "0 0 340px", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)", overflowY: "auto", padding: "18px 20px" }}>
-      {!detail ? (
-        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", lineHeight: 1.5, margin: 0 }}>Select a node on the supply-chain graph to see the physical entity group it maps to.</p>
-      ) : (
-        <>
-          <p style={{ fontSize: 8, color: "#666", margin: "0 0 4px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{detail.entity_class} · {detail.entity_type}</p>
+    <div style={{ width: 340, height: "100%", boxSizing: "border-box", overflowY: "auto", padding: "18px 20px" }}>
+      <>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+            <p style={{ fontSize: 8, color: "#666", margin: "0 0 4px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{detail.entity_class} · {detail.entity_type}</p>
+            <button onClick={onClose} aria-label="Close" style={{ background: "transparent", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.4)", fontSize: 15, lineHeight: 1, padding: 0, marginTop: -2 }}>×</button>
+          </div>
           <h3 style={{ fontSize: 17, fontWeight: 400, color: warmWhite, margin: "0 0 3px 0" }}>{detail.group_name}</h3>
           <p style={{ fontSize: 10, color: "#807870", margin: "0 0 12px 0", fontFamily: MONO }}>{detail.group_id}</p>
 
@@ -344,8 +362,7 @@ function SupplyPanel({ detail }: { detail: CollapsedDetail | null }) {
               Collapsed from {detail.member_count} route-specific positions (distinct inputs/outputs) into one group for the graph view. The per-route detail is preserved in the route participation records.
             </p>
           )}
-        </>
-      )}
+      </>
     </div>
   );
 }
