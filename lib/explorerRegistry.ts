@@ -8,6 +8,7 @@ import galliumClass from "@/data/node-v2/gallium-class-graph.json";
 import galliumRoutes from "@/data/node-v2/gallium-routes.json";
 import galliumGraph from "@/data/node-v2/gallium-supply-graph.json";
 import galliumEntities from "@/data/node-v2/gallium-entity-graph.json";
+import trailRecord from "@/data/node-v2/entities/pe_trail_smelter.json";
 
 export type ClassNodeRef = { id: string; name: string; class_type: string };
 export type ClassGraph = { node: ClassNodeRef; downstream: ClassNodeRef[] };
@@ -81,3 +82,27 @@ export function lookupNode(input: string): LoadedNode | null {
 }
 
 export const AVAILABLE_NODES = ["Germanium", "Gallium"];
+
+/* ── full schema-conformant Physical Entity Node records (Operating Facility schema) ── */
+export type FEGroupMembership = { group_id: string; group_name: string; qualification_status: string; qualification_evidence: string };
+export type FEOwner = { organization_name: string; ownership_percentage: number | null; ownership_type?: string; effective_date?: string; source_or_evidence?: string };
+export type FEOperator = { organization_name: string; operator_relationship_type?: string; source_or_evidence?: string };
+export type FEInput = { input_name: string; input_form: string; input_role: string; nameplate_input_or_throughput_capacity: string; actual_input_quantity: string; quantity_unit: string; reporting_period: string; source_physical_entity_ids: string[]; reported_or_estimated: string };
+export type FEProcess = { process_or_stage_name: string; transformation_function: string; actual_process_or_technology_used: string; major_process_steps: string[]; output_form: string; process_status: string };
+export type FEOutput = { output_name: string; output_form: string; output_classification: string; nameplate_output_capacity: string; actual_output_quantity: string; quantity_unit: string; reporting_period: string; reported_or_estimated: string };
+export type FEMetrics = { total_throughput_capacity: string; actual_throughput: string; capacity_utilization: string; quantity_unit: string; quantity_basis: string };
+export type FEOperation = { operation_id: string; operation_name: string; operation_category: string; physical_entity_node_group_id: string; operational_status: string; main_physical_function: string; inputs: FEInput[]; major_industrial_processes: FEProcess[]; outputs_produced: FEOutput[]; operation_metrics: FEMetrics; confidence: string; reported_or_estimated: string; estimation_method: string };
+export type FullEntityRecord = {
+  common: { physical_entity_id: string; entity_type: string; entity_subtype: string; physical_entity_node_group_memberships: FEGroupMembership[]; owners: FEOwner[]; operators: FEOperator[] };
+  identity: { facility_name: string; alternative_names: string[]; facility_type: string; short_description: string; commissioning_or_operating_start_date: string; facility_level_operational_status: string };
+  location: { country: string; region: string; city: string; site_address: string; coordinates: { latitude: number | null; longitude: number | null } };
+  operations: { operating_configuration: string; operations: FEOperation[]; facility_record_metadata: { record_status: string; overall_confidence: string; created_date: string; last_updated_date: string } };
+};
+
+const FULL_RECORDS: Record<string, FullEntityRecord> = {
+  pe_trail_smelter: trailRecord as unknown as FullEntityRecord,
+};
+
+export function getFullRecord(id: string): FullEntityRecord | null {
+  return FULL_RECORDS[id] ?? null;
+}

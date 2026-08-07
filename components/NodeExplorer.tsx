@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, type LoadedNode, type EntityNode, type EntityGraph } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, getFullRecord, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation } from "@/lib/explorerRegistry";
 
 type CollapsedDetail = {
   id: string; group_id: string; group_name: string; entity_class: string; entity_type: string;
@@ -345,8 +345,8 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
         )}
         {/* on-demand panel: entity detail */}
         {view === "entity" && (
-          <div style={{ flexBasis: selectedEntity ? 340 : 0, flexGrow: 0, flexShrink: 0, width: selectedEntity ? 340 : 0, transition: "flex-basis 0.24s ease, width 0.24s ease", overflow: "hidden", borderLeft: selectedEntity ? "1px solid rgba(255,255,255,0.06)" : "none", background: "rgb(20,20,20)" }}>
-            {selectedEntity && <EntityPanel entity={selectedEntity} graph={loaded!.entityGraph} onClose={() => setSelId(null)} />}
+          <div style={{ flexBasis: selectedEntity ? 400 : 0, flexGrow: 0, flexShrink: 0, width: selectedEntity ? 400 : 0, transition: "flex-basis 0.24s ease, width 0.24s ease", overflow: "hidden", borderLeft: selectedEntity ? "1px solid rgba(255,255,255,0.06)" : "none", background: "rgb(20,20,20)" }}>
+            {selectedEntity && <EntityPanel entity={selectedEntity} graph={loaded!.entityGraph} record={getFullRecord(selectedEntity.id)} onClose={() => setSelId(null)} />}
           </div>
         )}
       </div>
@@ -411,13 +411,13 @@ function SupplyPanel({ detail, onClose }: { detail: CollapsedDetail; onClose: ()
 }
 
 /* right panel for a selected real-world entity */
-function EntityPanel({ entity, graph, onClose }: { entity: EntityNode; graph: EntityGraph; onClose: () => void }) {
+function EntityPanel({ entity, graph, record, onClose }: { entity: EntityNode; graph: EntityGraph; record: FullEntityRecord | null; onClose: () => void }) {
   const nameOf = (id: string) => graph.entities.find(e => e.id === id)?.name ?? id;
   const upstream = graph.connections.filter(c => c.to === entity.id);
   const downstream = graph.connections.filter(c => c.from === entity.id);
   const statusColor = entity.status === "Producing" ? "#7fae6f" : entity.status === "Inactive" ? "#c86a5a" : "#c8a24a";
   return (
-    <div style={{ width: 340, height: "100%", boxSizing: "border-box", overflowY: "auto", padding: "18px 20px" }}>
+    <div style={{ width: 400, height: "100%", boxSizing: "border-box", overflowY: "auto", padding: "18px 20px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
         <p style={{ fontSize: 8, color: "#666", margin: "0 0 4px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{entity.entity_class} · {entity.entity_subtype}</p>
         <button onClick={onClose} aria-label="Close" style={{ background: "transparent", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.4)", fontSize: 15, lineHeight: 1, padding: 0, marginTop: -2 }}>×</button>
@@ -444,8 +444,109 @@ function EntityPanel({ entity, graph, onClose }: { entity: EntityNode; graph: En
           {downstream.map((c, i) => <div key={i}><span style={{ fontSize: 11, color: warmWhite }}>{nameOf(c.to)}</span><p style={{ fontSize: 8.5, color: c.status === "Verified" ? "#7fae6f" : "#8a7a5a", fontFamily: MONO, margin: "1px 0 6px 0" }}>{c.status} · {c.form}</p></div>)}
         </Sect>
       )}
+
+      {record && <FullRecordView record={record} />}
     </div>
   );
+}
+
+/* full schema-conformant Physical Entity Node record */
+function FullRecordView({ record }: { record: FullEntityRecord }) {
+  const c = record.common, id = record.identity, loc = record.location, ops = record.operations;
+  const coord = loc.coordinates.latitude != null ? `${loc.coordinates.latitude}, ${loc.coordinates.longitude}` : "Unknown";
+  return (
+    <>
+      <div style={{ marginTop: 18, paddingTop: 12, borderTop: "1px solid rgba(200,122,74,0.35)" }}>
+        <p style={{ fontSize: 8, color: accent, margin: "0 0 2px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>Full entity record · Operating Facility schema v1.0</p>
+        <p style={{ fontSize: 9, color: "#6f695f", fontFamily: MONO, margin: 0 }}>{c.physical_entity_id} · record {ops.facility_record_metadata.record_status} · confidence {ops.facility_record_metadata.overall_confidence}</p>
+      </div>
+
+      <Sect label="Identity">
+        <Row label="Type" value={id.facility_type} />
+        <Row label="Status" value={id.facility_level_operational_status} />
+        <Row label="Commissioned" value={id.commissioning_or_operating_start_date} />
+        {id.alternative_names?.length ? <Sub2 label="Also known as" value={id.alternative_names.join(", ")} /> : null}
+      </Sect>
+
+      <Sect label="Location">
+        <Prose>{loc.site_address}</Prose>
+        <Row label="Coordinates" value={coord} />
+      </Sect>
+
+      <Sect label="Group memberships">
+        {c.physical_entity_node_group_memberships.map((g, i) => (
+          <div key={i} style={{ marginBottom: 5 }}>
+            <span style={{ fontSize: 11, color: warmWhite }}>{g.group_name}</span>
+            <span style={{ fontSize: 8.5, color: g.qualification_status === "qualified" ? "#7fae6f" : "#c8a24a", fontFamily: MONO, marginLeft: 6 }}>{g.qualification_status}</span>
+            <p style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, margin: "1px 0 0 0" }}>{g.group_id}</p>
+          </div>
+        ))}
+      </Sect>
+
+      <Sect label="Ownership & operation">
+        {c.owners.map((o, i) => <Row key={"o" + i} label="Owner" value={`${o.organization_name}${o.ownership_percentage != null ? ` (${o.ownership_percentage}%)` : ""}`} />)}
+        {c.operators.map((o, i) => <Row key={"op" + i} label="Operator" value={`${o.organization_name}${o.operator_relationship_type ? ` · ${o.operator_relationship_type}` : ""}`} />)}
+      </Sect>
+
+      <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <p style={{ fontSize: 8, color: "#666", margin: "0 0 4px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>Operations ({ops.operations.length})</p>
+        <Prose>{ops.operating_configuration}</Prose>
+      </div>
+      {ops.operations.map((op, i) => <OperationBlock key={i} op={op} />)}
+
+      <Sect label="Record metadata">
+        <Row label="Record" value={ops.facility_record_metadata.record_status} />
+        <Row label="Confidence" value={ops.facility_record_metadata.overall_confidence} />
+        <Row label="Updated" value={ops.facility_record_metadata.last_updated_date} />
+      </Sect>
+    </>
+  );
+}
+
+function OperationBlock({ op }: { op: FEOperation }) {
+  return (
+    <div style={{ marginTop: 12, padding: "10px 11px", borderRadius: 5, background: "rgb(28,26,24)", border: "1px solid rgb(45,41,39)" }}>
+      <p style={{ fontSize: 11.5, color: warmWhite, margin: 0, fontFamily: SERIF }}>{op.operation_name}</p>
+      <p style={{ fontSize: 8, color: accent, margin: "1px 0 0 0", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>{op.operation_category} · {op.physical_entity_node_group_id} · {op.operational_status}</p>
+      <p style={{ fontSize: 10.5, color: "rgb(172,172,172)", margin: "6px 0 0 0", lineHeight: 1.5 }}>{op.main_physical_function}</p>
+
+      <MicroHead>Inputs</MicroHead>
+      {op.inputs.map((x, i) => (
+        <div key={i} style={{ marginBottom: 4 }}>
+          <span style={{ fontSize: 10, color: "#c9c1b4" }}>{x.input_name}</span>
+          <p style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, margin: "1px 0 0 0" }}>{x.input_role} · {x.actual_input_quantity !== "Not disclosed" ? `${x.actual_input_quantity}` : "qty not disclosed"}{x.source_physical_entity_ids?.filter(s => s !== "Unknown").length ? ` ← ${x.source_physical_entity_ids.filter(s => s !== "Unknown").join(", ")}` : ""}</p>
+        </div>
+      ))}
+
+      <MicroHead>Processes</MicroHead>
+      {op.major_industrial_processes.map((p, i) => (
+        <div key={i} style={{ marginBottom: 4 }}>
+          <span style={{ fontSize: 10, color: "#c9c1b4" }}>{p.process_or_stage_name}</span>
+          <p style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, margin: "1px 0 0 0" }}>{p.actual_process_or_technology_used} → {p.output_form}</p>
+        </div>
+      ))}
+
+      <MicroHead>Outputs</MicroHead>
+      {op.outputs_produced.map((o, i) => (
+        <div key={i} style={{ marginBottom: 4 }}>
+          <span style={{ fontSize: 10, color: "#c9c1b4" }}>{o.output_name}</span>
+          <span style={{ fontSize: 8, color: "#807869", fontFamily: MONO, marginLeft: 5 }}>{o.output_classification}</span>
+          <p style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, margin: "1px 0 0 0" }}>{o.actual_output_quantity !== "Not disclosed" ? o.actual_output_quantity : "qty not disclosed"}</p>
+        </div>
+      ))}
+
+      {op.operation_metrics.actual_throughput !== "Not disclosed" && (
+        <p style={{ fontSize: 8.5, color: "#807869", fontFamily: MONO, margin: "6px 0 0 0" }}>metrics: {op.operation_metrics.actual_throughput} / {op.operation_metrics.total_throughput_capacity} {op.operation_metrics.quantity_unit} · util {op.operation_metrics.capacity_utilization}</p>
+      )}
+    </div>
+  );
+}
+
+function MicroHead({ children }: { children: React.ReactNode }) {
+  return <p style={{ fontSize: 7.5, color: "#6f695f", margin: "8px 0 3px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{children}</p>;
+}
+function Sub2({ label, value }: { label: string; value: string }) {
+  return <div style={{ marginTop: 4 }}><span style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>{label}</span><p style={{ fontSize: 10.5, color: "rgb(172,172,172)", margin: "1px 0 0 0", lineHeight: 1.5 }}>{value}</p></div>;
 }
 
 function Sect({ label, children }: { label: string; children: React.ReactNode }) {
