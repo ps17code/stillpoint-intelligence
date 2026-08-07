@@ -1,0 +1,103 @@
+{
+  "common": {
+    "physical_entity_id": "pe_trail_smelter",
+    "entity_type": "Physical Entity",
+    "entity_subtype": "Operating Facility",
+    "physical_entity_node_group_memberships": [
+      {
+        "group_id": "PEG-OF-GEREF",
+        "group_name": "Germanium Refinery",
+        "qualification_status": "qualified",
+        "qualification_evidence": "Trail Operations is Canada's only producer of germanium and North America's only commercial-scale primary germanium recovery facility, refining germanium-bearing residues into germanium dioxide (and tetrachloride); the only supplier of germanium dioxide to the United States. Sources: https://www.teck.com/news/news-releases/2026/teck,-canada-growth-fund-and-canada-critical-minerals-accelerator-sign-agreement-to-support-strategic-metals-production-at-trail-smelter ; https://payneinstitute.mines.edu/the-north-american-germanium-supply-chain-military-applications-and-civilian-competition/ ; https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-germanium.pdf"
+      },
+      {
+        "group_id": "PEG-OF-ZNSMELT",
+        "group_name": "Zinc Smelter–Refinery",
+        "qualification_status": "qualified",
+        "qualification_evidence": "One of the world's largest fully integrated zinc and lead smelting/refining complexes; electrolytic zinc production (roast-leach-electrowin + direct pressure leaching) and a KIVCET lead smelter, ~295,000 t/yr refined zinc nameplate. Sources: https://www.teck.com/products/zinc/ ; https://www.canadianminingjournal.com/featured-article/green-lead-removes-tarnish/"
+      }
+    ],
+    "owners": [
+      { "organization_entity_id": "Unknown", "organization_name": "Teck Metals Ltd. (subsidiary of Teck Resources Limited)", "ownership_percentage": 100, "ownership_type": "wholly owned subsidiary ownership", "effective_date": "Unknown", "source_or_evidence": "https://www.sec.gov/Archives/edgar/data/886986/000088698625000004/teck-20241231xexx991aif.htm" }
+    ],
+    "operators": [
+      { "organization_entity_id": "Unknown", "organization_name": "Teck Metals Ltd.", "operator_relationship_type": "owner-operator", "effective_date": "Unknown", "source_or_evidence": "https://www.sec.gov/Archives/edgar/data/886986/000088698625000004/teck-20241231xexx991aif.htm" }
+    ]
+  },
+  "identity": {
+    "facility_name": "Teck Trail Operations",
+    "alternative_names": ["Trail Smelter", "Trail Metallurgical Operations", "Teck Cominco smelter", "Cominco Trail smelter", "Trail Operations smelting and refining complex"],
+    "facility_type": "Integrated polymetallic (zinc–lead) smelting and refining complex with germanium recovery/refining",
+    "short_description": "Integrated zinc-lead smelting and refining complex at Trail, British Columbia — one of the world's largest fully integrated polymetallic smelter-refineries. Produces refined zinc, lead and silver plus ~19 products, and is Canada's only germanium producer and North America's only commercial-scale primary germanium recovery/refining operation (germanium dioxide and tetrachloride), recovering germanium as a byproduct of zinc processing, including from germanium-bearing zinc concentrate from Red Dog (Alaska).",
+    "commissioning_or_operating_start_date": "1896 (first furnace; smelter operations continuous since ~1896, expanded and modernized over subsequent decades)",
+    "facility_level_operational_status": "operational"
+  },
+  "location": {
+    "country": "Canada",
+    "region": "British Columbia (Kootenay region, southern BC)",
+    "city": "Trail",
+    "site_address": "Trail, British Columbia, Canada (on the Columbia River, approx. 16 km north of the Canada–United States border)",
+    "coordinates": { "latitude": 49.094444, "longitude": -117.709167 }
+  },
+  "operations": {
+    "operating_configuration": "Single integrated site with multiple interconnected metallurgical operations: an electrolytic zinc plant (roast-leach-electrowin plus direct pressure leaching), a KIVCET lead smelter with slag fuming, and downstream byproduct/specialty-metals recovery circuits (germanium, indium, cadmium, antimony, bismuth, silver, gold). Germanium recovery is metallurgically coupled to and fed by the zinc/lead smelting circuits.",
+    "operations": [
+      {
+        "operation_id": "op_trail_znpb_smelt_refine",
+        "operation_name": "Integrated Zinc–Lead Smelting and Refining",
+        "operation_category": "primary metal smelting and refining",
+        "physical_entity_node_group_id": "PEG-OF-ZNSMELT",
+        "operational_status": "operational",
+        "main_physical_function": "Smelt and refine zinc and lead concentrates (including germanium-bearing Red Dog concentrate) into refined zinc, lead and silver, generating germanium/indium/cadmium-bearing zinc-oxide fume and residues as intermediates for byproduct recovery.",
+        "inputs": [
+          { "input_name": "Germanium-bearing zinc concentrate (Red Dog)", "input_form": "sulphide zinc concentrate", "input_role": "primary feedstock (germanium-bearing)", "nameplate_input_or_throughput_capacity": "Not disclosed", "actual_input_quantity": "Not disclosed at Trail level; Red Dog produced 462,700 t contained zinc in 2025 (mine output, not all delivered to Trail); germanium content not disclosed by Teck.", "quantity_unit": "tonnes contained zinc (mine output basis)", "reporting_period": "2025 (Red Dog mine output)", "source_physical_entity_ids": ["pe_reddog_mine"], "reported_or_estimated": "reported", "source_or_evidence": "https://payneinstitute.mines.edu/the-north-american-germanium-supply-chain-military-applications-and-civilian-competition/" },
+          { "input_name": "Zinc concentrate (third-party and other Teck sources)", "input_form": "sulphide zinc concentrate", "input_role": "primary feedstock", "nameplate_input_or_throughput_capacity": "Not disclosed", "actual_input_quantity": "Not disclosed", "quantity_unit": "tonnes", "reporting_period": "Not applicable", "source_physical_entity_ids": ["Unknown"], "reported_or_estimated": "reported", "source_or_evidence": "https://www.teck.com/products/zinc/" },
+          { "input_name": "Lead concentrate and recycled/secondary lead materials", "input_form": "sulphide lead concentrate / secondary lead-bearing materials", "input_role": "feedstock", "nameplate_input_or_throughput_capacity": "Not disclosed", "actual_input_quantity": "Not disclosed", "quantity_unit": "tonnes", "reporting_period": "Not applicable", "source_physical_entity_ids": ["Unknown"], "reported_or_estimated": "reported", "source_or_evidence": "https://www.canadianminingjournal.com/featured-article/green-lead-removes-tarnish/" }
+        ],
+        "major_industrial_processes": [
+          { "process_or_stage_name": "Electrolytic zinc production (roast-leach-electrowin + direct pressure leach)", "input_form": "sulphide zinc concentrate", "transformation_function": "Convert zinc concentrate to refined zinc metal, mobilizing germanium/indium/cadmium into residues and solution for downstream recovery", "actual_process_or_technology_used": "Fluid-bed roasting, atmospheric and direct pressure leaching, solution purification, and electrowinning", "major_process_steps": ["Roasting of concentrate to calcine", "Direct pressure leaching of concentrate", "Leaching/solution purification", "Zinc electrowinning", "Casting of refined zinc slab/jumbo and alloys"], "output_form": "refined zinc metal (slab/jumbo, alloys); leach residues", "process_status": "operational", "source_or_evidence": "https://www.woodmac.com/reports/metals-trail-zinc-smelter-16021815/" },
+          { "process_or_stage_name": "KIVCET lead smelting and slag fuming", "input_form": "lead concentrate, flux, coke, internal recycles", "transformation_function": "Smelt lead-bearing feed to lead bullion and fume off zinc/germanium/indium/cadmium-bearing oxide fume from slag", "actual_process_or_technology_used": "KIVCET (oxygen flash cyclone electrothermal) single-stage flash smelting furnace followed by slag fuming furnace", "major_process_steps": ["Dry feed preparation", "KIVCET flash smelting to lead bullion", "Slag fuming to produce zinc-oxide fume", "Lead refining and silver/precious-metal recovery"], "output_form": "refined lead, silver; zinc-oxide fume (Ge/In/Cd-bearing)", "process_status": "operational", "source_or_evidence": "https://www.canadianminingjournal.com/featured-article/green-lead-removes-tarnish/" }
+        ],
+        "outputs_produced": [
+          { "output_name": "Refined zinc (slab, jumbo, alloys)", "output_form": "refined zinc metal", "output_classification": "primary product", "nameplate_output_capacity": "~295,000–300,000 t/yr", "actual_output_quantity": "256,000 tonnes (2024); guidance 190,000–230,000 tonnes for 2025 and 2026", "quantity_unit": "tonnes/year", "reporting_period": "2024 actual; 2025–2026 guidance", "destination_physical_entity_ids": ["Unknown"], "reported_or_estimated": "reported", "source_or_evidence": "https://www.teck.com/products/zinc/ ; https://www.teck.com/news/news-releases/2025/teck-announces-2024-production-and-2025-guidance-update" },
+          { "output_name": "Refined lead", "output_form": "refined lead metal", "output_classification": "primary product", "nameplate_output_capacity": "Not disclosed", "actual_output_quantity": "61,100 tonnes (2024); 65,900 tonnes (2023)", "quantity_unit": "tonnes/year", "reporting_period": "2024 actual", "destination_physical_entity_ids": ["Unknown"], "reported_or_estimated": "reported", "source_or_evidence": "https://www.teck.com/media/Teck-2024-Management-Discussion-and-Analysis.pdf" },
+          { "output_name": "Refined silver", "output_form": "refined silver metal", "output_classification": "co-product", "nameplate_output_capacity": "Not disclosed", "actual_output_quantity": "8.6 million ounces (2024); 10.6 million ounces (2023)", "quantity_unit": "troy ounces/year", "reporting_period": "2024 actual", "destination_physical_entity_ids": ["Unknown"], "reported_or_estimated": "reported", "source_or_evidence": "https://www.teck.com/media/Teck-2024-Management-Discussion-and-Analysis.pdf" },
+          { "output_name": "Germanium/indium/cadmium-bearing zinc-oxide fume and leach residues", "output_form": "zinc-oxide fume; leach residues (germanium-bearing intermediate)", "output_classification": "intermediate product", "nameplate_output_capacity": "Not disclosed", "actual_output_quantity": "Not disclosed", "quantity_unit": "tonnes", "reporting_period": "Not applicable", "destination_physical_entity_ids": ["pe_trail_smelter"], "reported_or_estimated": "reported", "source_or_evidence": "https://propertyfile.gov.bc.ca/reports/PF888921.pdf" }
+        ],
+        "operation_metrics": { "total_throughput_capacity": "~295,000–300,000 (refined zinc); lead capacity not disclosed", "actual_throughput": "256,000 (refined zinc, 2024)", "capacity_utilization": "~85% of ~300,000 t nameplate in 2024; reduced to ~63–77% under 2025–2026 guidance (190,000–230,000 t)", "quantity_unit": "tonnes/year refined zinc", "quantity_basis": "refined metal output, annual" },
+        "reported_or_estimated": "reported",
+        "estimation_method": "Not applicable — figures from Teck disclosures; utilization ratios derived from reported output vs. nameplate",
+        "confidence": "high",
+        "effective_date": "2026-08-07",
+        "source_or_evidence": ["https://www.teck.com/products/zinc/", "https://www.teck.com/media/Teck-2024-Management-Discussion-and-Analysis.pdf", "https://www.teck.com/news/news-releases/2025/teck-announces-2024-production-and-2025-guidance-update"]
+      },
+      {
+        "operation_id": "op_trail_germanium_recovery_refine",
+        "operation_name": "Germanium Recovery and Refining",
+        "operation_category": "byproduct/specialty metal recovery and refining",
+        "physical_entity_node_group_id": "PEG-OF-GEREF",
+        "operational_status": "operational",
+        "main_physical_function": "Recover germanium from zinc-oxide fume and leach intermediates generated by the zinc/lead smelting circuits and refine it into germanium dioxide and germanium tetrachloride products.",
+        "inputs": [
+          { "input_name": "Germanium-bearing zinc-oxide fume / leach intermediate", "input_form": "zinc-oxide fume; oxide-leach solution/residue (germanium-bearing)", "input_role": "germanium-bearing feedstock (internal intermediate)", "nameplate_input_or_throughput_capacity": "Not disclosed", "actual_input_quantity": "Not disclosed", "quantity_unit": "tonnes", "reporting_period": "Not applicable", "source_physical_entity_ids": ["pe_trail_smelter", "pe_reddog_mine"], "reported_or_estimated": "reported", "source_or_evidence": "https://pubs.usgs.gov/myb/vol1/2019/myb1-2019-germanium.pdf" }
+        ],
+        "major_industrial_processes": [
+          { "process_or_stage_name": "Germanium recovery from zinc-oxide fume", "input_form": "zinc-oxide fume (Ge/In/Cd-bearing)", "transformation_function": "Leach fume and selectively precipitate/concentrate germanium into a germanium-rich intermediate", "actual_process_or_technology_used": "Sodium-carbonate leaching to remove chlorine/fluorine; ferric hydroxide precipitation in neutral pachucas to precipitate germanium (with As and Sb); further purification", "major_process_steps": ["Sodium-carbonate leach of zinc-oxide fume", "Ferric hydroxide precipitation of germanium", "Purification/concentration of germanium intermediate"], "output_form": "germanium-rich intermediate", "process_status": "operational", "source_or_evidence": "https://propertyfile.gov.bc.ca/reports/PF888921.pdf" },
+          { "process_or_stage_name": "Germanium refining to dioxide and tetrachloride", "input_form": "germanium-rich intermediate", "transformation_function": "Refine and convert germanium intermediate into marketable germanium products", "actual_process_or_technology_used": "Chlorination/distillation and hydrolysis to germanium tetrachloride and germanium dioxide (industry-standard germanium refining; specific Trail flowsheet not fully disclosed)", "major_process_steps": ["Chlorination/distillation to germanium tetrachloride", "Hydrolysis/purification to germanium dioxide", "Product finishing and packaging"], "output_form": "germanium dioxide (GeO₂); germanium tetrachloride (GeCl₄)", "process_status": "operational", "source_or_evidence": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-germanium.pdf" }
+        ],
+        "outputs_produced": [
+          { "output_name": "Germanium products (germanium dioxide and germanium tetrachloride)", "output_form": "germanium dioxide (GeO₂); germanium tetrachloride (GeCl₄)", "output_classification": "recovered material", "nameplate_output_capacity": "Not disclosed; announced expansion (Trail Strategic Metals Initiative) could double existing germanium production capacity, subject to definitive agreements (announced July 7, 2026)", "actual_output_quantity": "Not disclosed by Teck (germanium content of concentrate and Trail's germanium output are proprietary). Context: global primary germanium production ~130 t/yr (USGS); Trail is North America's only commercial-scale primary producer and only supplier of germanium dioxide to the US.", "quantity_unit": "tonnes/year (contained germanium)", "reporting_period": "Not applicable (current); expansion timeline not established", "destination_physical_entity_ids": ["Unknown"], "reported_or_estimated": "reported (qualitative); specific tonnage not disclosed", "source_or_evidence": "https://www.teck.com/news/news-releases/2026/teck,-canada-growth-fund-and-canada-critical-minerals-accelerator-sign-agreement-to-support-strategic-metals-production-at-trail-smelter ; https://payneinstitute.mines.edu/the-north-american-germanium-supply-chain-military-applications-and-civilian-competition/ ; https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-germanium.pdf" },
+          { "output_name": "Antimony products", "output_form": "antimony (refined/compound)", "output_classification": "co-product", "nameplate_output_capacity": "Not disclosed; announced expansion could double antimony production capacity (July 7, 2026)", "actual_output_quantity": "Not disclosed", "quantity_unit": "tonnes/year", "reporting_period": "Not applicable", "destination_physical_entity_ids": ["Unknown"], "reported_or_estimated": "reported (qualitative)", "source_or_evidence": "https://magazine.cim.org/en/news/2026/teck-to-double-germanium-and-antimony-production-at-trail-smelter-complex-en/" },
+          { "output_name": "Indium and cadmium (specialty byproduct metals)", "output_form": "refined indium; refined cadmium", "output_classification": "by-product", "nameplate_output_capacity": "Not disclosed", "actual_output_quantity": "Not disclosed", "quantity_unit": "tonnes/year", "reporting_period": "Not applicable", "destination_physical_entity_ids": ["Unknown"], "reported_or_estimated": "reported (qualitative)", "source_or_evidence": "https://www.titanminingcorp.com/news/news-releases/titan-mining-enters-into-cooperation-agreement-with-tecks-trail-operations-to-evaluate-germanium-recovery-from-existing-mine-waste-streams" }
+        ],
+        "operation_metrics": { "total_throughput_capacity": "Not disclosed", "actual_throughput": "Not disclosed", "capacity_utilization": "Unknown", "quantity_unit": "tonnes/year (contained germanium)", "quantity_basis": "contained germanium in refined germanium products, annual" },
+        "reported_or_estimated": "reported (qualitative); quantitative germanium output not disclosed",
+        "estimation_method": "Not applicable — Teck does not publicly disclose Trail germanium tonnage; multiple sources (Payne Institute, USGS) confirm the figure is proprietary. Commonly cited industry estimates of ~8–10 t/yr are not from a verifiable primary source and are therefore not asserted here.",
+        "confidence": "medium",
+        "effective_date": "2026-08-07",
+        "source_or_evidence": ["https://www.teck.com/news/news-releases/2026/teck,-canada-growth-fund-and-canada-critical-minerals-accelerator-sign-agreement-to-support-strategic-metals-production-at-trail-smelter", "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-germanium.pdf", "https://propertyfile.gov.bc.ca/reports/PF888921.pdf", "https://payneinstitute.mines.edu/the-north-american-germanium-supply-chain-military-applications-and-civilian-competition/"]
+      }
+    ],
+    "facility_record_metadata": { "record_status": "active", "overall_confidence": "medium-high", "created_date": "2026-08-08", "last_updated_date": "2026-08-08" }
+  }
+}
