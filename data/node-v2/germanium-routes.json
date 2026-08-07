@@ -10,8 +10,9 @@
       "name": "Sphalerite Zinc Deposit",
       "entity_class": "Resource Site",
       "entity_type": "Mineral deposit",
-      "definition": "A zinc sulfide ore body where germanium substitutes into the sphalerite lattice as a trace element.",
+      "definition": "A zinc sulfide ore body where germanium substitutes into the sphalerite lattice as a trace byproduct element.",
       "main_function": "Hosts germanium-bearing sphalerite zinc ore.",
+      "occurrence_mode": "byproduct/companion-hosted deposit",
       "typical_inputs": [],
       "typical_outputs": [
         "Ge-bearing sphalerite ore"
@@ -22,11 +23,38 @@
       "name": "Germanium Coal Deposit",
       "entity_class": "Resource Site",
       "entity_type": "Coal / lignite deposit",
-      "definition": "A coal (especially lignite) deposit in which germanium is organically bound and enriched above a recoverable cutoff grade.",
+      "definition": "A coal (especially lignite) deposit in which germanium is organically bound above a recoverable cutoff grade.",
       "main_function": "Hosts germanium-bearing lignite.",
+      "occurrence_mode": "byproduct/companion-hosted deposit",
       "typical_inputs": [],
       "typical_outputs": [
         "Ge-bearing lignite"
+      ]
+    },
+    "PEG-RS-SLAG": {
+      "group_id": "PEG-RS-SLAG",
+      "name": "Metallurgical Slag / Tailings Accumulation",
+      "entity_class": "Resource Site",
+      "entity_type": "Secondary residue accumulation",
+      "definition": "A man-made accumulation of germanium-bearing metallurgical slag, tailings or smelter residue held as an original starting source for secondary germanium recovery.",
+      "main_function": "Accumulates germanium-bearing metallurgical slag / tailings.",
+      "occurrence_mode": "secondary man-made accumulation",
+      "typical_inputs": [],
+      "typical_outputs": [
+        "germanium-bearing metallurgical slag / tailings"
+      ]
+    },
+    "PEG-RS-GE-OXIDE": {
+      "group_id": "PEG-RS-GE-OXIDE",
+      "name": "Oxide Germanium-Gallium Deposit",
+      "entity_class": "Resource Site",
+      "entity_type": "Mineral deposit",
+      "definition": "An oxide-hosted deposit mined directly for germanium and gallium as principal products (rather than as a zinc/coal byproduct).",
+      "main_function": "Hosts germanium-gallium oxide ore mined primarily for Ge/Ga.",
+      "occurrence_mode": "primary deposit",
+      "typical_inputs": [],
+      "typical_outputs": [
+        "germanium-gallium oxide ore"
       ]
     },
     "PEG-RS-GESCRAP": {
@@ -36,6 +64,7 @@
       "entity_type": "Secondary / scrap accumulation",
       "definition": "An accumulation of end-of-life germanium products and production scrap holding recoverable germanium.",
       "main_function": "Accumulates germanium-bearing end-of-life materials and scrap.",
+      "occurrence_mode": "end-of-life / recycled accumulation",
       "typical_inputs": [],
       "typical_outputs": [
         "Ge-bearing end-of-life products & scrap"
@@ -83,18 +112,18 @@
         "Ge-bearing lignite"
       ]
     },
-    "PEG-IA-POWER": {
-      "group_id": "PEG-IA-POWER",
-      "name": "Coal-Fired Power Plant",
-      "entity_class": "Infrastructure Asset",
-      "entity_type": "Power plant",
-      "definition": "A power-generation asset that combusts germanium-rich lignite, concentrating germanium into the resulting fly ash.",
-      "main_function": "Combusts Ge-lignite for power and concentrates Ge into fly ash.",
+    "PEG-OF-GEGAMINE": {
+      "group_id": "PEG-OF-GEGAMINE",
+      "name": "Germanium-Gallium Mine",
+      "entity_class": "Operating Facility",
+      "entity_type": "Mine-concentrator",
+      "definition": "An operating facility that mines and concentrates oxide germanium-gallium ore directly into a germanium-gallium concentrate.",
+      "main_function": "Mines and concentrates oxide Ge-Ga ore into Ge-Ga concentrate.",
       "typical_inputs": [
-        "Ge-bearing lignite"
+        "germanium-gallium oxide ore"
       ],
       "typical_outputs": [
-        "Ge-enriched fly ash"
+        "germanium-gallium concentrate"
       ]
     },
     "PEG-OF-SCRAP": {
@@ -116,11 +145,12 @@
       "name": "Germanium Recovery Operator",
       "entity_class": "Operating Facility",
       "entity_type": "Hydrometallurgical recovery plant",
-      "definition": "An operating facility that leaches and concentrates germanium from residues, fly ash, or recyclable feed into a crude germanium concentrate.",
+      "definition": "An operating facility that leaches and concentrates germanium from residues, fly ash, slag, or recyclable feed into a crude germanium concentrate.",
       "main_function": "Recovers and concentrates germanium into a crude concentrate.",
       "typical_inputs": [
         "Ge-bearing residue / flue dust",
         "Ge-enriched fly ash",
+        "germanium-bearing metallurgical slag / tailings",
         "Ge-bearing recyclable feed"
       ],
       "typical_outputs": [
@@ -132,15 +162,30 @@
       "name": "Germanium Refinery",
       "entity_class": "Operating Facility",
       "entity_type": "Chemical refinery",
-      "definition": "An operating facility that refines crude germanium concentrate via chlorination, distillation, hydrolysis, reduction and zone-refining into marketable germanium output forms.",
-      "main_function": "Refines crude Ge concentrate into GeCl₄, GeO₂ and germanium metal.",
+      "definition": "An operating facility that refines crude germanium concentrate (or Ge-Ga concentrate) via chlorination, distillation, hydrolysis, reduction and zone-refining into marketable germanium output forms.",
+      "main_function": "Refines germanium concentrate into GeCl₄, GeO₂ and germanium metal.",
       "typical_inputs": [
-        "crude germanium concentrate"
+        "crude germanium concentrate",
+        "germanium-gallium concentrate"
       ],
       "typical_outputs": [
         "high-purity germanium metal",
         "germanium dioxide (GeO₂)",
         "germanium tetrachloride (GeCl₄)"
+      ]
+    },
+    "PEG-IA-POWER": {
+      "group_id": "PEG-IA-POWER",
+      "name": "Coal-Fired Power Plant",
+      "entity_class": "Infrastructure Asset",
+      "entity_type": "Power plant",
+      "definition": "A power-generation asset that combusts germanium-rich lignite, concentrating germanium into the resulting fly ash.",
+      "main_function": "Combusts Ge-lignite for power and concentrates Ge into fly ash.",
+      "typical_inputs": [
+        "Ge-bearing lignite"
+      ],
+      "typical_outputs": [
+        "Ge-enriched fly ash"
       ]
     }
   },
@@ -728,6 +773,387 @@
       ]
     },
     {
+      "route_id": "RT-SL-MET",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-SLAG",
+        "starting_form": "germanium-bearing metallurgical slag / tailings"
+      },
+      "ending_output_form": "high-purity germanium metal",
+      "route_participation_ids": [
+        "RP-SL-MET-1",
+        "RP-SL-MET-2",
+        "RP-SL-MET-3"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-SL-MET-1",
+          "route_id": "RT-SL-MET",
+          "seq": 1,
+          "group_id": "PEG-RS-SLAG",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "germanium-bearing metallurgical slag / tailings",
+          "prev_rp": null,
+          "next_rp": "RP-SL-MET-2"
+        },
+        {
+          "rp_id": "RP-SL-MET-2",
+          "route_id": "RT-SL-MET",
+          "seq": 2,
+          "group_id": "PEG-OF-GEREC",
+          "input_form": "germanium-bearing metallurgical slag / tailings",
+          "functional_stage": "Germanium recovery (slag hydrometallurgy)",
+          "literal_steps": [
+            "mill/agitate",
+            "acid leach",
+            "solvent-extraction / precipitation",
+            "concentrate"
+          ],
+          "output_form": "crude germanium concentrate",
+          "prev_rp": "RP-SL-MET-1",
+          "next_rp": "RP-SL-MET-3"
+        },
+        {
+          "rp_id": "RP-SL-MET-3",
+          "route_id": "RT-SL-MET",
+          "seq": 3,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "crude germanium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "high-purity germanium metal",
+          "prev_rp": "RP-SL-MET-2",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-SL-GEO2",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-SLAG",
+        "starting_form": "germanium-bearing metallurgical slag / tailings"
+      },
+      "ending_output_form": "germanium dioxide (GeO₂)",
+      "route_participation_ids": [
+        "RP-SL-GEO2-1",
+        "RP-SL-GEO2-2",
+        "RP-SL-GEO2-3"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-SL-GEO2-1",
+          "route_id": "RT-SL-GEO2",
+          "seq": 1,
+          "group_id": "PEG-RS-SLAG",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "germanium-bearing metallurgical slag / tailings",
+          "prev_rp": null,
+          "next_rp": "RP-SL-GEO2-2"
+        },
+        {
+          "rp_id": "RP-SL-GEO2-2",
+          "route_id": "RT-SL-GEO2",
+          "seq": 2,
+          "group_id": "PEG-OF-GEREC",
+          "input_form": "germanium-bearing metallurgical slag / tailings",
+          "functional_stage": "Germanium recovery (slag hydrometallurgy)",
+          "literal_steps": [
+            "mill/agitate",
+            "acid leach",
+            "solvent-extraction / precipitation",
+            "concentrate"
+          ],
+          "output_form": "crude germanium concentrate",
+          "prev_rp": "RP-SL-GEO2-1",
+          "next_rp": "RP-SL-GEO2-3"
+        },
+        {
+          "rp_id": "RP-SL-GEO2-3",
+          "route_id": "RT-SL-GEO2",
+          "seq": 3,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "crude germanium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "germanium dioxide (GeO₂)",
+          "prev_rp": "RP-SL-GEO2-2",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-SL-GECL4",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-SLAG",
+        "starting_form": "germanium-bearing metallurgical slag / tailings"
+      },
+      "ending_output_form": "germanium tetrachloride (GeCl₄)",
+      "route_participation_ids": [
+        "RP-SL-GECL4-1",
+        "RP-SL-GECL4-2",
+        "RP-SL-GECL4-3"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-SL-GECL4-1",
+          "route_id": "RT-SL-GECL4",
+          "seq": 1,
+          "group_id": "PEG-RS-SLAG",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "germanium-bearing metallurgical slag / tailings",
+          "prev_rp": null,
+          "next_rp": "RP-SL-GECL4-2"
+        },
+        {
+          "rp_id": "RP-SL-GECL4-2",
+          "route_id": "RT-SL-GECL4",
+          "seq": 2,
+          "group_id": "PEG-OF-GEREC",
+          "input_form": "germanium-bearing metallurgical slag / tailings",
+          "functional_stage": "Germanium recovery (slag hydrometallurgy)",
+          "literal_steps": [
+            "mill/agitate",
+            "acid leach",
+            "solvent-extraction / precipitation",
+            "concentrate"
+          ],
+          "output_form": "crude germanium concentrate",
+          "prev_rp": "RP-SL-GECL4-1",
+          "next_rp": "RP-SL-GECL4-3"
+        },
+        {
+          "rp_id": "RP-SL-GECL4-3",
+          "route_id": "RT-SL-GECL4",
+          "seq": 3,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "crude germanium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "germanium tetrachloride (GeCl₄)",
+          "prev_rp": "RP-SL-GECL4-2",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-OX-MET",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-GE-OXIDE",
+        "starting_form": "germanium-gallium oxide ore"
+      },
+      "ending_output_form": "high-purity germanium metal",
+      "route_participation_ids": [
+        "RP-OX-MET-1",
+        "RP-OX-MET-2",
+        "RP-OX-MET-3"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-OX-MET-1",
+          "route_id": "RT-OX-MET",
+          "seq": 1,
+          "group_id": "PEG-RS-GE-OXIDE",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "germanium-gallium oxide ore",
+          "prev_rp": null,
+          "next_rp": "RP-OX-MET-2"
+        },
+        {
+          "rp_id": "RP-OX-MET-2",
+          "route_id": "RT-OX-MET",
+          "seq": 2,
+          "group_id": "PEG-OF-GEGAMINE",
+          "input_form": "germanium-gallium oxide ore",
+          "functional_stage": "Ge-Ga mining & concentration",
+          "literal_steps": [
+            "mine",
+            "crush",
+            "leach / concentrate Ge-Ga"
+          ],
+          "output_form": "germanium-gallium concentrate",
+          "prev_rp": "RP-OX-MET-1",
+          "next_rp": "RP-OX-MET-3"
+        },
+        {
+          "rp_id": "RP-OX-MET-3",
+          "route_id": "RT-OX-MET",
+          "seq": 3,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "germanium-gallium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "high-purity germanium metal",
+          "prev_rp": "RP-OX-MET-2",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-OX-GEO2",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-GE-OXIDE",
+        "starting_form": "germanium-gallium oxide ore"
+      },
+      "ending_output_form": "germanium dioxide (GeO₂)",
+      "route_participation_ids": [
+        "RP-OX-GEO2-1",
+        "RP-OX-GEO2-2",
+        "RP-OX-GEO2-3"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-OX-GEO2-1",
+          "route_id": "RT-OX-GEO2",
+          "seq": 1,
+          "group_id": "PEG-RS-GE-OXIDE",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "germanium-gallium oxide ore",
+          "prev_rp": null,
+          "next_rp": "RP-OX-GEO2-2"
+        },
+        {
+          "rp_id": "RP-OX-GEO2-2",
+          "route_id": "RT-OX-GEO2",
+          "seq": 2,
+          "group_id": "PEG-OF-GEGAMINE",
+          "input_form": "germanium-gallium oxide ore",
+          "functional_stage": "Ge-Ga mining & concentration",
+          "literal_steps": [
+            "mine",
+            "crush",
+            "leach / concentrate Ge-Ga"
+          ],
+          "output_form": "germanium-gallium concentrate",
+          "prev_rp": "RP-OX-GEO2-1",
+          "next_rp": "RP-OX-GEO2-3"
+        },
+        {
+          "rp_id": "RP-OX-GEO2-3",
+          "route_id": "RT-OX-GEO2",
+          "seq": 3,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "germanium-gallium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "germanium dioxide (GeO₂)",
+          "prev_rp": "RP-OX-GEO2-2",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-OX-GECL4",
+      "node_object": "class_node_000001",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-GE-OXIDE",
+        "starting_form": "germanium-gallium oxide ore"
+      },
+      "ending_output_form": "germanium tetrachloride (GeCl₄)",
+      "route_participation_ids": [
+        "RP-OX-GECL4-1",
+        "RP-OX-GECL4-2",
+        "RP-OX-GECL4-3"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-OX-GECL4-1",
+          "route_id": "RT-OX-GECL4",
+          "seq": 1,
+          "group_id": "PEG-RS-GE-OXIDE",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "germanium-gallium oxide ore",
+          "prev_rp": null,
+          "next_rp": "RP-OX-GECL4-2"
+        },
+        {
+          "rp_id": "RP-OX-GECL4-2",
+          "route_id": "RT-OX-GECL4",
+          "seq": 2,
+          "group_id": "PEG-OF-GEGAMINE",
+          "input_form": "germanium-gallium oxide ore",
+          "functional_stage": "Ge-Ga mining & concentration",
+          "literal_steps": [
+            "mine",
+            "crush",
+            "leach / concentrate Ge-Ga"
+          ],
+          "output_form": "germanium-gallium concentrate",
+          "prev_rp": "RP-OX-GECL4-1",
+          "next_rp": "RP-OX-GECL4-3"
+        },
+        {
+          "rp_id": "RP-OX-GECL4-3",
+          "route_id": "RT-OX-GECL4",
+          "seq": 3,
+          "group_id": "PEG-OF-GEREF",
+          "input_form": "germanium-gallium concentrate",
+          "functional_stage": "Germanium refining",
+          "literal_steps": [
+            "chlorination",
+            "fractional distillation",
+            "hydrolysis",
+            "hydrogen reduction",
+            "zone refining"
+          ],
+          "output_form": "germanium tetrachloride (GeCl₄)",
+          "prev_rp": "RP-OX-GECL4-2",
+          "next_rp": null
+        }
+      ]
+    },
+    {
       "route_id": "RT-RC-MET",
       "node_object": "class_node_000001",
       "status": "structured",
@@ -780,7 +1206,7 @@
           "input_form": "Ge-bearing recyclable feed",
           "functional_stage": "Germanium recovery",
           "literal_steps": [
-            "leach",
+            "dissolve / leach",
             "solvent-extraction / precipitation",
             "concentrate"
           ],
@@ -861,7 +1287,7 @@
           "input_form": "Ge-bearing recyclable feed",
           "functional_stage": "Germanium recovery",
           "literal_steps": [
-            "leach",
+            "dissolve / leach",
             "solvent-extraction / precipitation",
             "concentrate"
           ],
@@ -942,7 +1368,7 @@
           "input_form": "Ge-bearing recyclable feed",
           "functional_stage": "Germanium recovery",
           "literal_steps": [
-            "leach",
+            "dissolve / leach",
             "solvent-extraction / precipitation",
             "concentrate"
           ],
