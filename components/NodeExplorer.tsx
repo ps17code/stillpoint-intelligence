@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, type LoadedNode } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, type LoadedNode, type EntityNode, type EntityGraph } from "@/lib/explorerRegistry";
 
 type CollapsedDetail = {
   id: string; group_id: string; group_name: string; entity_class: string; entity_type: string;
@@ -146,7 +146,7 @@ function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap
   );
 }
 
-type View = "empty" | "class" | "supply";
+type View = "empty" | "class" | "supply" | "entity";
 
 export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const [view, setView] = useState<View>("empty");
@@ -245,11 +245,30 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     return supplyView.detail[selId] ?? null;
   }, [view, supplyView, selId]);
 
-  const headerKicker = view === "empty" ? "Node Explorer" : view === "class" ? "Node Explorer · Class Graph" : "Node Explorer · Supply Chain Graph";
-  const headerTitle = view === "empty" ? "Search a node" : view === "class" ? `${loaded?.name}` : `${loaded?.name} — Supply Chain`;
-  const backLabel = view === "supply" ? "Class graph" : view === "class" ? "Clear" : "Back";
+  // ── entity graph view (real-world physical entities) ──
+  const entityView = useMemo(() => {
+    if (!loaded) return null;
+    const eg = loaded.entityGraph;
+    const byCol: Record<string, Card[]> = {};
+    for (const e of eg.entities) {
+      (byCol[e.column] ??= []).push({ id: e.id, title: e.name, sub: e.country, clickable: true, muted: e.status === "Inactive" });
+    }
+    const columns: Column[] = eg.columns.map(c => ({ label: c.label, items: byCol[c.key] ?? [] }));
+    const edges: Edge[] = eg.connections.map(c => ({ from: c.from, to: c.to }));
+    return { columns, edges };
+  }, [loaded]);
+
+  const selectedEntity: EntityNode | null = useMemo(() => {
+    if (view !== "entity" || !loaded || !selId) return null;
+    return loaded.entityGraph.entities.find(e => e.id === selId) ?? null;
+  }, [view, loaded, selId]);
+
+  const headerKicker = view === "empty" ? "Node Explorer" : view === "class" ? "Node Explorer · Class Graph" : view === "supply" ? "Node Explorer · Supply Chain Graph" : "Node Explorer · Entity Graph";
+  const headerTitle = view === "empty" ? "Search a node" : view === "class" ? `${loaded?.name}` : view === "supply" ? `${loaded?.name} — Supply Chain` : `${loaded?.name} — Entities`;
+  const backLabel = view === "entity" ? "Supply chain graph" : view === "supply" ? "Class graph" : view === "class" ? "Clear" : "Back";
   const onBackClick = () => {
-    if (view === "supply") { setView("class"); setSelId(null); }
+    if (view === "entity") { setView("supply"); setSelId(null); }
+    else if (view === "supply") { setView("class"); setSelId(null); }
     else if (view === "class") { setView("empty"); setLoaded(null); setSelId(null); }
     else onBack();
   };
@@ -281,29 +300,53 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
 
       {/* Body */}
       <div style={{ flex: 1, minHeight: 0, display: "flex" }}>
-        <div
-          onClick={view === "supply" ? () => setSelId(null) : undefined}
-          style={{ flex: 1, minWidth: 0, overflowY: "auto", overflowX: "auto", padding: "16px 24px 24px" }}
-        >
-          {view === "empty" && (
-            <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10 }}>
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5"><circle cx="7" cy="7" r="3" /><circle cx="17" cy="17" r="3" /><path d="M10 7h4a3 3 0 0 1 3 3v4" /></svg>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", margin: 0, fontFamily: SERIF }}>Search for a node in the terminal below</p>
-              <p style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", margin: 0, fontFamily: MONO }}>available: {AVAILABLE_NODES.join(", ")}</p>
-            </div>
-          )}
-          {view === "class" && classView && (
-            <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { if (id === classView.rootId) { setView("supply"); setSelId(null); } }} />
-          )}
-          {view === "supply" && supplyView && (
-            <TreeCanvas columns={supplyView.columns} edges={supplyView.edges} onCardClick={(id) => setSelId(id)} selected={selId} fill gap={30} />
+        <div style={{ flex: 1, minWidth: 0, position: "relative" }}>
+          <div
+            onClick={view === "supply" || view === "entity" ? () => setSelId(null) : undefined}
+            style={{ position: "absolute", inset: 0, overflowY: "auto", overflowX: "auto", padding: "16px 24px 24px" }}
+          >
+            {view === "empty" && (
+              <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10 }}>
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5"><circle cx="7" cy="7" r="3" /><circle cx="17" cy="17" r="3" /><path d="M10 7h4a3 3 0 0 1 3 3v4" /></svg>
+                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", margin: 0, fontFamily: SERIF }}>Search for a node in the terminal below</p>
+                <p style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", margin: 0, fontFamily: MONO }}>available: {AVAILABLE_NODES.join(", ")}</p>
+              </div>
+            )}
+            {view === "class" && classView && (
+              <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { if (id === classView.rootId) { setView("supply"); setSelId(null); } }} />
+            )}
+            {view === "supply" && supplyView && (
+              <TreeCanvas columns={supplyView.columns} edges={supplyView.edges} onCardClick={(id) => setSelId(id)} selected={selId} fill gap={30} />
+            )}
+            {view === "entity" && entityView && (
+              <TreeCanvas columns={entityView.columns} edges={entityView.edges} onCardClick={(id) => setSelId(id)} selected={selId} fill gap={30} />
+            )}
+          </div>
+
+          {/* Explore Entity Graph — bottom corner of the supply chain graph view */}
+          {view === "supply" && (
+            <button
+              onClick={() => { setView("entity"); setSelId(null); }}
+              style={{ position: "absolute", bottom: 16, right: 16, zIndex: 6, display: "flex", alignItems: "center", gap: 7, background: "rgba(200,122,74,0.14)", border: `1px solid ${accent}`, borderRadius: 7, padding: "8px 13px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 11, backdropFilter: "blur(2px)" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.24)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,122,74,0.14)"; }}
+            >
+              Explore Entity Graph
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+            </button>
           )}
         </div>
 
-        {/* on-demand panel: collapsed by default, expands in on node click; graph reflows to fit */}
+        {/* on-demand panel: supply group detail */}
         {view === "supply" && (
           <div style={{ flexBasis: selectedDetail ? 340 : 0, flexGrow: 0, flexShrink: 0, width: selectedDetail ? 340 : 0, transition: "flex-basis 0.24s ease, width 0.24s ease", overflow: "hidden", borderLeft: selectedDetail ? "1px solid rgba(255,255,255,0.06)" : "none", background: "rgb(20,20,20)" }}>
             {selectedDetail && <SupplyPanel detail={selectedDetail} onClose={() => setSelId(null)} />}
+          </div>
+        )}
+        {/* on-demand panel: entity detail */}
+        {view === "entity" && (
+          <div style={{ flexBasis: selectedEntity ? 340 : 0, flexGrow: 0, flexShrink: 0, width: selectedEntity ? 340 : 0, transition: "flex-basis 0.24s ease, width 0.24s ease", overflow: "hidden", borderLeft: selectedEntity ? "1px solid rgba(255,255,255,0.06)" : "none", background: "rgb(20,20,20)" }}>
+            {selectedEntity && <EntityPanel entity={selectedEntity} graph={loaded!.entityGraph} onClose={() => setSelId(null)} />}
           </div>
         )}
       </div>
@@ -363,6 +406,44 @@ function SupplyPanel({ detail, onClose }: { detail: CollapsedDetail; onClose: ()
             </p>
           )}
       </>
+    </div>
+  );
+}
+
+/* right panel for a selected real-world entity */
+function EntityPanel({ entity, graph, onClose }: { entity: EntityNode; graph: EntityGraph; onClose: () => void }) {
+  const nameOf = (id: string) => graph.entities.find(e => e.id === id)?.name ?? id;
+  const upstream = graph.connections.filter(c => c.to === entity.id);
+  const downstream = graph.connections.filter(c => c.from === entity.id);
+  const statusColor = entity.status === "Producing" ? "#7fae6f" : entity.status === "Inactive" ? "#c86a5a" : "#c8a24a";
+  return (
+    <div style={{ width: 340, height: "100%", boxSizing: "border-box", overflowY: "auto", padding: "18px 20px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+        <p style={{ fontSize: 8, color: "#666", margin: "0 0 4px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{entity.entity_class} · {entity.entity_subtype}</p>
+        <button onClick={onClose} aria-label="Close" style={{ background: "transparent", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.4)", fontSize: 15, lineHeight: 1, padding: 0, marginTop: -2 }}>×</button>
+      </div>
+      <h3 style={{ fontSize: 17, fontWeight: 400, color: warmWhite, margin: "0 0 8px 0" }}>{entity.name}</h3>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+        <span style={{ fontSize: 10, color: "#807870", fontFamily: MONO }}>{entity.country}</span>
+        <span style={{ fontSize: 9, color: statusColor, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>● {entity.status}</span>
+      </div>
+
+      <Row label="Instantiates" value={entity.group_name} />
+      <Row label="Group" value={entity.group_id} />
+      <Row label="Confidence" value={entity.confidence} />
+
+      <Prose>{entity.short}</Prose>
+
+      {upstream.length > 0 && (
+        <Sect label="Receives from">
+          {upstream.map((c, i) => <div key={i}><span style={{ fontSize: 11, color: warmWhite }}>{nameOf(c.from)}</span><p style={{ fontSize: 8.5, color: c.status === "Verified" ? "#7fae6f" : "#8a7a5a", fontFamily: MONO, margin: "1px 0 6px 0" }}>{c.status} · {c.form}</p></div>)}
+        </Sect>
+      )}
+      {downstream.length > 0 && (
+        <Sect label="Supplies to">
+          {downstream.map((c, i) => <div key={i}><span style={{ fontSize: 11, color: warmWhite }}>{nameOf(c.to)}</span><p style={{ fontSize: 8.5, color: c.status === "Verified" ? "#7fae6f" : "#8a7a5a", fontFamily: MONO, margin: "1px 0 6px 0" }}>{c.status} · {c.form}</p></div>)}
+        </Sect>
+      )}
     </div>
   );
 }

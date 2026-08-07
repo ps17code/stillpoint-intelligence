@@ -3,6 +3,7 @@
 import germaniumClass from "@/data/node-v2/germanium-class-graph.json";
 import germaniumRoutes from "@/data/node-v2/germanium-routes.json";
 import germaniumGraph from "@/data/node-v2/germanium-supply-graph.json";
+import germaniumEntities from "@/data/node-v2/germanium-entity-graph.json";
 
 export type ClassNodeRef = { id: string; name: string; class_type: string };
 export type ClassGraph = { node: ClassNodeRef; downstream: ClassNodeRef[] };
@@ -27,10 +28,24 @@ export type SupplyGraph = {
   branch_points: string[];
 };
 
+export type EntityNode = {
+  id: string; name: string; entity_class: string; entity_subtype: string;
+  country: string; status: string; group_id: string; group_name: string;
+  column: string; confidence: string; short: string;
+};
+export type EntityEdge = { from: string; to: string; status: string; form: string };
+export type EntityGraph = {
+  graph_id: string; node_object: string;
+  columns: { key: string; label: string }[];
+  entities: EntityNode[];
+  connections: EntityEdge[];
+};
+
 export type LoadedNode = {
   name: string;
   classGraph: ClassGraph;
   supplyGraph: SupplyGraph;
+  entityGraph: EntityGraph;
   groups: Record<string, unknown>;
   routes: unknown[];
 };
@@ -39,6 +54,7 @@ const GERMANIUM: LoadedNode = {
   name: "Germanium",
   classGraph: germaniumClass as ClassGraph,
   supplyGraph: germaniumGraph as unknown as SupplyGraph,
+  entityGraph: germaniumEntities as unknown as EntityGraph,
   groups: (germaniumRoutes as { groups: Record<string, unknown> }).groups,
   routes: (germaniumRoutes as { routes: unknown[] }).routes,
 };
