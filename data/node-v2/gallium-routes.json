@@ -1,0 +1,486 @@
+{
+  "node_object": {
+    "id": "class_node_000005",
+    "name": "Gallium",
+    "class_type": "raw material"
+  },
+  "groups": {
+    "PEG-RS-BAUXITE": {
+      "group_id": "PEG-RS-BAUXITE",
+      "name": "Bauxite Deposit",
+      "entity_class": "Resource Site",
+      "entity_type": "Mineral deposit",
+      "definition": "A bauxite ore deposit in which gallium occurs as a trace byproduct, recovered downstream from the Bayer alumina process.",
+      "main_function": "Hosts gallium-bearing bauxite ore.",
+      "occurrence_mode": "byproduct/companion-hosted deposit",
+      "typical_outputs": [
+        "Ga-bearing bauxite ore"
+      ]
+    },
+    "PEG-RS-ZNSULF": {
+      "group_id": "PEG-RS-ZNSULF",
+      "name": "Sphalerite Zinc Deposit",
+      "entity_class": "Resource Site",
+      "entity_type": "Mineral deposit",
+      "definition": "A zinc sulfide ore body where gallium substitutes into sphalerite as a trace byproduct.",
+      "main_function": "Hosts gallium-bearing sphalerite zinc ore.",
+      "occurrence_mode": "byproduct/companion-hosted deposit",
+      "typical_outputs": [
+        "Ga-bearing sphalerite ore"
+      ]
+    },
+    "PEG-RS-REDMUD": {
+      "group_id": "PEG-RS-REDMUD",
+      "name": "Red Mud / Bauxite Residue Accumulation",
+      "entity_class": "Resource Site",
+      "entity_type": "Secondary residue accumulation",
+      "definition": "A man-made accumulation of bauxite residue (red mud) holding recoverable gallium, worked as a secondary source.",
+      "main_function": "Accumulates gallium-bearing red mud / bauxite residue.",
+      "occurrence_mode": "secondary man-made accumulation",
+      "typical_outputs": [
+        "gallium-bearing red mud"
+      ]
+    },
+    "PEG-RS-GASCRAP": {
+      "group_id": "PEG-RS-GASCRAP",
+      "name": "End-of-Life & New-Scrap Gallium Accumulation",
+      "entity_class": "Resource Site",
+      "entity_type": "Secondary / scrap accumulation",
+      "definition": "An accumulation of GaAs/GaN wafer & LED manufacturing new-scrap, sludges and end-of-life electronics holding recoverable gallium.",
+      "main_function": "Accumulates gallium-bearing new scrap and end-of-life material.",
+      "occurrence_mode": "end-of-life / recycled accumulation",
+      "typical_outputs": [
+        "Ga-bearing scrap / feed"
+      ]
+    },
+    "PEG-OF-BAUXMINE": {
+      "group_id": "PEG-OF-BAUXMINE",
+      "name": "Bauxite Mine",
+      "entity_class": "Operating Facility",
+      "entity_type": "Mine",
+      "definition": "An operating facility that mines bauxite ore, carrying trace gallium forward to alumina refining.",
+      "main_function": "Mines Ga-bearing bauxite.",
+      "typical_inputs": [
+        "Ga-bearing bauxite ore"
+      ],
+      "typical_outputs": [
+        "bauxite"
+      ]
+    },
+    "PEG-OF-ALUMINA": {
+      "group_id": "PEG-OF-ALUMINA",
+      "name": "Alumina Refinery (Bayer)",
+      "entity_class": "Operating Facility",
+      "entity_type": "Alumina refinery",
+      "definition": "A Bayer-process alumina refinery whose sodium-aluminate (Bayer) liquor concentrates gallium — the principal primary gallium feedstock.",
+      "main_function": "Refines bauxite to alumina; gallium concentrates in the Bayer liquor.",
+      "typical_inputs": [
+        "bauxite"
+      ],
+      "typical_outputs": [
+        "alumina",
+        "Ga-bearing Bayer liquor"
+      ]
+    },
+    "PEG-OF-ZNMINE": {
+      "group_id": "PEG-OF-ZNMINE",
+      "name": "Zinc Mine / Concentrator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Mine-concentrator",
+      "definition": "An operating facility that mines and concentrates zinc sulfide ore, carrying trace gallium in the zinc concentrate.",
+      "main_function": "Mines and concentrates Ga-bearing zinc ore.",
+      "typical_inputs": [
+        "Ga-bearing sphalerite ore"
+      ],
+      "typical_outputs": [
+        "Ga-bearing zinc concentrate"
+      ]
+    },
+    "PEG-OF-ZNSMELT": {
+      "group_id": "PEG-OF-ZNSMELT",
+      "name": "Zinc Smelter–Refinery",
+      "entity_class": "Operating Facility",
+      "entity_type": "Smelter-refinery",
+      "definition": "An electrolytic zinc smelter whose refining residues concentrate gallium as a byproduct.",
+      "main_function": "Refines zinc; gallium reports to residues.",
+      "typical_inputs": [
+        "Ga-bearing zinc concentrate"
+      ],
+      "typical_outputs": [
+        "Ga-bearing zinc residue"
+      ]
+    },
+    "PEG-OF-GASCRAPPROC": {
+      "group_id": "PEG-OF-GASCRAPPROC",
+      "name": "Gallium Scrap Pre-Processor",
+      "entity_class": "Operating Facility",
+      "entity_type": "Recycling pre-processor",
+      "definition": "An operating facility that collects and pre-processes GaAs/GaN/LED scrap into a gallium-bearing recyclable feed.",
+      "main_function": "Collects and pre-processes gallium scrap.",
+      "typical_inputs": [
+        "Ga-bearing scrap / feed"
+      ],
+      "typical_outputs": [
+        "Ga-bearing recyclable feed"
+      ]
+    },
+    "PEG-OF-GAREC": {
+      "group_id": "PEG-OF-GAREC",
+      "name": "Gallium Recovery Operator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Hydrometallurgical recovery plant",
+      "definition": "An operating facility that recovers gallium from Bayer liquor, zinc residues, red mud, or recyclable feed into crude gallium metal.",
+      "main_function": "Recovers gallium into crude metal.",
+      "typical_inputs": [
+        "Ga-bearing Bayer liquor",
+        "Ga-bearing zinc residue",
+        "gallium-bearing red mud",
+        "Ga-bearing recyclable feed"
+      ],
+      "typical_outputs": [
+        "crude gallium metal"
+      ]
+    },
+    "PEG-OF-GAREF": {
+      "group_id": "PEG-OF-GAREF",
+      "name": "Gallium Refinery",
+      "entity_class": "Operating Facility",
+      "entity_type": "Chemical refinery",
+      "definition": "An operating facility that purifies crude gallium into high-purity gallium metal (4N–7N) by fractional crystallization / zone refining / electrolysis.",
+      "main_function": "Refines crude gallium to high-purity metal.",
+      "typical_inputs": [
+        "crude gallium metal"
+      ],
+      "typical_outputs": [
+        "high-purity gallium metal"
+      ]
+    }
+  },
+  "routes": [
+    {
+      "route_id": "RT-BX-GA",
+      "node_object": "class_node_000005",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-BAUXITE",
+        "starting_form": "Ga-bearing bauxite ore"
+      },
+      "ending_output_form": "high-purity gallium metal",
+      "route_participation_ids": [
+        "RP-BX-GA-1",
+        "RP-BX-GA-2",
+        "RP-BX-GA-3",
+        "RP-BX-GA-4",
+        "RP-BX-GA-5"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-BX-GA-1",
+          "route_id": "RT-BX-GA",
+          "seq": 1,
+          "group_id": "PEG-RS-BAUXITE",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "Ga-bearing bauxite ore",
+          "prev_rp": null,
+          "next_rp": "RP-BX-GA-2"
+        },
+        {
+          "rp_id": "RP-BX-GA-2",
+          "route_id": "RT-BX-GA",
+          "seq": 2,
+          "group_id": "PEG-OF-BAUXMINE",
+          "input_form": "Ga-bearing bauxite ore",
+          "functional_stage": "Bauxite mining",
+          "literal_steps": [
+            "mine",
+            "crush",
+            "ship"
+          ],
+          "output_form": "bauxite",
+          "prev_rp": "RP-BX-GA-1",
+          "next_rp": "RP-BX-GA-3"
+        },
+        {
+          "rp_id": "RP-BX-GA-3",
+          "route_id": "RT-BX-GA",
+          "seq": 3,
+          "group_id": "PEG-OF-ALUMINA",
+          "input_form": "bauxite",
+          "functional_stage": "Bayer alumina refining",
+          "literal_steps": [
+            "digestion",
+            "clarification",
+            "precipitation",
+            "calcination"
+          ],
+          "output_form": "Ga-bearing Bayer liquor",
+          "prev_rp": "RP-BX-GA-2",
+          "next_rp": "RP-BX-GA-4"
+        },
+        {
+          "rp_id": "RP-BX-GA-4",
+          "route_id": "RT-BX-GA",
+          "seq": 4,
+          "group_id": "PEG-OF-GAREC",
+          "input_form": "Ga-bearing Bayer liquor",
+          "functional_stage": "Gallium recovery (Bayer liquor)",
+          "literal_steps": [
+            "ion-exchange / extraction",
+            "electrolysis"
+          ],
+          "output_form": "crude gallium metal",
+          "prev_rp": "RP-BX-GA-3",
+          "next_rp": "RP-BX-GA-5"
+        },
+        {
+          "rp_id": "RP-BX-GA-5",
+          "route_id": "RT-BX-GA",
+          "seq": 5,
+          "group_id": "PEG-OF-GAREF",
+          "input_form": "crude gallium metal",
+          "functional_stage": "Gallium refining",
+          "literal_steps": [
+            "fractional crystallization",
+            "zone refining",
+            "electrolytic purification"
+          ],
+          "output_form": "high-purity gallium metal",
+          "prev_rp": "RP-BX-GA-4",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-ZN-GA",
+      "node_object": "class_node_000005",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-ZNSULF",
+        "starting_form": "Ga-bearing sphalerite ore"
+      },
+      "ending_output_form": "high-purity gallium metal",
+      "route_participation_ids": [
+        "RP-ZN-GA-1",
+        "RP-ZN-GA-2",
+        "RP-ZN-GA-3",
+        "RP-ZN-GA-4",
+        "RP-ZN-GA-5"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-ZN-GA-1",
+          "route_id": "RT-ZN-GA",
+          "seq": 1,
+          "group_id": "PEG-RS-ZNSULF",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "Ga-bearing sphalerite ore",
+          "prev_rp": null,
+          "next_rp": "RP-ZN-GA-2"
+        },
+        {
+          "rp_id": "RP-ZN-GA-2",
+          "route_id": "RT-ZN-GA",
+          "seq": 2,
+          "group_id": "PEG-OF-ZNMINE",
+          "input_form": "Ga-bearing sphalerite ore",
+          "functional_stage": "Mining & concentration",
+          "literal_steps": [
+            "mine",
+            "grind",
+            "flotation"
+          ],
+          "output_form": "Ga-bearing zinc concentrate",
+          "prev_rp": "RP-ZN-GA-1",
+          "next_rp": "RP-ZN-GA-3"
+        },
+        {
+          "rp_id": "RP-ZN-GA-3",
+          "route_id": "RT-ZN-GA",
+          "seq": 3,
+          "group_id": "PEG-OF-ZNSMELT",
+          "input_form": "Ga-bearing zinc concentrate",
+          "functional_stage": "Zinc smelting & residue generation",
+          "literal_steps": [
+            "roast",
+            "leach",
+            "electrowin",
+            "residue collection"
+          ],
+          "output_form": "Ga-bearing zinc residue",
+          "prev_rp": "RP-ZN-GA-2",
+          "next_rp": "RP-ZN-GA-4"
+        },
+        {
+          "rp_id": "RP-ZN-GA-4",
+          "route_id": "RT-ZN-GA",
+          "seq": 4,
+          "group_id": "PEG-OF-GAREC",
+          "input_form": "Ga-bearing zinc residue",
+          "functional_stage": "Gallium recovery (zinc residue)",
+          "literal_steps": [
+            "acid leach",
+            "solvent extraction"
+          ],
+          "output_form": "crude gallium metal",
+          "prev_rp": "RP-ZN-GA-3",
+          "next_rp": "RP-ZN-GA-5"
+        },
+        {
+          "rp_id": "RP-ZN-GA-5",
+          "route_id": "RT-ZN-GA",
+          "seq": 5,
+          "group_id": "PEG-OF-GAREF",
+          "input_form": "crude gallium metal",
+          "functional_stage": "Gallium refining",
+          "literal_steps": [
+            "fractional crystallization",
+            "zone refining"
+          ],
+          "output_form": "high-purity gallium metal",
+          "prev_rp": "RP-ZN-GA-4",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-RM-GA",
+      "node_object": "class_node_000005",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-REDMUD",
+        "starting_form": "gallium-bearing red mud"
+      },
+      "ending_output_form": "high-purity gallium metal",
+      "route_participation_ids": [
+        "RP-RM-GA-1",
+        "RP-RM-GA-2",
+        "RP-RM-GA-3"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-RM-GA-1",
+          "route_id": "RT-RM-GA",
+          "seq": 1,
+          "group_id": "PEG-RS-REDMUD",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "gallium-bearing red mud",
+          "prev_rp": null,
+          "next_rp": "RP-RM-GA-2"
+        },
+        {
+          "rp_id": "RP-RM-GA-2",
+          "route_id": "RT-RM-GA",
+          "seq": 2,
+          "group_id": "PEG-OF-GAREC",
+          "input_form": "gallium-bearing red mud",
+          "functional_stage": "Gallium recovery (red mud)",
+          "literal_steps": [
+            "leach",
+            "extraction",
+            "electrolysis"
+          ],
+          "output_form": "crude gallium metal",
+          "prev_rp": "RP-RM-GA-1",
+          "next_rp": "RP-RM-GA-3"
+        },
+        {
+          "rp_id": "RP-RM-GA-3",
+          "route_id": "RT-RM-GA",
+          "seq": 3,
+          "group_id": "PEG-OF-GAREF",
+          "input_form": "crude gallium metal",
+          "functional_stage": "Gallium refining",
+          "literal_steps": [
+            "fractional crystallization",
+            "zone refining"
+          ],
+          "output_form": "high-purity gallium metal",
+          "prev_rp": "RP-RM-GA-2",
+          "next_rp": null
+        }
+      ]
+    },
+    {
+      "route_id": "RT-RC-GA",
+      "node_object": "class_node_000005",
+      "status": "structured",
+      "starting_boundary": {
+        "group_id": "PEG-RS-GASCRAP",
+        "starting_form": "Ga-bearing scrap / feed"
+      },
+      "ending_output_form": "high-purity gallium metal",
+      "route_participation_ids": [
+        "RP-RC-GA-1",
+        "RP-RC-GA-2",
+        "RP-RC-GA-3",
+        "RP-RC-GA-4"
+      ],
+      "participations": [
+        {
+          "rp_id": "RP-RC-GA-1",
+          "route_id": "RT-RC-GA",
+          "seq": 1,
+          "group_id": "PEG-RS-GASCRAP",
+          "input_form": null,
+          "functional_stage": "Resource hosting",
+          "literal_steps": [],
+          "output_form": "Ga-bearing scrap / feed",
+          "prev_rp": null,
+          "next_rp": "RP-RC-GA-2"
+        },
+        {
+          "rp_id": "RP-RC-GA-2",
+          "route_id": "RT-RC-GA",
+          "seq": 2,
+          "group_id": "PEG-OF-GASCRAPPROC",
+          "input_form": "Ga-bearing scrap / feed",
+          "functional_stage": "Collection & pre-processing",
+          "literal_steps": [
+            "collect",
+            "sort",
+            "size-reduce"
+          ],
+          "output_form": "Ga-bearing recyclable feed",
+          "prev_rp": "RP-RC-GA-1",
+          "next_rp": "RP-RC-GA-3"
+        },
+        {
+          "rp_id": "RP-RC-GA-3",
+          "route_id": "RT-RC-GA",
+          "seq": 3,
+          "group_id": "PEG-OF-GAREC",
+          "input_form": "Ga-bearing recyclable feed",
+          "functional_stage": "Gallium recovery (recycling)",
+          "literal_steps": [
+            "leach",
+            "solvent extraction"
+          ],
+          "output_form": "crude gallium metal",
+          "prev_rp": "RP-RC-GA-2",
+          "next_rp": "RP-RC-GA-4"
+        },
+        {
+          "rp_id": "RP-RC-GA-4",
+          "route_id": "RT-RC-GA",
+          "seq": 4,
+          "group_id": "PEG-OF-GAREF",
+          "input_form": "crude gallium metal",
+          "functional_stage": "Gallium refining",
+          "literal_steps": [
+            "fractional crystallization",
+            "zone refining"
+          ],
+          "output_form": "high-purity gallium metal",
+          "prev_rp": "RP-RC-GA-3",
+          "next_rp": null
+        }
+      ]
+    }
+  ]
+}

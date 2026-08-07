@@ -4,6 +4,10 @@ import germaniumClass from "@/data/node-v2/germanium-class-graph.json";
 import germaniumRoutes from "@/data/node-v2/germanium-routes.json";
 import germaniumGraph from "@/data/node-v2/germanium-supply-graph.json";
 import germaniumEntities from "@/data/node-v2/germanium-entity-graph.json";
+import galliumClass from "@/data/node-v2/gallium-class-graph.json";
+import galliumRoutes from "@/data/node-v2/gallium-routes.json";
+import galliumGraph from "@/data/node-v2/gallium-supply-graph.json";
+import galliumEntities from "@/data/node-v2/gallium-entity-graph.json";
 
 export type ClassNodeRef = { id: string; name: string; class_type: string };
 export type ClassGraph = { node: ClassNodeRef; downstream: ClassNodeRef[] };
@@ -59,11 +63,21 @@ const GERMANIUM: LoadedNode = {
   routes: (germaniumRoutes as { routes: unknown[] }).routes,
 };
 
+const GALLIUM: LoadedNode = {
+  name: "Gallium",
+  classGraph: galliumClass as ClassGraph,
+  supplyGraph: galliumGraph as unknown as SupplyGraph,
+  entityGraph: galliumEntities as unknown as EntityGraph,
+  groups: (galliumRoutes as { groups: Record<string, unknown> }).groups,
+  routes: (galliumRoutes as { routes: unknown[] }).routes,
+};
+
 const BY_KEY: Record<string, LoadedNode> = {};
 for (const a of ["germanium", "ge", "elemental germanium", "germanium metal"]) BY_KEY[a] = GERMANIUM;
+for (const a of ["gallium", "ga", "elemental gallium", "gallium metal"]) BY_KEY[a] = GALLIUM;
 
 export function lookupNode(input: string): LoadedNode | null {
   return BY_KEY[input.toLowerCase().trim()] ?? null;
 }
 
-export const AVAILABLE_NODES = ["Germanium"];
+export const AVAILABLE_NODES = ["Germanium", "Gallium"];

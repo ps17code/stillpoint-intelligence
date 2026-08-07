@@ -1,0 +1,505 @@
+{
+  "graph_id": "graph_ga_v1",
+  "node_object": "class_node_000005",
+  "graph_version": 1,
+  "source_route_ids": [
+    "RT-BX-GA",
+    "RT-ZN-GA",
+    "RT-RM-GA",
+    "RT-RC-GA"
+  ],
+  "columns": [
+    {
+      "key": "resource",
+      "label": "Resource Site"
+    },
+    {
+      "key": "extraction",
+      "label": "Extraction / Collection"
+    },
+    {
+      "key": "primary",
+      "label": "Primary Processing"
+    },
+    {
+      "key": "recovery",
+      "label": "Gallium Recovery"
+    },
+    {
+      "key": "refining",
+      "label": "Gallium Refining"
+    },
+    {
+      "key": "output",
+      "label": "Output Form"
+    }
+  ],
+  "map_nodes": [
+    {
+      "map_node_id": "MN-RS-BX",
+      "group_id": "PEG-RS-BAUXITE",
+      "group_name": "Bauxite Deposit",
+      "entity_class": "Resource Site",
+      "entity_type": "Mineral deposit",
+      "column": "resource",
+      "input_forms": [],
+      "output_forms": [
+        "Ga-bearing bauxite ore"
+      ],
+      "route_participation_ids": [
+        "RP-BX-GA-1"
+      ],
+      "route_ids": [
+        "RT-BX-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-BAUXMINE",
+      "group_id": "PEG-OF-BAUXMINE",
+      "group_name": "Bauxite Mine",
+      "entity_class": "Operating Facility",
+      "entity_type": "Mine",
+      "column": "extraction",
+      "input_forms": [
+        "Ga-bearing bauxite ore"
+      ],
+      "output_forms": [
+        "bauxite"
+      ],
+      "route_participation_ids": [
+        "RP-BX-GA-2"
+      ],
+      "route_ids": [
+        "RT-BX-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-ALUMINA",
+      "group_id": "PEG-OF-ALUMINA",
+      "group_name": "Alumina Refinery (Bayer)",
+      "entity_class": "Operating Facility",
+      "entity_type": "Alumina refinery",
+      "column": "primary",
+      "input_forms": [
+        "bauxite"
+      ],
+      "output_forms": [
+        "Ga-bearing Bayer liquor"
+      ],
+      "route_participation_ids": [
+        "RP-BX-GA-3"
+      ],
+      "route_ids": [
+        "RT-BX-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-GAREC-BX",
+      "group_id": "PEG-OF-GAREC",
+      "group_name": "Gallium Recovery Operator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Hydrometallurgical recovery plant",
+      "column": "recovery",
+      "input_forms": [
+        "Ga-bearing Bayer liquor"
+      ],
+      "output_forms": [
+        "crude gallium metal"
+      ],
+      "route_participation_ids": [
+        "RP-BX-GA-4"
+      ],
+      "route_ids": [
+        "RT-BX-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-GAREF-GA",
+      "group_id": "PEG-OF-GAREF",
+      "group_name": "Gallium Refinery",
+      "entity_class": "Operating Facility",
+      "entity_type": "Chemical refinery",
+      "column": "refining",
+      "input_forms": [
+        "crude gallium metal"
+      ],
+      "output_forms": [
+        "high-purity gallium metal"
+      ],
+      "route_participation_ids": [
+        "RP-BX-GA-5",
+        "RP-ZN-GA-5",
+        "RP-RM-GA-3",
+        "RP-RC-GA-4"
+      ],
+      "route_ids": [
+        "RT-BX-GA",
+        "RT-ZN-GA",
+        "RT-RM-GA",
+        "RT-RC-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-RS-ZN",
+      "group_id": "PEG-RS-ZNSULF",
+      "group_name": "Sphalerite Zinc Deposit",
+      "entity_class": "Resource Site",
+      "entity_type": "Mineral deposit",
+      "column": "resource",
+      "input_forms": [],
+      "output_forms": [
+        "Ga-bearing sphalerite ore"
+      ],
+      "route_participation_ids": [
+        "RP-ZN-GA-1"
+      ],
+      "route_ids": [
+        "RT-ZN-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-ZNMINE",
+      "group_id": "PEG-OF-ZNMINE",
+      "group_name": "Zinc Mine / Concentrator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Mine-concentrator",
+      "column": "extraction",
+      "input_forms": [
+        "Ga-bearing sphalerite ore"
+      ],
+      "output_forms": [
+        "Ga-bearing zinc concentrate"
+      ],
+      "route_participation_ids": [
+        "RP-ZN-GA-2"
+      ],
+      "route_ids": [
+        "RT-ZN-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-ZNSMELT",
+      "group_id": "PEG-OF-ZNSMELT",
+      "group_name": "Zinc Smelter–Refinery",
+      "entity_class": "Operating Facility",
+      "entity_type": "Smelter-refinery",
+      "column": "primary",
+      "input_forms": [
+        "Ga-bearing zinc concentrate"
+      ],
+      "output_forms": [
+        "Ga-bearing zinc residue"
+      ],
+      "route_participation_ids": [
+        "RP-ZN-GA-3"
+      ],
+      "route_ids": [
+        "RT-ZN-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-GAREC-ZN",
+      "group_id": "PEG-OF-GAREC",
+      "group_name": "Gallium Recovery Operator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Hydrometallurgical recovery plant",
+      "column": "recovery",
+      "input_forms": [
+        "Ga-bearing zinc residue"
+      ],
+      "output_forms": [
+        "crude gallium metal"
+      ],
+      "route_participation_ids": [
+        "RP-ZN-GA-4"
+      ],
+      "route_ids": [
+        "RT-ZN-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-RS-RM",
+      "group_id": "PEG-RS-REDMUD",
+      "group_name": "Red Mud / Bauxite Residue Accumulation",
+      "entity_class": "Resource Site",
+      "entity_type": "Secondary residue accumulation",
+      "column": "resource",
+      "input_forms": [],
+      "output_forms": [
+        "gallium-bearing red mud"
+      ],
+      "route_participation_ids": [
+        "RP-RM-GA-1"
+      ],
+      "route_ids": [
+        "RT-RM-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-GAREC-RM",
+      "group_id": "PEG-OF-GAREC",
+      "group_name": "Gallium Recovery Operator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Hydrometallurgical recovery plant",
+      "column": "recovery",
+      "input_forms": [
+        "gallium-bearing red mud"
+      ],
+      "output_forms": [
+        "crude gallium metal"
+      ],
+      "route_participation_ids": [
+        "RP-RM-GA-2"
+      ],
+      "route_ids": [
+        "RT-RM-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-RS-RC",
+      "group_id": "PEG-RS-GASCRAP",
+      "group_name": "End-of-Life & New-Scrap Gallium Accumulation",
+      "entity_class": "Resource Site",
+      "entity_type": "Secondary / scrap accumulation",
+      "column": "resource",
+      "input_forms": [],
+      "output_forms": [
+        "Ga-bearing scrap / feed"
+      ],
+      "route_participation_ids": [
+        "RP-RC-GA-1"
+      ],
+      "route_ids": [
+        "RT-RC-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-SCRAPPROC",
+      "group_id": "PEG-OF-GASCRAPPROC",
+      "group_name": "Gallium Scrap Pre-Processor",
+      "entity_class": "Operating Facility",
+      "entity_type": "Recycling pre-processor",
+      "column": "extraction",
+      "input_forms": [
+        "Ga-bearing scrap / feed"
+      ],
+      "output_forms": [
+        "Ga-bearing recyclable feed"
+      ],
+      "route_participation_ids": [
+        "RP-RC-GA-2"
+      ],
+      "route_ids": [
+        "RT-RC-GA"
+      ]
+    },
+    {
+      "map_node_id": "MN-GAREC-RC",
+      "group_id": "PEG-OF-GAREC",
+      "group_name": "Gallium Recovery Operator",
+      "entity_class": "Operating Facility",
+      "entity_type": "Hydrometallurgical recovery plant",
+      "column": "recovery",
+      "input_forms": [
+        "Ga-bearing recyclable feed"
+      ],
+      "output_forms": [
+        "crude gallium metal"
+      ],
+      "route_participation_ids": [
+        "RP-RC-GA-3"
+      ],
+      "route_ids": [
+        "RT-RC-GA"
+      ]
+    }
+  ],
+  "ending_boundary_nodes": [
+    {
+      "map_node_id": "OUT-GA",
+      "form": "high-purity gallium metal",
+      "column": "output"
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "E-1",
+      "from": "MN-RS-BX",
+      "to": "MN-BAUXMINE",
+      "handoff_form": "Ga-bearing bauxite ore",
+      "route_ids": [
+        "RT-BX-GA"
+      ]
+    },
+    {
+      "edge_id": "E-2",
+      "from": "MN-BAUXMINE",
+      "to": "MN-ALUMINA",
+      "handoff_form": "bauxite",
+      "route_ids": [
+        "RT-BX-GA"
+      ]
+    },
+    {
+      "edge_id": "E-3",
+      "from": "MN-ALUMINA",
+      "to": "MN-GAREC-BX",
+      "handoff_form": "Ga-bearing Bayer liquor",
+      "route_ids": [
+        "RT-BX-GA"
+      ]
+    },
+    {
+      "edge_id": "E-4",
+      "from": "MN-GAREC-BX",
+      "to": "MN-GAREF-GA",
+      "handoff_form": "crude gallium metal",
+      "route_ids": [
+        "RT-BX-GA"
+      ]
+    },
+    {
+      "edge_id": "E-5",
+      "from": "MN-RS-ZN",
+      "to": "MN-ZNMINE",
+      "handoff_form": "Ga-bearing sphalerite ore",
+      "route_ids": [
+        "RT-ZN-GA"
+      ]
+    },
+    {
+      "edge_id": "E-6",
+      "from": "MN-ZNMINE",
+      "to": "MN-ZNSMELT",
+      "handoff_form": "Ga-bearing zinc concentrate",
+      "route_ids": [
+        "RT-ZN-GA"
+      ]
+    },
+    {
+      "edge_id": "E-7",
+      "from": "MN-ZNSMELT",
+      "to": "MN-GAREC-ZN",
+      "handoff_form": "Ga-bearing zinc residue",
+      "route_ids": [
+        "RT-ZN-GA"
+      ]
+    },
+    {
+      "edge_id": "E-8",
+      "from": "MN-GAREC-ZN",
+      "to": "MN-GAREF-GA",
+      "handoff_form": "crude gallium metal",
+      "route_ids": [
+        "RT-ZN-GA"
+      ]
+    },
+    {
+      "edge_id": "E-9",
+      "from": "MN-RS-RM",
+      "to": "MN-GAREC-RM",
+      "handoff_form": "gallium-bearing red mud",
+      "route_ids": [
+        "RT-RM-GA"
+      ]
+    },
+    {
+      "edge_id": "E-10",
+      "from": "MN-GAREC-RM",
+      "to": "MN-GAREF-GA",
+      "handoff_form": "crude gallium metal",
+      "route_ids": [
+        "RT-RM-GA"
+      ]
+    },
+    {
+      "edge_id": "E-11",
+      "from": "MN-RS-RC",
+      "to": "MN-SCRAPPROC",
+      "handoff_form": "Ga-bearing scrap / feed",
+      "route_ids": [
+        "RT-RC-GA"
+      ]
+    },
+    {
+      "edge_id": "E-12",
+      "from": "MN-SCRAPPROC",
+      "to": "MN-GAREC-RC",
+      "handoff_form": "Ga-bearing recyclable feed",
+      "route_ids": [
+        "RT-RC-GA"
+      ]
+    },
+    {
+      "edge_id": "E-13",
+      "from": "MN-GAREC-RC",
+      "to": "MN-GAREF-GA",
+      "handoff_form": "crude gallium metal",
+      "route_ids": [
+        "RT-RC-GA"
+      ]
+    },
+    {
+      "edge_id": "E-14",
+      "from": "MN-GAREF-GA",
+      "to": "OUT-GA",
+      "handoff_form": "high-purity gallium metal",
+      "route_ids": [
+        "RT-BX-GA",
+        "RT-ZN-GA",
+        "RT-RM-GA",
+        "RT-RC-GA"
+      ]
+    }
+  ],
+  "starting_boundaries": [
+    {
+      "boundary_id": "SB-BX",
+      "group_id": "PEG-RS-BAUXITE",
+      "starting_form": "Ga-bearing bauxite ore",
+      "first_map_node": "MN-RS-BX",
+      "route_ids": [
+        "RT-BX-GA"
+      ]
+    },
+    {
+      "boundary_id": "SB-ZN",
+      "group_id": "PEG-RS-ZNSULF",
+      "starting_form": "Ga-bearing sphalerite ore",
+      "first_map_node": "MN-RS-ZN",
+      "route_ids": [
+        "RT-ZN-GA"
+      ]
+    },
+    {
+      "boundary_id": "SB-RM",
+      "group_id": "PEG-RS-REDMUD",
+      "starting_form": "gallium-bearing red mud",
+      "first_map_node": "MN-RS-RM",
+      "route_ids": [
+        "RT-RM-GA"
+      ]
+    },
+    {
+      "boundary_id": "SB-RC",
+      "group_id": "PEG-RS-GASCRAP",
+      "starting_form": "Ga-bearing scrap / feed",
+      "first_map_node": "MN-RS-RC",
+      "route_ids": [
+        "RT-RC-GA"
+      ]
+    }
+  ],
+  "ending_boundaries": [
+    {
+      "boundary_id": "OUT-GA",
+      "form": "high-purity gallium metal",
+      "final_map_node": "MN-GAREF-GA"
+    }
+  ],
+  "convergence_points": [
+    "MN-GAREF-GA"
+  ],
+  "branch_points": [],
+  "compilation_status": "validated"
+}

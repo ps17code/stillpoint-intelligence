@@ -1,0 +1,9 @@
+{
+  "node": { "id": "class_node_000005", "name": "Gallium", "class_type": "raw material" },
+  "downstream": [
+    { "id": "cn_gaas", "name": "Gallium arsenide (GaAs)", "class_type": "intermediate material" },
+    { "id": "cn_gan", "name": "Gallium nitride (GaN)", "class_type": "intermediate material" },
+    { "id": "cn_ga2o3", "name": "Gallium oxide (Ga₂O₃)", "class_type": "intermediate material" },
+    { "id": "cn_gacl3", "name": "Gallium trichloride (GaCl₃)", "class_type": "intermediate material" }
+  ]
+}
