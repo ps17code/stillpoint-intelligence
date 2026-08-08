@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, getFullRecord, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, getFullRecord, getCompanyRecord, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord } from "@/lib/explorerRegistry";
 
 type CollapsedDetail = {
   id: string; group_id: string; group_name: string; entity_class: string; entity_type: string;
@@ -363,7 +363,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
         {/* on-demand panel: entity detail */}
         {view === "entity" && (
           <div style={{ flexBasis: selectedEntity ? 400 : 0, flexGrow: 0, flexShrink: 0, width: selectedEntity ? 400 : 0, transition: "flex-basis 0.24s ease, width 0.24s ease", overflow: "hidden", borderLeft: selectedEntity ? "1px solid rgba(255,255,255,0.06)" : "none", background: "rgb(20,20,20)" }}>
-            {selectedEntity && <EntityPanel entity={selectedEntity} graph={loaded!.entityGraph} record={getFullRecord(selectedEntity.id)} onClose={() => setSelId(null)} />}
+            {selectedEntity && <EntityPanel entity={selectedEntity} graph={loaded!.entityGraph} record={getFullRecord(selectedEntity.id)} company={selectedEntity.organizational_entity ? getCompanyRecord(selectedEntity.organizational_entity) : null} onClose={() => setSelId(null)} />}
           </div>
         )}
       </div>
@@ -428,7 +428,7 @@ function SupplyPanel({ detail, onClose }: { detail: CollapsedDetail; onClose: ()
 }
 
 /* right panel for a selected real-world entity */
-function EntityPanel({ entity, graph, record, onClose }: { entity: EntityNode; graph: EntityGraph; record: FullEntityRecord | null; onClose: () => void }) {
+function EntityPanel({ entity, graph, record, company, onClose }: { entity: EntityNode; graph: EntityGraph; record: FullEntityRecord | null; company: CompanyRecord | null; onClose: () => void }) {
   const nameOf = (id: string) => graph.entities.find(e => e.id === id)?.name ?? id;
   const upstream = graph.connections.filter(c => c.to === entity.id);
   const downstream = graph.connections.filter(c => c.from === entity.id);
@@ -464,7 +464,75 @@ function EntityPanel({ entity, graph, record, onClose }: { entity: EntityNode; g
       )}
 
       {record && <FullRecordView record={record} />}
+      {company && <CompanyRecordView company={company} />}
     </div>
+  );
+}
+
+/* full schema-conformant Company (Organizational Entity) record */
+function CompanyRecordView({ company }: { company: CompanyRecord }) {
+  const id = company.identity, cs = company.corporate_structure, rev = company.financial.total_revenue;
+  const revText = rev.amount != null ? `${rev.amount} ${rev.currency}` : (rev.currency || "Not disclosed");
+  return (
+    <>
+      <div style={{ marginTop: 18, paddingTop: 12, borderTop: "1px solid rgba(200,122,74,0.35)" }}>
+        <p style={{ fontSize: 8, color: accent, margin: "0 0 2px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>Organization record · Company schema v1.0</p>
+        <p style={{ fontSize: 12.5, color: warmWhite, margin: "2px 0 0 0", fontFamily: SERIF }}>{id.company_name}</p>
+        <p style={{ fontSize: 9, color: "#6f695f", fontFamily: MONO, margin: "1px 0 0 0" }}>{company.common.organizational_entity_id} · {company.common.entity_subtype}</p>
+      </div>
+
+      <Sect label="Identity">
+        <Row label="Legal name" value={id.legal_name} />
+        <Row label="Type" value={id.company_type} />
+        <Row label="HQ" value={id.headquarters} />
+        <Sub2 label="Status" value={id.company_status} />
+        <Sub2 label="About" value={id.short_description} />
+      </Sect>
+
+      <Sect label="Corporate structure">
+        <Row label="Role" value={cs.corporate_role} />
+        <Sub2 label="Parent" value={cs.parent_company} />
+        {cs.subsidiaries?.length ? <Sub2 label="Subsidiaries" value={cs.subsidiaries.join(" · ")} /> : null}
+        {cs.joint_ventures?.length ? <Sub2 label="Joint ventures" value={cs.joint_ventures.join(" · ")} /> : null}
+      </Sect>
+
+      <Sect label="Financial">
+        <Row label="Revenue" value={revText} />
+        <Row label="Period" value={rev.reporting_period} />
+        <p style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, margin: "2px 0 0 0" }}>{rev.revenue_basis}</p>
+      </Sect>
+
+      <Sect label={`Economic activities (${company.economic_activities.length})`}>
+        {company.economic_activities.map((a, i) => (
+          <div key={i} style={{ marginBottom: 6 }}>
+            <span style={{ fontSize: 11, color: warmWhite }}>{a.activity_name}</span>
+            <Prose>{a.description}</Prose>
+          </div>
+        ))}
+      </Sect>
+
+      {company.product_service_groups.map((g, gi) => (
+        <div key={gi} style={{ marginTop: 12, padding: "10px 11px", borderRadius: 5, background: "rgb(28,26,24)", border: "1px solid rgb(45,41,39)" }}>
+          <p style={{ fontSize: 11.5, color: warmWhite, margin: 0, fontFamily: SERIF }}>{g.group_name}</p>
+          <p style={{ fontSize: 8, color: accent, margin: "1px 0 4px 0", fontFamily: MONO, textTransform: "uppercase" }}>product / service group · {g.commercial_outputs.length} outputs</p>
+          {g.commercial_outputs.map((o, oi) => (
+            <div key={oi} style={{ marginBottom: 4 }}>
+              <span style={{ fontSize: 10, color: "#c9c1b4" }}>{o.output_name}</span>
+              <p style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, margin: "1px 0 0 0" }}>{o.volume_quantity && o.volume_quantity !== "Not disclosed" ? `${o.volume_quantity} ${o.quantity_unit ?? ""}` : "qty not disclosed"}{o.end_markets?.length ? ` · ${o.end_markets.slice(0, 3).join(", ")}` : ""}</p>
+            </div>
+          ))}
+        </div>
+      ))}
+
+      <Sect label={`Physical realization (${company.physical_realization.length})`}>
+        {company.physical_realization.map((r, i) => (
+          <div key={i} style={{ marginBottom: 6 }}>
+            <span style={{ fontSize: 10.5, color: "#c9c1b4" }}>{r.realization_type}</span>
+            <p style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, margin: "1px 0 0 0" }}>{r.relationship_type}{r.physical_entity_ids?.filter(p => p.startsWith("pe_")).length ? ` → ${r.physical_entity_ids.filter(p => p.startsWith("pe_")).join(", ")}` : ""}</p>
+          </div>
+        ))}
+      </Sect>
+    </>
   );
 }
 

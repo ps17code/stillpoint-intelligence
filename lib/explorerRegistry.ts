@@ -9,6 +9,7 @@ import galliumRoutes from "@/data/node-v2/gallium-routes.json";
 import galliumGraph from "@/data/node-v2/gallium-supply-graph.json";
 import galliumEntities from "@/data/node-v2/gallium-entity-graph.json";
 import trailRecord from "@/data/node-v2/entities/pe_trail_smelter.json";
+import teckOrgRecord from "@/data/node-v2/entities/org_teck_resources.json";
 
 export type ClassNodeRef = { id: string; name: string; class_type: string };
 export type ClassGraph = { node: ClassNodeRef; downstream: ClassNodeRef[] };
@@ -106,4 +107,29 @@ const FULL_RECORDS: Record<string, FullEntityRecord> = {
 
 export function getFullRecord(id: string): FullEntityRecord | null {
   return FULL_RECORDS[id] ?? null;
+}
+
+/* ── canonical Organizational Entity (Company) records (Company Entity Schema) ── */
+export type CoRevenue = { amount: number | null; currency: string; reporting_period: string; revenue_basis: string; reporting_scope: string; reported_or_estimated: string; evidence: string };
+export type CoOutput = { output_id: string; output_name: string; output_type: string; description: string; volume_quantity: string; quantity_unit: string; reporting_period: string; revenue: string; geographic_markets: string[]; end_markets: string[]; reported_or_estimated: string; evidence: string };
+export type CoPSG = { group_id: string; group_name: string; description: string; economic_activity_ids: string[]; group_revenue: CoRevenue; commercial_outputs: CoOutput[] };
+export type CoActivity = { activity_id: string; activity_name: string; description: string; sector_market_served: string; activity_scope: string; performed_through_company_ids: string[]; product_service_group_ids: string[] };
+export type CoRealization = { realization_id: string; realization_type: string; relationship_type: string; physical_entity_ids: string[]; geographic_scope: string; description: string; resolution_status: string; commercial_output_ids: string[] };
+export type CompanyRecord = {
+  common: { organizational_entity_id: string; entity_type: string; entity_subtype: string };
+  identity: { company_name: string; legal_name: string; alternative_names: string[]; company_type: string; company_status: string; headquarters: string; short_description: string };
+  corporate_structure: { corporate_role: string; parent_company: string; subsidiaries: string[]; joint_ventures: string[]; equity_investments: string[]; other_affiliates: string[] };
+  financial: { total_revenue: CoRevenue };
+  economic_activities: CoActivity[];
+  product_service_groups: CoPSG[];
+  physical_realization: CoRealization[];
+  record_metadata: { resolution_status: string; overall_confidence: string; created_date: string; last_updated_date: string };
+};
+
+const ORG_RECORDS: Record<string, CompanyRecord> = {};
+function regOrg(rec: CompanyRecord, keys: string[]) { for (const k of keys) ORG_RECORDS[k.toLowerCase().trim()] = rec; }
+regOrg(teckOrgRecord as unknown as CompanyRecord, ["teck resources", "teck resources limited", "teck", "org_teck_resources"]);
+
+export function getCompanyRecord(nameOrId: string): CompanyRecord | null {
+  return ORG_RECORDS[nameOrId.toLowerCase().trim()] ?? null;
 }
