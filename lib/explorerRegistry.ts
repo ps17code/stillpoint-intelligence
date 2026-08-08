@@ -37,6 +37,7 @@ export type EntityNode = {
   id: string; name: string; entity_class: string; entity_subtype: string;
   country: string; status: string; group_id: string; group_name: string;
   column: string; confidence: string; short: string;
+  organizational_entity?: string; physical_entity?: string; flag?: string;
 };
 export type EntityEdge = { from: string; to: string; status: string; form: string };
 export type EntityGraph = {

@@ -15,7 +15,14 @@ const accent = "#c87a4a";
 const cardBg = "rgb(36, 32, 29)";
 const lineColor = "rgba(255,255,255,0.18)";
 
-type Card = { id: string; title: string; sub?: string; clickable?: boolean; muted?: boolean; featured?: boolean };
+const COUNTRY_CODES: Record<string, string> = {
+  "China": "cn", "United States": "us", "USA": "us", "Canada": "ca", "DR Congo": "cd", "DRC": "cd",
+  "Namibia": "na", "Peru": "pe", "Russia": "ru", "Kazakhstan": "kz", "Japan": "jp", "Belgium": "be",
+  "Germany": "de", "France": "fr", "Australia": "au", "South Korea": "kr", "Guinea": "gn", "Greece": "gr",
+  "Mexico": "mx", "Ukraine": "ua",
+};
+
+type Card = { id: string; title: string; sub?: string; physical?: string; country?: string; flag?: string; clickable?: boolean; muted?: boolean; featured?: boolean };
 type Column = { label: string; items: Card[] };
 type Edge = { from: string; to: string };
 
@@ -60,7 +67,14 @@ function NodeCard({ card, highlighted, dimmed, nodeRef, onHover, onLeave, onClic
         <p style={{ fontSize: 11, fontWeight: 600, color: feat || highlighted ? warmWhite : "rgb(184, 176, 164)", margin: 0, lineHeight: 1.25, fontFamily: SERIF, whiteSpace: "normal" }}>{card.title}</p>
         {card.clickable && <span style={{ fontSize: 8, color: "#666", flexShrink: 0 }}>→</span>}
       </div>
-      {card.sub && <span style={{ display: "block", marginTop: 3, fontSize: 7.5, color: feat ? accent : "#807869", fontFamily: MONO, letterSpacing: "0.06em", textTransform: "uppercase" }}>{card.sub}</span>}
+      {card.physical && <p style={{ margin: "3px 0 0 0", fontSize: 9.5, color: "rgb(150,143,132)", lineHeight: 1.3, fontFamily: SERIF }}>{card.physical}</p>}
+      {card.country && (
+        <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 4 }}>
+          {card.flag ? <img src={`https://flagcdn.com/16x12/${card.flag}.png`} alt="" width={14} height={11} style={{ borderRadius: 1, flexShrink: 0 }} /> : null}
+          <span style={{ fontSize: 8, color: "#807869", fontFamily: MONO, letterSpacing: "0.04em" }}>{card.country}</span>
+        </div>
+      )}
+      {!card.physical && !card.country && card.sub && <span style={{ display: "block", marginTop: 3, fontSize: 7.5, color: feat ? accent : "#807869", fontFamily: MONO, letterSpacing: "0.06em", textTransform: "uppercase" }}>{card.sub}</span>}
     </div>
   );
 }
@@ -251,7 +265,10 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     const eg = loaded.entityGraph;
     const byCol: Record<string, Card[]> = {};
     for (const e of eg.entities) {
-      (byCol[e.column] ??= []).push({ id: e.id, title: e.name, sub: e.country, clickable: true, muted: e.status === "Inactive" });
+      const card: Card = e.organizational_entity
+        ? { id: e.id, title: e.organizational_entity, physical: e.physical_entity ?? e.name, country: e.country, flag: e.flag ?? COUNTRY_CODES[e.country] ?? "", clickable: true, muted: e.status === "Inactive" }
+        : { id: e.id, title: e.name, sub: e.country, clickable: true, muted: e.status === "Inactive" };
+      (byCol[e.column] ??= []).push(card);
     }
     const columns: Column[] = eg.columns.map(c => ({ label: c.label, items: byCol[c.key] ?? [] }));
     const edges: Edge[] = eg.connections.map(c => ({ from: c.from, to: c.to }));
@@ -428,6 +445,7 @@ function EntityPanel({ entity, graph, record, onClose }: { entity: EntityNode; g
         <span style={{ fontSize: 9, color: statusColor, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>● {entity.status}</span>
       </div>
 
+      {entity.organizational_entity ? <Row label="Organization" value={entity.organizational_entity} /> : null}
       <Row label="Instantiates" value={entity.group_name} />
       <Row label="Group" value={entity.group_id} />
       <Row label="Confidence" value={entity.confidence} />
