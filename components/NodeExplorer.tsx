@@ -1,6 +1,62 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, getFullRecord, getCompanyRecord, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2 } from "@/lib/explorerRegistry";
+
+/* ── Company Subgraph projection over a canonical Company Record (v2.0) ── */
+type CNode = { key: string; kind: string; label: string; edge?: string; metas: string[]; canonicalId?: string; children: CNode[] };
+function compileCompanySubgraph(rec: CompanyRecordV2): CNode {
+  const anchorId = rec.common.organizational_entity_id;
+  const classify = (t: string, vid: string): string => {
+    const s = (t || "").toLowerCase();
+    if (vid === anchorId || s.includes("segment") || s.includes("directly active") || s.includes("anchor")) return "Directly Active";
+    if (s.includes("subsidiar")) return "Subsidiary";
+    if (s.includes("joint venture") || s.includes(" jv")) return "Joint Venture";
+    if (s.includes("equity") || s.includes("investment")) return "Equity Investment";
+    return "Subsidiary";
+  };
+  const mkMarket = (m: CompanyRecordV2["economic_activities"][0]["corporate_vehicles"][0]["product_service_groups"][0]["physical_entities"][0]["commercial_outputs"][0]["markets"][0]): CNode => ({
+    key: m.market_participation_id, kind: "Market", label: m.market_name, edge: "supplied into",
+    metas: [m.buyer_customer_category, m.geographic_scope, m.volume_revenue_exposure].filter(Boolean) as string[], children: [],
+  });
+  const mkOutput = (o: CompanyRecordV2["economic_activities"][0]["corporate_vehicles"][0]["product_service_groups"][0]["physical_entities"][0]["commercial_outputs"][0]): CNode => ({
+    key: o.commercial_output_id, kind: "Commercial Output", label: o.output_name, edge: "produces / provides",
+    metas: [o.volume_quantity && o.volume_quantity !== "Not disclosed" ? `${o.volume_quantity} ${o.quantity_unit || ""}`.trim() : "", o.output_type].filter(Boolean) as string[],
+    children: (o.markets || []).map(mkMarket),
+  });
+  const mkPE = (p: CompanyRecordV2["economic_activities"][0]["corporate_vehicles"][0]["product_service_groups"][0]["physical_entities"][0]): CNode => ({
+    key: p.physical_entity_id, kind: "Physical Entity", label: p.physical_entity_name, edge: "realized by", canonicalId: p.physical_entity_id,
+    metas: [p.physical_entity_class, p.relationship_to_corporate_vehicle, `status: ${p.resolution_status}`].filter(Boolean) as string[],
+    children: (p.commercial_outputs || []).map(mkOutput),
+  });
+  const mkPSG = (g: CompanyRecordV2["economic_activities"][0]["corporate_vehicles"][0]["product_service_groups"][0], extra: string[] = []): CNode => ({
+    key: g.product_service_group_id, kind: "Product / Service Group", label: g.group_name, edge: "responsible for",
+    metas: [...extra, g.description].filter(Boolean) as string[], children: (g.physical_entities || []).map(mkPE),
+  });
+  const mkActivity = (a: CompanyRecordV2["economic_activities"][0]): CNode => {
+    const children: CNode[] = [];
+    for (const cv of a.corporate_vehicles || []) {
+      const rel = classify(cv.vehicle_type, cv.vehicle_company_id);
+      const psgs = (cv.product_service_groups || []);
+      if (rel === "Directly Active") {
+        for (const g of psgs) children.push(mkPSG(g, [`directly active — ${rec.identity.company_name}`]));
+      } else {
+        children.push({
+          key: cv.corporate_vehicle_id, kind: "Corporate Vehicle", label: cv.vehicle_company_name, edge: "through", canonicalId: cv.vehicle_company_id,
+          metas: [rel, cv.ownership_percentage != null ? `${cv.ownership_percentage}% owned` : "", cv.control_status].filter(Boolean) as string[],
+          children: psgs.map((g) => mkPSG(g)),
+        });
+      }
+    }
+    return { key: a.economic_activity_id, kind: "Economic Activity", label: a.activity_name, edge: "participates in",
+      metas: [a.activity_category, a.activity_status, (a.geographic_scope || []).join(", ")].filter(Boolean) as string[], children };
+  };
+  const rev = rec.financial.total_revenue;
+  return {
+    key: anchorId, kind: "Company", label: rec.identity.company_name, canonicalId: anchorId,
+    metas: [rec.identity.company_type, rec.identity.headquarters, rev.amount != null ? `Revenue ${(rev.amount / 1e6).toFixed(0)}M ${rev.currency} (${rev.reporting_period})` : ""].filter(Boolean) as string[],
+    children: (rec.economic_activities || []).map(mkActivity),
+  };
+}
 
 type CollapsedDetail = {
   id: string; group_id: string; group_name: string; entity_class: string; entity_type: string;
@@ -160,12 +216,16 @@ function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap
   );
 }
 
-type View = "empty" | "class" | "supply" | "entity";
+type View = "empty" | "class" | "supply" | "entity" | "company";
 
 export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const [view, setView] = useState<View>("empty");
   const [loaded, setLoaded] = useState<LoadedNode | null>(null);
   const [selId, setSelId] = useState<string | null>(null);
+  const [companyRec, setCompanyRec] = useState<CompanyRecordV2 | null>(null);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const toggleNode = (k: string) => setExpanded(prev => { const n = new Set(prev); if (n.has(k)) n.delete(k); else n.add(k); return n; });
+  const companyView = useMemo(() => (companyRec ? compileCompanySubgraph(companyRec) : null), [companyRec]);
 
   // terminal
   const [input, setInput] = useState("");
@@ -179,11 +239,15 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     if (!v) return;
     setInput("");
     const found = lookupNode(v);
+    const co = found ? null : getCompanyRecordV2(v);
     if (found) {
       setLoaded(found); setView("class"); setSelId(null);
       setLog(l => [...l, `▶ search "${v}"`, `✓ found ${found.name} — loading class graph (${found.classGraph.downstream.length} downstream class nodes)`]);
+    } else if (co) {
+      setCompanyRec(co); setView("company"); setExpanded(new Set([co.common.organizational_entity_id]));
+      setLog(l => [...l, `▶ search "${v}"`, `✓ found company ${co.identity.company_name} — projecting company subgraph (${co.economic_activities.length} economic activities)`]);
     } else {
-      setLog(l => [...l, `▶ search "${v}"`, `✗ node not found in registry. Available: ${AVAILABLE_NODES.join(", ")}`]);
+      setLog(l => [...l, `▶ search "${v}"`, `✗ not found. Nodes: ${AVAILABLE_NODES.join(", ")} · companies: ${AVAILABLE_COMPANIES.join(", ")}`]);
     }
   };
 
@@ -280,13 +344,14 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     return loaded.entityGraph.entities.find(e => e.id === selId) ?? null;
   }, [view, loaded, selId]);
 
-  const headerKicker = view === "empty" ? "Node Explorer" : view === "class" ? "Node Explorer · Class Graph" : view === "supply" ? "Node Explorer · Supply Chain Graph" : "Node Explorer · Entity Graph";
-  const headerTitle = view === "empty" ? "Search a node" : view === "class" ? `${loaded?.name}` : view === "supply" ? `${loaded?.name} — Supply Chain` : `${loaded?.name} — Entities`;
-  const backLabel = view === "entity" ? "Supply chain graph" : view === "supply" ? "Class graph" : view === "class" ? "Clear" : "Back";
+  const headerKicker = view === "empty" ? "Node Explorer" : view === "company" ? "Node Explorer · Company Subgraph" : view === "class" ? "Node Explorer · Class Graph" : view === "supply" ? "Node Explorer · Supply Chain Graph" : "Node Explorer · Entity Graph";
+  const headerTitle = view === "empty" ? "Search a node" : view === "company" ? `${companyRec?.identity.company_name}` : view === "class" ? `${loaded?.name}` : view === "supply" ? `${loaded?.name} — Supply Chain` : `${loaded?.name} — Entities`;
+  const backLabel = view === "entity" ? "Supply chain graph" : view === "supply" ? "Class graph" : (view === "class" || view === "company") ? "Clear" : "Back";
   const onBackClick = () => {
     if (view === "entity") { setView("supply"); setSelId(null); }
     else if (view === "supply") { setView("class"); setSelId(null); }
     else if (view === "class") { setView("empty"); setLoaded(null); setSelId(null); }
+    else if (view === "company") { setView("empty"); setCompanyRec(null); }
     else onBack();
   };
 
@@ -325,9 +390,12 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
             {view === "empty" && (
               <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10 }}>
                 <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5"><circle cx="7" cy="7" r="3" /><circle cx="17" cy="17" r="3" /><path d="M10 7h4a3 3 0 0 1 3 3v4" /></svg>
-                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", margin: 0, fontFamily: SERIF }}>Search for a node in the terminal below</p>
-                <p style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", margin: 0, fontFamily: MONO }}>available: {AVAILABLE_NODES.join(", ")}</p>
+                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", margin: 0, fontFamily: SERIF }}>Search for a node or company in the terminal below</p>
+                <p style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", margin: 0, fontFamily: MONO }}>nodes: {AVAILABLE_NODES.join(", ")} · companies: {AVAILABLE_COMPANIES.join(", ")}</p>
               </div>
+            )}
+            {view === "company" && companyView && (
+              <CompanyTree root={companyView} expanded={expanded} onToggle={toggleNode} />
             )}
             {view === "class" && classView && (
               <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { if (id === classView.rootId) { setView("supply"); setSelId(null); } }} />
@@ -391,6 +459,44 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
       </div>
     </div>
   );
+}
+
+/* Company Subgraph — progressive-disclosure tree projection of a Company Record */
+function CompanyTree({ root, expanded, onToggle }: { root: CNode; expanded: Set<string>; onToggle: (k: string) => void }) {
+  const KIND_COLOR: Record<string, string> = {
+    "Company": accent, "Economic Activity": "#7fae6f", "Corporate Vehicle": "#c8a24a",
+    "Product / Service Group": "#8ab0c0", "Physical Entity": "#b08fce", "Commercial Output": "#cf9b7f", "Market": "#9a938a",
+  };
+  const rows: React.ReactNode[] = [];
+  const walk = (node: CNode, depth: number) => {
+    const hasKids = node.children.length > 0;
+    const isOpen = expanded.has(node.key);
+    const kc = KIND_COLOR[node.kind] ?? "#888";
+    const isCompany = node.kind === "Company";
+    rows.push(
+      <div key={node.key} style={{ paddingLeft: depth * 22, marginBottom: 3 }}>
+        <div
+          onClick={hasKids ? () => onToggle(node.key) : undefined}
+          style={{ display: "flex", alignItems: "flex-start", gap: 8, padding: "7px 10px", borderRadius: 5, background: isCompany ? "rgba(200,122,74,0.12)" : "rgb(30,28,26)", border: `1px solid ${isCompany ? accent : "rgb(45,41,39)"}`, borderLeft: `2px solid ${kc}`, cursor: hasKids ? "pointer" : "default" }}
+        >
+          <span style={{ width: 10, flexShrink: 0, color: "#8a8378", fontSize: 10, marginTop: 2 }}>{hasKids ? (isOpen ? "▾" : "▸") : "·"}</span>
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
+              {node.edge && <span style={{ fontSize: 7, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.05em", border: "1px solid rgba(200,122,74,0.35)", borderRadius: 3, padding: "1px 5px" }}>{node.edge}</span>}
+              <span style={{ fontSize: 12, color: warmWhite, fontFamily: SERIF }}>{node.label}</span>
+              <span style={{ fontSize: 7.5, color: kc, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>{node.kind}</span>
+              {hasKids && <span style={{ fontSize: 8, color: "#6f695f", fontFamily: MONO }}>({node.children.length})</span>}
+            </div>
+            {node.canonicalId && <p style={{ fontSize: 8.5, color: "#8ab0c0", fontFamily: MONO, margin: "2px 0 0 0" }}>{node.canonicalId} · canonical id</p>}
+            {node.metas.length > 0 && <p style={{ fontSize: 9, color: "#807869", margin: "2px 0 0 0", lineHeight: 1.45 }}>{node.metas.join(" · ")}</p>}
+          </div>
+        </div>
+      </div>
+    );
+    if (hasKids && isOpen) node.children.forEach(c => walk(c, depth + 1));
+  };
+  walk(root, 0);
+  return <div style={{ maxWidth: 860 }}>{rows}</div>;
 }
 
 /* right panel for a selected supply-graph node (collapsed group) */

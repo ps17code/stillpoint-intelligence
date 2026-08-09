@@ -10,6 +10,7 @@ import galliumGraph from "@/data/node-v2/gallium-supply-graph.json";
 import galliumEntities from "@/data/node-v2/gallium-entity-graph.json";
 import trailRecord from "@/data/node-v2/entities/pe_trail_smelter.json";
 import teckOrgRecord from "@/data/node-v2/entities/org_teck_resources.json";
+import mpOrgRecord from "@/data/node-v2/entities/org_mp_materials.json";
 
 export type ClassNodeRef = { id: string; name: string; class_type: string };
 export type ClassGraph = { node: ClassNodeRef; downstream: ClassNodeRef[] };
@@ -133,3 +134,26 @@ regOrg(teckOrgRecord as unknown as CompanyRecord, ["teck resources", "teck resou
 export function getCompanyRecord(nameOrId: string): CompanyRecord | null {
   return ORG_RECORDS[nameOrId.toLowerCase().trim()] ?? null;
 }
+
+/* ── Company Entity Schema v2.0 (nested value-chain hierarchy) — source for the Company Subgraph projection ── */
+export type V2Market = { market_participation_id: string; market_name: string; market_type: string; geographic_scope: string; buyer_customer_category: string; specific_buyer_organizational_entity_ids: string[]; volume_revenue_exposure: string; reporting_period: string };
+export type V2Output = { commercial_output_id: string; output_name: string; output_type: string; description: string; volume_quantity: string; quantity_unit: string; reporting_period: string; revenue: string; reported_or_estimated: string; markets: V2Market[] };
+export type V2Physical = { physical_entity_id: string; physical_entity_name: string; physical_entity_class: string; relationship_to_corporate_vehicle: string; resolution_status: string; geographic_scope: string; commercial_outputs: V2Output[] };
+export type V2Group = { product_service_group_id: string; group_name: string; description: string; physical_entities: V2Physical[] };
+export type V2Vehicle = { corporate_vehicle_id: string; vehicle_type: string; vehicle_company_id: string; vehicle_company_name: string; ownership_percentage: number | null; control_status: string; relationship_description: string; product_service_groups: V2Group[] };
+export type V2Activity = { economic_activity_id: string; activity_name: string; description: string; activity_category: string; geographic_scope: string[]; activity_status: string; corporate_vehicles: V2Vehicle[] };
+export type CompanyRecordV2 = {
+  common: { organizational_entity_id: string; entity_type: string; entity_subtype: string };
+  identity: { company_name: string; legal_name: string; company_type: string; company_status: string; country_of_incorporation: string; headquarters: string; short_description: string };
+  financial: { total_revenue: { amount: number | null; currency: string; reporting_period: string } };
+  economic_activities: V2Activity[];
+};
+
+const ORG_RECORDS_V2: Record<string, CompanyRecordV2> = {};
+function regOrgV2(rec: CompanyRecordV2, keys: string[]) { for (const k of keys) ORG_RECORDS_V2[k.toLowerCase().trim()] = rec; }
+regOrgV2(mpOrgRecord as unknown as CompanyRecordV2, ["mp materials", "mp materials corp", "mp", "org_mp_materials"]);
+
+export function getCompanyRecordV2(nameOrId: string): CompanyRecordV2 | null {
+  return ORG_RECORDS_V2[nameOrId.toLowerCase().trim()] ?? null;
+}
+export const AVAILABLE_COMPANIES = ["MP Materials"];
