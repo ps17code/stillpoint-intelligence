@@ -395,7 +395,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
               </div>
             )}
             {view === "company" && companyView && (
-              <CompanyTree root={companyView} expanded={expanded} onToggle={toggleNode} />
+              <CompanyGraph root={companyView} expanded={expanded} onToggle={toggleNode} />
             )}
             {view === "class" && classView && (
               <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { if (id === classView.rootId) { setView("supply"); setSelId(null); } }} />
@@ -462,41 +462,101 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
 }
 
 /* Company Subgraph — progressive-disclosure tree projection of a Company Record */
-function CompanyTree({ root, expanded, onToggle }: { root: CNode; expanded: Set<string>; onToggle: (k: string) => void }) {
-  const KIND_COLOR: Record<string, string> = {
-    "Company": accent, "Economic Activity": "#7fae6f", "Corporate Vehicle": "#c8a24a",
-    "Product / Service Group": "#8ab0c0", "Physical Entity": "#b08fce", "Commercial Output": "#cf9b7f", "Market": "#9a938a",
-  };
-  const rows: React.ReactNode[] = [];
-  const walk = (node: CNode, depth: number) => {
-    const hasKids = node.children.length > 0;
-    const isOpen = expanded.has(node.key);
-    const kc = KIND_COLOR[node.kind] ?? "#888";
-    const isCompany = node.kind === "Company";
-    rows.push(
-      <div key={node.key} style={{ paddingLeft: depth * 22, marginBottom: 3 }}>
-        <div
-          onClick={hasKids ? () => onToggle(node.key) : undefined}
-          style={{ display: "flex", alignItems: "flex-start", gap: 8, padding: "7px 10px", borderRadius: 5, background: isCompany ? "rgba(200,122,74,0.12)" : "rgb(30,28,26)", border: `1px solid ${isCompany ? accent : "rgb(45,41,39)"}`, borderLeft: `2px solid ${kc}`, cursor: hasKids ? "pointer" : "default" }}
-        >
-          <span style={{ width: 10, flexShrink: 0, color: "#8a8378", fontSize: 10, marginTop: 2 }}>{hasKids ? (isOpen ? "▾" : "▸") : "·"}</span>
-          <div style={{ minWidth: 0, flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
-              {node.edge && <span style={{ fontSize: 7, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.05em", border: "1px solid rgba(200,122,74,0.35)", borderRadius: 3, padding: "1px 5px" }}>{node.edge}</span>}
-              <span style={{ fontSize: 12, color: warmWhite, fontFamily: SERIF }}>{node.label}</span>
-              <span style={{ fontSize: 7.5, color: kc, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>{node.kind}</span>
-              {hasKids && <span style={{ fontSize: 8, color: "#6f695f", fontFamily: MONO }}>({node.children.length})</span>}
-            </div>
-            {node.canonicalId && <p style={{ fontSize: 8.5, color: "#8ab0c0", fontFamily: MONO, margin: "2px 0 0 0" }}>{node.canonicalId} · canonical id</p>}
-            {node.metas.length > 0 && <p style={{ fontSize: 9, color: "#807869", margin: "2px 0 0 0", lineHeight: 1.45 }}>{node.metas.join(" · ")}</p>}
-          </div>
+const CG_KIND_COLOR: Record<string, string> = {
+  "Company": accent, "Economic Activity": "#7fae6f", "Corporate Vehicle": "#c8a24a",
+  "Product / Service Group": "#8ab0c0", "Physical Entity": "#b08fce", "Commercial Output": "#cf9b7f", "Market": "#9a938a",
+};
+
+/* one node card in the top-down company graph */
+function CompanyNodeCard({ node, isOpen, onToggle, nodeRef }: { node: CNode; isOpen: boolean; onToggle: () => void; nodeRef: (el: HTMLDivElement | null) => void }) {
+  const hasKids = node.children.length > 0;
+  const kc = CG_KIND_COLOR[node.kind] ?? "#888";
+  const isCompany = node.kind === "Company";
+  const stage = node.edge || node.kind;
+  return (
+    <div
+      ref={nodeRef}
+      onClick={hasKids ? onToggle : undefined}
+      style={{
+        width: 172, boxSizing: "border-box", padding: "9px 12px 8px", borderRadius: 7,
+        background: isCompany ? "rgba(200,122,74,0.13)" : cardBg,
+        border: `1px solid ${isCompany ? accent : "rgb(48,43,40)"}`, borderTop: `2px solid ${kc}`,
+        cursor: hasKids ? "pointer" : "default", position: "relative", transition: "border-color 120ms, background 120ms",
+        boxShadow: isCompany ? "0 0 0 3px rgba(200,122,74,0.06)" : "none",
+      }}
+    >
+      <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.07em", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{stage}</p>
+      <p style={{ fontSize: 12.5, color: warmWhite, fontFamily: SERIF, margin: "3px 0 0 0", lineHeight: 1.2 }}>{node.label}</p>
+      {hasKids && (
+        <span style={{ position: "absolute", bottom: 5, right: 8, fontSize: 8, color: "#7d766b", fontFamily: MONO }}>
+          {isOpen ? "▾" : "▸"} {node.children.length}
+        </span>
+      )}
+    </div>
+  );
+}
+
+/* Company Subgraph — top-down node graph that fans out and expands downward */
+function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set<string>; onToggle: (k: string) => void }) {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const nodeEls = useRef<Record<string, HTMLDivElement | null>>({});
+  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number; color: string }[]>([]);
+
+  const { rows, edges } = useMemo(() => {
+    const rows: CNode[][] = [];
+    const edges: { from: string; to: string; color: string }[] = [];
+    const walk = (n: CNode, d: number) => {
+      (rows[d] ??= []).push(n);
+      if (expanded.has(n.key)) for (const c of n.children) { edges.push({ from: n.key, to: c.key, color: CG_KIND_COLOR[c.kind] ?? "#888" }); walk(c, d + 1); }
+    };
+    walk(root, 0);
+    return { rows, edges };
+  }, [root, expanded]);
+
+  const measure = useCallback(() => {
+    const box = boxRef.current?.getBoundingClientRect();
+    if (!box) return;
+    const next: { x1: number; y1: number; x2: number; y2: number; color: string }[] = [];
+    for (const e of edges) {
+      const f = nodeEls.current[e.from], t = nodeEls.current[e.to];
+      if (!f || !t) continue;
+      const fb = f.getBoundingClientRect(), tb = t.getBoundingClientRect();
+      next.push({ x1: fb.left + fb.width / 2 - box.left, y1: fb.bottom - box.top, x2: tb.left + tb.width / 2 - box.left, y2: tb.top - box.top, color: e.color });
+    }
+    setLines(next);
+  }, [edges]);
+
+  useEffect(() => {
+    const r = requestAnimationFrame(measure);
+    const t = setTimeout(measure, 90);
+    const ro = new ResizeObserver(() => measure());
+    if (boxRef.current) ro.observe(boxRef.current);
+    window.addEventListener("resize", measure);
+    return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
+  }, [measure, expanded]);
+
+  return (
+    <div ref={boxRef} style={{ position: "relative", minWidth: "100%", padding: "10px 8px 32px", display: "flex", flexDirection: "column", alignItems: "center", gap: 46 }}>
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
+        {lines.map((l, i) => {
+          const my = (l.y1 + l.y2) / 2;
+          return (
+            <g key={i}>
+              <path d={`M ${l.x1} ${l.y1} C ${l.x1} ${my}, ${l.x2} ${my}, ${l.x2} ${l.y2}`} fill="none" stroke={l.color} strokeOpacity={0.5} strokeWidth={1.3} />
+              <circle cx={l.x2} cy={l.y2} r={2.2} fill={l.color} fillOpacity={0.7} />
+            </g>
+          );
+        })}
+      </svg>
+      {rows.map((row, d) => (
+        <div key={d} style={{ display: "flex", gap: 22, justifyContent: "center", alignItems: "flex-start", position: "relative", zIndex: 1, flexWrap: "nowrap" }}>
+          {row.map(n => (
+            <CompanyNodeCard key={n.key} node={n} isOpen={expanded.has(n.key)} onToggle={() => onToggle(n.key)} nodeRef={el => { nodeEls.current[n.key] = el; }} />
+          ))}
         </div>
-      </div>
-    );
-    if (hasKids && isOpen) node.children.forEach(c => walk(c, depth + 1));
-  };
-  walk(root, 0);
-  return <div style={{ maxWidth: 860 }}>{rows}</div>;
+      ))}
+    </div>
+  );
 }
 
 /* right panel for a selected supply-graph node (collapsed group) */
