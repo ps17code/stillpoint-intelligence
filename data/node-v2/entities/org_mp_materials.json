@@ -1,0 +1,177 @@
+{
+  "common": {
+    "organizational_entity_id": "org_mp_materials",
+    "entity_type": "Organizational Entity",
+    "entity_subtype": "Company"
+  },
+  "identity": {
+    "company_name": "MP Materials Corp",
+    "legal_name": "MP Materials Corp.",
+    "alternative_names": ["MP Materials", "MP", "Fortress Value Acquisition Corp. (former name, pre-2020 SPAC)", "Molycorp (predecessor operator of Mountain Pass; not the same legal entity)"],
+    "company_type": "Public company (NYSE: MP)",
+    "company_status": "Active / Operating",
+    "country_of_incorporation": "United States (State of Delaware)",
+    "headquarters": "Las Vegas, Nevada, United States",
+    "short_description": "MP Materials Corp is a U.S. rare earth mining and permanent magnet manufacturing company. It owns and operates the Mountain Pass mine and processing facility in California (rare earth mining, concentration, separation and refining, producing rare earth concentrate and separated NdPr oxide/metal) and the Independence magnet facility in Fort Worth, Texas (NdFeB permanent magnets). It reports two segments, Materials and Magnetics. Formed via a November 2020 SPAC merger with Fortress Value Acquisition Corp. In July 2025 it entered a public-private partnership with the U.S. Department of Defense (DoD became largest shareholder via preferred stock and a warrant, with a 10-year NdPr price floor and DoD offtake of a planned '10X' magnet facility), and a $500M partnership with Apple for recycled rare earth magnets."
+  },
+  "financial": {
+    "total_revenue": {
+      "amount": 203900000, "currency": "USD", "reporting_period": "FY2024 (year ended December 31, 2024)",
+      "reporting_scope": "Consolidated", "revenue_basis": "Total consolidated revenue (Materials segment; Magnetics segment had not yet begun generating revenue in 2024)",
+      "reported_or_estimated": "reported", "evidence": "https://mpmaterials.com/news/mp-materials-reports-fourth-quarter-and-full-year-2024-results/"
+    }
+  },
+  "economic_activities": [
+    {
+      "economic_activity_id": "act_re_mining_concentration",
+      "activity_name": "Rare Earth Mining & Concentration",
+      "description": "Open-pit mining of bastnaesite ore at the Mountain Pass deposit and beneficiation/concentration to produce rare earth concentrate. Historically the primary source of revenue, sold predominantly to Shenghe Resources (China) under a take-or-pay offtake. In 2024 MP produced a record 45,455 MT of rare earth oxide (REO) in concentrate.",
+      "activity_category": "Extraction / Mining", "geographic_scope": ["United States (Mountain Pass, San Bernardino County, California)"], "activity_status": "Active",
+      "evidence": ["https://mpmaterials.com/news/mp-materials-reports-fourth-quarter-and-full-year-2024-results/", "https://s25.q4cdn.com/570172628/files/doc_downloads/2025/02/MPMC-2024-10-K-FINAL.pdf"],
+      "corporate_vehicles": [
+        {
+          "corporate_vehicle_id": "cv_mp_mine_operations", "vehicle_type": "Wholly-owned operating subsidiary",
+          "vehicle_company_id": "org_mp_mine_operations_llc", "vehicle_company_name": "MP Mine Operations LLC (MPMO)",
+          "ownership_percentage": 100, "control_status": "Wholly owned and controlled",
+          "relationship_description": "MP Mine Operations LLC (Delaware LLC, wholly-owned subsidiary of MP Materials Corp) acquired the Mountain Pass mine and processing facilities in July 2017 and operates the mining and concentration activity. Mineral rights held by affiliated wholly-owned subsidiary Secure Natural Resources LLC (SNR).",
+          "evidence": ["https://s25.q4cdn.com/570172628/files/doc_downloads/2025/02/MPMC-2024-10-K-FINAL.pdf"],
+          "product_service_groups": [
+            {
+              "product_service_group_id": "psg_rare_earth_concentrate", "group_name": "Rare Earth Concentrate",
+              "description": "Bastnaesite-based rare earth concentrate produced from Mountain Pass ore, sold primarily into China via Shenghe Resources. Part of the Materials segment.",
+              "group_revenue": { "amount": null, "currency": "USD", "reporting_period": "FY2024", "reporting_scope": "Product-line within Materials segment", "revenue_basis": "Concentrate sales (majority of 2024 total revenue $203.9M; exact concentrate-only figure Not disclosed)", "reported_or_estimated": "reported", "evidence": "https://mpmaterials.com/news/mp-materials-reports-fourth-quarter-and-full-year-2024-results/" },
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_mountain_pass_deposit", "physical_entity_name": "Mountain Pass Rare Earth Deposit", "physical_entity_class": "Resource Site",
+                  "relationship_to_corporate_vehicle": "Mineral rights owned by SNR; mined/operated by MPMO", "resolution_status": "resolved",
+                  "geographic_scope": "Mountain Pass, San Bernardino County, California, United States",
+                  "evidence": ["https://s25.q4cdn.com/570172628/files/doc_downloads/2025/02/MPMC-2024-10-K-FINAL.pdf"],
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "out_re_concentrate", "output_name": "Rare Earth Concentrate (REO in concentrate)", "output_type": "Physical commodity / mined and beneficiated product",
+                      "description": "Rare earth oxide contained in bastnaesite concentrate. 2024 production 45,455 MT REO in concentrate; 32,703 MT REO sold (concentrate + refined).",
+                      "volume_quantity": "45,455 (produced); 32,703 (sold)", "quantity_unit": "metric tons REO", "reporting_period": "FY2024", "revenue": "Not disclosed at concentrate-only granularity (majority of $203.9M FY2024 total)", "reported_or_estimated": "reported",
+                      "evidence": ["https://mpmaterials.com/news/mp-materials-reports-fourth-quarter-and-full-year-2024-results/"],
+                      "markets": [
+                        { "market_participation_id": "mkt_concentrate_china_shenghe", "market_name": "Rare Earth Concentrate export market (China)", "market_type": "B2B commodity offtake (take-or-pay)", "geographic_scope": "China (via Singapore subsidiary of Shenghe Resources)", "buyer_customer_category": "Rare earth trader / processor (offtake distributor)", "specific_buyer_organizational_entity_ids": ["org_shenghe_resources"], "volume_revenue_exposure": "Vast majority of concentrate sales historically to Shenghe (exclusive China distributor). Shipments to China suspended April 2025 amid Chinese tariffs; under the July 2025 DoD partnership MP agreed not to renew the Shenghe offtake.", "reporting_period": "FY2024 / through H1 2025", "evidence": ["https://fas.org/publication/unpacking-dod-and-mp-partnership/"] }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "economic_activity_id": "act_re_separation_refining",
+      "activity_name": "Rare Earth Separation & Refining",
+      "description": "Separation and refining of mixed rare earths at Mountain Pass to produce separated products, principally NdPr oxide and, from 2024, NdPr metal. MP produced a record 1,294 MT NdPr oxide in 2024; NdPr oxide/metal revenue rose to ~$58M in 2024 from under $1M in 2023.",
+      "activity_category": "Processing / Refining", "geographic_scope": ["United States (Mountain Pass, California)"], "activity_status": "Active",
+      "evidence": ["https://mpmaterials.com/news/mp-materials-reports-fourth-quarter-and-full-year-2024-results/", "https://www.panabee.com/news/mp-materials-mp-q4-2024-earning-results"],
+      "corporate_vehicles": [
+        {
+          "corporate_vehicle_id": "cv_mp_mine_operations_refining", "vehicle_type": "Wholly-owned operating subsidiary",
+          "vehicle_company_id": "org_mp_mine_operations_llc", "vehicle_company_name": "MP Mine Operations LLC (MPMO)", "ownership_percentage": 100, "control_status": "Wholly owned and controlled",
+          "relationship_description": "MPMO operates the separation and refining circuits at Mountain Pass (Materials segment), converting mined rare earths into separated NdPr oxide and NdPr metal.",
+          "evidence": ["https://s25.q4cdn.com/570172628/files/doc_downloads/2025/02/MPMC-2024-10-K-FINAL.pdf"],
+          "product_service_groups": [
+            {
+              "product_service_group_id": "psg_ndpr_oxide_metal", "group_name": "Separated NdPr Oxide & Metal",
+              "description": "Separated neodymium-praseodymium (NdPr) oxide and NdPr metal — key refined products for permanent magnets. Part of the Materials segment.",
+              "group_revenue": { "amount": 58000000, "currency": "USD", "reporting_period": "FY2024", "reporting_scope": "Product-line within Materials segment (NdPr oxide and metal)", "revenue_basis": "NdPr oxide and metal revenue (~$58M in 2024, up from under $1M in 2023)", "reported_or_estimated": "reported", "evidence": "https://www.panabee.com/news/mp-materials-mp-q4-2024-earning-results" },
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_mountain_pass_mine_processing", "physical_entity_name": "Mountain Pass Mine & Processing Facility (mine + concentrator + separation/refining)", "physical_entity_class": "Operating Facility",
+                  "relationship_to_corporate_vehicle": "Owned and operated by MPMO", "resolution_status": "resolved", "geographic_scope": "Mountain Pass, San Bernardino County, California, United States",
+                  "evidence": ["https://s25.q4cdn.com/570172628/files/doc_downloads/2025/02/MPMC-2024-10-K-FINAL.pdf"],
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "out_ndpr_oxide", "output_name": "Separated NdPr Oxide", "output_type": "Physical commodity / refined rare earth oxide",
+                      "description": "Separated neodymium-praseodymium oxide. Record 2024 production 1,294 MT; 1,142 MT sold.",
+                      "volume_quantity": "1,294 (produced); 1,142 (sold)", "quantity_unit": "metric tons NdPr oxide", "reporting_period": "FY2024", "revenue": "Within ~$58M NdPr oxide+metal revenue (oxide-only split Not disclosed)", "reported_or_estimated": "reported",
+                      "evidence": ["https://mpmaterials.com/news/mp-materials-reports-fourth-quarter-and-full-year-2024-results/"],
+                      "markets": [
+                        { "market_participation_id": "mkt_ndpr_oxide_domestic_magnet", "market_name": "NdPr oxide / refined rare earth market", "market_type": "B2B commodity sales", "geographic_scope": "Global; shifting to domestic + internal magnet feedstock", "buyer_customer_category": "Magnet and metal producers; internal transfer to Magnetics segment", "specific_buyer_organizational_entity_ids": [], "volume_revenue_exposure": "NdPr oxide/metal revenue ~$58M FY2024; increasingly consumed internally as feedstock; 10-year $110/kg NdPr oxide price floor under July 2025 DoD partnership.", "reporting_period": "FY2024", "evidence": ["https://mpmaterials.com/news/mp-materials-announces-transformational-public-private-partnership-with-the-department-of-defense-to-accelerate-u-s-rare-earth-magnet-independence/"] }
+                      ]
+                    },
+                    {
+                      "commercial_output_id": "out_ndpr_metal", "output_name": "NdPr Metal", "output_type": "Physical commodity / rare earth metal (magnetic precursor)",
+                      "description": "NdPr metal magnetic precursor. Commercial NdPr metal production and trial automotive-grade magnets commenced Q4 2024; NdPr metal sales expected Q1 2025.",
+                      "volume_quantity": "Not disclosed (commenced Q4 2024)", "quantity_unit": "metric tons NdPr metal", "reporting_period": "FY2024 (commencement)", "revenue": "Within ~$58M NdPr oxide+metal revenue; standalone Not disclosed", "reported_or_estimated": "reported",
+                      "evidence": ["https://mpmaterials.com/news/mp-materials-reports-fourth-quarter-and-full-year-2024-results/"],
+                      "markets": [
+                        { "market_participation_id": "mkt_ndpr_metal_internal", "market_name": "NdPr metal / magnetic precursor market", "market_type": "B2B / internal transfer", "geographic_scope": "United States", "buyer_customer_category": "Internal (Magnetics feedstock) and external buyers", "specific_buyer_organizational_entity_ids": [], "volume_revenue_exposure": "Primarily internal precursor for Independence magnet production; external sales began Q1 2025.", "reporting_period": "FY2024 / Q1 2025", "evidence": ["https://mpmaterials.com/news/mp-materials-reports-fourth-quarter-and-full-year-2024-results/"] }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "economic_activity_id": "act_re_magnet_manufacturing",
+      "activity_name": "Rare Earth Magnet Manufacturing",
+      "description": "Manufacturing of NdFeB permanent magnets and precursors at the Independence facility in Fort Worth, Texas (Magnetics segment). Magnetic precursor production commenced December 2024; commercial/automotive-grade magnet production ramping through 2025. Anchor/strategic customers: General Motors, Apple (recycled magnets), and the U.S. DoD (offtake of the planned 10X facility). A second plant (10X) is in development.",
+      "activity_category": "Manufacturing (Advanced materials / permanent magnets)", "geographic_scope": ["United States (Fort Worth, Texas; 10X site TBD)"], "activity_status": "Active (ramping) / Developing (10X facility)",
+      "evidence": ["https://mpmaterials.com/news/general-motors-and-mp-materials-enter-long-term-supply-agreement-to-scale-rare-earth-magnet-sourcing-and-production-in-the-us/", "https://mpmaterials.com/news/mp-materials-and-apple-announce-500-million-partnership-to-produce-recycled-rare-earth-magnets-in-the-united-states/", "https://mpmaterials.com/news/mp-materials-announces-transformational-public-private-partnership-with-the-department-of-defense-to-accelerate-u-s-rare-earth-magnet-independence/"],
+      "corporate_vehicles": [
+        {
+          "corporate_vehicle_id": "cv_mp_magnetics", "vehicle_type": "Operating company / Magnetics segment",
+          "vehicle_company_id": "org_mp_magnetics", "vehicle_company_name": "MP Materials Corp – Magnetics segment (Independence facility operations)", "ownership_percentage": 100, "control_status": "Wholly owned and controlled (U.S. DoD largest MP Materials shareholder via preferred stock/warrant from July 2025)",
+          "relationship_description": "The Magnetics segment operates the Independence NdFeB magnet facility, Fort Worth, TX. Specific magnet-subsidiary legal entity name Not disclosed. Under the July 2025 DoD partnership, DoD purchased $400M convertible preferred plus a warrant (initial conv./exercise $30.03/share), becoming MP's largest shareholder.",
+          "evidence": ["https://mpmaterials.com/news/mp-materials-announces-transformational-public-private-partnership-with-the-department-of-defense-to-accelerate-u-s-rare-earth-magnet-independence/"],
+          "product_service_groups": [
+            {
+              "product_service_group_id": "psg_ndfeb_magnets", "group_name": "NdFeB Permanent Magnets & Precursors",
+              "description": "NdFeB permanent magnets, alloy and metal precursors for EV traction motors, consumer electronics, defense and industrial applications. Magnetics segment.",
+              "group_revenue": { "amount": null, "currency": "USD", "reporting_period": "FY2024", "reporting_scope": "Magnetics segment", "revenue_basis": "Magnetics segment had not begun generating revenue in FY2024 (precursor production began December 2024)", "reported_or_estimated": "reported", "evidence": "https://mpmaterials.com/news/mp-materials-reports-fourth-quarter-and-full-year-2024-results/" },
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_independence_fort_worth", "physical_entity_name": "Independence Facility (Fort Worth, Texas NdFeB magnet plant)", "physical_entity_class": "Operating Facility",
+                  "relationship_to_corporate_vehicle": "Owned and operated by MP Materials (Magnetics segment)", "resolution_status": "resolved", "geographic_scope": "Fort Worth, Texas, United States",
+                  "evidence": ["https://mpmaterials.com/news/general-motors-and-mp-materials-enter-long-term-supply-agreement-to-scale-rare-earth-magnet-sourcing-and-production-in-the-us/"],
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "out_ndfeb_magnets", "output_name": "NdFeB Permanent Magnets (finished and precursor)", "output_type": "Manufactured product / permanent magnets",
+                      "description": "Finished sintered NdFeB magnets plus metal/alloy precursors. ~200,000 sq ft greenfield facility, initial capacity ~1,000 t/yr finished magnets (~500,000 EV motors/yr). Precursor production began December 2024; trial automotive-grade magnets Q4 2024.",
+                      "volume_quantity": "~1,000 (initial annual capacity)", "quantity_unit": "tonnes NdFeB magnets/yr", "reporting_period": "FY2024-2025 (ramp)", "revenue": "Not disclosed (no magnet revenue in FY2024)", "reported_or_estimated": "reported",
+                      "evidence": ["https://mpmaterials.com/news/general-motors-and-mp-materials-enter-long-term-supply-agreement-to-scale-rare-earth-magnet-sourcing-and-production-in-the-us/"],
+                      "markets": [
+                        { "market_participation_id": "mkt_magnets_gm_ev", "market_name": "EV traction-motor magnet supply", "market_type": "B2B long-term supply agreement", "geographic_scope": "United States", "buyer_customer_category": "Automotive OEM", "specific_buyer_organizational_entity_ids": ["org_general_motors"], "volume_revenue_exposure": "Binding long-term agreement (Dec 2021) to supply US-sourced alloy and finished magnets for electric motors in 12+ GM Ultium models; ramp from 2023.", "reporting_period": "2021 agreement; ramp from 2023", "evidence": ["https://mpmaterials.com/news/general-motors-and-mp-materials-enter-long-term-supply-agreement-to-scale-rare-earth-magnet-sourcing-and-production-in-the-us/"] },
+                        { "market_participation_id": "mkt_magnets_apple_recycled", "market_name": "Recycled rare earth magnets for consumer electronics", "market_type": "B2B long-term partnership", "geographic_scope": "United States", "buyer_customer_category": "Consumer electronics OEM", "specific_buyer_organizational_entity_ids": ["org_apple"], "volume_revenue_exposure": "$500M partnership (July 15, 2025) for 100% recycled rare earth magnets; shipments from 2027, supporting hundreds of millions of Apple devices; drives Fort Worth expansion.", "reporting_period": "Announced July 2025; shipments from 2027", "evidence": ["https://www.cnbc.com/2025/07/15/apple-mp-materials-magnets-rare-earths.html"] },
+                        { "market_participation_id": "mkt_magnets_oems", "market_name": "General magnet / defense & industrial market", "market_type": "B2B sales", "geographic_scope": "United States", "buyer_customer_category": "Magnet OEMs, defense, industrial", "specific_buyer_organizational_entity_ids": [], "volume_revenue_exposure": "Not disclosed", "reporting_period": "2025 ramp", "evidence": ["https://mpmaterials.com/news/mp-materials-reports-fourth-quarter-and-full-year-2024-results/"] }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "physical_entity_id": "pe_mp_10x_facility", "physical_entity_name": "10X Magnet Facility (planned second NdFeB magnet plant)", "physical_entity_class": "Operating Facility",
+                  "relationship_to_corporate_vehicle": "To be owned and operated by MP Materials (Magnetics segment); DoD-anchored offtake", "resolution_status": "partial", "geographic_scope": "United States (site TBD)",
+                  "evidence": ["https://mpmaterials.com/news/mp-materials-announces-transformational-public-private-partnership-with-the-department-of-defense-to-accelerate-u-s-rare-earth-magnet-independence/", "https://fas.org/publication/unpacking-dod-and-mp-partnership/"],
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "out_10x_ndfeb_magnets", "output_name": "NdFeB Magnets (10X Facility, planned)", "output_type": "Manufactured product / permanent magnets (planned)",
+                      "description": "Second magnet plant adding ~10,000 t/yr NdFeB capacity when commissioned (expected 2028). Financed with $1.0B from JPMorgan Chase Funding Inc. and Goldman Sachs Bank USA under the July 2025 DoD partnership.",
+                      "volume_quantity": "~10,000 (planned annual capacity)", "quantity_unit": "metric tons NdFeB magnets/yr", "reporting_period": "Planned commissioning 2028", "revenue": "Not applicable (not yet operational)", "reported_or_estimated": "reported",
+                      "evidence": ["https://mpmaterials.com/news/mp-materials-announces-transformational-public-private-partnership-with-the-department-of-defense-to-accelerate-u-s-rare-earth-magnet-independence/"],
+                      "markets": [
+                        { "market_participation_id": "mkt_10x_dod_offtake", "market_name": "U.S. Department of Defense magnet offtake", "market_type": "Government offtake (10-year 100% offtake)", "geographic_scope": "United States", "buyer_customer_category": "Government / defense", "specific_buyer_organizational_entity_ids": ["org_us_department_of_defense"], "volume_revenue_exposure": "DoD committed to buy 100% of 10X-facility magnets for 10 years once operational (target 2028). Broader partnership: DoD $400M preferred (largest shareholder), warrant (conv./exercise $30.03/share), 10-year $110/kg NdPr oxide price floor.", "reporting_period": "Announced July 2025; offtake from ~2028", "evidence": ["https://www.cnbc.com/2025/07/10/pentagon-to-become-largest-shareholder-in-rare-earth-magnet-maker-mp-materials.html"] }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "supply_chain_participations": { "organizational_entity_participation_ids": [] },
+  "record_metadata": { "resolution_status": "resolved", "overall_confidence": "high", "created_date": "2026-08-09", "last_updated_date": "2026-08-09" }
+}
