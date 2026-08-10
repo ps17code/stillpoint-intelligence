@@ -1,0 +1,24 @@
+{
+ "node": {
+  "id": "cn_lithium",
+  "name": "Lithium",
+  "class_type": "raw material"
+ },
+ "downstream": [
+  {
+   "id": "cn_lithium_carbonate",
+   "name": "Lithium carbonate",
+   "class_type": "intermediate material"
+  },
+  {
+   "id": "cn_lithium_hydroxide_monohydrate",
+   "name": "Lithium hydroxide monohydrate",
+   "class_type": "intermediate material"
+  },
+  {
+   "id": "cn_lithium_metal",
+   "name": "Lithium metal",
+   "class_type": "intermediate material"
+  }
+ ]
+}

@@ -1,0 +1,4967 @@
+{
+ "graph_id": "sg_lithium",
+ "node_object": "Lithium",
+ "columns": [
+  {
+   "key": "source",
+   "label": "Source / Resource Origin"
+  },
+  {
+   "key": "extraction",
+   "label": "Extraction & Beneficiation"
+  },
+  {
+   "key": "refining",
+   "label": "Refining, Leach & Purification"
+  },
+  {
+   "key": "conversion",
+   "label": "Chemical Conversion & Output"
+  }
+ ],
+ "map_nodes": [
+  {
+   "map_node_id": "mn_peg_li_spodumene_mine_concentrator__1",
+   "group_id": "peg_li_spodumene_mine_concentrator",
+   "group_name": "Hard-rock spodumene mine and concentrator",
+   "entity_class": "Resource Site",
+   "entity_type": "Hard-rock spodumene mine and concentrator",
+   "column": "source",
+   "input_forms": [
+    "Spodumene-bearing pegmatite ore (~1-2% Li2O run-of-mine)"
+   ],
+   "output_forms": [
+    "Spodumene concentrate SC6 (~6% Li2O)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB01-sulfate"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_spodumene_sulfate_converter__1",
+   "group_id": "peg_li_spodumene_sulfate_converter",
+   "group_name": "Spodumene sulfuric-acid roast-leach converter",
+   "entity_class": "Operating Facility",
+   "entity_type": "Spodumene sulfuric-acid roast-leach converter",
+   "column": "refining",
+   "input_forms": [
+    "Spodumene concentrate SC6 (~6% Li2O)"
+   ],
+   "output_forms": [
+    "Beta-spodumene (calcined, reactive)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB01-sulfate",
+    "R-SB01-EB02-bipolar-electrodialysis",
+    "R-SB01-EB02-causticization"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_spodumene_sulfate_converter__2",
+   "group_id": "peg_li_spodumene_sulfate_converter",
+   "group_name": "Spodumene sulfuric-acid roast-leach converter",
+   "entity_class": "Operating Facility",
+   "entity_type": "Spodumene sulfuric-acid roast-leach converter",
+   "column": "refining",
+   "input_forms": [
+    "Beta-spodumene (calcined, reactive); Sulfuric acid"
+   ],
+   "output_forms": [
+    "Purified lithium sulfate (Li2SO4) solution"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB01-sulfate",
+    "R-SB01-EB02-causticization"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__1",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulfate (Li2SO4) solution; Soda ash (Na2CO3)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical and battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB01-sulfate"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_spodumene_mine_concentrator__2",
+   "group_id": "peg_li_spodumene_mine_concentrator",
+   "group_name": "Hard-rock spodumene mine and concentrator",
+   "entity_class": "Resource Site",
+   "entity_type": "Hard-rock spodumene mine and concentrator",
+   "column": "source",
+   "input_forms": [
+    "Spodumene-bearing pegmatite ore (~1-2% Li2O)"
+   ],
+   "output_forms": [
+    "Spodumene concentrate SC6 (~6% Li2O)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB01-sodaash-autoclave",
+    "R-SB01-EB02-bipolar-electrodialysis",
+    "R-SB01-EB02-causticization",
+    "R-SB01-EB03-metal-via-carbonate-chloride"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_spodumene_sodaash_autoclave__1",
+   "group_id": "peg_li_spodumene_sodaash_autoclave",
+   "group_name": "Spodumene soda-ash alkaline autoclave converter",
+   "entity_class": "Operating Facility",
+   "entity_type": "Spodumene soda-ash alkaline autoclave converter",
+   "column": "refining",
+   "input_forms": [
+    "Spodumene concentrate SC6 (~6% Li2O)"
+   ],
+   "output_forms": [
+    "Beta-spodumene (calcined, reactive)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB01-sodaash-autoclave"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_spodumene_sodaash_autoclave__2",
+   "group_id": "peg_li_spodumene_sodaash_autoclave",
+   "group_name": "Spodumene soda-ash alkaline autoclave converter",
+   "entity_class": "Operating Facility",
+   "entity_type": "Spodumene soda-ash alkaline autoclave converter",
+   "column": "refining",
+   "input_forms": [
+    "Beta-spodumene (calcined, reactive); Soda ash (Na2CO3); Carbon dioxide (CO2)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical and battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB01-sodaash-autoclave"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__1",
+   "group_id": "peg_li_hydroxide_causticization_plant",
+   "group_name": "Lithium hydroxide causticization and crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium hydroxide causticization and crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulfate (Li2SO4) solution; Sodium hydroxide (NaOH)"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical and battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB02-causticization"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_spodumene_sulfate_converter__3",
+   "group_id": "peg_li_spodumene_sulfate_converter",
+   "group_name": "Spodumene sulfuric-acid roast-leach converter",
+   "entity_class": "Operating Facility",
+   "entity_type": "Spodumene sulfuric-acid roast-leach converter",
+   "column": "refining",
+   "input_forms": [
+    "Beta-spodumene (calcined, reactive); Sulfuric acid"
+   ],
+   "output_forms": [
+    "Purified lithium sulfate (Li2SO4) solution (membrane-grade)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB02-bipolar-electrodialysis"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__1",
+   "group_id": "peg_li_hydroxide_electrochemical_plant",
+   "group_name": "Electrochemical (membrane) lithium hydroxide plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Electrochemical (membrane) lithium hydroxide plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulfate (Li2SO4) solution (membrane-grade); Electrical energy (DC)"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery grade; By-product sulfuric acid (recycled)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB02-bipolar-electrodialysis"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_spodumene_sulfate_converter__4",
+   "group_id": "peg_li_spodumene_sulfate_converter",
+   "group_name": "Spodumene sulfuric-acid roast-leach converter",
+   "entity_class": "Operating Facility",
+   "entity_type": "Spodumene sulfuric-acid roast-leach converter",
+   "column": "refining",
+   "input_forms": [
+    "Spodumene concentrate SC6 (~6% Li2O); Sulfuric acid"
+   ],
+   "output_forms": [
+    "Purified lithium sulfate (Li2SO4) solution"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB03-metal-via-carbonate-chloride"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__2",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulfate (Li2SO4) solution; Soda ash (Na2CO3)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB03-metal-via-carbonate-chloride"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_anhydrous_licl_plant__1",
+   "group_id": "peg_li_anhydrous_licl_plant",
+   "group_name": "Anhydrous lithium chloride production plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Anhydrous lithium chloride production plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3); Hydrochloric acid (HCl)"
+   ],
+   "output_forms": [
+    "Anhydrous lithium chloride (LiCl)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB03-metal-via-carbonate-chloride"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__1",
+   "group_id": "peg_li_metal_electrolysis_works",
+   "group_name": "Molten-salt lithium metal electrowinning and refining works",
+   "entity_class": "Operating Facility",
+   "entity_type": "Molten-salt lithium metal electrowinning and refining works",
+   "column": "conversion",
+   "input_forms": [
+    "Anhydrous lithium chloride (LiCl); Electrical energy (DC)"
+   ],
+   "output_forms": [
+    "Lithium metal (Li), ingot/foil/granular"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB01-EB03-metal-via-carbonate-chloride"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_pegmatite_mine_petalite__1",
+   "group_id": "peg_li_pegmatite_mine_petalite",
+   "group_name": "Hard-rock petalite/amblygonite/eucryptite pegmatite mine",
+   "entity_class": "Resource Site",
+   "entity_type": "Hard-rock petalite/amblygonite/eucryptite pegmatite mine",
+   "column": "source",
+   "input_forms": [
+    "In-situ petalite/amblygonite/eucryptite-bearing pegmatite orebody"
+   ],
+   "output_forms": [
+    "Run-of-mine (crushed) petalite/amblygonite/eucryptite pegmatite ore"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R01",
+    "SB-02-R02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_pegmatite_concentrator__1",
+   "group_id": "peg_li_pegmatite_concentrator",
+   "group_name": "Lithium pegmatite mineral concentrator",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium pegmatite mineral concentrator",
+   "column": "extraction",
+   "input_forms": [
+    "Run-of-mine (crushed) petalite/amblygonite/eucryptite pegmatite ore"
+   ],
+   "output_forms": [
+    "Petalite concentrate (~4.0-4.7% Li2O); Amblygonite/eucryptite concentrate (~7-10% Li2O)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_spodumene_sulfate_converter__5",
+   "group_id": "peg_li_spodumene_sulfate_converter",
+   "group_name": "Spodumene sulfuric-acid roast-leach converter",
+   "entity_class": "Operating Facility",
+   "entity_type": "Spodumene sulfuric-acid roast-leach converter",
+   "column": "refining",
+   "input_forms": [
+    "Petalite/amblygonite/eucryptite concentrate"
+   ],
+   "output_forms": [
+    "Pregnant lithium sulfate (Li2SO4) leach liquor; Leach residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R01",
+    "SB-02-R02",
+    "SB-02-R03",
+    "SB-02-R04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_sulfate_solution_purification__1",
+   "group_id": "peg_li_sulfate_solution_purification",
+   "group_name": "Lithium sulfate solution purification circuit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium sulfate solution purification circuit",
+   "column": "refining",
+   "input_forms": [
+    "Pregnant lithium sulfate (Li2SO4) leach liquor"
+   ],
+   "output_forms": [
+    "Purified lithium sulfate (Li2SO4) solution; Impurity precipitate cake"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R01",
+    "SB-02-R02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__3",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulfate (Li2SO4) solution"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical and battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_pegmatite_concentrator__2",
+   "group_id": "peg_li_pegmatite_concentrator",
+   "group_name": "Lithium pegmatite mineral concentrator",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium pegmatite mineral concentrator",
+   "column": "extraction",
+   "input_forms": [
+    "Run-of-mine (crushed) petalite/amblygonite/eucryptite pegmatite ore"
+   ],
+   "output_forms": [
+    "Petalite/amblygonite/eucryptite concentrate"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__2",
+   "group_id": "peg_li_hydroxide_electrochemical_plant",
+   "group_name": "Electrochemical (membrane) lithium hydroxide plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Electrochemical (membrane) lithium hydroxide plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulfate (Li2SO4) solution"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery grade; Sodium sulfate (Na2SO4) by-product"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_pegmatite_mine_petalite__2",
+   "group_id": "peg_li_pegmatite_mine_petalite",
+   "group_name": "Hard-rock petalite/amblygonite/eucryptite pegmatite mine",
+   "entity_class": "Resource Site",
+   "entity_type": "Hard-rock petalite/amblygonite/eucryptite pegmatite mine",
+   "column": "source",
+   "input_forms": [
+    "In-situ petalite/amblygonite/eucryptite-bearing pegmatite orebody"
+   ],
+   "output_forms": [
+    "Run-of-mine (crushed) pegmatite ore"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R03",
+    "SB-02-R04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_pegmatite_concentrator__3",
+   "group_id": "peg_li_pegmatite_concentrator",
+   "group_name": "Lithium pegmatite mineral concentrator",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium pegmatite mineral concentrator",
+   "column": "extraction",
+   "input_forms": [
+    "Run-of-mine (crushed) pegmatite ore"
+   ],
+   "output_forms": [
+    "Petalite/amblygonite/eucryptite concentrate"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R03",
+    "SB-02-R04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_sulfate_solution_purification__2",
+   "group_id": "peg_li_sulfate_solution_purification",
+   "group_name": "Lithium sulfate solution purification circuit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium sulfate solution purification circuit",
+   "column": "refining",
+   "input_forms": [
+    "Pregnant lithium sulfate (Li2SO4) leach liquor"
+   ],
+   "output_forms": [
+    "Purified lithium sulfate (Li2SO4) solution"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__4",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulfate (Li2SO4) solution"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__2",
+   "group_id": "peg_li_hydroxide_causticization_plant",
+   "group_name": "Lithium hydroxide causticization and crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium hydroxide causticization and crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3), technical grade"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery grade; Calcium carbonate (CaCO3) residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__5",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Pregnant lithium sulfate (Li2SO4) leach liquor"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_anhydrous_licl_plant__2",
+   "group_id": "peg_li_anhydrous_licl_plant",
+   "group_name": "Anhydrous lithium chloride production plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Anhydrous lithium chloride production plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3), technical grade"
+   ],
+   "output_forms": [
+    "Anhydrous lithium chloride (LiCl)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__2",
+   "group_id": "peg_li_metal_electrolysis_works",
+   "group_name": "Molten-salt lithium metal electrowinning and refining works",
+   "entity_class": "Operating Facility",
+   "entity_type": "Molten-salt lithium metal electrowinning and refining works",
+   "column": "conversion",
+   "input_forms": [
+    "Anhydrous lithium chloride (LiCl)"
+   ],
+   "output_forms": [
+    "Lithium metal (Li) ingot/foil/granular; Chlorine gas (Cl2, recycled)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-02-R04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_mine__1",
+   "group_id": "peg_li_mica_mine",
+   "group_name": "Hard-rock lithium-mica (lepidolite/zinnwaldite) mine",
+   "entity_class": "Resource Site",
+   "entity_type": "Hard-rock lithium-mica (lepidolite/zinnwaldite) mine",
+   "column": "source",
+   "input_forms": [
+    "In-situ lepidolite/zinnwaldite mica orebody (deposit)"
+   ],
+   "output_forms": [
+    "Run-of-mine lithium-mica (lepidolite/zinnwaldite) ore"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_concentrator__1",
+   "group_id": "peg_li_mica_concentrator",
+   "group_name": "Lithium-mica flotation/magnetic concentrator",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium-mica flotation/magnetic concentrator",
+   "column": "extraction",
+   "input_forms": [
+    "Run-of-mine lithium-mica (lepidolite/zinnwaldite) ore"
+   ],
+   "output_forms": [
+    "Lithium-mica (lepidolite/zinnwaldite) concentrate"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_sulfate_roast_leach__1",
+   "group_id": "peg_li_mica_sulfate_roast_leach",
+   "group_name": "Lithium-mica sulfate-salt roast-leach plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium-mica sulfate-salt roast-leach plant",
+   "column": "refining",
+   "input_forms": [
+    "Lithium-mica (lepidolite/zinnwaldite) concentrate; Sulfate roasting reagents (Na2SO4/CaSO4/K2SO4)"
+   ],
+   "output_forms": [
+    "Lithium sulfate pregnant leach solution; Leach residue / silicate tailings"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_sulfate_solution_purification__3",
+   "group_id": "peg_li_sulfate_solution_purification",
+   "group_name": "Lithium sulfate solution purification circuit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium sulfate solution purification circuit",
+   "column": "refining",
+   "input_forms": [
+    "Lithium sulfate pregnant leach solution"
+   ],
+   "output_forms": [
+    "Purified concentrated lithium sulfate liquor; Rb/Cs byproduct stream; Impurity precipitate cake"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__6",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified concentrated lithium sulfate liquor; Soda ash (Na2CO3)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical/battery grade; Sodium sulfate byproduct"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_mine__2",
+   "group_id": "peg_li_mica_mine",
+   "group_name": "Hard-rock lithium-mica (lepidolite/zinnwaldite) mine",
+   "entity_class": "Resource Site",
+   "entity_type": "Hard-rock lithium-mica (lepidolite/zinnwaldite) mine",
+   "column": "source",
+   "input_forms": [
+    "In-situ lepidolite/zinnwaldite mica orebody (deposit)"
+   ],
+   "output_forms": [
+    "Run-of-mine lithium-mica ore"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_concentrator__2",
+   "group_id": "peg_li_mica_concentrator",
+   "group_name": "Lithium-mica flotation/magnetic concentrator",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium-mica flotation/magnetic concentrator",
+   "column": "extraction",
+   "input_forms": [
+    "Run-of-mine lithium-mica ore"
+   ],
+   "output_forms": [
+    "Lithium-mica concentrate"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_sulfate_roast_leach__2",
+   "group_id": "peg_li_mica_sulfate_roast_leach",
+   "group_name": "Lithium-mica sulfate-salt roast-leach plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium-mica sulfate-salt roast-leach plant",
+   "column": "refining",
+   "input_forms": [
+    "Lithium-mica concentrate; Sulfate roasting reagents"
+   ],
+   "output_forms": [
+    "Lithium sulfate pregnant leach solution; Leach residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_sulfate_solution_purification__4",
+   "group_id": "peg_li_sulfate_solution_purification",
+   "group_name": "Lithium sulfate solution purification circuit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium sulfate solution purification circuit",
+   "column": "refining",
+   "input_forms": [
+    "Lithium sulfate pregnant leach solution"
+   ],
+   "output_forms": [
+    "Purified concentrated lithium sulfate liquor"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__3",
+   "group_id": "peg_li_hydroxide_causticization_plant",
+   "group_name": "Lithium hydroxide causticization and crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium hydroxide causticization and crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified concentrated lithium sulfate liquor; Lime Ca(OH)2 or electrical energy + bipolar membranes"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical/battery grade; Gypsum (CaSO4) or sulfuric acid byproduct"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_mine__3",
+   "group_id": "peg_li_mica_mine",
+   "group_name": "Hard-rock lithium-mica (lepidolite/zinnwaldite) mine",
+   "entity_class": "Resource Site",
+   "entity_type": "Hard-rock lithium-mica (lepidolite/zinnwaldite) mine",
+   "column": "source",
+   "input_forms": [
+    "In-situ lepidolite/zinnwaldite orebody (deposit)"
+   ],
+   "output_forms": [
+    "Lithium-mica concentrate"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_sulfate_roast_leach__3",
+   "group_id": "peg_li_mica_sulfate_roast_leach",
+   "group_name": "Lithium-mica sulfate-salt roast-leach plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium-mica sulfate-salt roast-leach plant",
+   "column": "refining",
+   "input_forms": [
+    "Lithium-mica concentrate; Sulfate reagents"
+   ],
+   "output_forms": [
+    "Purified concentrated lithium sulfate liquor"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__7",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified concentrated lithium sulfate liquor; Soda ash"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), battery grade (intermediate)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_anhydrous_licl_plant__3",
+   "group_id": "peg_li_anhydrous_licl_plant",
+   "group_name": "Anhydrous lithium chloride production plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Anhydrous lithium chloride production plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3); Hydrochloric acid (HCl)"
+   ],
+   "output_forms": [
+    "Anhydrous lithium chloride (LiCl); CO2 off-gas"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__3",
+   "group_id": "peg_li_metal_electrolysis_works",
+   "group_name": "Molten-salt lithium metal electrowinning and refining works",
+   "entity_class": "Operating Facility",
+   "entity_type": "Molten-salt lithium metal electrowinning and refining works",
+   "column": "conversion",
+   "input_forms": [
+    "Anhydrous lithium chloride (LiCl); Electrical energy"
+   ],
+   "output_forms": [
+    "Lithium metal (Li); Chlorine gas byproduct"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_mine__4",
+   "group_id": "peg_li_mica_mine",
+   "group_name": "Hard-rock lithium-mica (lepidolite/zinnwaldite) mine",
+   "entity_class": "Resource Site",
+   "entity_type": "Hard-rock lithium-mica (lepidolite/zinnwaldite) mine",
+   "column": "source",
+   "input_forms": [
+    "In-situ zinnwaldite/lepidolite mica orebody (deposit)"
+   ],
+   "output_forms": [
+    "Run-of-mine lithium-mica ore"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_concentrator__3",
+   "group_id": "peg_li_mica_concentrator",
+   "group_name": "Lithium-mica flotation/magnetic concentrator",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium-mica flotation/magnetic concentrator",
+   "column": "extraction",
+   "input_forms": [
+    "Run-of-mine lithium-mica ore"
+   ],
+   "output_forms": [
+    "Zinnwaldite/lithium-mica concentrate"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_lime_sulfate_roast_leach__1",
+   "group_id": "peg_li_mica_lime_sulfate_roast_leach",
+   "group_name": "Lithium-mica lime-sulfate (limestone/gypsum) roast-leach plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium-mica lime-sulfate (limestone/gypsum) roast-leach plant",
+   "column": "refining",
+   "input_forms": [
+    "Zinnwaldite/lithium-mica concentrate; Limestone, waste gypsum, recycled Na2SO4"
+   ],
+   "output_forms": [
+    "Lithium(-potassium) sulfate pregnant leach solution; Calcine residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_sulfate_solution_purification__5",
+   "group_id": "peg_li_sulfate_solution_purification",
+   "group_name": "Lithium sulfate solution purification circuit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium sulfate solution purification circuit",
+   "column": "refining",
+   "input_forms": [
+    "Lithium(-potassium) sulfate pregnant leach solution"
+   ],
+   "output_forms": [
+    "Purified concentrated lithium sulfate liquor; K/Rb/Cs byproduct stream"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__8",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified concentrated lithium sulfate liquor; Soda ash"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical/battery grade; Sodium sulfate byproduct"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_mine__5",
+   "group_id": "peg_li_mica_mine",
+   "group_name": "Hard-rock lithium-mica (lepidolite/zinnwaldite) mine",
+   "entity_class": "Resource Site",
+   "entity_type": "Hard-rock lithium-mica (lepidolite/zinnwaldite) mine",
+   "column": "source",
+   "input_forms": [
+    "In-situ zinnwaldite/lepidolite orebody (deposit)"
+   ],
+   "output_forms": [
+    "Zinnwaldite/lithium-mica concentrate"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-05"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_mica_lime_sulfate_roast_leach__2",
+   "group_id": "peg_li_mica_lime_sulfate_roast_leach",
+   "group_name": "Lithium-mica lime-sulfate (limestone/gypsum) roast-leach plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium-mica lime-sulfate (limestone/gypsum) roast-leach plant",
+   "column": "refining",
+   "input_forms": [
+    "Zinnwaldite/lithium-mica concentrate; Limestone/gypsum/recycled Na2SO4"
+   ],
+   "output_forms": [
+    "Purified concentrated lithium sulfate liquor"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-05"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__4",
+   "group_id": "peg_li_hydroxide_causticization_plant",
+   "group_name": "Lithium hydroxide causticization and crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium hydroxide causticization and crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified concentrated lithium sulfate liquor; Lime or electrical energy + bipolar membranes"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical/battery grade; Gypsum or sulfuric acid byproduct"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB03-05"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_salar_brine_wellfield__1",
+   "group_id": "peg_li_salar_brine_wellfield",
+   "group_name": "Continental (salar) brine well-field",
+   "entity_class": "Resource Site",
+   "entity_type": "Continental (salar) brine well-field",
+   "column": "source",
+   "input_forms": [
+    "In-situ salar brine (dissolved Li+, ~200-2000+ mg/L Li)"
+   ],
+   "output_forms": [
+    "Raw lithium-bearing brine (dissolved Li+)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R1",
+    "SB-04-R2"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_solar_evaporation_ponds__1",
+   "group_id": "peg_li_solar_evaporation_ponds",
+   "group_name": "Solar evaporation pond concentrator (salar brine)",
+   "entity_class": "Operating Facility",
+   "entity_type": "Solar evaporation pond concentrator (salar brine)",
+   "column": "extraction",
+   "input_forms": [
+    "Raw lithium-bearing brine (dissolved Li+)"
+   ],
+   "output_forms": [
+    "Concentrated lithium liquor (~4-6% Li, LiCl/mixed-chloride brine); Potash (KCl) co-product; Boron/magnesium salt co-products"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R1"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_brine_softening_unit__1",
+   "group_id": "peg_li_brine_softening_unit",
+   "group_name": "Lithium brine purification / softening unit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium brine purification / softening unit",
+   "column": "refining",
+   "input_forms": [
+    "Concentrated lithium liquor (~4-6% Li, mixed-chloride brine)"
+   ],
+   "output_forms": [
+    "Purified concentrated lithium liquor (low Mg/Ca/B)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R1"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__9",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified concentrated lithium liquor (low Mg/Ca/B); Soda ash (Na2CO3)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical and battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R1"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_dle_plant__1",
+   "group_id": "peg_li_dle_plant",
+   "group_name": "Direct Lithium Extraction (DLE) plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Direct Lithium Extraction (DLE) plant",
+   "column": "extraction",
+   "input_forms": [
+    "Raw lithium-bearing brine (dissolved Li+)"
+   ],
+   "output_forms": [
+    "Dilute lithium chloride (LiCl) eluate; Lithium-depleted spent brine (reinjected)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R2"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_licl_concentration_purification__1",
+   "group_id": "peg_li_licl_concentration_purification",
+   "group_name": "Lithium chloride eluate concentration & purification unit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium chloride eluate concentration & purification unit",
+   "column": "refining",
+   "input_forms": [
+    "Dilute lithium chloride (LiCl) eluate"
+   ],
+   "output_forms": [
+    "Purified concentrated lithium chloride liquor (low Mg/Ca/B)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R2"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__10",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified concentrated lithium chloride liquor (low Mg/Ca/B); Soda ash (Na2CO3)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical and battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R2"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_salar_brine_wellfield__2",
+   "group_id": "peg_li_salar_brine_wellfield",
+   "group_name": "Continental (salar) brine well-field",
+   "entity_class": "Resource Site",
+   "entity_type": "Continental (salar) brine well-field",
+   "column": "source",
+   "input_forms": [
+    "In-situ salar brine (dissolved Li+)"
+   ],
+   "output_forms": [
+    "Raw lithium-bearing brine (dissolved Li+)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R3",
+    "SB-04-R4",
+    "SB-04-R5"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_solar_evaporation_ponds__2",
+   "group_id": "peg_li_solar_evaporation_ponds",
+   "group_name": "Solar evaporation pond concentrator (salar brine)",
+   "entity_class": "Operating Facility",
+   "entity_type": "Solar evaporation pond concentrator (salar brine)",
+   "column": "extraction",
+   "input_forms": [
+    "Raw lithium-bearing brine (dissolved Li+)"
+   ],
+   "output_forms": [
+    "Concentrated lithium liquor (~4-6% Li); Potash/boron/Mg co-products"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R3"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_brine_softening_unit__2",
+   "group_id": "peg_li_brine_softening_unit",
+   "group_name": "Lithium brine purification / softening unit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium brine purification / softening unit",
+   "column": "refining",
+   "input_forms": [
+    "Concentrated lithium liquor (~4-6% Li)"
+   ],
+   "output_forms": [
+    "Purified concentrated lithium liquor"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R3"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__11",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified concentrated lithium liquor; Soda ash (Na2CO3)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3) intermediate"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R3"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__5",
+   "group_id": "peg_li_hydroxide_causticization_plant",
+   "group_name": "Lithium hydroxide causticization and crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium hydroxide causticization and crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3) intermediate; Slaked lime Ca(OH)2"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical and battery grade; Calcium carbonate (CaCO3) by-product"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R3"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_dle_plant__2",
+   "group_id": "peg_li_dle_plant",
+   "group_name": "Direct Lithium Extraction (DLE) plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Direct Lithium Extraction (DLE) plant",
+   "column": "extraction",
+   "input_forms": [
+    "Raw lithium-bearing brine (dissolved Li+)"
+   ],
+   "output_forms": [
+    "Dilute lithium chloride (LiCl) eluate; Spent brine (reinjected)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R4"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_licl_concentration_purification__2",
+   "group_id": "peg_li_licl_concentration_purification",
+   "group_name": "Lithium chloride eluate concentration & purification unit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium chloride eluate concentration & purification unit",
+   "column": "refining",
+   "input_forms": [
+    "Dilute lithium chloride (LiCl) eluate"
+   ],
+   "output_forms": [
+    "High-purity concentrated lithium chloride liquor"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R4"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__3",
+   "group_id": "peg_li_hydroxide_electrochemical_plant",
+   "group_name": "Electrochemical (membrane) lithium hydroxide plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Electrochemical (membrane) lithium hydroxide plant",
+   "column": "conversion",
+   "input_forms": [
+    "High-purity concentrated lithium chloride liquor"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical and battery grade; Hydrochloric acid (HCl) by-product"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R4"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_brine_concentration_composite__1",
+   "group_id": "peg_li_brine_concentration_composite",
+   "group_name": "Brine concentration & LiCl purification (composite front-end)",
+   "entity_class": "Operating Facility",
+   "entity_type": "Brine concentration & LiCl purification (composite front-end)",
+   "column": "extraction",
+   "input_forms": [
+    "Raw lithium-bearing brine (dissolved Li+)"
+   ],
+   "output_forms": [
+    "Purified concentrated lithium chloride liquor"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R5"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_anhydrous_licl_plant__4",
+   "group_id": "peg_li_anhydrous_licl_plant",
+   "group_name": "Anhydrous lithium chloride production plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Anhydrous lithium chloride production plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified concentrated lithium chloride liquor; (alt) Lithium carbonate + HCl"
+   ],
+   "output_forms": [
+    "Anhydrous lithium chloride (LiCl)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R5"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__4",
+   "group_id": "peg_li_metal_electrolysis_works",
+   "group_name": "Molten-salt lithium metal electrowinning and refining works",
+   "entity_class": "Operating Facility",
+   "entity_type": "Molten-salt lithium metal electrowinning and refining works",
+   "column": "conversion",
+   "input_forms": [
+    "Anhydrous lithium chloride (LiCl); Potassium chloride (KCl, eutectic additive)"
+   ],
+   "output_forms": [
+    "Lithium metal (Li) ingot/foil/granular; Chlorine (Cl2) by-product"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-04-R5"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_geothermal_brine_field__1",
+   "group_id": "peg_li_geothermal_brine_field",
+   "group_name": "Geothermal brine field with co-located power plant",
+   "entity_class": "Resource Site",
+   "entity_type": "Geothermal brine field with co-located power plant",
+   "column": "source",
+   "input_forms": [
+    "Deep hot subsurface geothermal reservoir (dissolved Li+ in high-temperature saline brine)"
+   ],
+   "output_forms": [
+    "Electricity (co-product); Lithium-bearing hot spent geothermal brine (post-power-generation)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R1"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_geothermal_brine_pretreatment__1",
+   "group_id": "peg_li_geothermal_brine_pretreatment",
+   "group_name": "Geothermal brine pretreatment / impurity-removal plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Geothermal brine pretreatment / impurity-removal plant",
+   "column": "extraction",
+   "input_forms": [
+    "Lithium-bearing hot spent geothermal brine"
+   ],
+   "output_forms": [
+    "Clarified lithium-bearing brine (silica/iron/Mn reduced); Silica/iron/Mn precipitate residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R1"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_dle_plant__3",
+   "group_id": "peg_li_dle_plant",
+   "group_name": "Direct Lithium Extraction (DLE) plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Direct Lithium Extraction (DLE) plant",
+   "column": "extraction",
+   "input_forms": [
+    "Clarified lithium-bearing brine"
+   ],
+   "output_forms": [
+    "Concentrated purified lithium chloride (LiCl) solution; Lithium-depleted brine (reinjection)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R1"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__12",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Concentrated purified lithium chloride (LiCl) solution; Sodium carbonate (soda ash)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical and battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R1"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_geothermal_brine_field__2",
+   "group_id": "peg_li_geothermal_brine_field",
+   "group_name": "Geothermal brine field with co-located power plant",
+   "entity_class": "Resource Site",
+   "entity_type": "Geothermal brine field with co-located power plant",
+   "column": "source",
+   "input_forms": [
+    "Deep hot subsurface geothermal reservoir (dissolved Li+)"
+   ],
+   "output_forms": [
+    "Electricity (co-product); Lithium-bearing hot spent geothermal brine"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R2",
+    "SB-05-R3",
+    "SB-05-R4",
+    "SB-05-R5"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_geothermal_brine_pretreatment__2",
+   "group_id": "peg_li_geothermal_brine_pretreatment",
+   "group_name": "Geothermal brine pretreatment / impurity-removal plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Geothermal brine pretreatment / impurity-removal plant",
+   "column": "extraction",
+   "input_forms": [
+    "Lithium-bearing hot spent geothermal brine"
+   ],
+   "output_forms": [
+    "Clarified lithium-bearing brine; Silica/iron/Mn precipitate residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R2"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_dle_plant__4",
+   "group_id": "peg_li_dle_plant",
+   "group_name": "Direct Lithium Extraction (DLE) plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Direct Lithium Extraction (DLE) plant",
+   "column": "extraction",
+   "input_forms": [
+    "Clarified lithium-bearing brine"
+   ],
+   "output_forms": [
+    "Concentrated purified lithium chloride (LiCl) solution; Lithium-depleted brine"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R2",
+    "SB-05-R3",
+    "SB-05-R5"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__4",
+   "group_id": "peg_li_hydroxide_electrochemical_plant",
+   "group_name": "Electrochemical (membrane) lithium hydroxide plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Electrochemical (membrane) lithium hydroxide plant",
+   "column": "conversion",
+   "input_forms": [
+    "Concentrated purified lithium chloride (LiCl) solution"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery grade; Hydrochloric acid (HCl) co-product"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R2"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_geothermal_brine_pretreatment__3",
+   "group_id": "peg_li_geothermal_brine_pretreatment",
+   "group_name": "Geothermal brine pretreatment / impurity-removal plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Geothermal brine pretreatment / impurity-removal plant",
+   "column": "extraction",
+   "input_forms": [
+    "Lithium-bearing hot spent geothermal brine"
+   ],
+   "output_forms": [
+    "Clarified lithium-bearing brine; Silica/iron/Mn residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R3",
+    "SB-05-R4",
+    "SB-05-R5"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__13",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Concentrated purified lithium chloride (LiCl) solution; Sodium carbonate (soda ash)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R3"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__6",
+   "group_id": "peg_li_hydroxide_causticization_plant",
+   "group_name": "Lithium hydroxide causticization and crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium hydroxide causticization and crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3), technical grade; Calcium hydroxide (slaked lime)"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery grade; Calcium carbonate (CaCO3) byproduct"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R3"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_dle_plant__5",
+   "group_id": "peg_li_dle_plant",
+   "group_name": "Direct Lithium Extraction (DLE) plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Direct Lithium Extraction (DLE) plant",
+   "column": "extraction",
+   "input_forms": [
+    "Clarified lithium-bearing brine"
+   ],
+   "output_forms": [
+    "High-purity anhydrous lithium chloride (LiCl); Lithium-depleted brine"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R4"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__5",
+   "group_id": "peg_li_metal_electrolysis_works",
+   "group_name": "Molten-salt lithium metal electrowinning and refining works",
+   "entity_class": "Operating Facility",
+   "entity_type": "Molten-salt lithium metal electrowinning and refining works",
+   "column": "conversion",
+   "input_forms": [
+    "High-purity anhydrous lithium chloride (LiCl)"
+   ],
+   "output_forms": [
+    "Lithium metal (Li), ingot/foil/granular; Chlorine (Cl2) co-product"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R4",
+    "SB-05-R5"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__14",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Concentrated purified lithium chloride (LiCl) solution; Sodium carbonate (soda ash)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R5"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_anhydrous_licl_plant__5",
+   "group_id": "peg_li_anhydrous_licl_plant",
+   "group_name": "Anhydrous lithium chloride production plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Anhydrous lithium chloride production plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3); Hydrochloric acid / chlorinating agent"
+   ],
+   "output_forms": [
+    "High-purity anhydrous lithium chloride (LiCl); Carbon dioxide (CO2) off-gas"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-05-R5"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_oilfield_brine_formation__1",
+   "group_id": "peg_li_oilfield_brine_formation",
+   "group_name": "Oilfield / petroleum-formation lithium brine resource",
+   "entity_class": "Resource Site",
+   "entity_type": "Oilfield / petroleum-formation lithium brine resource",
+   "column": "source",
+   "input_forms": [
+    "(origin) subsurface hydrocarbon formation with connate Li-bearing brine"
+   ],
+   "output_forms": [
+    "Lithium-bearing oilfield formation / produced-water brine (dissolved Li+)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB01-carbonate",
+    "R-SB06-EB02-hydroxide-direct-electrolysis",
+    "R-SB06-EB02-hydroxide-via-carbonate",
+    "R-SB06-EB03-lithium-metal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_producedwater_pretreatment__1",
+   "group_id": "peg_li_producedwater_pretreatment",
+   "group_name": "Produced-water gathering & brine pretreatment facility",
+   "entity_class": "Operating Facility",
+   "entity_type": "Produced-water gathering & brine pretreatment facility",
+   "column": "extraction",
+   "input_forms": [
+    "Lithium-bearing oilfield formation / produced-water brine (raw, with hydrocarbons and solids)"
+   ],
+   "output_forms": [
+    "Pretreated (conditioned) lithium brine feed; Reinjected barren/effluent brine"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB01-carbonate"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_dle_plant__6",
+   "group_id": "peg_li_dle_plant",
+   "group_name": "Direct Lithium Extraction (DLE) plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Direct Lithium Extraction (DLE) plant",
+   "column": "extraction",
+   "input_forms": [
+    "Pretreated (conditioned) lithium brine feed"
+   ],
+   "output_forms": [
+    "Dilute, relatively pure lithium chloride (LiCl) eluate/solution; Barren brine (to reinjection)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB01-carbonate"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_licl_concentration_purification__3",
+   "group_id": "peg_li_licl_concentration_purification",
+   "group_name": "Lithium chloride eluate concentration & purification unit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium chloride eluate concentration & purification unit",
+   "column": "refining",
+   "input_forms": [
+    "Dilute, relatively pure lithium chloride (LiCl) eluate/solution"
+   ],
+   "output_forms": [
+    "Purified, concentrated lithium chloride (LiCl) solution"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB01-carbonate"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__15",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified, concentrated lithium chloride (LiCl) solution; Sodium carbonate (Na2CO3) reagent"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), battery/technical grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB01-carbonate"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_producedwater_pretreatment__2",
+   "group_id": "peg_li_producedwater_pretreatment",
+   "group_name": "Produced-water gathering & brine pretreatment facility",
+   "entity_class": "Operating Facility",
+   "entity_type": "Produced-water gathering & brine pretreatment facility",
+   "column": "extraction",
+   "input_forms": [
+    "Lithium-bearing oilfield formation / produced-water brine (raw)"
+   ],
+   "output_forms": [
+    "Pretreated (conditioned) lithium brine feed; Reinjected barren/effluent brine"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-direct-electrolysis",
+    "R-SB06-EB02-hydroxide-via-carbonate",
+    "R-SB06-EB03-lithium-metal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_dle_plant__7",
+   "group_id": "peg_li_dle_plant",
+   "group_name": "Direct Lithium Extraction (DLE) plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Direct Lithium Extraction (DLE) plant",
+   "column": "extraction",
+   "input_forms": [
+    "Pretreated (conditioned) lithium brine feed"
+   ],
+   "output_forms": [
+    "Dilute, relatively pure lithium chloride (LiCl) eluate; Barren brine (to reinjection)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-direct-electrolysis",
+    "R-SB06-EB02-hydroxide-via-carbonate",
+    "R-SB06-EB03-lithium-metal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_licl_concentration_purification__4",
+   "group_id": "peg_li_licl_concentration_purification",
+   "group_name": "Lithium chloride eluate concentration & purification unit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium chloride eluate concentration & purification unit",
+   "column": "refining",
+   "input_forms": [
+    "Dilute, relatively pure lithium chloride (LiCl) eluate"
+   ],
+   "output_forms": [
+    "Purified, concentrated lithium chloride (LiCl) solution"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-via-carbonate"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__16",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified, concentrated lithium chloride (LiCl) solution; Sodium carbonate (Na2CO3) reagent"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3) intermediate"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-via-carbonate"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__7",
+   "group_id": "peg_li_hydroxide_causticization_plant",
+   "group_name": "Lithium hydroxide causticization and crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium hydroxide causticization and crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3) intermediate; Calcium hydroxide / lime Ca(OH)2 reagent"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery/technical grade; Calcium carbonate (CaCO3) byproduct"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-via-carbonate"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__5",
+   "group_id": "peg_li_hydroxide_electrochemical_plant",
+   "group_name": "Electrochemical (membrane) lithium hydroxide plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Electrochemical (membrane) lithium hydroxide plant",
+   "column": "conversion",
+   "input_forms": [
+    "High-purity concentrated lithium chloride (LiCl) solution (electrolysis feed)"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery/technical grade; Chlorine (Cl2) byproduct; Hydrogen (H2) byproduct"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-direct-electrolysis"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_anhydrous_licl_plant__6",
+   "group_id": "peg_li_anhydrous_licl_plant",
+   "group_name": "Anhydrous lithium chloride production plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Anhydrous lithium chloride production plant",
+   "column": "conversion",
+   "input_forms": [
+    "Dilute, relatively pure lithium chloride (LiCl) eluate"
+   ],
+   "output_forms": [
+    "High-purity anhydrous lithium chloride (LiCl) salt"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB03-lithium-metal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__6",
+   "group_id": "peg_li_metal_electrolysis_works",
+   "group_name": "Molten-salt lithium metal electrowinning and refining works",
+   "entity_class": "Operating Facility",
+   "entity_type": "Molten-salt lithium metal electrowinning and refining works",
+   "column": "conversion",
+   "input_forms": [
+    "High-purity anhydrous lithium chloride (LiCl) salt"
+   ],
+   "output_forms": [
+    "Lithium metal (Li), ingot/foil/granular; Chlorine (Cl2) byproduct"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB06-EB03-lithium-metal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_clay_mine__1",
+   "group_id": "peg_li_clay_mine",
+   "group_name": "Lithium claystone open-pit mine",
+   "entity_class": "Resource Site",
+   "entity_type": "Lithium claystone open-pit mine",
+   "column": "source",
+   "input_forms": [
+    "In-situ lithium claystone deposit (smectite/hectorite + Li-illite host)"
+   ],
+   "output_forms": [
+    "Run-of-mine lithium claystone / clay ore"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_clay_beneficiation__1",
+   "group_id": "peg_li_clay_beneficiation",
+   "group_name": "Lithium clay beneficiation / attrition-scrubbing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium clay beneficiation / attrition-scrubbing plant",
+   "column": "extraction",
+   "input_forms": [
+    "Run-of-mine lithium claystone / clay ore"
+   ],
+   "output_forms": [
+    "Upgraded lithium clay concentrate (deslimed fine clay fraction)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_clay_acid_leach__1",
+   "group_id": "peg_li_clay_acid_leach",
+   "group_name": "Lithium clay sulfuric-acid leach & neutralization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium clay sulfuric-acid leach & neutralization plant",
+   "column": "refining",
+   "input_forms": [
+    "Upgraded lithium clay concentrate; Sulfuric acid / molten sulfur; Lime/limestone"
+   ],
+   "output_forms": [
+    "Pregnant lithium sulfate (Li2SO4) leach slurry (partially neutralized)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_clay_ccd_filtration__1",
+   "group_id": "peg_li_clay_ccd_filtration",
+   "group_name": "CCD / filtration & tailings separation circuit",
+   "entity_class": "Operating Facility",
+   "entity_type": "CCD / filtration & tailings separation circuit",
+   "column": "refining",
+   "input_forms": [
+    "Pregnant lithium sulfate leach slurry"
+   ],
+   "output_forms": [
+    "Clarified pregnant lithium sulfate solution; Leached clay residue / filtered tailings"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_generic_solution_purification__1",
+   "group_id": "peg_li_generic_solution_purification",
+   "group_name": "Lithium solution purification / impurity-removal plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium solution purification / impurity-removal plant",
+   "column": "refining",
+   "input_forms": [
+    "Clarified pregnant lithium sulfate solution"
+   ],
+   "output_forms": [
+    "Purified lithium sulfate solution"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__17",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulfate solution; Soda ash (Na2CO3)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical and battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_clay_mine__2",
+   "group_id": "peg_li_clay_mine",
+   "group_name": "Lithium claystone open-pit mine",
+   "entity_class": "Resource Site",
+   "entity_type": "Lithium claystone open-pit mine",
+   "column": "source",
+   "input_forms": [
+    "In-situ lithium claystone deposit"
+   ],
+   "output_forms": [
+    "Run-of-mine lithium claystone / clay ore"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-02",
+    "R-SB07-03",
+    "R-SB07-04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_clay_beneficiation__2",
+   "group_id": "peg_li_clay_beneficiation",
+   "group_name": "Lithium clay beneficiation / attrition-scrubbing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium clay beneficiation / attrition-scrubbing plant",
+   "column": "extraction",
+   "input_forms": [
+    "Run-of-mine lithium claystone / clay ore"
+   ],
+   "output_forms": [
+    "Upgraded lithium clay concentrate"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-02",
+    "R-SB07-04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_clay_hcl_leach__1",
+   "group_id": "peg_li_clay_hcl_leach",
+   "group_name": "Lithium clay hydrochloric-acid leach plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium clay hydrochloric-acid leach plant",
+   "column": "refining",
+   "input_forms": [
+    "Upgraded lithium clay concentrate; Hydrochloric acid (HCl)"
+   ],
+   "output_forms": [
+    "Pregnant lithium chloride (LiCl) solution; Leached clay residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_generic_solution_purification__2",
+   "group_id": "peg_li_generic_solution_purification",
+   "group_name": "Lithium solution purification / impurity-removal plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium solution purification / impurity-removal plant",
+   "column": "refining",
+   "input_forms": [
+    "Pregnant lithium chloride (LiCl) solution"
+   ],
+   "output_forms": [
+    "Purified lithium chloride solution"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__18",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium chloride solution; Soda ash (Na2CO3)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical and battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_clay_salt_roast__1",
+   "group_id": "peg_li_clay_salt_roast",
+   "group_name": "Lithium clay salt-roast / calcination plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium clay salt-roast / calcination plant",
+   "column": "refining",
+   "input_forms": [
+    "Run-of-mine lithium claystone / clay ore; Additive salts (NaCl, Na2SO4, KCl, gypsum)"
+   ],
+   "output_forms": [
+    "Roasted calcine bearing water-soluble lithium salts"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_water_leach_separation__1",
+   "group_id": "peg_li_water_leach_separation",
+   "group_name": "Calcine water-leach & solid-liquid separation circuit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Calcine water-leach & solid-liquid separation circuit",
+   "column": "refining",
+   "input_forms": [
+    "Roasted calcine bearing water-soluble lithium salts"
+   ],
+   "output_forms": [
+    "Lithium-bearing leach solution (chloride/sulfate); Leached gangue residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_generic_solution_purification__3",
+   "group_id": "peg_li_generic_solution_purification",
+   "group_name": "Lithium solution purification / impurity-removal plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium solution purification / impurity-removal plant",
+   "column": "refining",
+   "input_forms": [
+    "Lithium-bearing leach solution (chloride/sulfate)"
+   ],
+   "output_forms": [
+    "Purified lithium salt solution"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__19",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium salt solution; Soda ash (Na2CO3)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical and battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_clay_acid_leach__2",
+   "group_id": "peg_li_clay_acid_leach",
+   "group_name": "Lithium clay sulfuric-acid leach & neutralization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium clay sulfuric-acid leach & neutralization plant",
+   "column": "refining",
+   "input_forms": [
+    "Upgraded lithium clay concentrate; Sulfuric acid; Lime/soda"
+   ],
+   "output_forms": [
+    "Purified lithium sulfate (Li2SO4) solution; Leached clay residue / tailings"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__8",
+   "group_id": "peg_li_hydroxide_causticization_plant",
+   "group_name": "Lithium hydroxide causticization and crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium hydroxide causticization and crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulfate solution; Lime and/or membrane-electrolysis reagents/power"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical and battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_integrated_clay_carbonate__1",
+   "group_id": "peg_li_integrated_clay_carbonate",
+   "group_name": "Integrated clay-to-carbonate production complex",
+   "entity_class": "Operating Facility",
+   "entity_type": "Integrated clay-to-carbonate production complex",
+   "column": "conversion",
+   "input_forms": [
+    "In-situ lithium claystone deposit (through mining/leach chain)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), intermediate/technical grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-05"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__9",
+   "group_id": "peg_li_hydroxide_causticization_plant",
+   "group_name": "Lithium hydroxide causticization and crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium hydroxide causticization and crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3); Lime / slaked lime Ca(OH)2"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical and battery grade; Calcium carbonate byproduct"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-05"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_integrated_clay_carbonate__2",
+   "group_id": "peg_li_integrated_clay_carbonate",
+   "group_name": "Integrated clay-to-carbonate production complex",
+   "entity_class": "Operating Facility",
+   "entity_type": "Integrated clay-to-carbonate production complex",
+   "column": "conversion",
+   "input_forms": [
+    "In-situ lithium claystone deposit (through mining/leach chain)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-06"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_anhydrous_licl_plant__7",
+   "group_id": "peg_li_anhydrous_licl_plant",
+   "group_name": "Anhydrous lithium chloride production plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Anhydrous lithium chloride production plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3); Hydrochloric acid / chlorine"
+   ],
+   "output_forms": [
+    "Anhydrous lithium chloride (LiCl)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-06"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__7",
+   "group_id": "peg_li_metal_electrolysis_works",
+   "group_name": "Molten-salt lithium metal electrowinning and refining works",
+   "entity_class": "Operating Facility",
+   "entity_type": "Molten-salt lithium metal electrowinning and refining works",
+   "column": "conversion",
+   "input_forms": [
+    "Anhydrous lithium chloride (LiCl); Electrical power; KCl (eutectic salt)"
+   ],
+   "output_forms": [
+    "Lithium metal (Li), ingot / foil / granular; Chlorine gas byproduct"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB07-06"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_jadarite_mine__1",
+   "group_id": "peg_li_jadarite_mine",
+   "group_name": "Jadarite underground mine (Jadar-type Li-B deposit)",
+   "entity_class": "Resource Site",
+   "entity_type": "Jadarite underground mine (Jadar-type Li-B deposit)",
+   "column": "source",
+   "input_forms": [
+    "In-situ jadarite ore (LiNaSiB3O7(OH) in volcano-sedimentary host)"
+   ],
+   "output_forms": [
+    "Run-of-mine (ROM) jadarite ore"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R1-Li2CO3"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_jadarite_beneficiation__1",
+   "group_id": "peg_li_jadarite_beneficiation",
+   "group_name": "Jadarite comminution and beneficiation plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Jadarite comminution and beneficiation plant",
+   "column": "extraction",
+   "input_forms": [
+    "Run-of-mine (ROM) jadarite ore"
+   ],
+   "output_forms": [
+    "Jadarite concentrate; Beneficiation residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R1-Li2CO3",
+    "SB-08-R2-LiOHmono",
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_jadarite_acid_leach__1",
+   "group_id": "peg_li_jadarite_acid_leach",
+   "group_name": "Jadarite sulphuric-acid leach / digestion plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Jadarite sulphuric-acid leach / digestion plant",
+   "column": "refining",
+   "input_forms": [
+    "Jadarite concentrate; Sulphuric acid (H2SO4)"
+   ],
+   "output_forms": [
+    "Pregnant leach solution (PLS: Li/B/Na sulphate liquor); Digestion residue filter cake"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R1-Li2CO3"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_boron_recovery_unit__1",
+   "group_id": "peg_li_boron_recovery_unit",
+   "group_name": "Boric acid recovery / boron removal unit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Boric acid recovery / boron removal unit",
+   "column": "refining",
+   "input_forms": [
+    "Pregnant leach solution (PLS)"
+   ],
+   "output_forms": [
+    "Boric acid (co-product); Boron-depleted lithium-bearing sulphate liquor"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R1-Li2CO3",
+    "SB-08-R2-LiOHmono"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_liquor_purification_na2so4__1",
+   "group_id": "peg_li_liquor_purification_na2so4",
+   "group_name": "Liquor purification & sodium sulphate crystallisation unit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Liquor purification & sodium sulphate crystallisation unit",
+   "column": "refining",
+   "input_forms": [
+    "Boron-depleted lithium-bearing sulphate liquor; Lime (Ca(OH)2 / CaO)"
+   ],
+   "output_forms": [
+    "Purified lithium sulphate liquor; Anhydrous sodium sulphate (co-product); Liming residue filter cake"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R1-Li2CO3",
+    "SB-08-R2-LiOHmono"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__20",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulphate liquor; Soda ash (Na2CO3); Carbon dioxide (for bicarbonation)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical and battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R1-Li2CO3"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_jadarite_mine__2",
+   "group_id": "peg_li_jadarite_mine",
+   "group_name": "Jadarite underground mine (Jadar-type Li-B deposit)",
+   "entity_class": "Resource Site",
+   "entity_type": "Jadarite underground mine (Jadar-type Li-B deposit)",
+   "column": "source",
+   "input_forms": [
+    "In-situ jadarite ore (LiNaSiB3O7(OH))"
+   ],
+   "output_forms": [
+    "Run-of-mine (ROM) jadarite ore"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R2-LiOHmono",
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_jadarite_acid_leach__2",
+   "group_id": "peg_li_jadarite_acid_leach",
+   "group_name": "Jadarite sulphuric-acid leach / digestion plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Jadarite sulphuric-acid leach / digestion plant",
+   "column": "refining",
+   "input_forms": [
+    "Jadarite concentrate; Sulphuric acid (H2SO4)"
+   ],
+   "output_forms": [
+    "Pregnant leach solution (PLS); Digestion residue filter cake"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R2-LiOHmono",
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__21",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulphate liquor; Soda ash (Na2CO3)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3) intermediate feed to causticization"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R2-LiOHmono"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__10",
+   "group_id": "peg_li_hydroxide_causticization_plant",
+   "group_name": "Lithium hydroxide causticization and crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium hydroxide causticization and crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3); Lime (Ca(OH)2)"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O); Calcium carbonate (CaCO3) by-product"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R2-LiOHmono"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_boron_recovery_unit__2",
+   "group_id": "peg_li_boron_recovery_unit",
+   "group_name": "Boric acid recovery / boron removal unit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Boric acid recovery / boron removal unit",
+   "column": "refining",
+   "input_forms": [
+    "Pregnant leach solution (PLS)"
+   ],
+   "output_forms": [
+    "Boric acid (co-product); Boron-depleted lithium liquor"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_liquor_purification_na2so4__2",
+   "group_id": "peg_li_liquor_purification_na2so4",
+   "group_name": "Liquor purification & sodium sulphate crystallisation unit",
+   "entity_class": "Operating Facility",
+   "entity_type": "Liquor purification & sodium sulphate crystallisation unit",
+   "column": "refining",
+   "input_forms": [
+    "Boron-depleted lithium liquor; Lime (Ca(OH)2 / CaO)"
+   ],
+   "output_forms": [
+    "Purified lithium sulphate liquor; Anhydrous sodium sulphate (co-product); Liming residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__22",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulphate liquor; Soda ash (Na2CO3)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3) intermediate feed to chlorination"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_anhydrous_licl_plant__8",
+   "group_id": "peg_li_anhydrous_licl_plant",
+   "group_name": "Anhydrous lithium chloride production plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Anhydrous lithium chloride production plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3); Hydrochloric acid (HCl) / chlorine source"
+   ],
+   "output_forms": [
+    "Anhydrous lithium chloride (LiCl)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__8",
+   "group_id": "peg_li_metal_electrolysis_works",
+   "group_name": "Molten-salt lithium metal electrowinning and refining works",
+   "entity_class": "Operating Facility",
+   "entity_type": "Molten-salt lithium metal electrowinning and refining works",
+   "column": "conversion",
+   "input_forms": [
+    "Anhydrous lithium chloride (LiCl); Potassium chloride (KCl, eutectic co-melt); Electrical energy"
+   ],
+   "output_forms": [
+    "Lithium metal (Li), ingot/foil/granular; Chlorine gas (Cl2) by-product"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_tailings_reflotation__1",
+   "group_id": "peg_li_tailings_reflotation",
+   "group_name": "Lithium tailings reclamation & re-concentration operator",
+   "entity_class": "Resource Site",
+   "entity_type": "Lithium tailings reclamation & re-concentration operator",
+   "column": "source",
+   "input_forms": [
+    "Lithium-bearing tailings / residue (residual Li in spodumene flotation tailings, low-grade bulk)"
+   ],
+   "output_forms": [
+    "Recovered spodumene concentrate (~5-6% Li2O)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB09-EB01-A"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_spodumene_sulfate_converter__6",
+   "group_id": "peg_li_spodumene_sulfate_converter",
+   "group_name": "Spodumene sulfuric-acid roast-leach converter",
+   "entity_class": "Operating Facility",
+   "entity_type": "Spodumene sulfuric-acid roast-leach converter",
+   "column": "refining",
+   "input_forms": [
+    "Recovered spodumene concentrate (~5-6% Li2O)"
+   ],
+   "output_forms": [
+    "Lithium sulfate leach solution (impure)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB09-EB01-A",
+    "R-SB09-EB02-A",
+    "R-SB09-EB03-A"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__23",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium sulfate leach solution (impure)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical or battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB09-EB01-A"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_tailings_directleach__1",
+   "group_id": "peg_li_tailings_directleach",
+   "group_name": "Lithium tailings direct-leach recovery operator",
+   "entity_class": "Resource Site",
+   "entity_type": "Lithium tailings direct-leach recovery operator",
+   "column": "source",
+   "input_forms": [
+    "Lithium-bearing tailings / residue (residual Li in spodumene flotation tailings, low-grade bulk)"
+   ],
+   "output_forms": [
+    "Lithium pregnant leach solution (impure; sulfate or phosphate/sulfate)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB09-EB01-B"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__24",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium pregnant leach solution (impure; sulfate or phosphate/sulfate)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical or battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB09-EB01-B"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_tailings_reflotation__2",
+   "group_id": "peg_li_tailings_reflotation",
+   "group_name": "Lithium tailings reclamation & re-concentration operator",
+   "entity_class": "Resource Site",
+   "entity_type": "Lithium tailings reclamation & re-concentration operator",
+   "column": "source",
+   "input_forms": [
+    "Lithium-bearing tailings / residue (low-grade bulk)"
+   ],
+   "output_forms": [
+    "Recovered spodumene concentrate (~5-6% Li2O)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB09-EB02-A",
+    "R-SB09-EB03-A"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__6",
+   "group_id": "peg_li_hydroxide_electrochemical_plant",
+   "group_name": "Electrochemical (membrane) lithium hydroxide plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Electrochemical (membrane) lithium hydroxide plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium sulfate leach solution (impure)"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical or battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB09-EB02-A"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_tailings_directleach__2",
+   "group_id": "peg_li_tailings_directleach",
+   "group_name": "Lithium tailings direct-leach recovery operator",
+   "entity_class": "Resource Site",
+   "entity_type": "Lithium tailings direct-leach recovery operator",
+   "column": "source",
+   "input_forms": [
+    "Lithium-bearing tailings / residue (low-grade bulk)"
+   ],
+   "output_forms": [
+    "Lithium pregnant leach solution (impure)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB09-EB02-B"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__7",
+   "group_id": "peg_li_hydroxide_electrochemical_plant",
+   "group_name": "Electrochemical (membrane) lithium hydroxide plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Electrochemical (membrane) lithium hydroxide plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium pregnant leach solution (impure) / intermediate lithium carbonate"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical or battery grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB09-EB02-B"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__25",
+   "group_id": "peg_li_carbonate_plant",
+   "group_name": "Lithium carbonate precipitation and finishing plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium carbonate precipitation and finishing plant",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium sulfate leach solution (impure)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), chemical grade"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB09-EB03-A"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__9",
+   "group_id": "peg_li_metal_electrolysis_works",
+   "group_name": "Molten-salt lithium metal electrowinning and refining works",
+   "entity_class": "Operating Facility",
+   "entity_type": "Molten-salt lithium metal electrowinning and refining works",
+   "column": "conversion",
+   "input_forms": [
+    "Lithium carbonate (Li2CO3), chemical grade / anhydrous lithium chloride (LiCl)"
+   ],
+   "output_forms": [
+    "Lithium metal (Li) - ingot / foil / granular"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB09-EB03-A"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_battery_collection_site__1",
+   "group_id": "peg_li_battery_collection_site",
+   "group_name": "Spent battery collection & deactivation site",
+   "entity_class": "Resource Site",
+   "entity_type": "Spent battery collection & deactivation site",
+   "column": "source",
+   "input_forms": [
+    "Spent lithium-ion batteries / manufacturing scrap"
+   ],
+   "output_forms": [
+    "Discharged, sorted, dismantled spent cells / electrode scrap"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB01-HYDRO",
+    "R-SB10-EB02-HYDRO-BMED"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_black_mass_plant__1",
+   "group_id": "peg_li_black_mass_plant",
+   "group_name": "Battery shredding & black mass production plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Battery shredding & black mass production plant",
+   "column": "extraction",
+   "input_forms": [
+    "Discharged, sorted, dismantled spent cells / electrode scrap"
+   ],
+   "output_forms": [
+    "Black mass (Li/Ni/Co/Mn/Cu/graphite concentrate); Recovered steel/Al/Cu/plastics side-streams"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB01-HYDRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_blackmass_hydromet_refinery__1",
+   "group_id": "peg_li_blackmass_hydromet_refinery",
+   "group_name": "Black mass hydrometallurgical refinery (leach & purification)",
+   "entity_class": "Operating Facility",
+   "entity_type": "Black mass hydrometallurgical refinery (leach & purification)",
+   "column": "refining",
+   "input_forms": [
+    "Black mass (Li/Ni/Co/Mn/Cu/graphite concentrate)"
+   ],
+   "output_forms": [
+    "Purified metal-bearing leach liquor (Li + Ni/Co/Mn in solution); Graphite / leach residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB01-HYDRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_battery_metals_separation__1",
+   "group_id": "peg_li_battery_metals_separation",
+   "group_name": "Battery-metals separation & recycled lithium chemical plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Battery-metals separation & recycled lithium chemical plant",
+   "column": "refining",
+   "input_forms": [
+    "Purified metal-bearing leach liquor (Li + Ni/Co/Mn in solution)"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical and battery grade; Ni/Co/Mn sulfates or mixed hydroxide precursor"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB01-HYDRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_black_mass_plant__2",
+   "group_id": "peg_li_black_mass_plant",
+   "group_name": "Battery shredding & black mass production plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Battery shredding & black mass production plant",
+   "column": "extraction",
+   "input_forms": [
+    "Discharged, sorted, dismantled spent cells / electrode scrap"
+   ],
+   "output_forms": [
+    "Black mass (Li/Ni/Co/Mn/Cu/graphite concentrate); Steel/Al/Cu/plastic side-streams"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-BMED"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_blackmass_hydromet_refinery__2",
+   "group_id": "peg_li_blackmass_hydromet_refinery",
+   "group_name": "Black mass hydrometallurgical refinery (leach & purification)",
+   "entity_class": "Operating Facility",
+   "entity_type": "Black mass hydrometallurgical refinery (leach & purification)",
+   "column": "refining",
+   "input_forms": [
+    "Black mass (Li/Ni/Co/Mn/Cu/graphite concentrate)"
+   ],
+   "output_forms": [
+    "Purified metal-bearing leach liquor; Graphite / leach residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-BMED"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_battery_metals_separation__2",
+   "group_id": "peg_li_battery_metals_separation",
+   "group_name": "Battery-metals separation & recycled lithium chemical plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Battery-metals separation & recycled lithium chemical plant",
+   "column": "refining",
+   "input_forms": [
+    "Purified metal-bearing leach liquor"
+   ],
+   "output_forms": [
+    "Purified lithium sulfate (Li2SO4) solution; Ni/Co/Mn co-products"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-BMED"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_bmed_recycle__1",
+   "group_id": "peg_li_hydroxide_bmed_recycle",
+   "group_name": "Recycled lithium hydroxide conversion & crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Recycled lithium hydroxide conversion & crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Purified lithium sulfate (Li2SO4) solution"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH.H2O), technical and battery grade; H2SO4 by-product (recycled)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-BMED"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_battery_metals_separation__3",
+   "group_id": "peg_li_battery_metals_separation",
+   "group_name": "Battery-metals separation & recycled lithium chemical plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Battery-metals separation & recycled lithium chemical plant",
+   "column": "refining",
+   "input_forms": [
+    "Purified metal-bearing leach liquor"
+   ],
+   "output_forms": [
+    "Recovered lithium carbonate (Li2CO3)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-CAUSTIC"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_bmed_recycle__2",
+   "group_id": "peg_li_hydroxide_bmed_recycle",
+   "group_name": "Recycled lithium hydroxide conversion & crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Recycled lithium hydroxide conversion & crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Recovered lithium carbonate (Li2CO3)"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH.H2O), technical and battery grade; Calcium carbonate (CaCO3) by-product"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-CAUSTIC"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_battery_metals_separation__4",
+   "group_id": "peg_li_battery_metals_separation",
+   "group_name": "Battery-metals separation & recycled lithium chemical plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Battery-metals separation & recycled lithium chemical plant",
+   "column": "refining",
+   "input_forms": [
+    "Purified metal-bearing leach liquor"
+   ],
+   "output_forms": [
+    "Recovered lithium carbonate / lithium hydroxide"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB03-HYDRO-ELECTROLYSIS"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_anhydrous_licl_plant__9",
+   "group_id": "peg_li_anhydrous_licl_plant",
+   "group_name": "Anhydrous lithium chloride production plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Anhydrous lithium chloride production plant",
+   "column": "conversion",
+   "input_forms": [
+    "Recovered lithium carbonate / lithium hydroxide"
+   ],
+   "output_forms": [
+    "Anhydrous lithium chloride (LiCl)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB03-HYDRO-ELECTROLYSIS"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__10",
+   "group_id": "peg_li_metal_electrolysis_works",
+   "group_name": "Molten-salt lithium metal electrowinning and refining works",
+   "entity_class": "Operating Facility",
+   "entity_type": "Molten-salt lithium metal electrowinning and refining works",
+   "column": "conversion",
+   "input_forms": [
+    "Anhydrous lithium chloride (LiCl)"
+   ],
+   "output_forms": [
+    "Lithium metal (Li) - ingot / foil / granular; Chlorine gas (Cl2) by-product"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB03-HYDRO-ELECTROLYSIS",
+    "R-SB10-EB03-PYRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_battery_collection_site__2",
+   "group_id": "peg_li_battery_collection_site",
+   "group_name": "Spent battery collection & deactivation site",
+   "entity_class": "Resource Site",
+   "entity_type": "Spent battery collection & deactivation site",
+   "column": "source",
+   "input_forms": [
+    "Spent lithium-ion batteries / manufacturing scrap"
+   ],
+   "output_forms": [
+    "Sorted spent batteries / scrap prepared as smelter feed"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB01-PYRO",
+    "R-SB10-EB02-PYRO",
+    "R-SB10-EB03-PYRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_battery_smelter__1",
+   "group_id": "peg_li_battery_smelter",
+   "group_name": "Pyrometallurgical battery smelter",
+   "entity_class": "Operating Facility",
+   "entity_type": "Pyrometallurgical battery smelter",
+   "column": "extraction",
+   "input_forms": [
+    "Sorted spent batteries / scrap prepared as smelter feed"
+   ],
+   "output_forms": [
+    "Lithium-bearing slag; Ni/Co/Cu alloy (co-product)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB01-PYRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_slag_leach_recovery__1",
+   "group_id": "peg_li_slag_leach_recovery",
+   "group_name": "Slag-leach hydrometallurgical lithium recovery plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Slag-leach hydrometallurgical lithium recovery plant",
+   "column": "refining",
+   "input_forms": [
+    "Lithium-bearing slag"
+   ],
+   "output_forms": [
+    "Lithium carbonate (Li2CO3), technical and battery grade; Al/Ca/Mn leach residue"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB01-PYRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_battery_smelter__2",
+   "group_id": "peg_li_battery_smelter",
+   "group_name": "Pyrometallurgical battery smelter",
+   "entity_class": "Operating Facility",
+   "entity_type": "Pyrometallurgical battery smelter",
+   "column": "extraction",
+   "input_forms": [
+    "Sorted spent batteries / scrap prepared as smelter feed"
+   ],
+   "output_forms": [
+    "Lithium-bearing slag; Ni/Co/Cu alloy"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB02-PYRO",
+    "R-SB10-EB03-PYRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_slag_leach_recovery__2",
+   "group_id": "peg_li_slag_leach_recovery",
+   "group_name": "Slag-leach hydrometallurgical lithium recovery plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Slag-leach hydrometallurgical lithium recovery plant",
+   "column": "refining",
+   "input_forms": [
+    "Lithium-bearing slag"
+   ],
+   "output_forms": [
+    "Recovered lithium carbonate (Li2CO3)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB02-PYRO",
+    "R-SB10-EB03-PYRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_bmed_recycle__3",
+   "group_id": "peg_li_hydroxide_bmed_recycle",
+   "group_name": "Recycled lithium hydroxide conversion & crystallization plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Recycled lithium hydroxide conversion & crystallization plant",
+   "column": "conversion",
+   "input_forms": [
+    "Recovered lithium carbonate (Li2CO3)"
+   ],
+   "output_forms": [
+    "Lithium hydroxide monohydrate (LiOH.H2O), technical and battery grade; CaCO3 by-product"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB02-PYRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_anhydrous_licl_plant__10",
+   "group_id": "peg_li_anhydrous_licl_plant",
+   "group_name": "Anhydrous lithium chloride production plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Anhydrous lithium chloride production plant",
+   "column": "conversion",
+   "input_forms": [
+    "Recovered lithium carbonate (Li2CO3)"
+   ],
+   "output_forms": [
+    "Anhydrous lithium chloride (LiCl)"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [
+    "R-SB10-EB03-PYRO"
+   ]
+  }
+ ],
+ "ending_boundary_nodes": [
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__1",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical and battery grade",
+   "route_ids": [
+    "R-SB01-EB01-sulfate"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_spodumene_sodaash_autoclave__2",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical and battery grade",
+   "route_ids": [
+    "R-SB01-EB01-sodaash-autoclave"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__1",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical and battery grade",
+   "route_ids": [
+    "R-SB01-EB02-causticization"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__1",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery grade; By-product sulfuric acid (recycled)",
+   "route_ids": [
+    "R-SB01-EB02-bipolar-electrodialysis"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__1",
+   "boundary_id": "EB-03",
+   "output_form": "Lithium metal (Li), ingot/foil/granular",
+   "route_ids": [
+    "R-SB01-EB03-metal-via-carbonate-chloride"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__3",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical and battery grade",
+   "route_ids": [
+    "SB-02-R01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__2",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery grade; Sodium sulfate (Na2SO4) by-product",
+   "route_ids": [
+    "SB-02-R02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__2",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery grade; Calcium carbonate (CaCO3) residue",
+   "route_ids": [
+    "SB-02-R03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__2",
+   "boundary_id": "EB-03",
+   "output_form": "Lithium metal (Li) ingot/foil/granular; Chlorine gas (Cl2, recycled)",
+   "route_ids": [
+    "SB-02-R04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__6",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical/battery grade; Sodium sulfate byproduct",
+   "route_ids": [
+    "R-SB03-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__3",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical/battery grade; Gypsum (CaSO4) or sulfuric acid byproduct",
+   "route_ids": [
+    "R-SB03-02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__3",
+   "boundary_id": "EB-03",
+   "output_form": "Lithium metal (Li); Chlorine gas byproduct",
+   "route_ids": [
+    "R-SB03-03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__8",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical/battery grade; Sodium sulfate byproduct",
+   "route_ids": [
+    "R-SB03-04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__4",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical/battery grade; Gypsum or sulfuric acid byproduct",
+   "route_ids": [
+    "R-SB03-05"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__9",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical and battery grade",
+   "route_ids": [
+    "SB-04-R1"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__10",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical and battery grade",
+   "route_ids": [
+    "SB-04-R2"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__5",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical and battery grade; Calcium carbonate (CaCO3) by-product",
+   "route_ids": [
+    "SB-04-R3"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__3",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical and battery grade; Hydrochloric acid (HCl) by-product",
+   "route_ids": [
+    "SB-04-R4"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__4",
+   "boundary_id": "EB-03",
+   "output_form": "Lithium metal (Li) ingot/foil/granular; Chlorine (Cl2) by-product",
+   "route_ids": [
+    "SB-04-R5"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__12",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical and battery grade",
+   "route_ids": [
+    "SB-05-R1"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__4",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery grade; Hydrochloric acid (HCl) co-product",
+   "route_ids": [
+    "SB-05-R2"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__6",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery grade; Calcium carbonate (CaCO3) byproduct",
+   "route_ids": [
+    "SB-05-R3"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__5",
+   "boundary_id": "EB-03",
+   "output_form": "Lithium metal (Li), ingot/foil/granular; Chlorine (Cl2) co-product",
+   "route_ids": [
+    "SB-05-R4",
+    "SB-05-R5"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__15",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), battery/technical grade",
+   "route_ids": [
+    "R-SB06-EB01-carbonate"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__7",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery/technical grade; Calcium carbonate (CaCO3) byproduct",
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-via-carbonate"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__5",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), battery/technical grade; Chlorine (Cl2) byproduct; Hydrogen (H2) byproduct",
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-direct-electrolysis"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__6",
+   "boundary_id": "EB-03",
+   "output_form": "Lithium metal (Li), ingot/foil/granular; Chlorine (Cl2) byproduct",
+   "route_ids": [
+    "R-SB06-EB03-lithium-metal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__17",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical and battery grade",
+   "route_ids": [
+    "R-SB07-01"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__18",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical and battery grade",
+   "route_ids": [
+    "R-SB07-02"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__19",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical and battery grade",
+   "route_ids": [
+    "R-SB07-03"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__8",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical and battery grade",
+   "route_ids": [
+    "R-SB07-04"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__9",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical and battery grade; Calcium carbonate byproduct",
+   "route_ids": [
+    "R-SB07-05"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__7",
+   "boundary_id": "EB-03",
+   "output_form": "Lithium metal (Li), ingot / foil / granular; Chlorine gas byproduct",
+   "route_ids": [
+    "R-SB07-06"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__20",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical and battery grade",
+   "route_ids": [
+    "SB-08-R1-Li2CO3"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_causticization_plant__10",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O); Calcium carbonate (CaCO3) by-product",
+   "route_ids": [
+    "SB-08-R2-LiOHmono"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__8",
+   "boundary_id": "EB-03",
+   "output_form": "Lithium metal (Li), ingot/foil/granular; Chlorine gas (Cl2) by-product",
+   "route_ids": [
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__23",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical or battery grade",
+   "route_ids": [
+    "R-SB09-EB01-A"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_carbonate_plant__24",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical or battery grade",
+   "route_ids": [
+    "R-SB09-EB01-B"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__6",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical or battery grade",
+   "route_ids": [
+    "R-SB09-EB02-A"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_electrochemical_plant__7",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O), technical or battery grade",
+   "route_ids": [
+    "R-SB09-EB02-B"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__9",
+   "boundary_id": "EB-03",
+   "output_form": "Lithium metal (Li) - ingot / foil / granular",
+   "route_ids": [
+    "R-SB09-EB03-A"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_battery_metals_separation__1",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical and battery grade; Ni/Co/Mn sulfates or mixed hydroxide precursor",
+   "route_ids": [
+    "R-SB10-EB01-HYDRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_bmed_recycle__1",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH.H2O), technical and battery grade; H2SO4 by-product (recycled)",
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-BMED"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_bmed_recycle__2",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH.H2O), technical and battery grade; Calcium carbonate (CaCO3) by-product",
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-CAUSTIC"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_metal_electrolysis_works__10",
+   "boundary_id": "EB-03",
+   "output_form": "Lithium metal (Li) - ingot / foil / granular; Chlorine gas (Cl2) by-product",
+   "route_ids": [
+    "R-SB10-EB03-HYDRO-ELECTROLYSIS",
+    "R-SB10-EB03-PYRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_slag_leach_recovery__1",
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3), technical and battery grade; Al/Ca/Mn leach residue",
+   "route_ids": [
+    "R-SB10-EB01-PYRO"
+   ]
+  },
+  {
+   "map_node_id": "mn_peg_li_hydroxide_bmed_recycle__3",
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH.H2O), technical and battery grade; CaCO3 by-product",
+   "route_ids": [
+    "R-SB10-EB02-PYRO"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "edge_id": "e001",
+   "from": "mn_peg_li_spodumene_mine_concentrator__1",
+   "to": "mn_peg_li_spodumene_sulfate_converter__1",
+   "handoff_form": "Spodumene concentrate SC6 (~6% Li2O)",
+   "route_ids": [
+    "R-SB01-EB01-sulfate"
+   ]
+  },
+  {
+   "edge_id": "e002",
+   "from": "mn_peg_li_spodumene_sulfate_converter__1",
+   "to": "mn_peg_li_spodumene_sulfate_converter__2",
+   "handoff_form": "Beta-spodumene (calcined, reactive)",
+   "route_ids": [
+    "R-SB01-EB01-sulfate",
+    "R-SB01-EB02-causticization"
+   ]
+  },
+  {
+   "edge_id": "e003",
+   "from": "mn_peg_li_spodumene_sulfate_converter__2",
+   "to": "mn_peg_li_carbonate_plant__1",
+   "handoff_form": "Purified lithium sulfate (Li2SO4) solution",
+   "route_ids": [
+    "R-SB01-EB01-sulfate"
+   ]
+  },
+  {
+   "edge_id": "e004",
+   "from": "mn_peg_li_spodumene_mine_concentrator__2",
+   "to": "mn_peg_li_spodumene_sodaash_autoclave__1",
+   "handoff_form": "Spodumene concentrate SC6 (~6% Li2O)",
+   "route_ids": [
+    "R-SB01-EB01-sodaash-autoclave"
+   ]
+  },
+  {
+   "edge_id": "e005",
+   "from": "mn_peg_li_spodumene_sodaash_autoclave__1",
+   "to": "mn_peg_li_spodumene_sodaash_autoclave__2",
+   "handoff_form": "Beta-spodumene (calcined, reactive)",
+   "route_ids": [
+    "R-SB01-EB01-sodaash-autoclave"
+   ]
+  },
+  {
+   "edge_id": "e006",
+   "from": "mn_peg_li_spodumene_mine_concentrator__2",
+   "to": "mn_peg_li_spodumene_sulfate_converter__1",
+   "handoff_form": "Spodumene concentrate SC6 (~6% Li2O)",
+   "route_ids": [
+    "R-SB01-EB02-bipolar-electrodialysis",
+    "R-SB01-EB02-causticization"
+   ]
+  },
+  {
+   "edge_id": "e007",
+   "from": "mn_peg_li_spodumene_sulfate_converter__2",
+   "to": "mn_peg_li_hydroxide_causticization_plant__1",
+   "handoff_form": "Purified lithium sulfate (Li2SO4) solution",
+   "route_ids": [
+    "R-SB01-EB02-causticization"
+   ]
+  },
+  {
+   "edge_id": "e008",
+   "from": "mn_peg_li_spodumene_sulfate_converter__1",
+   "to": "mn_peg_li_spodumene_sulfate_converter__3",
+   "handoff_form": "Beta-spodumene (calcined, reactive)",
+   "route_ids": [
+    "R-SB01-EB02-bipolar-electrodialysis"
+   ]
+  },
+  {
+   "edge_id": "e009",
+   "from": "mn_peg_li_spodumene_sulfate_converter__3",
+   "to": "mn_peg_li_hydroxide_electrochemical_plant__1",
+   "handoff_form": "Purified lithium sulfate (Li2SO4) solution (membrane-grade)",
+   "route_ids": [
+    "R-SB01-EB02-bipolar-electrodialysis"
+   ]
+  },
+  {
+   "edge_id": "e010",
+   "from": "mn_peg_li_spodumene_mine_concentrator__2",
+   "to": "mn_peg_li_spodumene_sulfate_converter__4",
+   "handoff_form": "Spodumene concentrate SC6 (~6% Li2O)",
+   "route_ids": [
+    "R-SB01-EB03-metal-via-carbonate-chloride"
+   ]
+  },
+  {
+   "edge_id": "e011",
+   "from": "mn_peg_li_spodumene_sulfate_converter__4",
+   "to": "mn_peg_li_carbonate_plant__2",
+   "handoff_form": "Purified lithium sulfate (Li2SO4) solution",
+   "route_ids": [
+    "R-SB01-EB03-metal-via-carbonate-chloride"
+   ]
+  },
+  {
+   "edge_id": "e012",
+   "from": "mn_peg_li_carbonate_plant__2",
+   "to": "mn_peg_li_anhydrous_licl_plant__1",
+   "handoff_form": "Lithium carbonate (Li2CO3)",
+   "route_ids": [
+    "R-SB01-EB03-metal-via-carbonate-chloride"
+   ]
+  },
+  {
+   "edge_id": "e013",
+   "from": "mn_peg_li_anhydrous_licl_plant__1",
+   "to": "mn_peg_li_metal_electrolysis_works__1",
+   "handoff_form": "Anhydrous lithium chloride (LiCl)",
+   "route_ids": [
+    "R-SB01-EB03-metal-via-carbonate-chloride"
+   ]
+  },
+  {
+   "edge_id": "e014",
+   "from": "mn_peg_li_pegmatite_mine_petalite__1",
+   "to": "mn_peg_li_pegmatite_concentrator__1",
+   "handoff_form": "Run-of-mine (crushed) petalite/amblygonite/eucryptite pegmatite ore",
+   "route_ids": [
+    "SB-02-R01"
+   ]
+  },
+  {
+   "edge_id": "e015",
+   "from": "mn_peg_li_pegmatite_concentrator__1",
+   "to": "mn_peg_li_spodumene_sulfate_converter__5",
+   "handoff_form": "Petalite concentrate (~4.0-4.7% Li2O); Amblygonite/eucryptite concentrate (~7-10% Li2O)",
+   "route_ids": [
+    "SB-02-R01"
+   ]
+  },
+  {
+   "edge_id": "e016",
+   "from": "mn_peg_li_spodumene_sulfate_converter__5",
+   "to": "mn_peg_li_sulfate_solution_purification__1",
+   "handoff_form": "Pregnant lithium sulfate (Li2SO4) leach liquor; Leach residue",
+   "route_ids": [
+    "SB-02-R01",
+    "SB-02-R02"
+   ]
+  },
+  {
+   "edge_id": "e017",
+   "from": "mn_peg_li_sulfate_solution_purification__1",
+   "to": "mn_peg_li_carbonate_plant__3",
+   "handoff_form": "Purified lithium sulfate (Li2SO4) solution; Impurity precipitate cake",
+   "route_ids": [
+    "SB-02-R01"
+   ]
+  },
+  {
+   "edge_id": "e018",
+   "from": "mn_peg_li_pegmatite_mine_petalite__1",
+   "to": "mn_peg_li_pegmatite_concentrator__2",
+   "handoff_form": "Run-of-mine (crushed) petalite/amblygonite/eucryptite pegmatite ore",
+   "route_ids": [
+    "SB-02-R02"
+   ]
+  },
+  {
+   "edge_id": "e019",
+   "from": "mn_peg_li_pegmatite_concentrator__2",
+   "to": "mn_peg_li_spodumene_sulfate_converter__5",
+   "handoff_form": "Petalite/amblygonite/eucryptite concentrate",
+   "route_ids": [
+    "SB-02-R02"
+   ]
+  },
+  {
+   "edge_id": "e020",
+   "from": "mn_peg_li_sulfate_solution_purification__1",
+   "to": "mn_peg_li_hydroxide_electrochemical_plant__2",
+   "handoff_form": "Purified lithium sulfate (Li2SO4) solution; Impurity precipitate cake",
+   "route_ids": [
+    "SB-02-R02"
+   ]
+  },
+  {
+   "edge_id": "e021",
+   "from": "mn_peg_li_pegmatite_mine_petalite__2",
+   "to": "mn_peg_li_pegmatite_concentrator__3",
+   "handoff_form": "Run-of-mine (crushed) pegmatite ore",
+   "route_ids": [
+    "SB-02-R03",
+    "SB-02-R04"
+   ]
+  },
+  {
+   "edge_id": "e022",
+   "from": "mn_peg_li_pegmatite_concentrator__3",
+   "to": "mn_peg_li_spodumene_sulfate_converter__5",
+   "handoff_form": "Petalite/amblygonite/eucryptite concentrate",
+   "route_ids": [
+    "SB-02-R03",
+    "SB-02-R04"
+   ]
+  },
+  {
+   "edge_id": "e023",
+   "from": "mn_peg_li_spodumene_sulfate_converter__5",
+   "to": "mn_peg_li_sulfate_solution_purification__2",
+   "handoff_form": "Pregnant lithium sulfate (Li2SO4) leach liquor; Leach residue",
+   "route_ids": [
+    "SB-02-R03"
+   ]
+  },
+  {
+   "edge_id": "e024",
+   "from": "mn_peg_li_sulfate_solution_purification__2",
+   "to": "mn_peg_li_carbonate_plant__4",
+   "handoff_form": "Purified lithium sulfate (Li2SO4) solution",
+   "route_ids": [
+    "SB-02-R03"
+   ]
+  },
+  {
+   "edge_id": "e025",
+   "from": "mn_peg_li_carbonate_plant__4",
+   "to": "mn_peg_li_hydroxide_causticization_plant__2",
+   "handoff_form": "Lithium carbonate (Li2CO3), technical grade",
+   "route_ids": [
+    "SB-02-R03"
+   ]
+  },
+  {
+   "edge_id": "e026",
+   "from": "mn_peg_li_spodumene_sulfate_converter__5",
+   "to": "mn_peg_li_carbonate_plant__5",
+   "handoff_form": "Pregnant lithium sulfate (Li2SO4) leach liquor; Leach residue",
+   "route_ids": [
+    "SB-02-R04"
+   ]
+  },
+  {
+   "edge_id": "e027",
+   "from": "mn_peg_li_carbonate_plant__5",
+   "to": "mn_peg_li_anhydrous_licl_plant__2",
+   "handoff_form": "Lithium carbonate (Li2CO3), technical grade",
+   "route_ids": [
+    "SB-02-R04"
+   ]
+  },
+  {
+   "edge_id": "e028",
+   "from": "mn_peg_li_anhydrous_licl_plant__2",
+   "to": "mn_peg_li_metal_electrolysis_works__2",
+   "handoff_form": "Anhydrous lithium chloride (LiCl)",
+   "route_ids": [
+    "SB-02-R04"
+   ]
+  },
+  {
+   "edge_id": "e029",
+   "from": "mn_peg_li_mica_mine__1",
+   "to": "mn_peg_li_mica_concentrator__1",
+   "handoff_form": "Run-of-mine lithium-mica (lepidolite/zinnwaldite) ore",
+   "route_ids": [
+    "R-SB03-01"
+   ]
+  },
+  {
+   "edge_id": "e030",
+   "from": "mn_peg_li_mica_concentrator__1",
+   "to": "mn_peg_li_mica_sulfate_roast_leach__1",
+   "handoff_form": "Lithium-mica (lepidolite/zinnwaldite) concentrate",
+   "route_ids": [
+    "R-SB03-01"
+   ]
+  },
+  {
+   "edge_id": "e031",
+   "from": "mn_peg_li_mica_sulfate_roast_leach__1",
+   "to": "mn_peg_li_sulfate_solution_purification__3",
+   "handoff_form": "Lithium sulfate pregnant leach solution; Leach residue / silicate tailings",
+   "route_ids": [
+    "R-SB03-01"
+   ]
+  },
+  {
+   "edge_id": "e032",
+   "from": "mn_peg_li_sulfate_solution_purification__3",
+   "to": "mn_peg_li_carbonate_plant__6",
+   "handoff_form": "Purified concentrated lithium sulfate liquor; Rb/Cs byproduct stream; Impurity precipitate cake",
+   "route_ids": [
+    "R-SB03-01"
+   ]
+  },
+  {
+   "edge_id": "e033",
+   "from": "mn_peg_li_mica_mine__2",
+   "to": "mn_peg_li_mica_concentrator__2",
+   "handoff_form": "Run-of-mine lithium-mica ore",
+   "route_ids": [
+    "R-SB03-02"
+   ]
+  },
+  {
+   "edge_id": "e034",
+   "from": "mn_peg_li_mica_concentrator__2",
+   "to": "mn_peg_li_mica_sulfate_roast_leach__2",
+   "handoff_form": "Lithium-mica concentrate",
+   "route_ids": [
+    "R-SB03-02"
+   ]
+  },
+  {
+   "edge_id": "e035",
+   "from": "mn_peg_li_mica_sulfate_roast_leach__2",
+   "to": "mn_peg_li_sulfate_solution_purification__4",
+   "handoff_form": "Lithium sulfate pregnant leach solution; Leach residue",
+   "route_ids": [
+    "R-SB03-02"
+   ]
+  },
+  {
+   "edge_id": "e036",
+   "from": "mn_peg_li_sulfate_solution_purification__4",
+   "to": "mn_peg_li_hydroxide_causticization_plant__3",
+   "handoff_form": "Purified concentrated lithium sulfate liquor",
+   "route_ids": [
+    "R-SB03-02"
+   ]
+  },
+  {
+   "edge_id": "e037",
+   "from": "mn_peg_li_mica_mine__3",
+   "to": "mn_peg_li_mica_sulfate_roast_leach__3",
+   "handoff_form": "Lithium-mica concentrate",
+   "route_ids": [
+    "R-SB03-03"
+   ]
+  },
+  {
+   "edge_id": "e038",
+   "from": "mn_peg_li_mica_sulfate_roast_leach__3",
+   "to": "mn_peg_li_carbonate_plant__7",
+   "handoff_form": "Purified concentrated lithium sulfate liquor",
+   "route_ids": [
+    "R-SB03-03"
+   ]
+  },
+  {
+   "edge_id": "e039",
+   "from": "mn_peg_li_carbonate_plant__7",
+   "to": "mn_peg_li_anhydrous_licl_plant__3",
+   "handoff_form": "Lithium carbonate (Li2CO3), battery grade (intermediate)",
+   "route_ids": [
+    "R-SB03-03"
+   ]
+  },
+  {
+   "edge_id": "e040",
+   "from": "mn_peg_li_anhydrous_licl_plant__3",
+   "to": "mn_peg_li_metal_electrolysis_works__3",
+   "handoff_form": "Anhydrous lithium chloride (LiCl); CO2 off-gas",
+   "route_ids": [
+    "R-SB03-03"
+   ]
+  },
+  {
+   "edge_id": "e041",
+   "from": "mn_peg_li_mica_mine__4",
+   "to": "mn_peg_li_mica_concentrator__3",
+   "handoff_form": "Run-of-mine lithium-mica ore",
+   "route_ids": [
+    "R-SB03-04"
+   ]
+  },
+  {
+   "edge_id": "e042",
+   "from": "mn_peg_li_mica_concentrator__3",
+   "to": "mn_peg_li_mica_lime_sulfate_roast_leach__1",
+   "handoff_form": "Zinnwaldite/lithium-mica concentrate",
+   "route_ids": [
+    "R-SB03-04"
+   ]
+  },
+  {
+   "edge_id": "e043",
+   "from": "mn_peg_li_mica_lime_sulfate_roast_leach__1",
+   "to": "mn_peg_li_sulfate_solution_purification__5",
+   "handoff_form": "Lithium(-potassium) sulfate pregnant leach solution; Calcine residue",
+   "route_ids": [
+    "R-SB03-04"
+   ]
+  },
+  {
+   "edge_id": "e044",
+   "from": "mn_peg_li_sulfate_solution_purification__5",
+   "to": "mn_peg_li_carbonate_plant__8",
+   "handoff_form": "Purified concentrated lithium sulfate liquor; K/Rb/Cs byproduct stream",
+   "route_ids": [
+    "R-SB03-04"
+   ]
+  },
+  {
+   "edge_id": "e045",
+   "from": "mn_peg_li_mica_mine__5",
+   "to": "mn_peg_li_mica_lime_sulfate_roast_leach__2",
+   "handoff_form": "Zinnwaldite/lithium-mica concentrate",
+   "route_ids": [
+    "R-SB03-05"
+   ]
+  },
+  {
+   "edge_id": "e046",
+   "from": "mn_peg_li_mica_lime_sulfate_roast_leach__2",
+   "to": "mn_peg_li_hydroxide_causticization_plant__4",
+   "handoff_form": "Purified concentrated lithium sulfate liquor",
+   "route_ids": [
+    "R-SB03-05"
+   ]
+  },
+  {
+   "edge_id": "e047",
+   "from": "mn_peg_li_salar_brine_wellfield__1",
+   "to": "mn_peg_li_solar_evaporation_ponds__1",
+   "handoff_form": "Raw lithium-bearing brine (dissolved Li+)",
+   "route_ids": [
+    "SB-04-R1"
+   ]
+  },
+  {
+   "edge_id": "e048",
+   "from": "mn_peg_li_solar_evaporation_ponds__1",
+   "to": "mn_peg_li_brine_softening_unit__1",
+   "handoff_form": "Concentrated lithium liquor (~4-6% Li, LiCl/mixed-chloride brine); Potash (KCl) co-product; Boron/magnesium salt co-products",
+   "route_ids": [
+    "SB-04-R1"
+   ]
+  },
+  {
+   "edge_id": "e049",
+   "from": "mn_peg_li_brine_softening_unit__1",
+   "to": "mn_peg_li_carbonate_plant__9",
+   "handoff_form": "Purified concentrated lithium liquor (low Mg/Ca/B)",
+   "route_ids": [
+    "SB-04-R1"
+   ]
+  },
+  {
+   "edge_id": "e050",
+   "from": "mn_peg_li_salar_brine_wellfield__1",
+   "to": "mn_peg_li_dle_plant__1",
+   "handoff_form": "Raw lithium-bearing brine (dissolved Li+)",
+   "route_ids": [
+    "SB-04-R2"
+   ]
+  },
+  {
+   "edge_id": "e051",
+   "from": "mn_peg_li_dle_plant__1",
+   "to": "mn_peg_li_licl_concentration_purification__1",
+   "handoff_form": "Dilute lithium chloride (LiCl) eluate; Lithium-depleted spent brine (reinjected)",
+   "route_ids": [
+    "SB-04-R2"
+   ]
+  },
+  {
+   "edge_id": "e052",
+   "from": "mn_peg_li_licl_concentration_purification__1",
+   "to": "mn_peg_li_carbonate_plant__10",
+   "handoff_form": "Purified concentrated lithium chloride liquor (low Mg/Ca/B)",
+   "route_ids": [
+    "SB-04-R2"
+   ]
+  },
+  {
+   "edge_id": "e053",
+   "from": "mn_peg_li_salar_brine_wellfield__2",
+   "to": "mn_peg_li_solar_evaporation_ponds__2",
+   "handoff_form": "Raw lithium-bearing brine (dissolved Li+)",
+   "route_ids": [
+    "SB-04-R3"
+   ]
+  },
+  {
+   "edge_id": "e054",
+   "from": "mn_peg_li_solar_evaporation_ponds__2",
+   "to": "mn_peg_li_brine_softening_unit__2",
+   "handoff_form": "Concentrated lithium liquor (~4-6% Li); Potash/boron/Mg co-products",
+   "route_ids": [
+    "SB-04-R3"
+   ]
+  },
+  {
+   "edge_id": "e055",
+   "from": "mn_peg_li_brine_softening_unit__2",
+   "to": "mn_peg_li_carbonate_plant__11",
+   "handoff_form": "Purified concentrated lithium liquor",
+   "route_ids": [
+    "SB-04-R3"
+   ]
+  },
+  {
+   "edge_id": "e056",
+   "from": "mn_peg_li_carbonate_plant__11",
+   "to": "mn_peg_li_hydroxide_causticization_plant__5",
+   "handoff_form": "Lithium carbonate (Li2CO3) intermediate",
+   "route_ids": [
+    "SB-04-R3"
+   ]
+  },
+  {
+   "edge_id": "e057",
+   "from": "mn_peg_li_salar_brine_wellfield__2",
+   "to": "mn_peg_li_dle_plant__2",
+   "handoff_form": "Raw lithium-bearing brine (dissolved Li+)",
+   "route_ids": [
+    "SB-04-R4"
+   ]
+  },
+  {
+   "edge_id": "e058",
+   "from": "mn_peg_li_dle_plant__2",
+   "to": "mn_peg_li_licl_concentration_purification__2",
+   "handoff_form": "Dilute lithium chloride (LiCl) eluate; Spent brine (reinjected)",
+   "route_ids": [
+    "SB-04-R4"
+   ]
+  },
+  {
+   "edge_id": "e059",
+   "from": "mn_peg_li_licl_concentration_purification__2",
+   "to": "mn_peg_li_hydroxide_electrochemical_plant__3",
+   "handoff_form": "High-purity concentrated lithium chloride liquor",
+   "route_ids": [
+    "SB-04-R4"
+   ]
+  },
+  {
+   "edge_id": "e060",
+   "from": "mn_peg_li_salar_brine_wellfield__2",
+   "to": "mn_peg_li_brine_concentration_composite__1",
+   "handoff_form": "Raw lithium-bearing brine (dissolved Li+)",
+   "route_ids": [
+    "SB-04-R5"
+   ]
+  },
+  {
+   "edge_id": "e061",
+   "from": "mn_peg_li_brine_concentration_composite__1",
+   "to": "mn_peg_li_anhydrous_licl_plant__4",
+   "handoff_form": "Purified concentrated lithium chloride liquor",
+   "route_ids": [
+    "SB-04-R5"
+   ]
+  },
+  {
+   "edge_id": "e062",
+   "from": "mn_peg_li_anhydrous_licl_plant__4",
+   "to": "mn_peg_li_metal_electrolysis_works__4",
+   "handoff_form": "Anhydrous lithium chloride (LiCl)",
+   "route_ids": [
+    "SB-04-R5"
+   ]
+  },
+  {
+   "edge_id": "e063",
+   "from": "mn_peg_li_geothermal_brine_field__1",
+   "to": "mn_peg_li_geothermal_brine_pretreatment__1",
+   "handoff_form": "Electricity (co-product); Lithium-bearing hot spent geothermal brine (post-power-generation)",
+   "route_ids": [
+    "SB-05-R1"
+   ]
+  },
+  {
+   "edge_id": "e064",
+   "from": "mn_peg_li_geothermal_brine_pretreatment__1",
+   "to": "mn_peg_li_dle_plant__3",
+   "handoff_form": "Clarified lithium-bearing brine (silica/iron/Mn reduced); Silica/iron/Mn precipitate residue",
+   "route_ids": [
+    "SB-05-R1"
+   ]
+  },
+  {
+   "edge_id": "e065",
+   "from": "mn_peg_li_dle_plant__3",
+   "to": "mn_peg_li_carbonate_plant__12",
+   "handoff_form": "Concentrated purified lithium chloride (LiCl) solution; Lithium-depleted brine (reinjection)",
+   "route_ids": [
+    "SB-05-R1"
+   ]
+  },
+  {
+   "edge_id": "e066",
+   "from": "mn_peg_li_geothermal_brine_field__2",
+   "to": "mn_peg_li_geothermal_brine_pretreatment__2",
+   "handoff_form": "Electricity (co-product); Lithium-bearing hot spent geothermal brine",
+   "route_ids": [
+    "SB-05-R2"
+   ]
+  },
+  {
+   "edge_id": "e067",
+   "from": "mn_peg_li_geothermal_brine_pretreatment__2",
+   "to": "mn_peg_li_dle_plant__4",
+   "handoff_form": "Clarified lithium-bearing brine; Silica/iron/Mn precipitate residue",
+   "route_ids": [
+    "SB-05-R2"
+   ]
+  },
+  {
+   "edge_id": "e068",
+   "from": "mn_peg_li_dle_plant__4",
+   "to": "mn_peg_li_hydroxide_electrochemical_plant__4",
+   "handoff_form": "Concentrated purified lithium chloride (LiCl) solution; Lithium-depleted brine",
+   "route_ids": [
+    "SB-05-R2"
+   ]
+  },
+  {
+   "edge_id": "e069",
+   "from": "mn_peg_li_geothermal_brine_field__2",
+   "to": "mn_peg_li_geothermal_brine_pretreatment__3",
+   "handoff_form": "Electricity (co-product); Lithium-bearing hot spent geothermal brine",
+   "route_ids": [
+    "SB-05-R3",
+    "SB-05-R4",
+    "SB-05-R5"
+   ]
+  },
+  {
+   "edge_id": "e070",
+   "from": "mn_peg_li_geothermal_brine_pretreatment__3",
+   "to": "mn_peg_li_dle_plant__4",
+   "handoff_form": "Clarified lithium-bearing brine; Silica/iron/Mn residue",
+   "route_ids": [
+    "SB-05-R3",
+    "SB-05-R5"
+   ]
+  },
+  {
+   "edge_id": "e071",
+   "from": "mn_peg_li_dle_plant__4",
+   "to": "mn_peg_li_carbonate_plant__13",
+   "handoff_form": "Concentrated purified lithium chloride (LiCl) solution; Lithium-depleted brine",
+   "route_ids": [
+    "SB-05-R3"
+   ]
+  },
+  {
+   "edge_id": "e072",
+   "from": "mn_peg_li_carbonate_plant__13",
+   "to": "mn_peg_li_hydroxide_causticization_plant__6",
+   "handoff_form": "Lithium carbonate (Li2CO3), technical grade",
+   "route_ids": [
+    "SB-05-R3"
+   ]
+  },
+  {
+   "edge_id": "e073",
+   "from": "mn_peg_li_geothermal_brine_pretreatment__3",
+   "to": "mn_peg_li_dle_plant__5",
+   "handoff_form": "Clarified lithium-bearing brine; Silica/iron/Mn residue",
+   "route_ids": [
+    "SB-05-R4"
+   ]
+  },
+  {
+   "edge_id": "e074",
+   "from": "mn_peg_li_dle_plant__5",
+   "to": "mn_peg_li_metal_electrolysis_works__5",
+   "handoff_form": "High-purity anhydrous lithium chloride (LiCl); Lithium-depleted brine",
+   "route_ids": [
+    "SB-05-R4"
+   ]
+  },
+  {
+   "edge_id": "e075",
+   "from": "mn_peg_li_dle_plant__4",
+   "to": "mn_peg_li_carbonate_plant__14",
+   "handoff_form": "Concentrated purified lithium chloride (LiCl) solution; Lithium-depleted brine",
+   "route_ids": [
+    "SB-05-R5"
+   ]
+  },
+  {
+   "edge_id": "e076",
+   "from": "mn_peg_li_carbonate_plant__14",
+   "to": "mn_peg_li_anhydrous_licl_plant__5",
+   "handoff_form": "Lithium carbonate (Li2CO3)",
+   "route_ids": [
+    "SB-05-R5"
+   ]
+  },
+  {
+   "edge_id": "e077",
+   "from": "mn_peg_li_anhydrous_licl_plant__5",
+   "to": "mn_peg_li_metal_electrolysis_works__5",
+   "handoff_form": "High-purity anhydrous lithium chloride (LiCl); Carbon dioxide (CO2) off-gas",
+   "route_ids": [
+    "SB-05-R5"
+   ]
+  },
+  {
+   "edge_id": "e078",
+   "from": "mn_peg_li_oilfield_brine_formation__1",
+   "to": "mn_peg_li_producedwater_pretreatment__1",
+   "handoff_form": "Lithium-bearing oilfield formation / produced-water brine (dissolved Li+)",
+   "route_ids": [
+    "R-SB06-EB01-carbonate"
+   ]
+  },
+  {
+   "edge_id": "e079",
+   "from": "mn_peg_li_producedwater_pretreatment__1",
+   "to": "mn_peg_li_dle_plant__6",
+   "handoff_form": "Pretreated (conditioned) lithium brine feed; Reinjected barren/effluent brine",
+   "route_ids": [
+    "R-SB06-EB01-carbonate"
+   ]
+  },
+  {
+   "edge_id": "e080",
+   "from": "mn_peg_li_dle_plant__6",
+   "to": "mn_peg_li_licl_concentration_purification__3",
+   "handoff_form": "Dilute, relatively pure lithium chloride (LiCl) eluate/solution; Barren brine (to reinjection)",
+   "route_ids": [
+    "R-SB06-EB01-carbonate"
+   ]
+  },
+  {
+   "edge_id": "e081",
+   "from": "mn_peg_li_licl_concentration_purification__3",
+   "to": "mn_peg_li_carbonate_plant__15",
+   "handoff_form": "Purified, concentrated lithium chloride (LiCl) solution",
+   "route_ids": [
+    "R-SB06-EB01-carbonate"
+   ]
+  },
+  {
+   "edge_id": "e082",
+   "from": "mn_peg_li_oilfield_brine_formation__1",
+   "to": "mn_peg_li_producedwater_pretreatment__2",
+   "handoff_form": "Lithium-bearing oilfield formation / produced-water brine (dissolved Li+)",
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-direct-electrolysis",
+    "R-SB06-EB02-hydroxide-via-carbonate",
+    "R-SB06-EB03-lithium-metal"
+   ]
+  },
+  {
+   "edge_id": "e083",
+   "from": "mn_peg_li_producedwater_pretreatment__2",
+   "to": "mn_peg_li_dle_plant__7",
+   "handoff_form": "Pretreated (conditioned) lithium brine feed; Reinjected barren/effluent brine",
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-direct-electrolysis",
+    "R-SB06-EB02-hydroxide-via-carbonate",
+    "R-SB06-EB03-lithium-metal"
+   ]
+  },
+  {
+   "edge_id": "e084",
+   "from": "mn_peg_li_dle_plant__7",
+   "to": "mn_peg_li_licl_concentration_purification__4",
+   "handoff_form": "Dilute, relatively pure lithium chloride (LiCl) eluate; Barren brine (to reinjection)",
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-via-carbonate"
+   ]
+  },
+  {
+   "edge_id": "e085",
+   "from": "mn_peg_li_licl_concentration_purification__4",
+   "to": "mn_peg_li_carbonate_plant__16",
+   "handoff_form": "Purified, concentrated lithium chloride (LiCl) solution",
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-via-carbonate"
+   ]
+  },
+  {
+   "edge_id": "e086",
+   "from": "mn_peg_li_carbonate_plant__16",
+   "to": "mn_peg_li_hydroxide_causticization_plant__7",
+   "handoff_form": "Lithium carbonate (Li2CO3) intermediate",
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-via-carbonate"
+   ]
+  },
+  {
+   "edge_id": "e087",
+   "from": "mn_peg_li_dle_plant__7",
+   "to": "mn_peg_li_licl_concentration_purification__5",
+   "handoff_form": "Dilute, relatively pure lithium chloride (LiCl) eluate; Barren brine (to reinjection)",
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-direct-electrolysis"
+   ]
+  },
+  {
+   "edge_id": "e088",
+   "from": "mn_peg_li_licl_concentration_purification__5",
+   "to": "mn_peg_li_hydroxide_electrochemical_plant__5",
+   "handoff_form": "High-purity concentrated lithium chloride (LiCl) solution (electrolysis feed)",
+   "route_ids": [
+    "R-SB06-EB02-hydroxide-direct-electrolysis"
+   ]
+  },
+  {
+   "edge_id": "e089",
+   "from": "mn_peg_li_dle_plant__7",
+   "to": "mn_peg_li_anhydrous_licl_plant__6",
+   "handoff_form": "Dilute, relatively pure lithium chloride (LiCl) eluate; Barren brine (to reinjection)",
+   "route_ids": [
+    "R-SB06-EB03-lithium-metal"
+   ]
+  },
+  {
+   "edge_id": "e090",
+   "from": "mn_peg_li_anhydrous_licl_plant__6",
+   "to": "mn_peg_li_metal_electrolysis_works__6",
+   "handoff_form": "High-purity anhydrous lithium chloride (LiCl) salt",
+   "route_ids": [
+    "R-SB06-EB03-lithium-metal"
+   ]
+  },
+  {
+   "edge_id": "e091",
+   "from": "mn_peg_li_clay_mine__1",
+   "to": "mn_peg_li_clay_beneficiation__1",
+   "handoff_form": "Run-of-mine lithium claystone / clay ore",
+   "route_ids": [
+    "R-SB07-01"
+   ]
+  },
+  {
+   "edge_id": "e092",
+   "from": "mn_peg_li_clay_beneficiation__1",
+   "to": "mn_peg_li_clay_acid_leach__1",
+   "handoff_form": "Upgraded lithium clay concentrate (deslimed fine clay fraction)",
+   "route_ids": [
+    "R-SB07-01"
+   ]
+  },
+  {
+   "edge_id": "e093",
+   "from": "mn_peg_li_clay_acid_leach__1",
+   "to": "mn_peg_li_clay_ccd_filtration__1",
+   "handoff_form": "Pregnant lithium sulfate (Li2SO4) leach slurry (partially neutralized)",
+   "route_ids": [
+    "R-SB07-01"
+   ]
+  },
+  {
+   "edge_id": "e094",
+   "from": "mn_peg_li_clay_ccd_filtration__1",
+   "to": "mn_peg_li_generic_solution_purification__1",
+   "handoff_form": "Clarified pregnant lithium sulfate solution; Leached clay residue / filtered tailings",
+   "route_ids": [
+    "R-SB07-01"
+   ]
+  },
+  {
+   "edge_id": "e095",
+   "from": "mn_peg_li_generic_solution_purification__1",
+   "to": "mn_peg_li_carbonate_plant__17",
+   "handoff_form": "Purified lithium sulfate solution",
+   "route_ids": [
+    "R-SB07-01"
+   ]
+  },
+  {
+   "edge_id": "e096",
+   "from": "mn_peg_li_clay_mine__2",
+   "to": "mn_peg_li_clay_beneficiation__2",
+   "handoff_form": "Run-of-mine lithium claystone / clay ore",
+   "route_ids": [
+    "R-SB07-02",
+    "R-SB07-04"
+   ]
+  },
+  {
+   "edge_id": "e097",
+   "from": "mn_peg_li_clay_beneficiation__2",
+   "to": "mn_peg_li_clay_hcl_leach__1",
+   "handoff_form": "Upgraded lithium clay concentrate",
+   "route_ids": [
+    "R-SB07-02"
+   ]
+  },
+  {
+   "edge_id": "e098",
+   "from": "mn_peg_li_clay_hcl_leach__1",
+   "to": "mn_peg_li_generic_solution_purification__2",
+   "handoff_form": "Pregnant lithium chloride (LiCl) solution; Leached clay residue",
+   "route_ids": [
+    "R-SB07-02"
+   ]
+  },
+  {
+   "edge_id": "e099",
+   "from": "mn_peg_li_generic_solution_purification__2",
+   "to": "mn_peg_li_carbonate_plant__18",
+   "handoff_form": "Purified lithium chloride solution",
+   "route_ids": [
+    "R-SB07-02"
+   ]
+  },
+  {
+   "edge_id": "e100",
+   "from": "mn_peg_li_clay_mine__2",
+   "to": "mn_peg_li_clay_salt_roast__1",
+   "handoff_form": "Run-of-mine lithium claystone / clay ore",
+   "route_ids": [
+    "R-SB07-03"
+   ]
+  },
+  {
+   "edge_id": "e101",
+   "from": "mn_peg_li_clay_salt_roast__1",
+   "to": "mn_peg_li_water_leach_separation__1",
+   "handoff_form": "Roasted calcine bearing water-soluble lithium salts",
+   "route_ids": [
+    "R-SB07-03"
+   ]
+  },
+  {
+   "edge_id": "e102",
+   "from": "mn_peg_li_water_leach_separation__1",
+   "to": "mn_peg_li_generic_solution_purification__3",
+   "handoff_form": "Lithium-bearing leach solution (chloride/sulfate); Leached gangue residue",
+   "route_ids": [
+    "R-SB07-03"
+   ]
+  },
+  {
+   "edge_id": "e103",
+   "from": "mn_peg_li_generic_solution_purification__3",
+   "to": "mn_peg_li_carbonate_plant__19",
+   "handoff_form": "Purified lithium salt solution",
+   "route_ids": [
+    "R-SB07-03"
+   ]
+  },
+  {
+   "edge_id": "e104",
+   "from": "mn_peg_li_clay_beneficiation__2",
+   "to": "mn_peg_li_clay_acid_leach__2",
+   "handoff_form": "Upgraded lithium clay concentrate",
+   "route_ids": [
+    "R-SB07-04"
+   ]
+  },
+  {
+   "edge_id": "e105",
+   "from": "mn_peg_li_clay_acid_leach__2",
+   "to": "mn_peg_li_hydroxide_causticization_plant__8",
+   "handoff_form": "Purified lithium sulfate (Li2SO4) solution; Leached clay residue / tailings",
+   "route_ids": [
+    "R-SB07-04"
+   ]
+  },
+  {
+   "edge_id": "e106",
+   "from": "mn_peg_li_integrated_clay_carbonate__1",
+   "to": "mn_peg_li_hydroxide_causticization_plant__9",
+   "handoff_form": "Lithium carbonate (Li2CO3), intermediate/technical grade",
+   "route_ids": [
+    "R-SB07-05"
+   ]
+  },
+  {
+   "edge_id": "e107",
+   "from": "mn_peg_li_integrated_clay_carbonate__2",
+   "to": "mn_peg_li_anhydrous_licl_plant__7",
+   "handoff_form": "Lithium carbonate (Li2CO3)",
+   "route_ids": [
+    "R-SB07-06"
+   ]
+  },
+  {
+   "edge_id": "e108",
+   "from": "mn_peg_li_anhydrous_licl_plant__7",
+   "to": "mn_peg_li_metal_electrolysis_works__7",
+   "handoff_form": "Anhydrous lithium chloride (LiCl)",
+   "route_ids": [
+    "R-SB07-06"
+   ]
+  },
+  {
+   "edge_id": "e109",
+   "from": "mn_peg_li_jadarite_mine__1",
+   "to": "mn_peg_li_jadarite_beneficiation__1",
+   "handoff_form": "Run-of-mine (ROM) jadarite ore",
+   "route_ids": [
+    "SB-08-R1-Li2CO3"
+   ]
+  },
+  {
+   "edge_id": "e110",
+   "from": "mn_peg_li_jadarite_beneficiation__1",
+   "to": "mn_peg_li_jadarite_acid_leach__1",
+   "handoff_form": "Jadarite concentrate; Beneficiation residue",
+   "route_ids": [
+    "SB-08-R1-Li2CO3"
+   ]
+  },
+  {
+   "edge_id": "e111",
+   "from": "mn_peg_li_jadarite_acid_leach__1",
+   "to": "mn_peg_li_boron_recovery_unit__1",
+   "handoff_form": "Pregnant leach solution (PLS: Li/B/Na sulphate liquor); Digestion residue filter cake",
+   "route_ids": [
+    "SB-08-R1-Li2CO3"
+   ]
+  },
+  {
+   "edge_id": "e112",
+   "from": "mn_peg_li_boron_recovery_unit__1",
+   "to": "mn_peg_li_liquor_purification_na2so4__1",
+   "handoff_form": "Boric acid (co-product); Boron-depleted lithium-bearing sulphate liquor",
+   "route_ids": [
+    "SB-08-R1-Li2CO3",
+    "SB-08-R2-LiOHmono"
+   ]
+  },
+  {
+   "edge_id": "e113",
+   "from": "mn_peg_li_liquor_purification_na2so4__1",
+   "to": "mn_peg_li_carbonate_plant__20",
+   "handoff_form": "Purified lithium sulphate liquor; Anhydrous sodium sulphate (co-product); Liming residue filter cake",
+   "route_ids": [
+    "SB-08-R1-Li2CO3"
+   ]
+  },
+  {
+   "edge_id": "e114",
+   "from": "mn_peg_li_jadarite_mine__2",
+   "to": "mn_peg_li_jadarite_beneficiation__1",
+   "handoff_form": "Run-of-mine (ROM) jadarite ore",
+   "route_ids": [
+    "SB-08-R2-LiOHmono",
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "edge_id": "e115",
+   "from": "mn_peg_li_jadarite_beneficiation__1",
+   "to": "mn_peg_li_jadarite_acid_leach__2",
+   "handoff_form": "Jadarite concentrate; Beneficiation residue",
+   "route_ids": [
+    "SB-08-R2-LiOHmono",
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "edge_id": "e116",
+   "from": "mn_peg_li_jadarite_acid_leach__2",
+   "to": "mn_peg_li_boron_recovery_unit__1",
+   "handoff_form": "Pregnant leach solution (PLS); Digestion residue filter cake",
+   "route_ids": [
+    "SB-08-R2-LiOHmono"
+   ]
+  },
+  {
+   "edge_id": "e117",
+   "from": "mn_peg_li_liquor_purification_na2so4__1",
+   "to": "mn_peg_li_carbonate_plant__21",
+   "handoff_form": "Purified lithium sulphate liquor; Anhydrous sodium sulphate (co-product); Liming residue filter cake",
+   "route_ids": [
+    "SB-08-R2-LiOHmono"
+   ]
+  },
+  {
+   "edge_id": "e118",
+   "from": "mn_peg_li_carbonate_plant__21",
+   "to": "mn_peg_li_hydroxide_causticization_plant__10",
+   "handoff_form": "Lithium carbonate (Li2CO3) intermediate feed to causticization",
+   "route_ids": [
+    "SB-08-R2-LiOHmono"
+   ]
+  },
+  {
+   "edge_id": "e119",
+   "from": "mn_peg_li_jadarite_acid_leach__2",
+   "to": "mn_peg_li_boron_recovery_unit__2",
+   "handoff_form": "Pregnant leach solution (PLS); Digestion residue filter cake",
+   "route_ids": [
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "edge_id": "e120",
+   "from": "mn_peg_li_boron_recovery_unit__2",
+   "to": "mn_peg_li_liquor_purification_na2so4__2",
+   "handoff_form": "Boric acid (co-product); Boron-depleted lithium liquor",
+   "route_ids": [
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "edge_id": "e121",
+   "from": "mn_peg_li_liquor_purification_na2so4__2",
+   "to": "mn_peg_li_carbonate_plant__22",
+   "handoff_form": "Purified lithium sulphate liquor; Anhydrous sodium sulphate (co-product); Liming residue",
+   "route_ids": [
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "edge_id": "e122",
+   "from": "mn_peg_li_carbonate_plant__22",
+   "to": "mn_peg_li_anhydrous_licl_plant__8",
+   "handoff_form": "Lithium carbonate (Li2CO3) intermediate feed to chlorination",
+   "route_ids": [
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "edge_id": "e123",
+   "from": "mn_peg_li_anhydrous_licl_plant__8",
+   "to": "mn_peg_li_metal_electrolysis_works__8",
+   "handoff_form": "Anhydrous lithium chloride (LiCl)",
+   "route_ids": [
+    "SB-08-R3-LiMetal"
+   ]
+  },
+  {
+   "edge_id": "e124",
+   "from": "mn_peg_li_tailings_reflotation__1",
+   "to": "mn_peg_li_spodumene_sulfate_converter__6",
+   "handoff_form": "Recovered spodumene concentrate (~5-6% Li2O)",
+   "route_ids": [
+    "R-SB09-EB01-A"
+   ]
+  },
+  {
+   "edge_id": "e125",
+   "from": "mn_peg_li_spodumene_sulfate_converter__6",
+   "to": "mn_peg_li_carbonate_plant__23",
+   "handoff_form": "Lithium sulfate leach solution (impure)",
+   "route_ids": [
+    "R-SB09-EB01-A"
+   ]
+  },
+  {
+   "edge_id": "e126",
+   "from": "mn_peg_li_tailings_directleach__1",
+   "to": "mn_peg_li_carbonate_plant__24",
+   "handoff_form": "Lithium pregnant leach solution (impure; sulfate or phosphate/sulfate)",
+   "route_ids": [
+    "R-SB09-EB01-B"
+   ]
+  },
+  {
+   "edge_id": "e127",
+   "from": "mn_peg_li_tailings_reflotation__2",
+   "to": "mn_peg_li_spodumene_sulfate_converter__6",
+   "handoff_form": "Recovered spodumene concentrate (~5-6% Li2O)",
+   "route_ids": [
+    "R-SB09-EB02-A",
+    "R-SB09-EB03-A"
+   ]
+  },
+  {
+   "edge_id": "e128",
+   "from": "mn_peg_li_spodumene_sulfate_converter__6",
+   "to": "mn_peg_li_hydroxide_electrochemical_plant__6",
+   "handoff_form": "Lithium sulfate leach solution (impure)",
+   "route_ids": [
+    "R-SB09-EB02-A"
+   ]
+  },
+  {
+   "edge_id": "e129",
+   "from": "mn_peg_li_tailings_directleach__2",
+   "to": "mn_peg_li_hydroxide_electrochemical_plant__7",
+   "handoff_form": "Lithium pregnant leach solution (impure)",
+   "route_ids": [
+    "R-SB09-EB02-B"
+   ]
+  },
+  {
+   "edge_id": "e130",
+   "from": "mn_peg_li_spodumene_sulfate_converter__6",
+   "to": "mn_peg_li_carbonate_plant__25",
+   "handoff_form": "Lithium sulfate leach solution (impure)",
+   "route_ids": [
+    "R-SB09-EB03-A"
+   ]
+  },
+  {
+   "edge_id": "e131",
+   "from": "mn_peg_li_carbonate_plant__25",
+   "to": "mn_peg_li_metal_electrolysis_works__9",
+   "handoff_form": "Lithium carbonate (Li2CO3), chemical grade",
+   "route_ids": [
+    "R-SB09-EB03-A"
+   ]
+  },
+  {
+   "edge_id": "e132",
+   "from": "mn_peg_li_battery_collection_site__1",
+   "to": "mn_peg_li_black_mass_plant__1",
+   "handoff_form": "Discharged, sorted, dismantled spent cells / electrode scrap",
+   "route_ids": [
+    "R-SB10-EB01-HYDRO"
+   ]
+  },
+  {
+   "edge_id": "e133",
+   "from": "mn_peg_li_black_mass_plant__1",
+   "to": "mn_peg_li_blackmass_hydromet_refinery__1",
+   "handoff_form": "Black mass (Li/Ni/Co/Mn/Cu/graphite concentrate); Recovered steel/Al/Cu/plastics side-streams",
+   "route_ids": [
+    "R-SB10-EB01-HYDRO"
+   ]
+  },
+  {
+   "edge_id": "e134",
+   "from": "mn_peg_li_blackmass_hydromet_refinery__1",
+   "to": "mn_peg_li_battery_metals_separation__1",
+   "handoff_form": "Purified metal-bearing leach liquor (Li + Ni/Co/Mn in solution); Graphite / leach residue",
+   "route_ids": [
+    "R-SB10-EB01-HYDRO"
+   ]
+  },
+  {
+   "edge_id": "e135",
+   "from": "mn_peg_li_battery_collection_site__1",
+   "to": "mn_peg_li_black_mass_plant__2",
+   "handoff_form": "Discharged, sorted, dismantled spent cells / electrode scrap",
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-BMED"
+   ]
+  },
+  {
+   "edge_id": "e136",
+   "from": "mn_peg_li_black_mass_plant__2",
+   "to": "mn_peg_li_blackmass_hydromet_refinery__2",
+   "handoff_form": "Black mass (Li/Ni/Co/Mn/Cu/graphite concentrate); Steel/Al/Cu/plastic side-streams",
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-BMED"
+   ]
+  },
+  {
+   "edge_id": "e137",
+   "from": "mn_peg_li_blackmass_hydromet_refinery__2",
+   "to": "mn_peg_li_battery_metals_separation__2",
+   "handoff_form": "Purified metal-bearing leach liquor; Graphite / leach residue",
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-BMED"
+   ]
+  },
+  {
+   "edge_id": "e138",
+   "from": "mn_peg_li_battery_metals_separation__2",
+   "to": "mn_peg_li_hydroxide_bmed_recycle__1",
+   "handoff_form": "Purified lithium sulfate (Li2SO4) solution; Ni/Co/Mn co-products",
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-BMED"
+   ]
+  },
+  {
+   "edge_id": "e139",
+   "from": "mn_peg_li_battery_metals_separation__3",
+   "to": "mn_peg_li_hydroxide_bmed_recycle__2",
+   "handoff_form": "Recovered lithium carbonate (Li2CO3)",
+   "route_ids": [
+    "R-SB10-EB02-HYDRO-CAUSTIC"
+   ]
+  },
+  {
+   "edge_id": "e140",
+   "from": "mn_peg_li_battery_metals_separation__4",
+   "to": "mn_peg_li_anhydrous_licl_plant__9",
+   "handoff_form": "Recovered lithium carbonate / lithium hydroxide",
+   "route_ids": [
+    "R-SB10-EB03-HYDRO-ELECTROLYSIS"
+   ]
+  },
+  {
+   "edge_id": "e141",
+   "from": "mn_peg_li_anhydrous_licl_plant__9",
+   "to": "mn_peg_li_metal_electrolysis_works__10",
+   "handoff_form": "Anhydrous lithium chloride (LiCl)",
+   "route_ids": [
+    "R-SB10-EB03-HYDRO-ELECTROLYSIS"
+   ]
+  },
+  {
+   "edge_id": "e142",
+   "from": "mn_peg_li_battery_collection_site__2",
+   "to": "mn_peg_li_battery_smelter__1",
+   "handoff_form": "Sorted spent batteries / scrap prepared as smelter feed",
+   "route_ids": [
+    "R-SB10-EB01-PYRO"
+   ]
+  },
+  {
+   "edge_id": "e143",
+   "from": "mn_peg_li_battery_smelter__1",
+   "to": "mn_peg_li_slag_leach_recovery__1",
+   "handoff_form": "Lithium-bearing slag; Ni/Co/Cu alloy (co-product)",
+   "route_ids": [
+    "R-SB10-EB01-PYRO"
+   ]
+  },
+  {
+   "edge_id": "e144",
+   "from": "mn_peg_li_battery_collection_site__2",
+   "to": "mn_peg_li_battery_smelter__2",
+   "handoff_form": "Sorted spent batteries / scrap prepared as smelter feed",
+   "route_ids": [
+    "R-SB10-EB02-PYRO",
+    "R-SB10-EB03-PYRO"
+   ]
+  },
+  {
+   "edge_id": "e145",
+   "from": "mn_peg_li_battery_smelter__2",
+   "to": "mn_peg_li_slag_leach_recovery__2",
+   "handoff_form": "Lithium-bearing slag; Ni/Co/Cu alloy",
+   "route_ids": [
+    "R-SB10-EB02-PYRO",
+    "R-SB10-EB03-PYRO"
+   ]
+  },
+  {
+   "edge_id": "e146",
+   "from": "mn_peg_li_slag_leach_recovery__2",
+   "to": "mn_peg_li_hydroxide_bmed_recycle__3",
+   "handoff_form": "Recovered lithium carbonate (Li2CO3)",
+   "route_ids": [
+    "R-SB10-EB02-PYRO"
+   ]
+  },
+  {
+   "edge_id": "e147",
+   "from": "mn_peg_li_slag_leach_recovery__2",
+   "to": "mn_peg_li_anhydrous_licl_plant__10",
+   "handoff_form": "Recovered lithium carbonate (Li2CO3)",
+   "route_ids": [
+    "R-SB10-EB03-PYRO"
+   ]
+  },
+  {
+   "edge_id": "e148",
+   "from": "mn_peg_li_anhydrous_licl_plant__10",
+   "to": "mn_peg_li_metal_electrolysis_works__10",
+   "handoff_form": "Anhydrous lithium chloride (LiCl)",
+   "route_ids": [
+    "R-SB10-EB03-PYRO"
+   ]
+  }
+ ],
+ "starting_boundaries": [
+  {
+   "boundary_id": "SB-01",
+   "host_source_name": "Spodumene-bearing LCT (lithium-cesium-tantalum) granitic pegmatite deposit",
+   "entity_class": "Resource Site",
+   "occurrence_type": "Primary deposit",
+   "host_commodity": "Lithium (principal economic product)",
+   "original_source_anchor": "The in-situ hard-rock pegmatite orebody where lithium is locked in spodumene (LiAlSi2O6). Anchored at the deposit itself, not the downstream concentrator or roaster.",
+   "output_form": "Spodumene-bearing pegmatite ore (lithium hosted in spodumene; ~1-2% Li2O run-of-mine, upgradable to ~6% Li2O 'SC6' concentrate downstream)",
+   "confidence": "high",
+   "recovery_note": "Dominant hard-rock source globally (e.g., Australia, China, Zimbabwe, Canada). Spodumene is the only pegmatite mineral with reliable large-scale industrial Li production. Concentration and roast-leach are ROUTE steps, not the origin.",
+   "original_source_anchor_note": "Deposit = origin; SC6 concentrate is a route intermediate."
+  },
+  {
+   "boundary_id": "SB-02",
+   "host_source_name": "Petalite / amblygonite / eucryptite-bearing pegmatite deposit",
+   "entity_class": "Resource Site",
+   "occurrence_type": "Primary deposit",
+   "host_commodity": "Lithium (principal or co-product); often co-hosted with Ta, Sn, feldspar/ceramic minerals",
+   "original_source_anchor": "The in-situ pegmatite orebody where lithium is hosted in petalite (LiAlSi4O10), amblygonite (LiAlPO4F), or eucryptite (LiAlSiO4) rather than spodumene. Anchored at the deposit.",
+   "output_form": "Petalite/amblygonite/eucryptite-bearing pegmatite ore (lithium hosted in petalite ~3.0-4.7% Li2O, amblygonite/eucryptite ~10-12% Li2O)",
+   "confidence": "medium",
+   "recovery_note": "Distinct mineral hosts within pegmatites; petalite widely used for glass/ceramics and produced commercially (e.g., Zimbabwe, Namibia, Australia). Amblygonite/eucryptite historically mined (Zimbabwe) but now minor. Different mineralogy/processing than spodumene warrants a separate group; kept distinct from mica-hosted lepidolite.",
+   "original_source_anchor_note": "Could alternatively be folded into a single generic 'LCT pegmatite' group with SB-01; kept separate due to distinct ore mineralogy and processing routes."
+  },
+  {
+   "boundary_id": "SB-03",
+   "host_source_name": "Lepidolite / zinnwaldite (lithium-mica) deposit",
+   "entity_class": "Resource Site",
+   "occurrence_type": "Companion/byproduct deposit (and locally primary)",
+   "host_commodity": "Often companion to Sn-W, Cs, Rb, Ta systems; locally lithium-principal (e.g., Chinese lepidolite operations)",
+   "original_source_anchor": "The in-situ granite/pegmatite/greisen orebody where lithium is hosted in the mica minerals lepidolite (K(Li,Al)3(Si,Al)4O10(F,OH)2) or zinnwaldite (Fe-rich variety). Anchored at the deposit.",
+   "output_form": "Lepidolite/zinnwaldite mica ore (lithium hosted in lithium mica; lepidolite up to ~7.7% Li2O theoretical, zinnwaldite lower, Fe-rich)",
+   "confidence": "high",
+   "recovery_note": "Materially different mineralogy and processing (mica flotation, sulfate/chloride roasting, higher F/Rb/Cs impurity handling) than spodumene, so a separate group. Significant Chinese production; zinnwaldite associated with historic Sn-W greisen (e.g., Cinovec, Erzgebirge).",
+   "original_source_anchor_note": "Deposit = origin; mica concentrate is a route intermediate."
+  },
+  {
+   "boundary_id": "SB-04",
+   "host_source_name": "Continental (salar / closed-basin) lithium-bearing brine deposit",
+   "entity_class": "Resource Site",
+   "occurrence_type": "Primary deposit",
+   "host_commodity": "Lithium (principal), often with potash, boron, magnesium co-products",
+   "original_source_anchor": "The subsurface closed-basin salar aquifer where lithium exists as dissolved Li+ in continental brine beneath salt flats. Anchored at the in-situ brine reservoir, not the evaporation ponds or DLE plant.",
+   "output_form": "Lithium-bearing continental brine (dissolved Li+, typically ~200-2000+ mg/L Li)",
+   "confidence": "high",
+   "recovery_note": "Hosts most of the world's economically recoverable lithium (Lithium Triangle: Chile/Atacama, Argentina, Bolivia; also China/Tibet-Qinghai). Solar evaporation ponds and DLE are ROUTE concentration steps, not the origin.",
+   "original_source_anchor_note": "Reservoir = origin; concentrated liquor/pond brine is a route intermediate."
+  },
+  {
+   "boundary_id": "SB-05",
+   "host_source_name": "Geothermal brine lithium resource",
+   "entity_class": "Resource Site",
+   "occurrence_type": "Companion/byproduct deposit (co-product with geothermal energy)",
+   "host_commodity": "Lithium co-produced with geothermal heat/power; brine also carries Mn, Zn, etc.",
+   "original_source_anchor": "The deep hot subsurface geothermal reservoir where lithium is dissolved in high-temperature brine (e.g., Salton Sea KGRA, California). Anchored at the geothermal reservoir, not the power plant or DLE recovery unit.",
+   "output_form": "Lithium-bearing geothermal brine (dissolved Li+ in hot saline geothermal fluid)",
+   "confidence": "high",
+   "recovery_note": "Distinct from continental salar brine: high temperature, tied to geothermal power generation, DLE recovered from spent brine after energy extraction. Salton Sea estimated ~18 Mt Li. Materially different extraction capability -> separate group.",
+   "original_source_anchor_note": "Reservoir = origin; spent brine post-power-generation is a route step."
+  },
+  {
+   "boundary_id": "SB-06",
+   "host_source_name": "Oilfield / petroleum-formation brine (produced-water) lithium resource",
+   "entity_class": "Resource Site",
+   "occurrence_type": "Companion/byproduct deposit (byproduct of oil & gas produced water)",
+   "host_commodity": "Lithium as byproduct of hydrocarbon extraction; hosted in formation brines (e.g., Smackover Formation, Marcellus)",
+   "original_source_anchor": "The subsurface hydrocarbon-bearing sedimentary formation whose connate/formation brine carries dissolved lithium (e.g., Smackover Formation, Arkansas). Anchored at the formation, not the produced-water DLE plant.",
+   "output_form": "Lithium-bearing oilfield formation / produced-water brine (dissolved Li+ co-produced with oil & gas)",
+   "confidence": "high",
+   "recovery_note": "Distinct host system: brine co-produced with hydrocarbons, recovered via DLE from produced water. Smackover Formation and Marcellus shale are active development targets. Separate extraction capability -> separate group.",
+   "original_source_anchor_note": "Formation = origin; produced water at surface is a route intermediate."
+  },
+  {
+   "boundary_id": "SB-07",
+   "host_source_name": "Volcano-sedimentary lithium claystone deposit (smectite/illite; e.g., McDermitt caldera)",
+   "entity_class": "Resource Site",
+   "occurrence_type": "Primary deposit",
+   "host_commodity": "Lithium (principal economic product)",
+   "original_source_anchor": "The in-situ lacustrine claystone/tuffaceous sediment body (typically caldera-lake sediments) where lithium is hosted in clay minerals smectite (hectorite) and illite. Anchored at the claystone deposit.",
+   "output_form": "Lithium-bearing claystone / clay ore (lithium hosted in smectite/hectorite and Li-illite; ~0.9-1.8 wt% Li in high-grade illite)",
+   "confidence": "high",
+   "recovery_note": "Emerging but well-defined primary host (Thacker Pass/McDermitt caldera, Nevada; Clayton Valley clays). Requires materially different extraction (acid/roast leach of clay) than pegmatite or brine -> separate group. No commercial production yet at scale as of 2026 but defined reserves in construction.",
+   "original_source_anchor_note": "Includes hectorite smectite clay occurrences (magnesium-lithium smectite) under the same clay-host group."
+  },
+  {
+   "boundary_id": "SB-08",
+   "host_source_name": "Jadarite-hosted volcano-sedimentary lithium-borate deposit (Jadar-type)",
+   "entity_class": "Resource Site",
+   "occurrence_type": "Primary deposit",
+   "host_commodity": "Lithium and boron (co-principal products)",
+   "original_source_anchor": "The in-situ lacustrine sedimentary basin where lithium is hosted in the borosilicate mineral jadarite (LiNaSiB3O7(OH)), interlayered with tuffs. Anchored at the deposit (Jadar Valley, Serbia \u2014 only known jadarite locality).",
+   "output_form": "Jadarite ore (lithium-sodium-borosilicate; lithium co-hosted with boron)",
+   "confidence": "medium",
+   "recovery_note": "Distinct end-member volcano-sedimentary host with unique mineralogy (jadarite) and Li-B co-product processing, materially different from clay/smectite. Currently the Jadar Project, Serbia. Kept separate from clay claystone group due to distinct ore mineral and B co-product.",
+   "original_source_anchor_note": "Deposit = origin; unique to Serbia at present but classified as a reusable host type."
+  },
+  {
+   "boundary_id": "SB-09",
+   "host_source_name": "Lithium mine tailings / process residue accumulation (standalone, worked directly)",
+   "entity_class": "Resource Site",
+   "occurrence_type": "Standalone man-made accumulation",
+   "host_commodity": "Lithium (residual, in tailings from prior spodumene/mica processing)",
+   "original_source_anchor": "A legacy tailings pile / residue dump (e.g., low-grade spodumene flotation tailings) that is worked directly as a lithium source in its own right, with no active upstream mine feeding it. The accumulation itself is the origin for that secondary route.",
+   "output_form": "Lithium-bearing tailings / residue (residual Li in spodumene tailings ~ up to ~5% Li2O in flotation-recovered fraction; low-grade bulk)",
+   "confidence": "medium",
+   "recovery_note": "Per procedure: a standalone accumulation worked directly is its own origin. A tailings stream generated inside a route currently being mapped is NOT a separate boundary \u2014 only pre-existing/legacy accumulations qualify here. Recovery via re-flotation or acid leach are route steps.",
+   "original_source_anchor_note": "Only legacy/standalone accumulations qualify; in-route residues remain route intermediates."
+  },
+  {
+   "boundary_id": "SB-10",
+   "host_source_name": "End-of-life lithium battery / black mass accumulation (recycled)",
+   "entity_class": "Resource Site",
+   "occurrence_type": "End-of-life / recycled accumulation",
+   "host_commodity": "Lithium (plus Ni, Co, Mn, Cu, graphite) in spent Li-ion batteries and scrap",
+   "original_source_anchor": "The accumulation of post-consumer and post-industrial spent lithium-ion batteries and manufacturing scrap. Anchored at the collected end-of-life battery / scrap accumulation. Black mass (shredded, thermally treated concentrate) is a ROUTE intermediate downstream of this accumulation.",
+   "output_form": "Spent lithium-ion batteries / manufacturing scrap (lithium hosted in cathode active material within cells); intermediate route form: black mass",
+   "confidence": "high",
+   "recovery_note": "Distinct EOL host accumulation; hydrometallurgical/pyrometallurgical recovery of Li (as Li2CO3/LiOH) from black mass are route steps. Growing secondary source. Black mass itself is anchored as a route step, not the origin, per anchoring rule.",
+   "original_source_anchor_note": "Origin = the EOL battery/scrap accumulation; black mass is the direct recovery point (a route step), not the origin."
+  }
+ ],
+ "ending_boundaries": [
+  {
+   "boundary_id": "EB-01",
+   "output_form": "Lithium carbonate (Li2CO3)",
+   "description": "Dominant marketed lithium chemical; white powder. Sold as technical grade (glass/ceramics/industrial) and battery grade (higher purity, low iron). Same-layer grade variants (technical vs battery) are ONE output form, not separate ending boundaries. Corresponds to child node 'Lithium carbonate' (intermediate material). Function: battery cathode precursor (LFP, standard NMC), glass/ceramic flux, pharma API. Downstream child input form = lithium carbonate."
+  },
+  {
+   "boundary_id": "EB-02",
+   "output_form": "Lithium hydroxide monohydrate (LiOH\u00b7H2O)",
+   "description": "White crystalline compound; sold as technical grade (greases, industrial) and battery grade (high-nickel NMC/NCA cathodes). Technical vs battery grade are same-layer variants of one output form. Corresponds to child node 'Lithium hydroxide monohydrate' (intermediate material). Function: high-nickel cathode precursor, lithium-soap grease thickener. Downstream child input form = lithium hydroxide monohydrate."
+  },
+  {
+   "boundary_id": "EB-03",
+   "output_form": "Lithium metal (Li)",
+   "description": "Refined metallic lithium (ingot/foil/granular), produced mainly by molten-salt electrolysis of lithium chloride. Corresponds to child node 'Lithium metal' (intermediate material). Function: Li-metal/solid-state anodes, Al-Li alloys, organolithium/pharma reagents. Classification carried at LOWER (medium) confidence because it is both a distinct processed commercial object (favoring child/output form) and the raw element in metallic form (favoring output-form-only) per the output-form-vs-child rule. Downstream child input form = lithium metal."
+  }
+ ],
+ "convergence_points": [
+  "mn_peg_li_boron_recovery_unit__1",
+  "mn_peg_li_dle_plant__4",
+  "mn_peg_li_jadarite_beneficiation__1",
+  "mn_peg_li_metal_electrolysis_works__10",
+  "mn_peg_li_metal_electrolysis_works__5",
+  "mn_peg_li_spodumene_sulfate_converter__1",
+  "mn_peg_li_spodumene_sulfate_converter__5",
+  "mn_peg_li_spodumene_sulfate_converter__6"
+ ],
+ "branch_points": [
+  "mn_peg_li_battery_collection_site__1",
+  "mn_peg_li_battery_collection_site__2",
+  "mn_peg_li_clay_beneficiation__2",
+  "mn_peg_li_clay_mine__2",
+  "mn_peg_li_dle_plant__4",
+  "mn_peg_li_dle_plant__7",
+  "mn_peg_li_geothermal_brine_field__2",
+  "mn_peg_li_geothermal_brine_pretreatment__3",
+  "mn_peg_li_jadarite_acid_leach__2",
+  "mn_peg_li_jadarite_beneficiation__1",
+  "mn_peg_li_liquor_purification_na2so4__1",
+  "mn_peg_li_oilfield_brine_formation__1",
+  "mn_peg_li_pegmatite_mine_petalite__1",
+  "mn_peg_li_salar_brine_wellfield__1",
+  "mn_peg_li_salar_brine_wellfield__2",
+  "mn_peg_li_slag_leach_recovery__2",
+  "mn_peg_li_spodumene_mine_concentrator__2",
+  "mn_peg_li_spodumene_sulfate_converter__1",
+  "mn_peg_li_spodumene_sulfate_converter__2",
+  "mn_peg_li_spodumene_sulfate_converter__5",
+  "mn_peg_li_spodumene_sulfate_converter__6",
+  "mn_peg_li_sulfate_solution_purification__1"
+ ]
+}

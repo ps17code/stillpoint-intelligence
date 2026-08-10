@@ -8,6 +8,10 @@ import galliumClass from "@/data/node-v2/gallium-class-graph.json";
 import galliumRoutes from "@/data/node-v2/gallium-routes.json";
 import galliumGraph from "@/data/node-v2/gallium-supply-graph.json";
 import galliumEntities from "@/data/node-v2/gallium-entity-graph.json";
+import lithiumClass from "@/data/node-v2/lithium-class-graph.json";
+import lithiumRoutes from "@/data/node-v2/lithium-routes.json";
+import lithiumGraph from "@/data/node-v2/lithium-supply-graph.json";
+import lithiumEntities from "@/data/node-v2/lithium-entity-graph.json";
 import trailRecord from "@/data/node-v2/entities/pe_trail_smelter.json";
 import teckOrgRecord from "@/data/node-v2/entities/org_teck_resources.json";
 import mpOrgRecord from "@/data/node-v2/entities/org_mp_materials.json";
@@ -76,15 +80,25 @@ const GALLIUM: LoadedNode = {
   routes: (galliumRoutes as { routes: unknown[] }).routes,
 };
 
+const LITHIUM: LoadedNode = {
+  name: "Lithium",
+  classGraph: lithiumClass as ClassGraph,
+  supplyGraph: lithiumGraph as unknown as SupplyGraph,
+  entityGraph: lithiumEntities as unknown as EntityGraph,
+  groups: (lithiumRoutes as { groups: Record<string, unknown> }).groups,
+  routes: (lithiumRoutes as { routes: unknown[] }).routes,
+};
+
 const BY_KEY: Record<string, LoadedNode> = {};
 for (const a of ["germanium", "ge", "elemental germanium", "germanium metal"]) BY_KEY[a] = GERMANIUM;
 for (const a of ["gallium", "ga", "elemental gallium", "gallium metal"]) BY_KEY[a] = GALLIUM;
+for (const a of ["lithium", "li", "elemental lithium", "lithium metal"]) BY_KEY[a] = LITHIUM;
 
 export function lookupNode(input: string): LoadedNode | null {
   return BY_KEY[input.toLowerCase().trim()] ?? null;
 }
 
-export const AVAILABLE_NODES = ["Germanium", "Gallium"];
+export const AVAILABLE_NODES = ["Germanium", "Gallium", "Lithium"];
 
 /* ── full schema-conformant Physical Entity Node records (Operating Facility schema) ── */
 export type FEGroupMembership = { group_id: string; group_name: string; qualification_status: string; qualification_evidence: string };
