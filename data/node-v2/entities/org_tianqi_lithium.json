@@ -1,0 +1,496 @@
+{
+  "common": {
+    "organizational_entity_id": "org_tianqi_lithium",
+    "entity_type": "Organizational Entity",
+    "entity_subtype": "Company"
+  },
+  "identity": {
+    "company_name": "Tianqi Lithium Corporation",
+    "legal_name": "Tianqi Lithium Corporation (天齐锂业股份有限公司)",
+    "alternative_names": ["Tianqi Lithium", "Tianqi", "天齐锂业", "SZSE: 002466", "SEHK: 9696", "Chengdu Tianqi (informal reference to the group)"],
+    "company_type": "Public company (Shenzhen A-share SZSE: 002466; Hong Kong H-share SEHK: 9696)",
+    "company_status": "Active / Operating",
+    "country_of_incorporation": "China (Sichuan Province)",
+    "headquarters": "Building 1, No. 10 East Gaopeng Road, High-tech Zone, Chengdu, Sichuan Province, China",
+    "short_description": "Tianqi Lithium Corporation is a Chinese, dual-listed (Shenzhen 002466 / Hong Kong 9696) vertically integrated lithium major and one of the world's largest producers of lithium raw materials and lithium chemicals. Its economic activities span hard-rock lithium mining and lithium chemical conversion. Upstream, it controls a 51% interest in Talison Lithium Pty Ltd — operator of the Greenbushes lithium mine in Western Australia, the world's largest and lowest-cost hard-rock (spodumene) lithium operation (Albemarle holds the other 49% of Talison) — held through Tianqi Lithium Energy Australia Pty Ltd (TLEA), a joint venture Tianqi controls at 51% with IGO Limited at 49%. TLEA also owns 100% of the Kwinana battery-grade lithium hydroxide refinery in Western Australia (nameplate 24,000 t/yr Train 1). Domestically Tianqi operates lithium chemical conversion plants at Shehong and Suining Anju (Sichuan), Zhangjiagang (Jiangsu) and Tongliang (Chongqing), with total built lithium chemical capacity of roughly 91,600 t/yr. Tianqi also holds a ~22.16% equity stake in Sociedad Química y Minera de Chile S.A. (SQM), one of the world's largest lithium producers (Salar de Atacama brine), acquired in 2018 for USD ~4.1bn. In 2024 Tianqi reported revenue of RMB 13.063bn (down ~67.8% y/y) and a net loss attributable to shareholders of RMB 7.905bn — its most loss-making year since listing — driven by the collapse in lithium prices, weaker SQM results, impairments and FX losses. The controlling shareholder is Chengdu Tianqi Industry (Group) Co., Ltd. (founder/chairman Jiang Weiping)."
+  },
+  "corporate_structure": {
+    "corporate_role": "Operating parent company / listed group holding company for lithium mining and chemical conversion activities",
+    "parent_company": {
+      "company_id": "org_chengdu_tianqi_group",
+      "company_name": "Chengdu Tianqi Industry (Group) Co., Ltd.",
+      "ownership_percentage": 25.4,
+      "control_relationship": "Controlling shareholder (largest shareholder; ultimate control associated with founder/chairman Jiang Weiping and family)",
+      "effective_date": "Ownership ~25.4% as reported around 2024-2025 (subject to change from periodic share reductions)",
+      "evidence": "https://dcfmodeling.com/blogs/history/9696hk-history-mission-ownership"
+    },
+    "subsidiaries": [
+      {
+        "company_id": "org_tlea",
+        "company_name": "Tianqi Lithium Energy Australia Pty Ltd (TLEA)",
+        "ownership_percentage": 51,
+        "relationship_type": "Majority-owned controlled subsidiary (joint venture vehicle with IGO)",
+        "control_status": "Controlled",
+        "consolidation_status": "Fully consolidated",
+        "effective_date": "2021 (IGO acquired 49% of TLEA in June 2021 for USD ~1.4bn)",
+        "evidence": "https://www.igo.com.au/site/operations/lithium-holdco-joint-venture"
+      },
+      {
+        "company_id": "org_talison_lithium",
+        "company_name": "Talison Lithium Pty Ltd",
+        "ownership_percentage": 51,
+        "relationship_type": "Indirect subsidiary held through TLEA (TLEA owns 51% of Talison; Albemarle owns 49%). Tianqi's effective economic interest in Greenbushes is ~26% (51% of TLEA x 51% of Talison)",
+        "control_status": "Jointly controlled (Talison jointly governed by TLEA and Albemarle; TLEA holds the controlling 51%)",
+        "consolidation_status": "Unknown",
+        "effective_date": "Talison acquired by Tianqi in 2014; restructured under TLEA in 2021",
+        "evidence": "https://www.igo.com.au/site/operations/lithium-holdco-joint-venture"
+      }
+    ],
+    "joint_ventures": [
+      {
+        "company_id": "org_tlea",
+        "company_name": "Tianqi Lithium Energy Australia Pty Ltd (TLEA)",
+        "ownership_percentage": 51,
+        "other_major_owners": [
+          {"company_id": "org_igo_limited", "company_name": "IGO Limited", "ownership_percentage": 49}
+        ],
+        "control_structure": "Tianqi controls TLEA with 51% and board control; IGO is a 49% partner. TLEA is the holding vehicle for the 51% Talison/Greenbushes interest and 100% of the Kwinana refinery.",
+        "consolidation_status": "Fully consolidated into Tianqi",
+        "economic_purpose": "Develop and operate world-class Western Australian lithium assets: the Greenbushes spodumene operation (via 51% of Talison) and the Kwinana battery-grade lithium hydroxide refinery.",
+        "effective_date": "2021",
+        "evidence": "https://www.igo.com.au/site/operations/lithium-holdco-joint-venture"
+      },
+      {
+        "company_id": "org_talison_lithium",
+        "company_name": "Talison Lithium Pty Ltd",
+        "ownership_percentage": 51,
+        "other_major_owners": [
+          {"company_id": "org_albemarle", "company_name": "Albemarle Corporation", "ownership_percentage": 49}
+        ],
+        "control_structure": "Talison (operator of Greenbushes) is jointly owned by TLEA (51%) and Albemarle (49%). Offtake from Greenbushes is shared between the two shareholders in proportion to their interests.",
+        "consolidation_status": "Unknown",
+        "economic_purpose": "Own and operate the Greenbushes lithium mine and concentrators, producing spodumene (technical- and chemical-grade lithium concentrate) supplied to the two shareholders.",
+        "effective_date": "Joint venture structure since 2014 (Tianqi/Albemarle-predecessor Rockwood)",
+        "evidence": "https://www.talisonlithium.com/"
+      }
+    ],
+    "equity_investments": [
+      {
+        "company_id": "org_sqm",
+        "company_name": "Sociedad Química y Minera de Chile S.A. (SQM)",
+        "ownership_percentage": 22.16,
+        "investment_type": "Minority strategic equity investment (associate; equity-accounted)",
+        "control_status": "Not controlled (significant influence contested; antitrust restrictions limit Tianqi's ability to influence major strategic decisions such as the SQM-Codelco partnership)",
+        "strategic_relevance": "Provides Tianqi exposure to the world's premier lithium brine resource (Salar de Atacama, Chile) via SQM, one of the largest global lithium producers, diversifying beyond hard-rock spodumene. Acquired 23.77% in 2018 for USD ~4.1bn; stake since ~22.16%. Subject of ongoing disputes over the SQM-Codelco lithium joint venture and Chilean state nationalization moves.",
+        "effective_date": "2018 (initial 23.77% acquisition); ~22.16% held through 2024",
+        "evidence": "https://www.spglobal.com/energy/en/news-research/latest-news/metals/073024-chinas-tianqi-contests-chilean-regulators-move-to-hand-over-lithium-reserves-to-state"
+      }
+    ],
+    "other_affiliates": []
+  },
+  "financial": {
+    "total_revenue": {
+      "amount": 13063000000,
+      "currency": "CNY",
+      "reporting_period": "FY2024 (year ended December 31, 2024)",
+      "reporting_scope": "Consolidated corporate group",
+      "revenue_basis": "Reported revenue (RMB 13.063bn, down ~67.75% y/y; net loss attributable to shareholders RMB 7.905bn — most loss-making year since listing, driven by lithium price collapse, weaker SQM results, impairments and FX losses)",
+      "reported_or_estimated": "reported",
+      "evidence": "https://www.metal.com/en/newscontent/103248206"
+    }
+  },
+  "economic_activities": [
+    {
+      "economic_activity_id": "act_lithium_mining",
+      "activity_name": "Hard-Rock Lithium Mining & Concentration",
+      "description": "Open-pit mining of spodumene (hard-rock lithium) ore at the Greenbushes operation in Western Australia and beneficiation into technical- and chemical-grade lithium concentrate (spodumene concentrate). Greenbushes is the world's largest and lowest-cost operating hard-rock lithium mine. Conducted through Talison Lithium, jointly owned by TLEA (51%, Tianqi-controlled) and Albemarle (49%). Concentrate is shared as offtake between the two shareholders in proportion to ownership and feeds Tianqi's downstream chemical conversion (including Kwinana and its Chinese plants).",
+      "activity_category": "Extraction / Mining",
+      "geographic_scope": ["Australia (Greenbushes, Western Australia)"],
+      "activity_status": "Active",
+      "evidence": ["https://www.talisonlithium.com/", "https://www.igo.com.au/site/operations/lithium-holdco-joint-venture", "https://www.nsenergybusiness.com/projects/greenbushes-lithium-mine/"],
+      "corporate_vehicles": [
+        {
+          "corporate_vehicle_id": "cv_talison_greenbushes",
+          "vehicle_type": "Indirect subsidiary / joint venture operating company (held via TLEA)",
+          "vehicle_company_id": "org_talison_lithium",
+          "vehicle_company_name": "Talison Lithium Pty Ltd",
+          "ownership_percentage": 51,
+          "control_status": "Jointly controlled via TLEA (51%); Albemarle 49%. Tianqi effective economic interest in Greenbushes ~26%.",
+          "relationship_description": "Talison Lithium owns and operates the Greenbushes lithium mine and concentrators. TLEA (Tianqi 51% / IGO 49%) holds 51% of Talison; Albemarle holds 49%. Talison supplies spodumene concentrate to its two shareholders as offtake.",
+          "evidence": ["https://www.igo.com.au/site/operations/lithium-holdco-joint-venture", "https://www.talisonlithium.com/"],
+          "product_service_groups": [
+            {
+              "product_service_group_id": "psg_spodumene_concentrate",
+              "group_name": "Spodumene (Lithium) Concentrate",
+              "description": "Technical- and chemical-grade spodumene concentrate produced from Greenbushes ore. Chemical-grade concentrate is the primary feedstock for Tianqi's lithium chemical conversion plants; Tianqi takes its shareholder-proportion offtake from Greenbushes. Part of the lithium raw materials / mining segment.",
+              "group_revenue": {
+                "amount": null,
+                "currency": "CNY",
+                "reporting_period": "FY2024",
+                "reporting_scope": "Lithium raw materials / concentrate (segment split within RMB 13.063bn consolidated revenue Not disclosed at this granularity)",
+                "revenue_basis": "Not disclosed at concentrate-only granularity",
+                "reported_or_estimated": "reported",
+                "evidence": "https://www.metal.com/en/newscontent/103248206"
+              },
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_greenbushes_deposit",
+                  "physical_entity_name": "Greenbushes Lithium Deposit (spodumene pegmatite orebody)",
+                  "physical_entity_class": "Resource Site",
+                  "relationship_to_corporate_vehicle": "Mineral rights held and mined by Talison Lithium (TLEA 51% / Albemarle 49%)",
+                  "resolution_status": "resolved",
+                  "geographic_scope": "Greenbushes, Shire of Bridgetown-Greenbushes, Western Australia, Australia",
+                  "evidence": ["https://www.nsenergybusiness.com/projects/greenbushes-lithium-mine/"],
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "out_spodumene_concentrate",
+                      "output_name": "Spodumene (Lithium) Concentrate",
+                      "output_type": "Physical commodity / mined and beneficiated concentrate",
+                      "description": "Chemical- and technical-grade spodumene (lithium) concentrate produced at Greenbushes. Greenbushes is the world's largest operating hard-rock lithium mine; Talison exceeded its production plan in the 2024 calendar year (exact Tianqi-attributable concentrate volume Not disclosed here).",
+                      "volume_quantity": "Not disclosed (Tianqi-attributable offtake share); Greenbushes total among world's largest",
+                      "quantity_unit": "metric tons spodumene concentrate",
+                      "reporting_period": "FY2024",
+                      "revenue": "Not disclosed at concentrate-only granularity",
+                      "reported_or_estimated": "reported",
+                      "evidence": ["https://www.australianmining.com.au/greenbushes-maintains-robust-production/"],
+                      "markets": [
+                        {
+                          "market_participation_id": "mkt_spodumene_internal_offtake",
+                          "market_name": "Spodumene concentrate shareholder offtake / lithium chemical feedstock",
+                          "market_type": "B2B offtake (shareholder-proportion) / internal transfer to conversion",
+                          "geographic_scope": "Australia (Kwinana) and China (Tianqi conversion plants)",
+                          "buyer_customer_category": "Lithium chemical converters (Tianqi's own refineries) and Albemarle (its 49% offtake share)",
+                          "specific_buyer_organizational_entity_ids": ["org_tianqi_lithium", "org_albemarle"],
+                          "volume_revenue_exposure": "Tianqi/TLEA takes its 51%-of-Talison offtake share as feedstock for Kwinana and Chinese chemical plants; Albemarle takes its 49% share. Exact volumes/prices Not disclosed.",
+                          "reporting_period": "FY2024",
+                          "evidence": ["https://www.igo.com.au/site/operations/lithium-holdco-joint-venture"]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "economic_activity_id": "act_lithium_chemical_conversion",
+      "activity_name": "Lithium Chemical Conversion (Refining)",
+      "description": "Conversion of spodumene concentrate into battery-grade and industrial-grade lithium chemicals — principally lithium hydroxide and lithium carbonate, plus lithium chloride and lithium metal. Performed in Australia through TLEA's 100%-owned Kwinana battery-grade lithium hydroxide refinery (nameplate 24,000 t/yr Train 1), and in China through Tianqi's own conversion plants at Shehong and Suining Anju (Sichuan), Zhangjiagang (Jiangsu) and Tongliang (Chongqing), with total built lithium chemical capacity of roughly 91,600 t/yr. Outputs supply the lithium-ion battery and broader industrial value chain.",
+      "activity_category": "Processing / Refining",
+      "geographic_scope": ["Australia (Kwinana, Western Australia)", "China (Sichuan; Jiangsu; Chongqing)"],
+      "activity_status": "Active",
+      "evidence": ["https://www.igo.com.au/site/operations/lithium-holdco-joint-venture", "https://news.metal.com/newscontent/102156591-tianqi-lithiums-net-profit-soared-by-over-1000-in-2022-an-overview-of-its-lithium-product-capacity"],
+      "corporate_vehicles": [
+        {
+          "corporate_vehicle_id": "cv_tlea_kwinana",
+          "vehicle_type": "Controlled joint-venture subsidiary (TLEA, Tianqi 51% / IGO 49%)",
+          "vehicle_company_id": "org_tlea",
+          "vehicle_company_name": "Tianqi Lithium Energy Australia Pty Ltd (TLEA)",
+          "ownership_percentage": 51,
+          "control_status": "Controlled and consolidated by Tianqi (51%); IGO 49%",
+          "relationship_description": "TLEA owns 100% of the Kwinana battery-grade lithium hydroxide refinery in Western Australia. Kwinana is one of the largest fully automated battery-grade lithium hydroxide facilities globally and the first built in Australia (Train 1 nameplate 24,000 t/yr). The plant has faced ramp-up and viability challenges; Train 2 construction was suspended and IGO impaired its 49% interest in FY25.",
+          "evidence": ["https://www.igo.com.au/site/operations/lithium-holdco-joint-venture", "https://www.spglobal.com/energy/en/news-research/latest-news/metals/042226-kwinana-lithium-hydroxide-plant-to-be-competitive-soon-tianqi-jv-ceo"],
+          "product_service_groups": [
+            {
+              "product_service_group_id": "psg_lithium_hydroxide_kwinana",
+              "group_name": "Battery-Grade Lithium Hydroxide (Kwinana)",
+              "description": "Battery-grade lithium hydroxide monohydrate (LiOH·H2O) produced at the Kwinana refinery from Greenbushes spodumene concentrate, for lithium-ion battery cathode manufacturers. Part of the lithium chemicals segment.",
+              "group_revenue": {
+                "amount": null,
+                "currency": "CNY",
+                "reporting_period": "FY2024",
+                "reporting_scope": "Kwinana lithium hydroxide (product-line within lithium chemicals; standalone figure Not disclosed)",
+                "revenue_basis": "Not disclosed at plant/product-line granularity; Kwinana JV posted a net loss of ~A$955m in FY25",
+                "reported_or_estimated": "reported",
+                "evidence": "https://www.mining.com/igo-sees-no-path-forward-for-wa-lithium-refinery/"
+              },
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_kwinana_li_refinery",
+                  "physical_entity_name": "Kwinana Lithium Hydroxide Refinery",
+                  "physical_entity_class": "Operating Facility",
+                  "relationship_to_corporate_vehicle": "Owned 100% by TLEA (Tianqi-controlled)",
+                  "resolution_status": "resolved",
+                  "geographic_scope": "Kwinana, Western Australia, Australia",
+                  "evidence": ["https://www.igo.com.au/site/operations/lithium-holdco-joint-venture"],
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "out_lioh_kwinana",
+                      "output_name": "Battery-Grade Lithium Hydroxide Monohydrate (Kwinana)",
+                      "output_type": "Physical commodity / refined battery-grade lithium chemical",
+                      "description": "Battery-grade lithium hydroxide monohydrate produced at Kwinana. Train 1 nameplate capacity 24,000 t/yr; plant has struggled to reach nameplate and Train 2 construction was suspended. Actual 2024 output Not disclosed.",
+                      "volume_quantity": "Not disclosed (below 24,000 t/yr nameplate; ramp-up ongoing)",
+                      "quantity_unit": "metric tons LiOH·H2O per year (nameplate 24,000)",
+                      "reporting_period": "FY2024",
+                      "revenue": "Not disclosed",
+                      "reported_or_estimated": "reported",
+                      "evidence": ["https://www.spglobal.com/energy/en/news-research/latest-news/metals/042226-kwinana-lithium-hydroxide-plant-to-be-competitive-soon-tianqi-jv-ceo"],
+                      "markets": [
+                        {
+                          "market_participation_id": "mkt_lioh_battery_cathode",
+                          "market_name": "Battery-grade lithium hydroxide market (Li-ion cathode)",
+                          "market_type": "B2B commodity / offtake sales",
+                          "geographic_scope": "Global (battery and cathode manufacturers, incl. Asia)",
+                          "buyer_customer_category": "Lithium-ion battery / cathode active material manufacturers",
+                          "specific_buyer_organizational_entity_ids": [],
+                          "volume_revenue_exposure": "Specific customers and volumes Not disclosed; Kwinana output serves battery-grade lithium hydroxide demand for high-nickel cathodes.",
+                          "reporting_period": "FY2024",
+                          "evidence": ["https://www.spglobal.com/energy/en/news-research/latest-news/metals/042226-kwinana-lithium-hydroxide-plant-to-be-competitive-soon-tianqi-jv-ceo"]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "product_service_group_id": "psg_lithium_chemicals_china",
+              "group_name": "Lithium Chemicals (China conversion plants)",
+              "description": "Lithium carbonate, lithium hydroxide, lithium chloride and lithium metal produced at Tianqi's Chinese conversion plants (Shehong and Suining Anju in Sichuan, Zhangjiagang in Jiangsu, Tongliang in Chongqing). Total built lithium chemical capacity across all sites ~91,600 t/yr. Core lithium chemicals segment supplying China's battery supply chain.",
+              "group_revenue": {
+                "amount": null,
+                "currency": "CNY",
+                "reporting_period": "FY2024",
+                "reporting_scope": "Lithium chemicals segment (China plants; standalone split within RMB 13.063bn consolidated revenue Not disclosed)",
+                "revenue_basis": "Not disclosed at plant/product-line granularity",
+                "reported_or_estimated": "reported",
+                "evidence": "https://www.metal.com/en/newscontent/103248206"
+              },
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_tianqi_shehong_plant",
+                  "physical_entity_name": "Tianqi Shehong Lithium Chemical Plant",
+                  "physical_entity_class": "Operating Facility",
+                  "relationship_to_corporate_vehicle": "Owned and operated by Tianqi Lithium (directly)",
+                  "resolution_status": "partial",
+                  "geographic_scope": "Shehong, Sichuan Province, China",
+                  "evidence": ["https://news.metal.com/newscontent/102156591-tianqi-lithiums-net-profit-soared-by-over-1000-in-2022-an-overview-of-its-lithium-product-capacity"],
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "out_shehong_lithium_chemicals",
+                      "output_name": "Lithium Carbonate / Lithium Hydroxide / Lithium Chloride (Shehong)",
+                      "output_type": "Physical commodity / refined lithium chemicals",
+                      "description": "Shehong plant: ~14,500 t/yr lithium carbonate, ~5,000 t/yr lithium hydroxide, ~4,500 t/yr lithium chloride capacity. Actual 2024 output Not disclosed.",
+                      "volume_quantity": "Capacity ~14,500 (Li2CO3) / ~5,000 (LiOH) / ~4,500 (LiCl); actual output Not disclosed",
+                      "quantity_unit": "metric tons per year (nameplate capacity)",
+                      "reporting_period": "FY2024",
+                      "revenue": "Not disclosed",
+                      "reported_or_estimated": "reported",
+                      "evidence": ["https://news.metal.com/newscontent/102156591-tianqi-lithiums-net-profit-soared-by-over-1000-in-2022-an-overview-of-its-lithium-product-capacity"],
+                      "markets": [
+                        {
+                          "market_participation_id": "mkt_lithium_chem_china_battery",
+                          "market_name": "China lithium chemicals market (battery & industrial)",
+                          "market_type": "B2B commodity sales",
+                          "geographic_scope": "China (and export)",
+                          "buyer_customer_category": "Battery material / cathode manufacturers; industrial lithium users",
+                          "specific_buyer_organizational_entity_ids": [],
+                          "volume_revenue_exposure": "Specific customers and volumes Not disclosed.",
+                          "reporting_period": "FY2024",
+                          "evidence": ["https://news.metal.com/newscontent/102156591-tianqi-lithiums-net-profit-soared-by-over-1000-in-2022-an-overview-of-its-lithium-product-capacity"]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "physical_entity_id": "pe_tianqi_suining_anju_plant",
+                  "physical_entity_name": "Tianqi Suining Anju Lithium Carbonate Plant",
+                  "physical_entity_class": "Operating Facility",
+                  "relationship_to_corporate_vehicle": "Owned and operated by Tianqi Lithium (directly)",
+                  "resolution_status": "partial",
+                  "geographic_scope": "Suining (Anju District), Sichuan Province, China",
+                  "evidence": ["https://news.futunn.com/en/flash/15228859/tianqi-lithium-the-anju-plant-s-battery-grade-lithium-carbonate"],
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "out_suining_lithium_carbonate",
+                      "output_name": "Battery-Grade Lithium Carbonate (Suining Anju)",
+                      "output_type": "Physical commodity / refined battery-grade lithium chemical",
+                      "description": "Suining Anju plant: ~20,000 t/yr battery-grade lithium carbonate capacity (Phase two adding a ~23,000 t/yr lithium chloride line). Actual 2024 output Not disclosed.",
+                      "volume_quantity": "Capacity ~20,000 (Li2CO3); actual output Not disclosed",
+                      "quantity_unit": "metric tons per year (nameplate capacity)",
+                      "reporting_period": "FY2024",
+                      "revenue": "Not disclosed",
+                      "reported_or_estimated": "reported",
+                      "evidence": ["https://news.futunn.com/en/flash/15228859/tianqi-lithium-the-anju-plant-s-battery-grade-lithium-carbonate"],
+                      "markets": [
+                        {
+                          "market_participation_id": "mkt_suining_lithium_carbonate_battery",
+                          "market_name": "China lithium carbonate market (battery)",
+                          "market_type": "B2B commodity sales",
+                          "geographic_scope": "China",
+                          "buyer_customer_category": "Battery material / cathode manufacturers",
+                          "specific_buyer_organizational_entity_ids": [],
+                          "volume_revenue_exposure": "Specific customers and volumes Not disclosed.",
+                          "reporting_period": "FY2024",
+                          "evidence": ["https://news.futunn.com/en/flash/15228859/tianqi-lithium-the-anju-plant-s-battery-grade-lithium-carbonate"]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "physical_entity_id": "pe_tianqi_zhangjiagang_plant",
+                  "physical_entity_name": "Tianqi Zhangjiagang Lithium Chemical Plant",
+                  "physical_entity_class": "Operating Facility",
+                  "relationship_to_corporate_vehicle": "Owned and operated by Tianqi Lithium (directly)",
+                  "resolution_status": "partial",
+                  "geographic_scope": "Zhangjiagang, Jiangsu Province, China",
+                  "evidence": ["https://www.woodmac.com/reports/metals-zhangjiagang-tianqi-lithium-refinery-559196", "https://www.fastmarkets.com/insights/tianqi-lithium-to-build-30-000-tpy-lithium-hydroxide/"],
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "out_zhangjiagang_lithium_carbonate",
+                      "output_name": "Battery-Grade Lithium Carbonate (Zhangjiagang)",
+                      "output_type": "Physical commodity / refined battery-grade lithium chemical",
+                      "description": "Zhangjiagang plant: ~20,000 t/yr battery-grade lithium carbonate capacity; a further ~30,000 t/yr battery-grade lithium hydroxide project planned. Actual 2024 output Not disclosed.",
+                      "volume_quantity": "Capacity ~20,000 (Li2CO3); actual output Not disclosed",
+                      "quantity_unit": "metric tons per year (nameplate capacity)",
+                      "reporting_period": "FY2024",
+                      "revenue": "Not disclosed",
+                      "reported_or_estimated": "reported",
+                      "evidence": ["https://www.woodmac.com/reports/metals-zhangjiagang-tianqi-lithium-refinery-559196"],
+                      "markets": [
+                        {
+                          "market_participation_id": "mkt_zhangjiagang_lithium_carbonate_battery",
+                          "market_name": "China lithium carbonate market (battery)",
+                          "market_type": "B2B commodity sales",
+                          "geographic_scope": "China",
+                          "buyer_customer_category": "Battery material / cathode manufacturers",
+                          "specific_buyer_organizational_entity_ids": [],
+                          "volume_revenue_exposure": "Specific customers and volumes Not disclosed.",
+                          "reporting_period": "FY2024",
+                          "evidence": ["https://www.woodmac.com/reports/metals-zhangjiagang-tianqi-lithium-refinery-559196"]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "physical_entity_id": "pe_tianqi_tongliang_plant",
+                  "physical_entity_name": "Tianqi Tongliang Lithium Chemical Plant",
+                  "physical_entity_class": "Operating Facility",
+                  "relationship_to_corporate_vehicle": "Owned and operated by Tianqi Lithium (directly)",
+                  "resolution_status": "partial",
+                  "geographic_scope": "Tongliang, Chongqing, China",
+                  "evidence": ["https://en.wikipedia.org/wiki/Tianqi_Lithium"],
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "out_tongliang_lithium_chemicals",
+                      "output_name": "Lithium Chemicals (Tongliang)",
+                      "output_type": "Physical commodity / refined lithium chemicals",
+                      "description": "Tongliang (Chongqing) lithium chemical production site, part of Tianqi's ~91,600 t/yr total built lithium chemical capacity. Site-specific product breakdown and 2024 output Not disclosed.",
+                      "volume_quantity": "Not disclosed",
+                      "quantity_unit": "metric tons per year",
+                      "reporting_period": "FY2024",
+                      "revenue": "Not disclosed",
+                      "reported_or_estimated": "reported",
+                      "evidence": ["https://en.wikipedia.org/wiki/Tianqi_Lithium"],
+                      "markets": [
+                        {
+                          "market_participation_id": "mkt_tongliang_lithium_china",
+                          "market_name": "China lithium chemicals market",
+                          "market_type": "B2B commodity sales",
+                          "geographic_scope": "China",
+                          "buyer_customer_category": "Battery material / industrial lithium users",
+                          "specific_buyer_organizational_entity_ids": [],
+                          "volume_revenue_exposure": "Not disclosed",
+                          "reporting_period": "FY2024",
+                          "evidence": ["https://en.wikipedia.org/wiki/Tianqi_Lithium"]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "economic_activity_id": "act_sqm_equity_lithium",
+      "activity_name": "Lithium Brine Production via SQM Equity Interest",
+      "description": "Participation in global lithium brine production through a ~22.16% equity-accounted stake in SQM (Sociedad Química y Minera de Chile), which produces lithium carbonate and lithium hydroxide from Salar de Atacama brine in Chile. Tianqi does not operate SQM's assets and its ability to influence major strategic decisions is contested/restricted by antitrust conditions; this is an investment activity generating equity-method earnings rather than operated production.",
+      "activity_category": "Equity investment / associate (lithium brine production)",
+      "geographic_scope": ["Chile (Salar de Atacama)"],
+      "activity_status": "Active (contested; subject to Chilean nationalization / SQM-Codelco developments)",
+      "evidence": ["https://www.spglobal.com/energy/en/news-research/latest-news/metals/073024-chinas-tianqi-contests-chilean-regulators-move-to-hand-over-lithium-reserves-to-state", "https://www.caixinglobal.com/2025-04-29/tianqis-lithium-gamble-falters-as-chile-advances-sqm-nationalization-102314561.html"],
+      "corporate_vehicles": [
+        {
+          "corporate_vehicle_id": "cv_sqm_equity",
+          "vehicle_type": "Minority equity investment / associate (equity-accounted)",
+          "vehicle_company_id": "org_sqm",
+          "vehicle_company_name": "Sociedad Química y Minera de Chile S.A. (SQM)",
+          "ownership_percentage": 22.16,
+          "control_status": "Not controlled (significant influence contested; antitrust-restricted)",
+          "relationship_description": "Tianqi holds ~22.16% of SQM (acquired 23.77% in 2018 for USD ~4.1bn), its second-largest shareholder. SQM contributes to Tianqi via equity-method accounting; weaker SQM results were a stated driver of Tianqi's 2024 loss. Not an operated asset for Tianqi.",
+          "evidence": ["https://www.spglobal.com/energy/en/news-research/latest-news/metals/073024-chinas-tianqi-contests-chilean-regulators-move-to-hand-over-lithium-reserves-to-state"],
+          "product_service_groups": [
+            {
+              "product_service_group_id": "psg_sqm_lithium_equity",
+              "group_name": "SQM Lithium (equity-accounted associate output)",
+              "description": "Lithium carbonate and lithium hydroxide produced by SQM from Salar de Atacama brine. Tianqi participates economically via its ~22.16% equity stake (equity-method earnings), not as operator; no direct commercial output is sold by Tianqi from these assets.",
+              "group_revenue": {
+                "amount": null,
+                "currency": "CNY",
+                "reporting_period": "FY2024",
+                "reporting_scope": "Equity-accounted associate (SQM); not consolidated revenue — reflected as investment income/loss, not as Tianqi commercial output",
+                "revenue_basis": "Not applicable as commercial revenue (equity-method; SQM's weaker 2024 results contributed to Tianqi's net loss)",
+                "reported_or_estimated": "reported",
+                "evidence": "https://www.metal.com/en/newscontent/103248206"
+              },
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_salar_de_atacama_sqm",
+                  "physical_entity_name": "Salar de Atacama Lithium Brine Operations (SQM)",
+                  "physical_entity_class": "Resource Site",
+                  "relationship_to_corporate_vehicle": "Operated by SQM; Tianqi holds indirect economic exposure via ~22.16% equity stake (not operator/owner of the asset)",
+                  "resolution_status": "partial",
+                  "geographic_scope": "Salar de Atacama, Antofagasta Region, Chile",
+                  "evidence": ["https://www.caixinglobal.com/2025-04-29/tianqis-lithium-gamble-falters-as-chile-advances-sqm-nationalization-102314561.html"],
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "out_sqm_lithium_equity",
+                      "output_name": "SQM Lithium Chemicals (associate output — not Tianqi's direct commercial output)",
+                      "output_type": "Equity-method associate exposure (not a Tianqi-sold commodity)",
+                      "description": "Lithium carbonate/hydroxide from Salar de Atacama brine produced and sold by SQM. Tianqi's participation is financial (equity method); Tianqi does not directly sell this output. Volumes and prices are SQM's, not disclosed as Tianqi commercial output.",
+                      "volume_quantity": "Not applicable to Tianqi as direct output (SQM-produced)",
+                      "quantity_unit": "Not applicable",
+                      "reporting_period": "FY2024",
+                      "revenue": "Not applicable (equity-method investment income, not commercial revenue)",
+                      "reported_or_estimated": "reported",
+                      "evidence": ["https://www.caixinglobal.com/2025-04-29/tianqis-lithium-gamble-falters-as-chile-advances-sqm-nationalization-102314561.html"],
+                      "markets": [
+                        {
+                          "market_participation_id": "mkt_sqm_lithium_global",
+                          "market_name": "Global lithium chemicals market (SQM sales)",
+                          "market_type": "Equity-accounted associate (SQM's market participation; not Tianqi direct)",
+                          "geographic_scope": "Global (SQM customers)",
+                          "buyer_customer_category": "SQM's customers (battery / industrial lithium buyers) — not Tianqi's direct customers",
+                          "specific_buyer_organizational_entity_ids": [],
+                          "volume_revenue_exposure": "Tianqi exposure is via ~22.16% equity stake; no direct Tianqi sales. SQM's Atacama earnings subject to 70% government share from 2025 and nationalization/Codelco developments.",
+                          "reporting_period": "FY2024 onward",
+                          "evidence": ["https://www.caixinglobal.com/2025-04-29/tianqis-lithium-gamble-falters-as-chile-advances-sqm-nationalization-102314561.html"]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "supply_chain_participations": {"organizational_entity_participation_ids": []},
+  "record_metadata": {
+    "resolution_status": "resolved",
+    "overall_confidence": "medium-high",
+    "created_date": "2026-08-10",
+    "last_updated_date": "2026-08-10"
+  }
+}
