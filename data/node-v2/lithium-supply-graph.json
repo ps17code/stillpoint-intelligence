@@ -24,9 +24,9 @@
    "map_node_id": "mn_mjg_li_hardrock_mine",
    "group_id": "mjg_li_hardrock_mine",
    "group_name": "Hard-rock lithium mine & concentrator",
-   "entity_class": "Resource Site",
+   "entity_class": "Operating Facility",
    "entity_type": "Hard-rock lithium mine & concentrator",
-   "column": "source",
+   "column": "extraction",
    "input_forms": [
     "In-situ lepidolite/zinnwaldite mica orebody (deposit)",
     "In-situ lepidolite/zinnwaldite orebody (deposit)",
@@ -369,10 +369,10 @@
   {
    "map_node_id": "mn_mjg_li_salar_wellfield",
    "group_id": "mjg_li_salar_wellfield",
-   "group_name": "Continental (salar) brine well-field",
-   "entity_class": "Resource Site",
-   "entity_type": "Continental (salar) brine well-field",
-   "column": "source",
+   "group_name": "Salar brine well-field & pond operation",
+   "entity_class": "Operating Facility",
+   "entity_type": "Salar brine well-field & pond operation",
+   "column": "extraction",
    "input_forms": [
     "In-situ salar brine (dissolved Li+)",
     "In-situ salar brine (dissolved Li+, ~200-2000+ mg/L Li)"
@@ -474,10 +474,10 @@
   {
    "map_node_id": "mn_mjg_li_geothermal_field",
    "group_id": "mjg_li_geothermal_field",
-   "group_name": "Geothermal brine field & pretreatment",
-   "entity_class": "Resource Site",
-   "entity_type": "Geothermal brine field & pretreatment",
-   "column": "source",
+   "group_name": "Geothermal brine extraction & pretreatment plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Geothermal brine extraction & pretreatment plant",
+   "column": "extraction",
    "input_forms": [
     "Deep hot subsurface geothermal reservoir (dissolved Li+ in high-temperature saline brine)",
     "Deep hot subsurface geothermal reservoir (dissolved Li+)",
@@ -506,10 +506,10 @@
   {
    "map_node_id": "mn_mjg_li_oilfield_brine",
    "group_id": "mjg_li_oilfield_brine",
-   "group_name": "Oilfield / petroleum-brine lithium operation",
-   "entity_class": "Resource Site",
-   "entity_type": "Oilfield / petroleum-brine lithium operation",
-   "column": "source",
+   "group_name": "Oilfield brine gathering & extraction operation",
+   "entity_class": "Operating Facility",
+   "entity_type": "Oilfield brine gathering & extraction operation",
+   "column": "extraction",
    "input_forms": [
     "(origin) subsurface hydrocarbon formation with connate Li-bearing brine",
     "Lithium-bearing oilfield formation / produced-water brine (raw)",
@@ -534,10 +534,10 @@
   {
    "map_node_id": "mn_mjg_li_clay_plant",
    "group_id": "mjg_li_clay_plant",
-   "group_name": "Lithium clay-to-chemical plant",
-   "entity_class": "Resource Site",
-   "entity_type": "Lithium clay-to-chemical plant",
-   "column": "source",
+   "group_name": "Lithium clay mine & chemical plant",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium clay mine & chemical plant",
+   "column": "extraction",
    "input_forms": [
     "Clarified pregnant lithium sulfate solution",
     "In-situ lithium claystone deposit",
@@ -594,9 +594,9 @@
    "map_node_id": "mn_mjg_li_jadarite_plant",
    "group_id": "mjg_li_jadarite_plant",
    "group_name": "Jadarite mine & lithium-borate chemical plant",
-   "entity_class": "Resource Site",
+   "entity_class": "Operating Facility",
    "entity_type": "Jadarite mine & lithium-borate chemical plant",
-   "column": "source",
+   "column": "extraction",
    "input_forms": [
     "Boron-depleted lithium liquor; Lime (Ca(OH)2 / CaO)",
     "Boron-depleted lithium-bearing sulphate liquor; Lime (Ca(OH)2 / CaO)",
@@ -633,10 +633,10 @@
   {
    "map_node_id": "mn_mjg_li_tailings_reclamation",
    "group_id": "mjg_li_tailings_reclamation",
-   "group_name": "Lithium tailings / residue reclamation operation",
-   "entity_class": "Resource Site",
-   "entity_type": "Lithium tailings / residue reclamation operation",
-   "column": "source",
+   "group_name": "Lithium tailings reclamation operation",
+   "entity_class": "Operating Facility",
+   "entity_type": "Lithium tailings reclamation operation",
+   "column": "extraction",
    "input_forms": [
     "Lithium-bearing tailings / residue (low-grade bulk)",
     "Lithium-bearing tailings / residue (residual Li in spodumene flotation tailings, low-grade bulk)"
@@ -663,9 +663,9 @@
    "map_node_id": "mn_mjg_li_battery_recycling",
    "group_id": "mjg_li_battery_recycling",
    "group_name": "Battery recycling & recycled-lithium refinery",
-   "entity_class": "Resource Site",
+   "entity_class": "Operating Facility",
    "entity_type": "Battery recycling & recycled-lithium refinery",
-   "column": "source",
+   "column": "extraction",
    "input_forms": [
     "Black mass (Li/Ni/Co/Mn/Cu/graphite concentrate)",
     "Discharged, sorted, dismantled spent cells / electrode scrap",
@@ -714,6 +714,126 @@
     "peg_li_battery_smelter",
     "peg_li_slag_leach_recovery"
    ]
+  },
+  {
+   "map_node_id": "mn_mjg_li_hardrock_deposit",
+   "group_id": "mjg_li_hardrock_deposit",
+   "group_name": "Hard-rock LCT pegmatite lithium deposit",
+   "entity_class": "Resource Site",
+   "entity_type": "Hard-rock LCT pegmatite lithium deposit",
+   "column": "source",
+   "input_forms": [],
+   "output_forms": [
+    "in-situ lithium-bearing resource"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [],
+   "definition": "In-situ LCT granitic pegmatite orebody hosting spodumene, petalite, lepidolite or Li-mica/greisen."
+  },
+  {
+   "map_node_id": "mn_mjg_li_salar_reservoir",
+   "group_id": "mjg_li_salar_reservoir",
+   "group_name": "Continental salar brine reservoir",
+   "entity_class": "Resource Site",
+   "entity_type": "Continental salar brine reservoir",
+   "column": "source",
+   "input_forms": [],
+   "output_forms": [
+    "in-situ lithium-bearing resource"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [],
+   "definition": "Closed-basin salar aquifer holding lithium-bearing continental brine."
+  },
+  {
+   "map_node_id": "mn_mjg_li_geothermal_reservoir",
+   "group_id": "mjg_li_geothermal_reservoir",
+   "group_name": "Geothermal brine reservoir",
+   "entity_class": "Resource Site",
+   "entity_type": "Geothermal brine reservoir",
+   "column": "source",
+   "input_forms": [],
+   "output_forms": [
+    "in-situ lithium-bearing resource"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [],
+   "definition": "Deep hot geothermal aquifer carrying dissolved lithium."
+  },
+  {
+   "map_node_id": "mn_mjg_li_oilfield_reservoir",
+   "group_id": "mjg_li_oilfield_reservoir",
+   "group_name": "Oilfield / connate brine reservoir",
+   "entity_class": "Resource Site",
+   "entity_type": "Oilfield / connate brine reservoir",
+   "column": "source",
+   "input_forms": [],
+   "output_forms": [
+    "in-situ lithium-bearing resource"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [],
+   "definition": "Petroleum-associated subsurface formation brine bearing lithium (e.g. Smackover)."
+  },
+  {
+   "map_node_id": "mn_mjg_li_claystone_deposit",
+   "group_id": "mjg_li_claystone_deposit",
+   "group_name": "Lithium claystone (sedimentary) deposit",
+   "entity_class": "Resource Site",
+   "entity_type": "Lithium claystone (sedimentary) deposit",
+   "column": "source",
+   "input_forms": [],
+   "output_forms": [
+    "in-situ lithium-bearing resource"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [],
+   "definition": "Volcano-sedimentary lithium-bearing clay/claystone body (hectorite/smectite)."
+  },
+  {
+   "map_node_id": "mn_mjg_li_jadarite_deposit",
+   "group_id": "mjg_li_jadarite_deposit",
+   "group_name": "Jadarite / sedimentary lithium-borate deposit",
+   "entity_class": "Resource Site",
+   "entity_type": "Jadarite / sedimentary lithium-borate deposit",
+   "column": "source",
+   "input_forms": [],
+   "output_forms": [
+    "in-situ lithium-bearing resource"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [],
+   "definition": "Lacustrine sedimentary jadarite or searlesite lithium-borate body."
+  },
+  {
+   "map_node_id": "mn_mjg_li_tailings_body",
+   "group_id": "mjg_li_tailings_body",
+   "group_name": "Lithium-bearing tailings / residue accumulation",
+   "entity_class": "Resource Site",
+   "entity_type": "Lithium-bearing tailings / residue accumulation",
+   "column": "source",
+   "input_forms": [],
+   "output_forms": [
+    "in-situ lithium-bearing resource"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [],
+   "definition": "Anthropogenic historic tailings or residue body holding recoverable lithium."
+  },
+  {
+   "map_node_id": "mn_mjg_li_eol_scrap",
+   "group_id": "mjg_li_eol_scrap",
+   "group_name": "End-of-life lithium battery & production scrap stream",
+   "entity_class": "Resource Site",
+   "entity_type": "End-of-life lithium battery & production scrap stream",
+   "column": "source",
+   "input_forms": [],
+   "output_forms": [
+    "in-situ lithium-bearing resource"
+   ],
+   "route_participation_ids": [],
+   "route_ids": [],
+   "definition": "Post-consumer and production Li-ion battery scrap accumulation (secondary resource)."
   }
  ],
  "ending_boundary_nodes": [
@@ -1394,6 +1514,62 @@
     "R-SB10-EB03-HYDRO-ELECTROLYSIS",
     "R-SB10-EB03-PYRO"
    ]
+  },
+  {
+   "edge_id": "e_mjg_li_hardrock_deposit__mjg_li_hardrock_mine",
+   "from": "mn_mjg_li_hardrock_deposit",
+   "to": "mn_mjg_li_hardrock_mine",
+   "handoff_form": "in-situ resource extraction",
+   "route_ids": []
+  },
+  {
+   "edge_id": "e_mjg_li_salar_reservoir__mjg_li_salar_wellfield",
+   "from": "mn_mjg_li_salar_reservoir",
+   "to": "mn_mjg_li_salar_wellfield",
+   "handoff_form": "in-situ resource extraction",
+   "route_ids": []
+  },
+  {
+   "edge_id": "e_mjg_li_geothermal_reservoir__mjg_li_geothermal_field",
+   "from": "mn_mjg_li_geothermal_reservoir",
+   "to": "mn_mjg_li_geothermal_field",
+   "handoff_form": "in-situ resource extraction",
+   "route_ids": []
+  },
+  {
+   "edge_id": "e_mjg_li_oilfield_reservoir__mjg_li_oilfield_brine",
+   "from": "mn_mjg_li_oilfield_reservoir",
+   "to": "mn_mjg_li_oilfield_brine",
+   "handoff_form": "in-situ resource extraction",
+   "route_ids": []
+  },
+  {
+   "edge_id": "e_mjg_li_claystone_deposit__mjg_li_clay_plant",
+   "from": "mn_mjg_li_claystone_deposit",
+   "to": "mn_mjg_li_clay_plant",
+   "handoff_form": "in-situ resource extraction",
+   "route_ids": []
+  },
+  {
+   "edge_id": "e_mjg_li_jadarite_deposit__mjg_li_jadarite_plant",
+   "from": "mn_mjg_li_jadarite_deposit",
+   "to": "mn_mjg_li_jadarite_plant",
+   "handoff_form": "in-situ resource extraction",
+   "route_ids": []
+  },
+  {
+   "edge_id": "e_mjg_li_tailings_body__mjg_li_tailings_reclamation",
+   "from": "mn_mjg_li_tailings_body",
+   "to": "mn_mjg_li_tailings_reclamation",
+   "handoff_form": "in-situ resource extraction",
+   "route_ids": []
+  },
+  {
+   "edge_id": "e_mjg_li_eol_scrap__mjg_li_battery_recycling",
+   "from": "mn_mjg_li_eol_scrap",
+   "to": "mn_mjg_li_battery_recycling",
+   "handoff_form": "in-situ resource extraction",
+   "route_ids": []
   }
  ],
  "starting_boundaries": [

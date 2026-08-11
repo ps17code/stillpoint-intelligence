@@ -8427,5 +8427,55 @@
   "peg_li_hydroxide_electrochemical_plant": "mjg_li_hydroxide_plant",
   "peg_li_anhydrous_licl_plant": "mjg_li_metal_works",
   "peg_li_metal_electrolysis_works": "mjg_li_metal_works"
- }
+ },
+ "resource_site_groups": [
+  {
+   "group_id": "mjg_li_hardrock_deposit",
+   "group_name": "Hard-rock LCT pegmatite lithium deposit",
+   "entity_class": "Resource Site",
+   "from_operation_group": "mjg_li_hardrock_mine"
+  },
+  {
+   "group_id": "mjg_li_salar_reservoir",
+   "group_name": "Continental salar brine reservoir",
+   "entity_class": "Resource Site",
+   "from_operation_group": "mjg_li_salar_wellfield"
+  },
+  {
+   "group_id": "mjg_li_geothermal_reservoir",
+   "group_name": "Geothermal brine reservoir",
+   "entity_class": "Resource Site",
+   "from_operation_group": "mjg_li_geothermal_field"
+  },
+  {
+   "group_id": "mjg_li_oilfield_reservoir",
+   "group_name": "Oilfield / connate brine reservoir",
+   "entity_class": "Resource Site",
+   "from_operation_group": "mjg_li_oilfield_brine"
+  },
+  {
+   "group_id": "mjg_li_claystone_deposit",
+   "group_name": "Lithium claystone (sedimentary) deposit",
+   "entity_class": "Resource Site",
+   "from_operation_group": "mjg_li_clay_plant"
+  },
+  {
+   "group_id": "mjg_li_jadarite_deposit",
+   "group_name": "Jadarite / sedimentary lithium-borate deposit",
+   "entity_class": "Resource Site",
+   "from_operation_group": "mjg_li_jadarite_plant"
+  },
+  {
+   "group_id": "mjg_li_tailings_body",
+   "group_name": "Lithium-bearing tailings / residue accumulation",
+   "entity_class": "Resource Site",
+   "from_operation_group": "mjg_li_tailings_reclamation"
+  },
+  {
+   "group_id": "mjg_li_eol_scrap",
+   "group_name": "End-of-life lithium battery & production scrap stream",
+   "entity_class": "Resource Site",
+   "from_operation_group": "mjg_li_battery_recycling"
+  }
+ ]
 }
