@@ -8192,5 +8192,240 @@
    "received_form": "Anhydrous lithium chloride (LiCl)",
    "output_form": "Lithium metal (Li) - ingot / foil / granular; Chlorine gas (Cl2) by-product"
   }
- ]
+ ],
+ "major_groups": [
+  {
+   "major_group_id": "mjg_li_hardrock_mine",
+   "major_group_name": "Hard-rock lithium mine & concentrator",
+   "column": "source",
+   "entity_class": "Resource Site",
+   "definition": "A hard-rock LCT-pegmatite or lithium-mica mine with its co-located or associated beneficiation plant that mines run-of-mine ore and ships a lithium-mineral concentrate (spodumene, petalite, or lepidolite/zinnwaldite) off-site.",
+   "sub_stage_group_ids": [
+    "peg_li_spodumene_mine_concentrator",
+    "peg_li_pegmatite_mine_petalite",
+    "peg_li_pegmatite_concentrator",
+    "peg_li_mica_mine",
+    "peg_li_mica_concentrator"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_spodumene_converter",
+   "major_group_name": "Spodumene chemical converter",
+   "column": "refining",
+   "entity_class": "Operating Facility",
+   "definition": "A lithium chemical conversion plant that receives spodumene concentrate and converts it to a purified lithium salt liquor via the sulfuric-acid roast-leach or soda-ash alkaline-autoclave route, including its internal solution-purification circuit.",
+   "sub_stage_group_ids": [
+    "peg_li_spodumene_sulfate_converter",
+    "peg_li_spodumene_sodaash_autoclave",
+    "peg_li_sulfate_solution_purification"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_mica_converter",
+   "major_group_name": "Lithium-mica chemical converter",
+   "column": "refining",
+   "entity_class": "Operating Facility",
+   "definition": "A chemical plant that receives lithium-mica (lepidolite/zinnwaldite) concentrate and roast-leaches it with sulfate or lime-sulfate reagents to produce a lithium sulfate pregnant solution.",
+   "sub_stage_group_ids": [
+    "peg_li_mica_sulfate_roast_leach",
+    "peg_li_mica_lime_sulfate_roast_leach"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_salar_wellfield",
+   "major_group_name": "Continental (salar) brine well-field",
+   "column": "source",
+   "entity_class": "Resource Site",
+   "definition": "A closed-basin salar operation that extracts dissolved-lithium continental brine from an aquifer via a production well-field and delivers raw brine to concentration.",
+   "sub_stage_group_ids": [
+    "peg_li_salar_brine_wellfield"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_evaporation_ponds",
+   "major_group_name": "Solar evaporation pond brine concentrator",
+   "column": "extraction",
+   "entity_class": "Operating Facility",
+   "definition": "An engineered salar pond field (with associated softening) that concentrates raw brine by solar evaporation, precipitating bulk salts to yield a purified high-lithium liquor.",
+   "sub_stage_group_ids": [
+    "peg_li_solar_evaporation_ponds",
+    "peg_li_brine_concentration_composite"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_dle_plant",
+   "major_group_name": "Direct Lithium Extraction (DLE) plant",
+   "column": "extraction",
+   "entity_class": "Operating Facility",
+   "definition": "An engineered plant that selectively captures lithium from raw or pretreated brine using sorbent/ion-exchange/solvent-extraction media and delivers a purified, concentrated lithium chloride liquor via its integrated eluate concentration and softening steps.",
+   "sub_stage_group_ids": [
+    "peg_li_dle_plant",
+    "peg_li_licl_concentration_purification",
+    "peg_li_brine_softening_unit"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_geothermal_field",
+   "major_group_name": "Geothermal brine field & pretreatment",
+   "column": "source",
+   "entity_class": "Resource Site",
+   "definition": "A deep geothermal reservoir with its wellfield, co-located power plant, and brine-conditioning plant that produces and clarifies hot lithium-bearing brine for downstream lithium recovery.",
+   "sub_stage_group_ids": [
+    "peg_li_geothermal_brine_field",
+    "peg_li_geothermal_brine_pretreatment"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_oilfield_brine",
+   "major_group_name": "Oilfield / petroleum-brine lithium operation",
+   "column": "source",
+   "entity_class": "Resource Site",
+   "definition": "A hydrocarbon-associated subsurface brine resource with its produced-water gathering and pretreatment facility that conditions co-produced formation brine to feed lithium recovery.",
+   "sub_stage_group_ids": [
+    "peg_li_oilfield_brine_formation",
+    "peg_li_producedwater_pretreatment"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_clay_plant",
+   "major_group_name": "Lithium clay-to-chemical plant",
+   "column": "source",
+   "entity_class": "Resource Site",
+   "definition": "An integrated lithium-claystone operation spanning open-pit mining, beneficiation, acid-leach or salt-roast/water-leach, solid-liquid separation and purification, delivering a lithium liquor or carbonate as its shared intermediate.",
+   "sub_stage_group_ids": [
+    "peg_li_clay_mine",
+    "peg_li_clay_beneficiation",
+    "peg_li_clay_acid_leach",
+    "peg_li_clay_hcl_leach",
+    "peg_li_clay_salt_roast",
+    "peg_li_water_leach_separation",
+    "peg_li_clay_ccd_filtration",
+    "peg_li_generic_solution_purification",
+    "peg_li_integrated_clay_carbonate"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_jadarite_plant",
+   "major_group_name": "Jadarite mine & lithium-borate chemical plant",
+   "column": "source",
+   "entity_class": "Resource Site",
+   "definition": "An integrated Jadar-type lithium-borate operation spanning underground jadarite mining, HPGR beneficiation, sulphuric-acid digestion, boric-acid recovery and liquor purification with sodium-sulphate crystallisation to a purified lithium sulphate feed.",
+   "sub_stage_group_ids": [
+    "peg_li_jadarite_mine",
+    "peg_li_jadarite_beneficiation",
+    "peg_li_jadarite_acid_leach",
+    "peg_li_boron_recovery_unit",
+    "peg_li_liquor_purification_na2so4"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_tailings_reclamation",
+   "major_group_name": "Lithium tailings / residue reclamation operation",
+   "column": "source",
+   "entity_class": "Resource Site",
+   "definition": "A standalone legacy lithium-bearing tailings or process-residue accumulation worked directly as a source, with on-site re-flotation or direct leaching to recover lithium.",
+   "sub_stage_group_ids": [
+    "peg_li_tailings_reflotation",
+    "peg_li_tailings_directleach"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_battery_recycling",
+   "major_group_name": "Battery recycling & recycled-lithium refinery",
+   "column": "source",
+   "entity_class": "Resource Site",
+   "definition": "The end-of-life battery recycling chain spanning spent-battery collection, mechanical black-mass production or pyrometallurgical smelting, and the hydrometallurgical refinery that leaches, separates metals and recovers/finishes recycled lithium salts and hydroxide.",
+   "sub_stage_group_ids": [
+    "peg_li_battery_collection_site",
+    "peg_li_black_mass_plant",
+    "peg_li_blackmass_hydromet_refinery",
+    "peg_li_battery_metals_separation",
+    "peg_li_hydroxide_bmed_recycle",
+    "peg_li_battery_smelter",
+    "peg_li_slag_leach_recovery"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_carbonate_plant",
+   "major_group_name": "Lithium carbonate plant",
+   "column": "conversion",
+   "entity_class": "Operating Facility",
+   "definition": "A lithium carbonate conversion plant that purifies a lithium salt liquor and precipitates, refines, dries and packages battery- and technical-grade lithium carbonate.",
+   "sub_stage_group_ids": [
+    "peg_li_carbonate_plant"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_hydroxide_plant",
+   "major_group_name": "Lithium hydroxide plant",
+   "column": "conversion",
+   "entity_class": "Operating Facility",
+   "definition": "A lithium hydroxide conversion plant that produces and crystallises LiOH\u00b7H2O from a lithium feed via lime/NaOH causticization or membrane/electrochemical splitting.",
+   "sub_stage_group_ids": [
+    "peg_li_hydroxide_causticization_plant",
+    "peg_li_hydroxide_electrochemical_plant"
+   ]
+  },
+  {
+   "major_group_id": "mjg_li_metal_works",
+   "major_group_name": "Lithium metal electrolysis works",
+   "column": "conversion",
+   "entity_class": "Operating Facility",
+   "definition": "A molten-salt electrometallurgical works that prepares anhydrous lithium chloride feed and electrowins, refines and finishes metallic lithium.",
+   "sub_stage_group_ids": [
+    "peg_li_anhydrous_licl_plant",
+    "peg_li_metal_electrolysis_works"
+   ]
+  }
+ ],
+ "fine_to_major": {
+  "peg_li_spodumene_mine_concentrator": "mjg_li_hardrock_mine",
+  "peg_li_pegmatite_mine_petalite": "mjg_li_hardrock_mine",
+  "peg_li_pegmatite_concentrator": "mjg_li_hardrock_mine",
+  "peg_li_mica_mine": "mjg_li_hardrock_mine",
+  "peg_li_mica_concentrator": "mjg_li_hardrock_mine",
+  "peg_li_spodumene_sulfate_converter": "mjg_li_spodumene_converter",
+  "peg_li_spodumene_sodaash_autoclave": "mjg_li_spodumene_converter",
+  "peg_li_sulfate_solution_purification": "mjg_li_spodumene_converter",
+  "peg_li_mica_sulfate_roast_leach": "mjg_li_mica_converter",
+  "peg_li_mica_lime_sulfate_roast_leach": "mjg_li_mica_converter",
+  "peg_li_salar_brine_wellfield": "mjg_li_salar_wellfield",
+  "peg_li_solar_evaporation_ponds": "mjg_li_evaporation_ponds",
+  "peg_li_brine_concentration_composite": "mjg_li_evaporation_ponds",
+  "peg_li_dle_plant": "mjg_li_dle_plant",
+  "peg_li_licl_concentration_purification": "mjg_li_dle_plant",
+  "peg_li_brine_softening_unit": "mjg_li_dle_plant",
+  "peg_li_geothermal_brine_field": "mjg_li_geothermal_field",
+  "peg_li_geothermal_brine_pretreatment": "mjg_li_geothermal_field",
+  "peg_li_oilfield_brine_formation": "mjg_li_oilfield_brine",
+  "peg_li_producedwater_pretreatment": "mjg_li_oilfield_brine",
+  "peg_li_clay_mine": "mjg_li_clay_plant",
+  "peg_li_clay_beneficiation": "mjg_li_clay_plant",
+  "peg_li_clay_acid_leach": "mjg_li_clay_plant",
+  "peg_li_clay_hcl_leach": "mjg_li_clay_plant",
+  "peg_li_clay_salt_roast": "mjg_li_clay_plant",
+  "peg_li_water_leach_separation": "mjg_li_clay_plant",
+  "peg_li_clay_ccd_filtration": "mjg_li_clay_plant",
+  "peg_li_generic_solution_purification": "mjg_li_clay_plant",
+  "peg_li_integrated_clay_carbonate": "mjg_li_clay_plant",
+  "peg_li_jadarite_mine": "mjg_li_jadarite_plant",
+  "peg_li_jadarite_beneficiation": "mjg_li_jadarite_plant",
+  "peg_li_jadarite_acid_leach": "mjg_li_jadarite_plant",
+  "peg_li_boron_recovery_unit": "mjg_li_jadarite_plant",
+  "peg_li_liquor_purification_na2so4": "mjg_li_jadarite_plant",
+  "peg_li_tailings_reflotation": "mjg_li_tailings_reclamation",
+  "peg_li_tailings_directleach": "mjg_li_tailings_reclamation",
+  "peg_li_battery_collection_site": "mjg_li_battery_recycling",
+  "peg_li_black_mass_plant": "mjg_li_battery_recycling",
+  "peg_li_blackmass_hydromet_refinery": "mjg_li_battery_recycling",
+  "peg_li_battery_metals_separation": "mjg_li_battery_recycling",
+  "peg_li_hydroxide_bmed_recycle": "mjg_li_battery_recycling",
+  "peg_li_battery_smelter": "mjg_li_battery_recycling",
+  "peg_li_slag_leach_recovery": "mjg_li_battery_recycling",
+  "peg_li_carbonate_plant": "mjg_li_carbonate_plant",
+  "peg_li_hydroxide_causticization_plant": "mjg_li_hydroxide_plant",
+  "peg_li_hydroxide_electrochemical_plant": "mjg_li_hydroxide_plant",
+  "peg_li_anhydrous_licl_plant": "mjg_li_metal_works",
+  "peg_li_metal_electrolysis_works": "mjg_li_metal_works"
+ }
 }
