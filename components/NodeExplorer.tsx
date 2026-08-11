@@ -434,6 +434,12 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
             {selectedEntity && <EntityPanel entity={selectedEntity} graph={loaded!.entityGraph} record={getFullRecord(selectedEntity.id)} company={selectedEntity.organizational_entity ? getCompanyRecord(selectedEntity.organizational_entity) : null} onClose={() => setSelId(null)} />}
           </div>
         )}
+        {/* company record panel — full record data alongside the company graph */}
+        {view === "company" && companyRec && (
+          <div style={{ flexBasis: 430, flexGrow: 0, flexShrink: 0, width: 430, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)" }}>
+            <CompanyRecordPanel rec={companyRec} />
+          </div>
+        )}
       </div>
 
       {/* Terminal */}
@@ -555,6 +561,86 @@ function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set
           ))}
         </div>
       ))}
+    </div>
+  );
+}
+
+/* full Company Record data panel — renders the entire CompanyRecordV2 alongside the company graph */
+function CompanyRecordPanel({ rec }: { rec: CompanyRecordV2 }) {
+  const id = rec.identity;
+  const fin = rec.financial?.total_revenue;
+  const finAny = fin as unknown as { reporting_scope?: string; revenue_basis?: string } | undefined;
+  const rev = fin && fin.amount != null
+    ? `${fin.amount.toLocaleString()} ${fin.currency || ""}${fin.reporting_period ? ` (${fin.reporting_period})` : ""}`.trim()
+    : "Not disclosed";
+  const indent = (color: string): React.CSSProperties => ({ marginTop: 7, marginLeft: 5, paddingLeft: 9, borderLeft: `2px solid ${color}` });
+  return (
+    <div style={{ width: 430, height: "100%", boxSizing: "border-box", overflowY: "auto", padding: "18px 20px" }}>
+      <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Company Record · {rec.common?.entity_subtype || "Company"}</p>
+      <h2 style={{ fontSize: 17, color: warmWhite, fontFamily: SERIF, margin: "4px 0 0 0", lineHeight: 1.2 }}>{id?.company_name}</h2>
+      <p style={{ fontSize: 8.5, color: "#8ab0c0", fontFamily: MONO, margin: "3px 0 0 0" }}>{rec.common?.organizational_entity_id}</p>
+
+      <Sect label="Identity">
+        <Row label="Legal name" value={id?.legal_name || ""} />
+        <Row label="Type" value={id?.company_type || ""} />
+        <Row label="Status" value={id?.company_status || ""} />
+        <Row label="Incorporated" value={id?.country_of_incorporation || ""} />
+        <Row label="HQ" value={id?.headquarters || ""} />
+        {id?.short_description && <Prose>{id.short_description}</Prose>}
+      </Sect>
+
+      <Sect label="Financial">
+        <Row label="Revenue" value={rev} />
+        {finAny?.reporting_scope && <Row label="Scope" value={finAny.reporting_scope} />}
+        {finAny?.revenue_basis && <Prose>{finAny.revenue_basis}</Prose>}
+      </Sect>
+
+      <Sect label={`Economic Activities (${rec.economic_activities?.length || 0})`}>
+        {(rec.economic_activities || []).map((a, i) => (
+          <div key={i} style={{ marginTop: i ? 12 : 2, padding: "9px 10px", borderRadius: 6, background: cardBg, border: "1px solid rgb(45,41,39)" }}>
+            <p style={{ fontSize: 12.5, color: warmWhite, fontFamily: SERIF, margin: 0 }}>{a.activity_name}</p>
+            <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.05em", margin: "2px 0 0 0" }}>{[a.activity_category, (a.geographic_scope || []).join(", "), a.activity_status].filter(Boolean).join(" · ")}</p>
+            {a.description && <Prose>{a.description}</Prose>}
+            {(a.corporate_vehicles || []).map((cv, j) => (
+              <div key={j} style={indent("#c8a24a")}>
+                <MicroHead>through · corporate vehicle</MicroHead>
+                <p style={{ fontSize: 11.5, color: warmWhite, margin: 0 }}>{cv.vehicle_company_name}</p>
+                {cv.vehicle_company_id && <p style={{ fontSize: 8, color: "#8ab0c0", fontFamily: MONO, margin: "1px 0 0 0" }}>{cv.vehicle_company_id}</p>}
+                <Sub2 label="relationship" value={[cv.vehicle_type, cv.ownership_percentage != null ? `${cv.ownership_percentage}%` : "", cv.control_status].filter(Boolean).join(" · ")} />
+                {cv.relationship_description && <Prose>{cv.relationship_description}</Prose>}
+                {(cv.product_service_groups || []).map((g, k) => (
+                  <div key={k} style={indent("#8ab0c0")}>
+                    <MicroHead>responsible for · product / service group</MicroHead>
+                    <p style={{ fontSize: 11, color: warmWhite, margin: 0 }}>{g.group_name}</p>
+                    {g.description && <Prose>{g.description}</Prose>}
+                    {(g.physical_entities || []).map((pe, m) => (
+                      <div key={m} style={indent("#b08fce")}>
+                        <MicroHead>realized by · physical entity</MicroHead>
+                        <p style={{ fontSize: 11, color: warmWhite, margin: 0 }}>{pe.physical_entity_name}</p>
+                        <p style={{ fontSize: 8, color: "#8ab0c0", fontFamily: MONO, margin: "1px 0 0 0" }}>{[pe.physical_entity_id, pe.physical_entity_class, pe.resolution_status].filter(Boolean).join(" · ")}</p>
+                        {(pe.commercial_outputs || []).map((o, n) => (
+                          <div key={n} style={indent("#cf9b7f")}>
+                            <MicroHead>produces · commercial output</MicroHead>
+                            <p style={{ fontSize: 10.5, color: warmWhite, margin: 0 }}>{o.output_name}</p>
+                            <Sub2 label="volume / revenue" value={[o.volume_quantity && o.volume_quantity !== "Not disclosed" ? `${o.volume_quantity} ${o.quantity_unit || ""}`.trim() : "", o.revenue].filter(Boolean).join(" · ") || "Not disclosed"} />
+                            {(o.markets || []).map((mk, p) => (
+                              <div key={p} style={indent("#9a938a")}>
+                                <MicroHead>supplied into · market</MicroHead>
+                                <p style={{ fontSize: 10, color: "rgb(172,172,172)", margin: 0 }}>{mk.market_name}</p>
+                                <Sub2 label="exposure" value={[mk.buyer_customer_category, mk.geographic_scope, mk.volume_revenue_exposure].filter(Boolean).join(" · ")} />
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        ))}
+      </Sect>
     </div>
   );
 }
