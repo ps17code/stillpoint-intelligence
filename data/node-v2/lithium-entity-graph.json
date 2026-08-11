@@ -128,7 +128,7 @@
    "column": "conversion",
    "confidence": "high",
    "short": "SQM Carmen carbonate plant",
-   "organizational_entity": "",
+   "organizational_entity": "Sociedad Quimica y Minera de Chile S.A. (SQM)",
    "physical_entity": "Salar del Carmen Lithium Chemical Plant (PQC)",
    "flag": ""
   },
@@ -144,7 +144,7 @@
    "column": "conversion",
    "confidence": "high",
    "short": "Albemarle La Negra",
-   "organizational_entity": "",
+   "organizational_entity": "Albemarle Corporation",
    "physical_entity": "La Negra Lithium Conversion Plant (La Negra I-IV)",
    "flag": ""
   },
@@ -160,7 +160,7 @@
    "column": "conversion",
    "confidence": "high",
    "short": "F\u00e9nix carbonate plant",
-   "organizational_entity": "",
+   "organizational_entity": "Arcadium Lithium plc (Rio Tinto Lithium)",
    "physical_entity": "F\u00e9nix Lithium Carbonate Plant, Salar del Hombre Muerto",
    "flag": ""
   },
@@ -176,7 +176,7 @@
    "column": "conversion",
    "confidence": "high",
    "short": "Tianqi Shehong",
-   "organizational_entity": "",
+   "organizational_entity": "Tianqi Lithium Corporation",
    "physical_entity": "Shehong Lithium Carbonate Plant (Suining/Shehong, Sichuan)",
    "flag": ""
   },
@@ -192,7 +192,7 @@
    "column": "conversion",
    "confidence": "medium-high",
    "short": "Ganfeng Mahong carbonate",
-   "organizational_entity": "",
+   "organizational_entity": "Ganfeng Lithium Group Co., Ltd.",
    "physical_entity": "Ganfeng Mahong Plant Lithium Carbonate Line (Xinyu, Jiangxi)",
    "flag": ""
   },
@@ -208,7 +208,7 @@
    "column": "conversion",
    "confidence": "medium",
    "short": "Yahua carbonate plant",
-   "organizational_entity": "",
+   "organizational_entity": "Sichuan Yahua Industrial Group Co., Ltd.",
    "physical_entity": "Yahua Sichuan Lithium Carbonate Line",
    "flag": ""
   },
@@ -224,7 +224,7 @@
    "column": "conversion",
    "confidence": "medium",
    "short": "Yongxing Yichun carbonate",
-   "organizational_entity": "",
+   "organizational_entity": "Yongxing Special Materials Technology Co., Ltd.",
    "physical_entity": "Jiangxi Yongxing Yifeng/Yichun Battery-Grade Lithium Carbonate Plant",
    "flag": ""
   },
@@ -288,7 +288,7 @@
    "column": "conversion",
    "confidence": "high",
    "short": "Bessemer City",
-   "organizational_entity": "Arcadium Lithium plc",
+   "organizational_entity": "Arcadium Lithium (Rio Tinto Lithium)",
    "physical_entity": "Bessemer City Lithium Hydroxide Plant",
    "flag": ""
   },
@@ -368,7 +368,7 @@
    "column": "conversion",
    "confidence": "high",
    "short": "Ya'an",
-   "organizational_entity": "Sichuan Yahua Industrial Group Co., Ltd.",
+   "organizational_entity": "Sichuan Yahua Industrial Group",
    "physical_entity": "Yahua Ya'an Lithium Chemical Plant",
    "flag": ""
   },
@@ -512,7 +512,7 @@
    "column": "conversion",
    "confidence": "high",
    "short": "LiOH\u00b7H2O converter in B\u00e9cancour Industrial Park, Qu\u00e9bec, using Nemaska's patented membrane electrolysis to split purified lithium sulfate into LiOH; ~32,000 t/yr LiOH\u00b7H2O nameplate; feed from Whabouchi spodumene (via Shawinigan/B\u00e9cancour). Qualifies: membrane-electrolyzer LiOH plant, not causticization.",
-   "organizational_entity": "",
+   "organizational_entity": "Nemaska Lithium Inc.",
    "physical_entity": "Nemaska Lithium B\u00e9cancour Conversion Facility",
    "flag": ""
   },
@@ -528,7 +528,7 @@
    "column": "conversion",
    "confidence": "high",
    "short": "Greenfield lithium chemicals plant near Magnolia, Columbia County, Arkansas (Smackover Lithium / Standard Lithium\u2013Equinor). Purified LiCl from Koch LSS DLE is fed to electrolyzers using a modified chlor-alkali membrane electrolysis process to make LiOH, then crystallized to LiOH\u00b7H2O; ~30,000-35,000 t/yr. Qualifies: membrane electrolysis of LiCl.",
-   "organizational_entity": "",
+   "organizational_entity": "Smackover Lithium (SWA Lithium) JV",
    "physical_entity": "South West Arkansas (SWA) Lithium Hydroxide Plant",
    "flag": ""
   },
@@ -544,7 +544,7 @@
    "column": "conversion",
    "confidence": "medium-high",
    "short": "Argentina's first commercial LiOH plant, at G\u00fcemes (Salta), processing Hombre Muerto salar brine; POSCO's own (with WSK) membrane electrodialysis system converts the concentrated lithium salt to battery-grade LiOH; Phase 1 ~25,000 t/yr, part of a plan toward ~100,000 t/yr. Qualifies: EDBM membrane converter.",
-   "organizational_entity": "",
+   "organizational_entity": "POSCO Holdings Inc.",
    "physical_entity": "POSCO Sal de Oro Lithium Hydroxide Plant (G\u00fcemes, Salta)",
    "flag": ""
   },
@@ -560,7 +560,7 @@
    "column": "conversion",
    "confidence": "low",
    "short": "Planned ~20,000 t/yr LiOH facility at an existing ~55 MW geothermal power plant at the Salton Sea, Imperial County, California, using ILiAD DLE; offtake to Ford. Included provisionally \u2014 whether LiOH conversion uses membrane electrochemical vs conventional route is not confirmed; qualification unresolved.",
-   "organizational_entity": "",
+   "organizational_entity": "EnergySource Minerals LLC",
    "physical_entity": "EnergySource Minerals Project ATLiS (Salton Sea)",
    "flag": ""
   },
@@ -800,7 +800,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Kokkola / Keliber refinery",
-   "organizational_entity": "",
+   "organizational_entity": "Keliber Oy",
    "physical_entity": "Keliber Kokkola Lithium Refinery",
    "flag": ""
   },
@@ -816,7 +816,7 @@
    "column": "refining",
    "confidence": "low",
    "short": "Carolina Lithium",
-   "organizational_entity": "",
+   "organizational_entity": "Piedmont Lithium Inc.",
    "physical_entity": "Carolina Lithium conversion plant (planned)",
    "flag": ""
   },
@@ -832,7 +832,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Sons of Gwalia Li2CO3 plant",
-   "organizational_entity": "",
+   "organizational_entity": "Sons of Gwalia Ltd",
    "physical_entity": "Sons of Gwalia soda-ash lithium carbonate plant (Greenbushes)",
    "flag": ""
   },
@@ -848,7 +848,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Kings Mountain converter",
-   "organizational_entity": "",
+   "organizational_entity": "Cyprus Foote Mineral Company",
    "physical_entity": "Kings Mountain lithium carbonate plant",
    "flag": ""
   },
@@ -864,7 +864,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Quebec Lithium La Corne plant",
-   "organizational_entity": "",
+   "organizational_entity": "Quebec Lithium Corporation",
    "physical_entity": "Quebec Lithium (La Corne / Barraute) lithium carbonate plant",
    "flag": ""
   },
@@ -880,7 +880,7 @@
    "column": "conversion",
    "confidence": "high",
    "short": "Ganfeng Xinyu complex",
-   "organizational_entity": "",
+   "organizational_entity": "Ganfeng Lithium Group Co., Ltd.",
    "physical_entity": "Ganfeng Lithium Xinyu lithium salts & lithium metal complex (Jiangxi)",
    "flag": ""
   },
@@ -896,7 +896,7 @@
    "column": "conversion",
    "confidence": "medium",
    "short": "Tianqi Shenghe plant",
-   "organizational_entity": "",
+   "organizational_entity": "Sichuan Tianqi Shenghe Lithium Industry Co., Ltd.",
    "physical_entity": "Sichuan Tianqi Shenghe lithium chemicals plant (Sichuan)",
    "flag": ""
   },
@@ -912,7 +912,7 @@
    "column": "conversion",
    "confidence": "medium",
    "short": "Albemarle Kings Mountain conversion",
-   "organizational_entity": "",
+   "organizational_entity": "Albemarle Corporation",
    "physical_entity": "Albemarle Kings Mountain Lithium Conversion Facility (North Carolina)",
    "flag": ""
   },
@@ -928,7 +928,7 @@
    "column": "conversion",
    "confidence": "medium",
    "short": "Albemarle Langelsheim",
-   "organizational_entity": "",
+   "organizational_entity": "Albemarle Corporation",
    "physical_entity": "Albemarle Langelsheim specialty lithium plant (Lower Saxony, Germany)",
    "flag": ""
   },
@@ -944,7 +944,7 @@
    "column": "conversion",
    "confidence": "medium",
    "short": "Bessemer City plant",
-   "organizational_entity": "",
+   "organizational_entity": "Arcadium Lithium (Rio Tinto Lithium)",
    "physical_entity": "Bessemer City lithium plant (North Carolina) \u2014 Livent / Rio Tinto Lithium",
    "flag": ""
   },
@@ -960,7 +960,7 @@
    "column": "conversion",
    "confidence": "low",
    "short": "G\u00fcemes LiCl plant",
-   "organizational_entity": "",
+   "organizational_entity": "Arcadium Lithium (Rio Tinto Lithium)",
    "physical_entity": "G\u00fcemes lithium chloride plant, Salta (Argentina) \u2014 F\u00e9nix/Hombre Muerto operation",
    "flag": ""
   },
@@ -976,7 +976,7 @@
    "column": "conversion",
    "confidence": "medium-high",
    "short": "Yichun Ganfeng metal",
-   "organizational_entity": "",
+   "organizational_entity": "Ganfeng Lithium Group Co., Ltd.",
    "physical_entity": "Yichun Ganfeng lithium metal plant",
    "flag": ""
   },
@@ -992,7 +992,7 @@
    "column": "conversion",
    "confidence": "medium-high",
    "short": "Fengxin Ganfeng metal",
-   "organizational_entity": "",
+   "organizational_entity": "Ganfeng Lithium Group Co., Ltd.",
    "physical_entity": "Fengxin Ganfeng lithium metal plant",
    "flag": ""
   },
@@ -1008,7 +1008,7 @@
    "column": "conversion",
    "confidence": "medium",
    "short": "Ganfeng Yichun 7kt",
-   "organizational_entity": "",
+   "organizational_entity": "Ganfeng Lithium Group Co., Ltd.",
    "physical_entity": "Ganfeng Yichun 7,000 t/yr lithium metal project (molten-salt electrolysis + vacuum distillation)",
    "flag": ""
   },
@@ -1024,7 +1024,7 @@
    "column": "conversion",
    "confidence": "medium",
    "short": "Albemarle Kings Mountain",
-   "organizational_entity": "",
+   "organizational_entity": "Albemarle Corporation",
    "physical_entity": "Albemarle Kings Mountain lithium works (Bessemer City / Kings Mountain, NC)",
    "flag": ""
   },
@@ -1040,7 +1040,7 @@
    "column": "conversion",
    "confidence": "high",
    "short": "Bessemer City",
-   "organizational_entity": "",
+   "organizational_entity": "Arcadium Lithium plc (Rio Tinto Lithium)",
    "physical_entity": "Livent/Arcadium Bessemer City lithium works",
    "flag": ""
   },
@@ -1056,7 +1056,7 @@
    "column": "conversion",
    "confidence": "medium-high",
    "short": "Tianqi Tongliang",
-   "organizational_entity": "",
+   "organizational_entity": "Tianqi Lithium Corporation",
    "physical_entity": "Tianqi Lithium Tongliang production base (Chongqing)",
    "flag": ""
   },
@@ -1072,7 +1072,7 @@
    "column": "conversion",
    "confidence": "medium",
    "short": "NZHK Novosibirsk",
-   "organizational_entity": "",
+   "organizational_entity": "Novosibirsk Chemical Concentrates Plant PJSC (NZHK)",
    "physical_entity": "Novosibirsk Chemical Concentrates Plant lithium works",
    "flag": ""
   },
@@ -1216,7 +1216,7 @@
    "column": "refining",
    "confidence": "medium-high",
    "short": "CATL Yichun refinery",
-   "organizational_entity": "",
+   "organizational_entity": "Contemporary Amperex Technology Co., Limited",
    "physical_entity": "CATL Jianxiawo Lepidolite Mine & Yichun Lithium Refinery",
    "flag": ""
   },
@@ -1232,7 +1232,7 @@
    "column": "refining",
    "confidence": "medium-high",
    "short": "Nanshi Wanzai plant",
-   "organizational_entity": "",
+   "organizational_entity": "Jiangxi Nanshi Lithium Battery New Material Co., Ltd.",
    "physical_entity": "Nanshi Lithium Wanzai Lepidolite Lithium Carbonate Plant",
    "flag": ""
   },
@@ -1248,7 +1248,7 @@
    "column": "refining",
    "confidence": "medium-high",
    "short": "Yongxing Yifeng plant",
-   "organizational_entity": "",
+   "organizational_entity": "Jiangxi Yongxing Special Steel New Energy Technology Co., Ltd.",
    "physical_entity": "Yongxing New Energy Yifeng Lepidolite Lithium Carbonate Plant",
    "flag": ""
   },
@@ -1264,7 +1264,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Jiangte Yifeng plant",
-   "organizational_entity": "",
+   "organizational_entity": "Jiangxi Special Electric Motor Co., Ltd. (Jiangte Motor)",
    "physical_entity": "Jiangte Yifeng Lepidolite Lithium Salt Plant",
    "flag": ""
   },
@@ -1280,7 +1280,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Yichun Yinli line",
-   "organizational_entity": "",
+   "organizational_entity": "Jiangxi Special Electric Motor Co., Ltd. (Jiangte Motor)",
    "physical_entity": "Yichun Yinli Lepidolite Lithium Carbonate Line",
    "flag": ""
   },
@@ -1296,7 +1296,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Feiyu Yichun plant",
-   "organizational_entity": "",
+   "organizational_entity": "Jiangxi Feiyu New Energy Technology Co., Ltd.",
    "physical_entity": "Feiyu New Energy Yichun Lepidolite Lithium Carbonate Plant",
    "flag": ""
   },
@@ -1312,7 +1312,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Jiuling plant",
-   "organizational_entity": "",
+   "organizational_entity": "Jiangxi Jiuling Lithium Co., Ltd.",
    "physical_entity": "Jiuling Lithium Yichun Lepidolite Lithium Salt Plant",
    "flag": ""
   },
@@ -1424,7 +1424,7 @@
    "column": "extraction",
    "confidence": "medium",
    "short": "Ganfeng Lithium (major integrated lithium producer) holds Yichun lepidolite resources (including Songshugang Ta-Nb area) and announced ~RMB 30 bn investment in Yichun; operates/develops lepidolite mining-beneficiation feeding its lithium chemical operations.",
-   "organizational_entity": "Jiangxi Ganfeng Lithium Group Co., Ltd.",
+   "organizational_entity": "Ganfeng Lithium Group Co., Ltd.",
    "physical_entity": "Ganfeng Lithium Yichun Lepidolite Beneficiation Operations",
    "flag": ""
   },
@@ -1488,7 +1488,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Chemical plant to be built at the former Prunerov 1 power station (EPR1) site, Usti nad Labem region. Roasts zinnwaldite concentrate with gypsum, limestone and recycled alkali sulfates (extruded pellets, ~925C for ~1h), then water-leaches at ~60C to a lithium(-potassium) sulfate pregnant solution; downstream Li3PO4 precipitation, Glauber's salt crystallisation and bicarbonation to battery-grade Li2CO3. LCP Li recovery ~91%. Patent-pending flowsheet. Strongly qualifies for the group (explicit limestone+gypsum+recycled Na2SO4 roast). Owner/operator: Geomet s.r.o.",
-   "organizational_entity": "",
+   "organizational_entity": "Geomet s.r.o.",
    "physical_entity": "Cinovec Lithium Chemical Plant (LCP), Prunerov",
    "flag": ""
   },
@@ -1504,7 +1504,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Pilot/demonstration-scale roast-leach facility used by European Metals/Geomet to validate the Cinovec lime-sulfate roast-leach flowsheet and produce battery-grade lithium samples during DFS testwork. Physical realization details (exact location, throughput) only partially disclosed; qualifies as a smaller instance of the group.",
-   "organizational_entity": "",
+   "organizational_entity": "Geomet s.r.o.",
    "physical_entity": "Cinovec LCP demonstration / pilot plant",
    "flag": ""
   },
@@ -1520,7 +1520,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Planned chemical processing facility in the Erzgebirge/Saxony region (Liebenau licence area identified as candidate site) to process ~880,000 dmt/a of zinnwaldite ROM feed. Concentrate mixed with limestone and anhydrite/gypsum, roasted in a rotary kiln, then hot-water leached to convert lithium and potassium to water-soluble sulfates; multiple crystallisation cycles separate/purify Li and K sulfates. Targets battery-grade LiOH*H2O plus K2SO4 and PCC by-products. Strongly qualifies for the group. Owner/developer: Zinnwald Lithium GmbH (Zinnwald Lithium plc / AMG).",
-   "organizational_entity": "",
+   "organizational_entity": "Zinnwald Lithium GmbH",
    "physical_entity": "Zinnwald Lithium Process Plant",
    "flag": ""
   },
@@ -1536,7 +1536,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Imerys conversion plant planned on the La Loue industrial estate near Montlucon, Allier, to convert lithiniferous mica (lepidolite) concentrate from the Beauvoir quarry into ~34,000 t/a LiOH. Uses a thermal calcination step (stated to avoid large acid quantities) followed by water leach, purification and crystallisation; reagents cited include quicklime/slaked lime, sulfuric acid, HCl, NaOH, CO2. PROVISIONALLY qualified only: the mica calcine-water-leach architecture matches the group, but the specific limestone+gypsum lime-sulfate roast reagent chemistry is not confirmed and sulfuric acid is still used, so it may instead be a distinct mica flowsheet. Flagged for reagent-chemistry verification.",
-   "organizational_entity": "",
+   "organizational_entity": "Imerys S.A.",
    "physical_entity": "Project EMILI Conversion Plant, La Loue (Saint-Victor)",
    "flag": ""
   },
@@ -1552,7 +1552,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Spodumene-to-lithium-hydroxide refinery at Kwinana, Western Australia. Uses sulfuric-acid roasting of calcined Greenbushes spodumene followed by water leach; pregnant Li2SO4 liquor undergoes impurity precipitation (Fe/Al/Ca/Mg) and ion-exchange polishing before causticization/crystallization to battery-grade LiOH\u00b7H2O. Nameplate ~24 ktpa LiOH per train. Owned by the Tianqi/IGO JV (Tianqi Lithium Energy Australia).",
-   "organizational_entity": "",
+   "organizational_entity": "Tianqi Lithium Corporation",
    "physical_entity": "Kwinana Lithium Hydroxide Refinery (Tianqi/IGO)",
    "flag": ""
   },
@@ -1568,7 +1568,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Spodumene-to-lithium-hydroxide plant near Bunbury, Western Australia, processing Greenbushes 6% Li2O spodumene via sulfuric-acid roast and water leach; Li2SO4 liquor is purified (Fe/Al/Ca/Mg removal + ion exchange) then converted to LiOH with a Na2SO4 by-product. ~2 trains, ~25 kt LCE each. Owned/operated by Albemarle.",
-   "organizational_entity": "",
+   "organizational_entity": "Albemarle Corporation",
    "physical_entity": "Kemerton Lithium Hydroxide Plant (Albemarle)",
    "flag": ""
   },
@@ -1584,7 +1584,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Albemarle lithium hydroxide conversion plant in Ganmei Industrial Park, Meishan City, Sichuan. Uses the spodumene sulfuric-acid smelting process and lithium sulfate caustic cooling-crystallization route to battery-grade LiOH\u00b7H2O; the sulfate liquor purification circuit removes Fe/Al/Ca/Mg + ion exchange ahead of conversion. ~50 ktpa LiOH.",
-   "organizational_entity": "",
+   "organizational_entity": "Albemarle Corporation",
    "physical_entity": "Meishan Lithium Conversion Plant (Albemarle)",
    "flag": ""
   },
@@ -1600,7 +1600,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Sichuan Yahua's battery-grade lithium hydroxide (and carbonate) conversion lines in Sichuan (Ya'an, and Tyeeli plants in Meishan/Yibin). Uses spodumene sulfuric-acid roast + water leach; Li2SO4 liquor purification (Fe/Al/Ca/Mg + IX) precedes conversion, with anhydrous sodium sulfate by-product. Supplies LiOH to Tesla under long-term contract.",
-   "organizational_entity": "",
+   "organizational_entity": "Sichuan Yahua Industrial Group",
    "physical_entity": "Sichuan Yahua Lithium Hydroxide Plants (Ya'an / Meishan / Yibin)",
    "flag": ""
   },
@@ -1616,7 +1616,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Covalent Lithium (Wesfarmers/SQM 50:50 JV) lithium hydroxide refinery at Kwinana, WA, fed by Mt Holland spodumene concentrate. Spodumene sulfuric-acid roast + water leach; Li2SO4 liquor purification (precipitation + ion exchange) ahead of battery-grade LiOH crystallization. ~50 ktpa LiOH nameplate.",
-   "organizational_entity": "",
+   "organizational_entity": "Covalent Lithium Pty Ltd",
    "physical_entity": "Kwinana Lithium Refinery (Covalent Lithium)",
    "flag": ""
   },
@@ -1632,7 +1632,7 @@
    "column": "refining",
    "confidence": "medium-high",
    "short": "Ganfeng Lithium spodumene-conversion plant in Puguang Industrial Park, Xuanhan County, Dazhou City, Sichuan - described as the world's largest single-line spodumene lithium extraction line. Sulfuric-acid roast + water leach; Li2SO4 liquor purification (Fe/Al/Ca/Mg + IX) precedes carbonation to Li2CO3 and a LiOH line.",
-   "organizational_entity": "",
+   "organizational_entity": "Ganfeng Lithium Group Co., Ltd.",
    "physical_entity": "Ganfeng Lithium Dazhou/Xuanhan Spodumene Conversion Plant",
    "flag": ""
   },
@@ -1648,7 +1648,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Jiangxi Yongxing Special Steel New Energy Technology (subsidiary of Yongxing Special Materials) battery-grade lithium carbonate plant in Yifeng County, Yichun, Jiangxi. Mixes lepidolite with sulfate + fluoride-retention agent, roasts, grinds and leaches; the resulting Li(-K) sulfate pregnant liquor is purified (F removal, Fe/Al/Ca/Mg, Rb/Cs handling + IX) before carbonation. ~30 ktpa Li2CO3.",
-   "organizational_entity": "",
+   "organizational_entity": "Jiangxi Yongxing Special Steel New Energy Technology Co., Ltd.",
    "physical_entity": "Yongxing New Energy Lepidolite Lithium Carbonate Plant (Yifeng, Yichun)",
    "flag": ""
   },
@@ -1664,7 +1664,7 @@
    "column": "refining",
    "confidence": "medium-high",
    "short": "CATL vertically integrated lepidolite mine + lithium refinery at Jianxiawo, Yichun, Jiangxi (one of the world's largest single lepidolite deposits). Lepidolite concentrate is sulfate-roasted and water-leached; the pregnant Li(-K) sulfate liquor is purified (F, Fe/Al/Ca/Mg, Rb/Cs + IX) ahead of carbonation. Associated refinery capacity around 46-100 ktpa Li2CO3-equivalent.",
-   "organizational_entity": "",
+   "organizational_entity": "Contemporary Amperex Technology Co., Limited",
    "physical_entity": "CATL Jianxiawo Lepidolite Lithium Carbonate Refinery (Yichun)",
    "flag": ""
   },
@@ -1680,7 +1680,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Jiangxi Special Electric Motor (Jiangte) lithium carbonate operations in Yichun, Jiangxi, including a ~30 ktpa Yichun Yinli refinery. Runs both lepidolite-sulfate-roast (~15 kt/y) and spodumene-acid-roast (~15 kt/y) routes to Li2CO3, plus LiOH capacity; both routes generate a sulfate pregnant liquor requiring the purification circuit before carbonation.",
-   "organizational_entity": "",
+   "organizational_entity": "Jiangxi Special Electric Motor Co., Ltd. (Jiangte Motor)",
    "physical_entity": "Jiangte Motor (Jiangxi Special Electric Motor) Lepidolite/Spodumene Lithium Carbonate Plant, Yichun",
    "flag": ""
   },
@@ -1696,7 +1696,7 @@
    "column": "refining",
    "confidence": "medium-high",
    "short": "Tianqi Lithium battery-grade lithium carbonate plant at Suining Anju, Sichuan; ~23 ktpa Li2CO3. Spodumene (Greenbushes-sourced) sulfuric-acid roast + water leach; Li2SO4 liquor purification (Fe/Al/Ca/Mg + IX) precedes carbonation to battery-grade Li2CO3.",
-   "organizational_entity": "",
+   "organizational_entity": "Tianqi Lithium Corporation",
    "physical_entity": "Tianqi Lithium Suining Anju Lithium Carbonate Plant",
    "flag": ""
   },
@@ -1744,7 +1744,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Fenix ponds",
-   "organizational_entity": "Arcadium Lithium (formerly Livent; now Rio Tinto Lithium)",
+   "organizational_entity": "Arcadium Lithium plc (Rio Tinto Lithium)",
    "physical_entity": "Fenix evaporation pond field, Salar del Hombre Muerto",
    "flag": ""
   },
@@ -1824,7 +1824,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Salar del Carmen purification unit",
-   "organizational_entity": "",
+   "organizational_entity": "Sociedad Quimica y Minera de Chile S.A. (SQM)",
    "physical_entity": "SQM Salar del Carmen brine purification / boron-removal circuit",
    "flag": ""
   },
@@ -1840,7 +1840,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "La Negra purification unit",
-   "organizational_entity": "",
+   "organizational_entity": "Albemarle Corporation",
    "physical_entity": "Albemarle La Negra boron-removal & Ca/Mg-removal circuit",
    "flag": ""
   },
@@ -1856,7 +1856,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Fenix purification unit",
-   "organizational_entity": "",
+   "organizational_entity": "Minera del Altiplano S.A.",
    "physical_entity": "Fenix (Salar del Hombre Muerto) brine purification circuit",
    "flag": ""
   },
@@ -1872,7 +1872,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Olaroz purification unit",
-   "organizational_entity": "",
+   "organizational_entity": "Sales de Jujuy S.A.",
    "physical_entity": "Olaroz lithium carbonate plant brine impurity-removal circuit",
    "flag": ""
   },
@@ -1888,7 +1888,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Cauchari-Olaroz purification unit",
-   "organizational_entity": "",
+   "organizational_entity": "Minera Exar S.A.",
    "physical_entity": "Cauchari-Olaroz lithium carbonate plant brine purification circuit",
    "flag": ""
   },
@@ -1904,7 +1904,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Chaerhan purification unit",
-   "organizational_entity": "",
+   "organizational_entity": "Qinghai Salt Lake Industry Co., Ltd.",
    "physical_entity": "Qinghai Salt Lake Industry Chaerhan (Qarhan) lithium plant brine impurity-removal circuit",
    "flag": ""
   },
@@ -1920,7 +1920,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Zhabuye purification unit",
-   "organizational_entity": "",
+   "organizational_entity": "Tibet Mineral Development Co., Ltd. (Tibet Mining)",
    "physical_entity": "Zhabuye (Zabuye) salt-lake lithium carbonate plant brine purification circuit",
    "flag": ""
   },
@@ -1936,7 +1936,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Sal de Vida purification unit",
-   "organizational_entity": "",
+   "organizational_entity": "Arcadium Lithium (Rio Tinto Lithium)",
    "physical_entity": "Sal de Vida lithium carbonate plant brine purification circuit",
    "flag": ""
   },
@@ -2160,7 +2160,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "First industrial-scale deployment of Eramet's adsorption DLE technology, Salar de Centenario-Ratones, Puna de Salta (~3,870 m). Rejects Mg/Ca to spent brine, produces LiCl eluate feeding downstream carbonation.",
-   "organizational_entity": "",
+   "organizational_entity": "Eramet SA",
    "physical_entity": "Centenario (Centenario-Ratones) DLE Plant",
    "flag": ""
   },
@@ -2176,7 +2176,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Long-running brine lithium operation at Salar del Hombre Muerto using selective adsorption DLE ahead of downstream lithium chemical production. Operated by Minera del Altiplano (Rio Tinto/Arcadium).",
-   "organizational_entity": "",
+   "organizational_entity": "Rio Tinto Group",
    "physical_entity": "F\u00e9nix Project DLE Operation, Salar del Hombre Muerto",
    "flag": ""
   },
@@ -2192,7 +2192,7 @@
    "column": "extraction",
    "confidence": "medium-high",
    "short": "Adsorption-membrane DLE plant on the Qarhan salt lake, Qinghai, using self-produced aluminium-based adsorbent; recovers Li from very high Mg/Li potash-brine tailings streams.",
-   "organizational_entity": "",
+   "organizational_entity": "Qinghai Salt Lake Lanke Lithium Co., Ltd. (Lanke Lithium)",
    "physical_entity": "Lanke Lithium Adsorption DLE Plant, Qarhan Salt Lake",
    "flag": ""
   },
@@ -2208,7 +2208,7 @@
    "column": "extraction",
    "confidence": "medium-high",
    "short": "Sunresin-supplied adsorption+membrane DLE unit recovering lithium from Qarhan potash-brine (Mg/Li ~1,800:1, ~78% recovery); barren brine recharged to salt lake.",
-   "organizational_entity": "",
+   "organizational_entity": "Zangge Mining Company Limited",
    "physical_entity": "Zangge Mining Adsorption DLE Plant, Qarhan (Golmud)",
    "flag": ""
   },
@@ -2224,7 +2224,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Adsorption-type DLE plant at Landau in the Upper Rhine Valley extracting Li from geothermal brine (energy co-produced), yielding LiCl eluate; barren brine reinjected. Feeds downstream central lithium plant at Frankfurt-H\u00f6chst.",
-   "organizational_entity": "",
+   "organizational_entity": "Vulcan Energy Resources Ltd",
    "physical_entity": "Vulcan Energy Landau Lithium Extraction / Optimisation Plant (LEOP)",
    "flag": ""
   },
@@ -2240,7 +2240,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Demonstration-scale sorption DLE plant processing pretreated Smackover brine at Lanxess' South bromine plant near El Dorado, Arkansas; produces purified LiCl solution.",
-   "organizational_entity": "",
+   "organizational_entity": "Standard Lithium Ltd.",
    "physical_entity": "Standard Lithium El Dorado Demonstration DLE Plant (LANXESS South Plant)",
    "flag": ""
   },
@@ -2256,7 +2256,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Fully integrated demonstration DLE facility processing Leduc oilfield brine in Alberta; Canada's first scaled-up DLE, producing LiCl for downstream carbonation.",
-   "organizational_entity": "",
+   "organizational_entity": "E3 Lithium Ltd.",
    "physical_entity": "E3 Lithium Clearwater Demonstration DLE Facility",
    "flag": ""
   },
@@ -2304,7 +2304,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Longest-running commercial DLE operation (Livent/Arcadium/Rio Tinto). Selective sorption/adsorption of Li from brine, then ion-exchange softening (Ca/Mg/B removal) and concentration to a purified LiCl liquor feeding on-site carbonate and (via G\u00fcemes) lithium chloride/other converters. Salar del Hombre Muerto, Catamarca/Salta.",
-   "organizational_entity": "",
+   "organizational_entity": "Arcadium Lithium (Rio Tinto Lithium)",
    "physical_entity": "F\u00e9nix Project \u2014 Salar del Hombre Muerto DLE & LiCl purification operation",
    "flag": ""
   },
@@ -2320,7 +2320,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "First industrial-scale Eramet DLE plant, Salta. DLE capture followed by softening / IX polishing and membrane + forced-evaporation concentration of the LiCl eluate ahead of carbonate conversion. Designed 24,000 t/y LCE; first carbonate Dec 2024, ~6.7 kt in 2025.",
-   "organizational_entity": "",
+   "organizational_entity": "Eramet SA",
    "physical_entity": "Centenario-Ratones DLE plant",
    "flag": ""
   },
@@ -2336,7 +2336,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Rio Tinto adsorption-DLE starter plant at Salar del Rinc\u00f3n, Salta. Selective adsorption then LiCl eluate purification/concentration ahead of carbonate. 3,000 tpy starter operational May 2025; ~60 ktpa expansion planned.",
-   "organizational_entity": "",
+   "organizational_entity": "Rio Tinto Group",
    "physical_entity": "Rinc\u00f3n (Rinc\u00f3n 3000 starter plant) DLE operation",
    "flag": ""
   },
@@ -2352,7 +2352,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "First commercial-scale DLE column in North America, at LANXESS South Plant, El Dorado, Arkansas. LiSTR/LSS DLE on Smackover brine producing a concentrated, purified ~6% LiCl solution; feeds a chloride-to-hydroxide IX pilot. Demonstration/first-commercial scale.",
-   "organizational_entity": "",
+   "organizational_entity": "Standard Lithium Ltd.",
    "physical_entity": "El Dorado South Plant DLE Demonstration Plant (Standard Lithium / LANXESS site)",
    "flag": ""
   },
@@ -2368,7 +2368,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Adsorption-type DLE on high-Mg/Li Chaerhan brine (Golmud, Qinghai), with adsorbent elution to a dilute LiCl eluate, then membrane/nanofiltration concentration and impurity removal to purified LiCl liquor feeding battery-grade carbonate. Largest commercial adsorption-DLE base by volume; Lanke ~30 ktpa carbonate class.",
-   "organizational_entity": "",
+   "organizational_entity": "Qinghai Salt Lake Lanke Lithium Co., Ltd. (Lanke Lithium)",
    "physical_entity": "Chaerhan Salt Lake adsorption-DLE lithium lines (Lanke Lithium / Qinghai Salt Lake)",
    "flag": ""
   },
@@ -2384,7 +2384,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "20,000-tonne desalinated-brine adsorption lithium-extraction line, Kunlun Economic Development Zone, Golmud. Adsorbent extracts LiCl from saturated Mg brine; eluate concentrated/purified toward downstream lithium salts.",
-   "organizational_entity": "",
+   "organizational_entity": "Qinghai CITIC Guoan Technology Development Co., Ltd.",
    "physical_entity": "CITIC Guoan Golmud adsorption LiCl extraction line",
    "flag": ""
   },
@@ -2400,7 +2400,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Vulcan Lithium Extraction Optimisation Plant (Landau, Upper Rhine) producing high-purity LiCl from geothermal brine via sorption DLE plus purification/concentration since 2024; product refined at CLEOP (Frankfurt/H\u00f6chst) toward LHM. Precursor to 24-25 ktpa Phase 1 commercial plant.",
-   "organizational_entity": "",
+   "organizational_entity": "Vulcan Energy Resources Ltd",
    "physical_entity": "Vulcan LEOP / Central Lithium Electrolysis-Optimisation Plant (CLEOP)",
    "flag": ""
   },
@@ -2416,7 +2416,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Demonstration DLE + purification units on Leduc-aquifer petro-brine, Alberta. Commissioned Sept 2025 producing high-quality LiCl (softening/IX polishing + concentration); LiCl converted to 99.7% carbonate. Phase 3 target ~100 tpy LCE.",
-   "organizational_entity": "",
+   "organizational_entity": "E3 Lithium Ltd.",
    "physical_entity": "E3 Lithium Clearwater DLE Demonstration Facility",
    "flag": ""
   },
@@ -2432,7 +2432,7 @@
    "column": "refining",
    "confidence": "low",
    "short": "Ganfeng DLE demonstration plant (~5,000 tpy) at Cauchari-Olaroz, Jujuy, adding adsorption DLE + LiCl eluate purification/concentration alongside the existing pond operation.",
-   "organizational_entity": "",
+   "organizational_entity": "Ganfeng Lithium Group Co., Ltd.",
    "physical_entity": "Cauchari-Olaroz DLE demonstration plant (Ganfeng)",
    "flag": ""
   },
@@ -2576,7 +2576,7 @@
    "column": "source",
    "confidence": "high",
    "short": "World's largest and highest-grade Li-bearing geothermal brine field, at the southeastern edge of the Salton Sea in Imperial County, California. Deep (~1,500\u20132,500 m) high-temperature (>300\u00b0C) hypersaline brine reservoir carrying ~100\u2013400 mg/L lithium. ~11 operating flash-steam geothermal power plants (~400 MW) co-located on the reservoir produce spent hot brine that is the feedstock for lithium recovery (Li grade ~200 mg/L average; DOE-estimated resource sufficient for millions of tonnes LCE). Reinjection of depleted brine.",
-   "organizational_entity": "BHE Renewables, LLC",
+   "organizational_entity": "BHE Renewables LLC (Berkshire Hathaway Energy)",
    "physical_entity": "Salton Sea Geothermal Field (Salton Sea Known Geothermal Resource Area)",
    "flag": ""
   },
@@ -2704,7 +2704,7 @@
    "column": "source",
    "confidence": "medium",
    "short": "Deep geothermal power plant (~1 MWe, commissioned ~2025) and granite-hosted reservoir wellfield at United Downs near Redruth, Cornwall, UK. Geothermal brine with high lithium (>250\u2013300 ppm). GEL (Geothermal Engineering Ltd) operates the plant; Cornish Lithium runs geothermal-water lithium extraction (Geocubed / demonstration plant) on the co-produced hot brine.",
-   "organizational_entity": "Geothermal Engineering Ltd (GEL)",
+   "organizational_entity": "Geothermal Engineering Ltd",
    "physical_entity": "United Downs geothermal plant and wellfield (Cornwall, UK)",
    "flag": ""
   },
@@ -2736,7 +2736,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "ATLiS pretreatment (Featherstone)",
-   "organizational_entity": "SPV ESM ATLiS LLC",
+   "organizational_entity": "EnergySource Minerals LLC",
    "physical_entity": "Project ATLiS brine pretreatment unit at John L. Featherstone geothermal plant",
    "flag": ""
   },
@@ -2864,7 +2864,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "LANXESS South Plant",
-   "organizational_entity": "LANXESS Corporation",
+   "organizational_entity": "Standard Lithium Ltd.",
    "physical_entity": "LANXESS South Plant \u2014 El Dorado, Arkansas (bromine brine supply + Phase 1A brine feed)",
    "flag": ""
   },
@@ -2880,7 +2880,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Standard Li Demo Plant",
-   "organizational_entity": "Standard Lithium Ltd.",
+   "organizational_entity": "SWA Lithium LLC (Smackover Lithium)",
    "physical_entity": "Standard Lithium Demonstration Plant \u2014 LANXESS South Plant, El Dorado, AR",
    "flag": ""
   },
@@ -2896,7 +2896,7 @@
    "column": "extraction",
    "confidence": "medium-high",
    "short": "Pine Unit",
-   "organizational_entity": "Saltwerx LLC",
+   "organizational_entity": "ExxonMobil Corporation",
    "physical_entity": "Saltwerx Pine Brine Unit \u2014 South Arkansas (ExxonMobil)",
    "flag": ""
   },
@@ -2912,7 +2912,7 @@
    "column": "extraction",
    "confidence": "medium-high",
    "short": "Exxon Magnolia pilot",
-   "organizational_entity": "Exxon Mobil Corporation",
+   "organizational_entity": "ExxonMobil Corporation",
    "physical_entity": "ExxonMobil Magnolia, Arkansas lithium pilot plant (wellfield + pretreatment + DLE)",
    "flag": ""
   },
@@ -2960,7 +2960,7 @@
    "column": "extraction",
    "confidence": "medium-high",
    "short": "Prairie Project",
-   "organizational_entity": "Prairie Lithium Corp.",
+   "organizational_entity": "Arizona Lithium Limited",
    "physical_entity": "Prairie Lithium Project \u2014 Saskatchewan (Williston Basin oilfield-brine wells + DLE)",
    "flag": ""
   },
@@ -3312,7 +3312,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Beneficiation circuit at Thacker Pass (Humboldt County, Nevada) where ROM lithium claystone is toothed-roll crushed, attrition-scrubbed, wet-screened and classified via hydrocyclones to liberate high-grade fine Li-bearing clay from coarse gangue (pit-backfill) before sulfuric-acid leaching. Phase 1 under construction (Bechtel EPC), targeting ~40,000 tpa Li carbonate. Strongest qualifying instance of this group.",
-   "organizational_entity": "Lithium Nevada Ventures LLC (Thacker Pass JV)",
+   "organizational_entity": "Lithium Americas Corp.",
    "physical_entity": "Thacker Pass lithium clay attrition-scrubbing / beneficiation circuit",
    "flag": ""
   },
@@ -3408,7 +3408,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Integrated clay processing plant at the Thacker Pass claystone (McDermitt caldera) deposit. Crushed/slurried clay ore is leached with sulfuric acid at ~90C; pregnant slurry is neutralized with lime/limestone, clarified and purified to a lithium sulfate solution, then finished to battery-quality lithium carbonate (Phase 1 nameplate ~40,000 tpa Li2CO3). Includes a captive sulfur-burning sulfuric acid plant (~3,000 tpd design, MECS technology) generating steam/power. EPC by Bechtel. Directly qualifies: sulfuric-acid leach of lithium clay with captive acid plant + neutralization to Li2SO4.",
-   "organizational_entity": "",
+   "organizational_entity": "Lithium Americas Corp.",
    "physical_entity": "Thacker Pass lithium processing plant (acid leach & neutralization, with captive sulfuric acid plant)",
    "flag": ""
   },
@@ -3424,7 +3424,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Lithium-boron searlesite/claystone deposit processed by sulfuric-acid vat leach (retention time optimized to ~1.5 days) using commercial-grade (98.5%) acid from an on-site sulfuric acid plant (~3,500 tpd), with an integrated ~35 MW waste-heat steam power plant. Produces lithium carbonate/hydroxide plus boric acid. Qualifies as a sulfuric-acid clay-leach plant with captive acid plant; boron co-production does not violate group criteria. (Vat-leach variant of the acid-leach flowsheet.)",
-   "organizational_entity": "",
+   "organizational_entity": "ioneer Ltd",
    "physical_entity": "Rhyolite Ridge lithium-boron processing plant (sulfuric-acid vat leach, with captive acid plant)",
    "flag": ""
   },
@@ -3440,7 +3440,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Planned processing plant for the TLC lithium claystone deposit. Selected flowsheet is sulfuric-acid leach (test work ~95-97% Li extraction, e.g. 50-90C, ~495 kg/t acid) producing a lithium sulfate solution finished to battery-grade lithium carbonate/hydroxide; PEA base case ~4.4 Mtpa throughput expanding to ~8.8 Mtpa. American Lithium also tested HCl and salt-roast options but the PEA/design flowsheet is sulfuric-acid leach, so it qualifies. Captive acid plant implied by the industry-standard sulfuric-acid design though not fully detailed in disclosed excerpts.",
-   "organizational_entity": "",
+   "organizational_entity": "American Lithium Corp.",
    "physical_entity": "TLC (Tonopah Lithium Claims) processing plant (sulfuric-acid leach)",
    "flag": ""
   },
@@ -3456,7 +3456,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Planned processing plant for Noram Lithium's Zeus claystone deposit in Clayton Valley. Flowsheet leaches lithium-bearing clay with sulfuric acid in agitated tanks at ~90C, then removes iron/aluminum impurities and neutralizes with limestone under controlled conditions to yield a purified lithium sulfate solution. Qualifies: agitated-tank sulfuric-acid clay leach + limestone neutralization to Li2SO4.",
-   "organizational_entity": "",
+   "organizational_entity": "Noram Lithium Corp.",
    "physical_entity": "Zeus (Clayton Valley) lithium claystone processing plant (sulfuric-acid leach)",
    "flag": ""
   },
@@ -3472,7 +3472,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "First-of-kind integrated demonstration-scale facility processing lithium-bearing claystone from the Tonopah Flats deposit near Tonopah, Nevada. The economic route selected in the S-K 1300 initial assessment is a conventional salt-roasting thermal treatment of the clay to convert lattice-bound lithium into water-soluble lithium salts, followed by leaching, purification, and conversion to battery-grade lithium hydroxide. DOE-grant-supported; has manufactured demonstration quantities of LiOH from its own claystone. Feeds a planned 30,000 t/yr commercial LiOH refinery (Black & Veatch EPC) to be built on the TFLP claims.",
-   "organizational_entity": "",
+   "organizational_entity": "American Battery Technology Company",
    "physical_entity": "ABTC Nevada Claystone Integrated Demonstration Facility (Tonopah Flats)",
    "flag": ""
   },
@@ -3488,7 +3488,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Planned 30,000 metric tonne/year battery-grade lithium hydroxide refinery to be constructed directly on the Tonopah Flats mining claims in Big Smoky Valley, Nevada. Intended to scale the salt-roast/calcination-based extraction of lithium from Tonopah Flats claystone demonstrated at ABTC's integrated demonstration facility. Black & Veatch engaged for EPC; added to a US federal permitting dashboard.",
-   "organizational_entity": "",
+   "organizational_entity": "American Battery Technology Company",
    "physical_entity": "ABTC Tonopah Flats commercial lithium hydroxide refinery (planned 30,000 t/yr)",
    "flag": ""
   },
@@ -3504,7 +3504,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Processing plant designed for the Sonora Lithium Project in Sonora state, Mexico, comprising pre-concentration to produce a clay concentrate slurry, then roasting of the concentrate in a kiln at approximately 950 C in combination with recycled sodium sulphate (Na2SO4) to produce an intermediate lithium sulphate (Li2SO4) product for downstream conversion to lithium carbonate/hydroxide. Lithium is hosted in polylithionite clay. The 2018 bankable feasibility study defined the roast route. Project development has stalled amid cancellation of Ganfeng's Mexican concessions and ICSID arbitration (tribunal constituted January 2025).",
-   "organizational_entity": "",
+   "organizational_entity": "Ganfeng Lithium Group Co., Ltd.",
    "physical_entity": "Sonora Lithium Project processing plant (roasting kiln section)",
    "flag": ""
   },
@@ -3520,7 +3520,7 @@
    "column": "refining",
    "confidence": "low",
    "short": "American Lithium's Tonopah Lithium Claims (TLC) project near Tonopah, Nevada, for which salt-roast/water-leach testwork (conducted at Hazen Research and TECMMINE) using a combination of gypsum, sodium chloride and sodium sulfate roasting achieved 82%, then up to 89.4%, lithium extraction into a low-impurity, higher-pH pregnant solution suitable for downstream lithium carbonate/hydroxide production. Represents a materially significant salt-roast route for a large US clay resource, but no dedicated commercial salt-roast facility has been built.",
-   "organizational_entity": "",
+   "organizational_entity": "American Lithium Corp.",
    "physical_entity": "American Lithium TLC (Tonopah Lithium Claims) salt-roast / water-leach process (testwork stage)",
    "flag": ""
   },
@@ -3552,7 +3552,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Sichuan Yahua Industrial Group battery-grade lithium hydroxide plant at Ya'an, Sichuan (commissioned May 2020, ~20 ktpa initial; part of Yahua's ~73->173 ktpa lithium-salts expansion). Converts imported spodumene via roast + leach route; long-term LiOH supplier to Tesla. Contains the group's calcine water-leach + separation operation.",
-   "organizational_entity": "Sichuan Yahua Industrial Group Co., Ltd.",
+   "organizational_entity": "Sichuan Yahua Industrial Group",
    "physical_entity": "Sichuan Yahua Ya'an Lithium Plant",
    "flag": ""
   },
@@ -3568,7 +3568,7 @@
    "column": "refining",
    "confidence": "low",
    "short": "Second-phase Sichuan Yahua lithium hydroxide/salts converter in the Meishan area, Sichuan, part of the expansion of Yahua lithium-salt capacity toward ~173 ktpa. Spodumene roast-leach conversion route; contains the water-leach + separation circuit. Facility-level details partially disclosed.",
-   "organizational_entity": "Sichuan Yahua Industrial Group Co., Ltd.",
+   "organizational_entity": "Sichuan Yahua Industrial Group",
    "physical_entity": "Sichuan Yahua Meishan (Ganmei) Lithium Plant",
    "flag": ""
   },
@@ -3664,7 +3664,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Beneficiation section of the Rio Tinto Jadar lithium-borates project near Loznica, western Serbia. Designed to crush, HPGR-grind and size-classify ROM jadarite ore, exploiting the hardness differential between hard jadarite particles and softer host rock to produce a 4mm/+0.2mm leach-grade jadarite concentrate, rejecting the -0.2mm fraction as beneficiation residue. Concentrate feeds the co-located sulphuric-acid leach/hydrometallurgical plant (up to 58,000 t/y Li2CO3, ~160,000 t/y boric acid, ~255,000 t/y sodium sulphate). Co-located with the planned underground jadarite mine. Only jadarite beneficiation plant in the world (jadarite occurs only at the Jadar deposit).",
-   "organizational_entity": "",
+   "organizational_entity": "Rio Sava Exploration d.o.o.",
    "physical_entity": "Jadar jadarite comminution and beneficiation plant",
    "flag": ""
   },
@@ -3680,7 +3680,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Jadar acid-leach unit",
-   "organizational_entity": "",
+   "organizational_entity": "Rio Tinto Group",
    "physical_entity": "Jadar integrated chemical plant \u2014 sulphuric-acid leach / digestion unit",
    "flag": ""
   },
@@ -3696,7 +3696,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Bundoora Jadar pilot plant",
-   "organizational_entity": "",
+   "organizational_entity": "Rio Tinto Group",
    "physical_entity": "Rio Tinto Bundoora Technical Development Centre \u2014 Jadar chemical processing pilot plant",
    "flag": ""
   },
@@ -3840,7 +3840,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Processing plant for the Sonora clay (polylithionite/hectorite) lithium project in Sonora state, Mexico. Feasibility flowsheet uses roast/leach of lithium-bearing clay to a pregnant lithium sulfate solution, with thickening, counter-current decantation/washing and filtration to separate clarified pregnant solution from leached-clay residue before lithium carbonate crystallization. Designed for ~17,500 t/y Li2CO3 in Stage 1 (35,000 t/y at full build-out).",
-   "organizational_entity": "",
+   "organizational_entity": "Ganfeng Lithium Group Co., Ltd.",
    "physical_entity": "Sonora Lithium Mineral Conversion Plant",
    "flag": ""
   },
@@ -3856,7 +3856,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Claystone lithium project and lithium-extraction facility in Clayton Valley, Esmeralda County, Nevada, USA (formerly Cypress Development's Clayton Valley project). Process leaches claystone (originally sulfuric-acid; feasibility now uses on-site HCl via chlor-alkali) to a pregnant lithium solution, then separates leached residue from pregnant liquor using a counter-current decantation arrangement of thickener settlers plus filtration before DLE and Li2CO3 finishing. Leached-clay residue is managed as filtered tailings.",
-   "organizational_entity": "",
+   "organizational_entity": "Century Lithium Corp.",
    "physical_entity": "Century Lithium Angel Island (Clayton Valley) Lithium Extraction Facility",
    "flag": ""
   },
@@ -3872,7 +3872,7 @@
    "column": "refining",
    "confidence": "low",
    "short": "Planned processing plant for the McDermitt clay lithium project, Malheur County, Oregon, USA. Flowsheet (Fluor) uses beneficiation/attrition scrubbing of the clay fraction followed by sulfuric- and/or hydrochloric-acid leaching to a pregnant lithium solution, with solid-liquid separation of leached clay residue from pregnant liquor prior to purification and battery-grade Li2CO3 production.",
-   "organizational_entity": "",
+   "organizational_entity": "Jindalee Lithium Ltd (formerly Jindalee Resources)",
    "physical_entity": "McDermitt (Jindalee) Lithium Processing Plant",
    "flag": ""
   },
@@ -3888,7 +3888,7 @@
    "column": "refining",
    "confidence": "medium-high",
    "short": "Jadar liquor purification / Na2SO4 unit",
-   "organizational_entity": "",
+   "organizational_entity": "Rio Tinto Group",
    "physical_entity": "Jadar project hydrometallurgical plant - liquor purification & anhydrous sodium sulphate crystallisation unit",
    "flag": ""
   },
@@ -3904,7 +3904,7 @@
    "column": "refining",
    "confidence": "low",
    "short": "Rhyolite Ridge liming circuit",
-   "organizational_entity": "",
+   "organizational_entity": "ioneer Ltd",
    "physical_entity": "Rhyolite Ridge project - lithium liquor liming / purification circuit",
    "flag": ""
   },
@@ -3984,7 +3984,7 @@
    "column": "source",
    "confidence": "high",
    "short": "Legacy accumulation of ~30 years of tin-tantalum (and later Li) flotation tailings in Tailings Storage Facility 1 at Greenbushes, worked directly as a standalone lithium source by a dedicated on-site oxide re-flotation plant. TRP reclaims ~2.0 Mt/y of tailings grading ~1.4% Li2O (TSF1 resource ~8-10 Mt at ~1.2% Li2O) and produces ~285 kt/y of SC6.0 spodumene concentrate (6.0% Li2O). No fresh mine feed; the resource is the historic tailings itself.",
-   "organizational_entity": "Talison Lithium Pty Ltd",
+   "organizational_entity": "Talison Lithium",
    "physical_entity": "Greenbushes TSF1 Historic Tailings & Tailings Retreatment Plant (TRP)",
    "flag": ""
   },
@@ -4048,7 +4048,7 @@
    "column": "extraction",
    "confidence": "medium-high",
    "short": "Brunp's waste-battery disposal facilities (~120,000 t/yr at flagship site) shred spent cells/scrap and produce black mass; part of ~500,000 t/yr CATL Brunp network.",
-   "organizational_entity": "",
+   "organizational_entity": "Hunan Brunp Recycling Technology Co., Ltd.",
    "physical_entity": "CATL Brunp battery recycling & pretreatment complex (Guangdong / Hunan)",
    "flag": ""
   },
@@ -4064,7 +4064,7 @@
    "column": "extraction",
    "confidence": "medium",
    "short": "GEM's ~215,000 t/yr designed recycling capacity includes mechanical pretreatment and black mass production.",
-   "organizational_entity": "",
+   "organizational_entity": "GEM Co., Ltd.",
    "physical_entity": "GEM battery recycling plants (China)",
    "flag": ""
   },
@@ -4080,7 +4080,7 @@
    "column": "extraction",
    "confidence": "medium",
    "short": "~65,000 t/yr modular pre-processing capacity producing black mass from spent power batteries.",
-   "organizational_entity": "",
+   "organizational_entity": "Zhejiang Huayou Cobalt Co., Ltd.",
    "physical_entity": "Huayou Cobalt battery pre-processing facility (China)",
    "flag": ""
   },
@@ -4096,7 +4096,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Commercial black mass plant started June 2025; up to 15,000 t/yr EOL LIB (~40,000 EV batteries).",
-   "organizational_entity": "",
+   "organizational_entity": "BASF SE",
    "physical_entity": "BASF Black Mass plant, Schwarzheide",
    "flag": ""
   },
@@ -4112,7 +4112,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Operating since May 2022; ~12,000 t/yr battery pack shredding capacity; black mass shipped to Fortum Harjavalta.",
-   "organizational_entity": "",
+   "organizational_entity": "Hydrovolt AS",
    "physical_entity": "Hydrovolt battery recycling plant, Fredrikstad",
    "flag": ""
   },
@@ -4128,7 +4128,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Expanded 2024 with two lines; ~20,000 t/yr black mass scaling toward ~35,000 t/yr; shred and upgrade LIBs.",
-   "organizational_entity": "",
+   "organizational_entity": "Cirba Solutions",
    "physical_entity": "Cirba Solutions black mass facility, Lancaster, Ohio",
    "flag": ""
   },
@@ -4144,7 +4144,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Operational Aug 2022; ~30,000 t/yr input; extracts black mass from NMC batteries and gigafactory scrap.",
-   "organizational_entity": "",
+   "organizational_entity": "Ascend Elements, Inc.",
    "physical_entity": "Ascend Elements Base 1, Covington, Georgia",
    "flag": ""
   },
@@ -4160,7 +4160,7 @@
    "column": "extraction",
    "confidence": "medium-high",
    "short": "$65.8M JV (SK ecoplant 64% / Ascend 25% / TES 11%); shreds ~24,000 t/yr EOL batteries + scrap, ~12,000 t/yr black mass.",
-   "organizational_entity": "",
+   "organizational_entity": "Ascend Elements, Inc.",
    "physical_entity": "Hopkinsville, Kentucky black mass JV facility",
    "flag": ""
   },
@@ -4176,7 +4176,7 @@
    "column": "extraction",
    "confidence": "medium-high",
    "short": "Spoke facilities each ~10,000 t/yr, ~30,000 t/yr total; shred EOL batteries and manufacturing scrap into black mass. (Kingston is CA; multi-country group.)",
-   "organizational_entity": "",
+   "organizational_entity": "Li-Cycle Holdings Corp.",
    "physical_entity": "Li-Cycle Spoke plants (Kingston ON, Rochester NY, Gilbert AZ, Warren OH)",
    "flag": ""
   },
@@ -4192,7 +4192,7 @@
    "column": "extraction",
    "confidence": "medium-high",
    "short": "Pre-processes majority of North America's LIBs; mechanical/thermal recycling to black mass feeding onsite hydromet.",
-   "organizational_entity": "",
+   "organizational_entity": "Redwood Materials, Inc.",
    "physical_entity": "Redwood Materials facility, McCarran/Reno, Nevada",
    "flag": ""
   },
@@ -4208,7 +4208,7 @@
    "column": "extraction",
    "confidence": "medium-high",
    "short": "Recycles ~8,000+ t/yr spent LIBs/scrap; produces black mass; additional shredding plants in Hungary and Poland.",
-   "organizational_entity": "",
+   "organizational_entity": "SungEel HiTech Co., Ltd.",
    "physical_entity": "SungEel HiTech Gunsan Hydro Center pre-processing plants",
    "flag": ""
   },
@@ -4224,7 +4224,7 @@
    "column": "extraction",
    "confidence": "medium",
    "short": "LG Energy Solution / Toyota Tsusho JV; black mass pre-processing targeting ~13,500 t/yr.",
-   "organizational_entity": "",
+   "organizational_entity": "Green Metals Battery Innovations, LLC",
    "physical_entity": "Green Metals Battery Innovations plant, Winston-Salem, North Carolina",
    "flag": ""
   },
@@ -4240,7 +4240,7 @@
    "column": "extraction",
    "confidence": "medium",
    "short": "Advanced black mass production ~5,000 tpa, expanding to 15,000 tpa in 2026.",
-   "organizational_entity": "",
+   "organizational_entity": "Princeton NuEnergy Inc.",
    "physical_entity": "Princeton NuEnergy Advanced Black Mass facility, Chester, South Carolina",
    "flag": ""
   },
@@ -4256,7 +4256,7 @@
    "column": "source",
    "confidence": "high",
    "short": "Highly automated EV battery discharge & dismantling (D&D) line at Fredrikstad, Norway; safely de-energizes and disassembles EOL battery packs before crushing/sorting. Cleanest instance of a dedicated deactivation/dismantling yard. ~12,000 t/yr packs (~25,000 EV batteries) initial capacity.",
-   "organizational_entity": "Hydrovolt AS",
+   "organizational_entity": "Norsk Hydro ASA",
    "physical_entity": "Hydrovolt Fredrikstad Discharge & Dismantling facility",
    "flag": ""
   },
@@ -4624,7 +4624,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Hoboken, Antwerp. ~7,000 t/yr LIB capacity; UHT smelting to a Ni/Co/Cu/Li-bearing alloy, then hydrometallurgical refining separating Ni/Co/Cu and recovering lithium as Li2CO3/LiOH. Hydromet back-end qualifies for the group (smelt front-end excluded).",
-   "organizational_entity": "Umicore SA",
+   "organizational_entity": "Umicore",
    "physical_entity": "Umicore Hoboken battery-recycling plant",
    "flag": ""
   },
@@ -4704,7 +4704,7 @@
    "column": "refining",
    "confidence": "medium-high",
    "short": "Umicore Hoboken/Kokkola hydromet",
-   "organizational_entity": "Umicore N.V.",
+   "organizational_entity": "Umicore",
    "physical_entity": "Umicore Hoboken / Battery Recycling Hydrometallurgical Section",
    "flag": ""
   },
@@ -4720,7 +4720,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Cylib Dormagen",
-   "organizational_entity": "Cylib GmbH",
+   "organizational_entity": "cylib GmbH",
    "physical_entity": "Cylib Recycling Plant, Dormagen (Chempark)",
    "flag": ""
   },
@@ -4768,7 +4768,7 @@
    "column": "refining",
    "confidence": "high",
    "short": "Rochester Hub",
-   "organizational_entity": "Li-Cycle Holdings Corp.",
+   "organizational_entity": "Glencore plc",
    "physical_entity": "Rochester Hub Hydrometallurgical Resource Recovery Facility (ex-Li-Cycle)",
    "flag": ""
   },
@@ -4880,7 +4880,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Dedicated Ultra-High-Temperature (UHT) smelter for rechargeable Li-ion batteries and production scrap, commissioned 2011 at Hoboken (Antwerp), upgraded 2022 to broaden to automotive batteries. Smelts battery feed to a Co/Ni/Cu alloy with Li, Al and Mn reporting to a slag; alloy is downstream refined via hydromet. Facility processing capacity ~7,000 t (equiv. ~35,000 EV batteries/yr). Lithium historically slagged (construction additive) but Umicore has demonstrated slag-integration into Li-recovery flowsheets. Canonical example of the group.",
-   "organizational_entity": "",
+   "organizational_entity": "Umicore",
    "physical_entity": "Umicore Hoboken smelter (UHT battery recycling smelter)",
    "flag": ""
   },
@@ -4896,7 +4896,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Glencore Integrated Nickel Operations nickel smelter at Sudbury, Ontario. Recycling secondary Ni/Co/Cu-bearing streams since 1990; installed a Pre-Treatment Calcining Facility in 2007 enabling entry into battery recycling. Smelts battery scrap/black mass and other secondaries into a Ni/Co/Cu matte/alloy; Li and Al report to slag. In 2020 processed ~20,000 t recyclables (4,600 t Ni, 2,000 t Co, 800 t Cu). Alloy/matte is refined downstream at Nikkelverk (Norway).",
-   "organizational_entity": "",
+   "organizational_entity": "Glencore plc",
    "physical_entity": "Glencore Sudbury Smelter",
    "flag": ""
   },
@@ -4912,7 +4912,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "Secondary Ni/Co/Cu smelter at Aue, Saxony, recycling Li-ion batteries since 2011. Rotary kiln thermal pre-treatment plus shaft/blast furnace smelting to ~1350 C with slag formers (sand, gypsum); recovers Ni and Co in alloy/matte, with Li and Al lost to slag (Li ~0.82 wt%, as beta-eucryptite / lithium metasilicate). Total secondary smelting capacity ~20,000 t/yr. Combines pyro- and hydrometallurgy.",
-   "organizational_entity": "",
+   "organizational_entity": "Nickelh\u00fctte Aue GmbH",
    "physical_entity": "Nickelh\u00fctte Aue smelter",
    "flag": ""
   },
@@ -4928,7 +4928,7 @@
    "column": "extraction",
    "confidence": "high",
    "short": "SMM copper smelter at Saijo City, Ehime, integrated into SMM's Li-ion battery recycling flowsheet (with Niihama Nickel Refinery). Pyrometallurgical smelting selectively recovers Ni, Co and Cu as an alloy; Li reports to slag. Alloy is downstream leached/refined by hydromet to nickel/cobalt sulphate and electrolytic copper. SMM recovering Cu/Ni from end-of-life batteries since 2017; new recycling plants targeting ~10,000 t/yr of LIB cells (completion ~June 2026).",
-   "organizational_entity": "",
+   "organizational_entity": "Sumitomo Metal Mining Co., Ltd.",
    "physical_entity": "Sumitomo Metal Mining Toyo Smelter & Refinery",
    "flag": ""
   },
@@ -4944,7 +4944,7 @@
    "column": "extraction",
    "confidence": "medium",
    "short": "DOWA Group smelter at Kosaka, Akita, receiving battery-derived feed for pyrometallurgical metal recovery. DOWA ECO-SYSTEM detoxifies (heat-treats) Li-ion batteries at Odate (Akita) from Jan 2019 and, via MELTEC, sorts to iron plus mixed-metal raw material for smelting; smelting recovers Ni/Co/Cu, with Li reporting to slag (residues also to construction aggregate). DOWA treats on the order of ~1,000 t/yr spent LIBs (combined pyro/hydromet).",
-   "organizational_entity": "",
+   "organizational_entity": "DOWA Holdings Co., Ltd.",
    "physical_entity": "DOWA Kosaka Smelter (Kosaka Seiren)",
    "flag": ""
   },
@@ -4960,7 +4960,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Umicore's ultra-high-temperature (UHT) Li-ion battery recycling smelter at Hoboken, Antwerp province, Belgium. Input capacity >7,000 t/yr of end-of-life Li-ion batteries and production scrap. Produces a Co/Ni/Cu alloy plus a Li-Al-Si-Ca-Mn-O slag; the slag is the lithium-bearing feed to Umicore's hydrometallurgical Li recovery flowsheet (H2SO4 leach -> CaO purification -> Na2CO3 -> evaporative crystallization -> Li2CO3, ~98% purity per LiBRi-derived process). Reported >90% Li recovery. This is the smelter half of the integrated pyro-hydro realization; the slag-leach hydromet is at Hoboken/Olen. Qualifies as the material generator; realization of the qualifying leach step co-located/adjacent.",
-   "organizational_entity": "",
+   "organizational_entity": "Umicore",
    "physical_entity": "Umicore Hoboken Battery Recycling Smelter",
    "flag": ""
   },
@@ -4976,7 +4976,7 @@
    "column": "refining",
    "confidence": "medium",
    "short": "Umicore's hydrometallurgical refining site at Olen, Belgium, receives the alloy and lithium-bearing slag/streams from the Hoboken smelter and refines metals into battery-grade salts. The lithium slag-leach recovery flowsheet (sulphuric-acid leach ~1-1.5M at 60C, filtration to remove gypsum/silicates, CaO precipitation of Al/Fe/Si/residual TMs, further CaO for Mg, Na2CO3 addition, evaporative crystallization to Li2CO3 ~98%) is the qualifying operation. Exact split of the Li circuit between Hoboken and Olen is only partially disclosed; treated as the hydromet realization of the qualifying leach-and-crystallize function.",
-   "organizational_entity": "",
+   "organizational_entity": "Umicore",
    "physical_entity": "Umicore Olen hydrometallurgical refinery (Li recovery circuit)",
    "flag": ""
   },
