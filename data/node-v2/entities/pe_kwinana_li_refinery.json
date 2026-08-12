@@ -13,7 +13,7 @@
     ],
     "owners": [
       {
-        "organization_entity_id": "Unknown",
+        "organization_entity_id": "org_tlea",
         "organization_name": "Tianqi Lithium Energy Australia Pty Ltd (TLEA)",
         "ownership_percentage": 100,
         "ownership_type": "joint venture holding company (owns 100% of the Kwinana refinery)",
@@ -21,7 +21,7 @@
         "source_or_evidence": "https://www.igo.com.au/site/operations/lithium-holdco-joint-venture"
       },
       {
-        "organization_entity_id": "Unknown",
+        "organization_entity_id": "org_tianqi_lithium",
         "organization_name": "Tianqi Lithium Corporation (via TLEA)",
         "ownership_percentage": 51,
         "ownership_type": "indirect ownership through 51% stake in TLEA joint venture",
@@ -29,7 +29,7 @@
         "source_or_evidence": "https://www.igo.com.au/site/operations/lithium-holdco-joint-venture ; https://www.mining.com/igo-sees-no-path-forward-for-wa-lithium-refinery/"
       },
       {
-        "organization_entity_id": "Unknown",
+        "organization_entity_id": "org_igo_limited",
         "organization_name": "IGO Limited (via TLEA)",
         "ownership_percentage": 49,
         "ownership_type": "indirect ownership through 49% stake in TLEA joint venture",
@@ -39,7 +39,7 @@
     ],
     "operators": [
       {
-        "organization_entity_id": "Unknown",
+        "organization_entity_id": "org_tlea",
         "organization_name": "Tianqi Lithium Energy Australia Pty Ltd (TLEA)",
         "operator_relationship_type": "owner-operator (JV operating entity; Tianqi-managed operations)",
         "effective_date": "Unknown",
@@ -49,7 +49,12 @@
   },
   "identity": {
     "facility_name": "Kwinana Lithium Hydroxide Refinery",
-    "alternative_names": ["Kwinana Refinery", "TLEA Kwinana Lithium Hydroxide Plant", "Tianqi Kwinana Lithium Refinery", "Kwinana Lithium Plant"],
+    "alternative_names": [
+      "Kwinana Refinery",
+      "TLEA Kwinana Lithium Hydroxide Plant",
+      "Tianqi Kwinana Lithium Refinery",
+      "Kwinana Lithium Plant"
+    ],
     "facility_type": "Lithium chemical refinery (spodumene-to-lithium-hydroxide sulfate-route converter / battery-material plant)",
     "short_description": "Battery-grade lithium hydroxide refinery at Kwinana, Western Australia, owned 100% by the Tianqi Lithium Energy Australia (TLEA) joint venture (Tianqi Lithium 51% / IGO 49%). Designed as two 24,000 t/yr production trains (48,000 t/yr aggregate) converting chemical-grade spodumene concentrate (SC6) from the Greenbushes mine into premium battery-grade lithium hydroxide monohydrate via the calcine → concentrated-sulfuric-acid roast → water leach → purification → crystallization route. It was the first lithium hydroxide plant to commence production in Australia; Train 1 produced first lithium hydroxide in August 2021 and first battery-grade product in May 2022. Train 1 never operated near nameplate (peaked around 35-46% of the 24,000 t/yr capacity); Train 2 construction (partially complete) was suspended in January 2025 and IGO fully impaired its stake (A$605m) in FY25, declaring the asset non-viable while Tianqi indicated intent to retain and continue Train 1.",
     "commissioning_or_operating_start_date": "Train 1: first lithium hydroxide August 2021; first battery-grade product May 2022; commercial production declared December quarter 2022",
@@ -60,7 +65,10 @@
     "region": "Western Australia (Kwinana industrial strip, south of Perth)",
     "city": "Kwinana",
     "site_address": "Kwinana Industrial Area, Kwinana, Western Australia (approximately 35 km south of Perth; approximately 200-250 km north of the Greenbushes mine)",
-    "coordinates": { "latitude": -32.234, "longitude": 115.771 }
+    "coordinates": {
+      "latitude": -32.234,
+      "longitude": 115.771
+    }
   },
   "operations": {
     "operating_configuration": "Single-site lithium chemical refinery designed as two parallel processing trains (Train 1 operational, Train 2 partially built and construction-suspended), each with a nameplate capacity of 24,000 t/yr LiOH·H2O for 48,000 t/yr aggregate. Highly automated sulfate-route flowsheet: spodumene calcination/decrepitation, concentrated-sulfuric-acid roasting (acid bake), water leaching, multi-stage impurity purification, and lithium hydroxide crystallization, with process-residue (aluminosilicate and calcium sulfate) handling.",
@@ -81,7 +89,9 @@
             "actual_input_quantity": "Not disclosed",
             "quantity_unit": "tonnes/year (SC6 concentrate)",
             "reporting_period": "Not applicable",
-            "source_physical_entity_ids": ["pe_greenbushes_mine"],
+            "source_physical_entity_ids": [
+              "pe_greenbushes_mine"
+            ],
             "reported_or_estimated": "reported (qualitative — Greenbushes as source confirmed); quantity not disclosed",
             "source_or_evidence": "https://www.igo.com.au/site/operations/lithium-holdco-joint-venture ; https://www.nsenergybusiness.com/news/kwinana-lithium-hydroxide-refinery-commercial-production/"
           },
@@ -93,7 +103,9 @@
             "actual_input_quantity": "Not disclosed",
             "quantity_unit": "tonnes/year",
             "reporting_period": "Not applicable",
-            "source_physical_entity_ids": ["Unknown"],
+            "source_physical_entity_ids": [
+              "Unknown"
+            ],
             "reported_or_estimated": "reported (qualitative — sulfate route uses concentrated H2SO4); quantity not disclosed",
             "source_or_evidence": "https://www.min-eng.com/criticalminerals24/drafts/session3/krebs.pdf ; https://www.epa.wa.gov.au/sites/default/files/Referral_Documentation/Kwinana%20Lithium%20Refinery%20Process%20Residues%20Geochemical%20Assessment.pdf"
           },
@@ -105,7 +117,9 @@
             "actual_input_quantity": "Not disclosed",
             "quantity_unit": "tonnes/year",
             "reporting_period": "Not applicable",
-            "source_physical_entity_ids": ["Unknown"],
+            "source_physical_entity_ids": [
+              "Unknown"
+            ],
             "reported_or_estimated": "reported (qualitative — standard sulfate-route reagents); quantity not disclosed",
             "source_or_evidence": "https://www.epa.wa.gov.au/sites/default/files/Referral_Documentation/Kwinana%20Lithium%20Refinery%20Process%20Residues%20Geochemical%20Assessment.pdf"
           },
@@ -117,7 +131,9 @@
             "actual_input_quantity": "Not disclosed",
             "quantity_unit": "GJ/yr; kL/yr",
             "reporting_period": "Not applicable",
-            "source_physical_entity_ids": ["Unknown"],
+            "source_physical_entity_ids": [
+              "Unknown"
+            ],
             "reported_or_estimated": "estimated (implied by high-temperature calcination ~1050-1100C and leaching); quantity not disclosed",
             "source_or_evidence": "https://www.saltworkstech.com/articles/hardrock-spodumene-lithium-processing/"
           }
@@ -128,7 +144,11 @@
             "input_form": "chemical-grade spodumene concentrate (SC6, alpha-spodumene)",
             "transformation_function": "Convert crystalline alpha-spodumene to reactive beta-spodumene so lithium can be liberated in the subsequent acid roast",
             "actual_process_or_technology_used": "High-temperature rotary/kiln calcination at approximately 1050-1100 C (decrepitation roast) for roughly 30 minutes",
-            "major_process_steps": ["Feed preparation and drying of SC6 concentrate", "Calcination at ~1050-1100 C to convert alpha- to beta-spodumene", "Cooling and fine grinding of beta-spodumene"],
+            "major_process_steps": [
+              "Feed preparation and drying of SC6 concentrate",
+              "Calcination at ~1050-1100 C to convert alpha- to beta-spodumene",
+              "Cooling and fine grinding of beta-spodumene"
+            ],
             "output_form": "beta-spodumene (calcine)",
             "process_status": "operational (Train 1)",
             "source_or_evidence": "https://www.saltworkstech.com/articles/hardrock-spodumene-lithium-processing/ ; https://www.min-eng.com/criticalminerals24/drafts/session3/krebs.pdf"
@@ -138,7 +158,11 @@
             "input_form": "ground beta-spodumene",
             "transformation_function": "Convert lithium in beta-spodumene to water-soluble lithium sulfate",
             "actual_process_or_technology_used": "Mixing of finely ground beta-spodumene with concentrated sulfuric acid and roasting (acid bake) to form lithium sulfate; HF and acid off-gases scrubbed",
-            "major_process_steps": ["Blending of beta-spodumene with concentrated H2SO4", "Acid roast (acid bake) to form lithium sulfate", "Off-gas scrubbing (HF and acid gas removal); alkaline scrubber-bleed returned to water leach"],
+            "major_process_steps": [
+              "Blending of beta-spodumene with concentrated H2SO4",
+              "Acid roast (acid bake) to form lithium sulfate",
+              "Off-gas scrubbing (HF and acid gas removal); alkaline scrubber-bleed returned to water leach"
+            ],
             "output_form": "lithium-sulfate-bearing acid-roast product",
             "process_status": "operational (Train 1)",
             "source_or_evidence": "https://www.min-eng.com/criticalminerals24/drafts/session3/krebs.pdf ; https://www.epa.wa.gov.au/sites/default/files/Referral_Documentation/Kwinana%20Lithium%20Refinery%20Process%20Residues%20Geochemical%20Assessment.pdf"
@@ -148,7 +172,11 @@
             "input_form": "lithium-sulfate acid-roast product",
             "transformation_function": "Dissolve lithium sulfate into aqueous solution, separating leached lithium from insoluble aluminosilicate residue",
             "actual_process_or_technology_used": "Water leaching of the roast product; solid-liquid separation to remove aluminosilicate leach residue",
-            "major_process_steps": ["Water leach of acid-roast product", "Solid-liquid separation (residue filtration)", "Recovery of lithium-sulfate leach liquor"],
+            "major_process_steps": [
+              "Water leach of acid-roast product",
+              "Solid-liquid separation (residue filtration)",
+              "Recovery of lithium-sulfate leach liquor"
+            ],
             "output_form": "lithium sulfate leach solution; aluminosilicate leach residue",
             "process_status": "operational (Train 1)",
             "source_or_evidence": "https://www.epa.wa.gov.au/sites/default/files/Referral_Documentation/Kwinana%20Lithium%20Refinery%20Process%20Residues%20Geochemical%20Assessment.pdf"
@@ -158,7 +186,11 @@
             "input_form": "lithium sulfate leach solution",
             "transformation_function": "Remove impurities (iron, aluminium, magnesium, calcium, boron and other cations) to reach battery-grade purity",
             "actual_process_or_technology_used": "Multi-stage precipitation, neutralization, ion exchange and filtration purification (standard sulfate-route purification; specific Kwinana flowsheet not fully disclosed)",
-            "major_process_steps": ["Primary impurity precipitation and neutralization", "Secondary purification (ion exchange / polishing)", "Filtration to produce purified lithium-bearing solution"],
+            "major_process_steps": [
+              "Primary impurity precipitation and neutralization",
+              "Secondary purification (ion exchange / polishing)",
+              "Filtration to produce purified lithium-bearing solution"
+            ],
             "output_form": "purified lithium-bearing solution",
             "process_status": "operational (Train 1)",
             "source_or_evidence": "https://www.min-eng.com/criticalminerals24/drafts/session3/krebs.pdf"
@@ -168,7 +200,11 @@
             "input_form": "purified lithium-bearing solution",
             "transformation_function": "Convert purified lithium solution to solid battery-grade lithium hydroxide monohydrate crystals",
             "actual_process_or_technology_used": "Conversion/causticization to lithium hydroxide, evaporative crystallization of LiOH·H2O, centrifugation, drying, micronizing and packaging",
-            "major_process_steps": ["Conversion to lithium hydroxide", "Evaporative crystallization of LiOH·H2O", "Centrifuge, dry, micronize and package to battery-grade product"],
+            "major_process_steps": [
+              "Conversion to lithium hydroxide",
+              "Evaporative crystallization of LiOH·H2O",
+              "Centrifuge, dry, micronize and package to battery-grade product"
+            ],
             "output_form": "battery-grade lithium hydroxide monohydrate (LiOH·H2O)",
             "process_status": "operational (Train 1)",
             "source_or_evidence": "https://www.saltworkstech.com/articles/hardrock-spodumene-lithium-processing/ ; https://www.nsenergybusiness.com/news/kwinana-lithium-hydroxide-refinery-commercial-production/"
@@ -183,7 +219,9 @@
             "actual_output_quantity": "Well below nameplate: Train 1 peaked at approximately 35% of nameplate over its first three years, improving to about 46% of nameplate in one September quarter (approximately 2,775 tonnes that quarter). Never operated near the 24,000 t/yr nameplate.",
             "quantity_unit": "tonnes/year (LiOH·H2O)",
             "reporting_period": "cumulative to 2025 (Train 1)",
-            "destination_physical_entity_ids": ["Unknown"],
+            "destination_physical_entity_ids": [
+              "Unknown"
+            ],
             "reported_or_estimated": "reported",
             "source_or_evidence": "https://www.mining.com/igo-sees-no-path-forward-for-wa-lithium-refinery/ ; https://www.igo.com.au/site/operations/lithium-holdco-joint-venture ; https://www.indexbox.io/blog/igo-sees-no-viable-path-for-kwinana-lithium-refinery-despite-market-recovery/"
           },
@@ -195,7 +233,9 @@
             "actual_output_quantity": "Not disclosed",
             "quantity_unit": "tonnes/year",
             "reporting_period": "Not applicable",
-            "destination_physical_entity_ids": ["Unknown"],
+            "destination_physical_entity_ids": [
+              "Unknown"
+            ],
             "reported_or_estimated": "reported (qualitative — residue stream confirmed in EPA process-residue assessment)",
             "source_or_evidence": "https://www.epa.wa.gov.au/sites/default/files/Referral_Documentation/Kwinana%20Lithium%20Refinery%20Process%20Residues%20Geochemical%20Assessment.pdf"
           },
@@ -207,7 +247,9 @@
             "actual_output_quantity": "Not disclosed",
             "quantity_unit": "tonnes/year",
             "reporting_period": "Not applicable",
-            "destination_physical_entity_ids": ["Unknown"],
+            "destination_physical_entity_ids": [
+              "Unknown"
+            ],
             "reported_or_estimated": "reported (qualitative — sulfate-route residue streams confirmed)",
             "source_or_evidence": "https://www.epa.wa.gov.au/sites/default/files/Referral_Documentation/Kwinana%20Lithium%20Refinery%20Process%20Residues%20Geochemical%20Assessment.pdf"
           }
