@@ -1,0 +1,45 @@
+{
+  "node": "Germanium",
+  "description": {
+    "what": "Germanium is a hard, brittle, silvery-grey metalloid that sits between metals and non-metals on the periodic table. It is rarely found in concentrated ore and is produced almost entirely as a trace byproduct of other operations.",
+    "why": "It is a critical mineral with no easy substitute in several defence and high-tech uses, and its supply is thin, opaque, and heavily concentrated in China, making it a strategic pressure point. China's 2023-2024 export controls and its December 2024 ban on germanium exports to the United States underscored this leverage.",
+    "how": "Germanium is used in fibre-optic cable, infrared optics for thermal imaging and night vision, silicon-germanium (SiGe) chips and high-efficiency solar cells, and as a polymerisation catalyst (notably in PET plastics)."
+  },
+  "metrics": {
+    "global_production": "~140 t/yr refined germanium (USGS long-run estimate; exact global totals not reliably reported)",
+    "market_price": "Germanium metal rose from ~US$1,550/kg to ~US$2,950/kg over 2024 (USGS); Western spot prices later spiked above ~US$6,000/kg in 2025-2026 after China's export ban",
+    "top_countries": [
+      { "name": "China", "share": "~60% or more of refined germanium output" },
+      { "name": "Russia", "share": "second-largest producer (exact share not disclosed)" },
+      { "name": "Canada", "share": "primary non-Chinese Western refiner (Teck, Trail)" }
+    ],
+    "top_companies": [
+      { "name": "Yunnan Lincang Xinyuan Germanium", "country": "China", "note": "One of China's largest dedicated germanium producers, drawing on coal-hosted germanium; core to China's dominant refined output" },
+      { "name": "Teck Resources", "country": "Canada", "note": "Trail smelter is North America's largest germanium recovery operation, producing 5N+ germanium as a zinc byproduct; expanding capacity" },
+      { "name": "Umicore", "country": "Belgium", "note": "Leading Western germanium refiner and recycler supplying optics, electronics and substrate markets outside China" }
+    ]
+  },
+  "stillpoint_view": "Germanium is a byproduct metal, not a mined commodity: it is pulled from zinc smelting residues and coal ash rather than dedicated ore, so supply is set by unrelated zinc and coal economics and cannot scale on demand alone. The chokepoint is refining, where China holds a commanding share of high-purity output and used 2023-2024 export controls and a US export ban to demonstrate leverage. The market is small, opaque, and thinly traded, which makes prices volatile and stockpiles decisive; the post-ban split between depressed Chinese domestic prices and elevated Western spot prices shows a bifurcating market. Western capacity, led by Teck in Canada and Umicore in Belgium plus mine-waste recovery projects, is real but slow to build and structurally tied to zinc feedstock. The strategic read is a durable dependency: substitution is limited in defence-critical infrared and fibre-optic uses, and diversification will take years.",
+  "stages": {
+    "resource": {
+      "quantity_metric": "Ge hosted in Zn-Pb sulfides & coal",
+      "description": "Germanium occurs at trace levels substituted into zinc-lead sulfide (sphalerite) deposits and enriched in certain coals, with no standalone ore of its own."
+    },
+    "extraction": {
+      "quantity_metric": "Mined as Zn/coal byproduct",
+      "description": "Germanium is not mined for itself; it is carried along when zinc-lead ores are mined and concentrated or when germanium-rich coal is extracted."
+    },
+    "primary": {
+      "quantity_metric": "Concentrated into residues/flue dust",
+      "description": "Zinc smelting and coal combustion or gasification concentrate germanium into residues, leach solutions, and flue dusts that serve as the feedstock for recovery."
+    },
+    "recovery": {
+      "quantity_metric": "Ge concentrate from dusts (historically <5% recovered)",
+      "description": "Specialised operators pull germanium concentrate (as germanium oxide or chloride intermediates) out of smelter residues and flue dusts, though historically only a small fraction of contained germanium was captured."
+    },
+    "refining": {
+      "quantity_metric": "~140 t/yr refined Ge (5N+ metal, GeO2, GeCl4)",
+      "description": "Refiners upgrade germanium concentrate into high-purity germanium metal, germanium dioxide (GeO2), and germanium tetrachloride (GeCl4) for optics, electronics, and fibre applications."
+    }
+  }
+}

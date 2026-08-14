@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2 } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo } from "@/lib/explorerRegistry";
 
 /* ── Company Subgraph projection over a canonical Company Record (v2.0) ── */
 type CNode = { key: string; kind: string; label: string; edge?: string; metas: string[]; canonicalId?: string; children: CNode[] };
@@ -216,7 +216,7 @@ function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap
   );
 }
 
-type View = "empty" | "class" | "supply" | "entity" | "company";
+type View = "empty" | "overview" | "class" | "supply" | "entity" | "company";
 
 export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const [view, setView] = useState<View>("empty");
@@ -241,8 +241,8 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     const found = lookupNode(v);
     const co = found ? null : getCompanyRecordV2(v);
     if (found) {
-      setLoaded(found); setView("class"); setSelId(null);
-      setLog(l => [...l, `▶ search "${v}"`, `✓ found ${found.name} — loading class graph (${found.classGraph.downstream.length} downstream class nodes)`]);
+      setLoaded(found); setView("overview"); setSelId(null);
+      setLog(l => [...l, `▶ search "${v}"`, `✓ found ${found.name} — node object overview (${found.classGraph.downstream.length} downstream class nodes)`]);
     } else if (co) {
       setCompanyRec(co); setView("company"); setExpanded(new Set([co.common.organizational_entity_id]));
       setLog(l => [...l, `▶ search "${v}"`, `✓ found company ${co.identity.company_name} — projecting company subgraph (${co.economic_activities.length} economic activities)`]);
@@ -344,13 +344,16 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     return loaded.entityGraph.entities.find(e => e.id === selId) ?? null;
   }, [view, loaded, selId]);
 
-  const headerKicker = view === "empty" ? "Node Explorer" : view === "company" ? "Node Explorer · Company Subgraph" : view === "class" ? "Node Explorer · Class Graph" : view === "supply" ? "Node Explorer · Supply Chain Graph" : "Node Explorer · Entity Graph";
-  const headerTitle = view === "empty" ? "Search a node" : view === "company" ? `${companyRec?.identity.company_name}` : view === "class" ? `${loaded?.name}` : view === "supply" ? `${loaded?.name} — Supply Chain` : `${loaded?.name} — Entities`;
-  const backLabel = view === "entity" ? "Supply chain graph" : view === "supply" ? "Class graph" : (view === "class" || view === "company") ? "Clear" : "Back";
+  const overview = loaded?.overview ?? null;
+  const stages = useMemo(() => (loaded ? computeStages(loaded) : []), [loaded]);
+
+  const headerKicker = view === "empty" ? "Node Explorer" : view === "overview" ? "Node Explorer · Node Object" : view === "company" ? "Node Explorer · Company Subgraph" : view === "class" ? "Node Explorer · Class Graph" : view === "supply" ? "Node Explorer · Supply Chain Graph" : "Node Explorer · Entity Graph";
+  const headerTitle = view === "empty" ? "Search a node" : view === "overview" ? `${loaded?.name}` : view === "company" ? `${companyRec?.identity.company_name}` : view === "class" ? `${loaded?.name}` : view === "supply" ? `${loaded?.name} — Supply Chain` : `${loaded?.name} — Entities`;
+  const backLabel = view === "entity" ? "Supply chain graph" : view === "supply" ? "Node overview" : (view === "overview" || view === "class" || view === "company") ? "Clear" : "Back";
   const onBackClick = () => {
     if (view === "entity") { setView("supply"); setSelId(null); }
-    else if (view === "supply") { setView("class"); setSelId(null); }
-    else if (view === "class") { setView("empty"); setLoaded(null); setSelId(null); }
+    else if (view === "supply") { setView("overview"); setSelId(null); }
+    else if (view === "overview" || view === "class") { setView("empty"); setLoaded(null); setSelId(null); }
     else if (view === "company") { setView("empty"); setCompanyRec(null); }
     else onBack();
   };
@@ -397,6 +400,9 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
             {view === "company" && companyView && (
               <CompanyGraph root={companyView} expanded={expanded} onToggle={toggleNode} />
             )}
+            {view === "overview" && loaded && (
+              <AerialGraph loaded={loaded} stages={stages} onStageExpand={() => { setView("supply"); setSelId(null); }} />
+            )}
             {view === "class" && classView && (
               <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { if (id === classView.rootId) { setView("supply"); setSelId(null); } }} />
             )}
@@ -438,6 +444,12 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
         {view === "company" && companyRec && (
           <div style={{ flexBasis: 430, flexGrow: 0, flexShrink: 0, width: 430, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)" }}>
             <CompanyRecordPanel rec={companyRec} />
+          </div>
+        )}
+        {/* node object overview panel */}
+        {view === "overview" && loaded && overview && (
+          <div style={{ flexBasis: 400, flexGrow: 0, flexShrink: 0, width: 400, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)" }}>
+            <OverviewPanel loaded={loaded} overview={overview} />
           </div>
         )}
       </div>
@@ -561,6 +573,166 @@ function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set
           ))}
         </div>
       ))}
+    </div>
+  );
+}
+
+/* ── Node Object Overview view ── */
+function Flag({ country, size = 14 }: { country: string; size?: number }) {
+  const code = COUNTRY_CODES[country];
+  const h = Math.round(size * 0.78);
+  if (!code) return <span style={{ width: size, height: h, display: "inline-block", background: "rgba(255,255,255,0.08)", borderRadius: 1, flexShrink: 0 }} />;
+  return <img src={`https://flagcdn.com/16x12/${code}.png`} alt="" width={size} height={h} style={{ borderRadius: 1, flexShrink: 0 }} />;
+}
+
+const STAGE_COLORS = ["#7fae6f", "#c8a24a", "#8ab0c0", "#b08fce", "#cf9b7f", "#9a938a"];
+
+function StageCard({ stage, color, onExpand }: { stage: StageInfo; color: string; onExpand: () => void }) {
+  return (
+    <div style={{ padding: "10px 12px", borderRadius: 7, background: "rgb(30,28,26)", border: "1px solid rgb(48,43,40)", borderLeft: `2px solid ${color}` }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}>
+        <span style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF }}>{stage.label}</span>
+        {stage.quantity_metric && <span style={{ fontSize: 9, color, fontFamily: MONO, textAlign: "right", flexShrink: 0 }}>{stage.quantity_metric}</span>}
+      </div>
+      {stage.description && <p style={{ fontSize: 9.5, color: "#8f877b", margin: "4px 0 0 0", lineHeight: 1.45 }}>{stage.description}</p>}
+      {stage.top_countries.length > 0 && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 2, marginTop: 7 }}>
+          {stage.top_countries.map(c => (
+            <div key={c} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <Flag country={c} size={13} />
+              <span style={{ fontSize: 9.5, color: "rgb(172,172,172)" }}>{c}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginTop: 8 }}>
+        <span style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>{stage.count_label}</span>
+        <button
+          onClick={onExpand}
+          style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(200,122,74,0.12)", border: `1px solid rgba(200,122,74,0.5)`, borderRadius: 5, padding: "3px 8px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 8.5 }}
+          onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.24)"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,122,74,0.12)"; }}
+        >
+          Expand
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* aerial graph: parents · node-object-container(with stage cards) · child nodes */
+function AerialGraph({ loaded, stages, onStageExpand }: { loaded: LoadedNode; stages: StageInfo[]; onStageExpand: (key: string) => void }) {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const nodeRef = useRef<HTMLDivElement>(null);
+  const childRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
+  const children = loaded.classGraph.downstream;
+  const isRaw = (loaded.classGraph.node.class_type || "").toLowerCase().includes("raw");
+
+  const measure = useCallback(() => {
+    const box = boxRef.current?.getBoundingClientRect();
+    const n = nodeRef.current?.getBoundingClientRect();
+    if (!box || !n) return;
+    const next: { x1: number; y1: number; x2: number; y2: number }[] = [];
+    for (const c of children) {
+      const el = childRefs.current[c.id];
+      if (!el) continue;
+      const cb = el.getBoundingClientRect();
+      next.push({ x1: n.right - box.left, y1: n.top + n.height / 2 - box.top, x2: cb.left - box.left, y2: cb.top + cb.height / 2 - box.top });
+    }
+    setLines(next);
+  }, [children]);
+
+  useEffect(() => {
+    const r = requestAnimationFrame(measure);
+    const t = setTimeout(measure, 90);
+    const ro = new ResizeObserver(() => measure());
+    if (boxRef.current) ro.observe(boxRef.current);
+    window.addEventListener("resize", measure);
+    return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
+  }, [measure]);
+
+  return (
+    <div ref={boxRef} style={{ position: "relative", minHeight: "100%", display: "flex", alignItems: "center", gap: 72, padding: "20px 12px" }}>
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
+        {lines.map((l, i) => {
+          const mx = (l.x1 + l.x2) / 2;
+          return <path key={i} d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke={lineColor} strokeWidth={1.2} />;
+        })}
+      </svg>
+
+      {isRaw && (
+        <div style={{ zIndex: 1, flexShrink: 0, writingMode: "vertical-rl", transform: "rotate(180deg)", fontSize: 8, color: "#5f5a52", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.1em" }}>
+          Raw material · origin of chain
+        </div>
+      )}
+
+      {/* node object container */}
+      <div ref={nodeRef} style={{ zIndex: 1, flexShrink: 0, width: 366, background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 12, padding: "13px 13px 15px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)" }}>
+        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}>
+          <span style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
+          <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
+        </div>
+        <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "8px 0 0 0" }}>Supply-chain stages</p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 7 }}>
+          {stages.map((s, i) => <StageCard key={s.key} stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} onExpand={() => onStageExpand(s.key)} />)}
+        </div>
+      </div>
+
+      {/* child nodes */}
+      {children.length > 0 && (
+        <div style={{ zIndex: 1, flexShrink: 0, display: "flex", flexDirection: "column", gap: 9 }}>
+          <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Child nodes ({children.length})</p>
+          {children.map(c => (
+            <div key={c.id} ref={el => { childRefs.current[c.id] = el; }} style={{ width: 214, padding: "9px 11px", borderRadius: 7, background: cardBg, border: "1px solid rgb(48,43,40)" }}>
+              <p style={{ fontSize: 11, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.2 }}>{c.name}</p>
+              <p style={{ fontSize: 7.5, color: "#8ab0c0", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: "3px 0 0 0" }}>{c.class_type}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* right panel for the node object overview */
+function OverviewPanel({ loaded, overview }: { loaded: LoadedNode; overview: NodeOverview }) {
+  const m = overview.metrics;
+  return (
+    <div style={{ width: 400, height: "100%", boxSizing: "border-box", overflowY: "auto", padding: "18px 20px" }}>
+      <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Node Object · {loaded.classGraph.node.class_type}</p>
+      <h2 style={{ fontSize: 18, color: warmWhite, fontFamily: SERIF, margin: "4px 0 0 0" }}>{loaded.name}</h2>
+
+      <Sect label="What it is"><Prose>{overview.description.what}</Prose></Sect>
+      <Sect label="Why it matters"><Prose>{overview.description.why}</Prose></Sect>
+      <Sect label="How it's used"><Prose>{overview.description.how}</Prose></Sect>
+
+      <Sect label="Key Metrics">
+        <Sub2 label="Global production" value={m.global_production} />
+        <Sub2 label="Market price" value={m.market_price} />
+        <MicroHead>Top producing countries</MicroHead>
+        {m.top_countries.map((c, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 3 }}>
+            <Flag country={c.name} size={15} />
+            <span style={{ fontSize: 11, color: warmWhite }}>{c.name}</span>
+            {c.share && <span style={{ fontSize: 9, color: "#807869", fontFamily: MONO, marginLeft: "auto", textAlign: "right" }}>{c.share}</span>}
+          </div>
+        ))}
+        <div style={{ marginTop: 6 }} />
+        <MicroHead>Major companies</MicroHead>
+        {m.top_companies.map((c, i) => (
+          <div key={i} style={{ marginBottom: 6 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              {c.country && <Flag country={c.country} size={13} />}
+              <span style={{ fontSize: 11, color: warmWhite }}>{c.name}</span>
+            </div>
+            {c.note && <p style={{ fontSize: 9, color: "#807869", margin: "2px 0 0 0", lineHeight: 1.45 }}>{c.note}</p>}
+          </div>
+        ))}
+      </Sect>
+
+      <Sect label="Stillpoint View"><Prose>{overview.stillpoint_view}</Prose></Sect>
     </div>
   );
 }

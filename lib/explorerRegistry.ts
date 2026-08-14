@@ -4,6 +4,7 @@ import germaniumClass from "@/data/node-v2/germanium-class-graph.json";
 import germaniumRoutes from "@/data/node-v2/germanium-routes.json";
 import germaniumGraph from "@/data/node-v2/germanium-supply-graph.json";
 import germaniumEntities from "@/data/node-v2/germanium-entity-graph.json";
+import germaniumOverview from "@/data/node-v2/germanium-overview.json";
 import galliumClass from "@/data/node-v2/gallium-class-graph.json";
 import galliumRoutes from "@/data/node-v2/gallium-routes.json";
 import galliumGraph from "@/data/node-v2/gallium-supply-graph.json";
@@ -55,6 +56,20 @@ export type EntityGraph = {
   connections: EntityEdge[];
 };
 
+/* ── Node Object Overview (landing page metadata) ── */
+export type NodeOverview = {
+  node: string;
+  description: { what: string; why: string; how: string };
+  metrics: {
+    global_production: string;
+    market_price: string;
+    top_countries: { name: string; share?: string }[];
+    top_companies: { name: string; country?: string; note?: string }[];
+  };
+  stillpoint_view: string;
+  stages: Record<string, { quantity_metric: string; description: string }>;
+};
+
 export type LoadedNode = {
   name: string;
   classGraph: ClassGraph;
@@ -62,7 +77,57 @@ export type LoadedNode = {
   entityGraph: EntityGraph;
   groups: Record<string, unknown>;
   routes: unknown[];
+  overview?: NodeOverview | null;
 };
+
+/* aggregate one supply-chain stage (column) with its entity counts + top countries + overview text */
+export type StageInfo = {
+  key: string;
+  label: string;
+  quantity_metric: string;
+  description: string;
+  entity_count: number;
+  entity_class_label: string;
+  count_label: string;
+  top_countries: string[];
+};
+
+function pluralize(cls: string): string {
+  if (!cls) return "Entities";
+  if (cls.endsWith("y")) return cls.slice(0, -1) + "ies";
+  if (cls.endsWith("s")) return cls;
+  return cls + "s";
+}
+
+export function computeStages(node: LoadedNode): StageInfo[] {
+  const ov = node.overview;
+  const ents = node.entityGraph.entities;
+  const out: StageInfo[] = [];
+  for (const col of node.supplyGraph.columns) {
+    const stageMeta = ov?.stages?.[col.key];
+    const es = ents.filter((e) => e.column === col.key);
+    if (!stageMeta && es.length === 0) continue;
+    const classCount = new Map<string, number>();
+    const countryCount = new Map<string, number>();
+    for (const e of es) {
+      if (e.entity_class) classCount.set(e.entity_class, (classCount.get(e.entity_class) ?? 0) + 1);
+      if (e.country) countryCount.set(e.country, (countryCount.get(e.country) ?? 0) + 1);
+    }
+    const topClass = Array.from(classCount.entries()).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "Entity";
+    const topCountries = Array.from(countryCount.entries()).sort((a, b) => b[1] - a[1]).slice(0, 3).map((c) => c[0]);
+    out.push({
+      key: col.key,
+      label: col.label,
+      quantity_metric: stageMeta?.quantity_metric ?? "",
+      description: stageMeta?.description ?? "",
+      entity_count: es.length,
+      entity_class_label: topClass,
+      count_label: es.length ? `${es.length} ${pluralize(topClass)}` : "—",
+      top_countries: topCountries,
+    });
+  }
+  return out;
+}
 
 const GERMANIUM: LoadedNode = {
   name: "Germanium",
@@ -71,6 +136,7 @@ const GERMANIUM: LoadedNode = {
   entityGraph: germaniumEntities as unknown as EntityGraph,
   groups: (germaniumRoutes as { groups: Record<string, unknown> }).groups,
   routes: (germaniumRoutes as { routes: unknown[] }).routes,
+  overview: germaniumOverview as unknown as NodeOverview,
 };
 
 const GALLIUM: LoadedNode = {
