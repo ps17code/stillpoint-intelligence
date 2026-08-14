@@ -612,17 +612,17 @@ function StageCard({ stage, color, onExpand }: { stage: StageInfo; color: string
                 <span style={{ fontSize: 9.5, color: warmWhite }}>{c.name}</span>
               </div>
               {c.companies.length > 0 && (
-                <p style={{ fontSize: 8, color: "#807869", fontFamily: MONO, margin: "1px 0 0 19px", lineHeight: 1.4 }}>{c.companies.map(x => x.length > 22 ? x.slice(0, 21) + "…" : x).join(" · ")}</p>
+                <p style={{ fontSize: 7.5, color: "#807869", fontFamily: MONO, margin: "1px 0 0 19px", lineHeight: 1.4 }}>{c.companies.map(x => x.length > 18 ? x.slice(0, 17) + "…" : x).join(" · ")}</p>
               )}
             </div>
           ))}
         </div>
       )}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginTop: "auto", paddingTop: 9 }}>
-        <span style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>{stage.count_label}</span>
+      <div style={{ marginTop: "auto", paddingTop: 9 }}>
+        <p style={{ fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: "0 0 6px 0" }}>{stage.count_label}</p>
         <button
           onClick={onExpand}
-          style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(200,122,74,0.12)", border: `1px solid rgba(200,122,74,0.5)`, borderRadius: 5, padding: "3px 8px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 8.5 }}
+          style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 5, background: "rgba(200,122,74,0.12)", border: `1px solid rgba(200,122,74,0.5)`, borderRadius: 5, padding: "4px 8px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 8.5 }}
           onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.24)"; }}
           onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,122,74,0.12)"; }}
         >
@@ -640,8 +640,8 @@ function AerialGraph({ loaded, stages, onStageExpand }: { loaded: LoadedNode; st
   const nodeRef = useRef<HTMLDivElement>(null);
   const childRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
+  const [collapsed, setCollapsed] = useState(false);
   const children = loaded.classGraph.downstream;
-  const isRaw = (loaded.classGraph.node.class_type || "").toLowerCase().includes("raw");
 
   const measure = useCallback(() => {
     const box = boxRef.current?.getBoundingClientRect();
@@ -664,10 +664,10 @@ function AerialGraph({ loaded, stages, onStageExpand }: { loaded: LoadedNode; st
     if (boxRef.current) ro.observe(boxRef.current);
     window.addEventListener("resize", measure);
     return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
-  }, [measure]);
+  }, [measure, collapsed]);
 
   return (
-    <div ref={boxRef} style={{ position: "relative", minHeight: "100%", display: "flex", alignItems: "center", gap: 72, padding: "20px 12px" }}>
+    <div ref={boxRef} style={{ position: "relative", minHeight: "100%", display: "flex", alignItems: "center", gap: 40, padding: "16px 10px" }}>
       <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
         {lines.map((l, i) => {
           const mx = (l.x1 + l.x2) / 2;
@@ -675,39 +675,64 @@ function AerialGraph({ loaded, stages, onStageExpand }: { loaded: LoadedNode; st
         })}
       </svg>
 
-      {isRaw && (
-        <div style={{ zIndex: 1, flexShrink: 0, writingMode: "vertical-rl", transform: "rotate(180deg)", fontSize: 8, color: "#5f5a52", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.1em" }}>
-          Raw material · origin of chain
+      {/* node object — collapsible: expanded shows the supply-chain stage cards; collapsed is a plain class-graph node */}
+      {collapsed ? (
+        <div
+          ref={nodeRef}
+          onClick={() => onStageExpand("")}
+          title="Open supply chain graph"
+          style={{ zIndex: 1, flexShrink: 0, width: 210, cursor: "pointer", background: "rgba(200,122,74,0.08)", border: `1px solid ${accent}`, borderRadius: 10, padding: "12px 13px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)" }}
+        >
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+            <span style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
+            <button
+              onClick={e => { e.stopPropagation(); setCollapsed(false); }}
+              title="Show supply-chain stages"
+              style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "2px 4px", cursor: "pointer", color: "#8a8378" }}
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="8 4 16 12 8 20" /></svg>
+            </button>
+          </div>
+          <span style={{ display: "inline-block", fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px", marginTop: 6 }}>{loaded.classGraph.node.class_type}</span>
+          <p style={{ fontSize: 8.5, color: "#807869", fontFamily: MONO, margin: "8px 0 0 0" }}>Click to open supply chain →</p>
+        </div>
+      ) : (
+        <div ref={nodeRef} style={{ zIndex: 1, flexShrink: 0, width: "max-content", background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 12, padding: "12px 13px 14px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+            <span style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
+              <button
+                onClick={() => setCollapsed(true)}
+                title="Collapse to node"
+                style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "2px 4px", cursor: "pointer", color: "#8a8378" }}
+              >
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>
+              </button>
+            </div>
+          </div>
+          <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "8px 0 0 0" }}>Supply-chain stages</p>
+          <div style={{ display: "flex", flexDirection: "row", alignItems: "stretch", flexWrap: "nowrap", marginTop: 7 }}>
+            {stages.map((s, i) => (
+              <React.Fragment key={s.key}>
+                {i > 0 && <StageConnector />}
+                <div style={{ width: 142, flexShrink: 0, display: "flex" }}>
+                  <StageCard stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} onExpand={() => onStageExpand(s.key)} />
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       )}
 
-      {/* node object container */}
-      <div ref={nodeRef} style={{ zIndex: 1, flexShrink: 0, width: "max-content", background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 12, padding: "13px 14px 15px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)" }}>
-        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12 }}>
-          <span style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
-          <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
-        </div>
-        <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "8px 0 0 0" }}>Supply-chain stages</p>
-        <div style={{ display: "flex", flexDirection: "row", alignItems: "stretch", flexWrap: "nowrap", marginTop: 8 }}>
-          {stages.map((s, i) => (
-            <React.Fragment key={s.key}>
-              {i > 0 && <StageConnector />}
-              <div style={{ width: 176, flexShrink: 0, display: "flex" }}>
-                <StageCard stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} onExpand={() => onStageExpand(s.key)} />
-              </div>
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
-
       {/* child nodes */}
       {children.length > 0 && (
-        <div style={{ zIndex: 1, flexShrink: 0, display: "flex", flexDirection: "column", gap: 9 }}>
+        <div style={{ zIndex: 1, flexShrink: 0, display: "flex", flexDirection: "column", gap: 7 }}>
           <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Child nodes ({children.length})</p>
           {children.map(c => (
-            <div key={c.id} ref={el => { childRefs.current[c.id] = el; }} style={{ width: 214, padding: "9px 11px", borderRadius: 7, background: cardBg, border: "1px solid rgb(48,43,40)" }}>
-              <p style={{ fontSize: 11, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.2 }}>{c.name}</p>
-              <p style={{ fontSize: 7.5, color: "#8ab0c0", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: "3px 0 0 0" }}>{c.class_type}</p>
+            <div key={c.id} ref={el => { childRefs.current[c.id] = el; }} style={{ width: 150, padding: "7px 10px", borderRadius: 7, background: cardBg, border: "1px solid rgb(48,43,40)" }}>
+              <p style={{ fontSize: 10, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.2 }}>{c.name}</p>
+              <p style={{ fontSize: 7, color: "#8ab0c0", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: "2px 0 0 0" }}>{c.class_type}</p>
             </div>
           ))}
         </div>
