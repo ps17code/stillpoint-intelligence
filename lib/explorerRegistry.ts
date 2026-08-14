@@ -121,8 +121,8 @@ export function computeStages(node: LoadedNode): StageInfo[] {
     const topClass = Array.from(classCount.entries()).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "Entity";
     const topCountries = Array.from(countryCount.entries())
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 3)
-      .map(([name]) => ({ name, companies: Array.from(countryCompanies.get(name) ?? []).filter((c) => c && c !== "Undisclosed").slice(0, 3) }));
+      .slice(0, 2)
+      .map(([name]) => ({ name, companies: Array.from(countryCompanies.get(name) ?? []).filter((c) => c && c !== "Undisclosed").slice(0, 1) }));
     out.push({
       key: col.key,
       label: col.label,
