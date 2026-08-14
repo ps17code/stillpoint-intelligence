@@ -89,7 +89,7 @@ export type StageInfo = {
   entity_count: number;
   entity_class_label: string;
   count_label: string;
-  top_countries: string[];
+  top_countries: { name: string; companies: string[] }[];
 };
 
 function pluralize(cls: string): string {
@@ -109,12 +109,20 @@ export function computeStages(node: LoadedNode): StageInfo[] {
     if (!stageMeta && es.length === 0) continue;
     const classCount = new Map<string, number>();
     const countryCount = new Map<string, number>();
+    const countryCompanies = new Map<string, Set<string>>();
     for (const e of es) {
       if (e.entity_class) classCount.set(e.entity_class, (classCount.get(e.entity_class) ?? 0) + 1);
       if (e.country) countryCount.set(e.country, (countryCount.get(e.country) ?? 0) + 1);
+      if (e.country && e.organizational_entity) {
+        if (!countryCompanies.has(e.country)) countryCompanies.set(e.country, new Set());
+        countryCompanies.get(e.country)!.add(e.organizational_entity);
+      }
     }
     const topClass = Array.from(classCount.entries()).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "Entity";
-    const topCountries = Array.from(countryCount.entries()).sort((a, b) => b[1] - a[1]).slice(0, 3).map((c) => c[0]);
+    const topCountries = Array.from(countryCount.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([name]) => ({ name, companies: Array.from(countryCompanies.get(name) ?? []).filter((c) => c && c !== "Undisclosed").slice(0, 3) }));
     out.push({
       key: col.key,
       label: col.label,

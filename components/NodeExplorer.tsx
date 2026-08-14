@@ -587,25 +587,38 @@ function Flag({ country, size = 14 }: { country: string; size?: number }) {
 
 const STAGE_COLORS = ["#7fae6f", "#c8a24a", "#8ab0c0", "#b08fce", "#cf9b7f", "#9a938a"];
 
+function StageConnector() {
+  return (
+    <div style={{ width: 24, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#6b655c" }}>
+      <svg width="24" height="9" viewBox="0 0 24 9" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"><line x1="1" y1="4.5" x2="18" y2="4.5" /><polyline points="14,1 20,4.5 14,8" /></svg>
+    </div>
+  );
+}
+
 function StageCard({ stage, color, onExpand }: { stage: StageInfo; color: string; onExpand: () => void }) {
   return (
-    <div style={{ padding: "10px 12px", borderRadius: 7, background: "rgb(30,28,26)", border: "1px solid rgb(48,43,40)", borderLeft: `2px solid ${color}` }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}>
-        <span style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF }}>{stage.label}</span>
-        {stage.quantity_metric && <span style={{ fontSize: 9, color, fontFamily: MONO, textAlign: "right", flexShrink: 0 }}>{stage.quantity_metric}</span>}
+    <div style={{ height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", padding: "10px 11px", borderRadius: 7, background: "rgb(30,28,26)", border: "1px solid rgb(48,43,40)", borderTop: `2px solid ${color}` }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 6 }}>
+        <span style={{ fontSize: 11, color: warmWhite, fontFamily: SERIF }}>{stage.label}</span>
       </div>
-      {stage.description && <p style={{ fontSize: 9.5, color: "#8f877b", margin: "4px 0 0 0", lineHeight: 1.45 }}>{stage.description}</p>}
+      {stage.quantity_metric && <p style={{ fontSize: 8.5, color, fontFamily: MONO, margin: "3px 0 0 0", lineHeight: 1.4 }}>{stage.quantity_metric}</p>}
+      {stage.description && <p style={{ fontSize: 9, color: "#8f877b", margin: "4px 0 0 0", lineHeight: 1.4 }}>{stage.description}</p>}
       {stage.top_countries.length > 0 && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 2, marginTop: 7 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5, marginTop: 8 }}>
           {stage.top_countries.map(c => (
-            <div key={c} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <Flag country={c} size={13} />
-              <span style={{ fontSize: 9.5, color: "rgb(172,172,172)" }}>{c}</span>
+            <div key={c.name}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <Flag country={c.name} size={13} />
+                <span style={{ fontSize: 9.5, color: warmWhite }}>{c.name}</span>
+              </div>
+              {c.companies.length > 0 && (
+                <p style={{ fontSize: 8, color: "#807869", fontFamily: MONO, margin: "1px 0 0 19px", lineHeight: 1.4 }}>{c.companies.map(x => x.length > 22 ? x.slice(0, 21) + "…" : x).join(" · ")}</p>
+              )}
             </div>
           ))}
         </div>
       )}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginTop: 8 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginTop: "auto", paddingTop: 9 }}>
         <span style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>{stage.count_label}</span>
         <button
           onClick={onExpand}
@@ -669,14 +682,21 @@ function AerialGraph({ loaded, stages, onStageExpand }: { loaded: LoadedNode; st
       )}
 
       {/* node object container */}
-      <div ref={nodeRef} style={{ zIndex: 1, flexShrink: 0, width: 366, background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 12, padding: "13px 13px 15px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)" }}>
-        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}>
+      <div ref={nodeRef} style={{ zIndex: 1, flexShrink: 0, width: "max-content", background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 12, padding: "13px 14px 15px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)" }}>
+        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12 }}>
           <span style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
           <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
         </div>
         <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "8px 0 0 0" }}>Supply-chain stages</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 7 }}>
-          {stages.map((s, i) => <StageCard key={s.key} stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} onExpand={() => onStageExpand(s.key)} />)}
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "stretch", flexWrap: "nowrap", marginTop: 8 }}>
+          {stages.map((s, i) => (
+            <React.Fragment key={s.key}>
+              {i > 0 && <StageConnector />}
+              <div style={{ width: 176, flexShrink: 0, display: "flex" }}>
+                <StageCard stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} onExpand={() => onStageExpand(s.key)} />
+              </div>
+            </React.Fragment>
+          ))}
         </div>
       </div>
 
