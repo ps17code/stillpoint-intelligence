@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo } from "@/lib/explorerRegistry";
 
 /* ── Company Subgraph projection over a canonical Company Record (v2.0) ── */
 type CNode = { key: string; kind: string; label: string; edge?: string; metas: string[]; canonicalId?: string; children: CNode[] };
@@ -216,7 +216,7 @@ function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap
   );
 }
 
-type View = "empty" | "overview" | "class" | "supply" | "entity" | "company";
+type View = "empty" | "universe" | "overview" | "class" | "supply" | "entity" | "company";
 
 export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const [view, setView] = useState<View>("empty");
@@ -238,6 +238,11 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     const v = input.trim();
     if (!v) return;
     setInput("");
+    if (["universe", "node universe", "class universe", "map", "all"].includes(v.toLowerCase())) {
+      setView("universe"); setSelId(null);
+      setLog(l => [...l, `▶ search "${v}"`, `✓ class node universe — ${ALL_NODES.length} class nodes`]);
+      return;
+    }
     const found = lookupNode(v);
     const co = found ? null : getCompanyRecordV2(v);
     if (found) {
@@ -262,6 +267,25 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     const edges: Edge[] = g.downstream.map(d => ({ from: g.node.id, to: d.id }));
     return { columns, edges, rootId: g.node.id };
   }, [loaded]);
+
+  // ── class node universe view: every root class node + its child class nodes ──
+  const universeView = useMemo(() => {
+    const roots: Card[] = ALL_NODES.map(n => ({ id: n.classGraph.node.id, title: n.classGraph.node.name, sub: n.classGraph.node.class_type, clickable: true, featured: true }));
+    const childCards: Card[] = [];
+    const seen = new Set<string>();
+    const edges: Edge[] = [];
+    for (const n of ALL_NODES) {
+      for (const d of n.classGraph.downstream) {
+        if (!seen.has(d.id)) { seen.add(d.id); childCards.push({ id: d.id, title: d.name, sub: d.class_type, clickable: false }); }
+        edges.push({ from: n.classGraph.node.id, to: d.id });
+      }
+    }
+    const columns: Column[] = [
+      { label: `Class Nodes (${roots.length})`, items: roots },
+      { label: `Downstream Class Nodes (${childCards.length})`, items: childCards },
+    ];
+    return { columns, edges };
+  }, []);
 
   // ── supply chain graph view (collapsed by canonical Physical Entity Node Group) ──
   const supplyView = useMemo(() => {
@@ -347,13 +371,14 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const overview = loaded?.overview ?? null;
   const stages = useMemo(() => (loaded ? computeStages(loaded) : []), [loaded]);
 
-  const headerKicker = view === "empty" ? "Node Explorer" : view === "overview" ? "Node Explorer · Node Object" : view === "company" ? "Node Explorer · Company Subgraph" : view === "class" ? "Node Explorer · Class Graph" : view === "supply" ? "Node Explorer · Supply Chain Graph" : "Node Explorer · Entity Graph";
-  const headerTitle = view === "empty" ? "Search a node" : view === "overview" ? `${loaded?.name}` : view === "company" ? `${companyRec?.identity.company_name}` : view === "class" ? `${loaded?.name}` : view === "supply" ? `${loaded?.name} — Supply Chain` : `${loaded?.name} — Entities`;
-  const backLabel = view === "entity" ? "Supply chain graph" : view === "supply" ? "Node overview" : (view === "overview" || view === "class" || view === "company") ? "Clear" : "Back";
+  const headerKicker = view === "empty" ? "Node Explorer" : view === "universe" ? "Node Explorer · Class Node Universe" : view === "overview" ? "Node Explorer · Node Object" : view === "company" ? "Node Explorer · Company Subgraph" : view === "class" ? "Node Explorer · Class Graph" : view === "supply" ? "Node Explorer · Supply Chain Graph" : "Node Explorer · Entity Graph";
+  const headerTitle = view === "empty" ? "Search a node" : view === "universe" ? "Class Node Universe" : view === "overview" ? `${loaded?.name}` : view === "company" ? `${companyRec?.identity.company_name}` : view === "class" ? `${loaded?.name}` : view === "supply" ? `${loaded?.name} — Supply Chain` : `${loaded?.name} — Entities`;
+  const backLabel = view === "entity" ? "Supply chain graph" : view === "supply" ? "Node overview" : (view === "universe" || view === "overview" || view === "class" || view === "company") ? "Clear" : "Back";
   const onBackClick = () => {
     if (view === "entity") { setView("supply"); setSelId(null); }
     else if (view === "supply") { setView("overview"); setSelId(null); }
     else if (view === "overview" || view === "class") { setView("empty"); setLoaded(null); setSelId(null); }
+    else if (view === "universe") { setView("empty"); setSelId(null); }
     else if (view === "company") { setView("empty"); setCompanyRec(null); }
     else onBack();
   };
@@ -395,10 +420,22 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
                 <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5"><circle cx="7" cy="7" r="3" /><circle cx="17" cy="17" r="3" /><path d="M10 7h4a3 3 0 0 1 3 3v4" /></svg>
                 <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", margin: 0, fontFamily: SERIF }}>Search for a node or company in the terminal below</p>
                 <p style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", margin: 0, fontFamily: MONO }}>nodes: {AVAILABLE_NODES.join(", ")} · companies: {AVAILABLE_COMPANIES.join(", ")}</p>
+                <button
+                  onClick={() => { setView("universe"); setSelId(null); }}
+                  style={{ marginTop: 6, display: "flex", alignItems: "center", gap: 6, background: "rgba(200,122,74,0.12)", border: `1px solid rgba(200,122,74,0.45)`, borderRadius: 6, padding: "5px 11px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 10 }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.22)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,122,74,0.12)"; }}
+                >
+                  View class node universe
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                </button>
               </div>
             )}
             {view === "company" && companyView && (
               <CompanyGraph root={companyView} expanded={expanded} onToggle={toggleNode} />
+            )}
+            {view === "universe" && (
+              <TreeCanvas columns={universeView.columns} edges={universeView.edges} fill gap={30} onCardClick={(id) => { const n = ALL_NODES.find(x => x.classGraph.node.id === id); if (n) { setLoaded(n); setView("overview"); setSelId(null); } }} />
             )}
             {view === "overview" && loaded && (
               <AerialGraph loaded={loaded} stages={stages} onStageExpand={() => { setView("supply"); setSelId(null); }} />

@@ -175,6 +175,8 @@ export function lookupNode(input: string): LoadedNode | null {
 }
 
 export const AVAILABLE_NODES = ["Germanium", "Gallium", "Lithium"];
+/* all root class-node objects created so far — for the class-node universe view */
+export const ALL_NODES: LoadedNode[] = [GERMANIUM, GALLIUM, LITHIUM];
 
 /* ── full schema-conformant Physical Entity Node records (Operating Facility schema) ── */
 export type FEGroupMembership = { group_id: string; group_name: string; qualification_status: string; qualification_evidence: string };
