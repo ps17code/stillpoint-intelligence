@@ -643,9 +643,9 @@ function Flag({ country, size = 14 }: { country: string; size?: number }) {
 
 const STAGE_COLORS = ["#7fae6f", "#c8a24a", "#8ab0c0", "#b08fce", "#cf9b7f", "#9a938a"];
 
-function StageConnector() {
+function StageConnector({ top }: { top?: number }) {
   return (
-    <div style={{ width: 24, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#6b655c" }}>
+    <div style={{ width: 24, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#6b655c", alignSelf: top != null ? "flex-start" : undefined, marginTop: top }}>
       <svg width="24" height="9" viewBox="0 0 24 9" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"><line x1="1" y1="4.5" x2="18" y2="4.5" /><polyline points="14,1 20,4.5 14,8" /></svg>
     </div>
   );
@@ -852,7 +852,9 @@ function CountryGroupCard({ country, color, open, onToggle }: { country: StageCo
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#8a8378" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}><polyline points="9 6 15 12 9 18" /></svg>
         </div>
         {country.companies.length > 0 && (
-          <p style={{ fontSize: 9.5, color: "#807869", margin: "5px 0 0 24px", lineHeight: 1.5 }}>{country.companies.join(" · ")}</p>
+          <div style={{ margin: "5px 0 0 24px", display: "flex", flexDirection: "column", gap: 2 }}>
+            {country.companies.map((co, i) => <span key={i} style={{ fontSize: 9, color: "#807869", lineHeight: 1.4 }}>{co}</span>)}
+          </div>
         )}
       </button>
       {open && (
@@ -873,41 +875,55 @@ function CountryGroupCard({ country, color, open, onToggle }: { country: StageCo
   );
 }
 
+/* the selected stage card, expanded downward into country groups */
+function ExpandedStageCard({ stage, color, countries, openCountry, onToggleCountry }: { stage: StageInfo; color: string; countries: StageCountry[]; openCountry: string | null; onToggleCountry: (c: string) => void }) {
+  return (
+    <div style={{ width: "100%", boxSizing: "border-box", padding: "10px 11px", borderRadius: 7, background: "rgb(33,30,28)", border: `1px solid ${accent}`, borderTop: `2px solid ${color}` }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 6 }}>
+        <span style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF }}>{stage.label}</span>
+        <span style={{ fontSize: 8, color: "#6f695f", fontFamily: MONO }}>{countries.length} {countries.length === 1 ? "country" : "countries"}</span>
+      </div>
+      {stage.quantity_metric && <p style={{ fontSize: 8.5, color, fontFamily: MONO, margin: "3px 0 0 0" }}>{stage.quantity_metric}</p>}
+      <p style={{ fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: "5px 0 0 0" }}>{stage.count_label}</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 7, marginTop: 9 }}>
+        {countries.map(c => (
+          <CountryGroupCard key={c.name} country={c} color={color} open={openCountry === c.name} onToggle={() => onToggleCountry(c.name)} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* Supply Chain Stage view — keeps the node object's horizontal stage row; the clicked stage expands downward */
 function StageView({ loaded, stages, selectedKey, onSelectStage }: { loaded: LoadedNode; stages: StageInfo[]; selectedKey: string; onSelectStage: (key: string) => void }) {
   const [openCountry, setOpenCountry] = useState<string | null>(null);
   useEffect(() => { setOpenCountry(null); }, [selectedKey]);
   const countries = useMemo(() => computeStageCountries(loaded, selectedKey), [loaded, selectedKey]);
   return (
-    <div style={{ maxWidth: 680, margin: "0 auto", display: "flex", flexDirection: "column", gap: 9, padding: "6px 4px 28px" }}>
-      {stages.map((s, i) => {
-        const color = STAGE_COLORS[i % STAGE_COLORS.length];
-        if (s.key === selectedKey) {
-          return (
-            <div key={s.key} style={{ borderRadius: 9, background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderTop: `2px solid ${color}`, padding: "12px 13px 14px" }}>
-              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 10 }}>
-                <span style={{ fontSize: 14, color: warmWhite, fontFamily: SERIF }}>{s.label}</span>
-                <span style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.count_label} · {countries.length} {countries.length === 1 ? "country" : "countries"}</span>
-              </div>
-              {s.quantity_metric && <p style={{ fontSize: 9, color, fontFamily: MONO, margin: "3px 0 0 0" }}>{s.quantity_metric}</p>}
-              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 11 }}>
-                {countries.map(c => (
-                  <CountryGroupCard key={c.name} country={c} color={color} open={openCountry === c.name} onToggle={() => setOpenCountry(p => p === c.name ? null : c.name)} />
-                ))}
-              </div>
-            </div>
-          );
-        }
-        return (
-          <button key={s.key} onClick={() => onSelectStage(s.key)} style={{ display: "flex", alignItems: "center", gap: 9, padding: "9px 13px", borderRadius: 8, background: cardBg, border: "1px solid rgb(45,41,39)", borderLeft: `2px solid ${color}`, cursor: "pointer", textAlign: "left" }}
-            onMouseEnter={e => { e.currentTarget.style.background = "rgb(40,36,33)"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = cardBg; }}
-          >
-            <span style={{ fontSize: 12, color: warmWhite, fontFamily: SERIF }}>{s.label}</span>
-            <span style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", marginLeft: "auto" }}>{s.count_label}</span>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#8a8378" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 6 15 12 9 18" /></svg>
-          </button>
-        );
-      })}
+    <div style={{ minHeight: "100%", display: "flex", alignItems: "flex-start", padding: "16px 10px" }}>
+      <div style={{ margin: "0 auto", width: "max-content", background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 12, padding: "12px 13px 14px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+          <span style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
+          <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
+        </div>
+        <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "8px 0 0 0" }}>Supply-chain stages</p>
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", flexWrap: "nowrap", marginTop: 7 }}>
+          {stages.map((s, i) => {
+            const color = STAGE_COLORS[i % STAGE_COLORS.length];
+            const isSel = s.key === selectedKey;
+            return (
+              <React.Fragment key={s.key}>
+                {i > 0 && <StageConnector top={22} />}
+                <div style={{ width: isSel ? 236 : 142, flexShrink: 0, display: "flex" }}>
+                  {isSel
+                    ? <ExpandedStageCard stage={s} color={color} countries={countries} openCountry={openCountry} onToggleCountry={(c) => setOpenCountry(p => p === c ? null : c)} />
+                    : <StageCard stage={s} color={color} onExpand={() => onSelectStage(s.key)} />}
+                </div>
+              </React.Fragment>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
