@@ -704,13 +704,14 @@ function AerialGraph({ loaded, stages, onStageExpand }: { loaded: LoadedNode; st
   }, [measure, collapsed]);
 
   return (
-    <div ref={boxRef} style={{ position: "relative", minHeight: "100%", display: "flex", alignItems: "center", gap: 40, padding: "16px 10px" }}>
+    <div ref={boxRef} style={{ position: "relative", minHeight: "100%", display: "flex", padding: "16px 10px" }}>
       <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
         {lines.map((l, i) => {
           const mx = (l.x1 + l.x2) / 2;
           return <path key={i} d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke={lineColor} strokeWidth={1.2} />;
         })}
       </svg>
+      <div style={{ display: "flex", alignItems: "center", gap: 32, margin: "0 auto" }}>
 
       {/* node object — collapsible: expanded shows the supply-chain stage cards; collapsed is a plain class-graph node */}
       {collapsed ? (
@@ -774,8 +775,7 @@ function AerialGraph({ loaded, stages, onStageExpand }: { loaded: LoadedNode; st
           ))}
         </div>
       )}
-      {/* trailing spacer so child nodes aren't flush to the edge at scroll end */}
-      <div style={{ width: 72, flexShrink: 0 }} aria-hidden />
+      </div>
     </div>
   );
 }
