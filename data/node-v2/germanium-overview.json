@@ -44,23 +44,83 @@
   "stages": {
     "resource": {
       "quantity_metric": "Ge in Zn-Pb ore & coal",
-      "description": "Trace Ge in zinc-lead ores and certain coals."
+      "description": "Trace Ge in zinc-lead ores and certain coals.",
+      "dashboard_description": "This stage maps the geological and secondary hosts where germanium is contained before any extraction, spanning sphalerite zinc-lead deposits, germaniferous coal, and end-of-life or slag-bound accumulations. Germanium is never mined for its own sake here; it sits as a trace constituent awaiting mobilisation by processes downstream.",
+      "analysis": {
+        "takeaways": [
+          "14 hosting sites across 13 companies and 7 countries define the resource base.",
+          "Sphalerite zinc deposits dominate the host mix at 43%, with germanium coal at 29%.",
+          "China and the United States are co-leaders at 29% of sites each.",
+          "Secondary hosts (end-of-life plus slag/tailings) already account for 21% of sites."
+        ],
+        "concentration": "The resource base is comparatively diversified relative to later stages: China and the United States each hold 29% of hosting sites, followed by DR Congo at 14%, with Namibia, Peru, Russia, and a global bucket each near 7%. No single geography controls the geological endowment, which reflects germanium's status as a dispersed by-product rather than a discrete ore.",
+        "constraint": "The structural constraint is that germanium is not extractable on its own terms; it is locked into zinc and coal hosts at trace grades (43% sphalerite, 29% coal). Access to germanium is therefore gated by the economics of the primary host commodity, not by germanium demand itself.",
+        "strategic_note": "A diversified endowment is necessary but not sufficient for supply security, because control migrates downstream to processing. Building secondary hosts (already 21% of sites via end-of-life and tailings) is the most controllable lever for consuming nations, since it does not depend on new zinc or coal mine development."
+      }
     },
     "extraction": {
       "quantity_metric": "Mined as Zn/coal byproduct",
-      "description": "Carried along with zinc-lead mining."
+      "description": "Carried along with zinc-lead mining.",
+      "dashboard_description": "This stage covers the mining and collection that physically mobilises germanium-bearing material, primarily through zinc concentrators and germaniferous coal mines rather than dedicated germanium operations. Feedstock is captured here as concentrates, coal, or pre-processed scrap that carries germanium into the metallurgical chain.",
+      "analysis": {
+        "takeaways": [
+          "9 extraction sites across 9 companies but only 4 countries.",
+          "Zinc mines/concentrators lead at 44%, germaniferous coal mines at 33%.",
+          "The United States leads extraction at 44% of sites, ahead of China at 33%.",
+          "Country count narrows sharply from 7 at resource to 4 at extraction."
+        ],
+        "concentration": "Extraction concentrates into four countries: the United States at 44%, China at 33%, and DR Congo and Russia at 11% each. The compression from seven resource countries to four extraction countries shows that geological presence does not translate into active mobilisation, and that capacity is already clustering into two dominant operators.",
+        "constraint": "Because 44% of extraction runs through zinc mines and concentrators and 33% through coal mines, germanium output is a hostage of by-product economics. When zinc or coal throughput contracts, germanium-bearing feedstock contracts with it, regardless of germanium prices, leaving little independent supply response.",
+        "strategic_note": "The narrowing to four countries at extraction is the first genuine chokepoint in the chain and precedes the far tighter constriction downstream. Securing scrap pre-processing and by-product capture agreements at co-located zinc and coal operations offers consuming nations leverage before feedstock enters the concentrated processing stages."
+      }
     },
     "primary": {
       "quantity_metric": "Concentrated into residues",
-      "description": "Smelting / combustion concentrates Ge into residues."
+      "description": "Smelting / combustion concentrates Ge into residues.",
+      "dashboard_description": "This stage is where zinc smelting and coal combustion concentrate trace germanium into residues, dusts, and leach products at the smelter-refinery. It produces no germanium metal, but it determines whether germanium is captured into a recoverable residue or lost to slag and effluent.",
+      "analysis": {
+        "takeaways": [
+          "Only 2 primary-processing sites across 2 companies and 2 countries.",
+          "100% of capacity sits in zinc smelter-refineries.",
+          "The United States and Namibia split capacity evenly at 50% each.",
+          "This is the narrowest company footprint outside of recovery."
+        ],
+        "concentration": "Primary processing is extremely thin: two sites split evenly between the United States and Namibia at 50% each, with the entire stage classified as zinc smelter-refinery operations. This is one of the most concentrated points in the mapped chain by absolute site count, and it sits entirely within the zinc metallurgical route.",
+        "constraint": "The binding constraint is that germanium capture is a design and operating choice made inside a zinc smelter optimised for zinc, not germanium. With only two qualified sites, any outage, flowsheet change, or decision to forgo germanium recovery removes a material share of residue-bearing feedstock from the entire downstream chain.",
+        "strategic_note": "So few primary sites mean the chain's germanium-in-residue supply rests on a handful of smelter decisions well upstream of the visible refining bottleneck. Incentivising germanium capture circuits at additional zinc smelters is a high-leverage, low-visibility intervention for diversifying supply security."
+      }
     },
     "recovery": {
       "quantity_metric": "Historically <5% recovered",
-      "description": "Ge concentrate pulled from residues & flue dusts."
+      "description": "Ge concentrate pulled from residues & flue dusts.",
+      "dashboard_description": "This stage pulls germanium concentrate out of smelter residues, flue dusts, and leach solutions, upgrading it into an intermediate suitable for refining. It is the first point at which germanium is handled as the primary product rather than a trace passenger.",
+      "analysis": {
+        "takeaways": [
+          "4 recovery sites across 4 companies and 4 countries.",
+          "100% classified as dedicated germanium recovery operators.",
+          "Perfectly even geographic split, 25% each across four countries.",
+          "Kazakhstan, DR Congo, Japan, and the United States each host one site."
+        ],
+        "concentration": "Recovery is evenly distributed with each of Kazakhstan, DR Congo, Japan, and the United States holding 25% of sites, and all capacity sits with specialised germanium recovery operators. The even split masks fragility: with only four sites, the loss of any single operator removes a quarter of mapped recovery capacity.",
+        "constraint": "The constraint is specialised, non-substitutable capacity. Recovering germanium from complex residues and dusts requires dedicated hydrometallurgical circuits and know-how, so capacity cannot be improvised elsewhere at short notice. Four operators is a thin bench for a step that concentrates dispersed germanium into usable form.",
+        "strategic_note": "Recovery is the pivot where germanium transitions from by-product to product, making it a strategic gateway to the high-purity chain. Its geographic evenness is an asset for resilience, but the low absolute count means each site is systemically important and warrants redundancy investment."
+      }
     },
     "refining": {
       "quantity_metric": "~140 t/yr refined Ge",
-      "description": "Refined to high-purity Ge metal, GeO2, GeCl4."
+      "description": "Refined to high-purity Ge metal, GeO2, GeCl4.",
+      "dashboard_description": "This stage upgrades germanium concentrate into high-purity germanium metal, germanium dioxide, and germanium tetrachloride for optical, semiconductor, and infrared applications. It is the value-defining and technically demanding end of the chain, where product specification is finally met.",
+      "analysis": {
+        "takeaways": [
+          "8 refining sites across 7 companies and 6 countries.",
+          "China holds 38% of refining sites, more than any other stage's leader.",
+          "The remaining five countries each hold roughly 12%.",
+          "100% of sites are dedicated germanium refineries."
+        ],
+        "concentration": "Refining is where China's dominance concentrates most heavily: it holds 38% of mapped refining sites, roughly triple any single competitor, with Canada, Russia, Belgium, the United States, and Germany each near 12%. This is the sharpest single-country concentration in the entire chain, and it sits at the highest-value, most technically exacting stage.",
+        "constraint": "The constraint is that high-purity conversion to metal, GeO2, and GeCl4 demands specialised refining capability that is slow and costly to replicate, and it is disproportionately located in one jurisdiction. Because refining converts intermediate into the only forms end-users can consume, control here confers control over effective germanium availability regardless of upstream diversity.",
+        "strategic_note": "Upstream diversification is undermined if refining remains 38% concentrated in China, since the chain's leverage point is the purity step, not the ore. Rebuilding or expanding refining capacity among the five sub-scale countries near 12% each is the decisive move for genuine supply security and the most direct counter to export-control exposure."
+      }
     }
   }
 }

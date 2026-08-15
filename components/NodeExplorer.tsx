@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, computeStageCountries, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo, type StageCountry, type StageEntity } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, computeStageDashboard, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo, type StageDashboard, type StageBar, type StagePeg, type StageTableRow } from "@/lib/explorerRegistry";
 
 /* ── Company Subgraph projection over a canonical Company Record (v2.0) ── */
 type CNode = { key: string; kind: string; label: string; edge?: string; metas: string[]; canonicalId?: string; children: CNode[] };
@@ -371,9 +371,10 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
 
   const overview = loaded?.overview ?? null;
   const stages = useMemo(() => (loaded ? computeStages(loaded) : []), [loaded]);
+  const stageDash = useMemo(() => (loaded && stageKey ? computeStageDashboard(loaded, stageKey) : null), [loaded, stageKey]);
 
   const stageLabel = stages.find(s => s.key === stageKey)?.label ?? "";
-  const headerKicker = view === "empty" ? "Node Explorer" : view === "universe" ? "Node Explorer · Class Node Universe" : view === "overview" ? "Node Explorer · Node Object" : view === "stage" ? "Node Explorer · Supply Chain Stage" : view === "company" ? "Node Explorer · Company Subgraph" : view === "class" ? "Node Explorer · Class Graph" : view === "supply" ? "Node Explorer · Supply Chain Graph" : "Node Explorer · Entity Graph";
+  const headerKicker = view === "empty" ? "Node Explorer" : view === "universe" ? "Node Explorer · Class Node Universe" : view === "overview" ? "Node Explorer · Node Object" : view === "stage" ? "Node Explorer · Stage Market View" :view === "company" ? "Node Explorer · Company Subgraph" : view === "class" ? "Node Explorer · Class Graph" : view === "supply" ? "Node Explorer · Supply Chain Graph" : "Node Explorer · Entity Graph";
   const headerTitle = view === "empty" ? "Search a node" : view === "universe" ? "Class Node Universe" : view === "overview" ? `${loaded?.name}` : view === "stage" ? `${loaded?.name} — ${stageLabel}` : view === "company" ? `${companyRec?.identity.company_name}` : view === "class" ? `${loaded?.name}` : view === "supply" ? `${loaded?.name} — Supply Chain` : `${loaded?.name} — Entities`;
   const backLabel = view === "entity" ? "Supply chain graph" : view === "supply" ? "Node overview" : view === "stage" ? "Node overview" : (view === "universe" || view === "overview" || view === "class" || view === "company") ? "Clear" : "Back";
   const onBackClick = () => {
@@ -443,8 +444,8 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
             {view === "overview" && loaded && (
               <AerialGraph loaded={loaded} stages={stages} onStageExpand={(key) => { setStageKey(key); setSelId(null); setView("stage"); }} onOpenSupply={() => { setView("supply"); setSelId(null); }} />
             )}
-            {view === "stage" && loaded && (
-              <StageView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} onSelectStage={(key) => setStageKey(key)} />
+            {view === "stage" && loaded && stageDash && (
+              <StageDashboardView stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} onSelectStage={(key) => setStageKey(key)} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
             )}
             {view === "class" && classView && (
               <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { if (id === classView.rootId) { setView("supply"); setSelId(null); } }} />
@@ -495,17 +496,10 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
             <OverviewPanel loaded={loaded} overview={overview} />
           </div>
         )}
-        {/* supply-chain stage analysis panel (blank — to be filled later) */}
-        {view === "stage" && loaded && (
+        {/* supply-chain stage analysis panel */}
+        {view === "stage" && loaded && stageDash && (
           <div style={{ flexBasis: 400, flexGrow: 0, flexShrink: 0, width: 400, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)" }}>
-            <div style={{ width: 400, height: "100%", boxSizing: "border-box", overflowY: "auto", padding: "18px 20px" }}>
-              <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Stage Analysis</p>
-              <h2 style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF, margin: "4px 0 0 0" }}>{stageLabel}</h2>
-              <div style={{ marginTop: 40, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, color: "rgba(255,255,255,0.2)" }}>
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M3 3v18h18" /><path d="M7 14l4-4 3 3 5-6" /></svg>
-                <p style={{ fontSize: 10.5, fontFamily: SERIF, margin: 0 }}>Stage analysis — coming soon</p>
-              </div>
-            </div>
+            <StageAnalysisPanel dash={stageDash} onOpenEntityGraph={() => { setView("entity"); setSelId(null); }} />
           </div>
         )}
       </div>
@@ -840,103 +834,216 @@ function OverviewPanel({ loaded, overview }: { loaded: LoadedNode; overview: Nod
   );
 }
 
-/* ── Supply Chain Stage view — the selected stage card splits in place into country → entity nodes ── */
-function StageNode({ stage, color, onClick }: { stage: StageInfo; color: string; onClick: () => void }) {
+/* ── Supply Chain Stage view — stage market dashboard ── */
+function stageIconPath(key: string) {
+  switch (key) {
+    case "resource": return <path d="M3 20l6-11 4 6 3-5 5 10z" />;
+    case "extraction": return <path d="M14 3l7 7-3 3-4-4-7 7-3-3 7-7 3-3z" />;
+    case "primary": return <path d="M3 21V9l6 4V9l6 4V9l6 4v8z" />;
+    case "recovery": return <path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z" />;
+    case "refining": return <path d="M12 2l9 5v10l-9 5-9-5V7z" />;
+    default: return <circle cx="12" cy="12" r="8" />;
+  }
+}
+const CHART_COLORS = ["#7fae6f", "#8ab0c0", "#cf9b7f", "#b08fce", "#c8a24a", "#9a938a"];
+
+function StageTabs({ stages, selectedKey, onSelect }: { stages: StageInfo[]; selectedKey: string; onSelect: (k: string) => void }) {
   return (
-    <div onClick={onClick} style={{ width: 150, boxSizing: "border-box", padding: "9px 11px", borderRadius: 8, cursor: "pointer", background: cardBg, border: "1px solid rgb(48,43,40)", borderTop: `2px solid ${color}` }}
-      onMouseEnter={e => { e.currentTarget.style.background = "rgb(40,36,33)"; }}
-      onMouseLeave={e => { e.currentTarget.style.background = cardBg; }}
-    >
-      <p style={{ fontSize: 11, color: warmWhite, fontFamily: SERIF, margin: 0 }}>{stage.label}</p>
-      {stage.quantity_metric && <p style={{ fontSize: 8, color, fontFamily: MONO, margin: "3px 0 0 0", lineHeight: 1.35 }}>{stage.quantity_metric}</p>}
-      <p style={{ fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: "4px 0 0 0" }}>{stage.count_label}</p>
+    <div style={{ display: "flex", flexDirection: "row", gap: 8, flexWrap: "wrap" }}>
+      {stages.map((s, i) => {
+        const sel = s.key === selectedKey;
+        return (
+          <button key={s.key} onClick={() => onSelect(s.key)}
+            style={{ display: "flex", alignItems: "center", gap: 9, padding: "10px 16px", borderRadius: 8, cursor: "pointer", background: sel ? "rgba(200,122,74,0.1)" : "rgb(24,22,20)", border: `1px solid ${sel ? accent : "rgb(45,41,39)"}`, color: sel ? warmWhite : "#9a9186", fontFamily: SERIF, fontSize: 13.5 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={sel ? accent : STAGE_COLORS[i % STAGE_COLORS.length]} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">{stageIconPath(s.key)}</svg>
+            {s.label}
+          </button>
+        );
+      })}
     </div>
   );
 }
 
-function CountryNode({ country, open, onClick }: { country: StageCountry; open: boolean; onClick: () => void }) {
+function MetricCard({ label, value }: { label: string; value: string }) {
   return (
-    <div onClick={onClick} style={{ width: "100%", boxSizing: "border-box", padding: "8px 11px", borderRadius: 8, cursor: "pointer", background: open ? "rgba(138,176,192,0.08)" : cardBg, border: `1px solid ${open ? "#8ab0c0" : "rgb(48,43,40)"}` }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-        <Flag country={country.name} size={15} />
-        <span style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF }}>{country.name}</span>
-        <span style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, marginLeft: "auto" }}>{country.entity_count}</span>
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#8a8378" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}><polyline points="9 6 15 12 9 18" /></svg>
-      </div>
-      {!open && country.companies.length > 0 && (
-        <div style={{ margin: "5px 0 0 22px", display: "flex", flexDirection: "column", gap: 2 }}>
-          {country.companies.map((co, i) => <span key={i} style={{ fontSize: 8.5, color: "#807869", lineHeight: 1.35 }}>{co.length > 26 ? co.slice(0, 25) + "…" : co}</span>)}
+    <div style={{ flex: 1, minWidth: 150, padding: "13px 15px", borderRadius: 8, background: "rgb(24,22,20)", border: "1px solid rgb(45,41,39)" }}>
+      <p style={{ fontSize: 9, color: "#807869", fontFamily: MONO, margin: 0, lineHeight: 1.4 }}>{label}</p>
+      <p style={{ fontSize: 24, color: warmWhite, fontFamily: SERIF, margin: "6px 0 0 0", lineHeight: 1 }}>{value}</p>
+    </div>
+  );
+}
+
+function GeoBars({ data }: { data: StageBar[] }) {
+  const max = Math.max(1, ...data.map(d => d.pct));
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      {data.map((d, i) => (
+        <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ width: 96, flexShrink: 0, fontSize: 10.5, color: "rgb(172,172,172)", textAlign: "right", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{d.name}</span>
+          <div style={{ flex: 1, height: 12, background: "rgb(30,28,26)", borderRadius: 3, overflow: "hidden" }}>
+            <div style={{ width: `${(d.pct / max) * 100}%`, height: "100%", background: CHART_COLORS[i % CHART_COLORS.length], borderRadius: 3 }} />
+          </div>
+          <span style={{ width: 34, flexShrink: 0, fontSize: 9.5, color: "#807869", fontFamily: MONO, textAlign: "right" }}>{d.pct}%</span>
         </div>
-      )}
+      ))}
     </div>
   );
 }
 
-function StageEntityNode({ e }: { e: StageEntity }) {
+function PegDonut({ data, sites }: { data: StagePeg[]; sites: number }) {
+  const size = 128, sw = 17, r = (size - sw) / 2, cx = size / 2, cy = size / 2, C = 2 * Math.PI * r;
+  const total = data.reduce((s, d) => s + d.count, 0) || 1;
+  let acc = 0;
   return (
-    <div style={{ width: "100%", boxSizing: "border-box", padding: "8px 10px", borderRadius: 7, background: "rgb(30,28,26)", border: "1px solid rgb(45,41,39)", borderLeft: "2px solid #8ab0c0" }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}>
-        <span style={{ fontSize: 10.5, color: warmWhite, fontFamily: SERIF }}>{e.company}</span>
-        <span style={{ fontSize: 8.5, color: accent, fontFamily: MONO, flexShrink: 0 }}>{e.quantity}</span>
+    <div style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
+      <div style={{ position: "relative", width: size, height: size, flexShrink: 0 }}>
+        <svg width={size} height={size} style={{ transform: "rotate(-90deg)" }}>
+          <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgb(34,31,28)" strokeWidth={sw} />
+          {data.map((d, i) => {
+            const frac = d.count / total; const len = frac * C;
+            const seg = <circle key={i} cx={cx} cy={cy} r={r} fill="none" stroke={CHART_COLORS[i % CHART_COLORS.length]} strokeWidth={sw} strokeDasharray={`${len} ${C - len}`} strokeDashoffset={-acc * C} />;
+            acc += frac; return seg;
+          })}
+        </svg>
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+          <span style={{ fontSize: 22, color: warmWhite, fontFamily: SERIF, lineHeight: 1 }}>{sites}</span>
+          <span style={{ fontSize: 8, color: "#807869", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.05em", marginTop: 2 }}>Sites</span>
+        </div>
       </div>
-      <p style={{ fontSize: 9, color: "rgb(172,172,172)", margin: "3px 0 0 0", lineHeight: 1.4 }}>{e.physical_entity_name}</p>
-      {e.group_name && <p style={{ fontSize: 7.5, color: "#8ab0c0", fontFamily: MONO, margin: "2px 0 0 0" }}>{e.group_name}</p>}
+      <div style={{ display: "flex", flexDirection: "column", gap: 6, minWidth: 0, flex: 1 }}>
+        {data.map((d, i) => (
+          <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 7 }}>
+            <span style={{ width: 8, height: 8, borderRadius: 2, background: CHART_COLORS[i % CHART_COLORS.length], flexShrink: 0 }} />
+            <span style={{ fontSize: 10, color: "rgb(172,172,172)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{d.name}</span>
+            <span style={{ fontSize: 9.5, color: "#807869", fontFamily: MONO, marginLeft: "auto", flexShrink: 0 }}>{d.pct}%</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
-/* the node object zoomed in: the selected stage card splits into a headed column of country nodes, each splitting into entity nodes */
-function StageView({ loaded, stages, selectedKey, onSelectStage }: { loaded: LoadedNode; stages: StageInfo[]; selectedKey: string; onSelectStage: (key: string) => void }) {
-  const [openCountry, setOpenCountry] = useState<string | null>(null);
-  const [shown, setShown] = useState(false);
-  useEffect(() => { setOpenCountry(null); }, [selectedKey]);
-  useEffect(() => { const t = setTimeout(() => setShown(true), 20); return () => clearTimeout(t); }, []);
-  const countries = useMemo(() => computeStageCountries(loaded, selectedKey), [loaded, selectedKey]);
-  const selIdx = Math.max(0, stages.findIndex(s => s.key === selectedKey));
-  const selColor = STAGE_COLORS[selIdx % STAGE_COLORS.length];
+function SectionHead({ children }: { children: React.ReactNode }) {
+  return <p style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 12px 0" }}>{children}</p>;
+}
 
+function CompaniesTable({ rows }: { rows: StageTableRow[] }) {
+  const statusColor = (s: string) => /prospect|develop|plan/i.test(s) ? "#c8a24a" : /identif|operat|produc|active/i.test(s) ? "#7fae6f" : "rgb(172,172,172)";
+  const th: React.CSSProperties = { textAlign: "left", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", padding: "0 10px 8px 10px", fontWeight: 400 };
+  const td: React.CSSProperties = { fontSize: 10, color: "rgb(190,190,190)", padding: "9px 10px", borderTop: "1px solid rgb(38,35,32)", verticalAlign: "top" };
   return (
-    <div style={{ minHeight: "100%", display: "flex", alignItems: "flex-start", padding: "22px 16px 36px", opacity: shown ? 1 : 0, transition: "opacity 0.3s ease" }}>
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", margin: "0 auto" }}>
-        {stages.map((s, i) => {
-          const color = STAGE_COLORS[i % STAGE_COLORS.length];
-          if (s.key !== selectedKey) {
-            return (
-              <React.Fragment key={s.key}>
-                {i > 0 && <StageConnector top={16} />}
-                <StageNode stage={s} color={color} onClick={() => onSelectStage(s.key)} />
-              </React.Fragment>
-            );
-          }
-          // selected stage — splits in place into country nodes headed by the stage name
-          return (
-            <React.Fragment key={s.key}>
-              {i > 0 && <StageConnector top={16} />}
-              <div style={{ width: 212, flexShrink: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-                <div style={{ paddingBottom: 8, borderBottom: `1px solid ${selColor}55` }}>
-                  <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}>
-                    <span style={{ fontSize: 13.5, color: warmWhite, fontFamily: SERIF }}>{s.label}</span>
-                    <span style={{ fontSize: 7, color: selColor, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: `1px solid ${selColor}66`, borderRadius: 3, padding: "1px 5px" }}>stage</span>
-                  </div>
-                  {s.quantity_metric && <p style={{ fontSize: 8, color: selColor, fontFamily: MONO, margin: "3px 0 0 0" }}>{s.quantity_metric}</p>}
-                  <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: "3px 0 0 0" }}>{countries.length} {countries.length === 1 ? "country" : "countries"} · {s.count_label}</p>
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  {countries.map(c => (
-                    <div key={c.name} style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                      <CountryNode country={c} open={openCountry === c.name} onClick={() => setOpenCountry(p => p === c.name ? null : c.name)} />
-                      {openCountry === c.name && (
-                        <div style={{ display: "flex", flexDirection: "column", gap: 6, marginLeft: 10, paddingLeft: 9, borderLeft: "1px solid rgba(138,176,192,0.28)" }}>
-                          {c.entities.map((e, i2) => <StageEntityNode key={i2} e={e} />)}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </React.Fragment>
-          );
-        })}
+    <div style={{ overflowX: "auto" }}>
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <thead><tr>
+          <th style={th}>Company</th><th style={th}>Site</th><th style={th}>Country</th><th style={th}>Physical Entity Type</th><th style={{ ...th, whiteSpace: "nowrap" }}>Qty / Contained</th><th style={th}>Status</th><th style={th}>Confidence</th>
+        </tr></thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.entity_id}>
+              <td style={{ ...td, color: warmWhite, fontFamily: SERIF, fontSize: 11 }}>{r.company}</td>
+              <td style={td}>{r.site}</td>
+              <td style={td}>{r.country}</td>
+              <td style={td}>{r.physical_entity_type}</td>
+              <td style={{ ...td, fontFamily: MONO, fontSize: 9.5, whiteSpace: "nowrap" }}>{r.qty}</td>
+              <td style={{ ...td, color: statusColor(r.status), fontFamily: MONO, fontSize: 9.5 }}>{r.status}</td>
+              <td style={{ ...td, fontFamily: MONO, fontSize: 9.5 }}>{r.confidence}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function DashButton({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
+  return (
+    <button onClick={onClick} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "11px", borderRadius: 8, cursor: "pointer", background: "rgba(200,122,74,0.1)", border: "1px solid rgba(200,122,74,0.5)", color: warmWhite, fontFamily: MONO, fontSize: 11 }}
+      onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.2)"; }}
+      onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,122,74,0.1)"; }}>
+      {children}
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+    </button>
+  );
+}
+
+function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPhysical, onViewCompanies }: { stages: StageInfo[]; selectedKey: string; dash: StageDashboard; onSelectStage: (k: string) => void; onViewPhysical: () => void; onViewCompanies: () => void }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 16, padding: "4px 6px 24px", maxWidth: 1180, margin: "0 auto" }}>
+      <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} />
+      <div style={{ borderRadius: 10, background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "20px 22px" }}>
+        <h2 style={{ fontSize: 21, color: warmWhite, fontFamily: SERIF, margin: 0 }}>{dash.label}</h2>
+        {dash.description && <p style={{ fontSize: 12, color: "rgb(172,172,172)", lineHeight: 1.55, margin: "8px 0 0 0", maxWidth: 700 }}>{dash.description}</p>}
+        <div style={{ display: "flex", gap: 12, marginTop: 18, flexWrap: "wrap" }}>
+          <MetricCard label="# Sites / Assets / Facilities" value={String(dash.sites)} />
+          <MetricCard label="# Companies" value={String(dash.companies)} />
+          <MetricCard label="# Countries" value={String(dash.countries)} />
+          <MetricCard label="# Total Qty Produced / Contained" value={dash.total_qty} />
+        </div>
+        <div style={{ display: "flex", gap: 22, marginTop: 22, alignItems: "flex-start", flexWrap: "wrap" }}>
+          <div style={{ flex: "1 1 320px", minWidth: 300, display: "flex", flexDirection: "column", gap: 24 }}>
+            <div>
+              <SectionHead>Geographic Distribution / Concentration</SectionHead>
+              <GeoBars data={dash.geo} />
+            </div>
+            <div>
+              <SectionHead>Physical Entity Node Group Mix</SectionHead>
+              <PegDonut data={dash.pegmix} sites={dash.sites} />
+            </div>
+            <DashButton onClick={onViewPhysical}>View physical entities ({dash.sites})</DashButton>
+          </div>
+          <div style={{ flex: "1 1 440px", minWidth: 380, display: "flex", flexDirection: "column", gap: 12 }}>
+            <SectionHead>Companies &amp; Participating Records ({dash.companies})</SectionHead>
+            <CompaniesTable rows={dash.rows} />
+            <DashButton onClick={onViewCompanies}>View company graph ({dash.companies})</DashButton>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AnalysisSection({ label, icon, children }: { label: string; icon: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <div style={{ marginTop: 16 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 7, margin: "0 0 6px 0" }}>
+        <span style={{ color: accent, display: "flex" }}>{icon}</span>
+        <span style={{ fontSize: 8.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.07em" }}>{label}</span>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function StageAnalysisPanel({ dash, onOpenEntityGraph }: { dash: StageDashboard; onOpenEntityGraph: () => void }) {
+  const a = dash.analysis;
+  const ic = (p: React.ReactNode) => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">{p}</svg>;
+  return (
+    <div style={{ width: 400, height: "100%", boxSizing: "border-box", overflowY: "auto", padding: "18px 20px" }}>
+      <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Stage Analysis</p>
+      <h2 style={{ fontSize: 18, color: warmWhite, fontFamily: SERIF, margin: "4px 0 12px 0", paddingBottom: 12, borderBottom: "1px solid rgba(255,255,255,0.08)" }}>{dash.label}</h2>
+      {dash.description && <p style={{ fontSize: 11.5, color: "rgb(172,172,172)", lineHeight: 1.55, margin: 0 }}>{dash.description}</p>}
+      {a ? (
+        <>
+          <AnalysisSection label="Key Takeaways" icon={ic(<><circle cx="12" cy="12" r="9" /><path d="M9 12l2 2 4-4" /></>)}>
+            <ul style={{ margin: 0, paddingLeft: 16 }}>
+              {a.takeaways.map((t, i) => <li key={i} style={{ fontSize: 11, color: "rgb(180,180,180)", lineHeight: 1.5, marginBottom: 5 }}>{t}</li>)}
+            </ul>
+          </AnalysisSection>
+          <AnalysisSection label="Concentration" icon={ic(<><circle cx="12" cy="12" r="9" /><path d="M3 12h18" /><path d="M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18" /></>)}>
+            <Prose>{a.concentration}</Prose>
+          </AnalysisSection>
+          <AnalysisSection label="Constraint" icon={ic(<><path d="M12 3l9 16H3z" /><line x1="12" y1="10" x2="12" y2="14" /><line x1="12" y1="17" x2="12.01" y2="17" /></>)}>
+            <Prose>{a.constraint}</Prose>
+          </AnalysisSection>
+          <AnalysisSection label="Strategic Note" icon={ic(<path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z" />)}>
+            <Prose>{a.strategic_note}</Prose>
+          </AnalysisSection>
+        </>
+      ) : (
+        <p style={{ fontSize: 10.5, color: "rgba(255,255,255,0.3)", fontFamily: SERIF, marginTop: 24 }}>Stage analysis not yet generated for this stage.</p>
+      )}
+      <div style={{ marginTop: 20 }}>
+        <DashButton onClick={onOpenEntityGraph}>Open entity graph</DashButton>
       </div>
     </div>
   );

@@ -67,8 +67,10 @@ export type NodeOverview = {
     top_companies: { name: string; country?: string; note?: string }[];
   };
   stillpoint_view: string;
-  stages: Record<string, { quantity_metric: string; description: string }>;
+  stages: Record<string, { quantity_metric: string; description: string; dashboard_description?: string; analysis?: StageAnalysis }>;
 };
+
+export type StageAnalysis = { takeaways: string[]; concentration: string; constraint: string; strategic_note: string };
 
 export type LoadedNode = {
   name: string;
@@ -130,6 +132,58 @@ export function computeStageCountries(node: LoadedNode, stageKey: string): Stage
       entities,
     }))
     .sort((a, b) => b.entity_count - a.entity_count);
+}
+
+/* full dashboard payload for a supply-chain stage */
+export type StageBar = { name: string; pct: number };
+export type StagePeg = { name: string; pct: number; count: number };
+export type StageTableRow = { entity_id: string; company: string; site: string; country: string; physical_entity_type: string; qty: string; status: string; confidence: string };
+export type StageDashboard = {
+  key: string; label: string; description: string; total_qty: string;
+  sites: number; companies: number; countries: number;
+  geo: StageBar[]; pegmix: StagePeg[]; rows: StageTableRow[];
+  analysis: StageAnalysis | null;
+};
+
+export function computeStageDashboard(node: LoadedNode, stageKey: string): StageDashboard {
+  const sym = NODE_SYMBOLS[node.name];
+  const rowQty = sym ? `X t ${sym}` : "X metric";
+  const ov = node.overview;
+  const meta = ov?.stages?.[stageKey];
+  const label = node.supplyGraph.columns.find((c) => c.key === stageKey)?.label ?? stageKey;
+  const ents = node.entityGraph.entities.filter((e) => e.column === stageKey);
+  const total = ents.length || 1;
+  const companies = new Set(ents.map((e) => e.organizational_entity).filter((c) => c && c !== "Undisclosed"));
+  const countryCount = new Map<string, number>();
+  const pegCount = new Map<string, number>();
+  for (const e of ents) {
+    if (e.country) countryCount.set(e.country, (countryCount.get(e.country) ?? 0) + 1);
+    const g = e.group_name || "Other";
+    pegCount.set(g, (pegCount.get(g) ?? 0) + 1);
+  }
+  const sortedGeo = Array.from(countryCount.entries()).sort((a, b) => b[1] - a[1]);
+  const namedGeo = sortedGeo.slice(0, 5);
+  const namedSum = namedGeo.reduce((s, c) => s + c[1], 0);
+  const geo: StageBar[] = namedGeo.map(([name, n]) => ({ name, pct: Math.round((100 * n) / total) }));
+  if (ents.length - namedSum > 0) geo.push({ name: "Other", pct: Math.round((100 * (ents.length - namedSum)) / total) });
+  const pegmix: StagePeg[] = Array.from(pegCount.entries()).sort((a, b) => b[1] - a[1]).map(([name, count]) => ({ name, count, pct: Math.round((100 * count) / total) }));
+  const rows: StageTableRow[] = ents.map((e) => ({
+    entity_id: e.id,
+    company: e.organizational_entity || e.name,
+    site: e.physical_entity || e.name,
+    country: e.country || "—",
+    physical_entity_type: e.group_name || e.entity_subtype || "—",
+    qty: rowQty,
+    status: e.status || "—",
+    confidence: e.confidence || "—",
+  }));
+  return {
+    key: stageKey, label,
+    description: meta?.dashboard_description || meta?.description || "",
+    total_qty: sym ? `X t contained ${sym}` : "X metric",
+    sites: ents.length, companies: companies.size, countries: countryCount.size,
+    geo, pegmix, rows, analysis: meta?.analysis ?? null,
+  };
 }
 
 export function computeStages(node: LoadedNode): StageInfo[] {
