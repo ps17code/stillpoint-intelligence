@@ -853,13 +853,18 @@ function StageNode({ stage, color, selected, onClick, nodeRef }: { stage: StageI
 
 function CountryNode({ country, open, onClick, nodeRef }: { country: StageCountry; open: boolean; onClick: () => void; nodeRef: (el: HTMLDivElement | null) => void }) {
   return (
-    <div ref={nodeRef} onClick={onClick} style={{ width: 156, boxSizing: "border-box", padding: "8px 11px", borderRadius: 8, cursor: "pointer", background: open ? "rgba(138,176,192,0.08)" : cardBg, border: `1px solid ${open ? "#8ab0c0" : "rgb(48,43,40)"}` }}>
+    <div ref={nodeRef} onClick={onClick} style={{ width: 190, boxSizing: "border-box", padding: "8px 11px", borderRadius: 8, cursor: "pointer", background: open ? "rgba(138,176,192,0.08)" : cardBg, border: `1px solid ${open ? "#8ab0c0" : "rgb(48,43,40)"}` }}>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <Flag country={country.name} size={15} />
         <span style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF }}>{country.name}</span>
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#8a8378" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: "auto", transform: open ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}><polyline points="9 6 15 12 9 18" /></svg>
+        <span style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, marginLeft: "auto" }}>{country.entity_count}</span>
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#8a8378" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}><polyline points="9 6 15 12 9 18" /></svg>
       </div>
-      <p style={{ fontSize: 8, color: "#6f695f", fontFamily: MONO, margin: "4px 0 0 22px" }}>{country.entity_count} {country.entity_count === 1 ? "entity" : "entities"}</p>
+      {country.companies.length > 0 && (
+        <div style={{ margin: "5px 0 0 22px", display: "flex", flexDirection: "column", gap: 2 }}>
+          {country.companies.map((co, i) => <span key={i} style={{ fontSize: 8.5, color: "#807869", lineHeight: 1.35 }}>{co.length > 26 ? co.slice(0, 25) + "…" : co}</span>)}
+        </div>
+      )}
     </div>
   );
 }
@@ -890,19 +895,19 @@ function StageView({ loaded, stages, selectedKey, onSelectStage }: { loaded: Loa
   const stageRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const countryRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const entityRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number; color: string }[]>([]);
+  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number; color: string; dir: "v" | "h" }[]>([]);
 
   const measure = useCallback(() => {
     const box = boxRef.current?.getBoundingClientRect();
     if (!box) return;
-    const next: { x1: number; y1: number; x2: number; y2: number; color: string }[] = [];
+    const next: { x1: number; y1: number; x2: number; y2: number; color: string; dir: "v" | "h" }[] = [];
     const sel = stageRefs.current[selectedKey];
     if (sel) {
       const sb = sel.getBoundingClientRect();
       for (const c of countries) {
         const el = countryRefs.current[c.name]; if (!el) continue;
         const cb = el.getBoundingClientRect();
-        next.push({ x1: sb.left + sb.width / 2 - box.left, y1: sb.bottom - box.top, x2: cb.left + cb.width / 2 - box.left, y2: cb.top - box.top, color: accent });
+        next.push({ x1: sb.left + sb.width / 2 - box.left, y1: sb.bottom - box.top, x2: cb.left - box.left, y2: cb.top + cb.height / 2 - box.top, color: accent, dir: "v" });
       }
     }
     if (openCountry) {
@@ -912,7 +917,7 @@ function StageView({ loaded, stages, selectedKey, onSelectStage }: { loaded: Loa
         for (const e of openEntities) {
           const el = entityRefs.current[e.entity_id]; if (!el) continue;
           const eb = el.getBoundingClientRect();
-          next.push({ x1: cb.left + cb.width / 2 - box.left, y1: cb.bottom - box.top, x2: eb.left + eb.width / 2 - box.left, y2: eb.top - box.top, color: "#8ab0c0" });
+          next.push({ x1: cb.right - box.left, y1: cb.top + cb.height / 2 - box.top, x2: eb.left - box.left, y2: eb.top + eb.height / 2 - box.top, color: "#8ab0c0", dir: "h" });
         }
       }
     }
@@ -932,10 +937,12 @@ function StageView({ loaded, stages, selectedKey, onSelectStage }: { loaded: Loa
     <div ref={boxRef} style={{ position: "relative", minHeight: "100%", padding: "22px 16px 36px", display: "flex", flexDirection: "column", alignItems: "center", gap: 50, opacity: shown ? 1 : 0, transition: "opacity 0.3s ease" }}>
       <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
         {lines.map((l, i) => {
-          const my = (l.y1 + l.y2) / 2;
+          const d = l.dir === "h"
+            ? `M ${l.x1} ${l.y1} C ${(l.x1 + l.x2) / 2} ${l.y1}, ${(l.x1 + l.x2) / 2} ${l.y2}, ${l.x2} ${l.y2}`
+            : `M ${l.x1} ${l.y1} C ${l.x1} ${(l.y1 + l.y2) / 2}, ${l.x2} ${(l.y1 + l.y2) / 2}, ${l.x2} ${l.y2}`;
           return (
             <g key={i}>
-              <path d={`M ${l.x1} ${l.y1} C ${l.x1} ${my}, ${l.x2} ${my}, ${l.x2} ${l.y2}`} fill="none" stroke={l.color} strokeOpacity={0.5} strokeWidth={1.3} />
+              <path d={d} fill="none" stroke={l.color} strokeOpacity={0.5} strokeWidth={1.3} />
               <circle cx={l.x2} cy={l.y2} r={2.2} fill={l.color} fillOpacity={0.7} />
             </g>
           );
@@ -952,21 +959,21 @@ function StageView({ loaded, stages, selectedKey, onSelectStage }: { loaded: Loa
         ))}
       </div>
 
-      {/* country nodes */}
+      {/* country column (each listing its companies) + entity column to the right */}
       {countries.length > 0 && (
-        <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center", gap: 14, zIndex: 1, maxWidth: "94%" }}>
-          {countries.map(c => (
-            <CountryNode key={c.name} country={c} open={openCountry === c.name} onClick={() => setOpenCountry(p => p === c.name ? null : c.name)} nodeRef={el => { countryRefs.current[c.name] = el; }} />
-          ))}
-        </div>
-      )}
-
-      {/* entity nodes */}
-      {openCountry && openEntities.length > 0 && (
-        <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center", gap: 12, zIndex: 1, maxWidth: "94%" }}>
-          {openEntities.map(e => (
-            <StageEntityNode key={e.entity_id} e={e} nodeRef={el => { entityRefs.current[e.entity_id] = el; }} />
-          ))}
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 78, zIndex: 1 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {countries.map(c => (
+              <CountryNode key={c.name} country={c} open={openCountry === c.name} onClick={() => setOpenCountry(p => p === c.name ? null : c.name)} nodeRef={el => { countryRefs.current[c.name] = el; }} />
+            ))}
+          </div>
+          {openCountry && openEntities.length > 0 && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {openEntities.map(e => (
+                <StageEntityNode key={e.entity_id} e={e} nodeRef={el => { entityRefs.current[e.entity_id] = el; }} />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
