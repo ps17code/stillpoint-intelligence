@@ -704,7 +704,7 @@ function AerialGraph({ loaded, stages, onStageExpand }: { loaded: LoadedNode; st
   }, [measure, collapsed]);
 
   return (
-    <div ref={boxRef} style={{ position: "relative", minHeight: "100%", display: "flex", alignItems: "center", gap: 40, padding: "16px 10px" }}>
+    <div ref={boxRef} style={{ position: "relative", minHeight: "100%", display: "flex", alignItems: "center", gap: 40, padding: "16px 64px 16px 10px" }}>
       <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
         {lines.map((l, i) => {
           const mx = (l.x1 + l.x2) / 2;
