@@ -99,6 +99,39 @@ function pluralize(cls: string): string {
   return cls + "s";
 }
 
+/* one real entity within a stage's country group */
+export type StageEntity = { entity_id: string; company: string; physical_entity_name: string; group_name: string; quantity: string };
+export type StageCountry = { name: string; entity_count: number; companies: string[]; entities: StageEntity[] };
+
+const NODE_SYMBOLS: Record<string, string> = { Germanium: "Ge", Gallium: "Ga", Lithium: "Li" };
+
+/* group a supply-chain stage's real entities by country (for the stage drill-down view) */
+export function computeStageCountries(node: LoadedNode, stageKey: string): StageCountry[] {
+  const sym = NODE_SYMBOLS[node.name];
+  const quantity = sym ? `X t of ${sym}` : "X metric of Y";
+  const ents = node.entityGraph.entities.filter((e) => e.column === stageKey);
+  const map = new Map<string, StageEntity[]>();
+  for (const e of ents) {
+    const country = e.country || "Unknown";
+    if (!map.has(country)) map.set(country, []);
+    map.get(country)!.push({
+      entity_id: e.id,
+      company: e.organizational_entity || e.name,
+      physical_entity_name: e.physical_entity || e.name,
+      group_name: e.group_name || "",
+      quantity,
+    });
+  }
+  return Array.from(map.entries())
+    .map(([name, entities]) => ({
+      name,
+      entity_count: entities.length,
+      companies: Array.from(new Set(entities.map((x) => x.company).filter((c) => c && c !== "Undisclosed"))),
+      entities,
+    }))
+    .sort((a, b) => b.entity_count - a.entity_count);
+}
+
 export function computeStages(node: LoadedNode): StageInfo[] {
   const ov = node.overview;
   const ents = node.entityGraph.entities;

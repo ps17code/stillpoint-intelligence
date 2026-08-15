@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, computeStageCountries, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo, type StageCountry } from "@/lib/explorerRegistry";
 
 /* ── Company Subgraph projection over a canonical Company Record (v2.0) ── */
 type CNode = { key: string; kind: string; label: string; edge?: string; metas: string[]; canonicalId?: string; children: CNode[] };
@@ -216,12 +216,13 @@ function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap
   );
 }
 
-type View = "empty" | "universe" | "overview" | "class" | "supply" | "entity" | "company";
+type View = "empty" | "universe" | "overview" | "stage" | "class" | "supply" | "entity" | "company";
 
 export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const [view, setView] = useState<View>("empty");
   const [loaded, setLoaded] = useState<LoadedNode | null>(null);
   const [selId, setSelId] = useState<string | null>(null);
+  const [stageKey, setStageKey] = useState<string | null>(null);
   const [companyRec, setCompanyRec] = useState<CompanyRecordV2 | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const toggleNode = (k: string) => setExpanded(prev => { const n = new Set(prev); if (n.has(k)) n.delete(k); else n.add(k); return n; });
@@ -371,12 +372,14 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const overview = loaded?.overview ?? null;
   const stages = useMemo(() => (loaded ? computeStages(loaded) : []), [loaded]);
 
-  const headerKicker = view === "empty" ? "Node Explorer" : view === "universe" ? "Node Explorer · Class Node Universe" : view === "overview" ? "Node Explorer · Node Object" : view === "company" ? "Node Explorer · Company Subgraph" : view === "class" ? "Node Explorer · Class Graph" : view === "supply" ? "Node Explorer · Supply Chain Graph" : "Node Explorer · Entity Graph";
-  const headerTitle = view === "empty" ? "Search a node" : view === "universe" ? "Class Node Universe" : view === "overview" ? `${loaded?.name}` : view === "company" ? `${companyRec?.identity.company_name}` : view === "class" ? `${loaded?.name}` : view === "supply" ? `${loaded?.name} — Supply Chain` : `${loaded?.name} — Entities`;
-  const backLabel = view === "entity" ? "Supply chain graph" : view === "supply" ? "Node overview" : (view === "universe" || view === "overview" || view === "class" || view === "company") ? "Clear" : "Back";
+  const stageLabel = stages.find(s => s.key === stageKey)?.label ?? "";
+  const headerKicker = view === "empty" ? "Node Explorer" : view === "universe" ? "Node Explorer · Class Node Universe" : view === "overview" ? "Node Explorer · Node Object" : view === "stage" ? "Node Explorer · Supply Chain Stage" : view === "company" ? "Node Explorer · Company Subgraph" : view === "class" ? "Node Explorer · Class Graph" : view === "supply" ? "Node Explorer · Supply Chain Graph" : "Node Explorer · Entity Graph";
+  const headerTitle = view === "empty" ? "Search a node" : view === "universe" ? "Class Node Universe" : view === "overview" ? `${loaded?.name}` : view === "stage" ? `${loaded?.name} — ${stageLabel}` : view === "company" ? `${companyRec?.identity.company_name}` : view === "class" ? `${loaded?.name}` : view === "supply" ? `${loaded?.name} — Supply Chain` : `${loaded?.name} — Entities`;
+  const backLabel = view === "entity" ? "Supply chain graph" : view === "supply" ? "Node overview" : view === "stage" ? "Node overview" : (view === "universe" || view === "overview" || view === "class" || view === "company") ? "Clear" : "Back";
   const onBackClick = () => {
     if (view === "entity") { setView("supply"); setSelId(null); }
     else if (view === "supply") { setView("overview"); setSelId(null); }
+    else if (view === "stage") { setView("overview"); setSelId(null); }
     else if (view === "overview" || view === "class") { setView("empty"); setLoaded(null); setSelId(null); }
     else if (view === "universe") { setView("empty"); setSelId(null); }
     else if (view === "company") { setView("empty"); setCompanyRec(null); }
@@ -438,7 +441,10 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
               <TreeCanvas columns={universeView.columns} edges={universeView.edges} fill gap={30} onCardClick={(id) => { const n = ALL_NODES.find(x => x.classGraph.node.id === id); if (n) { setLoaded(n); setView("overview"); setSelId(null); } }} />
             )}
             {view === "overview" && loaded && (
-              <AerialGraph loaded={loaded} stages={stages} onStageExpand={() => { setView("supply"); setSelId(null); }} />
+              <AerialGraph loaded={loaded} stages={stages} onStageExpand={(key) => { setStageKey(key); setSelId(null); setView("stage"); }} onOpenSupply={() => { setView("supply"); setSelId(null); }} />
+            )}
+            {view === "stage" && loaded && (
+              <StageView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} onSelectStage={(key) => setStageKey(key)} />
             )}
             {view === "class" && classView && (
               <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { if (id === classView.rootId) { setView("supply"); setSelId(null); } }} />
@@ -487,6 +493,19 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
         {view === "overview" && loaded && overview && (
           <div style={{ flexBasis: 400, flexGrow: 0, flexShrink: 0, width: 400, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)" }}>
             <OverviewPanel loaded={loaded} overview={overview} />
+          </div>
+        )}
+        {/* supply-chain stage analysis panel (blank — to be filled later) */}
+        {view === "stage" && loaded && (
+          <div style={{ flexBasis: 400, flexGrow: 0, flexShrink: 0, width: 400, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)" }}>
+            <div style={{ width: 400, height: "100%", boxSizing: "border-box", overflowY: "auto", padding: "18px 20px" }}>
+              <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Stage Analysis</p>
+              <h2 style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF, margin: "4px 0 0 0" }}>{stageLabel}</h2>
+              <div style={{ marginTop: 40, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, color: "rgba(255,255,255,0.2)" }}>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M3 3v18h18" /><path d="M7 14l4-4 3 3 5-6" /></svg>
+                <p style={{ fontSize: 10.5, fontFamily: SERIF, margin: 0 }}>Stage analysis — coming soon</p>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -672,7 +691,7 @@ function StageCard({ stage, color, onExpand }: { stage: StageInfo; color: string
 }
 
 /* aerial graph: parents · node-object-container(with stage cards) · child nodes */
-function AerialGraph({ loaded, stages, onStageExpand }: { loaded: LoadedNode; stages: StageInfo[]; onStageExpand: (key: string) => void }) {
+function AerialGraph({ loaded, stages, onStageExpand, onOpenSupply }: { loaded: LoadedNode; stages: StageInfo[]; onStageExpand: (key: string) => void; onOpenSupply: () => void }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
   const childRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -717,7 +736,7 @@ function AerialGraph({ loaded, stages, onStageExpand }: { loaded: LoadedNode; st
       {collapsed ? (
         <div
           ref={nodeRef}
-          onClick={() => onStageExpand("")}
+          onClick={onOpenSupply}
           title="Open supply chain graph"
           style={{ zIndex: 1, flexShrink: 0, width: 210, cursor: "pointer", background: "rgba(200,122,74,0.08)", border: `1px solid ${accent}`, borderRadius: 10, padding: "12px 13px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)" }}
         >
@@ -817,6 +836,78 @@ function OverviewPanel({ loaded, overview }: { loaded: LoadedNode; overview: Nod
       </Sect>
 
       <Sect label="Stillpoint View"><Prose>{overview.stillpoint_view}</Prose></Sect>
+    </div>
+  );
+}
+
+/* ── Supply Chain Stage view: the clicked stage expands to country groups → entity nodes ── */
+function CountryGroupCard({ country, color, open, onToggle }: { country: StageCountry; color: string; open: boolean; onToggle: () => void }) {
+  return (
+    <div style={{ borderRadius: 7, background: "rgb(30,28,26)", border: "1px solid rgb(48,43,40)", borderLeft: `2px solid ${color}` }}>
+      <button onClick={onToggle} style={{ width: "100%", padding: "9px 11px", background: "transparent", border: "none", cursor: "pointer", textAlign: "left", display: "block" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <Flag country={country.name} size={16} />
+          <span style={{ fontSize: 12.5, color: warmWhite, fontFamily: SERIF }}>{country.name}</span>
+          <span style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, marginLeft: "auto" }}>{country.entity_count} {country.entity_count === 1 ? "entity" : "entities"}</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#8a8378" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}><polyline points="9 6 15 12 9 18" /></svg>
+        </div>
+        {country.companies.length > 0 && (
+          <p style={{ fontSize: 9.5, color: "#807869", margin: "5px 0 0 24px", lineHeight: 1.5 }}>{country.companies.join(" · ")}</p>
+        )}
+      </button>
+      {open && (
+        <div style={{ padding: "2px 11px 11px 24px", display: "flex", flexDirection: "column", gap: 7 }}>
+          {country.entities.map((e, i) => (
+            <div key={i} style={{ padding: "8px 10px", borderRadius: 6, background: cardBg, border: "1px solid rgb(45,41,39)" }}>
+              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}>
+                <span style={{ fontSize: 11, color: warmWhite, fontFamily: SERIF }}>{e.company}</span>
+                <span style={{ fontSize: 9, color: accent, fontFamily: MONO, flexShrink: 0 }}>{e.quantity}</span>
+              </div>
+              <p style={{ fontSize: 9.5, color: "rgb(172,172,172)", margin: "3px 0 0 0", lineHeight: 1.4 }}>{e.physical_entity_name}</p>
+              {e.group_name && <p style={{ fontSize: 8, color: "#8ab0c0", fontFamily: MONO, margin: "2px 0 0 0" }}>{e.group_name}</p>}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function StageView({ loaded, stages, selectedKey, onSelectStage }: { loaded: LoadedNode; stages: StageInfo[]; selectedKey: string; onSelectStage: (key: string) => void }) {
+  const [openCountry, setOpenCountry] = useState<string | null>(null);
+  useEffect(() => { setOpenCountry(null); }, [selectedKey]);
+  const countries = useMemo(() => computeStageCountries(loaded, selectedKey), [loaded, selectedKey]);
+  return (
+    <div style={{ maxWidth: 680, margin: "0 auto", display: "flex", flexDirection: "column", gap: 9, padding: "6px 4px 28px" }}>
+      {stages.map((s, i) => {
+        const color = STAGE_COLORS[i % STAGE_COLORS.length];
+        if (s.key === selectedKey) {
+          return (
+            <div key={s.key} style={{ borderRadius: 9, background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderTop: `2px solid ${color}`, padding: "12px 13px 14px" }}>
+              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 10 }}>
+                <span style={{ fontSize: 14, color: warmWhite, fontFamily: SERIF }}>{s.label}</span>
+                <span style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.count_label} · {countries.length} {countries.length === 1 ? "country" : "countries"}</span>
+              </div>
+              {s.quantity_metric && <p style={{ fontSize: 9, color, fontFamily: MONO, margin: "3px 0 0 0" }}>{s.quantity_metric}</p>}
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 11 }}>
+                {countries.map(c => (
+                  <CountryGroupCard key={c.name} country={c} color={color} open={openCountry === c.name} onToggle={() => setOpenCountry(p => p === c.name ? null : c.name)} />
+                ))}
+              </div>
+            </div>
+          );
+        }
+        return (
+          <button key={s.key} onClick={() => onSelectStage(s.key)} style={{ display: "flex", alignItems: "center", gap: 9, padding: "9px 13px", borderRadius: 8, background: cardBg, border: "1px solid rgb(45,41,39)", borderLeft: `2px solid ${color}`, cursor: "pointer", textAlign: "left" }}
+            onMouseEnter={e => { e.currentTarget.style.background = "rgb(40,36,33)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = cardBg; }}
+          >
+            <span style={{ fontSize: 12, color: warmWhite, fontFamily: SERIF }}>{s.label}</span>
+            <span style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", marginLeft: "auto" }}>{s.count_label}</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#8a8378" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 6 15 12 9 18" /></svg>
+          </button>
+        );
+      })}
     </div>
   );
 }
