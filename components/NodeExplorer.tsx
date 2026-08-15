@@ -840,10 +840,13 @@ function OverviewPanel({ loaded, overview }: { loaded: LoadedNode; overview: Nod
   );
 }
 
-/* ── Supply Chain Stage view — a graph of nodes (stage → country → entity), no container boxes ── */
-function StageNode({ stage, color, selected, onClick, nodeRef }: { stage: StageInfo; color: string; selected: boolean; onClick: () => void; nodeRef: (el: HTMLDivElement | null) => void }) {
+/* ── Supply Chain Stage view — the selected stage card splits in place into country → entity nodes ── */
+function StageNode({ stage, color, onClick }: { stage: StageInfo; color: string; onClick: () => void }) {
   return (
-    <div ref={nodeRef} onClick={onClick} style={{ width: 150, boxSizing: "border-box", padding: "9px 11px", borderRadius: 8, cursor: "pointer", background: selected ? "rgba(200,122,74,0.1)" : cardBg, border: `1px solid ${selected ? accent : "rgb(48,43,40)"}`, borderTop: `2px solid ${color}`, boxShadow: selected ? "0 0 0 3px rgba(200,122,74,0.06)" : "none" }}>
+    <div onClick={onClick} style={{ width: 150, boxSizing: "border-box", padding: "9px 11px", borderRadius: 8, cursor: "pointer", background: cardBg, border: "1px solid rgb(48,43,40)", borderTop: `2px solid ${color}` }}
+      onMouseEnter={e => { e.currentTarget.style.background = "rgb(40,36,33)"; }}
+      onMouseLeave={e => { e.currentTarget.style.background = cardBg; }}
+    >
       <p style={{ fontSize: 11, color: warmWhite, fontFamily: SERIF, margin: 0 }}>{stage.label}</p>
       {stage.quantity_metric && <p style={{ fontSize: 8, color, fontFamily: MONO, margin: "3px 0 0 0", lineHeight: 1.35 }}>{stage.quantity_metric}</p>}
       <p style={{ fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: "4px 0 0 0" }}>{stage.count_label}</p>
@@ -851,16 +854,16 @@ function StageNode({ stage, color, selected, onClick, nodeRef }: { stage: StageI
   );
 }
 
-function CountryNode({ country, open, onClick, nodeRef }: { country: StageCountry; open: boolean; onClick: () => void; nodeRef: (el: HTMLDivElement | null) => void }) {
+function CountryNode({ country, open, onClick }: { country: StageCountry; open: boolean; onClick: () => void }) {
   return (
-    <div ref={nodeRef} onClick={onClick} style={{ width: 190, boxSizing: "border-box", padding: "8px 11px", borderRadius: 8, cursor: "pointer", background: open ? "rgba(138,176,192,0.08)" : cardBg, border: `1px solid ${open ? "#8ab0c0" : "rgb(48,43,40)"}` }}>
+    <div onClick={onClick} style={{ width: "100%", boxSizing: "border-box", padding: "8px 11px", borderRadius: 8, cursor: "pointer", background: open ? "rgba(138,176,192,0.08)" : cardBg, border: `1px solid ${open ? "#8ab0c0" : "rgb(48,43,40)"}` }}>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         <Flag country={country.name} size={15} />
         <span style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF }}>{country.name}</span>
         <span style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, marginLeft: "auto" }}>{country.entity_count}</span>
         <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#8a8378" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}><polyline points="9 6 15 12 9 18" /></svg>
       </div>
-      {country.companies.length > 0 && (
+      {!open && country.companies.length > 0 && (
         <div style={{ margin: "5px 0 0 22px", display: "flex", flexDirection: "column", gap: 2 }}>
           {country.companies.map((co, i) => <span key={i} style={{ fontSize: 8.5, color: "#807869", lineHeight: 1.35 }}>{co.length > 26 ? co.slice(0, 25) + "…" : co}</span>)}
         </div>
@@ -869,9 +872,9 @@ function CountryNode({ country, open, onClick, nodeRef }: { country: StageCountr
   );
 }
 
-function StageEntityNode({ e, nodeRef }: { e: StageEntity; nodeRef: (el: HTMLDivElement | null) => void }) {
+function StageEntityNode({ e }: { e: StageEntity }) {
   return (
-    <div ref={nodeRef} style={{ width: 180, boxSizing: "border-box", padding: "8px 10px", borderRadius: 7, background: "rgb(30,28,26)", border: "1px solid rgb(45,41,39)", borderLeft: "2px solid #8ab0c0" }}>
+    <div style={{ width: "100%", boxSizing: "border-box", padding: "8px 10px", borderRadius: 7, background: "rgb(30,28,26)", border: "1px solid rgb(45,41,39)", borderLeft: "2px solid #8ab0c0" }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}>
         <span style={{ fontSize: 10.5, color: warmWhite, fontFamily: SERIF }}>{e.company}</span>
         <span style={{ fontSize: 8.5, color: accent, fontFamily: MONO, flexShrink: 0 }}>{e.quantity}</span>
@@ -882,100 +885,59 @@ function StageEntityNode({ e, nodeRef }: { e: StageEntity; nodeRef: (el: HTMLDiv
   );
 }
 
-/* the node object zoomed in: stage nodes across the top, the selected stage fanning into country → entity nodes */
+/* the node object zoomed in: the selected stage card splits into a headed column of country nodes, each splitting into entity nodes */
 function StageView({ loaded, stages, selectedKey, onSelectStage }: { loaded: LoadedNode; stages: StageInfo[]; selectedKey: string; onSelectStage: (key: string) => void }) {
   const [openCountry, setOpenCountry] = useState<string | null>(null);
   const [shown, setShown] = useState(false);
   useEffect(() => { setOpenCountry(null); }, [selectedKey]);
   useEffect(() => { const t = setTimeout(() => setShown(true), 20); return () => clearTimeout(t); }, []);
   const countries = useMemo(() => computeStageCountries(loaded, selectedKey), [loaded, selectedKey]);
-  const openEntities = useMemo(() => openCountry ? (countries.find(c => c.name === openCountry)?.entities ?? []) : [], [openCountry, countries]);
-
-  const boxRef = useRef<HTMLDivElement>(null);
-  const stageRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const countryRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const entityRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number; color: string; dir: "v" | "h" }[]>([]);
-
-  const measure = useCallback(() => {
-    const box = boxRef.current?.getBoundingClientRect();
-    if (!box) return;
-    const next: { x1: number; y1: number; x2: number; y2: number; color: string; dir: "v" | "h" }[] = [];
-    const sel = stageRefs.current[selectedKey];
-    if (sel) {
-      const sb = sel.getBoundingClientRect();
-      for (const c of countries) {
-        const el = countryRefs.current[c.name]; if (!el) continue;
-        const cb = el.getBoundingClientRect();
-        next.push({ x1: sb.left + sb.width / 2 - box.left, y1: sb.bottom - box.top, x2: cb.left - box.left, y2: cb.top + cb.height / 2 - box.top, color: accent, dir: "v" });
-      }
-    }
-    if (openCountry) {
-      const cn = countryRefs.current[openCountry];
-      if (cn) {
-        const cb = cn.getBoundingClientRect();
-        for (const e of openEntities) {
-          const el = entityRefs.current[e.entity_id]; if (!el) continue;
-          const eb = el.getBoundingClientRect();
-          next.push({ x1: cb.right - box.left, y1: cb.top + cb.height / 2 - box.top, x2: eb.left - box.left, y2: eb.top + eb.height / 2 - box.top, color: "#8ab0c0", dir: "h" });
-        }
-      }
-    }
-    setLines(next);
-  }, [countries, selectedKey, openCountry, openEntities]);
-
-  useEffect(() => {
-    const r = requestAnimationFrame(measure);
-    const t = setTimeout(measure, 90);
-    const ro = new ResizeObserver(() => measure());
-    if (boxRef.current) ro.observe(boxRef.current);
-    window.addEventListener("resize", measure);
-    return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
-  }, [measure]);
+  const selIdx = Math.max(0, stages.findIndex(s => s.key === selectedKey));
+  const selColor = STAGE_COLORS[selIdx % STAGE_COLORS.length];
 
   return (
-    <div ref={boxRef} style={{ position: "relative", minHeight: "100%", padding: "22px 16px 36px", display: "flex", flexDirection: "column", alignItems: "center", gap: 50, opacity: shown ? 1 : 0, transition: "opacity 0.3s ease" }}>
-      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
-        {lines.map((l, i) => {
-          const d = l.dir === "h"
-            ? `M ${l.x1} ${l.y1} C ${(l.x1 + l.x2) / 2} ${l.y1}, ${(l.x1 + l.x2) / 2} ${l.y2}, ${l.x2} ${l.y2}`
-            : `M ${l.x1} ${l.y1} C ${l.x1} ${(l.y1 + l.y2) / 2}, ${l.x2} ${(l.y1 + l.y2) / 2}, ${l.x2} ${l.y2}`;
+    <div style={{ minHeight: "100%", display: "flex", alignItems: "flex-start", padding: "22px 16px 36px", opacity: shown ? 1 : 0, transition: "opacity 0.3s ease" }}>
+      <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", margin: "0 auto" }}>
+        {stages.map((s, i) => {
+          const color = STAGE_COLORS[i % STAGE_COLORS.length];
+          if (s.key !== selectedKey) {
+            return (
+              <React.Fragment key={s.key}>
+                {i > 0 && <StageConnector top={16} />}
+                <StageNode stage={s} color={color} onClick={() => onSelectStage(s.key)} />
+              </React.Fragment>
+            );
+          }
+          // selected stage — splits in place into country nodes headed by the stage name
           return (
-            <g key={i}>
-              <path d={d} fill="none" stroke={l.color} strokeOpacity={0.5} strokeWidth={1.3} />
-              <circle cx={l.x2} cy={l.y2} r={2.2} fill={l.color} fillOpacity={0.7} />
-            </g>
+            <React.Fragment key={s.key}>
+              {i > 0 && <StageConnector top={16} />}
+              <div style={{ width: 212, flexShrink: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+                <div style={{ paddingBottom: 8, borderBottom: `1px solid ${selColor}55` }}>
+                  <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}>
+                    <span style={{ fontSize: 13.5, color: warmWhite, fontFamily: SERIF }}>{s.label}</span>
+                    <span style={{ fontSize: 7, color: selColor, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: `1px solid ${selColor}66`, borderRadius: 3, padding: "1px 5px" }}>stage</span>
+                  </div>
+                  {s.quantity_metric && <p style={{ fontSize: 8, color: selColor, fontFamily: MONO, margin: "3px 0 0 0" }}>{s.quantity_metric}</p>}
+                  <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: "3px 0 0 0" }}>{countries.length} {countries.length === 1 ? "country" : "countries"} · {s.count_label}</p>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {countries.map(c => (
+                    <div key={c.name} style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                      <CountryNode country={c} open={openCountry === c.name} onClick={() => setOpenCountry(p => p === c.name ? null : c.name)} />
+                      {openCountry === c.name && (
+                        <div style={{ display: "flex", flexDirection: "column", gap: 6, marginLeft: 10, paddingLeft: 9, borderLeft: "1px solid rgba(138,176,192,0.28)" }}>
+                          {c.entities.map((e, i2) => <StageEntityNode key={i2} e={e} />)}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </React.Fragment>
           );
         })}
-      </svg>
-
-      {/* stage nodes — the node object, zoomed in */}
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", zIndex: 1 }}>
-        {stages.map((s, i) => (
-          <React.Fragment key={s.key}>
-            {i > 0 && <StageConnector />}
-            <StageNode stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} selected={s.key === selectedKey} onClick={() => onSelectStage(s.key)} nodeRef={el => { stageRefs.current[s.key] = el; }} />
-          </React.Fragment>
-        ))}
       </div>
-
-      {/* country column (each listing its companies) + entity column to the right */}
-      {countries.length > 0 && (
-        <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 78, zIndex: 1 }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {countries.map(c => (
-              <CountryNode key={c.name} country={c} open={openCountry === c.name} onClick={() => setOpenCountry(p => p === c.name ? null : c.name)} nodeRef={el => { countryRefs.current[c.name] = el; }} />
-            ))}
-          </div>
-          {openCountry && openEntities.length > 0 && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {openEntities.map(e => (
-                <StageEntityNode key={e.entity_id} e={e} nodeRef={el => { entityRefs.current[e.entity_id] = el; }} />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }
