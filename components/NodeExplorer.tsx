@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, computeStageDashboard, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo, type StageDashboard, type StageBar, type StagePeg, type StageTableRow } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, computeStageDashboard, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo, type StageDashboard, type StageBar, type StagePeg, type StageTableRow, type StagePoint } from "@/lib/explorerRegistry";
+import WORLD_PATHS from "@/data/world-paths.json";
 
 /* ── Company Subgraph projection over a canonical Company Record (v2.0) ── */
 type CNode = { key: string; kind: string; label: string; edge?: string; metas: string[]; canonicalId?: string; children: CNode[] };
@@ -496,12 +497,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
             <OverviewPanel loaded={loaded} overview={overview} />
           </div>
         )}
-        {/* supply-chain stage analysis panel */}
-        {view === "stage" && loaded && stageDash && (
-          <div style={{ flexBasis: 400, flexGrow: 0, flexShrink: 0, width: 400, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)" }}>
-            <StageAnalysisPanel dash={stageDash} onOpenEntityGraph={() => { setView("entity"); setSelId(null); }} />
-          </div>
-        )}
+        {/* stage analysis panel hidden — dashboard takes full width (StageAnalysisPanel retained for later) */}
       </div>
 
       {/* Terminal */}
@@ -866,9 +862,90 @@ function StageTabs({ stages, selectedKey, onSelect }: { stages: StageInfo[]; sel
 
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
-    <div style={{ flex: 1, minWidth: 150, padding: "13px 15px", borderRadius: 8, background: "rgb(24,22,20)", border: "1px solid rgb(45,41,39)" }}>
-      <p style={{ fontSize: 9, color: "#807869", fontFamily: MONO, margin: 0, lineHeight: 1.4 }}>{label}</p>
-      <p style={{ fontSize: 24, color: warmWhite, fontFamily: SERIF, margin: "6px 0 0 0", lineHeight: 1 }}>{value}</p>
+    <div style={{ minWidth: 108, padding: "8px 11px", borderRadius: 7, background: "rgb(24,22,20)", border: "1px solid rgb(45,41,39)" }}>
+      <p style={{ fontSize: 7.5, color: "#807869", fontFamily: MONO, margin: 0, lineHeight: 1.35, textTransform: "uppercase", letterSpacing: "0.03em" }}>{label}</p>
+      <p style={{ fontSize: 18, color: warmWhite, fontFamily: SERIF, margin: "4px 0 0 0", lineHeight: 1 }}>{value}</p>
+    </div>
+  );
+}
+
+/* ── interactive world map (custom SVG, equirectangular, pan/zoom, country clustering) ── */
+const MAP_W = 1000, MAP_H = 500;
+const projX = (lon: number) => (lon + 180) / 360 * MAP_W;
+const projY = (lat: number) => (90 - lat) / 180 * MAP_H;
+
+function MapBtn({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
+  return <button onClick={onClick} style={{ width: 22, height: 22, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.55)", border: "1px solid rgba(255,255,255,0.16)", borderRadius: 4, color: warmWhite, cursor: "pointer", fontSize: 13, lineHeight: 1, fontFamily: MONO }}>{children}</button>;
+}
+
+function WorldMap({ points, height = 300 }: { points: StagePoint[]; height?: number }) {
+  const [view, setView] = useState({ k: 1, tx: 0, ty: 0 });
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useRef<{ x: number; y: number; tx: number; ty: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
+  useEffect(() => { setView({ k: 1, tx: 0, ty: 0 }); }, [points]);
+  const clampK = (k: number) => Math.max(1, Math.min(16, k));
+  const geom = () => {
+    const r = svgRef.current!.getBoundingClientRect();
+    const scale = Math.max(r.width / MAP_W, r.height / MAP_H);
+    return { r, scale, offX: (r.width - MAP_W * scale) / 2, offY: (r.height - MAP_H * scale) / 2 };
+  };
+  const onWheel = (e: React.WheelEvent) => {
+    const { r, scale, offX, offY } = geom();
+    const vx = (e.clientX - r.left - offX) / scale, vy = (e.clientY - r.top - offY) / scale;
+    setView(v => {
+      const k2 = clampK(v.k * (e.deltaY < 0 ? 1.18 : 1 / 1.18));
+      const wx = (vx - v.tx) / v.k, wy = (vy - v.ty) / v.k;
+      return { k: k2, tx: vx - wx * k2, ty: vy - wy * k2 };
+    });
+  };
+  const onDown = (e: React.PointerEvent) => { drag.current = { x: e.clientX, y: e.clientY, tx: view.tx, ty: view.ty }; setDragging(true); (e.currentTarget as Element).setPointerCapture?.(e.pointerId); };
+  const onMove = (e: React.PointerEvent) => {
+    if (!drag.current) return;
+    const { scale } = geom();
+    setView(v => ({ ...v, tx: drag.current!.tx + (e.clientX - drag.current!.x) / scale, ty: drag.current!.ty + (e.clientY - drag.current!.y) / scale }));
+  };
+  const onUp = () => { drag.current = null; setDragging(false); };
+  const zoomC = (f: number) => setView(v => { const k2 = clampK(v.k * f); const cx = MAP_W / 2, cy = MAP_H / 2; const wx = (cx - v.tx) / v.k, wy = (cy - v.ty) / v.k; return { k: k2, tx: cx - wx * k2, ty: cy - wy * k2 }; });
+
+  const clusters = useMemo(() => {
+    const m = new Map<string, { country: string; sx: number; sy: number; n: number }>();
+    for (const p of points) { const c = m.get(p.country) ?? { country: p.country, sx: 0, sy: 0, n: 0 }; c.sx += projX(p.lon); c.sy += projY(p.lat); c.n += 1; m.set(p.country, c); }
+    return Array.from(m.values()).map(c => ({ country: c.country, x: c.sx / c.n, y: c.sy / c.n, n: c.n }));
+  }, [points]);
+  const showClusters = view.k < 2.4;
+  const statusColor = (s: string) => /prospect|develop|plan/i.test(s) ? "#c8a24a" : /identif|operat|produc|active/i.test(s) ? "#7fae6f" : "#8ab0c0";
+
+  return (
+    <div style={{ position: "relative", width: "100%", height, borderRadius: 8, overflow: "hidden", background: "rgb(14,16,19)", border: "1px solid rgb(40,37,34)" }}>
+      <svg ref={svgRef} width="100%" height="100%" viewBox={`0 0 ${MAP_W} ${MAP_H}`} preserveAspectRatio="xMidYMid slice"
+        style={{ cursor: dragging ? "grabbing" : "grab", display: "block", touchAction: "none" }}
+        onWheel={onWheel} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerLeave={onUp}>
+        <g transform={`translate(${view.tx} ${view.ty}) scale(${view.k})`}>
+          {(WORLD_PATHS as string[]).map((d, i) => <path key={i} d={d} fill="rgb(32,30,28)" stroke="rgba(255,255,255,0.07)" strokeWidth={0.5 / view.k} />)}
+          {showClusters
+            ? clusters.map((c, i) => {
+                const r = (5 + Math.min(9, c.n)) / view.k;
+                return (
+                  <g key={i}>
+                    <circle cx={c.x} cy={c.y} r={r} fill="rgba(200,122,74,0.28)" stroke={accent} strokeWidth={0.9 / view.k} />
+                    <text x={c.x} y={c.y + 2.6 / view.k} textAnchor="middle" fontSize={7.5 / view.k} fill={warmWhite} fontFamily={MONO}>{c.n}</text>
+                  </g>
+                );
+              })
+            : points.map(p => (
+                <circle key={p.id} cx={projX(p.lon)} cy={projY(p.lat)} r={3.2 / view.k} fill={statusColor(p.status)} stroke="rgba(0,0,0,0.55)" strokeWidth={0.6 / view.k}>
+                  <title>{`${p.company} — ${p.site} (${p.country})`}</title>
+                </circle>
+              ))}
+        </g>
+      </svg>
+      <div style={{ position: "absolute", top: 8, right: 8, display: "flex", flexDirection: "column", gap: 4 }}>
+        <MapBtn onClick={() => zoomC(1.4)}>+</MapBtn>
+        <MapBtn onClick={() => zoomC(1 / 1.4)}>−</MapBtn>
+        <MapBtn onClick={() => setView({ k: 1, tx: 0, ty: 0 })}>⌂</MapBtn>
+      </div>
+      <div style={{ position: "absolute", bottom: 7, left: 10, fontSize: 8, color: "#8f887c", fontFamily: MONO, pointerEvents: "none" }}>{showClusters ? `${clusters.length} country clusters · zoom in for sites` : `${points.length} sites`}</div>
     </div>
   );
 }
@@ -968,19 +1045,29 @@ function DashButton({ children, onClick }: { children: React.ReactNode; onClick:
 
 function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPhysical, onViewCompanies }: { stages: StageInfo[]; selectedKey: string; dash: StageDashboard; onSelectStage: (k: string) => void; onViewPhysical: () => void; onViewCompanies: () => void }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16, padding: "4px 6px 24px", maxWidth: 1180, margin: "0 auto" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 16, padding: "4px 4px 24px", maxWidth: 1440, margin: "0 auto" }}>
       <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} />
-      <div style={{ borderRadius: 10, background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "20px 22px" }}>
-        <h2 style={{ fontSize: 21, color: warmWhite, fontFamily: SERIF, margin: 0 }}>{dash.label}</h2>
-        {dash.description && <p style={{ fontSize: 12, color: "rgb(172,172,172)", lineHeight: 1.55, margin: "8px 0 0 0", maxWidth: 700 }}>{dash.description}</p>}
-        <div style={{ display: "flex", gap: 12, marginTop: 18, flexWrap: "wrap" }}>
-          <MetricCard label="# Sites / Assets / Facilities" value={String(dash.sites)} />
-          <MetricCard label="# Companies" value={String(dash.companies)} />
-          <MetricCard label="# Countries" value={String(dash.countries)} />
-          <MetricCard label="# Total Qty Produced / Contained" value={dash.total_qty} />
+      <div style={{ borderRadius: 10, background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 22px" }}>
+        {/* header: title + description on the left, metric cards inline on the right */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 20, flexWrap: "wrap" }}>
+          <div style={{ flex: "1 1 340px", minWidth: 300 }}>
+            <h2 style={{ fontSize: 21, color: warmWhite, fontFamily: SERIF, margin: 0 }}>{dash.label}</h2>
+            {dash.description && <p style={{ fontSize: 11.5, color: "rgb(172,172,172)", lineHeight: 1.5, margin: "6px 0 0 0", maxWidth: 560 }}>{dash.description}</p>}
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", flexShrink: 0 }}>
+            <MetricCard label="Sites / Assets" value={String(dash.sites)} />
+            <MetricCard label="Companies" value={String(dash.companies)} />
+            <MetricCard label="Countries" value={String(dash.countries)} />
+            <MetricCard label="Total Qty / Contained" value={dash.total_qty} />
+          </div>
         </div>
-        <div style={{ display: "flex", gap: 22, marginTop: 22, alignItems: "flex-start", flexWrap: "wrap" }}>
-          <div style={{ flex: "1 1 320px", minWidth: 300, display: "flex", flexDirection: "column", gap: 24 }}>
+        {/* two columns */}
+        <div style={{ display: "flex", gap: 24, marginTop: 20, alignItems: "flex-start", flexWrap: "wrap" }}>
+          <div style={{ flex: "1 1 380px", minWidth: 340, display: "flex", flexDirection: "column", gap: 22 }}>
+            <div>
+              <SectionHead>Geographic Map — Site Locations</SectionHead>
+              <WorldMap points={dash.points} height={300} />
+            </div>
             <div>
               <SectionHead>Geographic Distribution / Concentration</SectionHead>
               <GeoBars data={dash.geo} />
@@ -991,7 +1078,7 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
             </div>
             <DashButton onClick={onViewPhysical}>View physical entities ({dash.sites})</DashButton>
           </div>
-          <div style={{ flex: "1 1 440px", minWidth: 380, display: "flex", flexDirection: "column", gap: 12 }}>
+          <div style={{ flex: "1 1 460px", minWidth: 380, display: "flex", flexDirection: "column", gap: 12 }}>
             <SectionHead>Companies &amp; Participating Records ({dash.companies})</SectionHead>
             <CompaniesTable rows={dash.rows} />
             <DashButton onClick={onViewCompanies}>View company graph ({dash.companies})</DashButton>

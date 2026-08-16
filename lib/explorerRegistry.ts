@@ -47,6 +47,7 @@ export type EntityNode = {
   country: string; status: string; group_id: string; group_name: string;
   column: string; confidence: string; short: string;
   organizational_entity?: string; physical_entity?: string; flag?: string;
+  lat?: number; lon?: number;
 };
 export type EntityEdge = { from: string; to: string; status: string; form: string };
 export type EntityGraph = {
@@ -138,10 +139,11 @@ export function computeStageCountries(node: LoadedNode, stageKey: string): Stage
 export type StageBar = { name: string; pct: number };
 export type StagePeg = { name: string; pct: number; count: number };
 export type StageTableRow = { entity_id: string; company: string; site: string; country: string; physical_entity_type: string; qty: string; status: string; confidence: string };
+export type StagePoint = { id: string; site: string; company: string; country: string; status: string; lat: number; lon: number };
 export type StageDashboard = {
   key: string; label: string; description: string; total_qty: string;
   sites: number; companies: number; countries: number;
-  geo: StageBar[]; pegmix: StagePeg[]; rows: StageTableRow[];
+  geo: StageBar[]; pegmix: StagePeg[]; rows: StageTableRow[]; points: StagePoint[];
   analysis: StageAnalysis | null;
 };
 
@@ -177,12 +179,15 @@ export function computeStageDashboard(node: LoadedNode, stageKey: string): Stage
     status: e.status || "—",
     confidence: e.confidence || "—",
   }));
+  const points: StagePoint[] = ents
+    .filter((e) => typeof e.lat === "number" && typeof e.lon === "number")
+    .map((e) => ({ id: e.id, site: e.physical_entity || e.name, company: e.organizational_entity || e.name, country: e.country || "—", status: e.status || "—", lat: e.lat as number, lon: e.lon as number }));
   return {
     key: stageKey, label,
     description: meta?.dashboard_description || meta?.description || "",
     total_qty: sym ? `X t contained ${sym}` : "X metric",
     sites: ents.length, companies: companies.size, countries: countryCount.size,
-    geo, pegmix, rows, analysis: meta?.analysis ?? null,
+    geo, pegmix, rows, points, analysis: meta?.analysis ?? null,
   };
 }
 
