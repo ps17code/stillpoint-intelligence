@@ -947,10 +947,15 @@ function WorldMap({ points, height = 300, selectedId, onSelect }: { points: Stag
               })
             : points.map(p => {
                 const sel = selectedId === p.id;
+                const x = projX(p.lon), y = projY(p.lat);
+                const trunc = (s: string, n: number) => s.length > n ? s.slice(0, n - 1) + "…" : s;
                 return (
-                  <circle key={p.id} cx={projX(p.lon)} cy={projY(p.lat)} r={(sel ? 4.8 : 3.2) / view.k} fill={statusColor(p.status)} stroke={sel ? warmWhite : "rgba(0,0,0,0.55)"} strokeWidth={(sel ? 1.5 : 0.6) / view.k} style={{ cursor: "pointer" }} onClick={() => onSelect?.(p.id)}>
+                  <g key={p.id} style={{ cursor: "pointer" }} onClick={() => onSelect?.(p.id)}>
+                    <circle cx={x} cy={y} r={(sel ? 4.8 : 3.2) / view.k} fill={statusColor(p.status)} stroke={sel ? warmWhite : "rgba(0,0,0,0.55)"} strokeWidth={(sel ? 1.5 : 0.6) / view.k} />
+                    <text x={x + 6 / view.k} y={y - 0.5 / view.k} fontSize={8 / view.k} fill={sel ? warmWhite : "rgb(205,205,205)"} fontFamily={DMSANS} stroke="rgba(0,0,0,0.7)" strokeWidth={1.7 / view.k} style={{ paintOrder: "stroke" }}>{trunc(p.site, 26)}</text>
+                    <text x={x + 6 / view.k} y={y + 7 / view.k} fontSize={6.8 / view.k} fill="#a89f93" fontFamily={MONO} stroke="rgba(0,0,0,0.7)" strokeWidth={1.5 / view.k} style={{ paintOrder: "stroke" }}>{trunc(p.company, 28)}</text>
                     <title>{`${p.company} — ${p.site} (${p.country})`}</title>
-                  </circle>
+                  </g>
                 );
               })}
         </g>
