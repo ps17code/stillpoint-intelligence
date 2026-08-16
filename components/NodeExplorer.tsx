@@ -844,7 +844,7 @@ function stageIconPath(key: string) {
 }
 const CHART_COLORS = ["#7fae6f", "#8ab0c0", "#cf9b7f", "#b08fce", "#c8a24a", "#9a938a"];
 
-function StageTabs({ stages, selectedKey, onSelect }: { stages: StageInfo[]; selectedKey: string; onSelect: (k: string) => void }) {
+function StageTabs({ stages, selectedKey, onSelect, onEntityGraph }: { stages: StageInfo[]; selectedKey: string; onSelect: (k: string) => void; onEntityGraph?: () => void }) {
   const border = "rgb(40,37,34)", panelBg = "rgb(20,19,18)";
   return (
     <div style={{ display: "flex", flexDirection: "row", gap: 5, flexWrap: "wrap", position: "relative", zIndex: 2 }}>
@@ -864,6 +864,12 @@ function StageTabs({ stages, selectedKey, onSelect }: { stages: StageInfo[]; sel
           </button>
         );
       })}
+      {onEntityGraph && (
+        <button onClick={onEntityGraph} style={{ marginLeft: "auto", alignSelf: "center", display: "flex", alignItems: "center", gap: 7, background: "transparent", border: "none", cursor: "pointer", color: accent, fontFamily: MONO, fontSize: 11 }}>
+          Go to entity graph
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+        </button>
+      )}
     </div>
   );
 }
@@ -1218,7 +1224,7 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
   );
   return (
     <div style={{ display: "flex", flexDirection: "column", padding: "4px 4px 24px", maxWidth: 1440, margin: "0 auto" }}>
-      <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} />
+      <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} onEntityGraph={onViewCompanies} />
       <div style={{ borderRadius: "0 10px 10px 10px", background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 20px" }}>
         {/* top row: total-contained card · OVERVIEW + takeaway · top-3 lists (equal height) */}
         <div style={{ display: "flex", gap: 26, flexWrap: "wrap", alignItems: "stretch" }}>
