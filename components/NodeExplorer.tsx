@@ -885,7 +885,7 @@ function MapBtn({ children, onClick }: { children: React.ReactNode; onClick: () 
   return <button onClick={onClick} style={{ width: 22, height: 22, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.55)", border: "1px solid rgba(255,255,255,0.16)", borderRadius: 4, color: warmWhite, cursor: "pointer", fontSize: 13, lineHeight: 1, fontFamily: MONO }}>{children}</button>;
 }
 
-function WorldMap({ points, height = 300 }: { points: StagePoint[]; height?: number | string }) {
+function WorldMap({ points, height = 300, selectedId, onSelect }: { points: StagePoint[]; height?: number | string; selectedId?: string | null; onSelect?: (id: string) => void }) {
   const [view, setView] = useState({ k: 1, tx: 0, ty: 0 });
   const svgRef = useRef<SVGSVGElement>(null);
   const drag = useRef<{ x: number; y: number; tx: number; ty: number } | null>(null);
@@ -934,17 +934,20 @@ function WorldMap({ points, height = 300 }: { points: StagePoint[]; height?: num
             ? clusters.map((c, i) => {
                 const r = (5 + Math.min(9, c.n)) / view.k;
                 return (
-                  <g key={i}>
+                  <g key={i} style={{ cursor: "pointer" }} onClick={() => setView(v => { const k2 = Math.max(3.2, v.k * 2.2); return { k: k2, tx: MAP_W / 2 - c.x * k2, ty: MAP_H / 2 - c.y * k2 }; })}>
                     <circle cx={c.x} cy={c.y} r={r} fill="rgba(200,122,74,0.28)" stroke={accent} strokeWidth={0.9 / view.k} />
                     <text x={c.x} y={c.y + 2.6 / view.k} textAnchor="middle" fontSize={7.5 / view.k} fill={warmWhite} fontFamily={MONO}>{c.n}</text>
                   </g>
                 );
               })
-            : points.map(p => (
-                <circle key={p.id} cx={projX(p.lon)} cy={projY(p.lat)} r={3.2 / view.k} fill={statusColor(p.status)} stroke="rgba(0,0,0,0.55)" strokeWidth={0.6 / view.k}>
-                  <title>{`${p.company} — ${p.site} (${p.country})`}</title>
-                </circle>
-              ))}
+            : points.map(p => {
+                const sel = selectedId === p.id;
+                return (
+                  <circle key={p.id} cx={projX(p.lon)} cy={projY(p.lat)} r={(sel ? 4.8 : 3.2) / view.k} fill={statusColor(p.status)} stroke={sel ? warmWhite : "rgba(0,0,0,0.55)"} strokeWidth={(sel ? 1.5 : 0.6) / view.k} style={{ cursor: "pointer" }} onClick={() => onSelect?.(p.id)}>
+                    <title>{`${p.company} — ${p.site} (${p.country})`}</title>
+                  </circle>
+                );
+              })}
         </g>
       </svg>
       <div style={{ position: "absolute", top: 8, right: 8, display: "flex", flexDirection: "column", gap: 4 }}>
@@ -1009,6 +1012,29 @@ function PegDonut({ data, sites }: { data: StagePeg[]; sites: number }) {
 
 function SectionHead({ children }: { children: React.ReactNode }) {
   return <p style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 12px 0" }}>{children}</p>;
+}
+
+/* condensed summary section: metric + 2-line commentary (left) · top-3 list (right) */
+function SummarySection({ metric, label, commentary, items }: { metric: string; label: string; commentary: string; items: { label: string; value: string; flag?: string }[] }) {
+  return (
+    <div style={{ flex: 1, minWidth: 250, display: "flex", gap: 14 }}>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <p style={{ fontSize: 21, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.05 }}>{metric}</p>
+        <p style={{ fontSize: 7.5, color: "#807869", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.05em", margin: "4px 0 0 0" }}>{label}</p>
+        {commentary && <p style={{ fontSize: 10, color: "rgb(158,158,158)", lineHeight: 1.45, margin: "8px 0 0 0", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{commentary}</p>}
+      </div>
+      <div style={{ flexShrink: 0, width: 138, display: "flex", flexDirection: "column", gap: 5 }}>
+        <p style={{ fontSize: 7, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", margin: 0 }}>Top 3</p>
+        {items.map((it, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            {it.flag !== undefined ? <Flag country={it.flag} size={12} /> : <span style={{ width: 6, height: 6, borderRadius: 2, background: CHART_COLORS[i % CHART_COLORS.length], flexShrink: 0, margin: "0 3px" }} />}
+            <span style={{ fontSize: 9.5, color: "rgb(172,172,172)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{it.label}</span>
+            <span style={{ fontSize: 9, color: "#807869", fontFamily: MONO, marginLeft: "auto", flexShrink: 0 }}>{it.value}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 /* big metric on the left + takeaway commentary on the right (section header) */
@@ -1155,70 +1181,46 @@ function DashButton({ children, onClick }: { children: React.ReactNode; onClick:
 }
 
 function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPhysical, onViewCompanies }: { stages: StageInfo[]; selectedKey: string; dash: StageDashboard; onSelectStage: (k: string) => void; onViewPhysical: () => void; onViewCompanies: () => void }) {
-  const [selRow, setSelRow] = useState<StageTableRow | null>(null);
-  useEffect(() => { setSelRow(null); }, [dash.key]);
+  const [selId, setSelId] = useState<string | null>(null);
+  const [mode, setMode] = useState<"map" | "table">("map");
+  useEffect(() => { setSelId(null); }, [dash.key]);
+  const selRow = selId ? dash.rows.find(r => r.entity_id === selId) ?? null : null;
+  const toggleBtn = (m: "map" | "table", label: string) => (
+    <button onClick={() => setMode(m)} style={{ padding: "6px 15px", borderRadius: 6, cursor: "pointer", fontFamily: MONO, fontSize: 10, background: mode === m ? "rgba(200,122,74,0.15)" : "transparent", border: `1px solid ${mode === m ? accent : "rgb(45,41,39)"}`, color: mode === m ? warmWhite : "#8a8177" }}>{label}</button>
+  );
+  const link = (onClick: () => void, label: string) => (
+    <button onClick={onClick} style={{ display: "flex", alignItems: "center", gap: 5, background: "transparent", border: "none", cursor: "pointer", color: accent, fontFamily: MONO, fontSize: 9.5 }}>{label}
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+    </button>
+  );
   return (
     <div style={{ display: "flex", flexDirection: "column", padding: "4px 4px 24px", maxWidth: 1440, margin: "0 auto" }}>
       <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} />
       <div style={{ borderRadius: "0 10px 10px 10px", background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 20px" }}>
-        {/* TOP SECTION — left: description + metrics + concentration/mix ; right: map */}
-        <div style={{ display: "flex", gap: 22, alignItems: "stretch", flexWrap: "wrap" }}>
-          <div style={{ flex: "0 1 340px", minWidth: 300, display: "flex", flexDirection: "column" }}>
-            {dash.description && <p style={{ fontSize: 11, color: "rgb(160,160,160)", lineHeight: 1.5, margin: "0 0 16px 0" }}>{dash.description}</p>}
-
-            {/* Section 1 — contained / produced quantity + geographic concentration */}
-            <StatHeader value={dash.total_qty} label="Contained / Produced" desc={dash.qty_commentary} />
-            <div style={{ display: "flex", gap: 14, alignItems: "center", marginTop: 12 }}>
-              <ConcentrationDonut data={dash.geo} />
-              <div style={{ display: "flex", flexDirection: "column", gap: 5, flex: 1, minWidth: 0 }}>
-                {dash.geo.map((d, i) => (
-                  <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    {d.name === "Other" ? <span style={{ width: 13, height: 10, borderRadius: 2, background: CHART_COLORS[i % CHART_COLORS.length], flexShrink: 0 }} /> : <Flag country={d.name} size={13} />}
-                    <span style={{ fontSize: 10, color: "rgb(172,172,172)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{d.name}</span>
-                    <span style={{ fontSize: 9.5, color: "#807869", fontFamily: MONO, marginLeft: "auto", flexShrink: 0 }}>{d.pct}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", margin: "18px 0" }} />
-
-            {/* Section 2 — sites + type mix */}
-            <StatHeader value={String(dash.sites)} label="Sites / Assets" desc={dash.sites_commentary} />
-            <div style={{ marginTop: 12 }}>
-              <GeoBars data={dash.pegmix.map(p => ({ name: p.name, pct: p.pct }))} />
-            </div>
-
-            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", margin: "18px 0" }} />
-
-            {/* Section 3 — companies + key players */}
-            <StatHeader value={String(dash.companies)} label="Companies" desc={dash.companies_commentary} />
-            <div style={{ marginTop: 12 }}>
-              <p style={{ fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 10px 0" }}>Key Players</p>
-              <KeyPlayers companies={dash.topCompanies} />
-            </div>
-          </div>
-          <div style={{ flex: "1 1 460px", minWidth: 360, display: "flex", flexDirection: "column" }}>
-            <SectionHead>Geographic Map — Site Locations</SectionHead>
-            <div style={{ flex: 1, display: "flex" }}>
-              <WorldMap points={dash.points} height="100%" />
-            </div>
-          </div>
+        {/* three condensed summary sections, laid horizontally */}
+        <div style={{ display: "flex", gap: 30, flexWrap: "wrap" }}>
+          <SummarySection metric={dash.total_qty} label="Contained / Produced" commentary={dash.qty_commentary} items={dash.geo.slice(0, 3).map(g => ({ label: g.name, value: `${g.pct}%`, flag: g.name }))} />
+          <SummarySection metric={String(dash.sites)} label="Sites / Assets" commentary={dash.sites_commentary} items={dash.pegmix.slice(0, 3).map(p => ({ label: p.name, value: String(p.count) }))} />
+          <SummarySection metric={String(dash.companies)} label="Companies" commentary={dash.companies_commentary} items={dash.topCompanies.slice(0, 3).map(c => ({ label: c.name, value: `~${c.share}%`, flag: c.country }))} />
         </div>
-        {/* BOTTOM SECTION — companies / assets table + company card */}
-        <div style={{ marginTop: 22 }}>
-          <SectionHead>Companies &amp; Physical Entities ({dash.rows.length})</SectionHead>
-          <div style={{ display: "flex", gap: 16, alignItems: "stretch", flexWrap: "wrap" }}>
-            <div style={{ flex: "1 1 560px", minWidth: 400, borderRadius: 9, background: "rgb(17,16,15)", border: "1px solid rgb(40,37,34)", overflowX: "auto" }}>
-              <CompaniesTable rows={dash.rows} selectedId={selRow?.entity_id ?? null} onRowClick={setSelRow} />
-            </div>
-            <div style={{ flex: "0 0 300px", minWidth: 260, borderRadius: 9, background: "rgb(24,22,20)", border: "1px solid rgb(40,37,34)" }}>
-              <CompanyCard row={selRow} />
-            </div>
+
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", margin: "18px 0" }} />
+
+        {/* map / table toggle + selected-record card */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 12, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 6 }}>{toggleBtn("map", "◎ Map")}{toggleBtn("table", "▦ Table")}</div>
+          <div style={{ display: "flex", gap: 16 }}>{link(onViewPhysical, `Physical entities (${dash.sites})`)}{link(onViewCompanies, `Company graph (${dash.companies})`)}</div>
+        </div>
+        <div style={{ display: "flex", gap: 14, alignItems: "stretch", flexWrap: "wrap" }}>
+          <div style={{ flex: "1 1 640px", minWidth: 420, display: "flex" }}>
+            {mode === "map"
+              ? <WorldMap points={dash.points} height={440} selectedId={selId} onSelect={setSelId} />
+              : <div style={{ width: "100%", height: 440, borderRadius: 8, background: "rgb(17,16,15)", border: "1px solid rgb(40,37,34)", overflow: "auto" }}>
+                  <CompaniesTable rows={dash.rows} selectedId={selId} onRowClick={r => setSelId(r.entity_id)} />
+                </div>}
           </div>
-          <div style={{ marginTop: 14, display: "flex", gap: 10, maxWidth: 460 }}>
-            <DashButton onClick={onViewPhysical}>View physical entities ({dash.sites})</DashButton>
-            <DashButton onClick={onViewCompanies}>View company graph ({dash.companies})</DashButton>
+          <div style={{ flex: "0 0 320px", minWidth: 280, borderRadius: 9, background: "rgb(24,22,20)", border: "1px solid rgb(40,37,34)" }}>
+            <CompanyCard row={selRow} />
           </div>
         </div>
       </div>
