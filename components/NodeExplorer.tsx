@@ -1204,25 +1204,22 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
   useEffect(() => { setSelId(null); }, [dash.key]);
   const selRow = selId ? dash.rows.find(r => r.entity_id === selId) ?? null : null;
   const toggleBtn = (m: "map" | "table", label: string) => (
-    <button onClick={() => setMode(m)} style={{ padding: "6px 15px", borderRadius: 6, cursor: "pointer", fontFamily: MONO, fontSize: 10, background: mode === m ? "rgba(200,122,74,0.15)" : "transparent", border: `1px solid ${mode === m ? accent : "rgb(45,41,39)"}`, color: mode === m ? warmWhite : "#8a8177" }}>{label}</button>
-  );
-  const link = (onClick: () => void, label: string) => (
-    <button onClick={onClick} style={{ display: "flex", alignItems: "center", gap: 5, background: "transparent", border: "none", cursor: "pointer", color: accent, fontFamily: MONO, fontSize: 9.5 }}>{label}
-      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-    </button>
+    <button onClick={() => setMode(m)} style={{ padding: "5px 13px", borderRadius: 5, cursor: "pointer", fontFamily: MONO, fontSize: 9.5, background: mode === m ? "rgba(200,122,74,0.2)" : "transparent", border: `1px solid ${mode === m ? accent : "rgba(255,255,255,0.12)"}`, color: mode === m ? warmWhite : "#9a9186" }}>{label}</button>
   );
   return (
     <div style={{ display: "flex", flexDirection: "column", padding: "4px 4px 24px", maxWidth: 1440, margin: "0 auto" }}>
       <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} />
       <div style={{ borderRadius: "0 10px 10px 10px", background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 20px" }}>
-        {/* top row: key takeaway · total-contained card · top-3 lists (all top-aligned) */}
+        {/* top row: total-contained card · OVERVIEW + takeaway · top-3 lists (all top-aligned) */}
         <div style={{ display: "flex", gap: 26, flexWrap: "wrap", alignItems: "flex-start" }}>
-          <div style={{ flex: "1 1 260px", minWidth: 240 }}>
-            <p style={{ fontSize: 17.5, color: warmWhite, fontFamily: SERIF, lineHeight: 1.4, margin: 0 }}>{dash.key_takeaway || dash.analysis?.takeaways?.[0] || dash.description}</p>
-          </div>
-          <div style={{ flexShrink: 0, width: 176, padding: "12px 14px", borderRadius: 8, background: "rgb(24,22,20)", border: "1px solid rgb(45,41,39)" }}>
+          <div style={{ flexShrink: 0, width: 190, padding: "13px 15px", borderRadius: 8, background: "rgb(24,22,20)", border: "1px solid rgb(45,41,39)" }}>
             <p style={{ fontSize: 8, color: "#807869", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: 0, lineHeight: 1.35 }}>Total Resources Contained</p>
-            <p style={{ fontSize: 20, color: warmWhite, fontFamily: SERIF, margin: "8px 0 0 0", lineHeight: 1 }}>{dash.total_qty}</p>
+            <p style={{ fontSize: 28, color: warmWhite, fontFamily: SERIF, margin: "9px 0 0 0", lineHeight: 1 }}>{dash.total_qty}</p>
+            <p style={{ fontSize: 9, color: "#807869", fontFamily: MONO, margin: "6px 0 0 0" }}>across {dash.sites} sites</p>
+          </div>
+          <div style={{ flex: "1 1 260px", minWidth: 240 }}>
+            <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>Overview</p>
+            <p style={{ fontSize: 13.5, color: warmWhite, fontFamily: MONO, lineHeight: 1.55, margin: "8px 0 0 0" }}>{dash.key_takeaway || dash.analysis?.takeaways?.[0] || dash.description}</p>
           </div>
           <div style={{ flex: "1.6 1 420px", minWidth: 380, display: "flex", gap: 22 }}>
             <TopList total={`${dash.countries} Countries`} items={dash.geo.slice(0, 3).map(g => ({ label: g.name, value: `${g.pct}%`, flag: g.name }))} />
@@ -1233,16 +1230,13 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
 
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", margin: "18px 0" }} />
 
-        {/* map / table toggle + selected-record card */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 12, flexWrap: "wrap" }}>
-          <div style={{ display: "flex", gap: 6 }}>{toggleBtn("map", "◎ Map")}{toggleBtn("table", "▦ Table")}</div>
-          <div style={{ display: "flex", gap: 16 }}>{link(onViewPhysical, `Physical entities (${dash.sites})`)}{link(onViewCompanies, `Company graph (${dash.companies})`)}</div>
-        </div>
+        {/* map / table panel (toggle overlaid) + selected-record card */}
         <div style={{ display: "flex", gap: 14, alignItems: "stretch", flexWrap: "wrap" }}>
-          <div style={{ flex: "1 1 640px", minWidth: 420, display: "flex" }}>
+          <div style={{ position: "relative", flex: "1 1 640px", minWidth: 420, display: "flex" }}>
+            <div style={{ position: "absolute", top: 8, left: 8, zIndex: 5, display: "flex", gap: 4, background: "rgba(0,0,0,0.5)", borderRadius: 7, padding: 3 }}>{toggleBtn("map", "◎ Map")}{toggleBtn("table", "▦ Table")}</div>
             {mode === "map"
               ? <WorldMap points={dash.points} height={440} selectedId={selId} onSelect={setSelId} />
-              : <div style={{ width: "100%", height: 440, borderRadius: 8, background: "rgb(17,16,15)", border: "1px solid rgb(40,37,34)", overflow: "auto" }}>
+              : <div style={{ width: "100%", height: 440, borderRadius: 8, background: "rgb(17,16,15)", border: "1px solid rgb(40,37,34)", overflow: "auto", paddingTop: 44 }}>
                   <CompaniesTable rows={dash.rows} selectedId={selId} onRowClick={r => setSelId(r.entity_id)} />
                 </div>}
           </div>
