@@ -68,10 +68,14 @@ export type NodeOverview = {
     top_companies: { name: string; country?: string; note?: string }[];
   };
   stillpoint_view: string;
-  stages: Record<string, { quantity_metric: string; description: string; dashboard_description?: string; analysis?: StageAnalysis }>;
+  stages: Record<string, {
+    quantity_metric: string; description: string; dashboard_description?: string; analysis?: StageAnalysis;
+    qty_commentary?: string; sites_commentary?: string; companies_commentary?: string; top_companies?: StageCompany[];
+  }>;
 };
 
 export type StageAnalysis = { takeaways: string[]; concentration: string; constraint: string; strategic_note: string };
+export type StageCompany = { name: string; country: string; share: number };
 
 export type LoadedNode = {
   name: string;
@@ -144,6 +148,7 @@ export type StageDashboard = {
   key: string; label: string; description: string; total_qty: string;
   sites: number; companies: number; countries: number;
   geo: StageBar[]; pegmix: StagePeg[]; rows: StageTableRow[]; points: StagePoint[];
+  qty_commentary: string; sites_commentary: string; companies_commentary: string; topCompanies: StageCompany[];
   analysis: StageAnalysis | null;
 };
 
@@ -187,7 +192,12 @@ export function computeStageDashboard(node: LoadedNode, stageKey: string): Stage
     description: meta?.dashboard_description || meta?.description || "",
     total_qty: sym ? `X t contained ${sym}` : "X metric",
     sites: ents.length, companies: companies.size, countries: countryCount.size,
-    geo, pegmix, rows, points, analysis: meta?.analysis ?? null,
+    geo, pegmix, rows, points,
+    qty_commentary: meta?.qty_commentary ?? "",
+    sites_commentary: meta?.sites_commentary ?? "",
+    companies_commentary: meta?.companies_commentary ?? "",
+    topCompanies: meta?.top_companies ?? [],
+    analysis: meta?.analysis ?? null,
   };
 }
 

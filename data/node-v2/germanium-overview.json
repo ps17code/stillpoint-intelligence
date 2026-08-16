@@ -56,7 +56,32 @@
         "concentration": "The resource base is comparatively diversified relative to later stages: China and the United States each hold 29% of hosting sites, followed by DR Congo at 14%, with Namibia, Peru, Russia, and a global bucket each near 7%. No single geography controls the geological endowment, which reflects germanium's status as a dispersed by-product rather than a discrete ore.",
         "constraint": "The structural constraint is that germanium is not extractable on its own terms; it is locked into zinc and coal hosts at trace grades (43% sphalerite, 29% coal). Access to germanium is therefore gated by the economics of the primary host commodity, not by germanium demand itself.",
         "strategic_note": "A diversified endowment is necessary but not sufficient for supply security, because control migrates downstream to processing. Building secondary hosts (already 21% of sites via end-of-life and tailings) is the most controllable lever for consuming nations, since it does not depend on new zinc or coal mine development."
-      }
+      },
+      "qty_commentary": "Contained germanium is distributed globally across resource sites but concentrated in China, the United States and DR Congo, with China controlling the majority of the economically extractable resource through its zinc and germaniferous coal deposits.",
+      "sites_commentary": "The 14 resource sites are dominated by sphalerite zinc deposits (43%) and germanium coal deposits (29%), underscoring germanium's status as a by-product rather than a primary mining target.",
+      "companies_commentary": "The three largest holders control roughly 60% of contained resource, with Chinese operators alone accounting for close to half.",
+      "top_companies": [
+        {
+          "name": "Yunnan Chihong Zinc & Germanium",
+          "country": "China",
+          "share": 28
+        },
+        {
+          "name": "Teck Resources",
+          "country": "United States",
+          "share": 18
+        },
+        {
+          "name": "Ivanhoe Mines / Gécamines",
+          "country": "DR Congo",
+          "share": 12
+        },
+        {
+          "name": "Mengdong Energy (Ulantuga Coal)",
+          "country": "China",
+          "share": 10
+        }
+      ]
     },
     "extraction": {
       "quantity_metric": "Mined as Zn/coal byproduct",
@@ -72,7 +97,32 @@
         "concentration": "Extraction concentrates into four countries: the United States at 44%, China at 33%, and DR Congo and Russia at 11% each. The compression from seven resource countries to four extraction countries shows that geological presence does not translate into active mobilisation, and that capacity is already clustering into two dominant operators.",
         "constraint": "Because 44% of extraction runs through zinc mines and concentrators and 33% through coal mines, germanium output is a hostage of by-product economics. When zinc or coal throughput contracts, germanium-bearing feedstock contracts with it, regardless of germanium prices, leaving little independent supply response.",
         "strategic_note": "The narrowing to four countries at extraction is the first genuine chokepoint in the chain and precedes the far tighter constriction downstream. Securing scrap pre-processing and by-product capture agreements at co-located zinc and coal operations offers consuming nations leverage before feedstock enters the concentrated processing stages."
-      }
+      },
+      "qty_commentary": "Extracted germanium-bearing feedstock is sourced principally from the United States (44%) and China (33%), though US tonnage reflects zinc concentrate volumes rather than sovereign refined output.",
+      "sites_commentary": "Across 9 extraction sites, zinc mines and concentrators (44%) and germaniferous coal mines (33%) supply nearly all feed, confirming co-product recovery as the dominant pathway.",
+      "companies_commentary": "The top three operators account for roughly 55% of germanium-bearing extraction, with Chinese coal and zinc producers driving concentration.",
+      "top_companies": [
+        {
+          "name": "Yunnan Chihong Zinc & Germanium",
+          "country": "China",
+          "share": 26
+        },
+        {
+          "name": "Teck Resources",
+          "country": "United States",
+          "share": 18
+        },
+        {
+          "name": "Mengdong Energy (Ulantuga Coal)",
+          "country": "China",
+          "share": 12
+        },
+        {
+          "name": "Ivanhoe Mines / Gécamines (KICO)",
+          "country": "DR Congo",
+          "share": 9
+        }
+      ]
     },
     "primary": {
       "quantity_metric": "Concentrated into residues",
@@ -88,7 +138,22 @@
         "concentration": "Primary processing is extremely thin: two sites split evenly between the United States and Namibia at 50% each, with the entire stage classified as zinc smelter-refinery operations. This is one of the most concentrated points in the mapped chain by absolute site count, and it sits entirely within the zinc metallurgical route.",
         "constraint": "The binding constraint is that germanium capture is a design and operating choice made inside a zinc smelter optimised for zinc, not germanium. With only two qualified sites, any outage, flowsheet change, or decision to forgo germanium recovery removes a material share of residue-bearing feedstock from the entire downstream chain.",
         "strategic_note": "So few primary sites mean the chain's germanium-in-residue supply rests on a handful of smelter decisions well upstream of the visible refining bottleneck. Incentivising germanium capture circuits at additional zinc smelters is a high-leverage, low-visibility intervention for diversifying supply security."
-      }
+      },
+      "qty_commentary": "Primary processing capacity is split evenly between the United States and Namibia, but volumes remain modest and entirely tied to zinc smelter-refinery by-product streams.",
+      "sites_commentary": "Only 2 primary processing sites exist, both zinc smelter-refineries, marking this as the narrowest and most fragile stage in the chain.",
+      "companies_commentary": "Two companies control 100% of stage capacity, an extreme concentration that constitutes a structural single-point-of-failure risk.",
+      "top_companies": [
+        {
+          "name": "Korea Zinc (ex-Nyrstar)",
+          "country": "United States",
+          "share": 55
+        },
+        {
+          "name": "Sinomine Resource Group",
+          "country": "Namibia",
+          "share": 45
+        }
+      ]
     },
     "recovery": {
       "quantity_metric": "Historically <5% recovered",
@@ -104,7 +169,32 @@
         "concentration": "Recovery is evenly distributed with each of Kazakhstan, DR Congo, Japan, and the United States holding 25% of sites, and all capacity sits with specialised germanium recovery operators. The even split masks fragility: with only four sites, the loss of any single operator removes a quarter of mapped recovery capacity.",
         "constraint": "The constraint is specialised, non-substitutable capacity. Recovering germanium from complex residues and dusts requires dedicated hydrometallurgical circuits and know-how, so capacity cannot be improvised elsewhere at short notice. Four operators is a thin bench for a step that concentrates dispersed germanium into usable form.",
         "strategic_note": "Recovery is the pivot where germanium transitions from by-product to product, making it a strategic gateway to the high-purity chain. Its geographic evenness is an asset for resilience, but the low absolute count means each site is systemically important and warrants redundancy investment."
-      }
+      },
+      "qty_commentary": "Recovered germanium concentrate output is spread evenly across Kazakhstan, DR Congo, Japan and the United States, giving this stage the broadest geographic balance in the chain.",
+      "sites_commentary": "All 4 recovery sites are dedicated germanium recovery operators, indicating a specialised but thinly populated stage with limited redundancy.",
+      "companies_commentary": "Four companies each hold roughly a quarter of recovery output, making this the least concentrated stage though still constrained by low absolute site count.",
+      "top_companies": [
+        {
+          "name": "Kazzinc (Glencore)",
+          "country": "Kazakhstan",
+          "share": 30
+        },
+        {
+          "name": "DOWA Holdings",
+          "country": "Japan",
+          "share": 27
+        },
+        {
+          "name": "Gécamines (STL)",
+          "country": "DR Congo",
+          "share": 23
+        },
+        {
+          "name": "Metallium (Flash Metals)",
+          "country": "United States",
+          "share": 20
+        }
+      ]
     },
     "refining": {
       "quantity_metric": "~140 t/yr refined Ge",
@@ -120,7 +210,32 @@
         "concentration": "Refining is where China's dominance concentrates most heavily: it holds 38% of mapped refining sites, roughly triple any single competitor, with Canada, Russia, Belgium, the United States, and Germany each near 12%. This is the sharpest single-country concentration in the entire chain, and it sits at the highest-value, most technically exacting stage.",
         "constraint": "The constraint is that high-purity conversion to metal, GeO2, and GeCl4 demands specialised refining capability that is slow and costly to replicate, and it is disproportionately located in one jurisdiction. Because refining converts intermediate into the only forms end-users can consume, control here confers control over effective germanium availability regardless of upstream diversity.",
         "strategic_note": "Upstream diversification is undermined if refining remains 38% concentrated in China, since the chain's leverage point is the purity step, not the ore. Rebuilding or expanding refining capacity among the five sub-scale countries near 12% each is the decisive move for genuine supply security and the most direct counter to export-control exposure."
-      }
+      },
+      "qty_commentary": "Refined germanium output is dominated by China (38% of sites), with Canada, Russia, Belgium, the US and Germany each holding roughly 12%, reinforcing China's chokehold on high-purity metal and export licensing.",
+      "sites_commentary": "The 8 refineries are exclusively dedicated germanium refining facilities, and Chinese sites alone form the plurality, concentrating the chain's most value-critical step.",
+      "companies_commentary": "The top three refiners control roughly 55% of high-purity output, with Chinese producers accounting for close to half of global refining capacity.",
+      "top_companies": [
+        {
+          "name": "Yunnan Chihong Zinc & Germanium",
+          "country": "China",
+          "share": 25
+        },
+        {
+          "name": "Umicore",
+          "country": "Belgium",
+          "share": 15
+        },
+        {
+          "name": "Teck Resources",
+          "country": "Canada",
+          "share": 12
+        },
+        {
+          "name": "Yunnan Lincang Xinyuan Germanium",
+          "country": "China",
+          "share": 10
+        }
+      ]
     }
   }
 }

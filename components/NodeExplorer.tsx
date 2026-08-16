@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, computeStageDashboard, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo, type StageDashboard, type StageBar, type StagePeg, type StageTableRow, type StagePoint } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, computeStageDashboard, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo, type StageDashboard, type StageBar, type StagePeg, type StageTableRow, type StagePoint, type StageCompany } from "@/lib/explorerRegistry";
 import WORLD_PATHS from "@/data/world-paths.json";
 
 /* ── Company Subgraph projection over a canonical Company Record (v2.0) ── */
@@ -1011,6 +1011,58 @@ function SectionHead({ children }: { children: React.ReactNode }) {
   return <p style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 12px 0" }}>{children}</p>;
 }
 
+/* big metric on the left + takeaway commentary on the right (section header) */
+function StatHeader({ value, label, desc }: { value: string; label: string; desc: string }) {
+  return (
+    <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
+      <div style={{ flexShrink: 0, maxWidth: 130 }}>
+        <p style={{ fontSize: 19, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.1 }}>{value}</p>
+        <p style={{ fontSize: 7.5, color: "#807869", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.05em", margin: "3px 0 0 0" }}>{label}</p>
+      </div>
+      {desc && <p style={{ fontSize: 10, color: "rgb(158,158,158)", lineHeight: 1.45, margin: 0, flex: 1 }}>{desc}</p>}
+    </div>
+  );
+}
+
+/* donut of geographic concentration (weights by pct) */
+function ConcentrationDonut({ data }: { data: StageBar[] }) {
+  const size = 108, sw = 14, r = (size - sw) / 2, cx = size / 2, cy = size / 2, C = 2 * Math.PI * r;
+  const total = data.reduce((s, d) => s + d.pct, 0) || 1;
+  let acc = 0;
+  return (
+    <svg width={size} height={size} style={{ transform: "rotate(-90deg)", flexShrink: 0 }}>
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgb(34,31,28)" strokeWidth={sw} />
+      {data.map((d, i) => {
+        const frac = d.pct / total; const len = frac * C;
+        const seg = <circle key={i} cx={cx} cy={cy} r={r} fill="none" stroke={CHART_COLORS[i % CHART_COLORS.length]} strokeWidth={sw} strokeDasharray={`${len} ${C - len}`} strokeDashoffset={-acc * C} />;
+        acc += frac; return seg;
+      })}
+    </svg>
+  );
+}
+
+/* top companies by market share — flag + name + % with a progress bar */
+function KeyPlayers({ companies }: { companies: StageCompany[] }) {
+  if (!companies.length) return <p style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", fontFamily: SERIF, margin: 0 }}>Market-share data not available.</p>;
+  const max = Math.max(1, ...companies.map(c => c.share));
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
+      {companies.map((c, i) => (
+        <div key={i}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <Flag country={c.country} size={15} />
+            <span style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.name}</span>
+            <span style={{ fontSize: 10, color: "rgb(172,172,172)", fontFamily: MONO, marginLeft: "auto", flexShrink: 0 }}>~{c.share}%</span>
+          </div>
+          <div style={{ height: 5, background: "rgb(34,31,28)", borderRadius: 3, marginTop: 5, overflow: "hidden" }}>
+            <div style={{ width: `${(c.share / max) * 100}%`, height: "100%", background: CHART_COLORS[i % CHART_COLORS.length], borderRadius: 3 }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function tableStatusColor(s: string) { return /prospect|develop|plan/i.test(s) ? "#c8a24a" : /identif|operat|produc|active/i.test(s) ? "#7fae6f" : "rgb(172,172,172)"; }
 
 function CompaniesTable({ rows, selectedId, onRowClick }: { rows: StageTableRow[]; selectedId: string | null; onRowClick: (r: StageTableRow) => void }) {
@@ -1111,21 +1163,39 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
       <div style={{ borderRadius: "0 10px 10px 10px", background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 20px" }}>
         {/* TOP SECTION — left: description + metrics + concentration/mix ; right: map */}
         <div style={{ display: "flex", gap: 22, alignItems: "stretch", flexWrap: "wrap" }}>
-          <div style={{ flex: "0 1 320px", minWidth: 280, display: "flex", flexDirection: "column", gap: 18 }}>
-            {dash.description && <p style={{ fontSize: 11.5, color: "rgb(172,172,172)", lineHeight: 1.5, margin: 0 }}>{dash.description}</p>}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-              <MetricCard label="Sites / Assets" value={String(dash.sites)} />
-              <MetricCard label="Companies" value={String(dash.companies)} />
-              <MetricCard label="Countries" value={String(dash.countries)} />
-              <MetricCard label="Total Qty / Contained" value={dash.total_qty} />
+          <div style={{ flex: "0 1 340px", minWidth: 300, display: "flex", flexDirection: "column" }}>
+            {dash.description && <p style={{ fontSize: 11, color: "rgb(160,160,160)", lineHeight: 1.5, margin: "0 0 16px 0" }}>{dash.description}</p>}
+
+            {/* Section 1 — contained / produced quantity + geographic concentration */}
+            <StatHeader value={dash.total_qty} label="Contained / Produced" desc={dash.qty_commentary} />
+            <div style={{ display: "flex", gap: 14, alignItems: "center", marginTop: 12 }}>
+              <ConcentrationDonut data={dash.geo} />
+              <div style={{ display: "flex", flexDirection: "column", gap: 5, flex: 1, minWidth: 0 }}>
+                {dash.geo.map((d, i) => (
+                  <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                    {d.name === "Other" ? <span style={{ width: 13, height: 10, borderRadius: 2, background: CHART_COLORS[i % CHART_COLORS.length], flexShrink: 0 }} /> : <Flag country={d.name} size={13} />}
+                    <span style={{ fontSize: 10, color: "rgb(172,172,172)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{d.name}</span>
+                    <span style={{ fontSize: 9.5, color: "#807869", fontFamily: MONO, marginLeft: "auto", flexShrink: 0 }}>{d.pct}%</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div>
-              <SectionHead>Geographic Distribution / Concentration</SectionHead>
-              <GeoBars data={dash.geo} />
+
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", margin: "18px 0" }} />
+
+            {/* Section 2 — sites + type mix */}
+            <StatHeader value={String(dash.sites)} label="Sites / Assets" desc={dash.sites_commentary} />
+            <div style={{ marginTop: 12 }}>
+              <GeoBars data={dash.pegmix.map(p => ({ name: p.name, pct: p.pct }))} />
             </div>
-            <div>
-              <SectionHead>Physical Entity Node Group Mix</SectionHead>
-              <PegDonut data={dash.pegmix} sites={dash.sites} />
+
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", margin: "18px 0" }} />
+
+            {/* Section 3 — companies + key players */}
+            <StatHeader value={String(dash.companies)} label="Companies" desc={dash.companies_commentary} />
+            <div style={{ marginTop: 12 }}>
+              <p style={{ fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 10px 0" }}>Key Players</p>
+              <KeyPlayers companies={dash.topCompanies} />
             </div>
           </div>
           <div style={{ flex: "1 1 460px", minWidth: 360, display: "flex", flexDirection: "column" }}>
