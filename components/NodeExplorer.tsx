@@ -1217,14 +1217,17 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
       <div style={{ borderRadius: "0 10px 10px 10px", background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 20px" }}>
         {/* top row: total-contained card · OVERVIEW + takeaway · top-3 lists (equal height) */}
         <div style={{ display: "flex", gap: 26, flexWrap: "wrap", alignItems: "stretch" }}>
-          <div style={{ flexShrink: 0, width: 190, boxSizing: "border-box", padding: "10px 15px", borderRadius: 8, background: "rgb(24,22,20)", border: "1px solid rgb(45,41,39)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-            <p style={{ fontSize: 8, color: "#807869", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: 0, lineHeight: 1.35 }}>Total Resources Contained</p>
-            <p style={{ fontSize: 30, color: warmWhite, fontFamily: DMSANS, margin: "9px 0 0 0", lineHeight: 1 }}>{dash.total_qty}</p>
-            <p style={{ fontSize: 9, color: "#807869", fontFamily: MONO, margin: "6px 0 0 0" }}>across {dash.sites} sites</p>
-          </div>
-          <div style={{ flex: "1 1 260px", minWidth: 240, display: "flex", flexDirection: "column" }}>
-            <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>Overview</p>
-            <p style={{ fontSize: 12, color: warmWhite, fontFamily: DMSANS, lineHeight: 1.55, margin: "9px 0 0 0" }}>{dash.key_takeaway || dash.analysis?.takeaways?.[0] || dash.description}</p>
+          <div style={{ flex: "1 1 470px", minWidth: 400, display: "flex", borderRadius: 8, background: "rgb(24,22,20)", border: "1px solid rgb(45,41,39)", overflow: "hidden" }}>
+            <div style={{ flexShrink: 0, width: 200, boxSizing: "border-box", padding: "12px 16px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <p style={{ fontSize: 8, color: "#807869", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: 0, lineHeight: 1.35 }}>Total Resources Contained</p>
+              <p style={{ fontSize: 30, color: warmWhite, fontFamily: DMSANS, margin: "9px 0 0 0", lineHeight: 1 }}>{dash.total_qty}</p>
+              <p style={{ fontSize: 9, color: "#807869", fontFamily: MONO, margin: "6px 0 0 0" }}>across {dash.sites} sites</p>
+            </div>
+            <div style={{ width: 1, background: "rgba(255,255,255,0.09)", flexShrink: 0 }} />
+            <div style={{ flex: 1, minWidth: 0, padding: "12px 16px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>Overview</p>
+              <p style={{ fontSize: 12, color: warmWhite, fontFamily: DMSANS, lineHeight: 1.55, margin: "8px 0 0 0" }}>{dash.key_takeaway || dash.analysis?.takeaways?.[0] || dash.description}</p>
+            </div>
           </div>
           <div style={{ flex: "1.6 1 420px", minWidth: 380, display: "flex", gap: 22 }}>
             <TopList total={`${dash.countries} Countries`} items={dash.geo.slice(0, 3).map(g => ({ label: g.name, value: `${g.pct}%`, flag: g.name }))} />
