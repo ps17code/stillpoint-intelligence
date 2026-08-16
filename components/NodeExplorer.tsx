@@ -1037,11 +1037,11 @@ function SummarySection({ metric, label, commentary, items }: { metric: string; 
   );
 }
 
-/* a small titled top-3 list (flag/dot + label + value) */
-function TopList({ title, items }: { title: string; items: { label: string; value: string; flag?: string }[] }) {
+/* a top-3 list led by the section total (e.g. "7 Countries") */
+function TopList({ total, items }: { total: string; items: { label: string; value: string; flag?: string }[] }) {
   return (
     <div style={{ flex: 1, minWidth: 0 }}>
-      <p style={{ fontSize: 7, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.07em", margin: "0 0 8px 0" }}>{title}</p>
+      <p style={{ fontSize: 12.5, color: warmWhite, fontFamily: SERIF, margin: "0 0 9px 0", paddingBottom: 7, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>{total}</p>
       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
         {items.map((it, i) => (
           <div key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -1215,24 +1215,19 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
     <div style={{ display: "flex", flexDirection: "column", padding: "4px 4px 24px", maxWidth: 1440, margin: "0 auto" }}>
       <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} />
       <div style={{ borderRadius: "0 10px 10px 10px", background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 20px" }}>
-        {/* top row: key takeaway · 4 metrics · top-3 lists */}
-        <div style={{ display: "flex", gap: 28, flexWrap: "wrap", alignItems: "flex-start" }}>
-          <div style={{ flex: "1 1 280px", minWidth: 250 }}>
-            <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.07em", margin: 0 }}>Key Takeaway</p>
-            <p style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF, lineHeight: 1.4, margin: "7px 0 0 0" }}>{dash.analysis?.takeaways?.[0] ?? dash.description}</p>
+        {/* top row: key takeaway · total-contained card · top-3 lists (all top-aligned) */}
+        <div style={{ display: "flex", gap: 26, flexWrap: "wrap", alignItems: "flex-start" }}>
+          <div style={{ flex: "1 1 260px", minWidth: 240 }}>
+            <p style={{ fontSize: 17.5, color: warmWhite, fontFamily: SERIF, lineHeight: 1.4, margin: 0 }}>{dash.key_takeaway || dash.analysis?.takeaways?.[0] || dash.description}</p>
           </div>
-          <div style={{ flexShrink: 0, width: 190, display: "flex", flexDirection: "column", gap: 9 }}>
-            {[{ v: String(dash.sites), l: "Sites / Assets" }, { v: String(dash.companies), l: "Companies" }, { v: String(dash.countries), l: "Countries" }, { v: dash.total_qty, l: "Total Contained" }].map((m, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 9 }}>
-                <span style={{ fontSize: m.v.length > 5 ? 12.5 : 18, color: warmWhite, fontFamily: SERIF, lineHeight: 1, flexShrink: 0 }}>{m.v}</span>
-                <span style={{ fontSize: 8.5, color: "#807869", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", lineHeight: 1.2 }}>{m.l}</span>
-              </div>
-            ))}
+          <div style={{ flexShrink: 0, width: 176, padding: "12px 14px", borderRadius: 8, background: "rgb(24,22,20)", border: "1px solid rgb(45,41,39)" }}>
+            <p style={{ fontSize: 8, color: "#807869", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: 0, lineHeight: 1.35 }}>Total Resources Contained</p>
+            <p style={{ fontSize: 20, color: warmWhite, fontFamily: SERIF, margin: "8px 0 0 0", lineHeight: 1 }}>{dash.total_qty}</p>
           </div>
-          <div style={{ flex: "1.5 1 400px", minWidth: 360, display: "flex", gap: 20 }}>
-            <TopList title="Top Countries" items={dash.geo.slice(0, 3).map(g => ({ label: g.name, value: `${g.pct}%`, flag: g.name }))} />
-            <TopList title="Top Companies" items={dash.topCompanies.slice(0, 3).map(c => ({ label: c.name, value: `~${c.share}%`, flag: c.country }))} />
-            <TopList title="Top Site Types" items={dash.pegmix.slice(0, 3).map(p => ({ label: p.name, value: String(p.count) }))} />
+          <div style={{ flex: "1.6 1 420px", minWidth: 380, display: "flex", gap: 22 }}>
+            <TopList total={`${dash.countries} Countries`} items={dash.geo.slice(0, 3).map(g => ({ label: g.name, value: `${g.pct}%`, flag: g.name }))} />
+            <TopList total={`${dash.companies} Companies`} items={dash.topCompanies.slice(0, 3).map(c => ({ label: c.name, value: `~${c.share}%`, flag: c.country }))} />
+            <TopList total={`${dash.sites} Sites`} items={dash.pegmix.slice(0, 3).map(p => ({ label: p.name, value: String(p.count) }))} />
           </div>
         </div>
 

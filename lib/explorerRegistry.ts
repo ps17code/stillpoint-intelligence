@@ -71,6 +71,7 @@ export type NodeOverview = {
   stages: Record<string, {
     quantity_metric: string; description: string; dashboard_description?: string; analysis?: StageAnalysis;
     qty_commentary?: string; sites_commentary?: string; companies_commentary?: string; top_companies?: StageCompany[];
+    key_takeaway?: string;
   }>;
 };
 
@@ -149,6 +150,7 @@ export type StageDashboard = {
   sites: number; companies: number; countries: number;
   geo: StageBar[]; pegmix: StagePeg[]; rows: StageTableRow[]; points: StagePoint[];
   qty_commentary: string; sites_commentary: string; companies_commentary: string; topCompanies: StageCompany[];
+  key_takeaway: string;
   analysis: StageAnalysis | null;
 };
 
@@ -190,13 +192,14 @@ export function computeStageDashboard(node: LoadedNode, stageKey: string): Stage
   return {
     key: stageKey, label,
     description: meta?.dashboard_description || meta?.description || "",
-    total_qty: sym ? `X t contained ${sym}` : "X metric",
+    total_qty: sym ? `X tons ${sym}` : "X tons",
     sites: ents.length, companies: companies.size, countries: countryCount.size,
     geo, pegmix, rows, points,
     qty_commentary: meta?.qty_commentary ?? "",
     sites_commentary: meta?.sites_commentary ?? "",
     companies_commentary: meta?.companies_commentary ?? "",
     topCompanies: meta?.top_companies ?? [],
+    key_takeaway: meta?.key_takeaway ?? "",
     analysis: meta?.analysis ?? null,
   };
 }
