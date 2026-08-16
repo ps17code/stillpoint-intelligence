@@ -844,13 +844,20 @@ function stageIconPath(key: string) {
 const CHART_COLORS = ["#7fae6f", "#8ab0c0", "#cf9b7f", "#b08fce", "#c8a24a", "#9a938a"];
 
 function StageTabs({ stages, selectedKey, onSelect }: { stages: StageInfo[]; selectedKey: string; onSelect: (k: string) => void }) {
+  const border = "rgb(40,37,34)", panelBg = "rgb(20,19,18)";
   return (
-    <div style={{ display: "flex", flexDirection: "row", gap: 8, flexWrap: "wrap" }}>
+    <div style={{ display: "flex", flexDirection: "row", gap: 5, flexWrap: "wrap", position: "relative", zIndex: 2 }}>
       {stages.map((s, i) => {
         const sel = s.key === selectedKey;
         return (
           <button key={s.key} onClick={() => onSelect(s.key)}
-            style={{ display: "flex", alignItems: "center", gap: 9, padding: "10px 16px", borderRadius: 8, cursor: "pointer", background: sel ? "rgba(200,122,74,0.1)" : "rgb(24,22,20)", border: `1px solid ${sel ? accent : "rgb(45,41,39)"}`, color: sel ? warmWhite : "#9a9186", fontFamily: SERIF, fontSize: 13.5 }}>
+            style={{ display: "flex", alignItems: "center", gap: 9, padding: "10px 16px", borderRadius: "9px 9px 0 0", cursor: "pointer", marginBottom: -1, position: "relative", zIndex: sel ? 3 : 1,
+              background: sel ? panelBg : "rgb(15,14,13)",
+              borderTop: `1px solid ${sel ? border : "rgb(36,33,30)"}`,
+              borderLeft: `1px solid ${sel ? border : "rgb(36,33,30)"}`,
+              borderRight: `1px solid ${sel ? border : "rgb(36,33,30)"}`,
+              borderBottom: sel ? `1px solid ${panelBg}` : `1px solid ${border}`,
+              color: sel ? warmWhite : "#867d73", fontFamily: SERIF, fontSize: 13.5 }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={sel ? accent : STAGE_COLORS[i % STAGE_COLORS.length]} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">{stageIconPath(s.key)}</svg>
             {s.label}
           </button>
@@ -878,7 +885,7 @@ function MapBtn({ children, onClick }: { children: React.ReactNode; onClick: () 
   return <button onClick={onClick} style={{ width: 22, height: 22, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.55)", border: "1px solid rgba(255,255,255,0.16)", borderRadius: 4, color: warmWhite, cursor: "pointer", fontSize: 13, lineHeight: 1, fontFamily: MONO }}>{children}</button>;
 }
 
-function WorldMap({ points, height = 300 }: { points: StagePoint[]; height?: number }) {
+function WorldMap({ points, height = 300 }: { points: StagePoint[]; height?: number | string }) {
   const [view, setView] = useState({ k: 1, tx: 0, ty: 0 });
   const svgRef = useRef<SVGSVGElement>(null);
   const drag = useRef<{ x: number; y: number; tx: number; ty: number } | null>(null);
@@ -917,7 +924,7 @@ function WorldMap({ points, height = 300 }: { points: StagePoint[]; height?: num
   const statusColor = (s: string) => /prospect|develop|plan/i.test(s) ? "#c8a24a" : /identif|operat|produc|active/i.test(s) ? "#7fae6f" : "#8ab0c0";
 
   return (
-    <div style={{ position: "relative", width: "100%", height, borderRadius: 8, overflow: "hidden", background: "rgb(14,16,19)", border: "1px solid rgb(40,37,34)" }}>
+    <div style={{ position: "relative", width: "100%", height, minHeight: 300, borderRadius: 8, overflow: "hidden", background: "rgb(14,16,19)", border: "1px solid rgb(40,37,34)" }}>
       <svg ref={svgRef} width="100%" height="100%" viewBox={`0 0 ${MAP_W} ${MAP_H}`} preserveAspectRatio="xMidYMid slice"
         style={{ cursor: dragging ? "grabbing" : "grab", display: "block", touchAction: "none" }}
         onWheel={onWheel} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerLeave={onUp}>
@@ -1004,30 +1011,82 @@ function SectionHead({ children }: { children: React.ReactNode }) {
   return <p style={{ fontSize: 8.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 12px 0" }}>{children}</p>;
 }
 
-function CompaniesTable({ rows }: { rows: StageTableRow[] }) {
-  const statusColor = (s: string) => /prospect|develop|plan/i.test(s) ? "#c8a24a" : /identif|operat|produc|active/i.test(s) ? "#7fae6f" : "rgb(172,172,172)";
-  const th: React.CSSProperties = { textAlign: "left", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", padding: "0 10px 8px 10px", fontWeight: 400 };
-  const td: React.CSSProperties = { fontSize: 10, color: "rgb(190,190,190)", padding: "9px 10px", borderTop: "1px solid rgb(38,35,32)", verticalAlign: "top" };
+function tableStatusColor(s: string) { return /prospect|develop|plan/i.test(s) ? "#c8a24a" : /identif|operat|produc|active/i.test(s) ? "#7fae6f" : "rgb(172,172,172)"; }
+
+function CompaniesTable({ rows, selectedId, onRowClick }: { rows: StageTableRow[]; selectedId: string | null; onRowClick: (r: StageTableRow) => void }) {
+  const th: React.CSSProperties = { textAlign: "left", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", padding: "0 10px 8px 10px", fontWeight: 400, whiteSpace: "nowrap" };
+  const base: React.CSSProperties = { fontSize: 10, color: "rgb(190,190,190)", padding: "8px 10px", borderTop: "1px solid rgb(38,35,32)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" };
+  const cell = (w: number): React.CSSProperties => ({ ...base, maxWidth: w });
   return (
-    <div style={{ overflowX: "auto" }}>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <thead><tr>
-          <th style={th}>Company</th><th style={th}>Site</th><th style={th}>Country</th><th style={th}>Physical Entity Type</th><th style={{ ...th, whiteSpace: "nowrap" }}>Qty / Contained</th><th style={th}>Status</th><th style={th}>Confidence</th>
-        </tr></thead>
-        <tbody>
-          {rows.map((r) => (
-            <tr key={r.entity_id}>
-              <td style={{ ...td, color: warmWhite, fontFamily: SERIF, fontSize: 11 }}>{r.company}</td>
-              <td style={td}>{r.site}</td>
-              <td style={td}>{r.country}</td>
-              <td style={td}>{r.physical_entity_type}</td>
-              <td style={{ ...td, fontFamily: MONO, fontSize: 9.5, whiteSpace: "nowrap" }}>{r.qty}</td>
-              <td style={{ ...td, color: statusColor(r.status), fontFamily: MONO, fontSize: 9.5 }}>{r.status}</td>
-              <td style={{ ...td, fontFamily: MONO, fontSize: 9.5 }}>{r.confidence}</td>
+    <table style={{ borderCollapse: "collapse", minWidth: 800, width: "100%" }}>
+      <thead><tr>
+        <th style={th}>Physical Entity / Site</th><th style={th}>Company / Operator</th><th style={th}>Country</th><th style={th}>Physical Entity Type</th><th style={th}>Qty / Contained</th><th style={th}>Status</th><th style={th}>Confidence</th>
+      </tr></thead>
+      <tbody>
+        {rows.map((r) => {
+          const sel = selectedId === r.entity_id;
+          return (
+            <tr key={r.entity_id} onClick={() => onRowClick(r)} style={{ cursor: "pointer", background: sel ? "rgba(200,122,74,0.09)" : "transparent" }}
+              onMouseEnter={e => { if (!sel) e.currentTarget.style.background = "rgba(255,255,255,0.025)"; }}
+              onMouseLeave={e => { if (!sel) e.currentTarget.style.background = "transparent"; }}>
+              <td style={{ ...cell(230), color: warmWhite, fontFamily: SERIF, fontSize: 11 }} title={r.site}>{r.site}</td>
+              <td style={cell(180)} title={r.company}>{r.company}</td>
+              <td style={cell(110)}>{r.country}</td>
+              <td style={cell(170)} title={r.physical_entity_type}>{r.physical_entity_type}</td>
+              <td style={{ ...cell(120), fontFamily: MONO, fontSize: 9.5 }}>{r.qty}</td>
+              <td style={{ ...cell(110), color: tableStatusColor(r.status), fontFamily: MONO, fontSize: 9.5 }} title={r.status}>{r.status}</td>
+              <td style={{ ...cell(90), fontFamily: MONO, fontSize: 9.5 }}>{r.confidence}</td>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+}
+
+/* sample / basic-researched company profiles (placeholder until real org records are wired) */
+const SAMPLE_PROFILES: Record<string, { hq: string; founded: string; ownership: string; primary_output: string; note: string }> = {
+  "Teck Resources": { hq: "Vancouver, BC, Canada", founded: "1906", ownership: "Public — TSX/NYSE: TECK", primary_output: "5N+ germanium (Zn byproduct), zinc, copper", note: "Trail Operations is North America's largest germanium producer, recovering high-purity germanium as a byproduct of zinc refining; expanding Ge capacity." },
+  "Yunnan Chihong Zinc & Germanium": { hq: "Qujing, Yunnan, China", founded: "2000", ownership: "Yunnan Metallurgical Group (SOE-linked)", primary_output: "Refined germanium, zinc, lead", note: "One of China's leading integrated zinc–germanium producers; core to China's dominant refined-germanium output." },
+  "Umicore": { hq: "Brussels, Belgium", founded: "1989 (roots to 1805)", ownership: "Public — Euronext: UMI", primary_output: "High-purity Ge substrates, GeCl4, optics, recycled Ge", note: "Leading Western germanium refiner and recycler supplying optics, electronics and substrate markets outside China." },
+};
+
+function CompanyCard({ row }: { row: StageTableRow | null }) {
+  if (!row) {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%", gap: 8, color: "rgba(255,255,255,0.22)", padding: 20, textAlign: "center" }}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9h18M8 4v16" /></svg>
+        <p style={{ fontSize: 10.5, fontFamily: SERIF, margin: 0 }}>Select a row to view company / asset details</p>
+      </div>
+    );
+  }
+  const prof = SAMPLE_PROFILES[row.company];
+  return (
+    <div style={{ padding: "16px 16px", height: "100%", boxSizing: "border-box", overflowY: "auto" }}>
+      <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Company / Asset</p>
+      <h3 style={{ fontSize: 15, color: warmWhite, fontFamily: SERIF, margin: "4px 0 0 0", lineHeight: 1.2 }}>{row.company}</h3>
+      <p style={{ fontSize: 10, color: "rgb(172,172,172)", margin: "3px 0 0 0" }}>{row.site}</p>
+      <div style={{ marginTop: 12, paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <Row label="Country" value={row.country} />
+        <Row label="Entity type" value={row.physical_entity_type} />
+        <Row label="Qty / contained" value={row.qty} />
+        <Row label="Status" value={row.status} />
+        <Row label="Confidence" value={row.confidence} />
+      </div>
+      <div style={{ marginTop: 12, paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <p style={{ fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.07em", margin: "0 0 8px 0" }}>Company Profile</p>
+        {prof ? (
+          <>
+            <Row label="Headquarters" value={prof.hq} />
+            <Row label="Founded" value={prof.founded} />
+            <Row label="Ownership" value={prof.ownership} />
+            <Row label="Primary output" value={prof.primary_output} />
+            <Prose>{prof.note}</Prose>
+          </>
+        ) : (
+          <p style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", fontFamily: SERIF, margin: 0 }}>Detailed profile not yet loaded for this entity.</p>
+        )}
+      </div>
     </div>
   );
 }
@@ -1044,29 +1103,21 @@ function DashButton({ children, onClick }: { children: React.ReactNode; onClick:
 }
 
 function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPhysical, onViewCompanies }: { stages: StageInfo[]; selectedKey: string; dash: StageDashboard; onSelectStage: (k: string) => void; onViewPhysical: () => void; onViewCompanies: () => void }) {
+  const [selRow, setSelRow] = useState<StageTableRow | null>(null);
+  useEffect(() => { setSelRow(null); }, [dash.key]);
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16, padding: "4px 4px 24px", maxWidth: 1440, margin: "0 auto" }}>
+    <div style={{ display: "flex", flexDirection: "column", padding: "4px 4px 24px", maxWidth: 1440, margin: "0 auto" }}>
       <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} />
-      <div style={{ borderRadius: 10, background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 22px" }}>
-        {/* header: title + description on the left, metric cards inline on the right */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 20, flexWrap: "wrap" }}>
-          <div style={{ flex: "1 1 340px", minWidth: 300 }}>
-            <h2 style={{ fontSize: 21, color: warmWhite, fontFamily: SERIF, margin: 0 }}>{dash.label}</h2>
-            {dash.description && <p style={{ fontSize: 11.5, color: "rgb(172,172,172)", lineHeight: 1.5, margin: "6px 0 0 0", maxWidth: 560 }}>{dash.description}</p>}
-          </div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", flexShrink: 0 }}>
-            <MetricCard label="Sites / Assets" value={String(dash.sites)} />
-            <MetricCard label="Companies" value={String(dash.companies)} />
-            <MetricCard label="Countries" value={String(dash.countries)} />
-            <MetricCard label="Total Qty / Contained" value={dash.total_qty} />
-          </div>
-        </div>
-        {/* two columns */}
-        <div style={{ display: "flex", gap: 24, marginTop: 20, alignItems: "flex-start", flexWrap: "wrap" }}>
-          <div style={{ flex: "1 1 380px", minWidth: 340, display: "flex", flexDirection: "column", gap: 22 }}>
-            <div>
-              <SectionHead>Geographic Map — Site Locations</SectionHead>
-              <WorldMap points={dash.points} height={300} />
+      <div style={{ borderRadius: "0 10px 10px 10px", background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 20px" }}>
+        {/* TOP SECTION — left: description + metrics + concentration/mix ; right: map */}
+        <div style={{ display: "flex", gap: 22, alignItems: "stretch", flexWrap: "wrap" }}>
+          <div style={{ flex: "0 1 320px", minWidth: 280, display: "flex", flexDirection: "column", gap: 18 }}>
+            {dash.description && <p style={{ fontSize: 11.5, color: "rgb(172,172,172)", lineHeight: 1.5, margin: 0 }}>{dash.description}</p>}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              <MetricCard label="Sites / Assets" value={String(dash.sites)} />
+              <MetricCard label="Companies" value={String(dash.companies)} />
+              <MetricCard label="Countries" value={String(dash.countries)} />
+              <MetricCard label="Total Qty / Contained" value={dash.total_qty} />
             </div>
             <div>
               <SectionHead>Geographic Distribution / Concentration</SectionHead>
@@ -1076,11 +1127,27 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
               <SectionHead>Physical Entity Node Group Mix</SectionHead>
               <PegDonut data={dash.pegmix} sites={dash.sites} />
             </div>
-            <DashButton onClick={onViewPhysical}>View physical entities ({dash.sites})</DashButton>
           </div>
-          <div style={{ flex: "1 1 460px", minWidth: 380, display: "flex", flexDirection: "column", gap: 12 }}>
-            <SectionHead>Companies &amp; Participating Records ({dash.companies})</SectionHead>
-            <CompaniesTable rows={dash.rows} />
+          <div style={{ flex: "1 1 460px", minWidth: 360, display: "flex", flexDirection: "column" }}>
+            <SectionHead>Geographic Map — Site Locations</SectionHead>
+            <div style={{ flex: 1, display: "flex" }}>
+              <WorldMap points={dash.points} height="100%" />
+            </div>
+          </div>
+        </div>
+        {/* BOTTOM SECTION — companies / assets table + company card */}
+        <div style={{ marginTop: 22 }}>
+          <SectionHead>Companies &amp; Physical Entities ({dash.rows.length})</SectionHead>
+          <div style={{ display: "flex", gap: 16, alignItems: "stretch", flexWrap: "wrap" }}>
+            <div style={{ flex: "1 1 560px", minWidth: 400, borderRadius: 9, background: "rgb(17,16,15)", border: "1px solid rgb(40,37,34)", overflowX: "auto" }}>
+              <CompaniesTable rows={dash.rows} selectedId={selRow?.entity_id ?? null} onRowClick={setSelRow} />
+            </div>
+            <div style={{ flex: "0 0 300px", minWidth: 260, borderRadius: 9, background: "rgb(24,22,20)", border: "1px solid rgb(40,37,34)" }}>
+              <CompanyCard row={selRow} />
+            </div>
+          </div>
+          <div style={{ marginTop: 14, display: "flex", gap: 10, maxWidth: 460 }}>
+            <DashButton onClick={onViewPhysical}>View physical entities ({dash.sites})</DashButton>
             <DashButton onClick={onViewCompanies}>View company graph ({dash.companies})</DashButton>
           </div>
         </div>
