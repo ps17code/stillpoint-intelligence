@@ -907,7 +907,7 @@ function WorldMap({ points, height = 300, selectedId, onSelect }: { points: Stag
       return { k: k2, tx: vx - wx * k2, ty: vy - wy * k2 };
     });
   };
-  const onDown = (e: React.PointerEvent) => { drag.current = { x: e.clientX, y: e.clientY, tx: view.tx, ty: view.ty }; setDragging(true); (e.currentTarget as Element).setPointerCapture?.(e.pointerId); };
+  const onDown = (e: React.PointerEvent) => { drag.current = { x: e.clientX, y: e.clientY, tx: view.tx, ty: view.ty }; setDragging(true); };
   const onMove = (e: React.PointerEvent) => {
     if (!drag.current) return;
     const { scale } = geom();
