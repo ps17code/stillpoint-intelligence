@@ -67,6 +67,7 @@ type CollapsedDetail = {
 
 const MONO = "'Geist Mono', monospace";
 const SERIF = "'EB Garamond', Georgia, serif";
+const DMSANS = "'DM Sans', sans-serif";
 const warmWhite = "#ece8e1";
 const accent = "#c87a4a";
 const cardBg = "rgb(36, 32, 29)";
@@ -934,8 +935,12 @@ function WorldMap({ points, height = 300, selectedId, onSelect }: { points: Stag
             ? clusters.map((c, i) => {
                 const r = (5 + Math.min(9, c.n)) / view.k;
                 return (
-                  <g key={i} style={{ cursor: "pointer" }} onClick={() => setView(v => { const k2 = Math.max(3.2, v.k * 2.2); return { k: k2, tx: MAP_W / 2 - c.x * k2, ty: MAP_H / 2 - c.y * k2 }; })}>
-                    <circle cx={c.x} cy={c.y} r={r} fill="rgba(200,122,74,0.28)" stroke={accent} strokeWidth={0.9 / view.k} />
+                  <g key={i} style={{ cursor: "pointer" }} onClick={() => setView(v => { const k2 = Math.max(4, v.k * 2.6); return { k: k2, tx: MAP_W / 2 - c.x * k2, ty: MAP_H / 2 - c.y * k2 }; })}>
+                    <circle cx={c.x} cy={c.y} r={r} fill="none" stroke={accent} strokeWidth={0.8 / view.k}>
+                      <animate attributeName="r" values={`${r};${r * 2.3}`} dur="1.8s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.65;0" dur="1.8s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx={c.x} cy={c.y} r={r} fill="rgba(200,122,74,0.3)" stroke={accent} strokeWidth={0.9 / view.k} />
                     <text x={c.x} y={c.y + 2.6 / view.k} textAnchor="middle" fontSize={7.5 / view.k} fill={warmWhite} fontFamily={MONO}>{c.n}</text>
                   </g>
                 );
@@ -1210,16 +1215,16 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
     <div style={{ display: "flex", flexDirection: "column", padding: "4px 4px 24px", maxWidth: 1440, margin: "0 auto" }}>
       <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} />
       <div style={{ borderRadius: "0 10px 10px 10px", background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 20px" }}>
-        {/* top row: total-contained card · OVERVIEW + takeaway · top-3 lists (all top-aligned) */}
-        <div style={{ display: "flex", gap: 26, flexWrap: "wrap", alignItems: "flex-start" }}>
-          <div style={{ flexShrink: 0, width: 190, padding: "13px 15px", borderRadius: 8, background: "rgb(24,22,20)", border: "1px solid rgb(45,41,39)" }}>
+        {/* top row: total-contained card · OVERVIEW + takeaway · top-3 lists (equal height) */}
+        <div style={{ display: "flex", gap: 26, flexWrap: "wrap", alignItems: "stretch" }}>
+          <div style={{ flexShrink: 0, width: 190, boxSizing: "border-box", padding: "14px 15px", borderRadius: 8, background: "rgb(24,22,20)", border: "1px solid rgb(45,41,39)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <p style={{ fontSize: 8, color: "#807869", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: 0, lineHeight: 1.35 }}>Total Resources Contained</p>
-            <p style={{ fontSize: 28, color: warmWhite, fontFamily: SERIF, margin: "9px 0 0 0", lineHeight: 1 }}>{dash.total_qty}</p>
+            <p style={{ fontSize: 30, color: warmWhite, fontFamily: SERIF, margin: "9px 0 0 0", lineHeight: 1 }}>{dash.total_qty}</p>
             <p style={{ fontSize: 9, color: "#807869", fontFamily: MONO, margin: "6px 0 0 0" }}>across {dash.sites} sites</p>
           </div>
-          <div style={{ flex: "1 1 260px", minWidth: 240 }}>
+          <div style={{ flex: "1 1 260px", minWidth: 240, display: "flex", flexDirection: "column" }}>
             <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>Overview</p>
-            <p style={{ fontSize: 13.5, color: warmWhite, fontFamily: MONO, lineHeight: 1.55, margin: "8px 0 0 0" }}>{dash.key_takeaway || dash.analysis?.takeaways?.[0] || dash.description}</p>
+            <p style={{ fontSize: 13, color: warmWhite, fontFamily: DMSANS, lineHeight: 1.55, margin: "9px 0 0 0" }}>{dash.key_takeaway || dash.analysis?.takeaways?.[0] || dash.description}</p>
           </div>
           <div style={{ flex: "1.6 1 420px", minWidth: 380, display: "flex", gap: 22 }}>
             <TopList total={`${dash.countries} Countries`} items={dash.geo.slice(0, 3).map(g => ({ label: g.name, value: `${g.pct}%`, flag: g.name }))} />
