@@ -1120,7 +1120,7 @@ function KeyPlayers({ companies }: { companies: StageCompany[] }) {
 function tableStatusColor(s: string) { return /prospect|develop|plan/i.test(s) ? "#c8a24a" : /identif|operat|produc|active/i.test(s) ? "#7fae6f" : "rgb(172,172,172)"; }
 
 function CompaniesTable({ rows, selectedId, onRowClick }: { rows: StageTableRow[]; selectedId: string | null; onRowClick: (r: StageTableRow) => void }) {
-  const th: React.CSSProperties = { textAlign: "left", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", padding: "0 10px 8px 10px", fontWeight: 400, whiteSpace: "nowrap" };
+  const th: React.CSSProperties = { textAlign: "left", fontSize: 8, color: "#8a8177", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", padding: "10px 10px", fontWeight: 400, whiteSpace: "nowrap", background: "rgb(28,26,24)", borderBottom: "1px solid rgb(45,41,39)" };
   const base: React.CSSProperties = { fontSize: 10, color: "rgb(190,190,190)", padding: "8px 10px", borderTop: "1px solid rgb(38,35,32)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" };
   const cell = (w: number): React.CSSProperties => ({ ...base, maxWidth: w });
   return (
@@ -1234,7 +1234,7 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
               <p style={{ fontSize: 12, color: warmWhite, fontFamily: DMSANS, lineHeight: 1.55, margin: "8px 0 0 0" }}>{dash.key_takeaway || dash.analysis?.takeaways?.[0] || dash.description}</p>
             </div>
           </div>
-          <div style={{ flex: "1.6 1 420px", minWidth: 380, display: "flex", gap: 22 }}>
+          <div style={{ flex: "1.6 1 420px", minWidth: 380, display: "flex", gap: 22, alignItems: "center" }}>
             <TopList total={`${dash.countries} Countries`} items={dash.geo.slice(0, 3).map(g => ({ label: g.name, value: `${g.pct}%`, flag: g.name }))} />
             <TopList total={`${dash.companies} Companies`} items={dash.topCompanies.slice(0, 3).map(c => ({ label: c.name, value: `~${c.share}%`, flag: c.country }))} />
             <TopList total={`${dash.sites} Sites`} items={dash.pegmix.slice(0, 3).map(p => ({ label: p.name, value: String(p.count) }))} />
@@ -1249,7 +1249,7 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
             <div style={{ position: "absolute", top: 8, left: 8, zIndex: 5, display: "flex", gap: 4, background: "rgba(0,0,0,0.5)", borderRadius: 7, padding: 3 }}>{toggleBtn("map", "◎ Map")}{toggleBtn("table", "▦ Table")}</div>
             {mode === "map"
               ? <WorldMap points={dash.points} height={440} selectedId={selId} onSelect={setSelId} />
-              : <div style={{ width: "100%", height: 440, borderRadius: 8, background: "rgb(17,16,15)", border: "1px solid rgb(40,37,34)", overflow: "auto", paddingTop: 44 }}>
+              : <div style={{ width: "100%", height: 440, borderRadius: 8, background: "rgb(17,16,15)", border: "1px solid rgb(40,37,34)", overflow: "auto", paddingTop: 52 }}>
                   <CompaniesTable rows={dash.rows} selectedId={selId} onRowClick={r => setSelId(r.entity_id)} />
                 </div>}
           </div>
