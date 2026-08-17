@@ -249,7 +249,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     const found = lookupNode(v);
     const co = found ? null : getCompanyRecordV2(v);
     if (found) {
-      setLoaded(found); setView("overview"); setSelId(null);
+      setLoaded(found); setView("overview"); setSelId(null); setStagesShown(false);
       setLog(l => [...l, `▶ search "${v}"`, `✓ found ${found.name} — node object overview (${found.classGraph.downstream.length} downstream class nodes)`]);
     } else if (co) {
       setCompanyRec(co); setView("company"); setExpanded(new Set([co.common.organizational_entity_id]));
@@ -374,6 +374,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   // staged entrance for the node-object overview: node → lines → children → panel
   const [reveal, setReveal] = useState(0);
   const [exiting, setExiting] = useState(false);
+  const [stagesShown, setStagesShown] = useState(false); // node object expanded to stages (shared by overview + dashboard)
   useEffect(() => {
     if (view !== "overview") { setReveal(0); return; }
     setExiting(false); setReveal(0);
@@ -454,10 +455,10 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
               <TreeCanvas columns={universeView.columns} edges={universeView.edges} fill gap={30} onCardClick={(id) => { const n = ALL_NODES.find(x => x.classGraph.node.id === id); if (n) { setLoaded(n); setView("overview"); setSelId(null); } }} />
             )}
             {view === "overview" && loaded && (
-              <AerialGraph loaded={loaded} stages={stages} reveal={reveal} exiting={exiting} onStageExpand={(key) => { setStageKey(key); setSelId(null); setExiting(true); window.setTimeout(() => { setView("stage"); }, 420); }} onOpenSupply={() => { setView("supply"); setSelId(null); }} />
+              <AerialGraph loaded={loaded} stages={stages} reveal={reveal} exiting={exiting} expanded={stagesShown} onToggleExpand={() => setStagesShown(v => !v)} onStageExpand={(key) => { setStageKey(key); setSelId(null); setExiting(true); window.setTimeout(() => { setView("stage"); }, 420); }} onOpenSupply={() => { setView("supply"); setSelId(null); }} />
             )}
             {view === "stage" && loaded && stageDash && (
-              <StageDashboardView stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} onSelectStage={(key) => setStageKey(key)} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
+              <StageDashboardView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} onSelectStage={(key) => setStageKey(key)} onCollapse={() => { setStagesShown(true); setView("overview"); setSelId(null); }} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
             )}
             {view === "class" && classView && (
               <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { if (id === classView.rootId) { setView("supply"); setSelId(null); } }} />
@@ -693,12 +694,12 @@ function StageCard({ stage, color, onExpand }: { stage: StageInfo; color: string
 }
 
 /* aerial graph: parents · node-object-container(with stage cards) · child nodes */
-function AerialGraph({ loaded, stages, reveal, exiting, onStageExpand, onOpenSupply }: { loaded: LoadedNode; stages: StageInfo[]; reveal: number; exiting: boolean; onStageExpand: (key: string) => void; onOpenSupply: () => void }) {
+function AerialGraph({ loaded, stages, reveal, exiting, expanded, onToggleExpand, onStageExpand, onOpenSupply }: { loaded: LoadedNode; stages: StageInfo[]; reveal: number; exiting: boolean; expanded: boolean; onToggleExpand: () => void; onStageExpand: (key: string) => void; onOpenSupply: () => void }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
   const childRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
-  const [collapsed, setCollapsed] = useState(true);
+  const collapsed = !expanded;
   const children = loaded.classGraph.downstream;
   const stagesWidth = stages.length * 142 + Math.max(0, stages.length - 1) * 24 + 28;
 
@@ -754,7 +755,7 @@ function AerialGraph({ loaded, stages, reveal, exiting, onStageExpand, onOpenSup
           <span style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
           <div style={{ display: "flex", alignItems: "center", gap: 7, flexShrink: 0 }}>
             <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
-            <button onClick={e => { e.stopPropagation(); setCollapsed(c => !c); }} title={collapsed ? "Show supply-chain stages" : "Collapse to node"} style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "2px 4px", cursor: "pointer", color: "#8a8378" }}>
+            <button onClick={e => { e.stopPropagation(); onToggleExpand(); }} title={collapsed ? "Show supply-chain stages" : "Collapse to node"} style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "2px 4px", cursor: "pointer", color: "#8a8378" }}>
               {collapsed
                 ? <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="8 4 16 12 8 20" /></svg>
                 : <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>}
@@ -1221,7 +1222,7 @@ function DashButton({ children, onClick }: { children: React.ReactNode; onClick:
   );
 }
 
-function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPhysical, onViewCompanies }: { stages: StageInfo[]; selectedKey: string; dash: StageDashboard; onSelectStage: (k: string) => void; onViewPhysical: () => void; onViewCompanies: () => void }) {
+function StageDashboardView({ loaded, stages, selectedKey, dash, onSelectStage, onCollapse, onViewPhysical, onViewCompanies }: { loaded: LoadedNode; stages: StageInfo[]; selectedKey: string; dash: StageDashboard; onSelectStage: (k: string) => void; onCollapse: () => void; onViewPhysical: () => void; onViewCompanies: () => void }) {
   const [selId, setSelId] = useState<string | null>(null);
   const [mode, setMode] = useState<"map" | "table">("map");
   useEffect(() => { setSelId(null); }, [dash.key]);
@@ -1230,9 +1231,21 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
     <button onClick={() => setMode(m)} style={{ padding: "5px 13px", borderRadius: 5, cursor: "pointer", fontFamily: MONO, fontSize: 9.5, background: mode === m ? "rgba(200,122,74,0.2)" : "transparent", border: `1px solid ${mode === m ? accent : "rgba(255,255,255,0.12)"}`, color: mode === m ? warmWhite : "#9a9186" }}>{label}</button>
   );
   return (
-    <div style={{ display: "flex", flexDirection: "column", padding: "4px 4px 24px", maxWidth: 1440, margin: "0 auto", animation: "ndPop 0.4s ease both" }}>
-      <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} onEntityGraph={onViewCompanies} />
-      <div style={{ borderRadius: "0 10px 10px 10px", background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 20px" }}>
+    <div style={{ minHeight: "100%", display: "flex", padding: "4px 2px 20px", animation: "ndPop 0.4s ease both" }}>
+      {/* node object expanded to fill the page — dashboard lives inside, keeping the orange node frame */}
+      <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 13, boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", padding: "13px 16px 16px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 12 }}>
+          <button onClick={onCollapse} title="Collapse to node overview" style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "3px 5px", cursor: "pointer", color: "#8a8378" }}
+            onMouseEnter={e => { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
+            onMouseLeave={e => { e.currentTarget.style.color = "#8a8378"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.14)"; }}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>
+          </button>
+          <span style={{ fontSize: 17, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
+          <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
+          <span style={{ marginLeft: "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>Stage Market View</span>
+        </div>
+        <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} onEntityGraph={onViewCompanies} />
+        <div style={{ flex: 1, borderRadius: "0 10px 10px 10px", background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 20px" }}>
         {/* top row: total-contained card · OVERVIEW + takeaway · top-3 lists (equal height) */}
         <div style={{ display: "flex", gap: 26, flexWrap: "wrap", alignItems: "stretch" }}>
           <div style={{ flex: "1 1 470px", minWidth: 400, display: "flex", borderRadius: 8, background: "rgb(24,22,20)", border: "1px solid rgb(45,41,39)", overflow: "hidden" }}>
@@ -1270,6 +1283,7 @@ function StageDashboardView({ stages, selectedKey, dash, onSelectStage, onViewPh
             <CompanyCard row={selRow} />
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
