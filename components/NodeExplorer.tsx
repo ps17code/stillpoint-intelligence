@@ -458,7 +458,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
               <TreeCanvas columns={universeView.columns} edges={universeView.edges} fill gap={30} onCardClick={(id) => { const n = ALL_NODES.find(x => x.classGraph.node.id === id); if (n) { setLoaded(n); setView("overview"); setSelId(null); } }} />
             )}
             {view === "overview" && loaded && (
-              <AerialGraph loaded={loaded} stages={stages} reveal={reveal} exiting={exiting} expanded={stagesShown} onToggleExpand={() => setStagesShown(v => !v)} onStageExpand={(key, rect) => { setStageKey(key); setSelId(null); setOriginRect(rect); setExiting(true); window.setTimeout(() => { setView("pegs"); }, 300); }} onOpenSupply={() => { setView("supply"); setSelId(null); }} />
+              <AerialGraph loaded={loaded} stages={stages} reveal={reveal} exiting={exiting} expanded={stagesShown} onToggleExpand={() => setStagesShown(v => !v)} onStageExpand={(key, rect) => { setStageKey(key); setSelId(null); setOriginRect(rect); setExiting(true); window.setTimeout(() => { setView("stage"); }, 300); }} onOpenGraph={(rect) => { setSelId(null); setOriginRect(rect); setExiting(true); window.setTimeout(() => { setView("pegs"); }, 300); }} />
             )}
             {view === "pegs" && loaded && stageGraph && (
               <StagePegView loaded={loaded} graph={stageGraph} selectedKey={stageKey ?? stages[0]?.key ?? ""} originRect={originRect} onOpenStage={(key) => { setStageKey(key); setOriginRect(null); setView("stage"); }} onCollapse={() => { setStagesShown(true); setView("overview"); setSelId(null); }} />
@@ -660,47 +660,52 @@ function StageConnector({ top }: { top?: number }) {
   );
 }
 
-function StageCard({ stage, color, onExpand }: { stage: StageInfo; color: string; onExpand: () => void }) {
+// placeholder status palette — real signal wiring comes later
+const STAGE_STATUS: Record<string, { label: string; color: string }> = {
+  stable: { label: "Stable", color: "#6f9e78" },
+  constrained: { label: "Constrained", color: "#c8974a" },
+  distressed: { label: "Distressed", color: "#c8624a" },
+};
+function StageCardMetric({ label, value, color }: { label: string; value: number | string; color?: string }) {
   return (
-    <div style={{ height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", padding: "10px 11px", borderRadius: 7, background: "rgb(30,28,26)", border: "1px solid rgb(48,43,40)", borderTop: `2px solid ${color}` }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 6 }}>
-        <span style={{ fontSize: 11, color: warmWhite, fontFamily: SERIF }}>{stage.label}</span>
+    <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 6 }}>
+      <span style={{ fontSize: 7.5, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>{label}</span>
+      <span style={{ fontSize: 12, color: color ?? warmWhite, fontFamily: DMSANS, fontWeight: 500 }}>{value}</span>
+    </div>
+  );
+}
+function StageCard({ stage, color, index, onOpen }: { stage: StageInfo; color: string; index: number; onOpen: () => void }) {
+  // deterministic placeholder signals until real data is wired in
+  const statusKey = (["constrained", "stable", "distressed"] as const)[index % 3];
+  const status = STAGE_STATUS[statusKey];
+  const chokepoints = (index % 3) + 1;
+  const signals = ((index * 2) % 5) + 1;
+  const opportunities = (index + 1) % 4;
+  return (
+    <div
+      onClick={e => { e.stopPropagation(); onOpen(); }}
+      title="Open market dashboard"
+      style={{ height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", padding: "10px 11px", borderRadius: 7, cursor: "pointer", background: "rgb(30,28,26)", border: "1px solid rgb(48,43,40)", borderTop: `2px solid ${color}`, transition: "border-color 0.15s, background 0.15s" }}
+      onMouseEnter={e => { e.currentTarget.style.background = "rgb(36,33,30)"; e.currentTarget.style.borderColor = "rgba(200,122,74,0.4)"; }}
+      onMouseLeave={e => { e.currentTarget.style.background = "rgb(30,28,26)"; e.currentTarget.style.borderColor = "rgb(48,43,40)"; }}
+    >
+      <span style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF, lineHeight: 1.2 }}>{stage.label}</span>
+      <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 7 }}>
+        <span style={{ width: 6, height: 6, borderRadius: "50%", background: status.color, flexShrink: 0 }} />
+        <span style={{ fontSize: 8, color: status.color, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.05em" }}>{status.label}</span>
       </div>
-      {stage.quantity_metric && <p style={{ fontSize: 8.5, color, fontFamily: MONO, margin: "3px 0 0 0", lineHeight: 1.4 }}>{stage.quantity_metric}</p>}
-      {stage.description && <p style={{ fontSize: 9, color: "#8f877b", margin: "4px 0 0 0", lineHeight: 1.4 }}>{stage.description}</p>}
-      {stage.top_countries.length > 0 && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 5, marginTop: 8 }}>
-          {stage.top_countries.map(c => (
-            <div key={c.name}>
-              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <Flag country={c.name} size={13} />
-                <span style={{ fontSize: 9.5, color: warmWhite }}>{c.name}</span>
-              </div>
-              {c.companies.length > 0 && (
-                <p style={{ fontSize: 7.5, color: "#807869", fontFamily: MONO, margin: "1px 0 0 19px", lineHeight: 1.4 }}>{c.companies.map(x => x.length > 18 ? x.slice(0, 17) + "…" : x).join(" · ")}</p>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-      <div style={{ marginTop: "auto", paddingTop: 9 }}>
-        <p style={{ fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: "0 0 6px 0" }}>{stage.count_label}</p>
-        <button
-          onClick={onExpand}
-          style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 5, background: "rgba(200,122,74,0.12)", border: `1px solid rgba(200,122,74,0.5)`, borderRadius: 5, padding: "4px 8px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 8.5 }}
-          onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.24)"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,122,74,0.12)"; }}
-        >
-          Expand
-          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-        </button>
+      <div style={{ display: "flex", flexDirection: "column", gap: 5, marginTop: 11, paddingTop: 9, borderTop: "1px solid rgb(42,38,35)" }}>
+        <StageCardMetric label="Entities" value={stage.entity_count} />
+        <StageCardMetric label="Chokepoints" value={chokepoints} color={chokepoints > 0 ? "#c8974a" : warmWhite} />
+        <StageCardMetric label="Signals" value={signals} />
+        <StageCardMetric label="Opportunities" value={opportunities} color={opportunities > 0 ? "#6f9e78" : warmWhite} />
       </div>
     </div>
   );
 }
 
 /* aerial graph: parents · node-object-container(with stage cards) · child nodes */
-function AerialGraph({ loaded, stages, reveal, exiting, expanded, onToggleExpand, onStageExpand, onOpenSupply }: { loaded: LoadedNode; stages: StageInfo[]; reveal: number; exiting: boolean; expanded: boolean; onToggleExpand: () => void; onStageExpand: (key: string, rect: DOMRect | null) => void; onOpenSupply: () => void }) {
+function AerialGraph({ loaded, stages, reveal, exiting, expanded, onToggleExpand, onStageExpand, onOpenGraph }: { loaded: LoadedNode; stages: StageInfo[]; reveal: number; exiting: boolean; expanded: boolean; onToggleExpand: () => void; onStageExpand: (key: string, rect: DOMRect | null) => void; onOpenGraph: (rect: DOMRect | null) => void }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
   const childRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -753,9 +758,9 @@ function AerialGraph({ loaded, stages, reveal, exiting, expanded, onToggleExpand
       {/* node object — expands in place from class node to the supply-chain stage row */}
       <div
         ref={nodeRef}
-        onClick={collapsed ? onOpenSupply : undefined}
-        title={collapsed ? "Open supply chain graph" : undefined}
-        style={{ zIndex: 1, flexShrink: 0, width: collapsed ? 210 : stagesWidth, cursor: collapsed ? "pointer" : "default", background: "rgba(200,122,74,0.06)", border: `1px solid ${accent}`, borderRadius: 11, padding: "12px 13px 14px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", opacity: reveal >= 1 ? 1 : 0, transition: "width 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease" }}
+        onClick={() => onOpenGraph(nodeRef.current?.getBoundingClientRect() ?? null)}
+        title="Open supply-chain graph"
+        style={{ zIndex: 1, flexShrink: 0, width: collapsed ? 210 : stagesWidth, cursor: "pointer", background: "rgba(200,122,74,0.06)", border: `1px solid ${accent}`, borderRadius: 11, padding: "12px 13px 14px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", opacity: reveal >= 1 ? 1 : 0, transition: "width 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease" }}
       >
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
           <span style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
@@ -769,16 +774,16 @@ function AerialGraph({ loaded, stages, reveal, exiting, expanded, onToggleExpand
           </div>
         </div>
         {collapsed ? (
-          <p style={{ fontSize: 8.5, color: "#807869", fontFamily: MONO, margin: "8px 0 0 0" }}>Click to open supply chain →</p>
+          <p style={{ fontSize: 8.5, color: "#807869", fontFamily: MONO, margin: "8px 0 0 0" }}>Click to open supply-chain graph →</p>
         ) : (
           <>
-            <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "8px 0 0 0" }}>Supply-chain stages</p>
+            <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "8px 0 0 0" }}>Supply-chain stages · click a stage to open its dashboard</p>
             <div style={{ display: "flex", flexDirection: "row", alignItems: "stretch", flexWrap: "nowrap", marginTop: 7, overflow: "hidden" }}>
               {stages.map((s, i) => (
                 <React.Fragment key={s.key}>
                   {i > 0 && <StageConnector />}
                   <div style={{ width: 142, flexShrink: 0, display: "flex", animation: "fadeSlideUp 0.42s ease both", animationDelay: `${200 + i * 110}ms` }}>
-                    <StageCard stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} onExpand={() => onStageExpand(s.key, nodeRef.current?.getBoundingClientRect() ?? null)} />
+                    <StageCard stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} index={i} onOpen={() => onStageExpand(s.key, nodeRef.current?.getBoundingClientRect() ?? null)} />
                   </div>
                 </React.Fragment>
               ))}
