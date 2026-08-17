@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect, useCallback, useMemo } from "react";
 import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, computeStageDashboard, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo, type StageDashboard, type StageBar, type StagePeg, type StageTableRow, type StagePoint, type StageCompany } from "@/lib/explorerRegistry";
 import WORLD_PATHS from "@/data/world-paths.json";
 
@@ -375,6 +375,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const [reveal, setReveal] = useState(0);
   const [exiting, setExiting] = useState(false);
   const [stagesShown, setStagesShown] = useState(false); // node object expanded to stages (shared by overview + dashboard)
+  const [originRect, setOriginRect] = useState<DOMRect | null>(null); // node rect captured for the shared-element expand into the dashboard
   useEffect(() => {
     if (view !== "overview") { setReveal(0); return; }
     setExiting(false); setReveal(0);
@@ -455,10 +456,10 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
               <TreeCanvas columns={universeView.columns} edges={universeView.edges} fill gap={30} onCardClick={(id) => { const n = ALL_NODES.find(x => x.classGraph.node.id === id); if (n) { setLoaded(n); setView("overview"); setSelId(null); } }} />
             )}
             {view === "overview" && loaded && (
-              <AerialGraph loaded={loaded} stages={stages} reveal={reveal} exiting={exiting} expanded={stagesShown} onToggleExpand={() => setStagesShown(v => !v)} onStageExpand={(key) => { setStageKey(key); setSelId(null); setExiting(true); window.setTimeout(() => { setView("stage"); }, 420); }} onOpenSupply={() => { setView("supply"); setSelId(null); }} />
+              <AerialGraph loaded={loaded} stages={stages} reveal={reveal} exiting={exiting} expanded={stagesShown} onToggleExpand={() => setStagesShown(v => !v)} onStageExpand={(key, rect) => { setStageKey(key); setSelId(null); setOriginRect(rect); setExiting(true); window.setTimeout(() => { setView("stage"); }, 300); }} onOpenSupply={() => { setView("supply"); setSelId(null); }} />
             )}
             {view === "stage" && loaded && stageDash && (
-              <StageDashboardView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} onSelectStage={(key) => setStageKey(key)} onCollapse={() => { setStagesShown(true); setView("overview"); setSelId(null); }} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
+              <StageDashboardView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} originRect={originRect} onSelectStage={(key) => setStageKey(key)} onCollapse={() => { setStagesShown(true); setView("overview"); setSelId(null); }} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
             )}
             {view === "class" && classView && (
               <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { if (id === classView.rootId) { setView("supply"); setSelId(null); } }} />
@@ -694,7 +695,7 @@ function StageCard({ stage, color, onExpand }: { stage: StageInfo; color: string
 }
 
 /* aerial graph: parents · node-object-container(with stage cards) · child nodes */
-function AerialGraph({ loaded, stages, reveal, exiting, expanded, onToggleExpand, onStageExpand, onOpenSupply }: { loaded: LoadedNode; stages: StageInfo[]; reveal: number; exiting: boolean; expanded: boolean; onToggleExpand: () => void; onStageExpand: (key: string) => void; onOpenSupply: () => void }) {
+function AerialGraph({ loaded, stages, reveal, exiting, expanded, onToggleExpand, onStageExpand, onOpenSupply }: { loaded: LoadedNode; stages: StageInfo[]; reveal: number; exiting: boolean; expanded: boolean; onToggleExpand: () => void; onStageExpand: (key: string, rect: DOMRect | null) => void; onOpenSupply: () => void }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
   const childRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -772,7 +773,7 @@ function AerialGraph({ loaded, stages, reveal, exiting, expanded, onToggleExpand
                 <React.Fragment key={s.key}>
                   {i > 0 && <StageConnector />}
                   <div style={{ width: 142, flexShrink: 0, display: "flex", animation: "fadeSlideUp 0.42s ease both", animationDelay: `${200 + i * 110}ms` }}>
-                    <StageCard stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} onExpand={() => onStageExpand(s.key)} />
+                    <StageCard stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} onExpand={() => onStageExpand(s.key, nodeRef.current?.getBoundingClientRect() ?? null)} />
                   </div>
                 </React.Fragment>
               ))}
@@ -1222,31 +1223,39 @@ function DashButton({ children, onClick }: { children: React.ReactNode; onClick:
   );
 }
 
-function StageDashboardView({ loaded, stages, selectedKey, dash, onSelectStage, onCollapse, onViewPhysical, onViewCompanies }: { loaded: LoadedNode; stages: StageInfo[]; selectedKey: string; dash: StageDashboard; onSelectStage: (k: string) => void; onCollapse: () => void; onViewPhysical: () => void; onViewCompanies: () => void }) {
+function StageDashboardView({ loaded, stages, selectedKey, dash, originRect, onSelectStage, onCollapse, onViewPhysical, onViewCompanies }: { loaded: LoadedNode; stages: StageInfo[]; selectedKey: string; dash: StageDashboard; originRect: DOMRect | null; onSelectStage: (k: string) => void; onCollapse: () => void; onViewPhysical: () => void; onViewCompanies: () => void }) {
   const [selId, setSelId] = useState<string | null>(null);
   const [mode, setMode] = useState<"map" | "table">("map");
   useEffect(() => { setSelId(null); }, [dash.key]);
-  // mount: the node container expands to full size first, then the dashboard content appears
-  const [phase, setPhase] = useState(0);
-  useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 30);
-    const t2 = setTimeout(() => setPhase(2), 560);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, []);
+  // shared-element expand: start the container at the overview node's exact rect, then grow to full; content appears after
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [flip, setFlip] = useState<{ transform: string; transition: string }>({ transform: "none", transition: "none" });
+  const [contentIn, setContentIn] = useState(false);
+  useLayoutEffect(() => {
+    const el = containerRef.current;
+    if (!el || !originRect) { setContentIn(true); return; }
+    const f = el.getBoundingClientRect();
+    const sx = Math.max(0.04, originRect.width / f.width);
+    const sy = Math.max(0.04, originRect.height / f.height);
+    setFlip({ transform: `translate(${originRect.left - f.left}px, ${originRect.top - f.top}px) scale(${sx}, ${sy})`, transition: "none" });
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => { raf2 = requestAnimationFrame(() => setFlip({ transform: "none", transition: "transform 0.52s cubic-bezier(0.4,0,0.2,1)" })); });
+    const t = setTimeout(() => setContentIn(true), 540);
+    return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); clearTimeout(t); };
+  }, [originRect]);
   const selRow = selId ? dash.rows.find(r => r.entity_id === selId) ?? null : null;
   const toggleBtn = (m: "map" | "table", label: string) => (
     <button onClick={() => setMode(m)} style={{ padding: "5px 13px", borderRadius: 5, cursor: "pointer", fontFamily: MONO, fontSize: 9.5, background: mode === m ? "rgba(200,122,74,0.2)" : "transparent", border: `1px solid ${mode === m ? accent : "rgba(255,255,255,0.12)"}`, color: mode === m ? warmWhite : "#9a9186" }}>{label}</button>
   );
   return (
-    <div style={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "flex-start", padding: "4px 2px 20px" }}>
-      {/* node object expands to fill the page first, then the dashboard content appears inside the orange node frame */}
-      <div style={{
-        width: phase >= 1 ? "100%" : "min(820px, 100%)",
-        minHeight: phase >= 1 ? "calc(100vh - 150px)" : 150,
+    <div style={{ minHeight: "100%", display: "flex", padding: "4px 2px 20px" }}>
+      {/* the overview node grows into this container (shared-element FLIP), then the dashboard content appears inside the orange node frame */}
+      <div ref={containerRef} style={{
+        width: "100%", minHeight: "calc(100vh - 150px)",
         minWidth: 0, display: "flex", flexDirection: "column", overflow: "hidden",
         background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 13,
         boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", padding: "13px 16px 16px",
-        transition: "width 0.5s cubic-bezier(0.4,0,0.2,1), min-height 0.5s cubic-bezier(0.4,0,0.2,1)",
+        transform: flip.transform, transformOrigin: "top left", transition: flip.transition, willChange: "transform",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 12 }}>
           <span style={{ fontSize: 17, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
@@ -1258,7 +1267,7 @@ function StageDashboardView({ loaded, stages, selectedKey, dash, onSelectStage, 
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>
           </button>
         </div>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", opacity: phase >= 2 ? 1 : 0, transition: "opacity 0.4s ease" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", opacity: contentIn ? 1 : 0, transition: "opacity 0.4s ease" }}>
         <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} onEntityGraph={onViewCompanies} />
         <div style={{ flex: 1, borderRadius: "0 10px 10px 10px", background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 20px" }}>
         {/* top row: total-contained card · OVERVIEW + takeaway · top-3 lists (equal height) */}
