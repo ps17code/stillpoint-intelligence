@@ -512,12 +512,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
             <CompanyRecordPanel rec={companyRec} />
           </div>
         )}
-        {/* node object overview panel — slides in after the graph reveals */}
-        {view === "overview" && loaded && overview && (
-          <div style={{ flexBasis: 400, flexGrow: 0, flexShrink: 0, width: 400, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)", opacity: (reveal >= 4 && !exiting) ? 1 : 0, transform: (reveal >= 4 && !exiting) ? "translateX(0)" : "translateX(30px)", transition: "opacity 0.4s ease, transform 0.4s ease" }}>
-            <OverviewPanel loaded={loaded} overview={overview} />
-          </div>
-        )}
+        {/* node object overview panel hidden for now (OverviewPanel retained for later) */}
         {/* stage analysis panel hidden — dashboard takes full width (StageAnalysisPanel retained for later) */}
       </div>
 
