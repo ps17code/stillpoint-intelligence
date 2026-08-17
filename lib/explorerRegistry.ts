@@ -204,6 +204,37 @@ export function computeStageDashboard(node: LoadedNode, stageKey: string): Stage
   };
 }
 
+/* full stage graph: PEG nodes per stage column (with entity counts) + edges across stages */
+export type StageGraphPeg = { id: string; name: string; count: number };
+export type StageGraphColumn = { key: string; label: string; description: string; pegs: StageGraphPeg[] };
+export type StageGraph = { columns: StageGraphColumn[]; edges: { from: string; to: string }[] };
+export function computeStageGraph(node: LoadedNode): StageGraph {
+  const sg = node.supplyGraph;
+  const ov = node.overview;
+  const countByGroup = new Map<string, number>();
+  for (const e of node.entityGraph.entities) if (e.group_id) countByGroup.set(e.group_id, (countByGroup.get(e.group_id) ?? 0) + 1);
+  const byCol = new Map<string, Map<string, StageGraphPeg>>();
+  const mapNodeToGroup: Record<string, string> = {};
+  for (const n of sg.map_nodes) {
+    mapNodeToGroup[n.map_node_id] = n.group_id;
+    let col = byCol.get(n.column); if (!col) { col = new Map(); byCol.set(n.column, col); }
+    if (!col.has(n.group_id)) col.set(n.group_id, { id: n.group_id, name: n.group_name, count: countByGroup.get(n.group_id) ?? 0 });
+  }
+  const seen = new Set<string>();
+  const edges: { from: string; to: string }[] = [];
+  for (const e of sg.edges) {
+    const from = mapNodeToGroup[e.from] ?? e.from;
+    const to = mapNodeToGroup[e.to] ?? e.to;
+    const key = `${from}__${to}`;
+    if (from === to || seen.has(key)) continue;
+    seen.add(key); edges.push({ from, to });
+  }
+  const columns: StageGraphColumn[] = sg.columns
+    .map((c) => ({ key: c.key, label: c.label, description: ov?.stages?.[c.key]?.description ?? "", pegs: Array.from((byCol.get(c.key) ?? new Map<string, StageGraphPeg>()).values()) }))
+    .filter((c) => c.pegs.length > 0);
+  return { columns, edges };
+}
+
 /* physical entity node groups within a stage, each with its companies (for the intermediate PEG view) */
 export type StagePegCompany = { name: string; country: string };
 export type StagePegGroup = { group_id: string; group_name: string; companies: StagePegCompany[] };

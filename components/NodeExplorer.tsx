@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useLayoutEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, computeStageDashboard, computeStagePegs, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo, type StageDashboard, type StageBar, type StagePeg, type StageTableRow, type StagePoint, type StageCompany, type StagePegGroup } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, computeStageDashboard, computeStageGraph, type StageGraph, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo, type StageDashboard, type StageBar, type StagePeg, type StageTableRow, type StagePoint, type StageCompany } from "@/lib/explorerRegistry";
 import WORLD_PATHS from "@/data/world-paths.json";
 
 /* ── Company Subgraph projection over a canonical Company Record (v2.0) ── */
@@ -391,7 +391,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const overview = loaded?.overview ?? null;
   const stages = useMemo(() => (loaded ? computeStages(loaded) : []), [loaded]);
   const stageDash = useMemo(() => (loaded && stageKey ? computeStageDashboard(loaded, stageKey) : null), [loaded, stageKey]);
-  const stagePegs = useMemo(() => (loaded && stageKey ? computeStagePegs(loaded, stageKey) : []), [loaded, stageKey]);
+  const stageGraph = useMemo(() => (loaded ? computeStageGraph(loaded) : null), [loaded]);
 
   const stageLabel = stages.find(s => s.key === stageKey)?.label ?? "";
   // breadcrumb navigator — where you are + jump back to any level
@@ -460,8 +460,8 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
             {view === "overview" && loaded && (
               <AerialGraph loaded={loaded} stages={stages} reveal={reveal} exiting={exiting} expanded={stagesShown} onToggleExpand={() => setStagesShown(v => !v)} onStageExpand={(key, rect) => { setStageKey(key); setSelId(null); setOriginRect(rect); setExiting(true); window.setTimeout(() => { setView("pegs"); }, 300); }} onOpenSupply={() => { setView("supply"); setSelId(null); }} />
             )}
-            {view === "pegs" && loaded && (
-              <StagePegView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} pegs={stagePegs} originRect={originRect} onSelectStage={(key) => setStageKey(key)} onOpenDashboard={() => { setOriginRect(null); setView("stage"); }} onCollapse={() => { setStagesShown(true); setView("overview"); setSelId(null); }} />
+            {view === "pegs" && loaded && stageGraph && (
+              <StagePegView loaded={loaded} graph={stageGraph} selectedKey={stageKey ?? stages[0]?.key ?? ""} originRect={originRect} onOpenStage={(key) => { setStageKey(key); setOriginRect(null); setView("stage"); }} onCollapse={() => { setStagesShown(true); setView("overview"); setSelId(null); }} />
             )}
             {view === "stage" && loaded && stageDash && (
               <StageDashboardView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} originRect={originRect} onSelectStage={(key) => setStageKey(key)} onCollapse={() => { setOriginRect(null); setView("pegs"); setSelId(null); }} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
@@ -1228,8 +1228,8 @@ function DashButton({ children, onClick }: { children: React.ReactNode; onClick:
   );
 }
 
-/* intermediate view: stage cards become header nodes; the selected one reveals its physical entity node groups (with companies), which feed into the next stage */
-function StagePegView({ loaded, stages, selectedKey, pegs, originRect, onSelectStage, onOpenDashboard, onCollapse }: { loaded: LoadedNode; stages: StageInfo[]; selectedKey: string; pegs: StagePegGroup[]; originRect: DOMRect | null; onSelectStage: (k: string) => void; onOpenDashboard: () => void; onCollapse: () => void }) {
+/* intermediate view: the full supply-chain graph — every physical entity group node connected across all stages, with each stage card as a column header showing only stage name + description */
+function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onCollapse }: { loaded: LoadedNode; graph: StageGraph; selectedKey: string; originRect: DOMRect | null; onOpenStage: (k: string) => void; onCollapse: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [flip, setFlip] = useState<{ transform: string; transition: string }>({ transform: "none", transition: "none" });
   const [contentIn, setContentIn] = useState(false);
@@ -1247,35 +1247,28 @@ function StagePegView({ loaded, stages, selectedKey, pegs, originRect, onSelectS
   }, [originRect]);
 
   const boxRef = useRef<HTMLDivElement>(null);
-  const headerRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const pegRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number; color: string }[]>([]);
-  const selIdx = stages.findIndex(s => s.key === selectedKey);
-  const nextStage = stages[selIdx + 1];
+  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
+  const colOf = useMemo(() => {
+    const m: Record<string, number> = {};
+    graph.columns.forEach((c, i) => c.pegs.forEach(p => { m[p.id] = i; }));
+    return m;
+  }, [graph]);
 
   const measure = useCallback(() => {
     const box = boxRef.current?.getBoundingClientRect(); if (!box) return;
-    const next: { x1: number; y1: number; x2: number; y2: number; color: string }[] = [];
-    const selHeader = headerRefs.current[selectedKey];
-    if (selHeader) {
-      const hb = selHeader.getBoundingClientRect();
-      for (const g of pegs) {
-        const el = pegRefs.current[g.group_id]; if (!el) continue;
-        const pb = el.getBoundingClientRect();
-        next.push({ x1: hb.left + hb.width / 2 - box.left, y1: hb.bottom - box.top, x2: pb.left + pb.width / 2 - box.left, y2: pb.top - box.top, color: accent });
-      }
-    }
-    const nh = nextStage ? headerRefs.current[nextStage.key] : null;
-    if (nh) {
-      const nb = nh.getBoundingClientRect();
-      for (const g of pegs) {
-        const el = pegRefs.current[g.group_id]; if (!el) continue;
-        const pb = el.getBoundingClientRect();
-        next.push({ x1: pb.left + pb.width / 2 - box.left, y1: pb.bottom - box.top, x2: nb.left + nb.width / 2 - box.left, y2: nb.bottom - box.top, color: "#8ab0c0" });
-      }
+    const next: { x1: number; y1: number; x2: number; y2: number }[] = [];
+    for (const e of graph.edges) {
+      const a = pegRefs.current[e.from]; const b = pegRefs.current[e.to];
+      if (!a || !b) continue;
+      // draw left→right by column order so beziers flow forward through the chain
+      const fwd = (colOf[e.from] ?? 0) <= (colOf[e.to] ?? 0);
+      const src = fwd ? a : b; const dst = fwd ? b : a;
+      const sb = src.getBoundingClientRect(); const db = dst.getBoundingClientRect();
+      next.push({ x1: sb.right - box.left, y1: sb.top + sb.height / 2 - box.top, x2: db.left - box.left, y2: db.top + db.height / 2 - box.top });
     }
     setLines(next);
-  }, [pegs, selectedKey, nextStage]);
+  }, [graph, colOf]);
 
   useEffect(() => {
     const r = requestAnimationFrame(measure);
@@ -1292,50 +1285,42 @@ function StagePegView({ loaded, stages, selectedKey, pegs, originRect, onSelectS
         <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 12 }}>
           <span style={{ fontSize: 17, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
           <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
-          <span style={{ marginLeft: "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>Supply-chain stage groups</span>
+          <span style={{ marginLeft: "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>Supply-chain graph</span>
           <button onClick={onCollapse} title="Collapse to node overview" style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "3px 5px", cursor: "pointer", color: "#8a8378" }}
             onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }} onMouseLeave={e => { e.currentTarget.style.color = "#8a8378"; }}>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>
           </button>
         </div>
-        <div style={{ flex: 1, opacity: contentIn ? 1 : 0, transition: "opacity 0.4s ease" }}>
-          <div ref={boxRef} style={{ position: "relative", padding: "10px 0 20px" }}>
+        <div style={{ flex: 1, opacity: contentIn ? 1 : 0, transition: "opacity 0.4s ease", overflowX: "auto" }} className="thin-scroll">
+          <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 40, padding: "10px 4px 20px", margin: "0 auto", width: "max-content" }}>
             <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
               {lines.map((l, i) => {
-                const my = (l.y1 + l.y2) / 2;
-                return <path key={i} d={`M ${l.x1} ${l.y1} C ${l.x1} ${my}, ${l.x2} ${my}, ${l.x2} ${l.y2}`} fill="none" stroke={l.color} strokeOpacity={0.5} strokeWidth={1.3} />;
+                const mx = (l.x1 + l.x2) / 2;
+                return <path key={i} d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke="#8ab0c0" strokeOpacity={0.45} strokeWidth={1.3} />;
               })}
             </svg>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "flex-start", gap: 14, position: "relative", zIndex: 1, flexWrap: "wrap" }}>
-              {stages.map((s, i) => {
-                const sel = s.key === selectedKey;
-                const color = STAGE_COLORS[i % STAGE_COLORS.length];
-                return (
-                  <div key={s.key} ref={el => { headerRefs.current[s.key] = el; }}
-                    onClick={() => sel ? onOpenDashboard() : onSelectStage(s.key)}
-                    style={{ width: 168, boxSizing: "border-box", padding: "10px 12px", borderRadius: 8, cursor: "pointer", background: sel ? "rgba(200,122,74,0.1)" : cardBg, border: `1px solid ${sel ? accent : "rgb(48,43,40)"}`, borderTop: `2px solid ${color}` }}>
-                    <p style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF, margin: 0 }}>{s.label}</p>
-                    {s.description && <p style={{ fontSize: 8.5, color: "#8f887c", margin: "4px 0 0 0", lineHeight: 1.4, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{s.description}</p>}
-                    {sel && <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, margin: "6px 0 0 0" }}>Open dashboard →</p>}
+            {graph.columns.map((col, ci) => {
+              const sel = col.key === selectedKey;
+              const color = STAGE_COLORS[ci % STAGE_COLORS.length];
+              return (
+                <div key={col.key} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 14, width: 190, flexShrink: 0 }}>
+                  <div onClick={() => onOpenStage(col.key)}
+                    style={{ boxSizing: "border-box", padding: "10px 12px", borderRadius: 8, cursor: "pointer", background: sel ? "rgba(200,122,74,0.1)" : cardBg, border: `1px solid ${sel ? accent : "rgb(48,43,40)"}`, borderTop: `2px solid ${color}`, transition: "border-color 0.2s, background 0.2s" }}
+                    onMouseEnter={e => { if (!sel) e.currentTarget.style.borderColor = "rgb(70,64,58)"; }}
+                    onMouseLeave={e => { if (!sel) e.currentTarget.style.borderColor = "rgb(48,43,40)"; }}>
+                    <p style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF, margin: 0 }}>{col.label}</p>
+                    {col.description && <p style={{ fontSize: 8.5, color: "#8f887c", margin: "4px 0 0 0", lineHeight: 1.4, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{col.description}</p>}
+                    <p style={{ fontSize: 7.5, color: sel ? accent : "#6f695f", fontFamily: MONO, margin: "6px 0 0 0", letterSpacing: "0.04em" }}>{sel ? "Open dashboard →" : "Signals coming soon"}</p>
                   </div>
-                );
-              })}
-            </div>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", gap: 16, marginTop: 66, position: "relative", zIndex: 1, flexWrap: "wrap" }}>
-              {pegs.map(g => (
-                <div key={g.group_id} ref={el => { pegRefs.current[g.group_id] = el; }} style={{ width: 192, boxSizing: "border-box", padding: "9px 11px", borderRadius: 8, background: "rgb(30,28,26)", border: "1px solid rgb(48,43,40)", borderLeft: "2px solid #8ab0c0" }}>
-                  <p style={{ fontSize: 11, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.25 }}>{g.group_name}</p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 3, marginTop: 7 }}>
-                    {g.companies.map((c, ci) => (
-                      <div key={ci} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                        <Flag country={c.country} size={12} />
-                        <span style={{ fontSize: 9, color: "rgb(172,172,172)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.name}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {col.pegs.map(p => (
+                    <div key={p.id} ref={el => { pegRefs.current[p.id] = el; }} style={{ boxSizing: "border-box", padding: "9px 11px", borderRadius: 8, background: "rgb(30,28,26)", border: "1px solid rgb(48,43,40)", borderLeft: `2px solid ${color}` }}>
+                      <p style={{ fontSize: 11, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.25 }}>{p.name}</p>
+                      <p style={{ fontSize: 8, color: "#8f887c", fontFamily: MONO, margin: "6px 0 0 0", letterSpacing: "0.04em" }}>{p.count} {p.count === 1 ? "entity" : "entities"}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>
