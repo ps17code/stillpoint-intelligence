@@ -1156,8 +1156,8 @@ function DashButton({ children, onClick }: { children: React.ReactNode; onClick:
 }
 
 /* the real-world entity graph, rendered inline inside the node container. Columns reveal left→right (branching out) as they fade in from the right */
-function EntityGraphInline({ loaded }: { loaded: LoadedNode }) {
-  const data = useMemo(() => {
+function EntityGraphInline({ loaded, focusId }: { loaded: LoadedNode; focusId?: string | null }) {
+  const full = useMemo(() => {
     const eg = loaded.entityGraph;
     const byCol: Record<string, Card[]> = {};
     for (const e of eg.entities) {
@@ -1170,6 +1170,15 @@ function EntityGraphInline({ loaded }: { loaded: LoadedNode }) {
     const edges: Edge[] = eg.connections.map(c => ({ from: c.from, to: c.to }));
     return { columns, edges };
   }, [loaded]);
+
+  // when focused on an entity, restrict to its route — every node reachable up or downstream from it
+  const routeSet = useMemo(() => (focusId ? computeHighlight(focusId, full.edges) : null), [focusId, full.edges]);
+  const data = useMemo(() => {
+    if (!routeSet) return full;
+    const columns = full.columns.map(c => ({ label: c.label, items: c.items.filter(it => routeSet.has(it.id)) })).filter(c => c.items.length > 0);
+    const edges = full.edges.filter(e => routeSet.has(e.from) && routeSet.has(e.to));
+    return { columns, edges };
+  }, [full, routeSet]);
 
   const colOfNode = useMemo(() => {
     const m: Record<string, number> = {};
@@ -1235,8 +1244,9 @@ function EntityGraphInline({ loaded }: { loaded: LoadedNode }) {
               <p style={{ fontSize: 7, color: "#706a60", margin: "0 0 3px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{col.label}</p>
               {col.items.map(card => {
                 const inSet = highlightSet?.has(card.id) ?? false;
+                const c = card.id === focusId ? { ...card, featured: true } : card;
                 return (
-                  <NodeCard key={card.id} card={card} highlighted={active && inSet} dimmed={active && !inSet}
+                  <NodeCard key={card.id} card={c} highlighted={active && inSet} dimmed={active && !inSet}
                     nodeRef={el => { nodeRefs.current[card.id] = el; }}
                     onHover={() => setHovered(card.id)} onLeave={() => setHovered(null)} />
                 );
@@ -1275,8 +1285,10 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
   const [expanded, setExpanded] = useState<string | null>(null);
   const [showEntities, setShowEntities] = useState(false); // switched to the inline entity graph
   const [leaving, setLeaving] = useState(false); // fading the supply-chain graph out before the entity graph mounts
-  const goEntities = () => { setLeaving(true); setTimeout(() => setShowEntities(true), 280); };
-  const backToGraph = () => { setShowEntities(false); setLeaving(false); };
+  const [entityFocus, setEntityFocus] = useState<string | null>(null); // when set, show only that entity's route (connected subgraph)
+  const goEntities = () => { setEntityFocus(null); setLeaving(true); setTimeout(() => setShowEntities(true), 280); };
+  const goEntityRoute = (id: string) => { setEntityFocus(id); setLeaving(true); setTimeout(() => setShowEntities(true), 280); };
+  const backToGraph = () => { setShowEntities(false); setLeaving(false); setEntityFocus(null); };
   const colOf = useMemo(() => {
     const m: Record<string, number> = {};
     graph.columns.forEach((c, i) => c.pegs.forEach(p => { m[p.id] = i; }));
@@ -1329,7 +1341,7 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
               Supply-chain graph
             </button>
           )}
-          <span style={{ marginLeft: showEntities ? 0 : "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>{showEntities ? "Entity graph" : "Supply-chain graph"}</span>
+          <span style={{ marginLeft: showEntities ? 0 : "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>{showEntities ? (entityFocus ? "Entity route" : "Entity graph") : "Supply-chain graph"}</span>
           <button onClick={onCollapse} title="Collapse to node overview" style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "3px 5px", cursor: "pointer", color: "#8a8378" }}
             onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }} onMouseLeave={e => { e.currentTarget.style.color = "#8a8378"; }}>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>
@@ -1337,7 +1349,7 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
         </div>
         {showEntities ? (
           <div style={{ flex: 1, minHeight: 0, animation: "fadeInDown 0.3s ease" }}>
-            <EntityGraphInline loaded={loaded} />
+            <EntityGraphInline loaded={loaded} focusId={entityFocus} />
           </div>
         ) : (
         <div style={{ flex: 1, minHeight: 0, opacity: contentIn && !leaving ? 1 : 0, transition: "opacity 0.28s ease", display: "flex", alignItems: "center", overflowX: "auto" }} className="thin-scroll">
@@ -1388,9 +1400,14 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
                         {isExp && ents.length > 0 && (
                           <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid rgb(48,43,40)", display: "flex", flexDirection: "column", gap: 5, animation: "fadeInDown 0.2s ease" }}>
                             {ents.map(en => (
-                              <div key={en.id} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                              <div key={en.id} title="Trace this entity's route"
+                                onClick={e => { e.stopPropagation(); goEntityRoute(en.id); }}
+                                style={{ display: "flex", alignItems: "center", gap: 6, padding: "2px 4px", margin: "0 -4px", borderRadius: 4, cursor: "pointer", transition: "background 0.12s" }}
+                                onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.12)"; const s = e.currentTarget.querySelector("span") as HTMLElement | null; if (s) s.style.color = warmWhite; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; const s = e.currentTarget.querySelector("span") as HTMLElement | null; if (s) s.style.color = "rgb(178,171,160)"; }}>
                                 <Flag country={en.country} size={12} />
-                                <span style={{ fontSize: 9, color: "rgb(178,171,160)", lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{en.physical_entity || en.name}</span>
+                                <span style={{ flex: 1, fontSize: 9, color: "rgb(178,171,160)", lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", transition: "color 0.12s" }}>{en.physical_entity || en.name}</span>
+                                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#6f695f" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><polyline points="9 18 15 12 9 6" /></svg>
                               </div>
                             ))}
                             <button onClick={e => { e.stopPropagation(); goEntities(); }}
