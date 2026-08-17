@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useLayoutEffect, useCallback, useMemo } from "react";
-import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, computeStageDashboard, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo, type StageDashboard, type StageBar, type StagePeg, type StageTableRow, type StagePoint, type StageCompany } from "@/lib/explorerRegistry";
+import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord, getCompanyRecordV2, AVAILABLE_COMPANIES, computeStages, computeStageDashboard, computeStagePegs, type LoadedNode, type EntityNode, type EntityGraph, type FullEntityRecord, type FEOperation, type CompanyRecord, type CompanyRecordV2, type NodeOverview, type StageInfo, type StageDashboard, type StageBar, type StagePeg, type StageTableRow, type StagePoint, type StageCompany, type StagePegGroup } from "@/lib/explorerRegistry";
 import WORLD_PATHS from "@/data/world-paths.json";
 
 /* ── Company Subgraph projection over a canonical Company Record (v2.0) ── */
@@ -218,7 +218,7 @@ function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap
   );
 }
 
-type View = "empty" | "universe" | "overview" | "stage" | "class" | "supply" | "entity" | "company";
+type View = "empty" | "universe" | "overview" | "pegs" | "stage" | "class" | "supply" | "entity" | "company";
 
 export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const [view, setView] = useState<View>("empty");
@@ -391,6 +391,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const overview = loaded?.overview ?? null;
   const stages = useMemo(() => (loaded ? computeStages(loaded) : []), [loaded]);
   const stageDash = useMemo(() => (loaded && stageKey ? computeStageDashboard(loaded, stageKey) : null), [loaded, stageKey]);
+  const stagePegs = useMemo(() => (loaded && stageKey ? computeStagePegs(loaded, stageKey) : []), [loaded, stageKey]);
 
   const stageLabel = stages.find(s => s.key === stageKey)?.label ?? "";
   // breadcrumb navigator — where you are + jump back to any level
@@ -401,7 +402,8 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
       case "universe": return [root, { label: "Class Node Universe" }];
       case "company": return [root, { label: companyRec?.identity.company_name ?? "Company" }];
       case "overview": case "class": return [root, { label: loaded?.name ?? "Node" }];
-      case "stage": return [root, nodeC, { label: stageLabel || "Stage" }];
+      case "pegs": return [root, nodeC, { label: stageLabel || "Stage" }];
+      case "stage": return [root, nodeC, { label: stageLabel || "Stage", go: () => setView("pegs") }, { label: "Market dashboard" }];
       case "supply": return [root, nodeC, { label: "Supply chain graph" }];
       case "entity": return [root, nodeC, { label: "Supply chain graph", go: () => { setView("supply"); setSelId(null); } }, { label: "Entities" }];
       default: return [root];
@@ -456,10 +458,13 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
               <TreeCanvas columns={universeView.columns} edges={universeView.edges} fill gap={30} onCardClick={(id) => { const n = ALL_NODES.find(x => x.classGraph.node.id === id); if (n) { setLoaded(n); setView("overview"); setSelId(null); } }} />
             )}
             {view === "overview" && loaded && (
-              <AerialGraph loaded={loaded} stages={stages} reveal={reveal} exiting={exiting} expanded={stagesShown} onToggleExpand={() => setStagesShown(v => !v)} onStageExpand={(key, rect) => { setStageKey(key); setSelId(null); setOriginRect(rect); setExiting(true); window.setTimeout(() => { setView("stage"); }, 300); }} onOpenSupply={() => { setView("supply"); setSelId(null); }} />
+              <AerialGraph loaded={loaded} stages={stages} reveal={reveal} exiting={exiting} expanded={stagesShown} onToggleExpand={() => setStagesShown(v => !v)} onStageExpand={(key, rect) => { setStageKey(key); setSelId(null); setOriginRect(rect); setExiting(true); window.setTimeout(() => { setView("pegs"); }, 300); }} onOpenSupply={() => { setView("supply"); setSelId(null); }} />
+            )}
+            {view === "pegs" && loaded && (
+              <StagePegView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} pegs={stagePegs} originRect={originRect} onSelectStage={(key) => setStageKey(key)} onOpenDashboard={() => { setOriginRect(null); setView("stage"); }} onCollapse={() => { setStagesShown(true); setView("overview"); setSelId(null); }} />
             )}
             {view === "stage" && loaded && stageDash && (
-              <StageDashboardView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} originRect={originRect} onSelectStage={(key) => setStageKey(key)} onCollapse={() => { setStagesShown(true); setView("overview"); setSelId(null); }} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
+              <StageDashboardView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} originRect={originRect} onSelectStage={(key) => setStageKey(key)} onCollapse={() => { setOriginRect(null); setView("pegs"); setSelId(null); }} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
             )}
             {view === "class" && classView && (
               <TreeCanvas columns={classView.columns} edges={classView.edges} onCardClick={(id) => { if (id === classView.rootId) { setView("supply"); setSelId(null); } }} />
@@ -1220,6 +1225,121 @@ function DashButton({ children, onClick }: { children: React.ReactNode; onClick:
       {children}
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
     </button>
+  );
+}
+
+/* intermediate view: stage cards become header nodes; the selected one reveals its physical entity node groups (with companies), which feed into the next stage */
+function StagePegView({ loaded, stages, selectedKey, pegs, originRect, onSelectStage, onOpenDashboard, onCollapse }: { loaded: LoadedNode; stages: StageInfo[]; selectedKey: string; pegs: StagePegGroup[]; originRect: DOMRect | null; onSelectStage: (k: string) => void; onOpenDashboard: () => void; onCollapse: () => void }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [flip, setFlip] = useState<{ transform: string; transition: string }>({ transform: "none", transition: "none" });
+  const [contentIn, setContentIn] = useState(false);
+  useLayoutEffect(() => {
+    const el = containerRef.current;
+    if (!el || !originRect) { setContentIn(true); return; }
+    const f = el.getBoundingClientRect();
+    const sx = Math.max(0.04, originRect.width / f.width);
+    const sy = Math.max(0.04, originRect.height / f.height);
+    setFlip({ transform: `translate(${originRect.left - f.left}px, ${originRect.top - f.top}px) scale(${sx}, ${sy})`, transition: "none" });
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => { raf2 = requestAnimationFrame(() => setFlip({ transform: "none", transition: "transform 0.52s cubic-bezier(0.4,0,0.2,1)" })); });
+    const t = setTimeout(() => setContentIn(true), 540);
+    return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); clearTimeout(t); };
+  }, [originRect]);
+
+  const boxRef = useRef<HTMLDivElement>(null);
+  const headerRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const pegRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number; color: string }[]>([]);
+  const selIdx = stages.findIndex(s => s.key === selectedKey);
+  const nextStage = stages[selIdx + 1];
+
+  const measure = useCallback(() => {
+    const box = boxRef.current?.getBoundingClientRect(); if (!box) return;
+    const next: { x1: number; y1: number; x2: number; y2: number; color: string }[] = [];
+    const selHeader = headerRefs.current[selectedKey];
+    if (selHeader) {
+      const hb = selHeader.getBoundingClientRect();
+      for (const g of pegs) {
+        const el = pegRefs.current[g.group_id]; if (!el) continue;
+        const pb = el.getBoundingClientRect();
+        next.push({ x1: hb.left + hb.width / 2 - box.left, y1: hb.bottom - box.top, x2: pb.left + pb.width / 2 - box.left, y2: pb.top - box.top, color: accent });
+      }
+    }
+    const nh = nextStage ? headerRefs.current[nextStage.key] : null;
+    if (nh) {
+      const nb = nh.getBoundingClientRect();
+      for (const g of pegs) {
+        const el = pegRefs.current[g.group_id]; if (!el) continue;
+        const pb = el.getBoundingClientRect();
+        next.push({ x1: pb.left + pb.width / 2 - box.left, y1: pb.bottom - box.top, x2: nb.left + nb.width / 2 - box.left, y2: nb.bottom - box.top, color: "#8ab0c0" });
+      }
+    }
+    setLines(next);
+  }, [pegs, selectedKey, nextStage]);
+
+  useEffect(() => {
+    const r = requestAnimationFrame(measure);
+    const t = setTimeout(measure, 120);
+    const ro = new ResizeObserver(() => measure());
+    if (boxRef.current) ro.observe(boxRef.current);
+    window.addEventListener("resize", measure);
+    return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
+  }, [measure, contentIn]);
+
+  return (
+    <div style={{ minHeight: "100%", display: "flex", padding: "4px 2px 20px" }}>
+      <div ref={containerRef} style={{ width: "100%", minHeight: "calc(100vh - 150px)", minWidth: 0, display: "flex", flexDirection: "column", overflow: "hidden", background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 13, boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", padding: "13px 16px 16px", transform: flip.transform, transformOrigin: "top left", transition: flip.transition, willChange: "transform" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 12 }}>
+          <span style={{ fontSize: 17, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
+          <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
+          <span style={{ marginLeft: "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>Supply-chain stage groups</span>
+          <button onClick={onCollapse} title="Collapse to node overview" style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "3px 5px", cursor: "pointer", color: "#8a8378" }}
+            onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }} onMouseLeave={e => { e.currentTarget.style.color = "#8a8378"; }}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>
+          </button>
+        </div>
+        <div style={{ flex: 1, opacity: contentIn ? 1 : 0, transition: "opacity 0.4s ease" }}>
+          <div ref={boxRef} style={{ position: "relative", padding: "10px 0 20px" }}>
+            <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
+              {lines.map((l, i) => {
+                const my = (l.y1 + l.y2) / 2;
+                return <path key={i} d={`M ${l.x1} ${l.y1} C ${l.x1} ${my}, ${l.x2} ${my}, ${l.x2} ${l.y2}`} fill="none" stroke={l.color} strokeOpacity={0.5} strokeWidth={1.3} />;
+              })}
+            </svg>
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "flex-start", gap: 14, position: "relative", zIndex: 1, flexWrap: "wrap" }}>
+              {stages.map((s, i) => {
+                const sel = s.key === selectedKey;
+                const color = STAGE_COLORS[i % STAGE_COLORS.length];
+                return (
+                  <div key={s.key} ref={el => { headerRefs.current[s.key] = el; }}
+                    onClick={() => sel ? onOpenDashboard() : onSelectStage(s.key)}
+                    style={{ width: 168, boxSizing: "border-box", padding: "10px 12px", borderRadius: 8, cursor: "pointer", background: sel ? "rgba(200,122,74,0.1)" : cardBg, border: `1px solid ${sel ? accent : "rgb(48,43,40)"}`, borderTop: `2px solid ${color}` }}>
+                    <p style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF, margin: 0 }}>{s.label}</p>
+                    {s.description && <p style={{ fontSize: 8.5, color: "#8f887c", margin: "4px 0 0 0", lineHeight: 1.4, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{s.description}</p>}
+                    {sel && <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, margin: "6px 0 0 0" }}>Open dashboard →</p>}
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", gap: 16, marginTop: 66, position: "relative", zIndex: 1, flexWrap: "wrap" }}>
+              {pegs.map(g => (
+                <div key={g.group_id} ref={el => { pegRefs.current[g.group_id] = el; }} style={{ width: 192, boxSizing: "border-box", padding: "9px 11px", borderRadius: 8, background: "rgb(30,28,26)", border: "1px solid rgb(48,43,40)", borderLeft: "2px solid #8ab0c0" }}>
+                  <p style={{ fontSize: 11, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.25 }}>{g.group_name}</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 3, marginTop: 7 }}>
+                    {g.companies.map((c, ci) => (
+                      <div key={ci} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        <Flag country={c.country} size={12} />
+                        <span style={{ fontSize: 9, color: "rgb(172,172,172)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

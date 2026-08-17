@@ -204,6 +204,22 @@ export function computeStageDashboard(node: LoadedNode, stageKey: string): Stage
   };
 }
 
+/* physical entity node groups within a stage, each with its companies (for the intermediate PEG view) */
+export type StagePegCompany = { name: string; country: string };
+export type StagePegGroup = { group_id: string; group_name: string; companies: StagePegCompany[] };
+export function computeStagePegs(node: LoadedNode, stageKey: string): StagePegGroup[] {
+  const ents = node.entityGraph.entities.filter((e) => e.column === stageKey);
+  const map = new Map<string, StagePegGroup>();
+  for (const e of ents) {
+    const gid = e.group_id || "unknown";
+    let g = map.get(gid);
+    if (!g) { g = { group_id: gid, group_name: e.group_name || gid, companies: [] }; map.set(gid, g); }
+    const comp = e.organizational_entity || e.name;
+    if (comp && comp !== "Undisclosed" && !g.companies.some((c) => c.name === comp)) g.companies.push({ name: comp, country: e.country || "" });
+  }
+  return Array.from(map.values());
+}
+
 export function computeStages(node: LoadedNode): StageInfo[] {
   const ov = node.overview;
   const ents = node.entityGraph.entities;
