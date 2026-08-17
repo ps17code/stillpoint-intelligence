@@ -1226,24 +1226,39 @@ function StageDashboardView({ loaded, stages, selectedKey, dash, onSelectStage, 
   const [selId, setSelId] = useState<string | null>(null);
   const [mode, setMode] = useState<"map" | "table">("map");
   useEffect(() => { setSelId(null); }, [dash.key]);
+  // mount: the node container expands to full size first, then the dashboard content appears
+  const [phase, setPhase] = useState(0);
+  useEffect(() => {
+    const t1 = setTimeout(() => setPhase(1), 30);
+    const t2 = setTimeout(() => setPhase(2), 560);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
   const selRow = selId ? dash.rows.find(r => r.entity_id === selId) ?? null : null;
   const toggleBtn = (m: "map" | "table", label: string) => (
     <button onClick={() => setMode(m)} style={{ padding: "5px 13px", borderRadius: 5, cursor: "pointer", fontFamily: MONO, fontSize: 9.5, background: mode === m ? "rgba(200,122,74,0.2)" : "transparent", border: `1px solid ${mode === m ? accent : "rgba(255,255,255,0.12)"}`, color: mode === m ? warmWhite : "#9a9186" }}>{label}</button>
   );
   return (
-    <div style={{ minHeight: "100%", display: "flex", padding: "4px 2px 20px", animation: "ndPop 0.4s ease both" }}>
-      {/* node object expanded to fill the page — dashboard lives inside, keeping the orange node frame */}
-      <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 13, boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", padding: "13px 16px 16px" }}>
+    <div style={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "flex-start", padding: "4px 2px 20px" }}>
+      {/* node object expands to fill the page first, then the dashboard content appears inside the orange node frame */}
+      <div style={{
+        width: phase >= 1 ? "100%" : "min(820px, 100%)",
+        minHeight: phase >= 1 ? "calc(100vh - 150px)" : 150,
+        minWidth: 0, display: "flex", flexDirection: "column", overflow: "hidden",
+        background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 13,
+        boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", padding: "13px 16px 16px",
+        transition: "width 0.5s cubic-bezier(0.4,0,0.2,1), min-height 0.5s cubic-bezier(0.4,0,0.2,1)",
+      }}>
         <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 12 }}>
+          <span style={{ fontSize: 17, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
+          <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
+          <span style={{ marginLeft: "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>Stage Market View</span>
           <button onClick={onCollapse} title="Collapse to node overview" style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "3px 5px", cursor: "pointer", color: "#8a8378" }}
             onMouseEnter={e => { e.currentTarget.style.color = warmWhite; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
             onMouseLeave={e => { e.currentTarget.style.color = "#8a8378"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.14)"; }}>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>
           </button>
-          <span style={{ fontSize: 17, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
-          <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
-          <span style={{ marginLeft: "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>Stage Market View</span>
         </div>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", opacity: phase >= 2 ? 1 : 0, transition: "opacity 0.4s ease" }}>
         <StageTabs stages={stages} selectedKey={selectedKey} onSelect={onSelectStage} onEntityGraph={onViewCompanies} />
         <div style={{ flex: 1, borderRadius: "0 10px 10px 10px", background: "rgb(20,19,18)", border: "1px solid rgb(40,37,34)", padding: "18px 20px" }}>
         {/* top row: total-contained card · OVERVIEW + takeaway · top-3 lists (equal height) */}
@@ -1283,6 +1298,7 @@ function StageDashboardView({ loaded, stages, selectedKey, dash, onSelectStage, 
             <CompanyCard row={selRow} />
           </div>
         </div>
+      </div>
       </div>
       </div>
     </div>
