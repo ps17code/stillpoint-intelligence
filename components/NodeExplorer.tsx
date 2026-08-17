@@ -179,7 +179,7 @@ function EdgeLines({ edgeRefs, containerRef, highlightSet }: { edgeRefs: { from:
 }
 
 /* shared column renderer */
-function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap = 46, fill = false }: { columns: Column[]; edges: Edge[]; onCardClick?: (id: string) => void; selected?: string | null; colWidth?: number; gap?: number; fill?: boolean }) {
+function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap = 46, fill = false }: { columns: Column[]; edges: Edge[]; onCardClick?: (id: string, rect: DOMRect | null) => void; selected?: string | null; colWidth?: number; gap?: number; fill?: boolean }) {
   const treeRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const active = hovered ?? selected ?? null;
@@ -208,7 +208,7 @@ function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap
                 nodeRef={getRef(card.id)}
                 onHover={() => setHovered(card.id)}
                 onLeave={() => setHovered(null)}
-                onClick={card.clickable && onCardClick ? () => onCardClick(card.id) : undefined}
+                onClick={card.clickable && onCardClick ? () => onCardClick(card.id, getRef(card.id).current?.getBoundingClientRect() ?? null) : undefined}
               />
             );
           })}
@@ -218,7 +218,7 @@ function TreeCanvas({ columns, edges, onCardClick, selected, colWidth = 172, gap
   );
 }
 
-type View = "empty" | "universe" | "overview" | "pegs" | "stage" | "class" | "supply" | "entity" | "company";
+type View = "empty" | "universe" | "pegs" | "stage" | "class" | "supply" | "entity" | "company";
 
 export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const [view, setView] = useState<View>("empty");
@@ -249,8 +249,8 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     const found = lookupNode(v);
     const co = found ? null : getCompanyRecordV2(v);
     if (found) {
-      setLoaded(found); setView("overview"); setSelId(null); setStagesShown(false);
-      setLog(l => [...l, `▶ search "${v}"`, `✓ found ${found.name} — node object overview (${found.classGraph.downstream.length} downstream class nodes)`]);
+      setLoaded(found); setSelId(null); setStageKey(null); setOriginRect(null); setView("pegs");
+      setLog(l => [...l, `▶ search "${v}"`, `✓ found ${found.name} — supply-chain graph (${found.classGraph.downstream.length} downstream class nodes)`]);
     } else if (co) {
       setCompanyRec(co); setView("company"); setExpanded(new Set([co.common.organizational_entity_id]));
       setLog(l => [...l, `▶ search "${v}"`, `✓ found company ${co.identity.company_name} — projecting company subgraph (${co.economic_activities.length} economic activities)`]);
@@ -371,24 +371,8 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     return loaded.entityGraph.entities.find(e => e.id === selId) ?? null;
   }, [view, loaded, selId]);
 
-  // staged entrance for the node-object overview: node → lines → children → panel
-  const [reveal, setReveal] = useState(0);
-  const [exiting, setExiting] = useState(false);
-  const [stagesShown, setStagesShown] = useState(false); // node object expanded to stages (shared by overview + dashboard)
-  const [originRect, setOriginRect] = useState<DOMRect | null>(null); // node rect captured for the shared-element expand into the dashboard
-  useEffect(() => {
-    if (view !== "overview") { setReveal(0); return; }
-    setExiting(false); setReveal(0);
-    const ts = [
-      setTimeout(() => setReveal(1), 90),
-      setTimeout(() => setReveal(2), 400),
-      setTimeout(() => setReveal(3), 720),
-      setTimeout(() => setReveal(4), 1080),
-    ];
-    return () => ts.forEach(clearTimeout);
-  }, [view, loaded]);
+  const [originRect, setOriginRect] = useState<DOMRect | null>(null); // node rect captured for the shared-element expand into the graph/dashboard
 
-  const overview = loaded?.overview ?? null;
   const stages = useMemo(() => (loaded ? computeStages(loaded) : []), [loaded]);
   const stageDash = useMemo(() => (loaded && stageKey ? computeStageDashboard(loaded, stageKey) : null), [loaded, stageKey]);
   const stageGraph = useMemo(() => (loaded ? computeStageGraph(loaded) : null), [loaded]);
@@ -397,13 +381,14 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   // breadcrumb navigator — where you are + jump back to any level
   const crumbs: { label: string; go?: () => void }[] = (() => {
     const root = { label: "Node Explorer", go: () => { setView("empty"); setLoaded(null); setSelId(null); setCompanyRec(null); } };
-    const nodeC = { label: loaded?.name ?? "Node", go: () => { setView("overview"); setSelId(null); } };
+    const universeC = { label: "Class Node Universe", go: () => { setView("universe"); setSelId(null); } };
+    const nodeC = { label: loaded?.name ?? "Node", go: () => { setView("pegs"); setSelId(null); } };
     switch (view) {
       case "universe": return [root, { label: "Class Node Universe" }];
       case "company": return [root, { label: companyRec?.identity.company_name ?? "Company" }];
-      case "overview": case "class": return [root, { label: loaded?.name ?? "Node" }];
-      case "pegs": return [root, nodeC, { label: stageLabel || "Stage" }];
-      case "stage": return [root, nodeC, { label: stageLabel || "Stage", go: () => setView("pegs") }, { label: "Market dashboard" }];
+      case "class": return [root, universeC, { label: loaded?.name ?? "Node" }];
+      case "pegs": return [root, universeC, { label: loaded?.name ?? "Node" }];
+      case "stage": return [root, nodeC, { label: stageLabel || "Market dashboard" }];
       case "supply": return [root, nodeC, { label: "Supply chain graph" }];
       case "entity": return [root, nodeC, { label: "Supply chain graph", go: () => { setView("supply"); setSelId(null); } }, { label: "Entities" }];
       default: return [root];
@@ -455,13 +440,10 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
               <CompanyGraph root={companyView} expanded={expanded} onToggle={toggleNode} />
             )}
             {view === "universe" && (
-              <TreeCanvas columns={universeView.columns} edges={universeView.edges} fill gap={30} onCardClick={(id) => { const n = ALL_NODES.find(x => x.classGraph.node.id === id); if (n) { setLoaded(n); setView("overview"); setSelId(null); } }} />
-            )}
-            {view === "overview" && loaded && (
-              <AerialGraph loaded={loaded} stages={stages} reveal={reveal} exiting={exiting} expanded={stagesShown} onToggleExpand={() => setStagesShown(v => !v)} onStageExpand={(key, rect) => { setStageKey(key); setSelId(null); setOriginRect(rect); setExiting(true); window.setTimeout(() => { setView("stage"); }, 300); }} onOpenGraph={(rect) => { setSelId(null); setOriginRect(rect); setExiting(true); window.setTimeout(() => { setView("pegs"); }, 300); }} />
+              <TreeCanvas columns={universeView.columns} edges={universeView.edges} fill gap={30} onCardClick={(id, rect) => { const n = ALL_NODES.find(x => x.classGraph.node.id === id); if (n) { setLoaded(n); setSelId(null); setStageKey(null); setOriginRect(rect); setView("pegs"); } }} />
             )}
             {view === "pegs" && loaded && stageGraph && (
-              <StagePegView loaded={loaded} graph={stageGraph} selectedKey={stageKey ?? stages[0]?.key ?? ""} originRect={originRect} onOpenStage={(key) => { setStageKey(key); setOriginRect(null); setView("stage"); }} onCollapse={() => { setStagesShown(true); setView("overview"); setSelId(null); }} />
+              <StagePegView loaded={loaded} graph={stageGraph} selectedKey={stageKey ?? stages[0]?.key ?? ""} originRect={originRect} onOpenStage={(key) => { setStageKey(key); setOriginRect(null); setView("stage"); }} onCollapse={() => { setView("universe"); setSelId(null); }} />
             )}
             {view === "stage" && loaded && stageDash && (
               <StageDashboardView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} originRect={originRect} onSelectStage={(key) => setStageKey(key)} onCollapse={() => { setOriginRect(null); setView("pegs"); setSelId(null); }} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
@@ -508,12 +490,6 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
         {view === "company" && companyRec && (
           <div style={{ flexBasis: 430, flexGrow: 0, flexShrink: 0, width: 430, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)" }}>
             <CompanyRecordPanel rec={companyRec} />
-          </div>
-        )}
-        {/* node object overview panel — slides in after the graph reveals */}
-        {view === "overview" && loaded && overview && (
-          <div style={{ flexBasis: 400, flexGrow: 0, flexShrink: 0, width: 400, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)", opacity: (reveal >= 4 && !exiting) ? 1 : 0, transform: (reveal >= 4 && !exiting) ? "translateX(0)" : "translateX(30px)", transition: "opacity 0.4s ease, transform 0.4s ease" }}>
-            <OverviewPanel loaded={loaded} overview={overview} />
           </div>
         )}
         {/* stage analysis panel hidden — dashboard takes full width (StageAnalysisPanel retained for later) */}
@@ -651,204 +627,6 @@ function Flag({ country, size = 14 }: { country: string; size?: number }) {
 }
 
 const STAGE_COLORS = ["#7fae6f", "#c8a24a", "#8ab0c0", "#b08fce", "#cf9b7f", "#9a938a"];
-
-function StageConnector({ top }: { top?: number }) {
-  return (
-    <div style={{ width: 24, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#6b655c", alignSelf: top != null ? "flex-start" : undefined, marginTop: top }}>
-      <svg width="24" height="9" viewBox="0 0 24 9" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"><line x1="1" y1="4.5" x2="18" y2="4.5" /><polyline points="14,1 20,4.5 14,8" /></svg>
-    </div>
-  );
-}
-
-// placeholder status palette — real signal wiring comes later
-const STAGE_STATUS: Record<string, { label: string; color: string }> = {
-  stable: { label: "Stable", color: "#6f9e78" },
-  constrained: { label: "Constrained", color: "#c8974a" },
-  distressed: { label: "Distressed", color: "#c8624a" },
-};
-function StageCardMetric({ label, value, color }: { label: string; value: number | string; color?: string }) {
-  return (
-    <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 6 }}>
-      <span style={{ fontSize: 7.5, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em" }}>{label}</span>
-      <span style={{ fontSize: 12, color: color ?? warmWhite, fontFamily: DMSANS, fontWeight: 500 }}>{value}</span>
-    </div>
-  );
-}
-function StageCard({ stage, color, index, onOpen }: { stage: StageInfo; color: string; index: number; onOpen: () => void }) {
-  // deterministic placeholder signals until real data is wired in
-  const statusKey = (["constrained", "stable", "distressed"] as const)[index % 3];
-  const status = STAGE_STATUS[statusKey];
-  const chokepoints = (index % 3) + 1;
-  const signals = ((index * 2) % 5) + 1;
-  const opportunities = (index + 1) % 4;
-  return (
-    <div
-      onClick={e => { e.stopPropagation(); onOpen(); }}
-      title="Open market dashboard"
-      style={{ height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", padding: "10px 11px", borderRadius: 7, cursor: "pointer", background: "rgb(30,28,26)", border: "1px solid rgb(48,43,40)", borderTop: `2px solid ${color}`, transition: "border-color 0.15s, background 0.15s" }}
-      onMouseEnter={e => { e.currentTarget.style.background = "rgb(36,33,30)"; e.currentTarget.style.borderColor = "rgba(200,122,74,0.4)"; }}
-      onMouseLeave={e => { e.currentTarget.style.background = "rgb(30,28,26)"; e.currentTarget.style.borderColor = "rgb(48,43,40)"; }}
-    >
-      <span style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF, lineHeight: 1.2 }}>{stage.label}</span>
-      <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 7 }}>
-        <span style={{ width: 6, height: 6, borderRadius: "50%", background: status.color, flexShrink: 0 }} />
-        <span style={{ fontSize: 8, color: status.color, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.05em" }}>{status.label}</span>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 5, marginTop: 11, paddingTop: 9, borderTop: "1px solid rgb(42,38,35)" }}>
-        <StageCardMetric label="Entities" value={stage.entity_count} />
-        <StageCardMetric label="Chokepoints" value={chokepoints} color={chokepoints > 0 ? "#c8974a" : warmWhite} />
-        <StageCardMetric label="Signals" value={signals} />
-        <StageCardMetric label="Opportunities" value={opportunities} color={opportunities > 0 ? "#6f9e78" : warmWhite} />
-      </div>
-    </div>
-  );
-}
-
-/* aerial graph: parents · node-object-container(with stage cards) · child nodes */
-function AerialGraph({ loaded, stages, reveal, exiting, expanded, onToggleExpand, onStageExpand, onOpenGraph }: { loaded: LoadedNode; stages: StageInfo[]; reveal: number; exiting: boolean; expanded: boolean; onToggleExpand: () => void; onStageExpand: (key: string, rect: DOMRect | null) => void; onOpenGraph: (rect: DOMRect | null) => void }) {
-  const boxRef = useRef<HTMLDivElement>(null);
-  const nodeRef = useRef<HTMLDivElement>(null);
-  const childRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
-  const collapsed = !expanded;
-  const children = loaded.classGraph.downstream;
-  const stagesWidth = stages.length * 142 + Math.max(0, stages.length - 1) * 24 + 28;
-
-  const measure = useCallback(() => {
-    const box = boxRef.current?.getBoundingClientRect();
-    const n = nodeRef.current?.getBoundingClientRect();
-    if (!box || !n) return;
-    const next: { x1: number; y1: number; x2: number; y2: number }[] = [];
-    for (const c of children) {
-      const el = childRefs.current[c.id];
-      if (!el) continue;
-      const cb = el.getBoundingClientRect();
-      next.push({ x1: n.right - box.left, y1: n.top + n.height / 2 - box.top, x2: cb.left - box.left, y2: cb.top + cb.height / 2 - box.top });
-    }
-    setLines(next);
-  }, [children]);
-
-  useEffect(() => {
-    const r = requestAnimationFrame(measure);
-    const t = setTimeout(measure, 90);
-    const ro = new ResizeObserver(() => measure());
-    if (boxRef.current) ro.observe(boxRef.current);
-    window.addEventListener("resize", measure);
-    return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
-  }, [measure, collapsed]);
-
-  // follow the layout while the node width animates (expand/collapse) so lines stay attached
-  useEffect(() => {
-    let raf = 0; let ticks = 0;
-    const tick = () => { measure(); if (++ticks < 40) raf = requestAnimationFrame(tick); };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [collapsed, measure]);
-
-  return (
-    <div ref={boxRef} style={{ position: "relative", minHeight: "100%", display: "flex", padding: "16px 10px" }}>
-      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0, opacity: exiting ? 0 : 1, transition: "opacity 0.35s ease" }}>
-        {lines.map((l, i) => {
-          const mx = (l.x1 + l.x2) / 2;
-          return <path key={i} d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke={lineColor} strokeWidth={1.2} pathLength={1} strokeDasharray={1} strokeDashoffset={reveal >= 2 ? 0 : 1} style={{ transition: "stroke-dashoffset 0.6s ease" }} />;
-        })}
-      </svg>
-      <div style={{ display: "flex", alignItems: "center", gap: 32, margin: "0 auto" }}>
-
-      {/* node object — expands in place from class node to the supply-chain stage row */}
-      <div
-        ref={nodeRef}
-        onClick={() => onOpenGraph(nodeRef.current?.getBoundingClientRect() ?? null)}
-        title="Open supply-chain graph"
-        style={{ zIndex: 1, flexShrink: 0, width: collapsed ? 210 : stagesWidth, cursor: "pointer", background: "rgba(200,122,74,0.06)", border: `1px solid ${accent}`, borderRadius: 11, padding: "12px 13px 14px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", opacity: reveal >= 1 ? 1 : 0, transition: "width 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease" }}
-      >
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-          <span style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
-          <div style={{ display: "flex", alignItems: "center", gap: 7, flexShrink: 0 }}>
-            <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
-            <button onClick={e => { e.stopPropagation(); onToggleExpand(); }} title={collapsed ? "Show supply-chain stages" : "Collapse to node"} style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "2px 4px", cursor: "pointer", color: "#8a8378" }}>
-              {collapsed
-                ? <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="8 4 16 12 8 20" /></svg>
-                : <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>}
-            </button>
-          </div>
-        </div>
-        {collapsed ? (
-          <p style={{ fontSize: 8.5, color: "#807869", fontFamily: MONO, margin: "8px 0 0 0" }}>Click to open supply-chain graph →</p>
-        ) : (
-          <>
-            <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "8px 0 0 0" }}>Supply-chain stages · click a stage to open its dashboard</p>
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "stretch", flexWrap: "nowrap", marginTop: 7, overflow: "hidden" }}>
-              {stages.map((s, i) => (
-                <React.Fragment key={s.key}>
-                  {i > 0 && <StageConnector />}
-                  <div style={{ width: 142, flexShrink: 0, display: "flex", animation: "fadeSlideUp 0.42s ease both", animationDelay: `${200 + i * 110}ms` }}>
-                    <StageCard stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} index={i} onOpen={() => onStageExpand(s.key, nodeRef.current?.getBoundingClientRect() ?? null)} />
-                  </div>
-                </React.Fragment>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-
-      {/* child nodes */}
-      {children.length > 0 && (
-        <div style={{ zIndex: 1, flexShrink: 0, display: "flex", flexDirection: "column", gap: 7 }}>
-          <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0, opacity: exiting ? 0 : reveal >= 3 ? 1 : 0, transition: "opacity 0.35s ease" }}>Child nodes ({children.length})</p>
-          {children.map((c, ci) => (
-            <div key={c.id} ref={el => { childRefs.current[c.id] = el; }} style={{ width: 150, padding: "7px 10px", borderRadius: 7, background: cardBg, border: "1px solid rgb(48,43,40)", opacity: exiting ? 0 : reveal >= 3 ? 1 : 0, transition: "opacity 0.35s ease", transitionDelay: exiting ? "0ms" : `${ci * 90}ms` }}>
-              <p style={{ fontSize: 10, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.2 }}>{c.name}</p>
-              <p style={{ fontSize: 7, color: "#8ab0c0", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: "2px 0 0 0" }}>{c.class_type}</p>
-            </div>
-          ))}
-        </div>
-      )}
-      </div>
-    </div>
-  );
-}
-
-/* right panel for the node object overview */
-function OverviewPanel({ loaded, overview }: { loaded: LoadedNode; overview: NodeOverview }) {
-  const m = overview.metrics;
-  return (
-    <div style={{ width: 400, height: "100%", boxSizing: "border-box", overflowY: "auto", padding: "18px 20px" }}>
-      <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Node Object · {loaded.classGraph.node.class_type}</p>
-      <h2 style={{ fontSize: 18, color: warmWhite, fontFamily: SERIF, margin: "4px 0 0 0" }}>{loaded.name}</h2>
-
-      <Sect label="What it is"><Prose>{overview.description.what}</Prose></Sect>
-      <Sect label="Why it matters"><Prose>{overview.description.why}</Prose></Sect>
-      <Sect label="How it's used"><Prose>{overview.description.how}</Prose></Sect>
-
-      <Sect label="Key Metrics">
-        <Sub2 label="Global production" value={m.global_production} />
-        <Sub2 label="Market price" value={m.market_price} />
-        <MicroHead>Top producing countries</MicroHead>
-        {m.top_countries.map((c, i) => (
-          <div key={i} style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 3 }}>
-            <Flag country={c.name} size={15} />
-            <span style={{ fontSize: 11, color: warmWhite }}>{c.name}</span>
-            {c.share && <span style={{ fontSize: 9, color: "#807869", fontFamily: MONO, marginLeft: "auto", textAlign: "right" }}>{c.share}</span>}
-          </div>
-        ))}
-        <div style={{ marginTop: 6 }} />
-        <MicroHead>Major companies</MicroHead>
-        {m.top_companies.map((c, i) => (
-          <div key={i} style={{ marginBottom: 6 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-              {c.country && <Flag country={c.country} size={13} />}
-              <span style={{ fontSize: 11, color: warmWhite }}>{c.name}</span>
-            </div>
-            {c.note && <p style={{ fontSize: 9, color: "#807869", margin: "2px 0 0 0", lineHeight: 1.45 }}>{c.note}</p>}
-          </div>
-        ))}
-      </Sect>
-
-      <Sect label="Stillpoint View"><Prose>{overview.stillpoint_view}</Prose></Sect>
-    </div>
-  );
-}
 
 /* ── Supply Chain Stage view — stage market dashboard ── */
 function stageIconPath(key: string) {
