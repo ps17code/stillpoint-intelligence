@@ -373,9 +373,10 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
 
   // staged entrance for the node-object overview: node → lines → children → panel
   const [reveal, setReveal] = useState(0);
+  const [exiting, setExiting] = useState(false);
   useEffect(() => {
     if (view !== "overview") { setReveal(0); return; }
-    setReveal(0);
+    setExiting(false); setReveal(0);
     const ts = [
       setTimeout(() => setReveal(1), 90),
       setTimeout(() => setReveal(2), 400),
@@ -458,7 +459,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
               <TreeCanvas columns={universeView.columns} edges={universeView.edges} fill gap={30} onCardClick={(id) => { const n = ALL_NODES.find(x => x.classGraph.node.id === id); if (n) { setLoaded(n); setView("overview"); setSelId(null); } }} />
             )}
             {view === "overview" && loaded && (
-              <AerialGraph loaded={loaded} stages={stages} reveal={reveal} onStageExpand={(key) => { setStageKey(key); setSelId(null); setView("stage"); }} onOpenSupply={() => { setView("supply"); setSelId(null); }} />
+              <AerialGraph loaded={loaded} stages={stages} reveal={reveal} exiting={exiting} onStageExpand={(key) => { setStageKey(key); setSelId(null); setExiting(true); window.setTimeout(() => { setView("stage"); }, 420); }} onOpenSupply={() => { setView("supply"); setSelId(null); }} />
             )}
             {view === "stage" && loaded && stageDash && (
               <StageDashboardView stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} onSelectStage={(key) => setStageKey(key)} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
@@ -508,7 +509,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
         )}
         {/* node object overview panel — slides in after the graph reveals */}
         {view === "overview" && loaded && overview && (
-          <div style={{ flexBasis: 400, flexGrow: 0, flexShrink: 0, width: 400, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)", opacity: reveal >= 4 ? 1 : 0, transform: reveal >= 4 ? "translateX(0)" : "translateX(30px)", transition: "opacity 0.45s ease, transform 0.45s ease" }}>
+          <div style={{ flexBasis: 400, flexGrow: 0, flexShrink: 0, width: 400, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)", opacity: (reveal >= 4 && !exiting) ? 1 : 0, transform: (reveal >= 4 && !exiting) ? "translateX(0)" : "translateX(30px)", transition: "opacity 0.4s ease, transform 0.4s ease" }}>
             <OverviewPanel loaded={loaded} overview={overview} />
           </div>
         )}
@@ -696,14 +697,14 @@ function StageCard({ stage, color, onExpand }: { stage: StageInfo; color: string
 }
 
 /* aerial graph: parents · node-object-container(with stage cards) · child nodes */
-function AerialGraph({ loaded, stages, reveal, onStageExpand, onOpenSupply }: { loaded: LoadedNode; stages: StageInfo[]; reveal: number; onStageExpand: (key: string) => void; onOpenSupply: () => void }) {
+function AerialGraph({ loaded, stages, reveal, exiting, onStageExpand, onOpenSupply }: { loaded: LoadedNode; stages: StageInfo[]; reveal: number; exiting: boolean; onStageExpand: (key: string) => void; onOpenSupply: () => void }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
   const childRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
   const [collapsed, setCollapsed] = useState(true);
   const children = loaded.classGraph.downstream;
-  const nodeStyle: React.CSSProperties = { opacity: reveal >= 1 ? 1 : 0, transition: "opacity 0.45s ease" };
+  const stagesWidth = stages.length * 142 + Math.max(0, stages.length - 1) * 24 + 28;
 
   const measure = useCallback(() => {
     const box = boxRef.current?.getBoundingClientRect();
@@ -728,9 +729,17 @@ function AerialGraph({ loaded, stages, reveal, onStageExpand, onOpenSupply }: { 
     return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
   }, [measure, collapsed]);
 
+  // follow the layout while the node width animates (expand/collapse) so lines stay attached
+  useEffect(() => {
+    let raf = 0; let ticks = 0;
+    const tick = () => { measure(); if (++ticks < 40) raf = requestAnimationFrame(tick); };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [collapsed, measure]);
+
   return (
     <div ref={boxRef} style={{ position: "relative", minHeight: "100%", display: "flex", padding: "16px 10px" }}>
-      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0, opacity: exiting ? 0 : 1, transition: "opacity 0.35s ease" }}>
         {lines.map((l, i) => {
           const mx = (l.x1 + l.x2) / 2;
           return <path key={i} d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke={lineColor} strokeWidth={1.2} pathLength={1} strokeDasharray={1} strokeDashoffset={reveal >= 2 ? 0 : 1} style={{ transition: "stroke-dashoffset 0.6s ease" }} />;
@@ -738,62 +747,49 @@ function AerialGraph({ loaded, stages, reveal, onStageExpand, onOpenSupply }: { 
       </svg>
       <div style={{ display: "flex", alignItems: "center", gap: 32, margin: "0 auto" }}>
 
-      {/* node object — collapsible: expanded shows the supply-chain stage cards; collapsed is a plain class-graph node */}
-      {collapsed ? (
-        <div
-          ref={nodeRef}
-          onClick={onOpenSupply}
-          title="Open supply chain graph"
-          style={{ zIndex: 1, flexShrink: 0, width: 210, cursor: "pointer", background: "rgba(200,122,74,0.08)", border: `1px solid ${accent}`, borderRadius: 10, padding: "12px 13px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", ...nodeStyle }}
-        >
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
-            <span style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
-            <button
-              onClick={e => { e.stopPropagation(); setCollapsed(false); }}
-              title="Show supply-chain stages"
-              style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "2px 4px", cursor: "pointer", color: "#8a8378" }}
-            >
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="8 4 16 12 8 20" /></svg>
+      {/* node object — expands in place from class node to the supply-chain stage row */}
+      <div
+        ref={nodeRef}
+        onClick={collapsed ? onOpenSupply : undefined}
+        title={collapsed ? "Open supply chain graph" : undefined}
+        style={{ zIndex: 1, flexShrink: 0, width: collapsed ? 210 : stagesWidth, cursor: collapsed ? "pointer" : "default", background: "rgba(200,122,74,0.06)", border: `1px solid ${accent}`, borderRadius: 11, padding: "12px 13px 14px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", opacity: reveal >= 1 ? 1 : 0, transition: "width 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease" }}
+      >
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+          <span style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 7, flexShrink: 0 }}>
+            <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
+            <button onClick={e => { e.stopPropagation(); setCollapsed(c => !c); }} title={collapsed ? "Show supply-chain stages" : "Collapse to node"} style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "2px 4px", cursor: "pointer", color: "#8a8378" }}>
+              {collapsed
+                ? <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="8 4 16 12 8 20" /></svg>
+                : <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>}
             </button>
           </div>
-          <span style={{ display: "inline-block", fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px", marginTop: 6 }}>{loaded.classGraph.node.class_type}</span>
+        </div>
+        {collapsed ? (
           <p style={{ fontSize: 8.5, color: "#807869", fontFamily: MONO, margin: "8px 0 0 0" }}>Click to open supply chain →</p>
-        </div>
-      ) : (
-        <div ref={nodeRef} style={{ zIndex: 1, flexShrink: 0, width: "max-content", background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 12, padding: "12px 13px 14px", boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", ...nodeStyle }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-            <span style={{ fontSize: 16, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
-            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-              <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
-              <button
-                onClick={() => setCollapsed(true)}
-                title="Collapse to node"
-                style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "2px 4px", cursor: "pointer", color: "#8a8378" }}
-              >
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>
-              </button>
+        ) : (
+          <>
+            <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "8px 0 0 0" }}>Supply-chain stages</p>
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "stretch", flexWrap: "nowrap", marginTop: 7, overflow: "hidden" }}>
+              {stages.map((s, i) => (
+                <React.Fragment key={s.key}>
+                  {i > 0 && <StageConnector />}
+                  <div style={{ width: 142, flexShrink: 0, display: "flex", animation: "fadeSlideUp 0.42s ease both", animationDelay: `${200 + i * 110}ms` }}>
+                    <StageCard stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} onExpand={() => onStageExpand(s.key)} />
+                  </div>
+                </React.Fragment>
+              ))}
             </div>
-          </div>
-          <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "8px 0 0 0" }}>Supply-chain stages</p>
-          <div style={{ display: "flex", flexDirection: "row", alignItems: "stretch", flexWrap: "nowrap", marginTop: 7 }}>
-            {stages.map((s, i) => (
-              <React.Fragment key={s.key}>
-                {i > 0 && <StageConnector />}
-                <div style={{ width: 142, flexShrink: 0, display: "flex", animation: "fadeSlideUp 0.34s ease both", animationDelay: `${i * 75}ms` }}>
-                  <StageCard stage={s} color={STAGE_COLORS[i % STAGE_COLORS.length]} onExpand={() => onStageExpand(s.key)} />
-                </div>
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
-      )}
+          </>
+        )}
+      </div>
 
       {/* child nodes */}
       {children.length > 0 && (
         <div style={{ zIndex: 1, flexShrink: 0, display: "flex", flexDirection: "column", gap: 7 }}>
-          <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0, opacity: reveal >= 3 ? 1 : 0, transition: "opacity 0.4s ease" }}>Child nodes ({children.length})</p>
+          <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0, opacity: exiting ? 0 : reveal >= 3 ? 1 : 0, transition: "opacity 0.35s ease" }}>Child nodes ({children.length})</p>
           {children.map((c, ci) => (
-            <div key={c.id} ref={el => { childRefs.current[c.id] = el; }} style={{ width: 150, padding: "7px 10px", borderRadius: 7, background: cardBg, border: "1px solid rgb(48,43,40)", opacity: reveal >= 3 ? 1 : 0, transition: "opacity 0.4s ease", transitionDelay: `${ci * 90}ms` }}>
+            <div key={c.id} ref={el => { childRefs.current[c.id] = el; }} style={{ width: 150, padding: "7px 10px", borderRadius: 7, background: cardBg, border: "1px solid rgb(48,43,40)", opacity: exiting ? 0 : reveal >= 3 ? 1 : 0, transition: "opacity 0.35s ease", transitionDelay: exiting ? "0ms" : `${ci * 90}ms` }}>
               <p style={{ fontSize: 10, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.2 }}>{c.name}</p>
               <p style={{ fontSize: 7, color: "#8ab0c0", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.04em", margin: "2px 0 0 0" }}>{c.class_type}</p>
             </div>
