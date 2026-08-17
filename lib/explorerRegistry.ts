@@ -18,6 +18,7 @@ import teckOrgRecord from "@/data/node-v2/entities/org_teck_resources.json";
 import mpOrgRecord from "@/data/node-v2/entities/org_mp_materials.json";
 import kwinanaRecord from "@/data/node-v2/entities/pe_kwinana_li_refinery.json";
 import tianqiRecord from "@/data/node-v2/entities/org_tianqi_lithium.json";
+import umicoreRecord from "@/data/node-v2/entities/org_umicore.json";
 
 export type ClassNodeRef = { id: string; name: string; class_type: string };
 export type ClassGraph = { node: ClassNodeRef; downstream: ClassNodeRef[] };
@@ -398,8 +399,9 @@ const ORG_RECORDS_V2: Record<string, CompanyRecordV2> = {};
 function regOrgV2(rec: CompanyRecordV2, keys: string[]) { for (const k of keys) ORG_RECORDS_V2[k.toLowerCase().trim()] = rec; }
 regOrgV2(mpOrgRecord as unknown as CompanyRecordV2, ["mp materials", "mp materials corp", "mp", "org_mp_materials"]);
 regOrgV2(tianqiRecord as unknown as CompanyRecordV2, ["tianqi lithium", "tianqi", "tianqi lithium corporation", "org_tianqi_lithium"]);
+regOrgV2(umicoreRecord as unknown as CompanyRecordV2, ["umicore", "umicore sa", "umicore sa/nv", "org_umicore"]);
 
 export function getCompanyRecordV2(nameOrId: string): CompanyRecordV2 | null {
   return ORG_RECORDS_V2[nameOrId.toLowerCase().trim()] ?? null;
 }
-export const AVAILABLE_COMPANIES = ["MP Materials", "Tianqi Lithium"];
+export const AVAILABLE_COMPANIES = ["MP Materials", "Tianqi Lithium", "Umicore"];

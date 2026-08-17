@@ -5,7 +5,15 @@ import WORLD_PATHS from "@/data/world-paths.json";
 
 /* ── Company Subgraph projection over a canonical Company Record (v2.0) ── */
 type CNode = { key: string; kind: string; label: string; edge?: string; metas: string[]; canonicalId?: string; children: CNode[] };
-function compileCompanySubgraph(rec: CompanyRecordV2): CNode {
+/* keep only the branches of a company subgraph whose route touches `kw` (e.g. "germanium"): a node stays if it matches, or any descendant does. A matching node keeps its whole subtree */
+function pruneCompanyToFocus(node: CNode, kw: string): CNode | null {
+  if (node.label.toLowerCase().includes(kw)) return node;
+  const kept = node.children.map(c => pruneCompanyToFocus(c, kw)).filter(Boolean) as CNode[];
+  if (kept.length > 0) return { ...node, children: kept };
+  return null;
+}
+function collectKeys(node: CNode, into: Set<string>) { into.add(node.key); node.children.forEach(c => collectKeys(c, into)); }
+function compileCompanySubgraph(rec: CompanyRecordV2, focus?: string): CNode {
   const anchorId = rec.common.organizational_entity_id;
   const classify = (t: string, vid: string): string => {
     const s = (t || "").toLowerCase();
@@ -52,11 +60,17 @@ function compileCompanySubgraph(rec: CompanyRecordV2): CNode {
       metas: [a.activity_category, a.activity_status, (a.geographic_scope || []).join(", ")].filter(Boolean) as string[], children };
   };
   const rev = rec.financial.total_revenue;
-  return {
+  const root: CNode = {
     key: anchorId, kind: "Company", label: rec.identity.company_name, canonicalId: anchorId,
     metas: [rec.identity.company_type, rec.identity.headquarters, rev.amount != null ? `Revenue ${(rev.amount / 1e6).toFixed(0)}M ${rev.currency} (${rev.reporting_period})` : ""].filter(Boolean) as string[],
     children: (rec.economic_activities || []).map(mkActivity),
   };
+  if (focus) {
+    const kw = focus.toLowerCase();
+    const pruned = pruneCompanyToFocus(root, kw);
+    if (pruned) return { ...pruned, metas: [...pruned.metas, `route: ${focus}`] };
+  }
+  return root;
 }
 
 type CollapsedDetail = {
@@ -226,9 +240,19 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const [selId, setSelId] = useState<string | null>(null);
   const [stageKey, setStageKey] = useState<string | null>(null);
   const [companyRec, setCompanyRec] = useState<CompanyRecordV2 | null>(null);
+  const [companyFocus, setCompanyFocus] = useState<string | null>(null); // when set, company graph shows only this material's route
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const toggleNode = (k: string) => setExpanded(prev => { const n = new Set(prev); if (n.has(k)) n.delete(k); else n.add(k); return n; });
-  const companyView = useMemo(() => (companyRec ? compileCompanySubgraph(companyRec) : null), [companyRec]);
+  const companyView = useMemo(() => (companyRec ? compileCompanySubgraph(companyRec, companyFocus ?? undefined) : null), [companyRec, companyFocus]);
+
+  // open a company's value-chain graph, optionally filtered to a material's route; auto-expand the whole (sub)graph
+  const openCompany = (nameOrId: string, focus: string | null) => {
+    const co = getCompanyRecordV2(nameOrId);
+    if (!co) return;
+    const sub = compileCompanySubgraph(co, focus ?? undefined);
+    const keys = new Set<string>(); collectKeys(sub, keys);
+    setCompanyRec(co); setCompanyFocus(focus); setExpanded(keys); setSelId(null); setView("company");
+  };
 
   // terminal
   const [input, setInput] = useState("");
@@ -252,7 +276,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
       setLoaded(found); setSelId(null); setStageKey(null); setView("overview");
       setLog(l => [...l, `▶ search "${v}"`, `✓ found ${found.name} — node object overview (${found.classGraph.downstream.length} downstream class nodes)`]);
     } else if (co) {
-      setCompanyRec(co); setView("company"); setExpanded(new Set([co.common.organizational_entity_id]));
+      setCompanyRec(co); setCompanyFocus(null); setView("company"); setExpanded(new Set([co.common.organizational_entity_id]));
       setLog(l => [...l, `▶ search "${v}"`, `✓ found company ${co.identity.company_name} — projecting company subgraph (${co.economic_activities.length} economic activities)`]);
     } else {
       setLog(l => [...l, `▶ search "${v}"`, `✗ not found. Nodes: ${AVAILABLE_NODES.join(", ")} · companies: ${AVAILABLE_COMPANIES.join(", ")}`]);
@@ -401,7 +425,9 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     const nodeC = { label: loaded?.name ?? "Node", go: () => { setView("overview"); setSelId(null); } };
     switch (view) {
       case "universe": return [root, { label: "Class Node Universe" }];
-      case "company": return [root, { label: companyRec?.identity.company_name ?? "Company" }];
+      case "company": return companyFocus && loaded
+        ? [root, nodeC, { label: `${companyRec?.identity.company_name ?? "Company"} · ${companyFocus} route` }]
+        : [root, { label: companyRec?.identity.company_name ?? "Company" }];
       case "class": return [root, universeC, { label: loaded?.name ?? "Node" }];
       case "overview": return [root, universeC, { label: loaded?.name ?? "Node" }];
       case "pegs": return [root, nodeC, { label: "Supply chain graph" }];
@@ -463,7 +489,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
               <AerialGraph loaded={loaded} reveal={reveal} exiting={exiting} onOpenGraph={(rect) => { setSelId(null); setStageKey(null); setOriginRect(rect); setExiting(true); window.setTimeout(() => { setView("pegs"); }, 300); }} />
             )}
             {view === "pegs" && loaded && stageGraph && (
-              <StagePegView loaded={loaded} graph={stageGraph} selectedKey={stageKey ?? stages[0]?.key ?? ""} originRect={originRect} onOpenStage={(key) => { setStageKey(key); setOriginRect(null); setView("stage"); }} onCollapse={() => { setView("overview"); setSelId(null); }} />
+              <StagePegView loaded={loaded} graph={stageGraph} selectedKey={stageKey ?? stages[0]?.key ?? ""} originRect={originRect} onOpenStage={(key) => { setStageKey(key); setOriginRect(null); setView("stage"); }} onCollapse={() => { setView("overview"); setSelId(null); }} onOpenCompany={openCompany} />
             )}
             {view === "stage" && loaded && stageDash && (
               <StageDashboardView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} originRect={originRect} onSelectStage={(key) => setStageKey(key)} onCollapse={() => { setOriginRect(null); setView("pegs"); setSelId(null); }} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
@@ -1151,7 +1177,7 @@ function DashButton({ children, onClick }: { children: React.ReactNode; onClick:
 }
 
 /* the real-world entity graph, rendered inline inside the node container. Columns reveal left→right (branching out) as they fade in from the right */
-function EntityGraphInline({ loaded, focusId }: { loaded: LoadedNode; focusId?: string | null }) {
+function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedNode; focusId?: string | null; onOpenCompany?: (name: string, focus: string) => void }) {
   const full = useMemo(() => {
     const eg = loaded.entityGraph;
     const byCol: Record<string, Card[]> = {};
@@ -1239,11 +1265,13 @@ function EntityGraphInline({ loaded, focusId }: { loaded: LoadedNode; focusId?: 
               <p style={{ fontSize: 7, color: "#706a60", margin: "0 0 3px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{col.label}</p>
               {col.items.map(card => {
                 const inSet = highlightSet?.has(card.id) ?? false;
-                const c = card.id === focusId ? { ...card, featured: true } : card;
+                const hasCo = !!onOpenCompany && !!getCompanyRecordV2(card.title);
+                const c = { ...card, featured: card.id === focusId, clickable: hasCo };
                 return (
                   <NodeCard key={card.id} card={c} highlighted={active && inSet} dimmed={active && !inSet}
                     nodeRef={el => { nodeRefs.current[card.id] = el; }}
-                    onHover={() => setHovered(card.id)} onLeave={() => setHovered(null)} />
+                    onHover={() => setHovered(card.id)} onLeave={() => setHovered(null)}
+                    onClick={hasCo ? () => onOpenCompany!(card.title, loaded.name) : undefined} />
                 );
               })}
             </div>
@@ -1256,7 +1284,7 @@ function EntityGraphInline({ loaded, focusId }: { loaded: LoadedNode; focusId?: 
 
 /* intermediate view: the full supply-chain graph — every physical entity group node connected across all stages. Stage names are plain column headers; hovering a group lights its route; clicking a group expands its entities */
 const PEG_ANCHOR_Y = 15; // connector attaches near the group node's title row so expansion doesn't move it
-function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onCollapse }: { loaded: LoadedNode; graph: StageGraph; selectedKey: string; originRect: DOMRect | null; onOpenStage: (k: string) => void; onCollapse: () => void }) {
+function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onCollapse, onOpenCompany }: { loaded: LoadedNode; graph: StageGraph; selectedKey: string; originRect: DOMRect | null; onOpenStage: (k: string) => void; onCollapse: () => void; onOpenCompany: (name: string, focus: string) => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [flip, setFlip] = useState<{ transform: string; transition: string }>({ transform: "none", transition: "none" });
   const [contentIn, setContentIn] = useState(false);
@@ -1344,7 +1372,7 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
         </div>
         {showEntities ? (
           <div style={{ flex: 1, minHeight: 0, animation: "fadeInDown 0.3s ease" }}>
-            <EntityGraphInline loaded={loaded} focusId={entityFocus} />
+            <EntityGraphInline loaded={loaded} focusId={entityFocus} onOpenCompany={onOpenCompany} />
           </div>
         ) : (
         <div style={{ flex: 1, minHeight: 0, opacity: contentIn && !leaving ? 1 : 0, transition: "opacity 0.28s ease", display: "flex", alignItems: "center", overflowX: "auto" }} className="thin-scroll">

@@ -1,0 +1,267 @@
+{
+  "common": { "organizational_entity_id": "org_umicore", "entity_type": "Organizational Entity", "entity_subtype": "Company" },
+  "identity": {
+    "company_name": "Umicore",
+    "legal_name": "Umicore SA/NV",
+    "company_type": "Public company (Euronext Brussels: UMI)",
+    "company_status": "Active / Operating",
+    "country_of_incorporation": "Belgium",
+    "headquarters": "Brussels, Belgium",
+    "short_description": "Umicore is a Belgian materials technology and recycling group operating across Catalysis, Recycling (precious-metals refining at Hoboken), and Energy & Surface Technologies (rechargeable battery cathode materials). Within Specialty Materials it is the leading Western producer of high-purity germanium — germanium substrates for space photovoltaics, germanium tetrachloride (GeCl4) for optical fibre, and germanium infrared optics — refined and reclaimed principally at Olen, Belgium."
+  },
+  "financial": { "total_revenue": { "amount": 3700000000, "currency": "EUR", "reporting_period": "FY2024" } },
+  "economic_activities": [
+    {
+      "economic_activity_id": "act_umi_catalysis",
+      "activity_name": "Catalysis",
+      "description": "Design and manufacture of automotive emission-control catalysts and precious-metals-based process catalysts.",
+      "activity_category": "Manufacturing / Specialty chemicals",
+      "geographic_scope": ["Europe", "Asia", "Americas"],
+      "activity_status": "Active",
+      "corporate_vehicles": [
+        {
+          "corporate_vehicle_id": "cv_umi_catalysis",
+          "vehicle_type": "Business segment (directly active)",
+          "vehicle_company_id": "org_umicore",
+          "vehicle_company_name": "Umicore Catalysis",
+          "ownership_percentage": 100,
+          "control_status": "Wholly owned segment",
+          "relationship_description": "Directly operated Catalysis business group.",
+          "product_service_groups": [
+            {
+              "product_service_group_id": "psg_umi_auto_catalysts",
+              "group_name": "Automotive Catalysts",
+              "description": "Catalytic converters and coated substrates for light- and heavy-duty vehicles.",
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_umi_florange_catalyst",
+                  "physical_entity_name": "Automotive Catalyst Plants",
+                  "physical_entity_class": "Manufacturing facility",
+                  "relationship_to_corporate_vehicle": "Owned & operated",
+                  "resolution_status": "resolved",
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "co_umi_catalyst_converters",
+                      "output_name": "Emission-control Catalysts",
+                      "output_type": "Manufactured component",
+                      "volume_quantity": "Not disclosed",
+                      "quantity_unit": "",
+                      "markets": [
+                        { "market_participation_id": "mkt_umi_auto_oem", "market_name": "Automotive OEMs", "buyer_customer_category": "Vehicle manufacturers", "geographic_scope": "Global", "volume_revenue_exposure": "Major segment" }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "economic_activity_id": "act_umi_recycling",
+      "activity_name": "Recycling — Precious Metals Refining",
+      "description": "Integrated smelting and refining of complex precious-metals-bearing materials and end-of-life scrap at Hoboken, Belgium, recovering gold, silver, platinum-group metals and specialty metals including germanium.",
+      "activity_category": "Recycling / Refining",
+      "geographic_scope": ["Belgium (Hoboken)", "Global feedstock"],
+      "activity_status": "Active",
+      "corporate_vehicles": [
+        {
+          "corporate_vehicle_id": "cv_umi_recycling",
+          "vehicle_type": "Business segment (directly active)",
+          "vehicle_company_id": "org_umicore",
+          "vehicle_company_name": "Umicore Recycling",
+          "ownership_percentage": 100,
+          "control_status": "Wholly owned segment",
+          "relationship_description": "Directly operated Recycling business group.",
+          "product_service_groups": [
+            {
+              "product_service_group_id": "psg_umi_pm_refining",
+              "group_name": "Precious Metals Refining",
+              "description": "Recovery and refining of gold, silver and platinum-group metals from industrial residues and end-of-life materials.",
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_umi_hoboken_smelter",
+                  "physical_entity_name": "Hoboken Smelter-Refinery",
+                  "physical_entity_class": "Smelter / refinery",
+                  "relationship_to_corporate_vehicle": "Owned & operated",
+                  "resolution_status": "resolved",
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "co_umi_refined_pm",
+                      "output_name": "Refined Gold, Silver & PGMs",
+                      "output_type": "Refined metal",
+                      "volume_quantity": "Not disclosed",
+                      "quantity_unit": "",
+                      "markets": [
+                        { "market_participation_id": "mkt_umi_pm", "market_name": "Precious Metals Markets", "buyer_customer_category": "Bullion & industrial buyers", "geographic_scope": "Global", "volume_revenue_exposure": "Major segment" }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "product_service_group_id": "psg_umi_ge_recycling",
+              "group_name": "Germanium Recycling",
+              "description": "Reclamation of germanium from optical-fibre residues, infrared-optics scrap and end-of-life germanium materials, feeding secondary germanium back into the refining loop.",
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_umi_ge_reclamation",
+                  "physical_entity_name": "Germanium Reclamation Line",
+                  "physical_entity_class": "Recycling facility",
+                  "relationship_to_corporate_vehicle": "Owned & operated",
+                  "resolution_status": "resolved",
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "co_umi_recycled_ge",
+                      "output_name": "Recycled Germanium (secondary GeCl4 feed)",
+                      "output_type": "Reclaimed metal",
+                      "volume_quantity": "Not disclosed",
+                      "quantity_unit": "",
+                      "markets": [
+                        { "market_participation_id": "mkt_umi_ge_recovery", "market_name": "Germanium Optics Supply Loop", "buyer_customer_category": "Internal & fibre customers", "geographic_scope": "Global", "volume_revenue_exposure": "Specialty" }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "economic_activity_id": "act_umi_battery_materials",
+      "activity_name": "Energy & Surface Technologies — Battery Materials",
+      "description": "Development and manufacture of cathode active materials (NMC) for rechargeable lithium-ion batteries.",
+      "activity_category": "Manufacturing / Battery materials",
+      "geographic_scope": ["Finland (Kokkola)", "South Korea", "China"],
+      "activity_status": "Active",
+      "corporate_vehicles": [
+        {
+          "corporate_vehicle_id": "cv_umi_est",
+          "vehicle_type": "Business segment (directly active)",
+          "vehicle_company_id": "org_umicore",
+          "vehicle_company_name": "Umicore Energy & Surface Technologies",
+          "ownership_percentage": 100,
+          "control_status": "Wholly owned segment",
+          "relationship_description": "Directly operated Energy & Surface Technologies business group.",
+          "product_service_groups": [
+            {
+              "product_service_group_id": "psg_umi_cathode",
+              "group_name": "Cathode Materials (NMC)",
+              "description": "Nickel-manganese-cobalt cathode active materials for EV and consumer battery cells.",
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_umi_kokkola",
+                  "physical_entity_name": "Battery Materials Plants",
+                  "physical_entity_class": "Manufacturing facility",
+                  "relationship_to_corporate_vehicle": "Owned & operated",
+                  "resolution_status": "resolved",
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "co_umi_nmc",
+                      "output_name": "NMC Cathode Active Material",
+                      "output_type": "Manufactured material",
+                      "volume_quantity": "Not disclosed",
+                      "quantity_unit": "",
+                      "markets": [
+                        { "market_participation_id": "mkt_umi_battery", "market_name": "EV Battery Cell Makers", "buyer_customer_category": "Cell manufacturers", "geographic_scope": "Global", "volume_revenue_exposure": "Major segment" }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "economic_activity_id": "act_umi_germanium",
+      "activity_name": "Optical & Specialty Materials — Germanium",
+      "description": "Refining of high-purity germanium and manufacture of germanium substrates, germanium tetrachloride (GeCl4) and germanium infrared optics, principally at Olen, Belgium.",
+      "activity_category": "Manufacturing / Specialty materials",
+      "geographic_scope": ["Belgium (Olen)"],
+      "activity_status": "Active",
+      "corporate_vehicles": [
+        {
+          "corporate_vehicle_id": "cv_umi_germanium",
+          "vehicle_type": "Business segment (directly active)",
+          "vehicle_company_id": "org_umicore",
+          "vehicle_company_name": "Umicore Specialty Materials — Germanium",
+          "ownership_percentage": 100,
+          "control_status": "Wholly owned segment",
+          "relationship_description": "Directly operated germanium refining and specialty-materials line.",
+          "product_service_groups": [
+            {
+              "product_service_group_id": "psg_umi_ge_substrates",
+              "group_name": "Germanium Substrates",
+              "description": "High-purity single-crystal germanium wafers and substrates.",
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_umi_olen_substrate",
+                  "physical_entity_name": "Olen Germanium Substrate Line",
+                  "physical_entity_class": "Manufacturing facility",
+                  "relationship_to_corporate_vehicle": "Owned & operated",
+                  "resolution_status": "resolved",
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "co_umi_ge_wafers",
+                      "output_name": "Germanium Substrates & Wafers",
+                      "output_type": "Manufactured material",
+                      "volume_quantity": "Not disclosed",
+                      "quantity_unit": "",
+                      "markets": [
+                        { "market_participation_id": "mkt_umi_space_pv", "market_name": "Space Photovoltaics (multi-junction solar)", "buyer_customer_category": "Space solar cell makers", "geographic_scope": "Global", "volume_revenue_exposure": "Specialty" },
+                        { "market_participation_id": "mkt_umi_ge_electronics", "market_name": "Electronics & Optoelectronics", "buyer_customer_category": "Device manufacturers", "geographic_scope": "Global", "volume_revenue_exposure": "Specialty" }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "product_service_group_id": "psg_umi_ge_optics",
+              "group_name": "Germanium Optics & Chemicals",
+              "description": "Germanium tetrachloride for optical fibre and germanium infrared optics for thermal imaging.",
+              "physical_entities": [
+                {
+                  "physical_entity_id": "pe_umi_olen_ge_refinery",
+                  "physical_entity_name": "Olen Germanium Refinery",
+                  "physical_entity_class": "Refinery",
+                  "relationship_to_corporate_vehicle": "Owned & operated",
+                  "resolution_status": "resolved",
+                  "commercial_outputs": [
+                    {
+                      "commercial_output_id": "co_umi_gecl4",
+                      "output_name": "Germanium Tetrachloride (GeCl4)",
+                      "output_type": "Refined chemical",
+                      "volume_quantity": "Not disclosed",
+                      "quantity_unit": "",
+                      "markets": [
+                        { "market_participation_id": "mkt_umi_fibre", "market_name": "Optical Fibre Cable", "buyer_customer_category": "Fibre preform & cable makers", "geographic_scope": "Global", "volume_revenue_exposure": "Specialty" }
+                      ]
+                    },
+                    {
+                      "commercial_output_id": "co_umi_ge_ir_optics",
+                      "output_name": "Germanium Infrared Optics",
+                      "output_type": "Manufactured component",
+                      "volume_quantity": "Not disclosed",
+                      "quantity_unit": "",
+                      "markets": [
+                        { "market_participation_id": "mkt_umi_thermal", "market_name": "Thermal Imaging & Defense", "buyer_customer_category": "IR optics & sensor makers", "geographic_scope": "Global", "volume_revenue_exposure": "Specialty" }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "record_metadata": { "resolution_status": "resolved", "overall_confidence": "illustrative", "created_date": "2026-08-17", "last_updated_date": "2026-08-17" }
+}
