@@ -1228,7 +1228,8 @@ function DashButton({ children, onClick }: { children: React.ReactNode; onClick:
   );
 }
 
-/* intermediate view: the full supply-chain graph — every physical entity group node connected across all stages, with each stage card as a column header showing only stage name + description */
+/* intermediate view: the full supply-chain graph — every physical entity group node connected across all stages. Stage names are plain column headers; hovering a group lights its route; clicking a group expands its entities */
+const PEG_ANCHOR_Y = 15; // connector attaches near the group node's title row so expansion doesn't move it
 function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onCollapse }: { loaded: LoadedNode; graph: StageGraph; selectedKey: string; originRect: DOMRect | null; onOpenStage: (k: string) => void; onCollapse: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [flip, setFlip] = useState<{ transform: string; transition: string }>({ transform: "none", transition: "none" });
@@ -1248,24 +1249,33 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
 
   const boxRef = useRef<HTMLDivElement>(null);
   const pegRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
+  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number; from: string; to: string }[]>([]);
+  const [hovered, setHovered] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState<string | null>(null);
   const colOf = useMemo(() => {
     const m: Record<string, number> = {};
     graph.columns.forEach((c, i) => c.pegs.forEach(p => { m[p.id] = i; }));
     return m;
   }, [graph]);
+  const entitiesByGroup = useMemo(() => {
+    const m: Record<string, EntityNode[]> = {};
+    for (const e of loaded.entityGraph.entities) { if (!e.group_id) continue; (m[e.group_id] ??= []).push(e); }
+    return m;
+  }, [loaded]);
+  const highlightSet = useMemo(() => computeHighlight(hovered, graph.edges as Edge[]), [hovered, graph.edges]);
 
   const measure = useCallback(() => {
     const box = boxRef.current?.getBoundingClientRect(); if (!box) return;
-    const next: { x1: number; y1: number; x2: number; y2: number }[] = [];
+    const next: { x1: number; y1: number; x2: number; y2: number; from: string; to: string }[] = [];
     for (const e of graph.edges) {
       const a = pegRefs.current[e.from]; const b = pegRefs.current[e.to];
       if (!a || !b) continue;
       // draw left→right by column order so beziers flow forward through the chain
       const fwd = (colOf[e.from] ?? 0) <= (colOf[e.to] ?? 0);
       const src = fwd ? a : b; const dst = fwd ? b : a;
+      const fromId = fwd ? e.from : e.to; const toId = fwd ? e.to : e.from;
       const sb = src.getBoundingClientRect(); const db = dst.getBoundingClientRect();
-      next.push({ x1: sb.right - box.left, y1: sb.top + sb.height / 2 - box.top, x2: db.left - box.left, y2: db.top + db.height / 2 - box.top });
+      next.push({ x1: sb.right - box.left, y1: sb.top + PEG_ANCHOR_Y - box.top, x2: db.left - box.left, y2: db.top + PEG_ANCHOR_Y - box.top, from: fromId, to: toId });
     }
     setLines(next);
   }, [graph, colOf]);
@@ -1277,7 +1287,9 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
     if (boxRef.current) ro.observe(boxRef.current);
     window.addEventListener("resize", measure);
     return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
-  }, [measure, contentIn]);
+  }, [measure, contentIn, expanded]);
+
+  const activeMode = highlightSet != null;
 
   return (
     <div style={{ minHeight: "100%", display: "flex", padding: "4px 2px 20px" }}>
@@ -1291,33 +1303,64 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>
           </button>
         </div>
-        <div style={{ flex: 1, opacity: contentIn ? 1 : 0, transition: "opacity 0.4s ease", overflowX: "auto" }} className="thin-scroll">
-          <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 40, padding: "10px 4px 20px", margin: "0 auto", width: "max-content" }}>
+        <div style={{ flex: 1, minHeight: 0, opacity: contentIn ? 1 : 0, transition: "opacity 0.4s ease", display: "flex", alignItems: "center", overflowX: "auto" }} className="thin-scroll">
+          <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 42, padding: "10px 6px", margin: "auto", width: "max-content" }}>
             <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
               {lines.map((l, i) => {
                 const mx = (l.x1 + l.x2) / 2;
-                return <path key={i} d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke="#8ab0c0" strokeOpacity={0.45} strokeWidth={1.3} />;
+                const lit = activeMode && highlightSet!.has(l.from) && highlightSet!.has(l.to);
+                const stroke = activeMode ? (lit ? accent : "rgba(200,200,200,0.05)") : "#8ab0c0";
+                return (
+                  <g key={i}>
+                    <circle cx={l.x1} cy={l.y1} r={1.6} fill={stroke} fillOpacity={activeMode ? (lit ? 0.9 : 0.15) : 0.5} />
+                    <path d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke={stroke} strokeOpacity={activeMode ? (lit ? 0.9 : 1) : 0.45} strokeWidth={lit ? 1.7 : 1.2} />
+                  </g>
+                );
               })}
             </svg>
             {graph.columns.map((col, ci) => {
               const sel = col.key === selectedKey;
               const color = STAGE_COLORS[ci % STAGE_COLORS.length];
               return (
-                <div key={col.key} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 14, width: 190, flexShrink: 0 }}>
-                  <div onClick={() => onOpenStage(col.key)}
-                    style={{ boxSizing: "border-box", padding: "10px 12px", borderRadius: 8, cursor: "pointer", background: sel ? "rgba(200,122,74,0.1)" : cardBg, border: `1px solid ${sel ? accent : "rgb(48,43,40)"}`, borderTop: `2px solid ${color}`, transition: "border-color 0.2s, background 0.2s" }}
-                    onMouseEnter={e => { if (!sel) e.currentTarget.style.borderColor = "rgb(70,64,58)"; }}
-                    onMouseLeave={e => { if (!sel) e.currentTarget.style.borderColor = "rgb(48,43,40)"; }}>
-                    <p style={{ fontSize: 11.5, color: warmWhite, fontFamily: SERIF, margin: 0 }}>{col.label}</p>
-                    {col.description && <p style={{ fontSize: 8.5, color: "#8f887c", margin: "4px 0 0 0", lineHeight: 1.4, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{col.description}</p>}
-                    <p style={{ fontSize: 7.5, color: sel ? accent : "#6f695f", fontFamily: MONO, margin: "6px 0 0 0", letterSpacing: "0.04em" }}>{sel ? "Open dashboard →" : "Signals coming soon"}</p>
+                <div key={col.key} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 12, width: 190, flexShrink: 0 }}>
+                  <div onClick={() => onOpenStage(col.key)} title="Open market dashboard"
+                    style={{ cursor: "pointer", paddingBottom: 7, marginBottom: 4, borderBottom: `1px solid ${sel ? accent : "rgb(66,60,54)"}`, transition: "border-color 0.2s" }}
+                    onMouseEnter={e => { const p = e.currentTarget.querySelector("p") as HTMLElement | null; if (p) p.style.color = accent; }}
+                    onMouseLeave={e => { const p = e.currentTarget.querySelector("p") as HTMLElement | null; if (p) p.style.color = sel ? accent : warmWhite; }}>
+                    <p style={{ fontSize: 12.5, color: sel ? accent : warmWhite, fontFamily: SERIF, margin: 0, transition: "color 0.2s" }}>{col.label}</p>
                   </div>
-                  {col.pegs.map(p => (
-                    <div key={p.id} ref={el => { pegRefs.current[p.id] = el; }} style={{ boxSizing: "border-box", padding: "9px 11px", borderRadius: 8, background: "rgb(30,28,26)", border: "1px solid rgb(48,43,40)", borderLeft: `2px solid ${color}` }}>
-                      <p style={{ fontSize: 11, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.25 }}>{p.name}</p>
-                      <p style={{ fontSize: 8, color: "#8f887c", fontFamily: MONO, margin: "6px 0 0 0", letterSpacing: "0.04em" }}>{p.count} {p.count === 1 ? "entity" : "entities"}</p>
-                    </div>
-                  ))}
+                  {col.pegs.map(p => {
+                    const inSet = highlightSet?.has(p.id) ?? false;
+                    const hl = activeMode && inSet;
+                    const dim = activeMode && !inSet;
+                    const isExp = expanded === p.id;
+                    const ents = entitiesByGroup[p.id] ?? [];
+                    return (
+                      <div key={p.id} ref={el => { pegRefs.current[p.id] = el; }}
+                        onMouseEnter={() => setHovered(p.id)} onMouseLeave={() => setHovered(null)}
+                        onClick={() => setExpanded(cur => (cur === p.id ? null : p.id))}
+                        style={{ boxSizing: "border-box", padding: "9px 11px", borderRadius: 8, cursor: "pointer",
+                          background: hl ? "rgba(200,122,74,0.1)" : "rgb(30,28,26)",
+                          border: `1px solid ${hl ? "rgba(200,122,74,0.5)" : "rgb(48,43,40)"}`, borderLeft: `2px solid ${color}`,
+                          opacity: dim ? 0.3 : 1, transition: "border-color 0.15s, opacity 0.15s, background 0.15s" }}>
+                        <div style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
+                          <p style={{ flex: 1, fontSize: 11, color: hl ? warmWhite : "rgb(200,193,182)", fontFamily: SERIF, margin: 0, lineHeight: 1.25 }}>{p.name}</p>
+                          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#8f887c" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: 2, flexShrink: 0, transform: isExp ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}><polyline points="6 9 12 15 18 9" /></svg>
+                        </div>
+                        <p style={{ fontSize: 8, color: "#8f887c", fontFamily: MONO, margin: "6px 0 0 0", letterSpacing: "0.04em" }}>{p.count} {p.count === 1 ? "entity" : "entities"}</p>
+                        {isExp && ents.length > 0 && (
+                          <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid rgb(48,43,40)", display: "flex", flexDirection: "column", gap: 5, animation: "fadeInDown 0.2s ease" }}>
+                            {ents.map(en => (
+                              <div key={en.id} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                <Flag country={en.country} size={12} />
+                                <span style={{ fontSize: 9, color: "rgb(178,171,160)", lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{en.physical_entity || en.name}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               );
             })}
