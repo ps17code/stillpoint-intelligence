@@ -391,47 +391,42 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const stageDash = useMemo(() => (loaded && stageKey ? computeStageDashboard(loaded, stageKey) : null), [loaded, stageKey]);
 
   const stageLabel = stages.find(s => s.key === stageKey)?.label ?? "";
-  const headerKicker = view === "empty" ? "Node Explorer" : view === "universe" ? "Node Explorer · Class Node Universe" : view === "overview" ? "Node Explorer · Node Object" : view === "stage" ? "Node Explorer · Stage Market View" :view === "company" ? "Node Explorer · Company Subgraph" : view === "class" ? "Node Explorer · Class Graph" : view === "supply" ? "Node Explorer · Supply Chain Graph" : "Node Explorer · Entity Graph";
-  const headerTitle = view === "empty" ? "Search a node" : view === "universe" ? "Class Node Universe" : view === "overview" ? `${loaded?.name}` : view === "stage" ? `${loaded?.name} — ${stageLabel}` : view === "company" ? `${companyRec?.identity.company_name}` : view === "class" ? `${loaded?.name}` : view === "supply" ? `${loaded?.name} — Supply Chain` : `${loaded?.name} — Entities`;
-  const backLabel = view === "entity" ? "Supply chain graph" : view === "supply" ? "Node overview" : view === "stage" ? "Node overview" : (view === "universe" || view === "overview" || view === "class" || view === "company") ? "Clear" : "Back";
-  const onBackClick = () => {
-    if (view === "entity") { setView("supply"); setSelId(null); }
-    else if (view === "supply") { setView("overview"); setSelId(null); }
-    else if (view === "stage") { setView("overview"); setSelId(null); }
-    else if (view === "overview" || view === "class") { setView("empty"); setLoaded(null); setSelId(null); }
-    else if (view === "universe") { setView("empty"); setSelId(null); }
-    else if (view === "company") { setView("empty"); setCompanyRec(null); }
-    else onBack();
-  };
+  // breadcrumb navigator — where you are + jump back to any level
+  const crumbs: { label: string; go?: () => void }[] = (() => {
+    const root = { label: "Node Explorer", go: () => { setView("empty"); setLoaded(null); setSelId(null); setCompanyRec(null); } };
+    const nodeC = { label: loaded?.name ?? "Node", go: () => { setView("overview"); setSelId(null); } };
+    switch (view) {
+      case "universe": return [root, { label: "Class Node Universe" }];
+      case "company": return [root, { label: companyRec?.identity.company_name ?? "Company" }];
+      case "overview": case "class": return [root, { label: loaded?.name ?? "Node" }];
+      case "stage": return [root, nodeC, { label: stageLabel || "Stage" }];
+      case "supply": return [root, nodeC, { label: "Supply chain graph" }];
+      case "entity": return [root, nodeC, { label: "Supply chain graph", go: () => { setView("supply"); setSelId(null); } }, { label: "Entities" }];
+      default: return [root];
+    }
+  })();
 
   return (
     <div style={{ width: "100vw", height: "100vh", background: "#161414", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-      {/* Header */}
-      <div style={{ flexShrink: 0, padding: "16px 24px 0" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <button
-            onClick={onBackClick}
-            style={{ display: "flex", alignItems: "center", gap: 6, background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "5px 12px", cursor: "pointer", color: "rgba(255,255,255,0.55)", fontFamily: MONO, fontSize: 10 }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)"; e.currentTarget.style.color = warmWhite; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "rgba(255,255,255,0.55)"; }}
-          >
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
-            {backLabel}
-          </button>
-          <div>
-            <p style={{ fontSize: 8, color: "#666", margin: "0 0 2px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{headerKicker}</p>
-            <h2 style={{ fontSize: 18, fontWeight: 400, color: warmWhite, margin: 0 }}>{headerTitle}</h2>
-          </div>
-          {view === "class" && (
-            <span style={{ marginLeft: 8, fontSize: 9.5, color: "#6f695f", fontFamily: MONO }}>click the {loaded?.name} node → supply chain graph</span>
-          )}
-        </div>
-        <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "14px 0 0" }} />
-      </div>
-
       {/* Body */}
       <div style={{ flex: 1, minHeight: 0, display: "flex" }}>
-        <div style={{ flex: 1, minWidth: 0, position: "relative" }}>
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
+          {/* breadcrumb navigator */}
+          {view !== "empty" && (
+            <div style={{ flexShrink: 0, padding: "13px 24px 11px 24px", display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+              {crumbs.map((c, i) => (
+                <React.Fragment key={i}>
+                  {i > 0 && <span style={{ color: "#4f4a44", fontSize: 12 }}>›</span>}
+                  {c.go ? (
+                    <button onClick={c.go} style={{ background: "transparent", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.5)", fontFamily: MONO, fontSize: 11, padding: 0 }} onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }} onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }}>{c.label}</button>
+                  ) : (
+                    <span style={{ color: warmWhite, fontFamily: MONO, fontSize: 11 }}>{c.label}</span>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          )}
+          <div style={{ flex: 1, minHeight: 0, position: "relative" }}>
           <div
             onClick={view === "supply" || view === "entity" ? () => setSelId(null) : undefined}
             style={{ position: "absolute", inset: 0, overflowY: "auto", overflowX: "auto", padding: "16px 24px 24px" }}
@@ -487,6 +482,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
             </button>
           )}
+          </div>
         </div>
 
         {/* on-demand panel: supply group detail */}
