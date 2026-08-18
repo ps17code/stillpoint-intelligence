@@ -1386,17 +1386,22 @@ function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedN
 
   // fit-to-container + pan/zoom over the whole graph
   const [tf, setTf] = useState({ k: 1, x: 0, y: 0 });
-  const [fitted, setFitted] = useState(false);
   const drag = useRef<{ px: number; py: number; ox: number; oy: number } | null>(null);
-  const fit = useCallback(() => {
-    const wrap = wrapRef.current, box = boxRef.current; if (!wrap || !box) return;
+  const fit = useCallback((): boolean => {
+    const wrap = wrapRef.current, box = boxRef.current; if (!wrap || !box) return false;
     const cw = wrap.clientWidth, ch = wrap.clientHeight, natW = box.offsetWidth, natH = box.offsetHeight;
-    if (!cw || !ch || !natW || !natH) return;
+    if (!cw || !ch || !natW || !natH) return false;
     const k = Math.min(cw / natW, ch / natH, 1.15) * 0.96;
-    setTf({ k, x: (cw - natW * k) / 2, y: (ch - natH * k) / 2 }); setFitted(true);
+    setTf({ k, x: (cw - natW * k) / 2, y: (ch - natH * k) / 2 });
+    return true;
   }, []);
-  useEffect(() => { setFitted(false); }, [data]);
-  useLayoutEffect(() => { const id = requestAnimationFrame(() => fit()); return () => cancelAnimationFrame(id); }, [data, fit]);
+  // fit before paint; retry across frames if the container hasn't been sized yet
+  useLayoutEffect(() => {
+    let tries = 0, raf = 0;
+    const attempt = () => { if (!fit() && tries++ < 20) raf = requestAnimationFrame(attempt); };
+    attempt();
+    return () => cancelAnimationFrame(raf);
+  }, [data, fit]);
   useEffect(() => { const on = () => fit(); window.addEventListener("resize", on); return () => window.removeEventListener("resize", on); }, [fit]);
   const zoomAt = (mx: number, my: number, factor: number) => setTf(v => { const nk = Math.min(4, Math.max(0.15, v.k * factor)); return { k: nk, x: mx - (mx - v.x) * (nk / v.k), y: my - (my - v.y) * (nk / v.k) }; });
   const onWheel = (e: React.WheelEvent) => { const w = wrapRef.current?.getBoundingClientRect(); if (!w) return; zoomAt(e.clientX - w.left, e.clientY - w.top, e.deltaY < 0 ? 1.12 : 1 / 1.12); };
@@ -1445,7 +1450,7 @@ function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedN
           return <path key={i} d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke={stroke} strokeOpacity={active ? (lit ? 0.9 : 1) : 0.85} strokeWidth={lit ? 1.7 : 1} />;
         })}
       </svg>
-      <div style={{ position: "absolute", top: 0, left: 0, zIndex: 2, width: "max-content", transformOrigin: "0 0", transform: `translate(${tf.x}px, ${tf.y}px) scale(${tf.k})`, opacity: fitted ? 1 : 0, transition: "opacity 0.25s ease" }}>
+      <div style={{ position: "absolute", top: 0, left: 0, zIndex: 2, width: "max-content", transformOrigin: "0 0", transform: `translate(${tf.x}px, ${tf.y}px) scale(${tf.k})` }}>
         <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", gap: 34, padding: "10px 8px", width: "max-content" }}>
           {data.columns.map((col, ci) => {
             const vis = ci < shown;
