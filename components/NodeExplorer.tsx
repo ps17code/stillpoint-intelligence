@@ -506,7 +506,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
               <AerialGraph loaded={loaded} reveal={reveal} exiting={exiting} onOpenGraph={(rect) => { setSelId(null); setStageKey(null); setOriginRect(rect); setExiting(true); window.setTimeout(() => { setView("pegs"); }, 300); }} />
             )}
             {view === "pegs" && loaded && stageGraph && (
-              <StagePegView loaded={loaded} graph={stageGraph} selectedKey={stageKey ?? stages[0]?.key ?? ""} originRect={originRect} onOpenStage={(key) => { setStageKey(key); setOriginRect(null); setView("stage"); }} onCollapse={() => { setView("overview"); setSelId(null); }} />
+              <StagePegView loaded={loaded} graph={stageGraph} selectedKey={stageKey ?? stages[0]?.key ?? ""} originRect={originRect} onOpenStage={(key) => { setStageKey(key); setOriginRect(null); setView("stage"); }} onCollapse={() => { setView("overview"); setSelId(null); }} onOpenFullCompany={(name) => openCompany(name, null)} />
             )}
             {view === "stage" && loaded && stageDash && (
               <StageDashboardView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} originRect={originRect} onSelectStage={(key) => setStageKey(key)} onCollapse={() => { setOriginRect(null); setView("pegs"); setSelId(null); }} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
@@ -1438,7 +1438,7 @@ function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedN
 
 /* intermediate view: the full supply-chain graph — every physical entity group node connected across all stages. Stage names are plain column headers; hovering a group lights its route; clicking a group expands its entities */
 const PEG_ANCHOR_Y = 15; // connector attaches near the group node's title row so expansion doesn't move it
-function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onCollapse }: { loaded: LoadedNode; graph: StageGraph; selectedKey: string; originRect: DOMRect | null; onOpenStage: (k: string) => void; onCollapse: () => void }) {
+function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onCollapse, onOpenFullCompany }: { loaded: LoadedNode; graph: StageGraph; selectedKey: string; originRect: DOMRect | null; onOpenStage: (k: string) => void; onCollapse: () => void; onOpenFullCompany?: (name: string) => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [flip, setFlip] = useState<{ transform: string; transition: string }>({ transform: "none", transition: "none" });
   const [contentIn, setContentIn] = useState(false);
@@ -1520,7 +1520,15 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
               {company ? "Entity graph" : "Supply-chain graph"}
             </button>
           )}
-          <span style={{ marginLeft: (showEntities || company) ? 0 : "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>{company ? "Company value chain" : showEntities ? (entityFocus ? "Entity route" : "Entity graph") : "Supply-chain graph"}</span>
+          <span style={{ marginLeft: (showEntities || company) ? 0 : "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>{company ? `Company value chain · ${loaded.name} route` : showEntities ? (entityFocus ? "Entity route" : "Entity graph") : "Supply-chain graph"}</span>
+          {company && onOpenFullCompany && (
+            <button onClick={() => onOpenFullCompany(company.rec.identity.company_name)} title="Open the full company value chain (all activities)"
+              style={{ display: "flex", alignItems: "center", gap: 4, background: "rgba(200,122,74,0.12)", border: "1px solid rgba(200,122,74,0.5)", borderRadius: 4, padding: "3px 8px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.22)"; }} onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,122,74,0.12)"; }}>
+              Explore full company graph
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+            </button>
+          )}
           <button onClick={onCollapse} title="Collapse to node overview" style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "3px 5px", cursor: "pointer", color: "#8a8378" }}
             onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }} onMouseLeave={e => { e.currentTarget.style.color = "#8a8378"; }}>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>
