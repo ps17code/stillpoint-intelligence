@@ -4,7 +4,8 @@ import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord
 import WORLD_PATHS from "@/data/world-paths.json";
 
 /* ── Company Subgraph projection over a canonical Company Record (v2.0) ── */
-type CNode = { key: string; kind: string; label: string; edge?: string; metas: string[]; canonicalId?: string; children: CNode[] };
+type PERoute = { fed_by?: string[]; commercial_input?: string; downstream?: { name: string; kind?: string }[] };
+type CNode = { key: string; kind: string; label: string; edge?: string; metas: string[]; canonicalId?: string; route?: PERoute; children: CNode[] };
 /* keep only the branches of a company subgraph whose route touches `kw` (e.g. "germanium"): a node stays if it matches, or any descendant does. A matching node keeps its whole subtree */
 function pruneCompanyToFocus(node: CNode, kw: string): CNode | null {
   if (node.label.toLowerCase().includes(kw)) return node;
@@ -35,6 +36,7 @@ function compileCompanySubgraph(rec: CompanyRecordV2, focus?: string): CNode {
   const mkPE = (p: CompanyRecordV2["economic_activities"][0]["corporate_vehicles"][0]["product_service_groups"][0]["physical_entities"][0]): CNode => ({
     key: p.physical_entity_id, kind: "Physical Entity", label: p.physical_entity_name, edge: "realized by", canonicalId: p.physical_entity_id,
     metas: [p.physical_entity_class, p.relationship_to_corporate_vehicle, `status: ${p.resolution_status}`].filter(Boolean) as string[],
+    route: (p as unknown as { pe_route?: PERoute }).pe_route,
     children: (p.commercial_outputs || []).map(mkOutput),
   });
   const mkPSG = (g: CompanyRecordV2["economic_activities"][0]["corporate_vehicles"][0]["product_service_groups"][0], extra: string[] = []): CNode => ({
@@ -490,7 +492,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
               <AerialGraph loaded={loaded} reveal={reveal} exiting={exiting} onOpenGraph={(rect) => { setSelId(null); setStageKey(null); setOriginRect(rect); setExiting(true); window.setTimeout(() => { setView("pegs"); }, 300); }} />
             )}
             {view === "pegs" && loaded && stageGraph && (
-              <StagePegView loaded={loaded} graph={stageGraph} selectedKey={stageKey ?? stages[0]?.key ?? ""} originRect={originRect} onOpenStage={(key) => { setStageKey(key); setOriginRect(null); setView("stage"); }} onCollapse={() => { setView("overview"); setSelId(null); }} onOpenCompany={openCompany} />
+              <StagePegView loaded={loaded} graph={stageGraph} selectedKey={stageKey ?? stages[0]?.key ?? ""} originRect={originRect} onOpenStage={(key) => { setStageKey(key); setOriginRect(null); setView("stage"); }} onCollapse={() => { setView("overview"); setSelId(null); }} />
             )}
             {view === "stage" && loaded && stageDash && (
               <StageDashboardView loaded={loaded} stages={stages} selectedKey={stageKey ?? stages[0]?.key ?? ""} dash={stageDash} originRect={originRect} onSelectStage={(key) => setStageKey(key)} onCollapse={() => { setOriginRect(null); setView("pegs"); setSelId(null); }} onViewPhysical={() => { setView("supply"); setSelId(null); }} onViewCompanies={() => { setView("entity"); setSelId(null); }} />
@@ -588,35 +590,75 @@ const CG_STAGE_LABEL: Record<string, string> = {
   "Product / Service Group": "Product / Service Group", "Physical Entity": "Physical Entities", "Commercial Output": "Commercial Outputs", "Market": "End Markets",
 };
 
-/* one node card in the horizontal company value-chain graph */
-function CompanyNodeCard({ node, isOpen, onToggle, nodeRef }: { node: CNode; isOpen: boolean; onToggle: () => void; nodeRef: (el: HTMLDivElement | null) => void }) {
-  const hasKids = node.children.length > 0;
-  const kc = CG_KIND_COLOR[node.kind] ?? "#888";
-  const isCompany = node.kind === "Company";
+/* icon per value-chain node kind — used on the node cards and in the legend */
+function CGIcon({ kind, size = 13, color = "#888" }: { kind: string; size?: number; color?: string }) {
+  const p = { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, style: { flexShrink: 0 } };
+  switch (kind) {
+    case "Company": return <svg {...p}><rect x="4" y="3" width="9" height="18" rx="1" /><path d="M13 8h7v13H4" /><line x1="7" y1="7" x2="7.01" y2="7" /><line x1="7" y1="11" x2="7.01" y2="11" /><line x1="7" y1="15" x2="7.01" y2="15" /></svg>;
+    case "Economic Activity": return <svg {...p}><rect x="3" y="7" width="18" height="12" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>;
+    case "Product / Service Group": return <svg {...p}><polygon points="12 3 21 8 12 13 3 8 12 3" /><polyline points="3 13 12 18 21 13" /></svg>;
+    case "Physical Entity": return <svg {...p}><path d="M3 21V9l6 4V9l6 4V5l6 3v13z" /><line x1="3" y1="21" x2="21" y2="21" /></svg>;
+    case "Commercial Output": return <svg {...p}><path d="M21 8l-9-5-9 5v8l9 5 9-5z" /><polyline points="3 8 12 13 21 8" /><line x1="12" y1="13" x2="12" y2="21" /></svg>;
+    case "Commercial Input": return <svg {...p}><path d="M21 8l-9-5-9 5v8l9 5 9-5z" /><polyline points="3 8 12 13 21 8" /></svg>;
+    case "Market": return <svg {...p}><path d="M4 9h16l-1-4H5z" /><path d="M5 9v10h14V9" /><line x1="9" y1="19" x2="9" y2="13" /><line x1="15" y1="19" x2="15" y2="13" /></svg>;
+    default: return <svg {...p}><circle cx="12" cy="12" r="8" /></svg>;
+  }
+}
+
+/* legend at the bottom of the company graph canvas */
+function CGLegend({ kinds }: { kinds: string[] }) {
+  const order = ["Company", "Economic Activity", "Product / Service Group", "Physical Entity", "Commercial Output", "Market"];
+  const shown = order.filter(k => kinds.includes(k));
   return (
-    <div
-      ref={nodeRef}
-      onClick={hasKids ? onToggle : undefined}
-      style={{
-        width: "100%", boxSizing: "border-box", padding: "9px 11px", borderRadius: 7,
-        background: isCompany ? "rgba(200,122,74,0.13)" : cardBg,
-        border: `1px solid ${isCompany ? accent : "rgb(48,43,40)"}`, borderLeft: `2px solid ${kc}`,
-        cursor: hasKids ? "pointer" : "default", transition: "border-color 120ms, background 120ms",
-        boxShadow: isCompany ? "0 0 0 3px rgba(200,122,74,0.06)" : "none",
-      }}
-      onMouseEnter={e => { if (hasKids && !isCompany) e.currentTarget.style.borderColor = "rgb(70,64,58)"; }}
-      onMouseLeave={e => { if (hasKids && !isCompany) e.currentTarget.style.borderColor = "rgb(48,43,40)"; }}
-    >
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
-        <p style={{ flex: 1, fontSize: 11.5, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.22 }}>{node.label}</p>
-        {hasKids && <span style={{ fontSize: 8, color: "#7d766b", fontFamily: MONO, flexShrink: 0, marginTop: 2 }}>{isOpen ? "▾" : "▸"}{node.children.length}</span>}
-      </div>
+    <div style={{ flexShrink: 0, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16, padding: "9px 14px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+      {shown.map(k => (
+        <div key={k} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+          <CGIcon kind={k} size={12} color={CG_KIND_COLOR[k] ?? "#888"} />
+          <span style={{ fontSize: 8, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.05em" }}>{CG_STAGE_LABEL[k] ?? k}</span>
+        </div>
+      ))}
     </div>
   );
 }
 
-/* Company value-chain graph — horizontal, left→right, one column per value-chain stage with a stage header on top */
-function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set<string>; onToggle: (k: string) => void }) {
+/* one node card in the horizontal company value-chain graph */
+function CompanyNodeCard({ node, isOpen, onToggle, nodeRef, onExpandPE }: { node: CNode; isOpen: boolean; onToggle: () => void; nodeRef: (el: HTMLDivElement | null) => void; onExpandPE?: (n: CNode) => void }) {
+  const [hover, setHover] = useState(false);
+  const hasKids = node.children.length > 0;
+  const kc = CG_KIND_COLOR[node.kind] ?? "#888";
+  const isCompany = node.kind === "Company";
+  const canRoutePE = node.kind === "Physical Entity" && !!onExpandPE && !!node.route;
+  return (
+    <div
+      ref={nodeRef}
+      onClick={hasKids ? onToggle : undefined}
+      onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+      style={{
+        width: "100%", boxSizing: "border-box", padding: "9px 11px", borderRadius: 7,
+        background: isCompany ? "rgba(200,122,74,0.13)" : cardBg,
+        border: `1px solid ${isCompany ? accent : (hover ? "rgb(70,64,58)" : "rgb(48,43,40)")}`, borderLeft: `2px solid ${kc}`,
+        cursor: hasKids ? "pointer" : "default", transition: "border-color 120ms, background 120ms",
+        boxShadow: isCompany ? "0 0 0 3px rgba(200,122,74,0.06)" : "none",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 7 }}>
+        <span style={{ marginTop: 1 }}><CGIcon kind={node.kind} size={13} color={kc} /></span>
+        <p style={{ flex: 1, fontSize: 11, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.22 }}>{node.label}</p>
+        {hasKids && <span style={{ fontSize: 8, color: "#7d766b", fontFamily: MONO, flexShrink: 0, marginTop: 2 }}>{isOpen ? "▾" : "▸"}{node.children.length}</span>}
+      </div>
+      {canRoutePE && hover && (
+        <button onClick={e => { e.stopPropagation(); onExpandPE!(node); }}
+          style={{ marginTop: 8, width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 5, background: "rgba(176,143,206,0.16)", border: "1px solid rgba(176,143,206,0.55)", borderRadius: 5, padding: "4px 6px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 8, animation: "fadeInDown 0.18s ease" }}>
+          Expand physical entity route
+          <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+        </button>
+      )}
+    </div>
+  );
+}
+
+/* Company value-chain graph — horizontal, left→right, one column per value-chain stage with a stage header directly above its nodes */
+function CompanyGraph({ root, expanded, onToggle, onExpandPE }: { root: CNode; expanded: Set<string>; onToggle: (k: string) => void; onExpandPE?: (n: CNode) => void }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const nodeEls = useRef<Record<string, HTMLDivElement | null>>({});
   const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number; color: string }[]>([]);
@@ -631,6 +673,8 @@ function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set
     walk(root, 0);
     return { cols, edges };
   }, [root, expanded]);
+
+  const kindsPresent = useMemo(() => { const s = new Set<string>(); cols.forEach(c => c.forEach(n => s.add(n.kind))); return Array.from(s); }, [cols]);
 
   const measure = useCallback(() => {
     const box = boxRef.current?.getBoundingClientRect();
@@ -655,36 +699,139 @@ function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set
   }, [measure, expanded]);
 
   return (
-    <div style={{ minHeight: "100%", overflowX: "auto", overflowY: "hidden" }} className="thin-scroll">
-      <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "stretch", gap: 46, padding: "12px 16px 20px", margin: "0 auto", width: "max-content", minHeight: "calc(100vh - 152px)" }}>
-        <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
-          {lines.map((l, i) => {
-            const mx = (l.x1 + l.x2) / 2;
+    <div style={{ minHeight: "100%", display: "flex", flexDirection: "column" }}>
+      <div style={{ flex: 1, minHeight: 0, display: "flex", alignItems: "center", overflowX: "auto" }} className="thin-scroll">
+        <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 44, padding: "10px 16px", margin: "auto", width: "max-content" }}>
+          <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
+            {lines.map((l, i) => {
+              const mx = (l.x1 + l.x2) / 2;
+              return (
+                <g key={i}>
+                  <path d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke={l.color} strokeOpacity={0.5} strokeWidth={1.3} />
+                  <circle cx={l.x2} cy={l.y2} r={2.2} fill={l.color} fillOpacity={0.7} />
+                </g>
+              );
+            })}
+          </svg>
+          {cols.map((col, d) => {
+            const stage = Array.from(new Set(col.map(n => CG_STAGE_LABEL[n.kind] ?? n.kind))).join(" / ");
+            const color = CG_KIND_COLOR[col[0]?.kind] ?? "#888";
             return (
-              <g key={i}>
-                <path d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke={l.color} strokeOpacity={0.5} strokeWidth={1.3} />
-                <circle cx={l.x2} cy={l.y2} r={2.2} fill={l.color} fillOpacity={0.7} />
-              </g>
-            );
-          })}
-        </svg>
-        {cols.map((col, d) => {
-          const stage = Array.from(new Set(col.map(n => CG_STAGE_LABEL[n.kind] ?? n.kind))).join(" / ");
-          const color = CG_KIND_COLOR[col[0]?.kind] ?? "#888";
-          return (
-            <div key={d} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", width: 186, flexShrink: 0 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 5, paddingBottom: 7, marginBottom: 10, borderBottom: "1px solid rgb(58,53,48)" }}>
-                <span style={{ width: 6, height: 6, borderRadius: "50%", background: color, flexShrink: 0 }} />
-                <p style={{ fontSize: 8, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", margin: 0 }}>{stage}</p>
-              </div>
-              <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: 10 }}>
+              <div key={d} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", width: 186, flexShrink: 0, gap: 9 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 5, paddingBottom: 6, borderBottom: "1px solid rgb(58,53,48)" }}>
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: color, flexShrink: 0 }} />
+                  <p style={{ fontSize: 8, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", margin: 0 }}>{stage}</p>
+                </div>
                 {col.map(n => (
-                  <CompanyNodeCard key={n.key} node={n} isOpen={expanded.has(n.key)} onToggle={() => onToggle(n.key)} nodeRef={el => { nodeEls.current[n.key] = el; }} />
+                  <CompanyNodeCard key={n.key} node={n} isOpen={expanded.has(n.key)} onToggle={() => onToggle(n.key)} nodeRef={el => { nodeEls.current[n.key] = el; }} onExpandPE={onExpandPE} />
                 ))}
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+      </div>
+      <CGLegend kinds={kindsPresent} />
+    </div>
+  );
+}
+
+/* the company value chain rendered inline inside the node container, as an extension off the clicked company node */
+function CompanyGraphInline({ rec, focus }: { rec: CompanyRecordV2; focus: string }) {
+  const sub = useMemo(() => compileCompanySubgraph(rec, focus), [rec, focus]);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const [peRoute, setPeRoute] = useState<CNode | null>(null);
+  useEffect(() => { const s = new Set<string>(); collectKeys(sub, s); setExpanded(s); setPeRoute(null); }, [sub]);
+  const toggle = (k: string) => setExpanded(prev => { const n = new Set(prev); if (n.has(k)) n.delete(k); else n.add(k); return n; });
+  if (peRoute) return <PhysicalEntityRoute node={peRoute} onBack={() => setPeRoute(null)} />;
+  return <CompanyGraph root={sub} expanded={expanded} onToggle={toggle} onExpandPE={setPeRoute} />;
+}
+
+/* the input → physical entity → output flow around a single physical entity */
+function PhysicalEntityRoute({ node, onBack }: { node: CNode; onBack: () => void }) {
+  const route = node.route ?? {};
+  const cols = useMemo(() => {
+    type RItem = { id: string; label: string; kind: string };
+    const fedBy: RItem[] = (route.fed_by ?? []).map((n, i) => ({ id: `fed-${i}`, label: n, kind: "Physical Entity" }));
+    const input: RItem[] = route.commercial_input ? [{ id: "input", label: route.commercial_input, kind: "Commercial Input" }] : [];
+    const pe: RItem[] = [{ id: "pe", label: node.label, kind: "Physical Entity" }];
+    const outputs: RItem[] = node.children.map(o => ({ id: o.key, label: o.label, kind: "Commercial Output" }));
+    // downstream: the physical entity it feeds (if known) and/or the end markets its outputs supply
+    const explicit: RItem[] = (route.downstream ?? []).map((d, i) => ({ id: `ds-${i}`, label: d.name, kind: d.kind || "Market" }));
+    const markets: RItem[] = node.children.flatMap(o => o.children.map(m => ({ id: m.key, label: m.label, kind: "Market" })));
+    const seen = new Set(explicit.map(d => d.label));
+    const downstream: RItem[] = [...explicit, ...markets.filter(m => !seen.has(m.label))];
+    const dsHasPE = downstream.some(d => d.kind === "Physical Entity");
+    return [
+      { key: "fed", label: "Upstream Physical Entities", items: fedBy },
+      { key: "in", label: "Commercial Input", items: input },
+      { key: "pe", label: "Physical Entity", items: pe },
+      { key: "out", label: "Commercial Output", items: outputs },
+      { key: "ds", label: dsHasPE ? "Downstream Entity / Market" : "End Markets", items: downstream },
+    ].filter(c => c.items.length > 0);
+  }, [node, route]);
+
+  const boxRef = useRef<HTMLDivElement>(null);
+  const els = useRef<Record<string, HTMLDivElement | null>>({});
+  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
+  const measure = useCallback(() => {
+    const box = boxRef.current?.getBoundingClientRect(); if (!box) return;
+    const next: { x1: number; y1: number; x2: number; y2: number }[] = [];
+    for (let ci = 0; ci < cols.length - 1; ci++) {
+      for (const a of cols[ci].items) for (const b of cols[ci + 1].items) {
+        const ea = els.current[a.id], eb = els.current[b.id]; if (!ea || !eb) continue;
+        const ab = ea.getBoundingClientRect(), bb = eb.getBoundingClientRect();
+        next.push({ x1: ab.right - box.left, y1: ab.top + ab.height / 2 - box.top, x2: bb.left - box.left, y2: bb.top + bb.height / 2 - box.top });
+      }
+    }
+    setLines(next);
+  }, [cols]);
+  useEffect(() => {
+    const r = requestAnimationFrame(measure); const t = setTimeout(measure, 100);
+    const ro = new ResizeObserver(() => measure()); if (boxRef.current) ro.observe(boxRef.current);
+    window.addEventListener("resize", measure);
+    return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
+  }, [measure]);
+
+  return (
+    <div style={{ minHeight: "100%", display: "flex", flexDirection: "column" }}>
+      <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 8, padding: "2px 4px 10px" }}>
+        <button onClick={onBack} style={{ display: "flex", alignItems: "center", gap: 4, background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "3px 7px", cursor: "pointer", color: "#8a8378", fontFamily: MONO, fontSize: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}
+          onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }} onMouseLeave={e => { e.currentTarget.style.color = "#8a8378"; }}>
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
+          Company graph
+        </button>
+        <span style={{ fontSize: 10.5, color: warmWhite, fontFamily: SERIF }}>{node.label}</span>
+        <span style={{ fontSize: 7.5, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em" }}>· physical entity route</span>
+      </div>
+      <div style={{ flex: 1, minHeight: 0, display: "flex", alignItems: "center", overflowX: "auto" }} className="thin-scroll">
+        <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 40, padding: "10px 14px", margin: "auto", width: "max-content" }}>
+          <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
+            {lines.map((l, i) => { const mx = (l.x1 + l.x2) / 2; return <path key={i} d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke="#8ab0c0" strokeOpacity={0.5} strokeWidth={1.2} />; })}
+          </svg>
+          {cols.map(col => {
+            const color = CG_KIND_COLOR[col.items[0]?.kind] ?? "#888";
+            const isPEcol = col.key === "pe";
+            return (
+              <div key={col.key} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", width: 168, flexShrink: 0, gap: 9 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 5, paddingBottom: 6, borderBottom: "1px solid rgb(58,53,48)" }}>
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: color, flexShrink: 0 }} />
+                  <p style={{ fontSize: 8, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.05em", margin: 0 }}>{col.label}</p>
+                </div>
+                {col.items.map(it => {
+                  const c = CG_KIND_COLOR[it.kind] ?? "#888";
+                  return (
+                    <div key={it.id} ref={el => { els.current[it.id] = el; }} style={{ boxSizing: "border-box", padding: "8px 10px", borderRadius: 7, background: isPEcol ? "rgba(176,143,206,0.14)" : cardBg, border: `1px solid ${isPEcol ? "rgba(176,143,206,0.55)" : "rgb(48,43,40)"}`, borderLeft: `2px solid ${c}` }}>
+                      <div style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
+                        <span style={{ marginTop: 1 }}><CGIcon kind={it.kind} size={12} color={c} /></span>
+                        <p style={{ flex: 1, fontSize: 10, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.2 }}>{it.label}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
@@ -1309,7 +1456,7 @@ function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedN
 
 /* intermediate view: the full supply-chain graph — every physical entity group node connected across all stages. Stage names are plain column headers; hovering a group lights its route; clicking a group expands its entities */
 const PEG_ANCHOR_Y = 15; // connector attaches near the group node's title row so expansion doesn't move it
-function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onCollapse, onOpenCompany }: { loaded: LoadedNode; graph: StageGraph; selectedKey: string; originRect: DOMRect | null; onOpenStage: (k: string) => void; onCollapse: () => void; onOpenCompany: (name: string, focus: string) => void }) {
+function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onCollapse }: { loaded: LoadedNode; graph: StageGraph; selectedKey: string; originRect: DOMRect | null; onOpenStage: (k: string) => void; onCollapse: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [flip, setFlip] = useState<{ transform: string; transition: string }>({ transform: "none", transition: "none" });
   const [contentIn, setContentIn] = useState(false);
@@ -1334,9 +1481,11 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
   const [showEntities, setShowEntities] = useState(false); // switched to the inline entity graph
   const [leaving, setLeaving] = useState(false); // fading the supply-chain graph out before the entity graph mounts
   const [entityFocus, setEntityFocus] = useState<string | null>(null); // when set, show only that entity's route (connected subgraph)
+  const [company, setCompany] = useState<{ rec: CompanyRecordV2; focus: string } | null>(null); // company value chain rendered inline, off a clicked company node
   const goEntities = () => { setEntityFocus(null); setLeaving(true); setTimeout(() => setShowEntities(true), 280); };
   const goEntityRoute = (id: string) => { setEntityFocus(id); setLeaving(true); setTimeout(() => setShowEntities(true), 280); };
-  const backToGraph = () => { setShowEntities(false); setLeaving(false); setEntityFocus(null); };
+  const backToGraph = () => { setShowEntities(false); setLeaving(false); setEntityFocus(null); setCompany(null); };
+  const openCompanyInline = (name: string, focus: string) => { const rec = getCompanyRecordV2(name); if (rec) setCompany({ rec, focus }); };
   const colOf = useMemo(() => {
     const m: Record<string, number> = {};
     graph.columns.forEach((c, i) => c.pegs.forEach(p => { m[p.id] = i; }));
@@ -1382,22 +1531,26 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
         <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 12 }}>
           <span style={{ fontSize: 17, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
           <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
-          {showEntities && (
-            <button onClick={backToGraph} title="Back to supply-chain graph" style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 4, background: "transparent", border: "none", cursor: "pointer", color: "#8a8378", fontFamily: MONO, fontSize: 8, textTransform: "uppercase", letterSpacing: "0.06em", padding: 0 }}
+          {(showEntities || company) && (
+            <button onClick={company ? () => setCompany(null) : backToGraph} title={company ? "Back to entity graph" : "Back to supply-chain graph"} style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 4, background: "transparent", border: "none", cursor: "pointer", color: "#8a8378", fontFamily: MONO, fontSize: 8, textTransform: "uppercase", letterSpacing: "0.06em", padding: 0 }}
               onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }} onMouseLeave={e => { e.currentTarget.style.color = "#8a8378"; }}>
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
-              Supply-chain graph
+              {company ? "Entity graph" : "Supply-chain graph"}
             </button>
           )}
-          <span style={{ marginLeft: showEntities ? 0 : "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>{showEntities ? (entityFocus ? "Entity route" : "Entity graph") : "Supply-chain graph"}</span>
+          <span style={{ marginLeft: (showEntities || company) ? 0 : "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>{company ? "Company value chain" : showEntities ? (entityFocus ? "Entity route" : "Entity graph") : "Supply-chain graph"}</span>
           <button onClick={onCollapse} title="Collapse to node overview" style={{ display: "flex", alignItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "3px 5px", cursor: "pointer", color: "#8a8378" }}
             onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }} onMouseLeave={e => { e.currentTarget.style.color = "#8a8378"; }}>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>
           </button>
         </div>
-        {showEntities ? (
+        {company ? (
           <div style={{ flex: 1, minHeight: 0, animation: "fadeInDown 0.3s ease" }}>
-            <EntityGraphInline loaded={loaded} focusId={entityFocus} onOpenCompany={onOpenCompany} />
+            <CompanyGraphInline rec={company.rec} focus={company.focus} />
+          </div>
+        ) : showEntities ? (
+          <div style={{ flex: 1, minHeight: 0, animation: "fadeInDown 0.3s ease" }}>
+            <EntityGraphInline loaded={loaded} focusId={entityFocus} onOpenCompany={openCompanyInline} />
           </div>
         ) : (
         <div style={{ flex: 1, minHeight: 0, opacity: contentIn && !leaving ? 1 : 0, transition: "opacity 0.28s ease", display: "flex", alignItems: "center", overflowX: "auto" }} className="thin-scroll">

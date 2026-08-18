@@ -112,6 +112,11 @@
                   "physical_entity_class": "Recycling facility",
                   "relationship_to_corporate_vehicle": "Owned & operated",
                   "resolution_status": "resolved",
+                  "pe_route": {
+                    "fed_by": ["End-of-life Ge optics scrap", "Optical-fibre residues"],
+                    "commercial_input": "Germanium-bearing scrap & residues",
+                    "downstream": [{ "name": "Olen Germanium Refinery", "kind": "Physical Entity" }]
+                  },
                   "commercial_outputs": [
                     {
                       "commercial_output_id": "co_umi_recycled_ge",
@@ -206,6 +211,10 @@
                   "physical_entity_class": "Manufacturing facility",
                   "relationship_to_corporate_vehicle": "Owned & operated",
                   "resolution_status": "resolved",
+                  "pe_route": {
+                    "fed_by": ["Olen Germanium Refinery"],
+                    "commercial_input": "Purified germanium metal (zone-refined)"
+                  },
                   "commercial_outputs": [
                     {
                       "commercial_output_id": "co_umi_ge_wafers",
@@ -233,6 +242,11 @@
                   "physical_entity_class": "Refinery",
                   "relationship_to_corporate_vehicle": "Owned & operated",
                   "resolution_status": "resolved",
+                  "pe_route": {
+                    "fed_by": ["Germanium Reclamation Line", "Imported GeO2 concentrate"],
+                    "commercial_input": "Germanium concentrate / GeO2",
+                    "downstream": [{ "name": "Olen Germanium Substrate Line", "kind": "Physical Entity" }]
+                  },
                   "commercial_outputs": [
                     {
                       "commercial_output_id": "co_umi_gecl4",
