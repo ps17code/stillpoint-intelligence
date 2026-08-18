@@ -19,6 +19,10 @@ import mpOrgRecord from "@/data/node-v2/entities/org_mp_materials.json";
 import kwinanaRecord from "@/data/node-v2/entities/pe_kwinana_li_refinery.json";
 import tianqiRecord from "@/data/node-v2/entities/org_tianqi_lithium.json";
 import umicoreRecord from "@/data/node-v2/entities/org_umicore.json";
+import umicoreOlenRecord from "@/data/node-v2/entities/pe_umicore_olen.json";
+import stlLubumbashiRecord from "@/data/node-v2/entities/pe_stl_lubumbashi.json";
+import bigHillSlagRecord from "@/data/node-v2/entities/pe_big_hill_slag.json";
+import fiberScrapRecord from "@/data/node-v2/entities/pe_fiber_scrap_stream.json";
 
 export type ClassNodeRef = { id: string; name: string; class_type: string };
 export type ClassGraph = { node: ClassNodeRef; downstream: ClassNodeRef[] };
@@ -350,6 +354,10 @@ export type FullEntityRecord = {
 const FULL_RECORDS: Record<string, FullEntityRecord> = {
   pe_trail_smelter: trailRecord as unknown as FullEntityRecord,
   pe_kwinana_li_refinery: kwinanaRecord as unknown as FullEntityRecord,
+  pe_umicore_olen: umicoreOlenRecord as unknown as FullEntityRecord,
+  pe_stl_lubumbashi: stlLubumbashiRecord as unknown as FullEntityRecord,
+  pe_big_hill_slag: bigHillSlagRecord as unknown as FullEntityRecord,
+  pe_fiber_scrap_stream: fiberScrapRecord as unknown as FullEntityRecord,
 };
 
 export function getFullRecord(id: string): FullEntityRecord | null {

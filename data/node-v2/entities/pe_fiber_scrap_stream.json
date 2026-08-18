@@ -1,0 +1,56 @@
+{
+  "common": {
+    "physical_entity_id": "pe_fiber_scrap_stream",
+    "entity_type": "Physical Entity",
+    "entity_subtype": "Resource Site",
+    "physical_entity_node_group_memberships": [
+      { "group_id": "PEG-RS-GESCRAP", "group_name": "End-of-Life Germanium Accumulation", "qualification_status": "qualified", "qualification_evidence": "Optical-fibre preform manufacturing generates the largest secondary germanium stream — GeO2-in-glass soot, GeCl4 returns and reject preforms — which is collected and returned to refiner-recyclers such as Umicore." }
+    ],
+    "owners": [
+      { "organization_name": "Various fibre / preform manufacturers", "ownership_percentage": null, "ownership_type": "Distributed generators of the scrap stream", "source_or_evidence": "Scrap arises across many optical-fibre preform producers globally." }
+    ],
+    "operators": [
+      { "organization_name": "Various fibre / preform manufacturers", "operator_relationship_type": "Generators / consolidators of the secondary stream", "source_or_evidence": "Preform makers accumulate and consign germanium-bearing scrap for recycling." }
+    ]
+  },
+  "identity": {
+    "facility_name": "Optical-Fiber Preform Ge Scrap Stream",
+    "alternative_names": ["Fibre preform germanium scrap", "GeO2-in-glass soot returns"],
+    "facility_type": "Secondary (recyclable) germanium accumulation",
+    "short_description": "The largest secondary germanium stream — GeO2-in-glass soot, GeCl4 returns and reject preforms from optical-fibre manufacturing — consigned to refiner-recyclers (Umicore Olen, Umicore Quapaw, Vital/VPMS) for germanium reclamation.",
+    "commissioning_or_operating_start_date": "Ongoing (co-produced with fibre manufacturing)",
+    "facility_level_operational_status": "Active"
+  },
+  "location": {
+    "country": "Global",
+    "region": "Distributed (global fibre manufacturing)",
+    "city": "—",
+    "site_address": "Distributed across fibre / preform manufacturers",
+    "coordinates": { "latitude": null, "longitude": null }
+  },
+  "operations": {
+    "operating_configuration": "Distributed secondary-material stream consolidated for recycling",
+    "operations": [
+      {
+        "operation_id": "op_fiber_scrap_stream",
+        "operation_name": "Optical-Fibre Germanium Scrap Generation",
+        "operation_category": "Secondary material accumulation",
+        "physical_entity_node_group_id": "PEG-RS-GESCRAP",
+        "operational_status": "Active",
+        "main_physical_function": "Accumulates germanium-bearing optical-fibre manufacturing scrap and supplies it as recycling feed to germanium refiner-recyclers",
+        "inputs": [],
+        "major_industrial_processes": [
+          { "process_or_stage_name": "Scrap collection & consolidation", "transformation_function": "Collection and consolidation of germanium-bearing fibre scrap", "actual_process_or_technology_used": "Sorting and consignment of soot, GeCl4 returns and reject preforms", "major_process_steps": ["Collection of GeO2-in-glass soot", "Recovery of GeCl4 returns", "Consolidation of reject preforms"], "output_form": "germanium-bearing fibre / preform scrap", "process_status": "Active" }
+        ],
+        "outputs_produced": [
+          { "output_name": "Germanium fibre / preform scrap", "output_form": "Ge-bearing fibre/preform scrap (GeO2-in-glass soot; GeCl4 returns; reject preforms)", "output_classification": "Secondary recyclable feedstock", "nameplate_output_capacity": "Not disclosed", "actual_output_quantity": "Largest single secondary Ge stream", "quantity_unit": "t Ge/yr", "reporting_period": "Ongoing", "reported_or_estimated": "estimated" }
+        ],
+        "operation_metrics": { "total_throughput_capacity": "Not disclosed", "actual_throughput": "Not disclosed", "capacity_utilization": "Not disclosed", "quantity_unit": "t Ge/yr", "quantity_basis": "Germanium contained in recycled scrap" },
+        "confidence": "medium",
+        "reported_or_estimated": "estimated",
+        "estimation_method": "Industry characterisation of secondary germanium streams"
+      }
+    ],
+    "facility_record_metadata": { "record_status": "illustrative", "overall_confidence": "medium", "created_date": "2026-08-17", "last_updated_date": "2026-08-17" }
+  }
+}

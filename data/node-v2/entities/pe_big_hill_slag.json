@@ -1,0 +1,56 @@
+{
+  "common": {
+    "physical_entity_id": "pe_big_hill_slag",
+    "entity_type": "Physical Entity",
+    "entity_subtype": "Resource Site",
+    "physical_entity_node_group_memberships": [
+      { "group_id": "PEG-RS-SLAG", "group_name": "Metallurgical Slag / Tailings Accumulation", "qualification_status": "qualified", "qualification_evidence": "The Big Hill / Terril de Lubumbashi is a historic copper-cobalt smelter slag heap of roughly 10-14 Mt that carries recoverable germanium (alongside zinc, copper, cobalt and rare metals); it is the host accumulation feeding STL's germanium recovery." }
+    ],
+    "owners": [
+      { "organization_name": "Gécamines", "ownership_percentage": 100, "ownership_type": "State mining company (owner of the slag resource)", "source_or_evidence": "The Lubumbashi slag heap is a legacy Gécamines asset." }
+    ],
+    "operators": [
+      { "organization_name": "Société pour le Traitement du Terril de Lubumbashi (STL)", "operator_relationship_type": "Processing operator working the slag under agreement", "source_or_evidence": "STL reclaims and treats the Big Hill slag." }
+    ]
+  },
+  "identity": {
+    "facility_name": "Big Hill Slag Dump (Terril de Lubumbashi)",
+    "alternative_names": ["Big Hill", "Terril de Lubumbashi", "Lubumbashi slag heap"],
+    "facility_type": "Metallurgical slag accumulation / secondary resource",
+    "short_description": "Legacy copper-cobalt smelter slag heap in Lubumbashi (~10-14 Mt) that hosts recoverable germanium; the primary feed source for STL's germanium recovery plant and, downstream, Umicore.",
+    "commissioning_or_operating_start_date": "Accumulated over 20th-century Cu-Co smelting; reclamation-era from ~1990s",
+    "facility_level_operational_status": "Active (being reclaimed)"
+  },
+  "location": {
+    "country": "Democratic Republic of the Congo",
+    "region": "Haut-Katanga",
+    "city": "Lubumbashi",
+    "site_address": "Terril de Lubumbashi, Lubumbashi",
+    "coordinates": { "latitude": -11.66, "longitude": 27.48 }
+  },
+  "operations": {
+    "operating_configuration": "Single-site slag accumulation feeding an adjacent reclamation/hydrometallurgical plant",
+    "operations": [
+      {
+        "operation_id": "op_big_hill_slag",
+        "operation_name": "Germanium-bearing Slag Accumulation & Reclamation",
+        "operation_category": "Resource accumulation / host material",
+        "physical_entity_node_group_id": "PEG-RS-SLAG",
+        "operational_status": "Active",
+        "main_physical_function": "Hosts germanium-bearing copper-cobalt smelter slag and supplies reclaimed slag as feedstock to germanium recovery",
+        "inputs": [],
+        "major_industrial_processes": [
+          { "process_or_stage_name": "Slag reclamation", "transformation_function": "Excavation and reclamation of the historic slag heap", "actual_process_or_technology_used": "Mechanical excavation / reclamation of the terril", "major_process_steps": ["Excavation of slag", "Sizing / preparation for hydrometallurgical treatment"], "output_form": "germanium-bearing copper-cobalt smelter slag", "process_status": "Active" }
+        ],
+        "outputs_produced": [
+          { "output_name": "Germanium-bearing smelter slag", "output_form": "germanium-bearing copper-cobalt smelter slag", "output_classification": "Secondary resource / feedstock", "nameplate_output_capacity": "Not disclosed", "actual_output_quantity": "~10-14 Mt slag in place", "quantity_unit": "t (resource in place)", "reporting_period": "Resource estimate", "reported_or_estimated": "estimated" }
+        ],
+        "operation_metrics": { "total_throughput_capacity": "Not disclosed", "actual_throughput": "Not disclosed", "capacity_utilization": "Not disclosed", "quantity_unit": "t", "quantity_basis": "Slag reclaimed and fed to recovery" },
+        "confidence": "medium",
+        "reported_or_estimated": "estimated",
+        "estimation_method": "Public reporting on the Lubumbashi slag heap resource"
+      }
+    ],
+    "facility_record_metadata": { "record_status": "illustrative", "overall_confidence": "medium", "created_date": "2026-08-17", "last_updated_date": "2026-08-17" }
+  }
+}

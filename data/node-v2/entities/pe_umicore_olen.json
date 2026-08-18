@@ -1,0 +1,63 @@
+{
+  "common": {
+    "physical_entity_id": "pe_umicore_olen",
+    "entity_type": "Physical Entity",
+    "entity_subtype": "Operating Facility",
+    "physical_entity_node_group_memberships": [
+      { "group_id": "PEG-OF-GEREF", "group_name": "Germanium Refinery", "qualification_status": "qualified", "qualification_evidence": "Umicore's Olen site is the leading Western germanium refiner-recycler, refining germanium concentrate and germanium-bearing recycling feed into high-purity germanium metal, germanium dioxide (GeO2), germanium tetrachloride (GeCl4) and germanium substrates. Over half of its germanium feed is from recycling; it holds exclusive offtake of the STL / Big Hill germanium concentrate." }
+    ],
+    "owners": [
+      { "organization_name": "Umicore", "ownership_percentage": 100, "ownership_type": "Wholly owned site", "source_or_evidence": "Olen is a wholly owned Umicore site." }
+    ],
+    "operators": [
+      { "organization_name": "Umicore", "operator_relationship_type": "Owner-operator", "source_or_evidence": "Operated within Umicore's Specialty Materials / germanium business." }
+    ]
+  },
+  "identity": {
+    "facility_name": "Umicore Olen",
+    "alternative_names": ["Umicore Olen germanium refinery", "Olen site"],
+    "facility_type": "Germanium chemical refinery & recycler",
+    "short_description": "Umicore's Olen (Belgium) germanium refinery-recycler — the leading Western germanium producer. Refines germanium concentrate (exclusive STL/Big Hill offtake) and germanium-bearing recycling feed into high-purity Ge metal, GeO2, GeCl4 and germanium substrates. >50% of feed from recycling.",
+    "commissioning_or_operating_start_date": "Long-established (Olen metallurgical site)",
+    "facility_level_operational_status": "Producing"
+  },
+  "location": {
+    "country": "Belgium",
+    "region": "Antwerp Province",
+    "city": "Olen",
+    "site_address": "Umicore, Olen",
+    "coordinates": { "latitude": 51.16, "longitude": 4.86 }
+  },
+  "operations": {
+    "operating_configuration": "Integrated germanium refining and recycling line",
+    "operations": [
+      {
+        "operation_id": "op_umicore_olen_ge_refining",
+        "operation_name": "Germanium Refining & Recycling",
+        "operation_category": "Chemical refining / recycling",
+        "physical_entity_node_group_id": "PEG-OF-GEREF",
+        "operational_status": "Producing",
+        "main_physical_function": "Refines germanium concentrate and germanium-bearing recycling feed into high-purity germanium metal, GeO2, GeCl4 and germanium substrates",
+        "inputs": [
+          { "input_name": "Germanium concentrate", "input_form": "germanium concentrate", "input_role": "Primary germanium feedstock (exclusive offtake)", "nameplate_input_or_throughput_capacity": "Not disclosed", "actual_input_quantity": "~14-30", "quantity_unit": "t Ge/yr", "reporting_period": "2020-target", "source_physical_entity_ids": ["pe_stl_lubumbashi"], "reported_or_estimated": "reported" },
+          { "input_name": "Germanium fibre / preform scrap", "input_form": "Ge-bearing fibre/preform scrap (GeO2-in-glass soot; GeCl4 returns; reject preforms)", "input_role": "Recycling feedstock (>50% of feed)", "nameplate_input_or_throughput_capacity": "Not disclosed", "actual_input_quantity": ">50% of total Ge feed", "quantity_unit": "t Ge/yr", "reporting_period": "Ongoing", "source_physical_entity_ids": ["pe_fiber_scrap_stream"], "reported_or_estimated": "reported" }
+        ],
+        "major_industrial_processes": [
+          { "process_or_stage_name": "Chlorination & distillation", "transformation_function": "Convert germanium feed to GeCl4 and purify by distillation", "actual_process_or_technology_used": "Chlorination + fractional distillation", "major_process_steps": ["Chlorination to GeCl4", "Fractional distillation / purification", "Hydrolysis to GeO2"], "output_form": "germanium tetrachloride (GeCl4); germanium dioxide (GeO2)", "process_status": "Active" },
+          { "process_or_stage_name": "Reduction & zone refining", "transformation_function": "Reduce GeO2 to metal and zone-refine to high purity", "actual_process_or_technology_used": "Hydrogen reduction + zone refining + crystal growth", "major_process_steps": ["Reduction of GeO2 to Ge metal", "Zone refining", "Single-crystal growth & substrate fabrication"], "output_form": "high-purity germanium metal; germanium substrates", "process_status": "Active" }
+        ],
+        "outputs_produced": [
+          { "output_name": "High-purity germanium metal", "output_form": "high-purity germanium metal", "output_classification": "Refined metal", "nameplate_output_capacity": "Not disclosed", "actual_output_quantity": "Not disclosed", "quantity_unit": "t/yr", "reporting_period": "Ongoing", "reported_or_estimated": "estimated" },
+          { "output_name": "Germanium dioxide (GeO2)", "output_form": "germanium dioxide (GeO2)", "output_classification": "Refined chemical", "nameplate_output_capacity": "Not disclosed", "actual_output_quantity": "Not disclosed", "quantity_unit": "t/yr", "reporting_period": "Ongoing", "reported_or_estimated": "estimated" },
+          { "output_name": "Germanium tetrachloride (GeCl4)", "output_form": "germanium tetrachloride (GeCl4)", "output_classification": "Refined chemical", "nameplate_output_capacity": "Not disclosed", "actual_output_quantity": "Not disclosed", "quantity_unit": "t/yr", "reporting_period": "Ongoing", "reported_or_estimated": "estimated" },
+          { "output_name": "Germanium substrates", "output_form": "germanium substrates / wafers", "output_classification": "Manufactured material", "nameplate_output_capacity": "Not disclosed", "actual_output_quantity": "Not disclosed", "quantity_unit": "units/yr", "reporting_period": "Ongoing", "reported_or_estimated": "estimated" }
+        ],
+        "operation_metrics": { "total_throughput_capacity": "Not disclosed", "actual_throughput": "Not disclosed", "capacity_utilization": "Not disclosed", "quantity_unit": "t Ge/yr", "quantity_basis": "Germanium refined across primary + recycled feed" },
+        "confidence": "medium",
+        "reported_or_estimated": "reported",
+        "estimation_method": "Public reporting on Umicore's germanium business"
+      }
+    ],
+    "facility_record_metadata": { "record_status": "illustrative", "overall_confidence": "medium", "created_date": "2026-08-17", "last_updated_date": "2026-08-17" }
+  }
+}

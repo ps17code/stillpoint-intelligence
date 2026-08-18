@@ -1298,7 +1298,21 @@ function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedN
   const routeSet = useMemo(() => (focusId ? computeHighlight(focusId, full.edges) : null), [focusId, full.edges]);
   const data = useMemo(() => {
     if (!routeSet) return full;
-    const attach = (it: Card): Card => { const f = groupForms[entityGroup[it.id]]; return f ? { ...it, inForm: f.input || undefined, outForm: f.output || undefined } : it; };
+    const attach = (it: Card): Card => {
+      // prefer the entity's own facility-level IO when we have a full record; else fall back to its group's material forms
+      const rec = getFullRecord(it.id);
+      if (rec) {
+        const ins = new Set<string>(), outs = new Set<string>();
+        for (const op of rec.operations.operations) {
+          op.inputs.forEach(i => { if (i.input_form) ins.add(i.input_form); });
+          op.outputs_produced.forEach(o => { if (o.output_form) outs.add(o.output_form); });
+        }
+        const inS = Array.from(ins).join(", "), outS = Array.from(outs).join(", ");
+        if (inS || outS) return { ...it, inForm: inS || undefined, outForm: outS || undefined };
+      }
+      const f = groupForms[entityGroup[it.id]];
+      return f ? { ...it, inForm: f.input || undefined, outForm: f.output || undefined } : it;
+    };
     const columns = full.columns.map(c => ({ label: c.label, items: c.items.filter(it => routeSet.has(it.id)).map(attach) })).filter(c => c.items.length > 0);
     const edges = full.edges.filter(e => routeSet.has(e.from) && routeSet.has(e.to));
     return { columns, edges };

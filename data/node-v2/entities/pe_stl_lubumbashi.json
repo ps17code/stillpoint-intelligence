@@ -1,0 +1,59 @@
+{
+  "common": {
+    "physical_entity_id": "pe_stl_lubumbashi",
+    "entity_type": "Physical Entity",
+    "entity_subtype": "Operating Facility",
+    "physical_entity_node_group_memberships": [
+      { "group_id": "PEG-OF-GEREC", "group_name": "Germanium Recovery Operator", "qualification_status": "qualified", "qualification_evidence": "STL operates a hydrometallurgical plant at Lubumbashi that recovers germanium (and zinc) from the Big Hill slag, producing a germanium concentrate supplied under exclusive offtake to Umicore. Recovered ~14 t Ge (2020) with a ~30 t/yr target." }
+    ],
+    "owners": [
+      { "organization_name": "Gécamines", "ownership_percentage": null, "ownership_type": "Joint-venture partner (state mining company)", "source_or_evidence": "STL is a Gécamines-linked joint venture treating the Lubumbashi terril." }
+    ],
+    "operators": [
+      { "organization_name": "Société pour le Traitement du Terril de Lubumbashi (STL)", "operator_relationship_type": "Owner-operator of the recovery plant", "source_or_evidence": "STL runs the slag-treatment and germanium recovery operation." }
+    ]
+  },
+  "identity": {
+    "facility_name": "STL Lubumbashi Hydromet Plant",
+    "alternative_names": ["STL", "Société pour le Traitement du Terril de Lubumbashi", "Groupe Chimique métallurgique (Big Hill project)"],
+    "facility_type": "Hydrometallurgical germanium & zinc recovery plant",
+    "short_description": "Gécamines-linked hydrometallurgical plant in Lubumbashi that treats reclaimed Big Hill slag to recover a germanium concentrate; supplies germanium under exclusive offtake to Umicore. ~14 t Ge recovered in 2020, ~30 t/yr target.",
+    "commissioning_or_operating_start_date": "Mid-2010s",
+    "facility_level_operational_status": "Producing"
+  },
+  "location": {
+    "country": "Democratic Republic of the Congo",
+    "region": "Haut-Katanga",
+    "city": "Lubumbashi",
+    "site_address": "Terril de Lubumbashi, Lubumbashi",
+    "coordinates": { "latitude": -11.66, "longitude": 27.48 }
+  },
+  "operations": {
+    "operating_configuration": "Single integrated hydrometallurgical line recovering germanium and zinc from reclaimed slag",
+    "operations": [
+      {
+        "operation_id": "op_stl_ge_recovery",
+        "operation_name": "Germanium Recovery from Slag",
+        "operation_category": "Hydrometallurgical recovery",
+        "physical_entity_node_group_id": "PEG-OF-GEREC",
+        "operational_status": "Producing",
+        "main_physical_function": "Leaches and concentrates germanium from reclaimed copper-cobalt smelter slag into a germanium concentrate",
+        "inputs": [
+          { "input_name": "Germanium-bearing smelter slag", "input_form": "germanium-bearing copper-cobalt smelter slag", "input_role": "Primary feedstock", "nameplate_input_or_throughput_capacity": "Not disclosed", "actual_input_quantity": "Not disclosed", "quantity_unit": "t", "reporting_period": "2020", "source_physical_entity_ids": ["pe_big_hill_slag"], "reported_or_estimated": "reported" }
+        ],
+        "major_industrial_processes": [
+          { "process_or_stage_name": "Leaching & concentration", "transformation_function": "Selective leaching and precipitation to concentrate germanium", "actual_process_or_technology_used": "Hydrometallurgical leach / solvent-extraction / precipitation", "major_process_steps": ["Slag leaching", "Germanium concentration / precipitation", "Zinc co-recovery", "Concentrate drying"], "output_form": "germanium concentrate", "process_status": "Active" }
+        ],
+        "outputs_produced": [
+          { "output_name": "Germanium concentrate", "output_form": "germanium concentrate", "output_classification": "Intermediate concentrate", "nameplate_output_capacity": "~30", "actual_output_quantity": "~14", "quantity_unit": "t Ge/yr", "reporting_period": "2020 (actual); ~30 t/yr target", "reported_or_estimated": "reported" },
+          { "output_name": "Zinc byproduct", "output_form": "zinc product (co-recovered)", "output_classification": "Byproduct", "nameplate_output_capacity": "Not disclosed", "actual_output_quantity": "Not disclosed", "quantity_unit": "t", "reporting_period": "2020", "reported_or_estimated": "estimated" }
+        ],
+        "operation_metrics": { "total_throughput_capacity": "~30 t Ge/yr target", "actual_throughput": "~14 t Ge (2020)", "capacity_utilization": "Ramping", "quantity_unit": "t Ge/yr", "quantity_basis": "Germanium contained in concentrate" },
+        "confidence": "medium",
+        "reported_or_estimated": "reported",
+        "estimation_method": "Public reporting on the Big Hill germanium project"
+      }
+    ],
+    "facility_record_metadata": { "record_status": "illustrative", "overall_confidence": "medium", "created_date": "2026-08-17", "last_updated_date": "2026-08-17" }
+  }
+}
