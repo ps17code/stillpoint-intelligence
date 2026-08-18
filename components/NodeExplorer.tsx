@@ -733,7 +733,17 @@ function CompanyGraph({ root, expanded, onToggle, staged = false, originRect = n
     if (boxRef.current) ro.observe(boxRef.current);
     window.addEventListener("resize", measure);
     return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
-  }, [measure, expanded, shown]);
+  }, [measure, expanded, shown, revealing]);
+
+  // while the company node flies in and stage columns branch out, the nodes are mid-animation — re-measure every frame so the connectors track them, then settle
+  useEffect(() => {
+    if (!staged || !revealing) return;
+    let raf = 0; let stop = false;
+    const tick = () => { measure(); if (!stop) raf = requestAnimationFrame(tick); };
+    raf = requestAnimationFrame(tick);
+    const settle = setTimeout(() => { stop = true; cancelAnimationFrame(raf); measure(); }, 700);
+    return () => { stop = true; cancelAnimationFrame(raf); clearTimeout(settle); };
+  }, [staged, revealing, shown, measure]);
 
   const visibleCols = staged ? cols.slice(0, shown) : cols;
 
