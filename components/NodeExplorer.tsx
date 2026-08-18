@@ -241,6 +241,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   const [stageKey, setStageKey] = useState<string | null>(null);
   const [companyRec, setCompanyRec] = useState<CompanyRecordV2 | null>(null);
   const [companyFocus, setCompanyFocus] = useState<string | null>(null); // when set, company graph shows only this material's route
+  const [companyPanelOpen, setCompanyPanelOpen] = useState(false); // company record side panel — hidden until the edge tab is opened
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const toggleNode = (k: string) => setExpanded(prev => { const n = new Set(prev); if (n.has(k)) n.delete(k); else n.add(k); return n; });
   const companyView = useMemo(() => (companyRec ? compileCompanySubgraph(companyRec, companyFocus ?? undefined) : null), [companyRec, companyFocus]);
@@ -251,7 +252,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
     if (!co) return;
     const sub = compileCompanySubgraph(co, focus ?? undefined);
     const keys = new Set<string>(); collectKeys(sub, keys);
-    setCompanyRec(co); setCompanyFocus(focus); setExpanded(keys); setSelId(null); setView("company");
+    setCompanyRec(co); setCompanyFocus(focus); setExpanded(keys); setCompanyPanelOpen(false); setSelId(null); setView("company");
   };
 
   // terminal
@@ -276,7 +277,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
       setLoaded(found); setSelId(null); setStageKey(null); setView("overview");
       setLog(l => [...l, `▶ search "${v}"`, `✓ found ${found.name} — node object overview (${found.classGraph.downstream.length} downstream class nodes)`]);
     } else if (co) {
-      setCompanyRec(co); setCompanyFocus(null); setView("company"); setExpanded(new Set([co.common.organizational_entity_id]));
+      setCompanyRec(co); setCompanyFocus(null); setCompanyPanelOpen(false); setView("company"); setExpanded(new Set([co.common.organizational_entity_id]));
       setLog(l => [...l, `▶ search "${v}"`, `✓ found company ${co.identity.company_name} — projecting company subgraph (${co.economic_activities.length} economic activities)`]);
     } else {
       setLog(l => [...l, `▶ search "${v}"`, `✗ not found. Nodes: ${AVAILABLE_NODES.join(", ")} · companies: ${AVAILABLE_COMPANIES.join(", ")}`]);
@@ -441,7 +442,7 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
   return (
     <div style={{ width: "100vw", height: "100vh", background: "#161414", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       {/* Body */}
-      <div style={{ flex: 1, minHeight: 0, display: "flex" }}>
+      <div style={{ flex: 1, minHeight: 0, display: "flex", position: "relative" }}>
         <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
           {/* breadcrumb navigator */}
           {view !== "empty" && (
@@ -532,10 +533,18 @@ export default function NodeExplorer({ onBack }: { onBack: () => void }) {
             {selectedEntity && <EntityPanel entity={selectedEntity} graph={loaded!.entityGraph} record={getFullRecord(selectedEntity.id)} company={selectedEntity.organizational_entity ? getCompanyRecord(selectedEntity.organizational_entity) : null} onClose={() => setSelId(null)} />}
           </div>
         )}
-        {/* company record panel — full record data alongside the company graph */}
+        {/* company record panel — hidden until opened via the right-edge tab */}
         {view === "company" && companyRec && (
-          <div style={{ flexBasis: 430, flexGrow: 0, flexShrink: 0, width: 430, overflow: "hidden", borderLeft: "1px solid rgba(255,255,255,0.06)", background: "rgb(20,20,20)" }}>
-            <CompanyRecordPanel rec={companyRec} />
+          <button onClick={() => setCompanyPanelOpen(v => !v)} title={companyPanelOpen ? "Hide company record" : "Show company record"}
+            style={{ position: "absolute", top: "50%", right: companyPanelOpen ? 430 : 0, transform: "translateY(-50%)", zIndex: 8, transition: "right 0.26s ease", display: "flex", alignItems: "center", gap: 6, background: "rgb(24,23,22)", border: "1px solid rgba(255,255,255,0.12)", borderRight: companyPanelOpen ? "1px solid rgba(255,255,255,0.12)" : "none", borderRadius: "6px 0 0 6px", padding: "12px 6px", cursor: "pointer", color: "#8a8378", writingMode: "vertical-rl" }}
+            onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }} onMouseLeave={e => { e.currentTarget.style.color = "#8a8378"; }}>
+            <span style={{ fontFamily: MONO, fontSize: 8.5, textTransform: "uppercase", letterSpacing: "0.1em", transform: "rotate(180deg)" }}>Company Record</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: "rotate(180deg)" }}><polyline points={companyPanelOpen ? "15 18 9 12 15 6" : "9 18 15 12 9 6"} /></svg>
+          </button>
+        )}
+        {view === "company" && companyRec && (
+          <div style={{ flexBasis: companyPanelOpen ? 430 : 0, flexGrow: 0, flexShrink: 0, width: companyPanelOpen ? 430 : 0, overflow: "hidden", borderLeft: companyPanelOpen ? "1px solid rgba(255,255,255,0.06)" : "none", background: "rgb(20,20,20)", transition: "flex-basis 0.26s ease, width 0.26s ease" }}>
+            <div style={{ width: 430, height: "100%" }}><CompanyRecordPanel rec={companyRec} /></div>
           </div>
         )}
         {/* node object overview panel hidden for now (OverviewPanel retained for later) */}
@@ -573,50 +582,54 @@ const CG_KIND_COLOR: Record<string, string> = {
   "Product / Service Group": "#8ab0c0", "Physical Entity": "#b08fce", "Commercial Output": "#cf9b7f", "Market": "#9a938a",
 };
 
-/* one node card in the top-down company graph */
+/* value-chain stage names — matches the company value-chain architecture, keyed by node kind */
+const CG_STAGE_LABEL: Record<string, string> = {
+  "Company": "Company", "Economic Activity": "Economic Activities", "Corporate Vehicle": "Corporate Vehicle",
+  "Product / Service Group": "Product / Service Group", "Physical Entity": "Physical Entities", "Commercial Output": "Commercial Outputs", "Market": "End Markets",
+};
+
+/* one node card in the horizontal company value-chain graph */
 function CompanyNodeCard({ node, isOpen, onToggle, nodeRef }: { node: CNode; isOpen: boolean; onToggle: () => void; nodeRef: (el: HTMLDivElement | null) => void }) {
   const hasKids = node.children.length > 0;
   const kc = CG_KIND_COLOR[node.kind] ?? "#888";
   const isCompany = node.kind === "Company";
-  const stage = node.edge || node.kind;
   return (
     <div
       ref={nodeRef}
       onClick={hasKids ? onToggle : undefined}
       style={{
-        width: 172, boxSizing: "border-box", padding: "9px 12px 8px", borderRadius: 7,
+        width: "100%", boxSizing: "border-box", padding: "9px 11px", borderRadius: 7,
         background: isCompany ? "rgba(200,122,74,0.13)" : cardBg,
-        border: `1px solid ${isCompany ? accent : "rgb(48,43,40)"}`, borderTop: `2px solid ${kc}`,
-        cursor: hasKids ? "pointer" : "default", position: "relative", transition: "border-color 120ms, background 120ms",
+        border: `1px solid ${isCompany ? accent : "rgb(48,43,40)"}`, borderLeft: `2px solid ${kc}`,
+        cursor: hasKids ? "pointer" : "default", transition: "border-color 120ms, background 120ms",
         boxShadow: isCompany ? "0 0 0 3px rgba(200,122,74,0.06)" : "none",
       }}
+      onMouseEnter={e => { if (hasKids && !isCompany) e.currentTarget.style.borderColor = "rgb(70,64,58)"; }}
+      onMouseLeave={e => { if (hasKids && !isCompany) e.currentTarget.style.borderColor = "rgb(48,43,40)"; }}
     >
-      <p style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.07em", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{stage}</p>
-      <p style={{ fontSize: 12.5, color: warmWhite, fontFamily: SERIF, margin: "3px 0 0 0", lineHeight: 1.2 }}>{node.label}</p>
-      {hasKids && (
-        <span style={{ position: "absolute", bottom: 5, right: 8, fontSize: 8, color: "#7d766b", fontFamily: MONO }}>
-          {isOpen ? "▾" : "▸"} {node.children.length}
-        </span>
-      )}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
+        <p style={{ flex: 1, fontSize: 11.5, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.22 }}>{node.label}</p>
+        {hasKids && <span style={{ fontSize: 8, color: "#7d766b", fontFamily: MONO, flexShrink: 0, marginTop: 2 }}>{isOpen ? "▾" : "▸"}{node.children.length}</span>}
+      </div>
     </div>
   );
 }
 
-/* Company Subgraph — top-down node graph that fans out and expands downward */
+/* Company value-chain graph — horizontal, left→right, one column per value-chain stage with a stage header on top */
 function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set<string>; onToggle: (k: string) => void }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const nodeEls = useRef<Record<string, HTMLDivElement | null>>({});
   const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number; color: string }[]>([]);
 
-  const { rows, edges } = useMemo(() => {
-    const rows: CNode[][] = [];
+  const { cols, edges } = useMemo(() => {
+    const cols: CNode[][] = [];
     const edges: { from: string; to: string; color: string }[] = [];
     const walk = (n: CNode, d: number) => {
-      (rows[d] ??= []).push(n);
+      (cols[d] ??= []).push(n);
       if (expanded.has(n.key)) for (const c of n.children) { edges.push({ from: n.key, to: c.key, color: CG_KIND_COLOR[c.kind] ?? "#888" }); walk(c, d + 1); }
     };
     walk(root, 0);
-    return { rows, edges };
+    return { cols, edges };
   }, [root, expanded]);
 
   const measure = useCallback(() => {
@@ -627,7 +640,7 @@ function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set
       const f = nodeEls.current[e.from], t = nodeEls.current[e.to];
       if (!f || !t) continue;
       const fb = f.getBoundingClientRect(), tb = t.getBoundingClientRect();
-      next.push({ x1: fb.left + fb.width / 2 - box.left, y1: fb.bottom - box.top, x2: tb.left + tb.width / 2 - box.left, y2: tb.top - box.top, color: e.color });
+      next.push({ x1: fb.right - box.left, y1: fb.top + fb.height / 2 - box.top, x2: tb.left - box.left, y2: tb.top + tb.height / 2 - box.top, color: e.color });
     }
     setLines(next);
   }, [edges]);
@@ -642,25 +655,37 @@ function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set
   }, [measure, expanded]);
 
   return (
-    <div ref={boxRef} style={{ position: "relative", minWidth: "100%", padding: "10px 8px 32px", display: "flex", flexDirection: "column", alignItems: "center", gap: 46 }}>
-      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
-        {lines.map((l, i) => {
-          const my = (l.y1 + l.y2) / 2;
+    <div style={{ minHeight: "100%", overflowX: "auto", overflowY: "hidden" }} className="thin-scroll">
+      <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "stretch", gap: 46, padding: "12px 16px 20px", margin: "0 auto", width: "max-content", minHeight: "calc(100vh - 152px)" }}>
+        <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
+          {lines.map((l, i) => {
+            const mx = (l.x1 + l.x2) / 2;
+            return (
+              <g key={i}>
+                <path d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke={l.color} strokeOpacity={0.5} strokeWidth={1.3} />
+                <circle cx={l.x2} cy={l.y2} r={2.2} fill={l.color} fillOpacity={0.7} />
+              </g>
+            );
+          })}
+        </svg>
+        {cols.map((col, d) => {
+          const stage = Array.from(new Set(col.map(n => CG_STAGE_LABEL[n.kind] ?? n.kind))).join(" / ");
+          const color = CG_KIND_COLOR[col[0]?.kind] ?? "#888";
           return (
-            <g key={i}>
-              <path d={`M ${l.x1} ${l.y1} C ${l.x1} ${my}, ${l.x2} ${my}, ${l.x2} ${l.y2}`} fill="none" stroke={l.color} strokeOpacity={0.5} strokeWidth={1.3} />
-              <circle cx={l.x2} cy={l.y2} r={2.2} fill={l.color} fillOpacity={0.7} />
-            </g>
+            <div key={d} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", width: 186, flexShrink: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 5, paddingBottom: 7, marginBottom: 10, borderBottom: "1px solid rgb(58,53,48)" }}>
+                <span style={{ width: 6, height: 6, borderRadius: "50%", background: color, flexShrink: 0 }} />
+                <p style={{ fontSize: 8, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", margin: 0 }}>{stage}</p>
+              </div>
+              <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: 10 }}>
+                {col.map(n => (
+                  <CompanyNodeCard key={n.key} node={n} isOpen={expanded.has(n.key)} onToggle={() => onToggle(n.key)} nodeRef={el => { nodeEls.current[n.key] = el; }} />
+                ))}
+              </div>
+            </div>
           );
         })}
-      </svg>
-      {rows.map((row, d) => (
-        <div key={d} style={{ display: "flex", gap: 22, justifyContent: "center", alignItems: "flex-start", position: "relative", zIndex: 1, flexWrap: "nowrap" }}>
-          {row.map(n => (
-            <CompanyNodeCard key={n.key} node={n} isOpen={expanded.has(n.key)} onToggle={() => onToggle(n.key)} nodeRef={el => { nodeEls.current[n.key] = el; }} />
-          ))}
-        </div>
-      ))}
+      </div>
     </div>
   );
 }
