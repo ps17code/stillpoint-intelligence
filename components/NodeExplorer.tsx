@@ -1570,8 +1570,8 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
   const activeMode = highlightSet != null;
 
   return (
-    <div style={{ minHeight: "100%", display: "flex", padding: "4px 2px 20px" }}>
-      <div ref={containerRef} style={{ width: "100%", minHeight: "calc(100vh - 150px)", minWidth: 0, display: "flex", flexDirection: "column", overflow: "hidden", background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 13, boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", padding: "13px 16px 16px", transform: flip.transform, transformOrigin: "top left", transition: flip.transition, willChange: "transform" }}>
+    <div style={{ minHeight: "100%", height: showMap ? "100%" : undefined, display: "flex", padding: "4px 2px 20px", boxSizing: "border-box" }}>
+      <div ref={containerRef} style={{ width: "100%", minHeight: showMap ? 0 : "calc(100vh - 150px)", height: showMap ? "100%" : undefined, minWidth: 0, display: "flex", flexDirection: "column", overflow: "hidden", background: "rgba(200,122,74,0.05)", border: `1px solid ${accent}`, borderRadius: 13, boxShadow: "0 0 0 4px rgba(200,122,74,0.04)", padding: "13px 16px 16px", transform: flip.transform, transformOrigin: "top left", transition: flip.transition, willChange: "transform" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 12 }}>
           <span style={{ fontSize: 17, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
           <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
