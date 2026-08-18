@@ -663,8 +663,8 @@ function CompanyNodeCard({ node, isOpen, onToggle, nodeRef }: { node: CNode; isO
   );
 }
 
-/* Company value-chain graph — horizontal, left→right, one column per value-chain stage with a stage header directly above its nodes */
-function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set<string>; onToggle: (k: string) => void }) {
+/* Company value-chain graph — horizontal, left→right, one column per value-chain stage with a stage header directly above its nodes. When `staged`, the company node flies in from `originRect` (left-aligned) and the stage columns branch out from it left→right */
+function CompanyGraph({ root, expanded, onToggle, staged = false, originRect = null }: { root: CNode; expanded: Set<string>; onToggle: (k: string) => void; staged?: boolean; originRect?: DOMRect | null }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const nodeEls = useRef<Record<string, HTMLDivElement | null>>({});
   const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number; color: string }[]>([]);
@@ -681,6 +681,36 @@ function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set
   }, [root, expanded]);
 
   const kindsPresent = useMemo(() => { const s = new Set<string>(); cols.forEach(c => c.forEach(n => s.add(n.kind))); return Array.from(s); }, [cols]);
+
+  // staged branch-out: reveal one stage column at a time, left→right, after the company node has flown in
+  const [shown, setShown] = useState(staged ? 1 : cols.length);
+  const [revealing, setRevealing] = useState(staged);
+  useEffect(() => {
+    if (!staged) return;
+    setShown(1); setRevealing(true);
+    const ts: ReturnType<typeof setTimeout>[] = [];
+    for (let i = 2; i <= cols.length; i++) ts.push(setTimeout(() => setShown(i), 520 + (i - 2) * 190));
+    ts.push(setTimeout(() => setRevealing(false), 520 + Math.max(0, cols.length - 1) * 190 + 420));
+    return () => ts.forEach(clearTimeout);
+  }, [staged]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { if (!revealing) setShown(cols.length); }, [cols.length, revealing]);
+
+  // FLIP the company node from the clicked entity's rect to its resting position on the left
+  useLayoutEffect(() => {
+    if (!staged || !originRect) return;
+    const el = nodeEls.current[root.key];
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    if (!r.width) return;
+    const dx = originRect.left - r.left, dy = originRect.top - r.top;
+    const sx = Math.max(0.2, originRect.width / r.width), sy = Math.max(0.2, originRect.height / r.height);
+    el.style.transformOrigin = "top left";
+    el.style.transition = "none";
+    el.style.transform = `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`;
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => { raf2 = requestAnimationFrame(() => { el.style.transition = "transform 0.5s cubic-bezier(0.4,0,0.2,1)"; el.style.transform = "none"; }); });
+    return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); };
+  }, [staged, originRect, root.key]);
 
   const measure = useCallback(() => {
     const box = boxRef.current?.getBoundingClientRect();
@@ -702,12 +732,14 @@ function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set
     if (boxRef.current) ro.observe(boxRef.current);
     window.addEventListener("resize", measure);
     return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
-  }, [measure, expanded]);
+  }, [measure, expanded, shown]);
+
+  const visibleCols = staged ? cols.slice(0, shown) : cols;
 
   return (
     <div style={{ minHeight: "100%", display: "flex", flexDirection: "column" }}>
       <div style={{ flex: 1, minHeight: 0, display: "flex", alignItems: "center", overflowX: "auto" }} className="thin-scroll">
-        <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 44, padding: "10px 16px", margin: "auto", width: "max-content" }}>
+        <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: staged ? "center" : "flex-start", gap: 44, padding: "10px 16px", margin: staged ? 0 : "auto", minHeight: staged ? "100%" : undefined, width: "max-content" }}>
           <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
             {lines.map((l, i) => {
               const mx = (l.x1 + l.x2) / 2;
@@ -719,11 +751,11 @@ function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set
               );
             })}
           </svg>
-          {cols.map((col, d) => {
+          {visibleCols.map((col, d) => {
             const stage = Array.from(new Set(col.map(n => CG_STAGE_LABEL[n.kind] ?? n.kind))).join(" / ");
             const color = CG_KIND_COLOR[col[0]?.kind] ?? "#888";
             return (
-              <div key={d} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", width: 186, flexShrink: 0, gap: 9 }}>
+              <div key={d} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", width: 186, flexShrink: 0, gap: 9, animation: revealing && d > 0 ? "cgBranchIn 0.4s ease both" : undefined }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 5, paddingBottom: 6, borderBottom: "1px solid rgb(58,53,48)" }}>
                   <span style={{ width: 6, height: 6, borderRadius: "50%", background: color, flexShrink: 0 }} />
                   <p style={{ fontSize: 8, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", margin: 0 }}>{stage}</p>
@@ -741,13 +773,13 @@ function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set
   );
 }
 
-/* the company value chain rendered inline inside the node container, as an extension off the clicked company node */
-function CompanyGraphInline({ rec, focus }: { rec: CompanyRecordV2; focus: string }) {
+/* the company value chain rendered inline inside the node container, branching out from the clicked company node */
+function CompanyGraphInline({ rec, focus, originRect }: { rec: CompanyRecordV2; focus: string; originRect: DOMRect | null }) {
   const sub = useMemo(() => compileCompanySubgraph(rec, focus), [rec, focus]);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   useEffect(() => { const s = new Set<string>(); collectKeys(sub, s); setExpanded(s); }, [sub]);
   const toggle = (k: string) => setExpanded(prev => { const n = new Set(prev); if (n.has(k)) n.delete(k); else n.add(k); return n; });
-  return <CompanyGraph root={sub} expanded={expanded} onToggle={toggle} />;
+  return <CompanyGraph root={sub} expanded={expanded} onToggle={toggle} staged originRect={originRect} />;
 }
 
 /* ── Node Object Overview view ── */
@@ -1262,7 +1294,8 @@ function DashButton({ children, onClick }: { children: React.ReactNode; onClick:
 }
 
 /* the real-world entity graph, rendered inline inside the node container. Columns reveal left→right (branching out) as they fade in from the right */
-function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedNode; focusId?: string | null; onOpenCompany?: (name: string, focus: string) => void }) {
+function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedNode; focusId?: string | null; onOpenCompany?: (name: string, focus: string, rect: DOMRect | null) => void }) {
+  const [collapsing, setCollapsing] = useState<string | null>(null); // clicked company entity — fade the rest out, then hand off to the company graph
   const full = useMemo(() => {
     const eg = loaded.entityGraph;
     const byCol: Record<string, Card[]> = {};
@@ -1367,7 +1400,7 @@ function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedN
   return (
     <div style={{ height: "100%", display: "flex", alignItems: "center", overflowX: "auto" }} className="thin-scroll">
       <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", gap: 34, padding: "10px 8px", margin: "auto", width: "max-content", minHeight: "calc(100% - 20px)" }}>
-        <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
+        <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0, opacity: collapsing ? 0 : 1, transition: "opacity 0.3s ease" }}>
           {lines.map((l, i) => {
             const mx = (l.x1 + l.x2) / 2;
             const lit = active && highlightSet!.has(l.from) && highlightSet!.has(l.to);
@@ -1379,16 +1412,20 @@ function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedN
           const vis = ci < shown;
           return (
             <div key={col.label} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 9, width: 176, flexShrink: 0, justifyContent: "center", opacity: vis ? 1 : 0, transform: vis ? "translateX(0)" : "translateX(26px)", transition: "opacity 0.42s ease, transform 0.42s cubic-bezier(0.4,0,0.2,1)" }}>
-              <p style={{ fontSize: 7, color: "#706a60", margin: "0 0 3px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase" }}>{col.label}</p>
+              <p style={{ fontSize: 7, color: "#706a60", margin: "0 0 3px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase", opacity: collapsing ? 0 : 1, transition: "opacity 0.3s ease" }}>{col.label}</p>
               {col.items.map(card => {
                 const inSet = highlightSet?.has(card.id) ?? false;
                 const hasCo = !!onOpenCompany && !!getCompanyRecordV2(card.title);
                 const c = { ...card, featured: card.id === focusId, clickable: hasCo };
+                const isCollapsingTarget = collapsing === card.id;
+                const fadeOut = collapsing != null && !isCollapsingTarget;
                 return (
-                  <NodeCard key={card.id} card={c} highlighted={active && inSet} dimmed={active && !inSet}
-                    nodeRef={el => { nodeRefs.current[card.id] = el; }}
-                    onHover={() => setHovered(card.id)} onLeave={() => setHovered(null)}
-                    onClick={hasCo ? () => onOpenCompany!(card.title, loaded.name) : undefined} />
+                  <div key={card.id} style={{ opacity: fadeOut ? 0 : 1, transform: isCollapsingTarget ? "scale(1.02)" : "none", transition: "opacity 0.3s ease, transform 0.3s ease" }}>
+                    <NodeCard card={c} highlighted={active && inSet} dimmed={active && !inSet}
+                      nodeRef={el => { nodeRefs.current[card.id] = el; }}
+                      onHover={() => setHovered(card.id)} onLeave={() => setHovered(null)}
+                      onClick={hasCo ? () => { const rect = nodeRefs.current[card.id]?.getBoundingClientRect() ?? null; setCollapsing(card.id); setTimeout(() => onOpenCompany!(card.title, loaded.name, rect), 340); } : undefined} />
+                  </div>
                 );
               })}
             </div>
@@ -1426,11 +1463,11 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
   const [showEntities, setShowEntities] = useState(false); // switched to the inline entity graph
   const [leaving, setLeaving] = useState(false); // fading the supply-chain graph out before the entity graph mounts
   const [entityFocus, setEntityFocus] = useState<string | null>(null); // when set, show only that entity's route (connected subgraph)
-  const [company, setCompany] = useState<{ rec: CompanyRecordV2; focus: string } | null>(null); // company value chain rendered inline, off a clicked company node
+  const [company, setCompany] = useState<{ rec: CompanyRecordV2; focus: string; originRect: DOMRect | null } | null>(null); // company value chain rendered inline, branching off a clicked company node
   const goEntities = () => { setEntityFocus(null); setLeaving(true); setTimeout(() => setShowEntities(true), 280); };
   const goEntityRoute = (id: string) => { setEntityFocus(id); setLeaving(true); setTimeout(() => setShowEntities(true), 280); };
   const backToGraph = () => { setShowEntities(false); setLeaving(false); setEntityFocus(null); setCompany(null); };
-  const openCompanyInline = (name: string, focus: string) => { const rec = getCompanyRecordV2(name); if (rec) setCompany({ rec, focus }); };
+  const openCompanyInline = (name: string, focus: string, rect: DOMRect | null) => { const rec = getCompanyRecordV2(name); if (rec) setCompany({ rec, focus, originRect: rect }); };
   const colOf = useMemo(() => {
     const m: Record<string, number> = {};
     graph.columns.forEach((c, i) => c.pegs.forEach(p => { m[p.id] = i; }));
@@ -1490,8 +1527,8 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
           </button>
         </div>
         {company ? (
-          <div style={{ flex: 1, minHeight: 0, animation: "fadeInDown 0.3s ease" }}>
-            <CompanyGraphInline rec={company.rec} focus={company.focus} />
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <CompanyGraphInline rec={company.rec} focus={company.focus} originRect={company.originRect} />
           </div>
         ) : showEntities ? (
           <div style={{ flex: 1, minHeight: 0, animation: "fadeInDown 0.3s ease" }}>
