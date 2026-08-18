@@ -1380,10 +1380,31 @@ function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedN
   const highlightSet = useMemo(() => computeHighlight(hovered, data.edges), [hovered, data.edges]);
 
   const boxRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number; from: string; to: string }[]>([]);
+
+  // fit-to-container + pan/zoom over the whole graph
+  const [tf, setTf] = useState({ k: 1, x: 0, y: 0 });
+  const [fitted, setFitted] = useState(false);
+  const drag = useRef<{ px: number; py: number; ox: number; oy: number } | null>(null);
+  const fit = useCallback(() => {
+    const wrap = wrapRef.current, box = boxRef.current; if (!wrap || !box) return;
+    const cw = wrap.clientWidth, ch = wrap.clientHeight, natW = box.offsetWidth, natH = box.offsetHeight;
+    if (!cw || !ch || !natW || !natH) return;
+    const k = Math.min(cw / natW, ch / natH, 1.15) * 0.96;
+    setTf({ k, x: (cw - natW * k) / 2, y: (ch - natH * k) / 2 }); setFitted(true);
+  }, []);
+  useEffect(() => { setFitted(false); }, [data]);
+  useLayoutEffect(() => { const id = requestAnimationFrame(() => fit()); return () => cancelAnimationFrame(id); }, [data, fit]);
+  useEffect(() => { const on = () => fit(); window.addEventListener("resize", on); return () => window.removeEventListener("resize", on); }, [fit]);
+  const zoomAt = (mx: number, my: number, factor: number) => setTf(v => { const nk = Math.min(4, Math.max(0.15, v.k * factor)); return { k: nk, x: mx - (mx - v.x) * (nk / v.k), y: my - (my - v.y) * (nk / v.k) }; });
+  const onWheel = (e: React.WheelEvent) => { const w = wrapRef.current?.getBoundingClientRect(); if (!w) return; zoomAt(e.clientX - w.left, e.clientY - w.top, e.deltaY < 0 ? 1.12 : 1 / 1.12); };
+  const zoomCenter = (factor: number) => { const w = wrapRef.current; if (!w) return; zoomAt(w.clientWidth / 2, w.clientHeight / 2, factor); };
+
+  // connectors are drawn in the container's (screen) space so they track the nodes through zoom/pan
   const measure = useCallback(() => {
-    const box = boxRef.current?.getBoundingClientRect(); if (!box) return;
+    const wrap = wrapRef.current?.getBoundingClientRect(); if (!wrap) return;
     const next: { x1: number; y1: number; x2: number; y2: number; from: string; to: string }[] = [];
     for (const e of data.edges) {
       const cf = colOfNode[e.from] ?? 99; const ct = colOfNode[e.to] ?? 99;
@@ -1394,55 +1415,69 @@ function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedN
       const src = fwd ? a : b; const dst = fwd ? b : a;
       const fromId = fwd ? e.from : e.to; const toId = fwd ? e.to : e.from;
       const sb = src.getBoundingClientRect(); const db = dst.getBoundingClientRect();
-      next.push({ x1: sb.right - box.left, y1: sb.top + sb.height / 2 - box.top, x2: db.left - box.left, y2: db.top + db.height / 2 - box.top, from: fromId, to: toId });
+      next.push({ x1: sb.right - wrap.left, y1: sb.top + sb.height / 2 - wrap.top, x2: db.left - wrap.left, y2: db.top + db.height / 2 - wrap.top, from: fromId, to: toId });
     }
     setLines(next);
   }, [data, colOfNode, shown]);
 
+  useEffect(() => { measure(); }, [tf, measure]);
   useEffect(() => {
-    const r = requestAnimationFrame(measure);
-    const t = setTimeout(measure, 120);
-    const ro = new ResizeObserver(() => measure());
-    if (boxRef.current) ro.observe(boxRef.current);
-    window.addEventListener("resize", measure);
-    return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
+    let raf = 0, stop = false;
+    const tick = () => { measure(); if (!stop) raf = requestAnimationFrame(tick); };
+    raf = requestAnimationFrame(tick);
+    const t = setTimeout(() => { stop = true; cancelAnimationFrame(raf); measure(); }, 560);
+    const ro = new ResizeObserver(() => measure()); if (wrapRef.current) ro.observe(wrapRef.current);
+    return () => { stop = true; cancelAnimationFrame(raf); clearTimeout(t); ro.disconnect(); };
   }, [measure, shown]);
 
   const active = highlightSet != null;
   return (
-    <div style={{ height: "100%", display: "flex", alignItems: "center", overflowX: "auto" }} className="thin-scroll">
-      <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", gap: 34, padding: "10px 8px", margin: "auto", width: "max-content", minHeight: "calc(100% - 20px)" }}>
-        <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0, opacity: collapsing ? 0 : 1, transition: "opacity 0.3s ease" }}>
-          {lines.map((l, i) => {
-            const mx = (l.x1 + l.x2) / 2;
-            const lit = active && highlightSet!.has(l.from) && highlightSet!.has(l.to);
-            const stroke = active ? (lit ? accent : "rgba(200,200,200,0.05)") : lineColor;
-            return <path key={i} d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke={stroke} strokeOpacity={active ? (lit ? 0.9 : 1) : 0.85} strokeWidth={lit ? 1.7 : 1} style={{ animation: "fadeInDown 0.4s ease" }} />;
-          })}
-        </svg>
-        {data.columns.map((col, ci) => {
-          const vis = ci < shown;
-          return (
-            <div key={col.label} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 9, width: 176, flexShrink: 0, justifyContent: "center", opacity: vis ? 1 : 0, transform: vis ? "translateX(0)" : "translateX(26px)", transition: "opacity 0.42s ease, transform 0.42s cubic-bezier(0.4,0,0.2,1)" }}>
-              <p style={{ fontSize: 7, color: "#706a60", margin: "0 0 3px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase", opacity: collapsing ? 0 : 1, transition: "opacity 0.3s ease" }}>{col.label}</p>
-              {col.items.map(card => {
-                const inSet = highlightSet?.has(card.id) ?? false;
-                const hasCo = !!onOpenCompany && !!getCompanyRecordV2(card.title);
-                const c = { ...card, featured: card.id === focusId, clickable: hasCo };
-                const isCollapsingTarget = collapsing === card.id;
-                const fadeOut = collapsing != null && !isCollapsingTarget;
-                return (
-                  <div key={card.id} style={{ opacity: fadeOut ? 0 : 1, transform: isCollapsingTarget ? "scale(1.02)" : "none", transition: "opacity 0.3s ease, transform 0.3s ease" }}>
-                    <NodeCard card={c} highlighted={active && inSet} dimmed={active && !inSet}
-                      nodeRef={el => { nodeRefs.current[card.id] = el; }}
-                      onHover={() => setHovered(card.id)} onLeave={() => setHovered(null)}
-                      onClick={hasCo ? () => { const rect = nodeRefs.current[card.id]?.getBoundingClientRect() ?? null; setCollapsing(card.id); setTimeout(() => onOpenCompany!(card.title, loaded.name, rect), 340); } : undefined} />
-                  </div>
-                );
-              })}
-            </div>
-          );
+    <div ref={wrapRef} onWheel={onWheel}
+      onPointerDown={e => { drag.current = { px: e.clientX, py: e.clientY, ox: tf.x, oy: tf.y }; }}
+      onPointerMove={e => { if (!drag.current) return; const d = drag.current; setTf(v => ({ ...v, x: d.ox + (e.clientX - d.px), y: d.oy + (e.clientY - d.py) })); }}
+      onPointerUp={() => { drag.current = null; }} onPointerLeave={() => { drag.current = null; }}
+      style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", cursor: "grab", touchAction: "none" }}>
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 1, opacity: collapsing ? 0 : 1, transition: "opacity 0.3s ease" }}>
+        {lines.map((l, i) => {
+          const mx = (l.x1 + l.x2) / 2;
+          const lit = active && highlightSet!.has(l.from) && highlightSet!.has(l.to);
+          const stroke = active ? (lit ? accent : "rgba(200,200,200,0.05)") : lineColor;
+          return <path key={i} d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke={stroke} strokeOpacity={active ? (lit ? 0.9 : 1) : 0.85} strokeWidth={lit ? 1.7 : 1} />;
         })}
+      </svg>
+      <div style={{ position: "absolute", top: 0, left: 0, zIndex: 2, width: "max-content", transformOrigin: "0 0", transform: `translate(${tf.x}px, ${tf.y}px) scale(${tf.k})`, opacity: fitted ? 1 : 0, transition: "opacity 0.25s ease" }}>
+        <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", gap: 34, padding: "10px 8px", width: "max-content" }}>
+          {data.columns.map((col, ci) => {
+            const vis = ci < shown;
+            return (
+              <div key={col.label} style={{ display: "flex", flexDirection: "column", gap: 9, width: 176, flexShrink: 0, justifyContent: "center", opacity: vis ? 1 : 0, transform: vis ? "translateX(0)" : "translateX(26px)", transition: "opacity 0.42s ease, transform 0.42s cubic-bezier(0.4,0,0.2,1)" }}>
+                <p style={{ fontSize: 7, color: "#706a60", margin: "0 0 3px 0", fontFamily: MONO, letterSpacing: "0.08em", textTransform: "uppercase", opacity: collapsing ? 0 : 1, transition: "opacity 0.3s ease" }}>{col.label}</p>
+                {col.items.map(card => {
+                  const inSet = highlightSet?.has(card.id) ?? false;
+                  const hasCo = !!onOpenCompany && !!getCompanyRecordV2(card.title);
+                  const c = { ...card, featured: card.id === focusId, clickable: hasCo };
+                  const isCollapsingTarget = collapsing === card.id;
+                  const fadeOut = collapsing != null && !isCollapsingTarget;
+                  return (
+                    <div key={card.id} style={{ opacity: fadeOut ? 0 : 1, transform: isCollapsingTarget ? "scale(1.02)" : "none", transition: "opacity 0.3s ease, transform 0.3s ease" }}>
+                      <NodeCard card={c} highlighted={active && inSet} dimmed={active && !inSet}
+                        nodeRef={el => { nodeRefs.current[card.id] = el; }}
+                        onHover={() => setHovered(card.id)} onLeave={() => setHovered(null)}
+                        onClick={hasCo ? () => { const rect = nodeRefs.current[card.id]?.getBoundingClientRect() ?? null; setCollapsing(card.id); setTimeout(() => onOpenCompany!(card.title, loaded.name, rect), 340); } : undefined} />
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div style={{ position: "absolute", bottom: 10, left: 10, zIndex: 3, display: "flex", flexDirection: "column", gap: 4 }}>
+        <button onClick={() => zoomCenter(1.2)} title="Zoom in" style={{ width: 22, height: 22, display: "flex", alignItems: "center", justifyContent: "center", background: "rgb(30,28,26)", border: "1px solid rgb(60,54,49)", borderRadius: 4, cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 13 }} onMouseEnter={e => { e.currentTarget.style.borderColor = accent; }} onMouseLeave={e => { e.currentTarget.style.borderColor = "rgb(60,54,49)"; }}>+</button>
+        <button onClick={() => zoomCenter(1 / 1.2)} title="Zoom out" style={{ width: 22, height: 22, display: "flex", alignItems: "center", justifyContent: "center", background: "rgb(30,28,26)", border: "1px solid rgb(60,54,49)", borderRadius: 4, cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 13 }} onMouseEnter={e => { e.currentTarget.style.borderColor = accent; }} onMouseLeave={e => { e.currentTarget.style.borderColor = "rgb(60,54,49)"; }}>{"−"}</button>
+        <button onClick={fit} title="Fit to view" style={{ width: 22, height: 22, display: "flex", alignItems: "center", justifyContent: "center", background: "rgb(30,28,26)", border: "1px solid rgb(60,54,49)", borderRadius: 4, cursor: "pointer", color: "#8a8378" }} onMouseEnter={e => { e.currentTarget.style.borderColor = accent; e.currentTarget.style.color = warmWhite; }} onMouseLeave={e => { e.currentTarget.style.borderColor = "rgb(60,54,49)"; e.currentTarget.style.color = "#8a8378"; }}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 9 4 4 9 4" /><polyline points="20 9 20 4 15 4" /><polyline points="4 15 4 20 9 20" /><polyline points="20 15 20 20 15 20" /></svg>
+        </button>
       </div>
     </div>
   );
@@ -1555,6 +1590,7 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
             <EntityGraphInline loaded={loaded} focusId={entityFocus} onOpenCompany={openCompanyInline} />
           </div>
         ) : (
+        <div style={{ position: "relative", flex: 1, minHeight: 0, display: "flex" }}>
         <div style={{ flex: 1, minHeight: 0, opacity: contentIn && !leaving ? 1 : 0, transition: "opacity 0.28s ease", display: "flex", alignItems: "center", overflowX: "auto" }} className="thin-scroll">
           <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 42, padding: "10px 6px", margin: "auto", width: "max-content" }}>
             <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
@@ -1628,6 +1664,13 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
               );
             })}
           </div>
+        </div>
+          <button onClick={goEntities} title="Generate the full entity graph for this node"
+            style={{ position: "absolute", bottom: 14, right: 14, zIndex: 6, display: "flex", alignItems: "center", gap: 7, background: "rgba(200,122,74,0.14)", border: `1px solid ${accent}`, borderRadius: 7, padding: "8px 13px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 10.5 }}
+            onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.24)"; }} onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,122,74,0.14)"; }}>
+            Generate Entity Graph
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+          </button>
         </div>
         )}
       </div>
