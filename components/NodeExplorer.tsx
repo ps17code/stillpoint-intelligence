@@ -1517,14 +1517,19 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
   const [entityFocus, setEntityFocus] = useState<string | null>(null); // when set, show only that entity's route (connected subgraph)
   const [company, setCompany] = useState<{ rec: CompanyRecordV2; focus: string; originRect: DOMRect | null } | null>(null); // company value chain rendered inline, branching off a clicked company node
   const [showMap, setShowMap] = useState(false); // geographic map of all physical entities
+  const [mapStage, setMapStage] = useState<string>("all"); // supply-chain stage filter on the map side panel
+  const [mapSel, setMapSel] = useState<string | null>(null); // selected entity on the map
   const goEntities = () => { setEntityFocus(null); setLeaving(true); setTimeout(() => setShowEntities(true), 280); };
   const goEntityRoute = (id: string) => { setEntityFocus(id); setLeaving(true); setTimeout(() => setShowEntities(true), 280); };
-  const goMap = () => { setLeaving(true); setTimeout(() => setShowMap(true), 280); };
+  const goMap = () => { setMapStage("all"); setMapSel(null); setLeaving(true); setTimeout(() => setShowMap(true), 280); };
   const backToGraph = () => { setShowEntities(false); setLeaving(false); setEntityFocus(null); setCompany(null); setShowMap(false); };
   const openCompanyInline = (name: string, focus: string, rect: DOMRect | null) => { const rec = getCompanyRecordV2(name); if (rec) setCompany({ rec, focus, originRect: rect }); };
-  const mapPoints = useMemo<StagePoint[]>(() => loaded.entityGraph.entities
+  const mapEntities = useMemo(() => loaded.entityGraph.entities
     .filter(e => typeof e.lat === "number" && typeof e.lon === "number")
-    .map(e => ({ id: e.id, site: e.physical_entity || e.name, company: e.organizational_entity || e.name, country: e.country || "—", status: e.status || "—", lat: e.lat as number, lon: e.lon as number })), [loaded]);
+    .map(e => ({ id: e.id, site: e.physical_entity || e.name, company: e.organizational_entity || e.name, country: e.country || "—", status: e.status || "—", column: e.column, lat: e.lat as number, lon: e.lon as number })), [loaded]);
+  const mapStages = useMemo(() => { const present = new Set(mapEntities.map(e => e.column)); return loaded.entityGraph.columns.filter(c => present.has(c.key)); }, [mapEntities, loaded]);
+  const mapFiltered = useMemo(() => mapStage === "all" ? mapEntities : mapEntities.filter(e => e.column === mapStage), [mapEntities, mapStage]);
+  const mapPoints = useMemo<StagePoint[]>(() => mapFiltered.map(e => ({ id: e.id, site: e.site, company: e.company, country: e.country, status: e.status, lat: e.lat, lon: e.lon })), [mapFiltered]);
   const colOf = useMemo(() => {
     const m: Record<string, number> = {};
     graph.columns.forEach((c, i) => c.pegs.forEach(p => { m[p.id] = i; }));
@@ -1592,8 +1597,44 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
           </button>
         </div>
         {showMap ? (
-          <div style={{ flex: 1, minHeight: 0, padding: "4px 2px", animation: "fadeInDown 0.3s ease" }}>
-            <WorldMap points={mapPoints} height="100%" />
+          <div style={{ flex: 1, minHeight: 0, display: "flex", gap: 10, padding: "4px 2px", animation: "fadeInDown 0.3s ease" }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <WorldMap points={mapPoints} height="100%" selectedId={mapSel} onSelect={setMapSel} />
+            </div>
+            <div style={{ width: 300, flexShrink: 0, display: "flex", flexDirection: "column", minHeight: 0, background: "rgb(20,19,18)", border: "1px solid rgb(48,43,40)", borderRadius: 8, overflow: "hidden" }}>
+              <div style={{ flexShrink: 0, padding: "10px 11px", borderBottom: "1px solid rgb(40,37,34)" }}>
+                <p style={{ fontSize: 7.5, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 7px 0" }}>Entities · {mapFiltered.length}</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                  {[{ key: "all", label: "All" }, ...mapStages].map(s => {
+                    const on = mapStage === s.key;
+                    return (
+                      <button key={s.key} onClick={() => { setMapStage(s.key); setMapSel(null); }}
+                        style={{ padding: "3px 8px", borderRadius: 4, cursor: "pointer", fontFamily: MONO, fontSize: 8, letterSpacing: "0.03em", background: on ? "rgba(200,122,74,0.16)" : "transparent", border: `1px solid ${on ? accent : "rgb(55,50,45)"}`, color: on ? warmWhite : "#8f887c" }}>
+                        {s.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div style={{ flex: 1, minHeight: 0, overflowY: "auto" }} className="thin-scroll">
+                {mapFiltered.map(e => {
+                  const sel = mapSel === e.id;
+                  const stColor = /prospect|develop|plan/i.test(e.status) ? "#c8a24a" : /identif|operat|produc|active/i.test(e.status) ? "#7fae6f" : "#8ab0c0";
+                  return (
+                    <div key={e.id} onClick={() => setMapSel(e.id)}
+                      style={{ display: "flex", alignItems: "flex-start", gap: 8, padding: "8px 11px", cursor: "pointer", borderBottom: "1px solid rgb(32,30,28)", background: sel ? "rgba(200,122,74,0.1)" : "transparent" }}
+                      onMouseEnter={ev => { if (!sel) ev.currentTarget.style.background = "rgb(28,26,24)"; }} onMouseLeave={ev => { if (!sel) ev.currentTarget.style.background = "transparent"; }}>
+                      <Flag country={e.country} size={13} />
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{ fontSize: 10, color: sel ? warmWhite : "rgb(190,183,172)", margin: 0, lineHeight: 1.25, fontFamily: SERIF, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{e.site}</p>
+                        <p style={{ fontSize: 8, color: "#807869", fontFamily: MONO, margin: "2px 0 0 0", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{e.company}</p>
+                      </div>
+                      <span title={e.status} style={{ width: 6, height: 6, borderRadius: "50%", background: stColor, flexShrink: 0, marginTop: 4 }} />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         ) : company ? (
           <div style={{ flex: 1, minHeight: 0 }}>
