@@ -688,9 +688,10 @@ function CompanyGraph({ root, expanded, onToggle, staged = false, originRect = n
   useEffect(() => {
     if (!staged) return;
     setShown(1); setRevealing(true);
+    const START = 600, STEP = 300; // let the company node land first, then reveal one stage column per STEP ms
     const ts: ReturnType<typeof setTimeout>[] = [];
-    for (let i = 2; i <= cols.length; i++) ts.push(setTimeout(() => setShown(i), 520 + (i - 2) * 190));
-    ts.push(setTimeout(() => setRevealing(false), 520 + Math.max(0, cols.length - 1) * 190 + 420));
+    for (let i = 2; i <= cols.length; i++) ts.push(setTimeout(() => setShown(i), START + (i - 2) * STEP));
+    ts.push(setTimeout(() => setRevealing(false), START + Math.max(0, cols.length - 1) * STEP + 450));
     return () => ts.forEach(clearTimeout);
   }, [staged]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { if (!revealing) setShown(cols.length); }, [cols.length, revealing]);
@@ -755,7 +756,7 @@ function CompanyGraph({ root, expanded, onToggle, staged = false, originRect = n
             const stage = Array.from(new Set(col.map(n => CG_STAGE_LABEL[n.kind] ?? n.kind))).join(" / ");
             const color = CG_KIND_COLOR[col[0]?.kind] ?? "#888";
             return (
-              <div key={d} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", width: 186, flexShrink: 0, gap: 9, animation: revealing && d > 0 ? "cgBranchIn 0.4s ease both" : undefined }}>
+              <div key={d} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", width: 186, flexShrink: 0, gap: 9, animation: revealing && d > 0 ? "cgBranchIn 0.45s cubic-bezier(0.4,0,0.2,1) both" : undefined }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 5, paddingBottom: 6, borderBottom: "1px solid rgb(58,53,48)" }}>
                   <span style={{ width: 6, height: 6, borderRadius: "50%", background: color, flexShrink: 0 }} />
                   <p style={{ fontSize: 8, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", margin: 0 }}>{stage}</p>
@@ -776,7 +777,8 @@ function CompanyGraph({ root, expanded, onToggle, staged = false, originRect = n
 /* the company value chain rendered inline inside the node container, branching out from the clicked company node */
 function CompanyGraphInline({ rec, focus, originRect }: { rec: CompanyRecordV2; focus: string; originRect: DOMRect | null }) {
   const sub = useMemo(() => compileCompanySubgraph(rec, focus), [rec, focus]);
-  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  // fully expanded from the first render so the staged branch-out sees all stage columns (not just the company node)
+  const [expanded, setExpanded] = useState<Set<string>>(() => { const s = new Set<string>(); collectKeys(sub, s); return s; });
   useEffect(() => { const s = new Set<string>(); collectKeys(sub, s); setExpanded(s); }, [sub]);
   const toggle = (k: string) => setExpanded(prev => { const n = new Set(prev); if (n.has(k)) n.delete(k); else n.add(k); return n; });
   return <CompanyGraph root={sub} expanded={expanded} onToggle={toggle} staged originRect={originRect} />;

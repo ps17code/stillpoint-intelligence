@@ -76,7 +76,7 @@ body {
 
 /* company graph branch-out: new stage columns slide in from the company node on the left */
 @keyframes cgBranchIn {
-  from { opacity: 0; transform: translateX(-18px); }
+  from { opacity: 0; transform: translateX(-28px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
