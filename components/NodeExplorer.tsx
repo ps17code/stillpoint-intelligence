@@ -1516,10 +1516,15 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
   const [leaving, setLeaving] = useState(false); // fading the supply-chain graph out before the entity graph mounts
   const [entityFocus, setEntityFocus] = useState<string | null>(null); // when set, show only that entity's route (connected subgraph)
   const [company, setCompany] = useState<{ rec: CompanyRecordV2; focus: string; originRect: DOMRect | null } | null>(null); // company value chain rendered inline, branching off a clicked company node
+  const [showMap, setShowMap] = useState(false); // geographic map of all physical entities
   const goEntities = () => { setEntityFocus(null); setLeaving(true); setTimeout(() => setShowEntities(true), 280); };
   const goEntityRoute = (id: string) => { setEntityFocus(id); setLeaving(true); setTimeout(() => setShowEntities(true), 280); };
-  const backToGraph = () => { setShowEntities(false); setLeaving(false); setEntityFocus(null); setCompany(null); };
+  const goMap = () => { setLeaving(true); setTimeout(() => setShowMap(true), 280); };
+  const backToGraph = () => { setShowEntities(false); setLeaving(false); setEntityFocus(null); setCompany(null); setShowMap(false); };
   const openCompanyInline = (name: string, focus: string, rect: DOMRect | null) => { const rec = getCompanyRecordV2(name); if (rec) setCompany({ rec, focus, originRect: rect }); };
+  const mapPoints = useMemo<StagePoint[]>(() => loaded.entityGraph.entities
+    .filter(e => typeof e.lat === "number" && typeof e.lon === "number")
+    .map(e => ({ id: e.id, site: e.physical_entity || e.name, company: e.organizational_entity || e.name, country: e.country || "—", status: e.status || "—", lat: e.lat as number, lon: e.lon as number })), [loaded]);
   const colOf = useMemo(() => {
     const m: Record<string, number> = {};
     graph.columns.forEach((c, i) => c.pegs.forEach(p => { m[p.id] = i; }));
@@ -1565,14 +1570,14 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
         <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 12 }}>
           <span style={{ fontSize: 17, color: warmWhite, fontFamily: SERIF }}>{loaded.name}</span>
           <span style={{ fontSize: 7.5, color: accent, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", border: "1px solid rgba(200,122,74,0.4)", borderRadius: 3, padding: "1px 6px" }}>{loaded.classGraph.node.class_type}</span>
-          {(showEntities || company) && (
-            <button onClick={company ? () => setCompany(null) : backToGraph} title={company ? "Back to entity graph" : "Back to supply-chain graph"} style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 4, background: "transparent", border: "none", cursor: "pointer", color: "#8a8378", fontFamily: MONO, fontSize: 8, textTransform: "uppercase", letterSpacing: "0.06em", padding: 0 }}
+          {(showEntities || company || showMap) && (
+            <button onClick={company ? () => setCompany(null) : showMap ? () => { setShowMap(false); setLeaving(false); } : backToGraph} title={company ? "Back to entity graph" : "Back to supply-chain graph"} style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 4, background: "transparent", border: "none", cursor: "pointer", color: "#8a8378", fontFamily: MONO, fontSize: 8, textTransform: "uppercase", letterSpacing: "0.06em", padding: 0 }}
               onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }} onMouseLeave={e => { e.currentTarget.style.color = "#8a8378"; }}>
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
               {company ? "Entity graph" : "Supply-chain graph"}
             </button>
           )}
-          <span style={{ marginLeft: (showEntities || company) ? 0 : "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>{company ? `Company value chain · ${loaded.name} route` : showEntities ? (entityFocus ? "Entity route" : "Entity graph") : "Supply-chain graph"}</span>
+          <span style={{ marginLeft: (showEntities || company || showMap) ? 0 : "auto", fontSize: 8, color: "#6f695f", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.08em" }}>{company ? `Company value chain · ${loaded.name} route` : showEntities ? (entityFocus ? "Entity route" : "Entity graph") : showMap ? "Geographic map" : "Supply-chain graph"}</span>
           {company && onOpenFullCompany && (
             <button onClick={() => onOpenFullCompany(company.rec.identity.company_name)} title="Open the full company value chain (all activities)"
               style={{ display: "flex", alignItems: "center", gap: 4, background: "rgba(200,122,74,0.12)", border: "1px solid rgba(200,122,74,0.5)", borderRadius: 4, padding: "3px 8px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}
@@ -1586,7 +1591,11 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /></svg>
           </button>
         </div>
-        {company ? (
+        {showMap ? (
+          <div style={{ flex: 1, minHeight: 0, padding: "4px 2px", animation: "fadeInDown 0.3s ease" }}>
+            <WorldMap points={mapPoints} height="100%" />
+          </div>
+        ) : company ? (
           <div style={{ flex: 1, minHeight: 0 }}>
             <CompanyGraphInline rec={company.rec} focus={company.focus} originRect={company.originRect} />
           </div>
@@ -1670,12 +1679,20 @@ function StagePegView({ loaded, graph, selectedKey, originRect, onOpenStage, onC
             })}
           </div>
         </div>
-          <button onClick={goEntities} title="Generate the full entity graph for this node"
-            style={{ position: "absolute", bottom: 14, right: 14, zIndex: 6, display: "flex", alignItems: "center", gap: 7, background: "rgba(200,122,74,0.14)", border: `1px solid ${accent}`, borderRadius: 7, padding: "8px 13px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 10.5 }}
-            onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.24)"; }} onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,122,74,0.14)"; }}>
-            Generate Entity Graph
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-          </button>
+          <div style={{ position: "absolute", bottom: 14, right: 14, zIndex: 6, display: "flex", alignItems: "center", gap: 9 }}>
+            <button onClick={goMap} title="Plot all physical entities of this node on a map"
+              style={{ display: "flex", alignItems: "center", gap: 7, background: "rgb(30,28,26)", border: "1px solid rgb(60,54,49)", borderRadius: 7, padding: "8px 13px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 10.5 }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = accent; }} onMouseLeave={e => { e.currentTarget.style.borderColor = "rgb(60,54,49)"; }}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+              Open Geographic Map
+            </button>
+            <button onClick={goEntities} title="Generate the full entity graph for this node"
+              style={{ display: "flex", alignItems: "center", gap: 7, background: "rgba(200,122,74,0.14)", border: `1px solid ${accent}`, borderRadius: 7, padding: "8px 13px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 10.5 }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,122,74,0.24)"; }} onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,122,74,0.14)"; }}>
+              Generate Entity Graph
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+            </button>
+          </div>
         </div>
         )}
       </div>
