@@ -4,8 +4,7 @@ import { lookupNode, AVAILABLE_NODES, ALL_NODES, getFullRecord, getCompanyRecord
 import WORLD_PATHS from "@/data/world-paths.json";
 
 /* ── Company Subgraph projection over a canonical Company Record (v2.0) ── */
-type PERoute = { fed_by?: string[]; commercial_input?: string; downstream?: { name: string; kind?: string }[] };
-type CNode = { key: string; kind: string; label: string; edge?: string; metas: string[]; canonicalId?: string; route?: PERoute; children: CNode[] };
+type CNode = { key: string; kind: string; label: string; edge?: string; metas: string[]; canonicalId?: string; children: CNode[] };
 /* keep only the branches of a company subgraph whose route touches `kw` (e.g. "germanium"): a node stays if it matches, or any descendant does. A matching node keeps its whole subtree */
 function pruneCompanyToFocus(node: CNode, kw: string): CNode | null {
   if (node.label.toLowerCase().includes(kw)) return node;
@@ -36,7 +35,6 @@ function compileCompanySubgraph(rec: CompanyRecordV2, focus?: string): CNode {
   const mkPE = (p: CompanyRecordV2["economic_activities"][0]["corporate_vehicles"][0]["product_service_groups"][0]["physical_entities"][0]): CNode => ({
     key: p.physical_entity_id, kind: "Physical Entity", label: p.physical_entity_name, edge: "realized by", canonicalId: p.physical_entity_id,
     metas: [p.physical_entity_class, p.relationship_to_corporate_vehicle, `status: ${p.resolution_status}`].filter(Boolean) as string[],
-    route: (p as unknown as { pe_route?: PERoute }).pe_route,
     children: (p.commercial_outputs || []).map(mkOutput),
   });
   const mkPSG = (g: CompanyRecordV2["economic_activities"][0]["corporate_vehicles"][0]["product_service_groups"][0], extra: string[] = []): CNode => ({
@@ -96,7 +94,7 @@ const COUNTRY_CODES: Record<string, string> = {
   "Mexico": "mx", "Ukraine": "ua",
 };
 
-type Card = { id: string; title: string; sub?: string; physical?: string; country?: string; flag?: string; clickable?: boolean; muted?: boolean; featured?: boolean };
+type Card = { id: string; title: string; sub?: string; physical?: string; country?: string; flag?: string; clickable?: boolean; muted?: boolean; featured?: boolean; inForm?: string; outForm?: string };
 type Column = { label: string; items: Card[] };
 type Edge = { from: string; to: string };
 
@@ -149,6 +147,22 @@ function NodeCard({ card, highlighted, dimmed, nodeRef, onHover, onLeave, onClic
         </div>
       )}
       {!card.physical && !card.country && card.sub && <span style={{ display: "block", marginTop: 3, fontSize: 7.5, color: feat ? accent : "#807869", fontFamily: MONO, letterSpacing: "0.06em", textTransform: "uppercase" }}>{card.sub}</span>}
+      {(card.inForm || card.outForm) && (
+        <div style={{ marginTop: 6, paddingTop: 6, borderTop: "1px solid rgb(45,41,39)", display: "flex", flexDirection: "column", gap: 3 }}>
+          {card.inForm && (
+            <div style={{ display: "flex", gap: 5 }}>
+              <span style={{ fontSize: 6.5, color: "#8ab0c0", fontFamily: MONO, letterSpacing: "0.08em", marginTop: 1, flexShrink: 0 }}>IN</span>
+              <span style={{ fontSize: 8, color: "rgb(150,143,132)", lineHeight: 1.3 }}>{card.inForm}</span>
+            </div>
+          )}
+          {card.outForm && (
+            <div style={{ display: "flex", gap: 5 }}>
+              <span style={{ fontSize: 6.5, color: "#7fae6f", fontFamily: MONO, letterSpacing: "0.08em", marginTop: 1, flexShrink: 0 }}>OUT</span>
+              <span style={{ fontSize: 8, color: "rgb(178,171,160)", lineHeight: 1.3 }}>{card.outForm}</span>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -622,12 +636,11 @@ function CGLegend({ kinds }: { kinds: string[] }) {
 }
 
 /* one node card in the horizontal company value-chain graph */
-function CompanyNodeCard({ node, isOpen, onToggle, nodeRef, onExpandPE }: { node: CNode; isOpen: boolean; onToggle: () => void; nodeRef: (el: HTMLDivElement | null) => void; onExpandPE?: (n: CNode) => void }) {
+function CompanyNodeCard({ node, isOpen, onToggle, nodeRef }: { node: CNode; isOpen: boolean; onToggle: () => void; nodeRef: (el: HTMLDivElement | null) => void }) {
   const [hover, setHover] = useState(false);
   const hasKids = node.children.length > 0;
   const kc = CG_KIND_COLOR[node.kind] ?? "#888";
   const isCompany = node.kind === "Company";
-  const canRoutePE = node.kind === "Physical Entity" && !!onExpandPE && !!node.route;
   return (
     <div
       ref={nodeRef}
@@ -646,19 +659,12 @@ function CompanyNodeCard({ node, isOpen, onToggle, nodeRef, onExpandPE }: { node
         <p style={{ flex: 1, fontSize: 11, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.22 }}>{node.label}</p>
         {hasKids && <span style={{ fontSize: 8, color: "#7d766b", fontFamily: MONO, flexShrink: 0, marginTop: 2 }}>{isOpen ? "▾" : "▸"}{node.children.length}</span>}
       </div>
-      {canRoutePE && hover && (
-        <button onClick={e => { e.stopPropagation(); onExpandPE!(node); }}
-          style={{ marginTop: 8, width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 5, background: "rgba(176,143,206,0.16)", border: "1px solid rgba(176,143,206,0.55)", borderRadius: 5, padding: "4px 6px", cursor: "pointer", color: warmWhite, fontFamily: MONO, fontSize: 8, animation: "fadeInDown 0.18s ease" }}>
-          Expand physical entity route
-          <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-        </button>
-      )}
     </div>
   );
 }
 
 /* Company value-chain graph — horizontal, left→right, one column per value-chain stage with a stage header directly above its nodes */
-function CompanyGraph({ root, expanded, onToggle, onExpandPE }: { root: CNode; expanded: Set<string>; onToggle: (k: string) => void; onExpandPE?: (n: CNode) => void }) {
+function CompanyGraph({ root, expanded, onToggle }: { root: CNode; expanded: Set<string>; onToggle: (k: string) => void }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const nodeEls = useRef<Record<string, HTMLDivElement | null>>({});
   const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number; color: string }[]>([]);
@@ -723,7 +729,7 @@ function CompanyGraph({ root, expanded, onToggle, onExpandPE }: { root: CNode; e
                   <p style={{ fontSize: 8, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em", margin: 0 }}>{stage}</p>
                 </div>
                 {col.map(n => (
-                  <CompanyNodeCard key={n.key} node={n} isOpen={expanded.has(n.key)} onToggle={() => onToggle(n.key)} nodeRef={el => { nodeEls.current[n.key] = el; }} onExpandPE={onExpandPE} />
+                  <CompanyNodeCard key={n.key} node={n} isOpen={expanded.has(n.key)} onToggle={() => onToggle(n.key)} nodeRef={el => { nodeEls.current[n.key] = el; }} />
                 ))}
               </div>
             );
@@ -739,102 +745,9 @@ function CompanyGraph({ root, expanded, onToggle, onExpandPE }: { root: CNode; e
 function CompanyGraphInline({ rec, focus }: { rec: CompanyRecordV2; focus: string }) {
   const sub = useMemo(() => compileCompanySubgraph(rec, focus), [rec, focus]);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
-  const [peRoute, setPeRoute] = useState<CNode | null>(null);
-  useEffect(() => { const s = new Set<string>(); collectKeys(sub, s); setExpanded(s); setPeRoute(null); }, [sub]);
+  useEffect(() => { const s = new Set<string>(); collectKeys(sub, s); setExpanded(s); }, [sub]);
   const toggle = (k: string) => setExpanded(prev => { const n = new Set(prev); if (n.has(k)) n.delete(k); else n.add(k); return n; });
-  if (peRoute) return <PhysicalEntityRoute node={peRoute} onBack={() => setPeRoute(null)} />;
-  return <CompanyGraph root={sub} expanded={expanded} onToggle={toggle} onExpandPE={setPeRoute} />;
-}
-
-/* the input → physical entity → output flow around a single physical entity */
-function PhysicalEntityRoute({ node, onBack }: { node: CNode; onBack: () => void }) {
-  const route = node.route ?? {};
-  const cols = useMemo(() => {
-    type RItem = { id: string; label: string; kind: string };
-    const fedBy: RItem[] = (route.fed_by ?? []).map((n, i) => ({ id: `fed-${i}`, label: n, kind: "Physical Entity" }));
-    const input: RItem[] = route.commercial_input ? [{ id: "input", label: route.commercial_input, kind: "Commercial Input" }] : [];
-    const pe: RItem[] = [{ id: "pe", label: node.label, kind: "Physical Entity" }];
-    const outputs: RItem[] = node.children.map(o => ({ id: o.key, label: o.label, kind: "Commercial Output" }));
-    // downstream: the physical entity it feeds (if known) and/or the end markets its outputs supply
-    const explicit: RItem[] = (route.downstream ?? []).map((d, i) => ({ id: `ds-${i}`, label: d.name, kind: d.kind || "Market" }));
-    const markets: RItem[] = node.children.flatMap(o => o.children.map(m => ({ id: m.key, label: m.label, kind: "Market" })));
-    const seen = new Set(explicit.map(d => d.label));
-    const downstream: RItem[] = [...explicit, ...markets.filter(m => !seen.has(m.label))];
-    const dsHasPE = downstream.some(d => d.kind === "Physical Entity");
-    return [
-      { key: "fed", label: "Upstream Physical Entities", items: fedBy },
-      { key: "in", label: "Commercial Input", items: input },
-      { key: "pe", label: "Physical Entity", items: pe },
-      { key: "out", label: "Commercial Output", items: outputs },
-      { key: "ds", label: dsHasPE ? "Downstream Entity / Market" : "End Markets", items: downstream },
-    ].filter(c => c.items.length > 0);
-  }, [node, route]);
-
-  const boxRef = useRef<HTMLDivElement>(null);
-  const els = useRef<Record<string, HTMLDivElement | null>>({});
-  const [lines, setLines] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
-  const measure = useCallback(() => {
-    const box = boxRef.current?.getBoundingClientRect(); if (!box) return;
-    const next: { x1: number; y1: number; x2: number; y2: number }[] = [];
-    for (let ci = 0; ci < cols.length - 1; ci++) {
-      for (const a of cols[ci].items) for (const b of cols[ci + 1].items) {
-        const ea = els.current[a.id], eb = els.current[b.id]; if (!ea || !eb) continue;
-        const ab = ea.getBoundingClientRect(), bb = eb.getBoundingClientRect();
-        next.push({ x1: ab.right - box.left, y1: ab.top + ab.height / 2 - box.top, x2: bb.left - box.left, y2: bb.top + bb.height / 2 - box.top });
-      }
-    }
-    setLines(next);
-  }, [cols]);
-  useEffect(() => {
-    const r = requestAnimationFrame(measure); const t = setTimeout(measure, 100);
-    const ro = new ResizeObserver(() => measure()); if (boxRef.current) ro.observe(boxRef.current);
-    window.addEventListener("resize", measure);
-    return () => { cancelAnimationFrame(r); clearTimeout(t); ro.disconnect(); window.removeEventListener("resize", measure); };
-  }, [measure]);
-
-  return (
-    <div style={{ minHeight: "100%", display: "flex", flexDirection: "column" }}>
-      <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 8, padding: "2px 4px 10px" }}>
-        <button onClick={onBack} style={{ display: "flex", alignItems: "center", gap: 4, background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 4, padding: "3px 7px", cursor: "pointer", color: "#8a8378", fontFamily: MONO, fontSize: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}
-          onMouseEnter={e => { e.currentTarget.style.color = warmWhite; }} onMouseLeave={e => { e.currentTarget.style.color = "#8a8378"; }}>
-          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
-          Company graph
-        </button>
-        <span style={{ fontSize: 10.5, color: warmWhite, fontFamily: SERIF }}>{node.label}</span>
-        <span style={{ fontSize: 7.5, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.06em" }}>· physical entity route</span>
-      </div>
-      <div style={{ flex: 1, minHeight: 0, display: "flex", alignItems: "center", overflowX: "auto" }} className="thin-scroll">
-        <div ref={boxRef} style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "flex-start", gap: 40, padding: "10px 14px", margin: "auto", width: "max-content" }}>
-          <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 0 }}>
-            {lines.map((l, i) => { const mx = (l.x1 + l.x2) / 2; return <path key={i} d={`M ${l.x1} ${l.y1} C ${mx} ${l.y1}, ${mx} ${l.y2}, ${l.x2} ${l.y2}`} fill="none" stroke="#8ab0c0" strokeOpacity={0.5} strokeWidth={1.2} />; })}
-          </svg>
-          {cols.map(col => {
-            const color = CG_KIND_COLOR[col.items[0]?.kind] ?? "#888";
-            const isPEcol = col.key === "pe";
-            return (
-              <div key={col.key} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", width: 168, flexShrink: 0, gap: 9 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 5, paddingBottom: 6, borderBottom: "1px solid rgb(58,53,48)" }}>
-                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: color, flexShrink: 0 }} />
-                  <p style={{ fontSize: 8, color: "#8f887c", fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.05em", margin: 0 }}>{col.label}</p>
-                </div>
-                {col.items.map(it => {
-                  const c = CG_KIND_COLOR[it.kind] ?? "#888";
-                  return (
-                    <div key={it.id} ref={el => { els.current[it.id] = el; }} style={{ boxSizing: "border-box", padding: "8px 10px", borderRadius: 7, background: isPEcol ? "rgba(176,143,206,0.14)" : cardBg, border: `1px solid ${isPEcol ? "rgba(176,143,206,0.55)" : "rgb(48,43,40)"}`, borderLeft: `2px solid ${c}` }}>
-                      <div style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
-                        <span style={{ marginTop: 1 }}><CGIcon kind={it.kind} size={12} color={c} /></span>
-                        <p style={{ flex: 1, fontSize: 10, color: warmWhite, fontFamily: SERIF, margin: 0, lineHeight: 1.2 }}>{it.label}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
+  return <CompanyGraph root={sub} expanded={expanded} onToggle={toggle} />;
 }
 
 /* ── Node Object Overview view ── */
@@ -1364,14 +1277,32 @@ function EntityGraphInline({ loaded, focusId, onOpenCompany }: { loaded: LoadedN
     return { columns, edges };
   }, [loaded]);
 
-  // when focused on an entity, restrict to its route — every node reachable up or downstream from it
+  // input / output material forms carried by each physical-entity node group (unioned across its map-node rows)
+  const groupForms = useMemo(() => {
+    const m: Record<string, { input: string; output: string }> = {};
+    const ins: Record<string, Set<string>> = {}; const outs: Record<string, Set<string>> = {};
+    for (const mn of loaded.supplyGraph.map_nodes) {
+      (ins[mn.group_id] ??= new Set()); (outs[mn.group_id] ??= new Set());
+      mn.input_forms.forEach(f => ins[mn.group_id].add(f)); mn.output_forms.forEach(f => outs[mn.group_id].add(f));
+    }
+    for (const gid of Object.keys(ins)) m[gid] = { input: Array.from(ins[gid]).join(", "), output: Array.from(outs[gid]).join(", ") };
+    return m;
+  }, [loaded]);
+  const entityGroup = useMemo(() => {
+    const m: Record<string, string> = {};
+    for (const e of loaded.entityGraph.entities) if (e.group_id) m[e.id] = e.group_id;
+    return m;
+  }, [loaded]);
+
+  // when focused on an entity, restrict to its route — every node reachable up or downstream from it — and label each node with its group's in/out materials
   const routeSet = useMemo(() => (focusId ? computeHighlight(focusId, full.edges) : null), [focusId, full.edges]);
   const data = useMemo(() => {
     if (!routeSet) return full;
-    const columns = full.columns.map(c => ({ label: c.label, items: c.items.filter(it => routeSet.has(it.id)) })).filter(c => c.items.length > 0);
+    const attach = (it: Card): Card => { const f = groupForms[entityGroup[it.id]]; return f ? { ...it, inForm: f.input || undefined, outForm: f.output || undefined } : it; };
+    const columns = full.columns.map(c => ({ label: c.label, items: c.items.filter(it => routeSet.has(it.id)).map(attach) })).filter(c => c.items.length > 0);
     const edges = full.edges.filter(e => routeSet.has(e.from) && routeSet.has(e.to));
     return { columns, edges };
-  }, [full, routeSet]);
+  }, [full, routeSet, groupForms, entityGroup]);
 
   const colOfNode = useMemo(() => {
     const m: Record<string, number> = {};
