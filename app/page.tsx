@@ -28,6 +28,7 @@ import VerticalLandingPage from "@/components/VerticalLandingPage";
 import ExplorerHub from "@/components/ExplorerHub";
 import ExplorerPlaceholder from "@/components/ExplorerPlaceholder";
 import NodeExplorer from "@/components/NodeExplorer";
+import AccessGate, { ACCESS_STORAGE_KEY } from "@/components/AccessGate";
 
 const R = 1;
 
@@ -289,7 +290,13 @@ export default function HomePage() {
   const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [appLoading,    setAppLoading]    = useState(true);
+  const [authed,        setAuthed]        = useState(false);
   const [verticalSelected, setVerticalSelected] = useState(false);
+
+  // Restore session-scoped access so an in-tab reload doesn't re-prompt
+  useEffect(() => {
+    try { if (sessionStorage.getItem(ACCESS_STORAGE_KEY) === "1") setAuthed(true); } catch {}
+  }, []);
   const [explorer,      setExplorer]      = useState<"hub" | "verticals" | "node" | "global">("hub");
   const [selectedL2,    setSelectedL2]    = useState<Map<string, string>>(new Map());
   const [openDropdown,  setOpenDropdown]  = useState<string | null>(null);
@@ -695,6 +702,11 @@ export default function HomePage() {
             <ExplorerPlaceholder title="Global Explorer" message="Geographic supply network view — coming soon." onBack={() => setExplorer("hub")} />
           )}
         </div>
+        {!authed && (
+          <div className="absolute inset-0 z-40">
+            <AccessGate onUnlock={() => setAuthed(true)} />
+          </div>
+        )}
         {appLoading && (
           <div className="absolute inset-0 z-50">
             <StillpointLoadingLanding onComplete={() => setAppLoading(false)} />
